@@ -2,6 +2,7 @@ import AppKit
 import Foundation
 import MemoryCapture
 import MemoryContracts
+import MemoryEnrichment
 import SwiftUI
 
 @main
@@ -12,12 +13,20 @@ struct LocalMemoryApp: App {
     private let captureSpikeDurationSeconds: Double
     private let captureSpikeStaticMode: Bool
     private let captureSpikeCrashActiveMode: Bool
+    private let contextSpikeOutputDirectory: String?
 
     init() {
         let arguments = ProcessInfo.processInfo.arguments
         shouldRequestCapturePermissions = arguments.contains("--request-capture-permissions")
         captureSpikeStaticMode = arguments.contains("--capture-spike-static")
         captureSpikeCrashActiveMode = arguments.contains("--capture-spike-crash-active")
+        if let flagIndex = arguments.firstIndex(of: "--context-spike"),
+           arguments.indices.contains(flagIndex + 1)
+        {
+            contextSpikeOutputDirectory = arguments[flagIndex + 1]
+        } else {
+            contextSpikeOutputDirectory = nil
+        }
         if let flagIndex = arguments.firstIndex(of: "--capture-spike"),
            arguments.indices.contains(flagIndex + 1)
         {
@@ -44,13 +53,21 @@ struct LocalMemoryApp: App {
     var body: some Scene {
         WindowGroup("Local Memory") {
             Group {
-                if captureSpikeOutputDirectory == nil {
+                if contextSpikeOutputDirectory != nil {
+                    ContextSpikeTargetView()
+                } else if captureSpikeOutputDirectory == nil {
                     BootstrapView(schemaVersion: BootstrapContract.schemaVersion)
                 } else {
                     CaptureSpikeTargetView(animated: captureSpikeCrashActiveMode)
                 }
             }
                 .task {
+                    if let contextSpikeOutputDirectory {
+                        await ContextSpikeHarness.run(
+                            outputDirectory: URL(fileURLWithPath: contextSpikeOutputDirectory)
+                        )
+                        return
+                    }
                     if shouldRequestCapturePermissions {
                         _ = CaptureCapabilities.requestFromUser()
                         return

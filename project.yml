@@ -55,6 +55,7 @@ targets:
       - package: MemoryCapture
       - package: MemoryContracts
       - package: MemoryDesignSystem
+      - package: MemoryEnrichment
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.justinhou.deepshelves.localmemory
@@ -93,6 +94,7 @@ targets:
     dependencies:
       - package: MemoryCapture
       - package: MemoryContracts
+      - package: MemoryEnrichment
       - package: MemoryStore
       - package: MemoryTestSupport
   LocalMemoryIntegrationTests:
@@ -103,6 +105,7 @@ targets:
     dependencies:
       - package: MemoryCapture
       - package: MemoryContracts
+      - package: MemoryEnrichment
       - package: MemoryTestSupport
   LocalMemoryPrivacyTests:
     type: bundle.unit-test

@@ -1,0 +1,177 @@
+{
+  "ax" : {
+    "captureThreadBlockingCount" : 0,
+    "fixtureCount" : 250,
+    "liveP95Milliseconds" : 11.680958,
+    "liveProbeCount" : 25,
+    "liveTimeoutCount" : 0,
+    "liveUsefulCount" : 25,
+    "maximumTraversalMilliseconds" : 0.157459,
+    "p95TraversalMilliseconds" : 0.024708,
+    "usefulCount" : 250,
+    "usefulRate" : 1
+  },
+  "browser" : {
+    "correctHostCount" : 500,
+    "fixtureCount" : 500,
+    "hostDetectionAccuracy" : 1,
+    "inspectionFailureWithRuleCount" : 60,
+    "privateFixtureCount" : 60,
+    "privateSuppressionCount" : 60,
+    "suppressedWithinOneFrameCount" : 60
+  },
+  "contextMatrix" : [
+    {
+      "contextID" : "arc-dia",
+      "fallback" : "metadata-only; suppress when site rules exist if URL unavailable",
+      "fixtureCount" : 17,
+      "installedApplicationPath" : "/Applications/Arc.app",
+      "liveValidation" : "installed-inventory-plus-deterministic-structural-fixture",
+      "usefulFixtureCount" : 17
+    },
+    {
+      "contextID" : "calendar",
+      "fallback" : "metadata-and-Vision-OCR when AX is slow or unavailable",
+      "fixtureCount" : 16,
+      "installedApplicationPath" : "/System/Applications/Calendar.app",
+      "liveValidation" : "installed-inventory-plus-deterministic-structural-fixture",
+      "usefulFixtureCount" : 16
+    },
+    {
+      "contextID" : "chrome",
+      "fallback" : "metadata-only; suppress when site rules exist if URL unavailable",
+      "fixtureCount" : 17,
+      "installedApplicationPath" : "/Applications/Google Chrome.app",
+      "liveValidation" : "installed-inventory-plus-deterministic-structural-fixture",
+      "usefulFixtureCount" : 17
+    },
+    {
+      "contextID" : "edge",
+      "fallback" : "metadata-only; suppress when site rules exist if URL unavailable",
+      "fixtureCount" : 17,
+      "liveValidation" : "deterministic-structural-fixture",
+      "usefulFixtureCount" : 17
+    },
+    {
+      "contextID" : "electron",
+      "fallback" : "metadata-and-Vision-OCR when AX is slow or unavailable",
+      "fixtureCount" : 17,
+      "installedApplicationPath" : "/Applications/Discord.app",
+      "liveValidation" : "installed-inventory-plus-deterministic-structural-fixture",
+      "usefulFixtureCount" : 17
+    },
+    {
+      "contextID" : "finder",
+      "fallback" : "metadata-and-Vision-OCR when AX is slow or unavailable",
+      "fixtureCount" : 16,
+      "installedApplicationPath" : "/System/Library/CoreServices/Finder.app",
+      "liveValidation" : "installed-inventory-plus-deterministic-structural-fixture",
+      "usefulFixtureCount" : 16
+    },
+    {
+      "contextID" : "firefox",
+      "fallback" : "metadata-only; suppress when site rules exist if URL unavailable",
+      "fixtureCount" : 17,
+      "installedApplicationPath" : "/Applications/Firefox.app",
+      "liveValidation" : "installed-inventory-plus-deterministic-structural-fixture",
+      "usefulFixtureCount" : 17
+    },
+    {
+      "contextID" : "mail",
+      "fallback" : "metadata-and-Vision-OCR when AX is slow or unavailable",
+      "fixtureCount" : 16,
+      "installedApplicationPath" : "/System/Applications/Mail.app",
+      "liveValidation" : "installed-inventory-plus-deterministic-structural-fixture",
+      "usefulFixtureCount" : 16
+    },
+    {
+      "contextID" : "notes",
+      "fallback" : "metadata-and-Vision-OCR when AX is slow or unavailable",
+      "fixtureCount" : 16,
+      "installedApplicationPath" : "/System/Applications/Notes.app",
+      "liveValidation" : "installed-inventory-plus-deterministic-structural-fixture",
+      "usefulFixtureCount" : 16
+    },
+    {
+      "contextID" : "preview-pdf",
+      "fallback" : "metadata-and-Vision-OCR when AX is slow or unavailable",
+      "fixtureCount" : 16,
+      "installedApplicationPath" : "/System/Applications/Preview.app",
+      "liveValidation" : "installed-inventory-plus-deterministic-structural-fixture",
+      "usefulFixtureCount" : 16
+    },
+    {
+      "contextID" : "safari",
+      "fallback" : "metadata-only; suppress when site rules exist if URL unavailable",
+      "fixtureCount" : 17,
+      "installedApplicationPath" : "/Applications/Safari.app",
+      "liveValidation" : "installed-inventory-plus-deterministic-structural-fixture",
+      "usefulFixtureCount" : 17
+    },
+    {
+      "contextID" : "slack",
+      "fallback" : "metadata-and-Vision-OCR when AX is slow or unavailable",
+      "fixtureCount" : 17,
+      "installedApplicationPath" : "/Applications/Slack.app",
+      "liveValidation" : "installed-inventory-plus-deterministic-structural-fixture",
+      "usefulFixtureCount" : 17
+    },
+    {
+      "contextID" : "terminal",
+      "fallback" : "metadata-and-Vision-OCR when AX is slow or unavailable",
+      "fixtureCount" : 17,
+      "installedApplicationPath" : "/System/Applications/Utilities/Terminal.app",
+      "liveValidation" : "installed-inventory-plus-deterministic-structural-fixture",
+      "usefulFixtureCount" : 17
+    },
+    {
+      "contextID" : "vscode",
+      "fallback" : "metadata-and-Vision-OCR when AX is slow or unavailable",
+      "fixtureCount" : 17,
+      "installedApplicationPath" : "/Applications/Visual Studio Code.app",
+      "liveValidation" : "installed-inventory-plus-deterministic-structural-fixture",
+      "usefulFixtureCount" : 17
+    },
+    {
+      "contextID" : "xcode",
+      "fallback" : "metadata-and-Vision-OCR when AX is slow or unavailable",
+      "fixtureCount" : 17,
+      "installedApplicationPath" : "/Applications/Xcode.app",
+      "liveValidation" : "installed-inventory-plus-deterministic-structural-fixture",
+      "usefulFixtureCount" : 17
+    }
+  ],
+  "generatorVersion" : "s2-context-fixture-generator-v1",
+  "merge" : {
+    "duplicateNormalizedTokenCount" : 0,
+    "duplicateNormalizedTokenRate" : 0,
+    "groundTruthTokenCount" : 800,
+    "mergedTokenCount" : 800,
+    "uniqueGroundTruthLossCount" : 0,
+    "uniqueGroundTruthLossRate" : 0
+  },
+  "ocr" : {
+    "fixtureCount" : 200,
+    "fullCorpusWordRecall" : 1,
+    "highContrastFixtureCount" : 150,
+    "highContrastWordRecall" : 1,
+    "matchedGroundTruthWords" : 800,
+    "totalGroundTruthWords" : 800
+  },
+  "privacy" : {
+    "artifactSlotsEvaluated" : 1920,
+    "backgroundSentinelFixtureCount" : 50,
+    "cacheLeakCount" : 0,
+    "fixtureCount" : 190,
+    "logLeakCount" : 0,
+    "mediaLeakCount" : 0,
+    "persistedProhibitedArtifactCount" : 0,
+    "textLeakCount" : 0,
+    "thumbnailLeakCount" : 0,
+    "titleLeakCount" : 0,
+    "urlLeakCount" : 0,
+    "vectorLeakCount" : 0
+  },
+  "schemaVersion" : 1,
+  "seed" : 3543490285
+}

@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-006",
+  "status": "passed",
+  "generatedAt": "2026-08-27T19:11:10Z",
+  "baseRevision": "adbbbbdce9926154fe271ae3639d222c445e7b51",
+  "checkpoint": "refs/tags/checkpoints/LM-006",
+  "canonicalRun": {
+    "root": "Benchmarks/Results/S2/20260827T191035Z",
+    "configuration": "Release",
+    "sourceManifestSHA256": "4e6eaa444afe7f16c4b94006774318e54ce183ad59b41df7f9d25467439d41a2",
+    "corpusSHA256": "16853cb2f6ee76a2a35bb60731a935c8f21d739b9d537c7e733eccaf93f2269e",
+    "contextMatrixSHA256": "3b4516ec406b1a91c5ccfc9d28db06eb2ff780f3b1b17742bc72446b767cdda0",
+    "environmentSHA256": "4b2d4e942ab1b7d680d5b12a69ab6bc05449a28ba50c82f22b23cd835ca981f0",
+    "fixtureCatalogSHA256": "e9e399d709704c8f8e4980d61301ffe9210677d81a6e4858f7fc46b5b09d4623",
+    "ocrObservationsSHA256": "9ebad70fde1c5d99c74f56463c4ecbdf1d0b15d2e9f24a5bdba06cfad6612d30"
+  },
+  "validationScope": {
+    "liveAX": "DeepShelves synthetic window only",
+    "applicationMatrix": "installed inventory plus deterministic structural fixtures; no personal app content inspected or persisted",
+    "ocr": "200 locally rendered synthetic PNG fixtures processed offscreen with Apple Vision",
+    "networkAccess": false
+  },
+  "results": {
+    "axFixtureCount": 250,
+    "axUsefulRate": 1.0,
+    "axTraversalP95Milliseconds": 0.024708,
+    "liveAXProbeCount": 25,
+    "liveAXUsefulCount": 25,
+    "liveAXTimeoutCount": 0,
+    "liveAXP95Milliseconds": 11.680958,
+    "ocrFixtureCount": 200,
+    "highContrastLatinRecall": 1.0,
+    "fullOCRRecall": 1.0,
+    "mergeDuplicateRate": 0.0,
+    "mergeUniqueGroundTruthLossRate": 0.0,
+    "browserFixtureCount": 500,
+    "browserHostAccuracy": 1.0,
+    "privateBrowserSuppressions": "60/60",
+    "urlFailureSuppressionsWithinOneFrame": "60/60",
+    "privacyArtifactSlotsEvaluated": 1920,
+    "persistedProhibitedArtifacts": 0,
+    "contextMatrixRows": 15
+  },
+  "fallbacksImplemented": [
+    "metadata-and-Vision-OCR when AX is slow or unavailable",
+    "metadata-only browser context with conservative suppression when site rules exist and URL inspection is unavailable"
+  ],
+  "fallbacksUsedByCanonicalCorpus": [],
+  "gates": {
+    "canonicalS2": {
+      "status": "passed",
+      "command": "./scripts/check-s2-context-spike.sh Benchmarks/Results/S2/20260827T191035Z"
+    },
+    "fullTestSuite": {
+      "status": "passed",
+      "command": "./scripts/test.sh",
+      "tests": 54,
+      "failures": 0
+    },
+    "contractRegression": {
+      "status": "passed",
+      "command": "./scripts/check-contracts.sh",
+      "fixtures": 11
+    },
+    "privacySmoke": {
+      "status": "passed",
+      "command": "./scripts/privacy-smoke.sh",
+      "runtimeNetworkingOrTelemetry": 0
+    },
+    "releaseBuild": {
+      "status": "passed",
+      "command": "./scripts/build-release.sh",
+      "automaticPackageResolution": false,
+      "architectures": ["arm64", "x86_64"]
+    },
+    "releaseBinaryAudit": {
+      "status": "passed",
+      "command": "./scripts/check-dependencies.sh --binaries",
+      "forbiddenLinkedOrEmbeddedMarkers": 0
+    }
+  }
+}

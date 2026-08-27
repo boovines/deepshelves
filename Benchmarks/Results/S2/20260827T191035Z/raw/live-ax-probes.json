@@ -1,0 +1,202 @@
+[
+  {
+    "elapsedMilliseconds" : 35.862167,
+    "nodesVisited" : 10,
+    "spanCount" : 5,
+    "status" : "useful",
+    "targetAssociated" : true,
+    "truncated" : false
+  },
+  {
+    "elapsedMilliseconds" : 6.136375,
+    "nodesVisited" : 10,
+    "spanCount" : 5,
+    "status" : "useful",
+    "targetAssociated" : true,
+    "truncated" : false
+  },
+  {
+    "elapsedMilliseconds" : 8.386625,
+    "nodesVisited" : 10,
+    "spanCount" : 5,
+    "status" : "useful",
+    "targetAssociated" : true,
+    "truncated" : false
+  },
+  {
+    "elapsedMilliseconds" : 6.449166,
+    "nodesVisited" : 10,
+    "spanCount" : 5,
+    "status" : "useful",
+    "targetAssociated" : true,
+    "truncated" : false
+  },
+  {
+    "elapsedMilliseconds" : 2.590083,
+    "nodesVisited" : 10,
+    "spanCount" : 5,
+    "status" : "useful",
+    "targetAssociated" : true,
+    "truncated" : false
+  },
+  {
+    "elapsedMilliseconds" : 6.177333,
+    "nodesVisited" : 10,
+    "spanCount" : 5,
+    "status" : "useful",
+    "targetAssociated" : true,
+    "truncated" : false
+  },
+  {
+    "elapsedMilliseconds" : 2.467125,
+    "nodesVisited" : 10,
+    "spanCount" : 5,
+    "status" : "useful",
+    "targetAssociated" : true,
+    "truncated" : false
+  },
+  {
+    "elapsedMilliseconds" : 5.434291,
+    "nodesVisited" : 10,
+    "spanCount" : 5,
+    "status" : "useful",
+    "targetAssociated" : true,
+    "truncated" : false
+  },
+  {
+    "elapsedMilliseconds" : 2.477791,
+    "nodesVisited" : 10,
+    "spanCount" : 5,
+    "status" : "useful",
+    "targetAssociated" : true,
+    "truncated" : false
+  },
+  {
+    "elapsedMilliseconds" : 6.335625,
+    "nodesVisited" : 10,
+    "spanCount" : 5,
+    "status" : "useful",
+    "targetAssociated" : true,
+    "truncated" : false
+  },
+  {
+    "elapsedMilliseconds" : 2.220375,
+    "nodesVisited" : 10,
+    "spanCount" : 5,
+    "status" : "useful",
+    "targetAssociated" : true,
+    "truncated" : false
+  },
+  {
+    "elapsedMilliseconds" : 6.08275,
+    "nodesVisited" : 10,
+    "spanCount" : 5,
+    "status" : "useful",
+    "targetAssociated" : true,
+    "truncated" : false
+  },
+  {
+    "elapsedMilliseconds" : 2.447875,
+    "nodesVisited" : 10,
+    "spanCount" : 5,
+    "status" : "useful",
+    "targetAssociated" : true,
+    "truncated" : false
+  },
+  {
+    "elapsedMilliseconds" : 5.17025,
+    "nodesVisited" : 10,
+    "spanCount" : 5,
+    "status" : "useful",
+    "targetAssociated" : true,
+    "truncated" : false
+  },
+  {
+    "elapsedMilliseconds" : 2.449333,
+    "nodesVisited" : 10,
+    "spanCount" : 5,
+    "status" : "useful",
+    "targetAssociated" : true,
+    "truncated" : false
+  },
+  {
+    "elapsedMilliseconds" : 5.486417,
+    "nodesVisited" : 10,
+    "spanCount" : 5,
+    "status" : "useful",
+    "targetAssociated" : true,
+    "truncated" : false
+  },
+  {
+    "elapsedMilliseconds" : 2.2825,
+    "nodesVisited" : 10,
+    "spanCount" : 5,
+    "status" : "useful",
+    "targetAssociated" : true,
+    "truncated" : false
+  },
+  {
+    "elapsedMilliseconds" : 11.680958,
+    "nodesVisited" : 10,
+    "spanCount" : 5,
+    "status" : "useful",
+    "targetAssociated" : true,
+    "truncated" : false
+  },
+  {
+    "elapsedMilliseconds" : 2.808417,
+    "nodesVisited" : 10,
+    "spanCount" : 5,
+    "status" : "useful",
+    "targetAssociated" : true,
+    "truncated" : false
+  },
+  {
+    "elapsedMilliseconds" : 2.46325,
+    "nodesVisited" : 10,
+    "spanCount" : 5,
+    "status" : "useful",
+    "targetAssociated" : true,
+    "truncated" : false
+  },
+  {
+    "elapsedMilliseconds" : 5.716583,
+    "nodesVisited" : 10,
+    "spanCount" : 5,
+    "status" : "useful",
+    "targetAssociated" : true,
+    "truncated" : false
+  },
+  {
+    "elapsedMilliseconds" : 2.296542,
+    "nodesVisited" : 10,
+    "spanCount" : 5,
+    "status" : "useful",
+    "targetAssociated" : true,
+    "truncated" : false
+  },
+  {
+    "elapsedMilliseconds" : 6.068083,
+    "nodesVisited" : 10,
+    "spanCount" : 5,
+    "status" : "useful",
+    "targetAssociated" : true,
+    "truncated" : false
+  },
+  {
+    "elapsedMilliseconds" : 2.360125,
+    "nodesVisited" : 10,
+    "spanCount" : 5,
+    "status" : "useful",
+    "targetAssociated" : true,
+    "truncated" : false
+  },
+  {
+    "elapsedMilliseconds" : 6.428958,
+    "nodesVisited" : 10,
+    "spanCount" : 5,
+    "status" : "useful",
+    "targetAssociated" : true,
+    "truncated" : false
+  }
+]

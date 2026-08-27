@@ -1,0 +1,13 @@
+{
+  "git_revision": "adbbbbdce9926154fe271ae3639d222c445e7b51",
+  "source_manifest_sha256": "4e6eaa444afe7f16c4b94006774318e54ce183ad59b41df7f9d25467439d41a2",
+  "corpus_sha256": "16853cb2f6ee76a2a35bb60731a935c8f21d739b9d537c7e733eccaf93f2269e",
+  "mac_model": "Mac15,6",
+  "ram_bytes": 19327352832,
+  "os_version": "26.5",
+  "os_build": "25F71",
+  "architecture": "arm64",
+  "xcode_version": "Xcode 26.5 Build version 17F42 ",
+  "configuration": "Release",
+  "liveProbeScope": "DeepShelves synthetic window only"
+}
