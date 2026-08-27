@@ -1,0 +1,14 @@
+{
+  "git_revision": "54271e572e7ac1abc42eb0d64b0d47fb8ceed3f4",
+  "source_manifest_sha256": "32e849a163d19a7b96bcd791a21e43bcd8550369d207952d310601aa8347c941",
+  "corpus_sha256": "975ed54289b1eb9766c5bfc548aabf9883ebfea4bb5a6df4f4c4d58ec0dec7df",
+  "mac_model": "Mac15,6",
+  "ram_bytes": 19327352832,
+  "os_version": "26.5",
+  "os_build": "25F71",
+  "architecture": "arm64",
+  "xcode_version": "Xcode 26.5 Build version 17F42 ",
+  "power_mode": "Battery Power:  lowpowermode         1  Sleep On Power Button 1  standby              1  ttyskeepawake        1  hibernatemode        3  powernap             0  hibernatefile        /var/vm/sleepimage  displaysleep         0  womp                 0  networkoversleep     0  sleep                9  tcpkeepalive         1  lessbright           1  disksleep            10 AC Power:  Sleep On Power Button 1  lowpowermode         0  standby              1  ttyskeepawake        1  hibernatemode        3  powernap             1  hibernatefile        /var/vm/sleepimage  displaysleep         0  womp                 1  networkoversleep     0  sleep                0  tcpkeepalive         1  disksleep            10 ",
+  "thermal_state": "Note: No thermal warning level has been recorded Note: No performance warning level has been recorded Note: No CPU power status has been recorded ",
+  "configuration": "Release"
+}

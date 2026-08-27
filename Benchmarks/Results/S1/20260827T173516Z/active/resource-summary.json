@@ -1,0 +1,7 @@
+{
+  "samples": 3521,
+  "settled_samples": 3511,
+  "mean_cpu_percent": 3.9479920250640843,
+  "p95_cpu_percent": 8.5,
+  "maximum_rss_mb": 97.09375
+}

@@ -1,0 +1,113 @@
+{
+  "backpressureDrops" : 0,
+  "captureEpochID" : "DD7FF36D-C5D5-4DAB-A40E-ED222B1FEDC6",
+  "chunks" : [
+    {
+      "epochID" : "DD7FF36D-C5D5-4DAB-A40E-ED222B1FEDC6",
+      "height" : 480,
+      "path" : "\/Users\/justinhou\/Development\/deepshelves\/Benchmarks\/Results\/S1\/20260827T173516Z\/static\/capture.mov",
+      "targetWindowID" : 30944,
+      "width" : 720
+    },
+    {
+      "epochID" : "DD7FF36D-C5D5-4DAB-A40E-ED222B1FEDC6",
+      "height" : 480,
+      "path" : "\/Users\/justinhou\/Development\/deepshelves\/Benchmarks\/Results\/S1\/20260827T173516Z\/static\/capture-0001.mov",
+      "targetWindowID" : 30944,
+      "width" : 720
+    },
+    {
+      "epochID" : "DD7FF36D-C5D5-4DAB-A40E-ED222B1FEDC6",
+      "height" : 480,
+      "path" : "\/Users\/justinhou\/Development\/deepshelves\/Benchmarks\/Results\/S1\/20260827T173516Z\/static\/capture-0002.mov",
+      "targetWindowID" : 30944,
+      "width" : 720
+    },
+    {
+      "epochID" : "DD7FF36D-C5D5-4DAB-A40E-ED222B1FEDC6",
+      "height" : 480,
+      "path" : "\/Users\/justinhou\/Development\/deepshelves\/Benchmarks\/Results\/S1\/20260827T173516Z\/static\/capture-0003.mov",
+      "targetWindowID" : 30944,
+      "width" : 720
+    },
+    {
+      "epochID" : "DD7FF36D-C5D5-4DAB-A40E-ED222B1FEDC6",
+      "height" : 480,
+      "path" : "\/Users\/justinhou\/Development\/deepshelves\/Benchmarks\/Results\/S1\/20260827T173516Z\/static\/capture-0004.mov",
+      "targetWindowID" : 30944,
+      "width" : 720
+    },
+    {
+      "epochID" : "DD7FF36D-C5D5-4DAB-A40E-ED222B1FEDC6",
+      "height" : 480,
+      "path" : "\/Users\/justinhou\/Development\/deepshelves\/Benchmarks\/Results\/S1\/20260827T173516Z\/static\/capture-0005.mov",
+      "targetWindowID" : 30944,
+      "width" : 720
+    },
+    {
+      "epochID" : "DD7FF36D-C5D5-4DAB-A40E-ED222B1FEDC6",
+      "height" : 480,
+      "path" : "\/Users\/justinhou\/Development\/deepshelves\/Benchmarks\/Results\/S1\/20260827T173516Z\/static\/capture-0006.mov",
+      "targetWindowID" : 30944,
+      "width" : 720
+    },
+    {
+      "epochID" : "DD7FF36D-C5D5-4DAB-A40E-ED222B1FEDC6",
+      "height" : 480,
+      "path" : "\/Users\/justinhou\/Development\/deepshelves\/Benchmarks\/Results\/S1\/20260827T173516Z\/static\/capture-0007.mov",
+      "targetWindowID" : 30944,
+      "width" : 720
+    },
+    {
+      "epochID" : "DD7FF36D-C5D5-4DAB-A40E-ED222B1FEDC6",
+      "height" : 480,
+      "path" : "\/Users\/justinhou\/Development\/deepshelves\/Benchmarks\/Results\/S1\/20260827T173516Z\/static\/capture-0008.mov",
+      "targetWindowID" : 30944,
+      "width" : 720
+    },
+    {
+      "epochID" : "DD7FF36D-C5D5-4DAB-A40E-ED222B1FEDC6",
+      "height" : 480,
+      "path" : "\/Users\/justinhou\/Development\/deepshelves\/Benchmarks\/Results\/S1\/20260827T173516Z\/static\/capture-0009.mov",
+      "targetWindowID" : 30944,
+      "width" : 720
+    }
+  ],
+  "contaminationFrames" : 0,
+  "correctWithinOneSecondTransitions" : 0,
+  "diagnostics" : [
+
+  ],
+  "eligibleFocusTransitions" : 0,
+  "encodedHeight" : 480,
+  "encodedWidth" : 720,
+  "endedAt" : "2026-08-27T18:40:31Z",
+  "filterUpdateLatenciesMilliseconds" : [
+
+  ],
+  "framesAccepted" : 10,
+  "framesIndexed" : 10,
+  "framesReceived" : 600,
+  "mediaPath" : "\/Users\/justinhou\/Development\/deepshelves\/Benchmarks\/Results\/S1\/20260827T173516Z\/static\/capture.mov",
+  "mediaPaths" : [
+    "\/Users\/justinhou\/Development\/deepshelves\/Benchmarks\/Results\/S1\/20260827T173516Z\/static\/capture.mov",
+    "\/Users\/justinhou\/Development\/deepshelves\/Benchmarks\/Results\/S1\/20260827T173516Z\/static\/capture-0001.mov",
+    "\/Users\/justinhou\/Development\/deepshelves\/Benchmarks\/Results\/S1\/20260827T173516Z\/static\/capture-0002.mov",
+    "\/Users\/justinhou\/Development\/deepshelves\/Benchmarks\/Results\/S1\/20260827T173516Z\/static\/capture-0003.mov",
+    "\/Users\/justinhou\/Development\/deepshelves\/Benchmarks\/Results\/S1\/20260827T173516Z\/static\/capture-0004.mov",
+    "\/Users\/justinhou\/Development\/deepshelves\/Benchmarks\/Results\/S1\/20260827T173516Z\/static\/capture-0005.mov",
+    "\/Users\/justinhou\/Development\/deepshelves\/Benchmarks\/Results\/S1\/20260827T173516Z\/static\/capture-0006.mov",
+    "\/Users\/justinhou\/Development\/deepshelves\/Benchmarks\/Results\/S1\/20260827T173516Z\/static\/capture-0007.mov",
+    "\/Users\/justinhou\/Development\/deepshelves\/Benchmarks\/Results\/S1\/20260827T173516Z\/static\/capture-0008.mov",
+    "\/Users\/justinhou\/Development\/deepshelves\/Benchmarks\/Results\/S1\/20260827T173516Z\/static\/capture-0009.mov"
+  ],
+  "sleepTransitions" : 0,
+  "staleOrPolicyFramesRejected" : 2,
+  "startedAt" : "2026-08-27T18:35:31Z",
+  "targetWindowID" : 30944,
+  "unresolvedOrExcludedTransitions" : 0,
+  "wakeTransitions" : 0,
+  "writerErrors" : [
+
+  ]
+}

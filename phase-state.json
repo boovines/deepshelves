@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "activeStory": null,
+  "activeStory": "LM-006",
   "stories": {
     "LM-001": {
       "status": "passed",
@@ -56,23 +56,29 @@
       "resumeProbe": null
     },
     "LM-005": {
-      "status": "pending",
-      "startedAt": null,
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": null,
+      "status": "passed",
+      "startedAt": "2026-08-27T13:20:17Z",
+      "completedAt": "2026-08-27T18:57:01Z",
+      "gitRevision": "refs/tags/checkpoints/LM-005",
+      "evidence": [
+        "Results/LM-005/report.json",
+        "Results/LM-005/capabilities.json",
+        "Decisions/0001-capture-media.md",
+        "Benchmarks/Results/S1/20260827T173516Z/environment.json",
+        "Benchmarks/Results/S1/20260827T173516Z/instruments/capture-time-profiler.trace"
+      ],
+      "notes": "Final signed-binary S1 passes all focus, stale-frame, contamination, media, crash, decode, storage, CPU, memory, and static-idle gates. H2 probes are both true. The accepted design uses 1920px, 2fps receive/1fps accept, hardware HEVC Main at 2Mbps, one-second fragments, 29-second writer rollover under a 30-second contract, bounded shareable-content refresh leases, and no fallback.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null
     },
     "LM-006": {
-      "status": "pending",
-      "startedAt": null,
+      "status": "active",
+      "startedAt": "2026-08-27T18:57:01Z",
       "completedAt": null,
       "gitRevision": null,
       "evidence": [],
-      "notes": null,
+      "notes": "Base checkpoint refs/tags/checkpoints/LM-005. Run S2 AX/OCR/browser/privacy spike and publish Results/LM-006/context-matrix.json.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null

@@ -1,0 +1,245 @@
+{
+  "required_count": 30,
+  "results": [
+    {
+      "forced_second": 1,
+      "path": "/Users/justinhou/Development/deepshelves/Benchmarks/Results/S1/20260827T173516Z/crash-runs-20260827T184032Z/second-01/.capture.mov.partial.mov",
+      "codec": "hevc",
+      "duration_seconds": 1.001667,
+      "bytes": 3599,
+      "playable": true
+    },
+    {
+      "forced_second": 2,
+      "path": "/Users/justinhou/Development/deepshelves/Benchmarks/Results/S1/20260827T173516Z/crash-runs-20260827T184032Z/second-02/.capture.mov.partial.mov",
+      "codec": "hevc",
+      "duration_seconds": 2.005000,
+      "bytes": 5173,
+      "playable": true
+    },
+    {
+      "forced_second": 3,
+      "path": "/Users/justinhou/Development/deepshelves/Benchmarks/Results/S1/20260827T173516Z/crash-runs-20260827T184032Z/second-03/.capture.mov.partial.mov",
+      "codec": "hevc",
+      "duration_seconds": 3.003333,
+      "bytes": 6470,
+      "playable": true
+    },
+    {
+      "forced_second": 4,
+      "path": "/Users/justinhou/Development/deepshelves/Benchmarks/Results/S1/20260827T173516Z/crash-runs-20260827T184032Z/second-04/.capture.mov.partial.mov",
+      "codec": "hevc",
+      "duration_seconds": 4.010000,
+      "bytes": 8003,
+      "playable": true
+    },
+    {
+      "forced_second": 5,
+      "path": "/Users/justinhou/Development/deepshelves/Benchmarks/Results/S1/20260827T173516Z/crash-runs-20260827T184032Z/second-05/.capture.mov.partial.mov",
+      "codec": "hevc",
+      "duration_seconds": 4.008333,
+      "bytes": 7929,
+      "playable": true
+    },
+    {
+      "forced_second": 6,
+      "path": "/Users/justinhou/Development/deepshelves/Benchmarks/Results/S1/20260827T173516Z/crash-runs-20260827T184032Z/second-06/.capture.mov.partial.mov",
+      "codec": "hevc",
+      "duration_seconds": 8.010000,
+      "bytes": 9128,
+      "playable": true
+    },
+    {
+      "forced_second": 7,
+      "path": "/Users/justinhou/Development/deepshelves/Benchmarks/Results/S1/20260827T173516Z/crash-runs-20260827T184032Z/second-07/.capture.mov.partial.mov",
+      "codec": "hevc",
+      "duration_seconds": 8.510000,
+      "bytes": 10865,
+      "playable": true
+    },
+    {
+      "forced_second": 8,
+      "path": "/Users/justinhou/Development/deepshelves/Benchmarks/Results/S1/20260827T173516Z/crash-runs-20260827T184032Z/second-08/.capture.mov.partial.mov",
+      "codec": "hevc",
+      "duration_seconds": 9.515000,
+      "bytes": 12709,
+      "playable": true
+    },
+    {
+      "forced_second": 9,
+      "path": "/Users/justinhou/Development/deepshelves/Benchmarks/Results/S1/20260827T173516Z/crash-runs-20260827T184032Z/second-09/.capture.mov.partial.mov",
+      "codec": "hevc",
+      "duration_seconds": 10.516667,
+      "bytes": 17347,
+      "playable": true
+    },
+    {
+      "forced_second": 10,
+      "path": "/Users/justinhou/Development/deepshelves/Benchmarks/Results/S1/20260827T173516Z/crash-runs-20260827T184032Z/second-10/.capture.mov.partial.mov",
+      "codec": "hevc",
+      "duration_seconds": 10.013333,
+      "bytes": 16554,
+      "playable": true
+    },
+    {
+      "forced_second": 11,
+      "path": "/Users/justinhou/Development/deepshelves/Benchmarks/Results/S1/20260827T173516Z/crash-runs-20260827T184032Z/second-11/.capture.mov.partial.mov",
+      "codec": "hevc",
+      "duration_seconds": 11.016667,
+      "bytes": 18284,
+      "playable": true
+    },
+    {
+      "forced_second": 12,
+      "path": "/Users/justinhou/Development/deepshelves/Benchmarks/Results/S1/20260827T173516Z/crash-runs-20260827T184032Z/second-12/.capture.mov.partial.mov",
+      "codec": "hevc",
+      "duration_seconds": 13.525000,
+      "bytes": 22320,
+      "playable": true
+    },
+    {
+      "forced_second": 13,
+      "path": "/Users/justinhou/Development/deepshelves/Benchmarks/Results/S1/20260827T173516Z/crash-runs-20260827T184032Z/second-13/.capture.mov.partial.mov",
+      "codec": "hevc",
+      "duration_seconds": 13.018333,
+      "bytes": 18096,
+      "playable": true
+    },
+    {
+      "forced_second": 14,
+      "path": "/Users/justinhou/Development/deepshelves/Benchmarks/Results/S1/20260827T173516Z/crash-runs-20260827T184032Z/second-14/.capture.mov.partial.mov",
+      "codec": "hevc",
+      "duration_seconds": 14.018333,
+      "bytes": 19736,
+      "playable": true
+    },
+    {
+      "forced_second": 15,
+      "path": "/Users/justinhou/Development/deepshelves/Benchmarks/Results/S1/20260827T173516Z/crash-runs-20260827T184032Z/second-15/.capture.mov.partial.mov",
+      "codec": "hevc",
+      "duration_seconds": 16.521667,
+      "bytes": 27138,
+      "playable": true
+    },
+    {
+      "forced_second": 16,
+      "path": "/Users/justinhou/Development/deepshelves/Benchmarks/Results/S1/20260827T173516Z/crash-runs-20260827T184032Z/second-16/.capture.mov.partial.mov",
+      "codec": "hevc",
+      "duration_seconds": 17.530000,
+      "bytes": 28692,
+      "playable": true
+    },
+    {
+      "forced_second": 17,
+      "path": "/Users/justinhou/Development/deepshelves/Benchmarks/Results/S1/20260827T173516Z/crash-runs-20260827T184032Z/second-17/.capture.mov.partial.mov",
+      "codec": "hevc",
+      "duration_seconds": 17.025000,
+      "bytes": 24640,
+      "playable": true
+    },
+    {
+      "forced_second": 18,
+      "path": "/Users/justinhou/Development/deepshelves/Benchmarks/Results/S1/20260827T173516Z/crash-runs-20260827T184032Z/second-18/.capture.mov.partial.mov",
+      "codec": "hevc",
+      "duration_seconds": 17.528333,
+      "bytes": 26100,
+      "playable": true
+    },
+    {
+      "forced_second": 19,
+      "path": "/Users/justinhou/Development/deepshelves/Benchmarks/Results/S1/20260827T173516Z/crash-runs-20260827T184032Z/second-19/.capture.mov.partial.mov",
+      "codec": "hevc",
+      "duration_seconds": 18.528333,
+      "bytes": 21490,
+      "playable": true
+    },
+    {
+      "forced_second": 20,
+      "path": "/Users/justinhou/Development/deepshelves/Benchmarks/Results/S1/20260827T173516Z/crash-runs-20260827T184032Z/second-20/.capture.mov.partial.mov",
+      "codec": "hevc",
+      "duration_seconds": 19.531667,
+      "bytes": 29396,
+      "playable": true
+    },
+    {
+      "forced_second": 21,
+      "path": "/Users/justinhou/Development/deepshelves/Benchmarks/Results/S1/20260827T173516Z/crash-runs-20260827T184032Z/second-21/.capture.mov.partial.mov",
+      "codec": "hevc",
+      "duration_seconds": 19.030000,
+      "bytes": 27674,
+      "playable": true
+    },
+    {
+      "forced_second": 22,
+      "path": "/Users/justinhou/Development/deepshelves/Benchmarks/Results/S1/20260827T173516Z/crash-runs-20260827T184032Z/second-22/.capture.mov.partial.mov",
+      "codec": "hevc",
+      "duration_seconds": 21.533333,
+      "bytes": 32476,
+      "playable": true
+    },
+    {
+      "forced_second": 23,
+      "path": "/Users/justinhou/Development/deepshelves/Benchmarks/Results/S1/20260827T173516Z/crash-runs-20260827T184032Z/second-23/.capture.mov.partial.mov",
+      "codec": "hevc",
+      "duration_seconds": 22.533333,
+      "bytes": 31016,
+      "playable": true
+    },
+    {
+      "forced_second": 24,
+      "path": "/Users/justinhou/Development/deepshelves/Benchmarks/Results/S1/20260827T173516Z/crash-runs-20260827T184032Z/second-24/.capture.mov.partial.mov",
+      "codec": "hevc",
+      "duration_seconds": 24.031667,
+      "bytes": 35760,
+      "playable": true
+    },
+    {
+      "forced_second": 25,
+      "path": "/Users/justinhou/Development/deepshelves/Benchmarks/Results/S1/20260827T173516Z/crash-runs-20260827T184032Z/second-25/.capture.mov.partial.mov",
+      "codec": "hevc",
+      "duration_seconds": 26.540000,
+      "bytes": 39641,
+      "playable": true
+    },
+    {
+      "forced_second": 26,
+      "path": "/Users/justinhou/Development/deepshelves/Benchmarks/Results/S1/20260827T173516Z/crash-runs-20260827T184032Z/second-26/.capture.mov.partial.mov",
+      "codec": "hevc",
+      "duration_seconds": 25.546667,
+      "bytes": 35654,
+      "playable": true
+    },
+    {
+      "forced_second": 27,
+      "path": "/Users/justinhou/Development/deepshelves/Benchmarks/Results/S1/20260827T173516Z/crash-runs-20260827T184032Z/second-27/capture.mov",
+      "codec": "hevc",
+      "duration_seconds": 29.548333,
+      "bytes": 45739,
+      "playable": true
+    },
+    {
+      "forced_second": 28,
+      "path": "/Users/justinhou/Development/deepshelves/Benchmarks/Results/S1/20260827T173516Z/crash-runs-20260827T184032Z/second-28/.capture.mov.partial.mov",
+      "codec": "hevc",
+      "duration_seconds": 28.045000,
+      "bytes": 42160,
+      "playable": true
+    },
+    {
+      "forced_second": 29,
+      "path": "/Users/justinhou/Development/deepshelves/Benchmarks/Results/S1/20260827T173516Z/crash-runs-20260827T184032Z/second-29/capture.mov",
+      "codec": "hevc",
+      "duration_seconds": 29.053333,
+      "bytes": 48053,
+      "playable": true
+    },
+    {
+      "forced_second": 30,
+      "path": "/Users/justinhou/Development/deepshelves/Benchmarks/Results/S1/20260827T173516Z/crash-runs-20260827T184032Z/second-30/capture.mov",
+      "codec": "hevc",
+      "duration_seconds": 29.560000,
+      "bytes": 40260,
+      "playable": true
+    }
+  ]
+}

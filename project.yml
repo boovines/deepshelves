@@ -52,6 +52,7 @@ targets:
         NSHighResolutionCapable: true
         NSHumanReadableCopyright: Copyright 2026
     dependencies:
+      - package: MemoryCapture
       - package: MemoryContracts
       - package: MemoryDesignSystem
     settings:
@@ -90,6 +91,7 @@ targets:
     sources:
       - Tests/Unit
     dependencies:
+      - package: MemoryCapture
       - package: MemoryContracts
       - package: MemoryStore
       - package: MemoryTestSupport
@@ -99,6 +101,7 @@ targets:
     sources:
       - Tests/Integration
     dependencies:
+      - package: MemoryCapture
       - package: MemoryContracts
       - package: MemoryTestSupport
   LocalMemoryPrivacyTests:

@@ -1,0 +1,146 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-005",
+  "status": "passed",
+  "generatedAt": "2026-08-27T18:55:42Z",
+  "baseRevision": "54271e572e7ac1abc42eb0d64b0d47fb8ceed3f4",
+  "checkpoint": "refs/tags/checkpoints/LM-005",
+  "decision": "Decisions/0001-capture-media.md",
+  "canonicalRun": {
+    "root": "Benchmarks/Results/S1/20260827T173516Z",
+    "configuration": "Release",
+    "sourceManifestSHA256": "32e849a163d19a7b96bcd791a21e43bcd8550369d207952d310601aa8347c941",
+    "corpusSHA256": "975ed54289b1eb9766c5bfc548aabf9883ebfea4bb5a6df4f4c4d58ec0dec7df",
+    "activeReportSHA256": "625af65f70ea0a3a72af8d434647ead1c7517e9fec79d4ca455487879cfd87dd",
+    "staticReportSHA256": "0c8c82cbacf5fcb1bdfa29b343782c774d6c5d02b10bed5a4560db57bc0039ee",
+    "crashIntegritySHA256": "a19183447119ff91eb19cb75565381d82b32e30567f57364ed29195096b60a33"
+  },
+  "capabilities": {
+    "path": "Results/LM-005/capabilities.json",
+    "screenRecording": true,
+    "accessibility": true,
+    "probe": "signed Release app capability probe"
+  },
+  "productionConstants": {
+    "focusPollMilliseconds": 100,
+    "receiveFramesPerSecond": 2,
+    "activeAcceptanceFramesPerSecond": 1,
+    "indexIntervalSeconds": 2,
+    "staticHeartbeatSeconds": 30,
+    "idleSuspendSeconds": 300,
+    "maximumLongEdgePixels": 1920,
+    "streamQueueDepth": 3,
+    "mediaQueueCapacity": 4,
+    "codec": "hevc-main-hardware-required",
+    "averageBitRate": 2000000,
+    "keyFrameIntervalSeconds": 1,
+    "fragmentIntervalSeconds": 1,
+    "writerRolloverSeconds": 29,
+    "maximumChunkDurationSeconds": 30,
+    "shareableContentTimeoutSeconds": 2,
+    "refreshLeaseCooldownSeconds": 30
+  },
+  "active": {
+    "durationSeconds": 3600,
+    "framesReceived": 7428,
+    "framesAccepted": 2842,
+    "framesIndexed": 2409,
+    "staleOrPolicyFramesRejected": 2341,
+    "backpressureDrops": 0,
+    "contaminationFrames": 0,
+    "eligibleFocusTransitions": 2458,
+    "correctWithinOneSecondTransitions": 2458,
+    "correctWithinOneSecondRate": 1.0,
+    "unresolvedOrExcludedTransitions": 352,
+    "sleepTransitions": 351,
+    "wakeTransitions": 351,
+    "maximumFilterUpdateMilliseconds": 202.161542,
+    "chunks": 2409,
+    "mediaPaths": 2409,
+    "writerErrors": 0,
+    "meanCPUPercent": 3.9479920250640843,
+    "p95CPUPercent": 8.5,
+    "maximumRSSMB": 97.09375,
+    "storageMBPerHour": 43.80754089355469,
+    "decodeP95Milliseconds": 12.615042,
+    "decodeP99Milliseconds": 16.654042
+  },
+  "static": {
+    "durationSeconds": 300,
+    "framesReceived": 600,
+    "framesAccepted": 10,
+    "framesIndexed": 10,
+    "staleOrPolicyFramesRejected": 2,
+    "backpressureDrops": 0,
+    "contaminationFrames": 0,
+    "chunks": 10,
+    "mediaPaths": 10,
+    "writerErrors": 0,
+    "meanCPUPercent": 0.7729824561403509,
+    "p95CPUPercent": 1.1,
+    "maximumRSSMB": 85.1875,
+    "storageMBPerHour": 0.5194587707519531
+  },
+  "crashIntegrity": {
+    "forcedTerminationPoints": 30,
+    "playableHEVCArtifacts": 30,
+    "minimumDurationSeconds": 1.001667,
+    "maximumDurationSeconds": 29.56,
+    "rolloverBoundarySeconds": {
+      "28": 28.045,
+      "29": 29.053333,
+      "30": 29.56
+    }
+  },
+  "instruments": {
+    "trace": "Benchmarks/Results/S1/20260827T173516Z/instruments/capture-time-profiler.trace",
+    "tableOfContents": "Benchmarks/Results/S1/20260827T173516Z/instruments/time-profiler-toc.xml",
+    "tableOfContentsSHA256": "61f2ae4ecddaba25cec9ec992c9de4bdc478b2df5845b285d5213dabdebf64f6",
+    "template": "Time Profiler",
+    "durationSeconds": 30,
+    "note": "Recorded against the same signed Release binary in a separate run so canonical resource samples remained unperturbed."
+  },
+  "fallbacksUsed": [],
+  "gates": {
+    "canonicalS1": {
+      "status": "passed",
+      "command": "./scripts/check-s1-capture-spike.sh Benchmarks/Results/S1/20260827T173516Z"
+    },
+    "focusedTests": {
+      "status": "passed",
+      "command": "xcodebuild ... -only-testing:LocalMemoryUnitTests/CaptureSpikeCoreTests -only-testing:LocalMemoryIntegrationTests/CaptureMediaIntegrationTests test",
+      "tests": 14,
+      "failures": 0
+    },
+    "fullTestSuite": {
+      "status": "passed",
+      "command": "./scripts/test.sh",
+      "tests": 47,
+      "failures": 0
+    },
+    "contractRegression": {
+      "status": "passed",
+      "command": "./scripts/check-contracts.sh",
+      "fixtures": 11
+    },
+    "privacySmoke": {
+      "status": "passed",
+      "command": "./scripts/privacy-smoke.sh",
+      "runtimeNetworkingOrTelemetry": 0
+    },
+    "releaseBuild": {
+      "status": "passed",
+      "command": "./scripts/build-release.sh",
+      "automaticPackageResolution": false,
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ]
+    },
+    "releaseBinaryAudit": {
+      "status": "passed",
+      "command": "./scripts/check-dependencies.sh --binaries",
+      "forbiddenLinkedOrEmbeddedMarkers": 0
+    }
+  }
+}

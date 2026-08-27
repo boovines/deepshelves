@@ -1,11 +1,81 @@
+import AppKit
+import Foundation
+import MemoryCapture
 import MemoryContracts
 import SwiftUI
 
 @main
 struct LocalMemoryApp: App {
+    private let capabilityProbeOutput: String?
+    private let shouldRequestCapturePermissions: Bool
+    private let captureSpikeOutputDirectory: String?
+    private let captureSpikeDurationSeconds: Double
+    private let captureSpikeStaticMode: Bool
+    private let captureSpikeCrashActiveMode: Bool
+
+    init() {
+        let arguments = ProcessInfo.processInfo.arguments
+        shouldRequestCapturePermissions = arguments.contains("--request-capture-permissions")
+        captureSpikeStaticMode = arguments.contains("--capture-spike-static")
+        captureSpikeCrashActiveMode = arguments.contains("--capture-spike-crash-active")
+        if let flagIndex = arguments.firstIndex(of: "--capture-spike"),
+           arguments.indices.contains(flagIndex + 1)
+        {
+            captureSpikeOutputDirectory = arguments[flagIndex + 1]
+        } else {
+            captureSpikeOutputDirectory = nil
+        }
+        if let flagIndex = arguments.firstIndex(of: "--capture-spike-duration"),
+           arguments.indices.contains(flagIndex + 1)
+        {
+            captureSpikeDurationSeconds = Double(arguments[flagIndex + 1]) ?? 10
+        } else {
+            captureSpikeDurationSeconds = 10
+        }
+        if let flagIndex = arguments.firstIndex(of: "--capture-capability-probe"),
+           arguments.indices.contains(flagIndex + 1)
+        {
+            capabilityProbeOutput = arguments[flagIndex + 1]
+        } else {
+            capabilityProbeOutput = nil
+        }
+    }
+
     var body: some Scene {
         WindowGroup("Local Memory") {
-            BootstrapView(schemaVersion: BootstrapContract.schemaVersion)
+            Group {
+                if captureSpikeOutputDirectory == nil {
+                    BootstrapView(schemaVersion: BootstrapContract.schemaVersion)
+                } else {
+                    CaptureSpikeTargetView(animated: captureSpikeCrashActiveMode)
+                }
+            }
+                .task {
+                    if shouldRequestCapturePermissions {
+                        _ = CaptureCapabilities.requestFromUser()
+                        return
+                    }
+                    if let captureSpikeOutputDirectory {
+                        await CaptureSpikeHarness.run(
+                            outputDirectory: URL(fileURLWithPath: captureSpikeOutputDirectory),
+                            durationSeconds: captureSpikeDurationSeconds,
+                            staticMode: captureSpikeStaticMode
+                        )
+                        return
+                    }
+                    guard let capabilityProbeOutput else {
+                        return
+                    }
+                    do {
+                        let encoder = JSONEncoder()
+                        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+                        let data = try encoder.encode(CaptureCapabilities.current())
+                        try data.write(to: URL(fileURLWithPath: capabilityProbeOutput), options: .atomic)
+                    } catch {
+                        FileHandle.standardError.write(Data("capture capability probe failed\n".utf8))
+                    }
+                    NSApplication.shared.terminate(nil)
+                }
         }
         .defaultSize(width: 720, height: 480)
     }
@@ -34,4 +104,3 @@ struct BootstrapView: View {
         .accessibilityIdentifier("bootstrap.root")
     }
 }
-

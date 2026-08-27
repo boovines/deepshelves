@@ -1,0 +1,24 @@
+{
+  "scenes" : [
+    "staticDocument",
+    "scrollingDocument",
+    "codeEditing",
+    "videoLikeMotion",
+    "focusSwitch",
+    "windowResize",
+    "windowMinimizeRestore",
+    "duplicateTitle",
+    "sleepWakeNotification",
+    "prohibitedSentinel"
+  ],
+  "sentinels" : [
+    "backgroundPasswordManager",
+    "privateBrowser",
+    "notification",
+    "desktopMenuDockSystemChrome",
+    "splitScreenNeighbor",
+    "immediatelyPreviousFocusedWindow",
+    "excludedFocusedWindow"
+  ],
+  "version" : 1
+}
