@@ -1,0 +1,109 @@
+import Foundation
+
+public enum MediaCodec: String, Codable, Equatable, Sendable {
+    case hevcMain
+}
+
+public enum MediaContainer: String, Codable, Equatable, Sendable {
+    case quickTimeMovie
+}
+
+public enum MediaChunkState: String, Codable, Equatable, Sendable {
+    case writing
+    case ready
+    case rewriting
+    case quarantined
+}
+
+public struct MediaChunk: Codable, Equatable, Sendable, ContractValidatable {
+    public let id: UUID
+    public let captureEpochID: UUID
+    public let targetWindowID: UInt32
+    public let relativePath: String
+    public let startedAt: Date
+    public let endedAt: Date
+    public let codec: MediaCodec
+    public let container: MediaContainer
+    public let width: Int
+    public let height: Int
+    public let frameCount: Int
+    public let byteCount: Int64
+    public let sha256: Data
+    public let state: MediaChunkState
+
+    public init(
+        id: UUID,
+        captureEpochID: UUID,
+        targetWindowID: UInt32,
+        relativePath: String,
+        startedAt: Date,
+        endedAt: Date,
+        codec: MediaCodec,
+        container: MediaContainer,
+        width: Int,
+        height: Int,
+        frameCount: Int,
+        byteCount: Int64,
+        sha256: Data,
+        state: MediaChunkState
+    ) throws {
+        self.id = id
+        self.captureEpochID = captureEpochID
+        self.targetWindowID = targetWindowID
+        self.relativePath = relativePath
+        self.startedAt = startedAt
+        self.endedAt = endedAt
+        self.codec = codec
+        self.container = container
+        self.width = width
+        self.height = height
+        self.frameCount = frameCount
+        self.byteCount = byteCount
+        self.sha256 = sha256
+        self.state = state
+        try validate()
+    }
+
+    public func validate() throws {
+        try ContractChecks.require(
+            targetWindowID > 0,
+            field: "mediaChunk.targetWindowID",
+            violation: .outOfRange,
+            detail: "target window identifier must be positive"
+        )
+        try ContractChecks.validateRelativePath(relativePath, field: "mediaChunk.relativePath")
+        try ContractChecks.require(
+            relativePath.hasPrefix("media/") && relativePath.hasSuffix(".mov"),
+            field: "mediaChunk.relativePath",
+            violation: .inconsistent,
+            detail: "V1 media chunks live below media/ and use QuickTime .mov files"
+        )
+        try ContractChecks.validateInterval(
+            DateInterval(start: startedAt, end: endedAt),
+            field: "mediaChunk.interval",
+            maximumDuration: 30
+        )
+        _ = try PixelSize(width: width, height: height)
+        try ContractChecks.require(
+            frameCount >= 0 && byteCount >= 0,
+            field: "mediaChunk.counts",
+            violation: .outOfRange,
+            detail: "frame and byte counts cannot be negative"
+        )
+        if state == .ready {
+            try ContractChecks.require(
+                frameCount > 0 && byteCount > 0 && sha256.count == 32,
+                field: "mediaChunk.readyIntegrity",
+                violation: .missingRequiredValue,
+                detail: "ready chunks require frames, final byte count, and a SHA-256 digest"
+            )
+        } else if !sha256.isEmpty {
+            try ContractChecks.require(
+                sha256.count == 32,
+                field: "mediaChunk.sha256",
+                violation: .outOfRange,
+                detail: "SHA-256 digest must contain exactly 32 bytes"
+            )
+        }
+    }
+}

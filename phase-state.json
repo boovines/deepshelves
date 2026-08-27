@@ -30,12 +30,14 @@
       "resumeProbe": null
     },
     "LM-003": {
-      "status": "pending",
-      "startedAt": null,
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": null,
+      "status": "passed",
+      "startedAt": "2026-08-27T12:34:04Z",
+      "completedAt": "2026-08-27T12:54:44Z",
+      "gitRevision": "refs/tags/checkpoints/LM-003",
+      "evidence": [
+        "Results/LM-003/contracts.json"
+      ],
+      "notes": "Foundation-only V1 contracts, typed validation, canonical RFC3339/lowercase-UUID JSON, 11 manifest-pinned synthetic compatibility fixtures, stable search/timeline ordering, and fail-closed enum/path/interval/policy behavior pass 21 focused tests plus all release/privacy gates.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null

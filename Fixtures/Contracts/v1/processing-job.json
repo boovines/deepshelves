@@ -1,0 +1,1 @@
+{"attemptCount":2,"id":"a0000000-0000-0000-0000-000000000001","kind":"visionOCR","lastErrorCode":"vision_temporarily_unavailable","nextAttemptAt":"2026-05-02T05:41:40.000Z","parentID":"30000000-0000-0000-0000-000000000001","priority":100,"producer":{"modelHash":"oKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKA=","name":"VisionOCR","semanticVersion":"1.0.0"},"state":"retryableFailure"}

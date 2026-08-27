@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "generatorVersion": "contract-fixture-generator-v1",
+  "fixtures": [
+    {
+      "path": "Contracts/v1/access-policy.json",
+      "source": "synthetic",
+      "license": "CC0-1.0",
+      "sha256": "62d4a91504b7e5c70b21f7ba146fd25e7e9c71da718e4635fbb4a83443c03cf1",
+      "semanticLabels": ["v1", "agent-policy", "bounded-access"]
+    },
+    {
+      "path": "Contracts/v1/capture-envelope.json",
+      "source": "synthetic",
+      "license": "CC0-1.0",
+      "sha256": "db5a9486ea9db42f0857ef21f6679a27f0a400b869be6eaef045cc8941b5c255",
+      "semanticLabels": ["v1", "foreground-window", "approved-browser-context"]
+    },
+    {
+      "path": "Contracts/v1/deletion-tombstone.json",
+      "source": "synthetic",
+      "license": "CC0-1.0",
+      "sha256": "bcf21fd572c2d9f2f662575f4abb5d18bcd91d3cc46135e08ba4f57f1c1bf3ba",
+      "semanticLabels": ["v1", "verified-deletion", "content-free-proof"]
+    },
+    {
+      "path": "Contracts/v1/enrichment-artifact.json",
+      "source": "synthetic",
+      "license": "CC0-1.0",
+      "sha256": "50d44a5b8ee5fa0569923d191d9ad417373345b1ead938e40df83ef52a578ad2",
+      "semanticLabels": ["v1", "visual-vector", "relative-file-offset"]
+    },
+    {
+      "path": "Contracts/v1/media-chunk.json",
+      "source": "synthetic",
+      "license": "CC0-1.0",
+      "sha256": "85ccf292f23febc2680622d229692b07f740a3aab8096e229797938def4fd920",
+      "semanticLabels": ["v1", "hevc", "single-epoch", "thirty-seconds"]
+    },
+    {
+      "path": "Contracts/v1/processing-job.json",
+      "source": "synthetic",
+      "license": "CC0-1.0",
+      "sha256": "541c90fb067dee5010d8ce21848bc462f7fd9c315e5aece132405401ffd0a7d4",
+      "semanticLabels": ["v1", "retryable-failure", "bounded-attempts"]
+    },
+    {
+      "path": "Contracts/v1/search-page.json",
+      "source": "synthetic",
+      "license": "CC0-1.0",
+      "sha256": "2e83922a579acd21d89d1068e8ab4e533e651de2c140c28ff83af8a3e5fc2ad4",
+      "semanticLabels": ["v1", "stable-order", "evidence-backed-result"]
+    },
+    {
+      "path": "Contracts/v1/search-request.json",
+      "source": "synthetic",
+      "license": "CC0-1.0",
+      "sha256": "b857b0cb986dfbcd7ae8636754f41c4bd0857eeb4ed282c6ce118ec0c00c437d",
+      "semanticLabels": ["v1", "hybrid-search", "policy-subset"]
+    },
+    {
+      "path": "Contracts/v1/searchable-frame.json",
+      "source": "synthetic",
+      "license": "CC0-1.0",
+      "sha256": "0f2066453c28618bc1d2498a35284a26aca8e12b576820957e3a8966b20037e8",
+      "semanticLabels": ["v1", "searchable-frame", "approved-projection"]
+    },
+    {
+      "path": "Contracts/v1/text-span.json",
+      "source": "synthetic",
+      "license": "CC0-1.0",
+      "sha256": "43eae3e844c3bb648b4f9ec1a513f38df25e8a409fad3ddf44231acf9e27574c",
+      "semanticLabels": ["v1", "vision-ocr", "normalized-text"]
+    },
+    {
+      "path": "Contracts/v1/timeline-slice.json",
+      "source": "synthetic",
+      "license": "CC0-1.0",
+      "sha256": "77cdf7af12044d4fc705193011acfef3a103757bdea8d366b5aa8c833d1f64c2",
+      "semanticLabels": ["v1", "timeline", "typed-gap", "ordered"]
+    }
+  ]
+}

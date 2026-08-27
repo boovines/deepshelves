@@ -52,3 +52,12 @@ This file is append-only. Each story records measurements, failures, and durable
 - `ArchivePathProviderTests` prove the archive tree is mode `0700`, published files are mode `0600`, and caller-supplied root names cannot escape Application Support.
 - Full Xcode tests, privacy smoke, and unsigned Release build passed. Test and release scripts must not run concurrently because both call XcodeGen on the same `.xcodeproj`; a parallel gate attempt produced a harmless destination-exists race, and the release gate passed when rerun sequentially.
 - Acceptance evidence is recorded in `Results/LM-002/entitlements.txt`.
+
+## 2026-08-27 — LM-003 passed
+
+- `MemoryContracts` now owns the V1 Foundation-only vocabulary for capture, media, searchable frames, text, enrichment, bounded search, stable result pages, timeline gaps/transitions, agent policies, deletion tombstones, and recoverable processing jobs. Runtime pixel buffers are explicitly omitted from serialization.
+- `ContractJSON` is the canonical boundary codec. It emits sorted canonical JSON, lowercase UUID strings, and RFC 3339 UTC timestamps with exactly millisecond precision; unknown additive fields are ignored while unknown enums and noncanonical timestamps fail closed.
+- Validation fixes normalized coordinates to upper-left-origin `0...1`, media intervals to half-open and at most 30 seconds, archive locators to relative non-traversing paths, agent history to 30 days, agent sessions to 24 hours, result bounds to 100, and automatic job attempts to three. Empty agent allowlists mean no content.
+- Search pages sort by fused score descending, capture time descending, then lowercase UUID lexical order. Timeline members sort chronologically and excluded/protected/policy-uncertain gaps reject application identity.
+- Eleven synthetic CC0 V1 fixtures are manifest-pinned by SHA-256. `scripts/check-contracts.sh` rebuilds the fixture generator, reproduces every byte, verifies every manifest hash, and runs 21 focused behavior/compatibility tests.
+- The full repository suite passes 27 tests with zero failures; privacy smoke and unsigned offline Release build pass. Evidence: `Results/LM-003/contracts.json`.

@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-003",
+  "status": "passed",
+  "generatedAt": "2026-08-27T12:54:03Z",
+  "baseRevision": "87ed3776c2041ee0227bd67634f00259744e249a",
+  "checkpoint": "refs/tags/checkpoints/LM-003",
+  "contractVersion": 1,
+  "packageDependencies": [
+    "Foundation"
+  ],
+  "publicContracts": [
+    "CaptureEnvelope",
+    "MediaChunk",
+    "SearchableFrame",
+    "TextSpan",
+    "EnrichmentArtifact",
+    "SearchRequest",
+    "SearchResult",
+    "SearchPage",
+    "TimelineSlice",
+    "AccessPolicy",
+    "DeletionTombstone",
+    "ProcessingJob"
+  ],
+  "serialization": {
+    "codec": "ContractJSON",
+    "timestamps": "RFC3339 UTC with exactly millisecond fractional precision",
+    "mediaOffsetsAndDurations": "integer milliseconds",
+    "coordinates": "normalized 0...1, upper-left origin",
+    "identifiers": "UUID encoded as lowercase strings",
+    "setEncoding": "lexically sorted arrays",
+    "unknownAdditiveFields": "ignored",
+    "unknownEnumCases": "rejected"
+  },
+  "fixtures": {
+    "manifest": "Fixtures/manifest.json",
+    "manifestSHA256": "fca90e17b395429d4895c3c1a1050031cb01a21d1f8de1bc772ed8e4d3333a86",
+    "directory": "Fixtures/Contracts/v1",
+    "count": 11,
+    "source": "synthetic",
+    "license": "CC0-1.0",
+    "generator": "Benchmarks/ContractFixtureGenerator.swift",
+    "generatorVersion": "contract-fixture-generator-v1",
+    "reproduction": "byte-identical"
+  },
+  "failClosedCases": [
+    "unknown enum case",
+    "absolute or traversing archive path",
+    "empty or overlong half-open interval",
+    "noncanonical wall-clock timestamp",
+    "out-of-display normalized rectangle",
+    "private browser context in persisted capture/search/timeline",
+    "policy-uncertain gap containing application identity",
+    "agent policy not explicitly user-created",
+    "agent policy exceeding 30-day history",
+    "agent session exceeding 24 hours",
+    "agent result bound outside 1...100",
+    "query filters outside agent allowlists",
+    "processing job exceeding three attempts"
+  ],
+  "gates": {
+    "contractFixtureTests": {
+      "status": "passed",
+      "command": "./scripts/check-contracts.sh",
+      "contractTests": 21,
+      "fixtureRoundTrips": 11
+    },
+    "swiftFormat": {
+      "status": "passed",
+      "warnings": 0
+    },
+    "fullTestSuite": {
+      "status": "passed",
+      "tests": 27,
+      "failures": 0
+    },
+    "privacySmoke": {
+      "status": "passed",
+      "outboundRuntimeSymbols": 0
+    },
+    "releaseBuild": {
+      "status": "passed",
+      "automaticPackageResolution": false,
+      "codeSigningForGate": false
+    }
+  }
+}
