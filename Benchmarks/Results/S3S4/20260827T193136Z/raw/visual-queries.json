@@ -1,0 +1,502 @@
+[
+  {
+    "category" : "apple",
+    "id" : "query-000",
+    "text" : "a photo of a apple"
+  },
+  {
+    "category" : "apple",
+    "id" : "query-001",
+    "text" : "find the apple"
+  },
+  {
+    "category" : "apple",
+    "id" : "query-002",
+    "text" : "an image showing a apple"
+  },
+  {
+    "category" : "apple",
+    "id" : "query-003",
+    "text" : "the apple picture"
+  },
+  {
+    "category" : "apple",
+    "id" : "query-004",
+    "text" : "a clear apple"
+  },
+  {
+    "category" : "apple",
+    "id" : "query-005",
+    "text" : "a colorful apple"
+  },
+  {
+    "category" : "apple",
+    "id" : "query-006",
+    "text" : "a simple apple icon"
+  },
+  {
+    "category" : "apple",
+    "id" : "query-007",
+    "text" : "a large apple"
+  },
+  {
+    "category" : "apple",
+    "id" : "query-008",
+    "text" : "show me a apple"
+  },
+  {
+    "category" : "apple",
+    "id" : "query-009",
+    "text" : "the visible apple"
+  },
+  {
+    "category" : "bicycle",
+    "id" : "query-010",
+    "text" : "a photo of a bicycle"
+  },
+  {
+    "category" : "bicycle",
+    "id" : "query-011",
+    "text" : "find the bicycle"
+  },
+  {
+    "category" : "bicycle",
+    "id" : "query-012",
+    "text" : "an image showing a bicycle"
+  },
+  {
+    "category" : "bicycle",
+    "id" : "query-013",
+    "text" : "the bicycle picture"
+  },
+  {
+    "category" : "bicycle",
+    "id" : "query-014",
+    "text" : "a clear bicycle"
+  },
+  {
+    "category" : "bicycle",
+    "id" : "query-015",
+    "text" : "a colorful bicycle"
+  },
+  {
+    "category" : "bicycle",
+    "id" : "query-016",
+    "text" : "a simple bicycle icon"
+  },
+  {
+    "category" : "bicycle",
+    "id" : "query-017",
+    "text" : "a large bicycle"
+  },
+  {
+    "category" : "bicycle",
+    "id" : "query-018",
+    "text" : "show me a bicycle"
+  },
+  {
+    "category" : "bicycle",
+    "id" : "query-019",
+    "text" : "the visible bicycle"
+  },
+  {
+    "category" : "calendar",
+    "id" : "query-020",
+    "text" : "a photo of a calendar"
+  },
+  {
+    "category" : "calendar",
+    "id" : "query-021",
+    "text" : "find the calendar"
+  },
+  {
+    "category" : "calendar",
+    "id" : "query-022",
+    "text" : "an image showing a calendar"
+  },
+  {
+    "category" : "calendar",
+    "id" : "query-023",
+    "text" : "the calendar picture"
+  },
+  {
+    "category" : "calendar",
+    "id" : "query-024",
+    "text" : "a clear calendar"
+  },
+  {
+    "category" : "calendar",
+    "id" : "query-025",
+    "text" : "a colorful calendar"
+  },
+  {
+    "category" : "calendar",
+    "id" : "query-026",
+    "text" : "a simple calendar icon"
+  },
+  {
+    "category" : "calendar",
+    "id" : "query-027",
+    "text" : "a large calendar"
+  },
+  {
+    "category" : "calendar",
+    "id" : "query-028",
+    "text" : "show me a calendar"
+  },
+  {
+    "category" : "calendar",
+    "id" : "query-029",
+    "text" : "the visible calendar"
+  },
+  {
+    "category" : "camera",
+    "id" : "query-030",
+    "text" : "a photo of a camera"
+  },
+  {
+    "category" : "camera",
+    "id" : "query-031",
+    "text" : "find the camera"
+  },
+  {
+    "category" : "camera",
+    "id" : "query-032",
+    "text" : "an image showing a camera"
+  },
+  {
+    "category" : "camera",
+    "id" : "query-033",
+    "text" : "the camera picture"
+  },
+  {
+    "category" : "camera",
+    "id" : "query-034",
+    "text" : "a clear camera"
+  },
+  {
+    "category" : "camera",
+    "id" : "query-035",
+    "text" : "a colorful camera"
+  },
+  {
+    "category" : "camera",
+    "id" : "query-036",
+    "text" : "a simple camera icon"
+  },
+  {
+    "category" : "camera",
+    "id" : "query-037",
+    "text" : "a large camera"
+  },
+  {
+    "category" : "camera",
+    "id" : "query-038",
+    "text" : "show me a camera"
+  },
+  {
+    "category" : "camera",
+    "id" : "query-039",
+    "text" : "the visible camera"
+  },
+  {
+    "category" : "cat",
+    "id" : "query-040",
+    "text" : "a photo of a cat"
+  },
+  {
+    "category" : "cat",
+    "id" : "query-041",
+    "text" : "find the cat"
+  },
+  {
+    "category" : "cat",
+    "id" : "query-042",
+    "text" : "an image showing a cat"
+  },
+  {
+    "category" : "cat",
+    "id" : "query-043",
+    "text" : "the cat picture"
+  },
+  {
+    "category" : "cat",
+    "id" : "query-044",
+    "text" : "a clear cat"
+  },
+  {
+    "category" : "cat",
+    "id" : "query-045",
+    "text" : "a colorful cat"
+  },
+  {
+    "category" : "cat",
+    "id" : "query-046",
+    "text" : "a simple cat icon"
+  },
+  {
+    "category" : "cat",
+    "id" : "query-047",
+    "text" : "a large cat"
+  },
+  {
+    "category" : "cat",
+    "id" : "query-048",
+    "text" : "show me a cat"
+  },
+  {
+    "category" : "cat",
+    "id" : "query-049",
+    "text" : "the visible cat"
+  },
+  {
+    "category" : "coffee",
+    "id" : "query-050",
+    "text" : "a photo of a coffee"
+  },
+  {
+    "category" : "coffee",
+    "id" : "query-051",
+    "text" : "find the coffee"
+  },
+  {
+    "category" : "coffee",
+    "id" : "query-052",
+    "text" : "an image showing a coffee"
+  },
+  {
+    "category" : "coffee",
+    "id" : "query-053",
+    "text" : "the coffee picture"
+  },
+  {
+    "category" : "coffee",
+    "id" : "query-054",
+    "text" : "a clear coffee"
+  },
+  {
+    "category" : "coffee",
+    "id" : "query-055",
+    "text" : "a colorful coffee"
+  },
+  {
+    "category" : "coffee",
+    "id" : "query-056",
+    "text" : "a simple coffee icon"
+  },
+  {
+    "category" : "coffee",
+    "id" : "query-057",
+    "text" : "a large coffee"
+  },
+  {
+    "category" : "coffee",
+    "id" : "query-058",
+    "text" : "show me a coffee"
+  },
+  {
+    "category" : "coffee",
+    "id" : "query-059",
+    "text" : "the visible coffee"
+  },
+  {
+    "category" : "document",
+    "id" : "query-060",
+    "text" : "a photo of a document"
+  },
+  {
+    "category" : "document",
+    "id" : "query-061",
+    "text" : "find the document"
+  },
+  {
+    "category" : "document",
+    "id" : "query-062",
+    "text" : "an image showing a document"
+  },
+  {
+    "category" : "document",
+    "id" : "query-063",
+    "text" : "the document picture"
+  },
+  {
+    "category" : "document",
+    "id" : "query-064",
+    "text" : "a clear document"
+  },
+  {
+    "category" : "document",
+    "id" : "query-065",
+    "text" : "a colorful document"
+  },
+  {
+    "category" : "document",
+    "id" : "query-066",
+    "text" : "a simple document icon"
+  },
+  {
+    "category" : "document",
+    "id" : "query-067",
+    "text" : "a large document"
+  },
+  {
+    "category" : "document",
+    "id" : "query-068",
+    "text" : "show me a document"
+  },
+  {
+    "category" : "document",
+    "id" : "query-069",
+    "text" : "the visible document"
+  },
+  {
+    "category" : "flower",
+    "id" : "query-070",
+    "text" : "a photo of a flower"
+  },
+  {
+    "category" : "flower",
+    "id" : "query-071",
+    "text" : "find the flower"
+  },
+  {
+    "category" : "flower",
+    "id" : "query-072",
+    "text" : "an image showing a flower"
+  },
+  {
+    "category" : "flower",
+    "id" : "query-073",
+    "text" : "the flower picture"
+  },
+  {
+    "category" : "flower",
+    "id" : "query-074",
+    "text" : "a clear flower"
+  },
+  {
+    "category" : "flower",
+    "id" : "query-075",
+    "text" : "a colorful flower"
+  },
+  {
+    "category" : "flower",
+    "id" : "query-076",
+    "text" : "a simple flower icon"
+  },
+  {
+    "category" : "flower",
+    "id" : "query-077",
+    "text" : "a large flower"
+  },
+  {
+    "category" : "flower",
+    "id" : "query-078",
+    "text" : "show me a flower"
+  },
+  {
+    "category" : "flower",
+    "id" : "query-079",
+    "text" : "the visible flower"
+  },
+  {
+    "category" : "guitar",
+    "id" : "query-080",
+    "text" : "a photo of a guitar"
+  },
+  {
+    "category" : "guitar",
+    "id" : "query-081",
+    "text" : "find the guitar"
+  },
+  {
+    "category" : "guitar",
+    "id" : "query-082",
+    "text" : "an image showing a guitar"
+  },
+  {
+    "category" : "guitar",
+    "id" : "query-083",
+    "text" : "the guitar picture"
+  },
+  {
+    "category" : "guitar",
+    "id" : "query-084",
+    "text" : "a clear guitar"
+  },
+  {
+    "category" : "guitar",
+    "id" : "query-085",
+    "text" : "a colorful guitar"
+  },
+  {
+    "category" : "guitar",
+    "id" : "query-086",
+    "text" : "a simple guitar icon"
+  },
+  {
+    "category" : "guitar",
+    "id" : "query-087",
+    "text" : "a large guitar"
+  },
+  {
+    "category" : "guitar",
+    "id" : "query-088",
+    "text" : "show me a guitar"
+  },
+  {
+    "category" : "guitar",
+    "id" : "query-089",
+    "text" : "the visible guitar"
+  },
+  {
+    "category" : "mountain",
+    "id" : "query-090",
+    "text" : "a photo of a mountain"
+  },
+  {
+    "category" : "mountain",
+    "id" : "query-091",
+    "text" : "find the mountain"
+  },
+  {
+    "category" : "mountain",
+    "id" : "query-092",
+    "text" : "an image showing a mountain"
+  },
+  {
+    "category" : "mountain",
+    "id" : "query-093",
+    "text" : "the mountain picture"
+  },
+  {
+    "category" : "mountain",
+    "id" : "query-094",
+    "text" : "a clear mountain"
+  },
+  {
+    "category" : "mountain",
+    "id" : "query-095",
+    "text" : "a colorful mountain"
+  },
+  {
+    "category" : "mountain",
+    "id" : "query-096",
+    "text" : "a simple mountain icon"
+  },
+  {
+    "category" : "mountain",
+    "id" : "query-097",
+    "text" : "a large mountain"
+  },
+  {
+    "category" : "mountain",
+    "id" : "query-098",
+    "text" : "show me a mountain"
+  },
+  {
+    "category" : "mountain",
+    "id" : "query-099",
+    "text" : "the visible mountain"
+  }
+]

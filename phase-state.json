@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "activeStory": "LM-007",
+  "activeStory": "LM-008",
   "stories": {
     "LM-001": {
       "status": "passed",
@@ -89,23 +89,29 @@
       "resumeProbe": null
     },
     "LM-007": {
-      "status": "active",
+      "status": "passed",
       "startedAt": "2026-08-27T19:11:10Z",
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": "Base checkpoint refs/tags/checkpoints/LM-006. Run S3 embedding/model spike and publish the required benchmark evidence.",
+      "completedAt": "2026-08-27T19:34:25Z",
+      "gitRevision": "refs/tags/checkpoints/LM-007",
+      "evidence": [
+        "Results/LM-007/report.json",
+        "Results/LM-007/benchmark.json",
+        "Benchmarks/Results/S3S4/20260827T193136Z/environment.json",
+        "Benchmarks/Results/S3S4/20260827T193136Z/resource-summary.json",
+        "Benchmarks/Results/S3S4/20260827T193136Z/raw/visual-corpus.json"
+      ],
+      "notes": "Signed Release S3/S4 packages a 112,239,644-byte, manifest-verified MobileCLIP-S0 resource set with no runtime download. Real Core ML parity is at least 0.99999988, frozen visual Recall@10 is 1.0, and single-job inference stays within capture/resource gates. The chunked Accelerate exact scan passes 1M-vector latency, 2.875 MB incremental RSS, scalar parity, stable-ordering, and truncation gates; no HNSW fallback was needed. MobileCLIP remains private-research-only pending a different license for redistribution or commercial use.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null
     },
     "LM-008": {
-      "status": "pending",
-      "startedAt": null,
+      "status": "active",
+      "startedAt": "2026-08-27T19:34:25Z",
       "completedAt": null,
       "gitRevision": null,
       "evidence": [],
-      "notes": null,
+      "notes": "Base checkpoint refs/tags/checkpoints/LM-007. Run S5-S7 SQLCipher, native-UI, and offline spikes and freeze measured defaults.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null

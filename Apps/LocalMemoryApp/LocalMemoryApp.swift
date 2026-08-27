@@ -1,4 +1,5 @@
 import AppKit
+import Darwin
 import Foundation
 import MemoryCapture
 import MemoryContracts
@@ -14,6 +15,7 @@ struct LocalMemoryApp: App {
     private let captureSpikeStaticMode: Bool
     private let captureSpikeCrashActiveMode: Bool
     private let contextSpikeOutputDirectory: String?
+    private let vectorSpikeArguments: (output: String, imageModel: String, textModel: String)?
 
     init() {
         let arguments = ProcessInfo.processInfo.arguments
@@ -26,6 +28,17 @@ struct LocalMemoryApp: App {
             contextSpikeOutputDirectory = arguments[flagIndex + 1]
         } else {
             contextSpikeOutputDirectory = nil
+        }
+        if let flagIndex = arguments.firstIndex(of: "--s3-s4-spike"),
+           arguments.indices.contains(flagIndex + 3)
+        {
+            vectorSpikeArguments = (
+                arguments[flagIndex + 1],
+                arguments[flagIndex + 2],
+                arguments[flagIndex + 3]
+            )
+        } else {
+            vectorSpikeArguments = nil
         }
         if let flagIndex = arguments.firstIndex(of: "--capture-spike"),
            arguments.indices.contains(flagIndex + 1)
@@ -47,6 +60,9 @@ struct LocalMemoryApp: App {
             capabilityProbeOutput = arguments[flagIndex + 1]
         } else {
             capabilityProbeOutput = nil
+        }
+        if let vectorSpikeArguments {
+            Self.launchVectorSpike(vectorSpikeArguments)
         }
     }
 
@@ -95,6 +111,38 @@ struct LocalMemoryApp: App {
                 }
         }
         .defaultSize(width: 720, height: 480)
+    }
+
+    private static func launchVectorSpike(
+        _ arguments: (output: String, imageModel: String, textModel: String)
+    ) {
+        Task.detached(priority: .userInitiated) {
+            let output = URL(fileURLWithPath: arguments.output, isDirectory: true)
+            do {
+                _ = try await S3S4SpikeRunner.run(
+                    outputDirectory: output,
+                    referenceImageModelURL: URL(
+                        fileURLWithPath: arguments.imageModel,
+                        isDirectory: true
+                    ),
+                    referenceTextModelURL: URL(
+                        fileURLWithPath: arguments.textModel,
+                        isDirectory: true
+                    )
+                )
+                Darwin.exit(EXIT_SUCCESS)
+            } catch {
+                try? FileManager.default.createDirectory(
+                    at: output,
+                    withIntermediateDirectories: true
+                )
+                try? Data("S3/S4 spike failed: \(error)\n".utf8).write(
+                    to: output.appending(path: "s3-s4-error.log"),
+                    options: .atomic
+                )
+                Darwin.exit(EXIT_FAILURE)
+            }
+        }
     }
 }
 

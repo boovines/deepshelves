@@ -1,0 +1,41 @@
+{
+  "exactVectorScan" : {
+    "dimension" : 512,
+    "endedAtEpoch" : 1787859141.6068048,
+    "fileBytes" : 1024000128,
+    "filteredCandidateCount" : 100000,
+    "filteredP95Milliseconds" : 64.117458,
+    "maximumScalarScoreError" : 1.3709068298339844e-05,
+    "stableOrderingMatched" : true,
+    "startedAtEpoch" : 1787859126.2326488,
+    "truncatedFileDetectedBeforeResults" : true,
+    "unfilteredP95Milliseconds" : 618.042708,
+    "unfilteredP99Milliseconds" : 637.554625,
+    "unfilteredSampleCount" : 20,
+    "vectorCount" : 1000000,
+    "vectorFileSHA256" : "b64da0860a4909b4f13ed6e55bc5df9b4c69637e95d9b6c329136dbf73705e79"
+  },
+  "inference" : {
+    "captureTimerIntervalsOver100Milliseconds" : 0,
+    "captureTimerP95Milliseconds" : 11.117792,
+    "imageCount" : 500,
+    "imageP95Milliseconds" : 1.546083,
+    "maximumConcurrentInferenceJobs" : 1,
+    "textP95Milliseconds" : 7.919458,
+    "textQueryCount" : 100,
+    "visualRecallAt10" : 1
+  },
+  "packaging" : {
+    "artifactCount" : 12,
+    "bundledFootprintBytes" : 112239644,
+    "computeUnits" : "MLComputeUnits.all (Neural Engine where available)",
+    "modelVersion" : "mobileclip-s0-coreml-3e0a7bf",
+    "runtimeDownloadAllowed" : false,
+    "verifiedArtifactCount" : 12
+  },
+  "parity" : {
+    "imageCosineSimilarity" : 1,
+    "textCosineSimilarity" : 0.9999998807907104
+  },
+  "schemaVersion" : 1
+}

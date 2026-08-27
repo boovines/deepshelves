@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-007",
+  "status": "passed",
+  "generatedAt": "2026-08-27T19:34:25Z",
+  "baseRevision": "c747a6faf73845ced058d40268fcb45ccc588126",
+  "checkpoint": "refs/tags/checkpoints/LM-007",
+  "canonicalRun": {
+    "root": "Benchmarks/Results/S3S4/20260827T193136Z",
+    "configuration": "Release",
+    "networkPolicy": "sandbox deny network*",
+    "sourceManifestSHA256": "b977594a1a3fa1ac7cae050d0611b414d3b86ab624bc36e5a0db320dfebda9ec",
+    "corpusSHA256": "e22c17ac73f36593724790b7adac002217925114ff88644d5d2d13c576aff401",
+    "benchmarkReportSHA256": "820c56bdda7de08453ab0fd79aef907341c569ecaec92e2e15d5fd90d6405ed8",
+    "environmentSHA256": "9645b77baeaae074ef0c21d18a89413de1efd199db9c60b3b51946602a5dab11",
+    "resourceSummarySHA256": "7c29d03b7893a996e6f40e619dc7df8784ae67780b6fe9e948c5aeab35a67266",
+    "imageEmbeddingsSHA256": "e531c0e5fcfd94267608cd475b15f7351ce9370166b16c4564638070c9fafdb8",
+    "textEmbeddingsSHA256": "35895de853921db2b1bc230bf83e4dd91214a7d119190f27329d2ca6f9534dab"
+  },
+  "model": {
+    "name": "MobileCLIP-S0 Core ML",
+    "version": "mobileclip-s0-coreml-3e0a7bf",
+    "embeddingDimension": 512,
+    "computeUnits": "MLComputeUnits.all (Neural Engine where available)",
+    "artifactCount": 12,
+    "verifiedArtifactCount": 12,
+    "bundledFootprintBytes": 112239644,
+    "runtimeDownloadAllowed": false,
+    "licenseScope": "private research evaluation only; redistribution or commercial use requires a new grant or approved model decision"
+  },
+  "results": {
+    "imageCosineSimilarity": 1.0,
+    "textCosineSimilarity": 0.9999998807907104,
+    "imageCount": 500,
+    "imageP95Milliseconds": 1.546083,
+    "textQueryCount": 100,
+    "textP95Milliseconds": 7.919458,
+    "visualRecallAt10": 1.0,
+    "maximumConcurrentInferenceJobs": 1,
+    "captureTimerP95Milliseconds": 11.117792,
+    "captureTimerIntervalsOver100Milliseconds": 0,
+    "enrichmentMaximumRSSMegabytes": 351.609375,
+    "vectorCount": 1000000,
+    "vectorDimension": 512,
+    "vectorFileBytes": 1024000128,
+    "vectorFileSHA256": "b64da0860a4909b4f13ed6e55bc5df9b4c69637e95d9b6c329136dbf73705e79",
+    "unfilteredP95Milliseconds": 618.042708,
+    "unfilteredP99Milliseconds": 637.554625,
+    "filteredCandidateCount": 100000,
+    "filteredP95Milliseconds": 64.117458,
+    "vectorScanIncrementalRSSMegabytes": 2.875,
+    "maximumScalarScoreError": 0.000013709068298339844,
+    "stableOrderingMatched": true,
+    "truncatedFileDetectedBeforeResults": true
+  },
+  "fallbacksUsed": [],
+  "gates": {
+    "canonicalS3S4": {
+      "status": "passed",
+      "command": "./scripts/check-s3-s4-vector-spike.sh Benchmarks/Results/S3S4/20260827T193136Z"
+    },
+    "fullTestSuite": {
+      "status": "passed",
+      "command": "./Scripts/test.sh",
+      "tests": 58,
+      "failures": 0
+    },
+    "contractRegression": {
+      "status": "passed",
+      "command": "./Scripts/check-contracts.sh",
+      "fixtures": 11
+    },
+    "privacySmoke": {
+      "status": "passed",
+      "command": "./Scripts/privacy-smoke.sh",
+      "runtimeNetworkingOrTelemetry": 0
+    },
+    "releaseBuild": {
+      "status": "passed",
+      "command": "./Scripts/build-release.sh",
+      "automaticPackageResolution": false,
+      "architectures": ["arm64", "x86_64"]
+    },
+    "releaseBinaryAudit": {
+      "status": "passed",
+      "command": "./Scripts/check-dependencies.sh --binaries",
+      "forbiddenLinkedOrEmbeddedMarkers": 0
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "artifacts": [
+    {"relativePath":"clip-merges.txt","sha256":"7e0847f6fced8bd28a736dcaeab20e64ac19010771700197ba479a0a8e517d4f"},
+    {"relativePath":"clip-vocab.json","sha256":"7aeb221a2a93047170070379743b49204c13d6993d9947323cd94b75c1f657ba"},
+    {"relativePath":"mobileclip_s0_image.mlmodelc/analytics/coremldata.bin","sha256":"346a3313250b5e4814ba8c506281388d6a2f429d0c7ca8bed60d2e04ab950902"},
+    {"relativePath":"mobileclip_s0_image.mlmodelc/coremldata.bin","sha256":"552bb3208efba60ce0fb9a2d65c5f1b06817d8fe64b0a8f8b2737165097d8644"},
+    {"relativePath":"mobileclip_s0_image.mlmodelc/metadata.json","sha256":"ceb916d1d2f6d6fc931a53070035436f336ca8aa4296df9af2478091f9f1b652"},
+    {"relativePath":"mobileclip_s0_image.mlmodelc/model.mil","sha256":"858f2fc75c7d7b2fd182c1a13ae099a3f66c16ba1d0ea72375a0cdf6fe97b984"},
+    {"relativePath":"mobileclip_s0_image.mlmodelc/weights/weight.bin","sha256":"87d8f63997bbd2f38ba7defeaaa2c571928bdece56aa9629542198b3ce906ed6"},
+    {"relativePath":"mobileclip_s0_text.mlmodelc/analytics/coremldata.bin","sha256":"474233c792816e5f275e05809caeb00b5343c915a9ff4d83945c5a50001d228c"},
+    {"relativePath":"mobileclip_s0_text.mlmodelc/coremldata.bin","sha256":"f7f61cc8ad01af51dfd87a663e3a412d1799e4ef3206dfcc35abdc7be97a72a6"},
+    {"relativePath":"mobileclip_s0_text.mlmodelc/metadata.json","sha256":"ea4f14ff8cb0a039dc70267bfe4fd7a5f36062de3eb2112735cc2080077dc812"},
+    {"relativePath":"mobileclip_s0_text.mlmodelc/model.mil","sha256":"7ce276757c678b9dda7f0f9115fbe87a128acd6e344aba2dc417c43a137db3bb"},
+    {"relativePath":"mobileclip_s0_text.mlmodelc/weights/weight.bin","sha256":"34723e51445b2630106e94e1fdbebed80e7676b404fb839f4eb9bec97bdcad68"}
+  ],
+  "version": "mobileclip-s0-coreml-3e0a7bf"
+}

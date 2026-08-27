@@ -1,0 +1,11 @@
+{
+  "samples": 175,
+  "minimum_rss_mb": 0.03125,
+  "maximum_rss_mb": 351.609375,
+  "incremental_rss_mb": 351.578125,
+  "enrichment_maximum_rss_mb": 351.609375,
+  "vector_search_baseline_rss_mb": 248.375,
+  "vector_search_maximum_rss_mb": 251.25,
+  "vector_search_incremental_rss_mb": 2.875,
+  "maximum_cpu_percent": 100.0
+}

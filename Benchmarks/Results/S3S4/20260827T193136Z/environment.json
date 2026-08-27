@@ -1,0 +1,15 @@
+{
+  "git_revision": "c747a6faf73845ced058d40268fcb45ccc588126",
+  "source_manifest_sha256": "b977594a1a3fa1ac7cae050d0611b414d3b86ab624bc36e5a0db320dfebda9ec",
+  "corpus_sha256": "e22c17ac73f36593724790b7adac002217925114ff88644d5d2d13c576aff401",
+  "mac_model": "Mac15,6",
+  "ram_bytes": 19327352832,
+  "os_version": "26.5",
+  "os_build": "25F71",
+  "architecture": "arm64",
+  "xcode_version": "Xcode 26.5 Build version 17F42 ",
+  "configuration": "Release",
+  "networkPolicy": "sandbox deny network*",
+  "modelSource": "pinned offline cache",
+  "modelLicenseScope": "private research evaluation only"
+}
