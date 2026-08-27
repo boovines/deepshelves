@@ -1,0 +1,32 @@
+{
+  "captureMediaBytes" : 4477,
+  "captureVideoTrackCount" : 1,
+  "cliExitStatus" : 0,
+  "cliTransport" : "local-stdio",
+  "completedStages" : [
+    "firstLaunch",
+    "onboarding",
+    "capture",
+    "search",
+    "visualInference",
+    "deletion",
+    "export",
+    "cli",
+    "mcp"
+  ],
+  "deletedArtifactAbsent" : true,
+  "exportManifestExists" : true,
+  "freshArchiveOwnerOnly" : true,
+  "mcpExitStatus" : 0,
+  "mcpTransport" : "local-stdio",
+  "onboardingLocalOnly" : true,
+  "remoteResourcesAllowed" : false,
+  "runtimeDownloadsAllowed" : false,
+  "schemaVersion" : 1,
+  "textSearchResultCount" : 1,
+  "verifiedModelResourceCount" : 12,
+  "visualEmbeddingDimension" : 512,
+  "visualModelVersion" : "mobileclip-s0-coreml-3e0a7bf",
+  "visualSearchResultCount" : 1,
+  "visualTopResultIndex" : 0
+}

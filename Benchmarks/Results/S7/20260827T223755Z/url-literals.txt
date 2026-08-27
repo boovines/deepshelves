@@ -1,0 +1,1 @@
+GRDB is not linked against SQLCipher. Check https://discuss.zetetic.net/t/important-advisory-sqlcipher-with-xcode-8-and-new-sdks/1688

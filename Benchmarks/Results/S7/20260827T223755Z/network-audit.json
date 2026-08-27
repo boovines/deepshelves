@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "sandboxPolicy": "deny network*",
+  "instrumentationControlDenials": 1,
+  "shippingDeniedAttempts": 0,
+  "dnsAttempts": 0,
+  "tcpAttempts": 0,
+  "udpAttempts": 0,
+  "httpAttempts": 0,
+  "quicAttempts": 0,
+  "appExitStatus": 0,
+  "cliExitStatus": 0,
+  "mcpExitStatus": 0
+}

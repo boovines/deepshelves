@@ -1,0 +1,2 @@
+dependency-cache: 41 artifacts verified in --offline mode at /Users/justinhou/Development/deepshelves/.dependency-cache
+materialized-dependencies: GRDB 7.11.1 + SQLCipher 4.18.0 from verified offline cache

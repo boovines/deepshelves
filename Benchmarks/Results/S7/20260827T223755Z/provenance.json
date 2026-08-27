@@ -1,0 +1,223 @@
+{
+  "schemaVersion": 1,
+  "fileCount": 27,
+  "allComplete": true,
+  "files": [
+    {
+      "path": "Local Memory.app/Contents/_CodeSignature/CodeResources",
+      "source": "DeepShelves source tree and Apple Xcode toolchain",
+      "version": "0.1.0",
+      "license": "Private personal-use source / Apple SDK",
+      "sha256": "30c26139d1250bd3ba5bc9fecabb5d1be19c8281cf97ac5d6149cf98cf6589cc",
+      "updateProcedure": "Rebuild from a reviewed story with the pinned Xcode toolchain and rerun S7."
+    },
+    {
+      "path": "Local Memory.app/Contents/MacOS/Local Memory",
+      "source": "DeepShelves source tree and Apple Xcode toolchain",
+      "version": "0.1.0",
+      "license": "Private personal-use source / Apple SDK",
+      "sha256": "f762e74777ae1cea55ef097d452eca3c0094f27604598b7c6abd6e1dc07e0562",
+      "updateProcedure": "Rebuild from a reviewed story with the pinned Xcode toolchain and rerun S7."
+    },
+    {
+      "path": "Local Memory.app/Contents/Resources/GRDB_GRDB.bundle/Contents/Resources/PrivacyInfo.xcprivacy",
+      "source": "GRDB.swift pinned source a285e4ca87ec6b3584c97b0ec25fc61fec02de60",
+      "version": "7.11.1",
+      "license": "MIT",
+      "sha256": "17784da62e51f74c5859df32fe402e01e25cdf6f797a4add06e2a3ce15c911f4",
+      "updateProcedure": "Update with SQLCipher, verify source/license hashes, then rerun S5 and S7."
+    },
+    {
+      "path": "Local Memory.app/Contents/Resources/GRDB_GRDB.bundle/Contents/Info.plist",
+      "source": "GRDB.swift pinned source a285e4ca87ec6b3584c97b0ec25fc61fec02de60",
+      "version": "7.11.1",
+      "license": "MIT",
+      "sha256": "1fce87859f73798979571359b35b244212c8d393f355d1464bd9e2a3bf89c3f8",
+      "updateProcedure": "Update with SQLCipher, verify source/license hashes, then rerun S5 and S7."
+    },
+    {
+      "path": "Local Memory.app/Contents/Resources/MemoryEnrichment_MemoryEnrichment.bundle/Contents/Resources/MobileCLIP-S0/mobileclip_s0_text.mlmodelc/weights/weight.bin",
+      "source": "Apple CoreML MobileCLIP pinned revision 3e0a7bfb9fe83da8a3efaa3fd8f7df24214bb947",
+      "version": "S0-coreml-3e0a7bf",
+      "license": "LicenseRef-Apple-ML-Research-Model",
+      "sha256": "34723e51445b2630106e94e1fdbebed80e7676b404fb839f4eb9bec97bdcad68",
+      "updateProcedure": "Review license, fetch only the pinned files, verify hashes, compile offline, then rerun S3/S4 and S7."
+    },
+    {
+      "path": "Local Memory.app/Contents/Resources/MemoryEnrichment_MemoryEnrichment.bundle/Contents/Resources/MobileCLIP-S0/mobileclip_s0_text.mlmodelc/metadata.json",
+      "source": "Apple CoreML MobileCLIP pinned revision 3e0a7bfb9fe83da8a3efaa3fd8f7df24214bb947",
+      "version": "S0-coreml-3e0a7bf",
+      "license": "LicenseRef-Apple-ML-Research-Model",
+      "sha256": "ea4f14ff8cb0a039dc70267bfe4fd7a5f36062de3eb2112735cc2080077dc812",
+      "updateProcedure": "Review license, fetch only the pinned files, verify hashes, compile offline, then rerun S3/S4 and S7."
+    },
+    {
+      "path": "Local Memory.app/Contents/Resources/MemoryEnrichment_MemoryEnrichment.bundle/Contents/Resources/MobileCLIP-S0/mobileclip_s0_text.mlmodelc/model.mil",
+      "source": "Apple CoreML MobileCLIP pinned revision 3e0a7bfb9fe83da8a3efaa3fd8f7df24214bb947",
+      "version": "S0-coreml-3e0a7bf",
+      "license": "LicenseRef-Apple-ML-Research-Model",
+      "sha256": "7ce276757c678b9dda7f0f9115fbe87a128acd6e344aba2dc417c43a137db3bb",
+      "updateProcedure": "Review license, fetch only the pinned files, verify hashes, compile offline, then rerun S3/S4 and S7."
+    },
+    {
+      "path": "Local Memory.app/Contents/Resources/MemoryEnrichment_MemoryEnrichment.bundle/Contents/Resources/MobileCLIP-S0/mobileclip_s0_text.mlmodelc/coremldata.bin",
+      "source": "Apple CoreML MobileCLIP pinned revision 3e0a7bfb9fe83da8a3efaa3fd8f7df24214bb947",
+      "version": "S0-coreml-3e0a7bf",
+      "license": "LicenseRef-Apple-ML-Research-Model",
+      "sha256": "f7f61cc8ad01af51dfd87a663e3a412d1799e4ef3206dfcc35abdc7be97a72a6",
+      "updateProcedure": "Review license, fetch only the pinned files, verify hashes, compile offline, then rerun S3/S4 and S7."
+    },
+    {
+      "path": "Local Memory.app/Contents/Resources/MemoryEnrichment_MemoryEnrichment.bundle/Contents/Resources/MobileCLIP-S0/mobileclip_s0_text.mlmodelc/analytics/coremldata.bin",
+      "source": "Apple CoreML MobileCLIP pinned revision 3e0a7bfb9fe83da8a3efaa3fd8f7df24214bb947",
+      "version": "S0-coreml-3e0a7bf",
+      "license": "LicenseRef-Apple-ML-Research-Model",
+      "sha256": "474233c792816e5f275e05809caeb00b5343c915a9ff4d83945c5a50001d228c",
+      "updateProcedure": "Review license, fetch only the pinned files, verify hashes, compile offline, then rerun S3/S4 and S7."
+    },
+    {
+      "path": "Local Memory.app/Contents/Resources/MemoryEnrichment_MemoryEnrichment.bundle/Contents/Resources/MobileCLIP-S0/clip-vocab.json",
+      "source": "Apple CoreML MobileCLIP pinned revision 3e0a7bfb9fe83da8a3efaa3fd8f7df24214bb947",
+      "version": "S0-coreml-3e0a7bf",
+      "license": "LicenseRef-Apple-ML-Research-Model",
+      "sha256": "7aeb221a2a93047170070379743b49204c13d6993d9947323cd94b75c1f657ba",
+      "updateProcedure": "Review license, fetch only the pinned files, verify hashes, compile offline, then rerun S3/S4 and S7."
+    },
+    {
+      "path": "Local Memory.app/Contents/Resources/MemoryEnrichment_MemoryEnrichment.bundle/Contents/Resources/MobileCLIP-S0/clip-merges.txt",
+      "source": "Apple CoreML MobileCLIP pinned revision 3e0a7bfb9fe83da8a3efaa3fd8f7df24214bb947",
+      "version": "S0-coreml-3e0a7bf",
+      "license": "LicenseRef-Apple-ML-Research-Model",
+      "sha256": "7e0847f6fced8bd28a736dcaeab20e64ac19010771700197ba479a0a8e517d4f",
+      "updateProcedure": "Review license, fetch only the pinned files, verify hashes, compile offline, then rerun S3/S4 and S7."
+    },
+    {
+      "path": "Local Memory.app/Contents/Resources/MemoryEnrichment_MemoryEnrichment.bundle/Contents/Resources/MobileCLIP-S0/model-manifest.json",
+      "source": "Apple CoreML MobileCLIP pinned revision 3e0a7bfb9fe83da8a3efaa3fd8f7df24214bb947",
+      "version": "S0-coreml-3e0a7bf",
+      "license": "LicenseRef-Apple-ML-Research-Model",
+      "sha256": "758468b14a34070a0f6295fe8b6fd4d1b8cf536083cbb10c847fd5dae3cc762b",
+      "updateProcedure": "Review license, fetch only the pinned files, verify hashes, compile offline, then rerun S3/S4 and S7."
+    },
+    {
+      "path": "Local Memory.app/Contents/Resources/MemoryEnrichment_MemoryEnrichment.bundle/Contents/Resources/MobileCLIP-S0/mobileclip_s0_image.mlmodelc/weights/weight.bin",
+      "source": "Apple CoreML MobileCLIP pinned revision 3e0a7bfb9fe83da8a3efaa3fd8f7df24214bb947",
+      "version": "S0-coreml-3e0a7bf",
+      "license": "LicenseRef-Apple-ML-Research-Model",
+      "sha256": "87d8f63997bbd2f38ba7defeaaa2c571928bdece56aa9629542198b3ce906ed6",
+      "updateProcedure": "Review license, fetch only the pinned files, verify hashes, compile offline, then rerun S3/S4 and S7."
+    },
+    {
+      "path": "Local Memory.app/Contents/Resources/MemoryEnrichment_MemoryEnrichment.bundle/Contents/Resources/MobileCLIP-S0/mobileclip_s0_image.mlmodelc/metadata.json",
+      "source": "Apple CoreML MobileCLIP pinned revision 3e0a7bfb9fe83da8a3efaa3fd8f7df24214bb947",
+      "version": "S0-coreml-3e0a7bf",
+      "license": "LicenseRef-Apple-ML-Research-Model",
+      "sha256": "ceb916d1d2f6d6fc931a53070035436f336ca8aa4296df9af2478091f9f1b652",
+      "updateProcedure": "Review license, fetch only the pinned files, verify hashes, compile offline, then rerun S3/S4 and S7."
+    },
+    {
+      "path": "Local Memory.app/Contents/Resources/MemoryEnrichment_MemoryEnrichment.bundle/Contents/Resources/MobileCLIP-S0/mobileclip_s0_image.mlmodelc/model.mil",
+      "source": "Apple CoreML MobileCLIP pinned revision 3e0a7bfb9fe83da8a3efaa3fd8f7df24214bb947",
+      "version": "S0-coreml-3e0a7bf",
+      "license": "LicenseRef-Apple-ML-Research-Model",
+      "sha256": "858f2fc75c7d7b2fd182c1a13ae099a3f66c16ba1d0ea72375a0cdf6fe97b984",
+      "updateProcedure": "Review license, fetch only the pinned files, verify hashes, compile offline, then rerun S3/S4 and S7."
+    },
+    {
+      "path": "Local Memory.app/Contents/Resources/MemoryEnrichment_MemoryEnrichment.bundle/Contents/Resources/MobileCLIP-S0/mobileclip_s0_image.mlmodelc/coremldata.bin",
+      "source": "Apple CoreML MobileCLIP pinned revision 3e0a7bfb9fe83da8a3efaa3fd8f7df24214bb947",
+      "version": "S0-coreml-3e0a7bf",
+      "license": "LicenseRef-Apple-ML-Research-Model",
+      "sha256": "552bb3208efba60ce0fb9a2d65c5f1b06817d8fe64b0a8f8b2737165097d8644",
+      "updateProcedure": "Review license, fetch only the pinned files, verify hashes, compile offline, then rerun S3/S4 and S7."
+    },
+    {
+      "path": "Local Memory.app/Contents/Resources/MemoryEnrichment_MemoryEnrichment.bundle/Contents/Resources/MobileCLIP-S0/mobileclip_s0_image.mlmodelc/analytics/coremldata.bin",
+      "source": "Apple CoreML MobileCLIP pinned revision 3e0a7bfb9fe83da8a3efaa3fd8f7df24214bb947",
+      "version": "S0-coreml-3e0a7bf",
+      "license": "LicenseRef-Apple-ML-Research-Model",
+      "sha256": "346a3313250b5e4814ba8c506281388d6a2f429d0c7ca8bed60d2e04ab950902",
+      "updateProcedure": "Review license, fetch only the pinned files, verify hashes, compile offline, then rerun S3/S4 and S7."
+    },
+    {
+      "path": "Local Memory.app/Contents/Resources/MemoryEnrichment_MemoryEnrichment.bundle/Contents/Info.plist",
+      "source": "DeepShelves source tree and Apple Xcode toolchain",
+      "version": "0.1.0",
+      "license": "Private personal-use source / Apple SDK",
+      "sha256": "a480ef3529f09a0524f080ab18222276d778838ee8d69541713e43e6ccf6a9d4",
+      "updateProcedure": "Rebuild from a reviewed story with the pinned Xcode toolchain and rerun S7."
+    },
+    {
+      "path": "Local Memory.app/Contents/embedded.provisionprofile",
+      "source": "DeepShelves source tree and Apple Xcode toolchain",
+      "version": "0.1.0",
+      "license": "Private personal-use source / Apple SDK",
+      "sha256": "3852d2b530f20c9086fa8224402371ca67893eeb29d3bd9790b53c2387ee45fd",
+      "updateProcedure": "Rebuild from a reviewed story with the pinned Xcode toolchain and rerun S7."
+    },
+    {
+      "path": "Local Memory.app/Contents/Frameworks/SQLCipher.framework/Versions/A/_CodeSignature/CodeResources",
+      "source": "SQLCipher.swift pinned artifact f879fffaaa3ad3541a77830daad4a28726dfa927",
+      "version": "4.18.0",
+      "license": "LicenseRef-SQLCipher-BSD",
+      "sha256": "d5df31add99e453500e7bc8d276758efb64f9f058080382e770f4eec8484b875",
+      "updateProcedure": "Update with the pinned GRDB closure, verify cache hashes, then rerun S5 and S7."
+    },
+    {
+      "path": "Local Memory.app/Contents/Frameworks/SQLCipher.framework/Versions/A/Resources/PrivacyInfo.xcprivacy",
+      "source": "SQLCipher.swift pinned artifact f879fffaaa3ad3541a77830daad4a28726dfa927",
+      "version": "4.18.0",
+      "license": "LicenseRef-SQLCipher-BSD",
+      "sha256": "9362796ba800a7b4169834eff8bde990866f40114ff7baac002b8bae543e8dd1",
+      "updateProcedure": "Update with the pinned GRDB closure, verify cache hashes, then rerun S5 and S7."
+    },
+    {
+      "path": "Local Memory.app/Contents/Frameworks/SQLCipher.framework/Versions/A/Resources/Info.plist",
+      "source": "SQLCipher.swift pinned artifact f879fffaaa3ad3541a77830daad4a28726dfa927",
+      "version": "4.18.0",
+      "license": "LicenseRef-SQLCipher-BSD",
+      "sha256": "40f02027a17eabd6e0ae6cd4e56fcde208fd4a29a140a78853dc308a299bb15b",
+      "updateProcedure": "Update with the pinned GRDB closure, verify cache hashes, then rerun S5 and S7."
+    },
+    {
+      "path": "Local Memory.app/Contents/Frameworks/SQLCipher.framework/Versions/A/SQLCipher",
+      "source": "SQLCipher.swift pinned artifact f879fffaaa3ad3541a77830daad4a28726dfa927",
+      "version": "4.18.0",
+      "license": "LicenseRef-SQLCipher-BSD",
+      "sha256": "e0787657a963426e8282161f6f5f13974a302f4ca39f953bb97f668d4ef3c5b8",
+      "updateProcedure": "Update with the pinned GRDB closure, verify cache hashes, then rerun S5 and S7."
+    },
+    {
+      "path": "Local Memory.app/Contents/Info.plist",
+      "source": "DeepShelves source tree and Apple Xcode toolchain",
+      "version": "0.1.0",
+      "license": "Private personal-use source / Apple SDK",
+      "sha256": "be1934966305063216d7508430ca6f91791780884979681112643e67ac7feda4",
+      "updateProcedure": "Rebuild from a reviewed story with the pinned Xcode toolchain and rerun S7."
+    },
+    {
+      "path": "Local Memory.app/Contents/PkgInfo",
+      "source": "DeepShelves source tree and Apple Xcode toolchain",
+      "version": "0.1.0",
+      "license": "Private personal-use source / Apple SDK",
+      "sha256": "82502191c9484b04d685374f9879a0066069c49b8acae7a04b01d38d07e8eca0",
+      "updateProcedure": "Rebuild from a reviewed story with the pinned Xcode toolchain and rerun S7."
+    },
+    {
+      "path": "local-memory",
+      "source": "DeepShelves source tree and Apple Xcode toolchain",
+      "version": "0.1.0",
+      "license": "Private personal-use source / Apple SDK",
+      "sha256": "bf8ac8331fb9db422b5400d925e7a52709e205a98e382657bdea76613bb840c0",
+      "updateProcedure": "Rebuild from a reviewed story with the pinned Xcode toolchain and rerun S7."
+    },
+    {
+      "path": "local-memory-mcp",
+      "source": "DeepShelves source tree and Apple Xcode toolchain",
+      "version": "0.1.0",
+      "license": "Private personal-use source / Apple SDK",
+      "sha256": "56d1b75ea4cd765298cb3870649278e213428d26ba61c5f2d6c7a9bf8393d668",
+      "updateProcedure": "Rebuild from a reviewed story with the pinned Xcode toolchain and rerun S7."
+    }
+  ]
+}

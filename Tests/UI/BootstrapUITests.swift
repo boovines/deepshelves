@@ -1,5 +1,6 @@
 import XCTest
 
+@MainActor
 final class BootstrapUITests: XCTestCase {
     func testBootstrapWindowAppears() {
         let application = XCUIApplication()
@@ -7,4 +8,3 @@ final class BootstrapUITests: XCTestCase {
         XCTAssertTrue(application.staticTexts["Local Memory"].waitForExistence(timeout: 5))
     }
 }
-

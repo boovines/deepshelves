@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "gitRevision": "f2b4f938ad639b5e6955cf041b3d2810e0d8b214",
+  "sourceManifestSHA256": "94c2332a48bde86a399a4c3ffb0163ce36bc09671b1c022d07957b45ece12dbb",
+  "mediaFixtureSHA256": "5961ba509269183a1df59645168625a51d6f82f3006e1c2d587a1272337d09da",
+  "macModel": "Mac15,6",
+  "ramBytes": 19327352832,
+  "osVersion": "26.5",
+  "osBuild": "25F71",
+  "architecture": "arm64",
+  "xcodeVersion": "Xcode 26.5 Build version 17F42 ",
+  "configuration": "Release",
+  "onlyActiveArchitecture": true,
+  "uiFramework": "SwiftUI composition with NSCollectionView hot collection",
+  "signedApplication": true,
+  "signedXCUITestRunner": true
+}

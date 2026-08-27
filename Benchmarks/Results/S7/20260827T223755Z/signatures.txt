@@ -1,0 +1,84 @@
+Executable=/Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/Local Memory.app/Contents/MacOS/Local Memory
+Identifier=com.justinhou.deepshelves.localmemory
+Format=app bundle with Mach-O thin (arm64)
+CodeDirectory v=20500 size=17425 flags=0x10000(runtime) hashes=533+7 location=embedded
+VersionPlatform=1
+VersionMin=983040
+VersionSDK=1705216
+Hash type=sha256 size=32
+CandidateCDHash sha256=578d8ff24db6a65fee1caf6de65ac30e20914968
+CandidateCDHashFull sha256=578d8ff24db6a65fee1caf6de65ac30e20914968fb2a3646755367f45423a321
+Hash choices=sha256
+CMSDigest=578d8ff24db6a65fee1caf6de65ac30e20914968fb2a3646755367f45423a321
+CMSDigestType=2
+Executable Segment base=0
+Executable Segment limit=3424256
+Executable Segment flags=0x1
+Page size=16384
+CDHash=578d8ff24db6a65fee1caf6de65ac30e20914968
+Signature size=4790
+Authority=Apple Development: justin_hou25@icloud.com (K8SNDR5HV9)
+Authority=Apple Worldwide Developer Relations Certification Authority
+Authority=Apple Root CA
+Signed Time=Aug 28, 2026 at 12:37:09 AM
+Info.plist entries=23
+TeamIdentifier=NS5L7NNR8U
+Runtime Version=26.5.0
+Sealed Resources version=2 rules=13 files=18
+Internal requirements count=1 size=212
+Executable=/Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/local-memory
+Identifier=local-memory
+Format=Mach-O thin (arm64)
+CodeDirectory v=20500 size=2296 flags=0x10000(runtime) hashes=61+7 location=embedded
+VersionPlatform=1
+VersionMin=983040
+VersionSDK=1705216
+Hash type=sha256 size=32
+CandidateCDHash sha256=43f934ed03a08f0b1037988c801f2b970db329f3
+CandidateCDHashFull sha256=43f934ed03a08f0b1037988c801f2b970db329f3e492cfa5470b5124d88f893a
+Hash choices=sha256
+CMSDigest=43f934ed03a08f0b1037988c801f2b970db329f3e492cfa5470b5124d88f893a
+CMSDigestType=2
+Executable Segment base=0
+Executable Segment limit=344064
+Executable Segment flags=0x1
+Page size=16384
+CDHash=43f934ed03a08f0b1037988c801f2b970db329f3
+Signature size=4790
+Authority=Apple Development: justin_hou25@icloud.com (K8SNDR5HV9)
+Authority=Apple Worldwide Developer Relations Certification Authority
+Authority=Apple Root CA
+Signed Time=Aug 28, 2026 at 12:38:06 AM
+Info.plist=not bound
+TeamIdentifier=NS5L7NNR8U
+Runtime Version=26.5.0
+Sealed Resources=none
+Internal requirements count=1 size=184
+Executable=/Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/local-memory-mcp
+Identifier=local-memory-mcp
+Format=Mach-O thin (arm64)
+CodeDirectory v=20500 size=2300 flags=0x10000(runtime) hashes=61+7 location=embedded
+VersionPlatform=1
+VersionMin=983040
+VersionSDK=1705216
+Hash type=sha256 size=32
+CandidateCDHash sha256=fe40477be2cbc8434427cbcfc864a2eea17c288e
+CandidateCDHashFull sha256=fe40477be2cbc8434427cbcfc864a2eea17c288e24b4190666bfb0fae3a54567
+Hash choices=sha256
+CMSDigest=fe40477be2cbc8434427cbcfc864a2eea17c288e24b4190666bfb0fae3a54567
+CMSDigestType=2
+Executable Segment base=0
+Executable Segment limit=344064
+Executable Segment flags=0x1
+Page size=16384
+CDHash=fe40477be2cbc8434427cbcfc864a2eea17c288e
+Signature size=4790
+Authority=Apple Development: justin_hou25@icloud.com (K8SNDR5HV9)
+Authority=Apple Worldwide Developer Relations Certification Authority
+Authority=Apple Root CA
+Signed Time=Aug 28, 2026 at 12:38:08 AM
+Info.plist=not bound
+TeamIdentifier=NS5L7NNR8U
+Runtime Version=26.5.0
+Sealed Resources=none
+Internal requirements count=1 size=188

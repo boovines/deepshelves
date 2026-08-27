@@ -1,0 +1,166 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-008",
+  "status": "passed",
+  "generatedAt": "2026-08-27T22:46:36Z",
+  "baseRevision": "f2b4f938ad639b5e6955cf041b3d2810e0d8b214",
+  "checkpoint": "refs/tags/checkpoints/LM-008",
+  "canonicalRuns": {
+    "s5": {
+      "root": "Benchmarks/Results/S5/20260827T224019Z",
+      "configuration": "Release",
+      "reportSHA256": "3e0dbb9e570701ac985f384c1c347d350108bcab6af32149ab69ce39e884b9fd",
+      "environmentSHA256": "eecdedecea59ceedb6e4ca18bd1ff2d39aebe0ef54301e58e5242bdf903fa365"
+    },
+    "s6": {
+      "root": "Benchmarks/Results/S6/20260827T222621Z",
+      "configuration": "Release",
+      "reportSHA256": "d6a59c290c59d61b7fa9d50dc70ba365bab4e364f83dde55dde521e904fbce82",
+      "environmentSHA256": "f0d55a2c83f85b878dab07a740de15c65150cdd24521c35ecbb8463dff68c868",
+      "screenshotSHA256": "f8ec40f50d72692a634316e0e22d828886b8a6673386c4393284d2a86b7a79be"
+    },
+    "s7": {
+      "root": "Benchmarks/Results/S7/20260827T223755Z",
+      "configuration": "Release",
+      "journeySHA256": "d4a25851a0745d5c4dbc19759f2cbde8f99ab4bbbd9216ba1e99c0007786399e",
+      "environmentSHA256": "06593f2f9511e3166e7da9c24138d7ee84d11105f23a4cb29b4642fca8f6e1b2",
+      "networkAuditSHA256": "5949595a11aeb0030df1777504fba2856d84a766da344f758abccb7c17418eff",
+      "provenanceSHA256": "33fb238dc1f1d77b0d3a195db420dbb8cefeaeed97b0aaaf41547f1040950237",
+      "staticAuditSHA256": "6b3a31648f2cd9cadb2f29ff43a225a3a71ea0d187a7dd62cfe5c53081a83049"
+    }
+  },
+  "results": {
+    "s5": {
+      "cipher": "SQLCipher 4.18.0 community through GRDB 7.11.1",
+      "walEnabled": true,
+      "keyByteCount": 32,
+      "appCLIMCPKeyHashesMatched": true,
+      "unsignedAndMismatchedAccessDenied": true,
+      "plaintextSentinelMatchesBeforeDeletion": 0,
+      "encryptedP95Milliseconds": 9.4265,
+      "plaintextP95Milliseconds": 9.345083,
+      "encryptionOverheadFraction": 0.00871228217020652,
+      "faultInjectedCrashPoints": 10000,
+      "consistentRecoveries": 10000,
+      "forcedProcessCrashes": 4,
+      "seededMediaDecodedBeforeDeletion": true,
+      "seededMediaAbsentAfterDeletion": true,
+      "filesScannedAfterDeletion": 21,
+      "allDeletionSentinelMatches": 0
+    },
+    "s6": {
+      "fixtureCardCount": 10000,
+      "timelineHours": 24,
+      "coldPanelVisibleAndFocusedMilliseconds": 260.19,
+      "warmPanelVisibleAndFocusedMilliseconds": 43.039708,
+      "initialRenderP95Milliseconds": 10.904708,
+      "fastScrollFramesPerSecondP95": 58.72838252285621,
+      "maximumResidentMemoryMegabytes": 129.1875,
+      "thumbnailFeedbackP95Milliseconds": 0.014333,
+      "fullFrameSettleP95Milliseconds": 18.296417,
+      "staleScreenshotCount": 0,
+      "windowResizeLightDarkVoiceOverPseudoLocalizationPassed": true,
+      "fallback": "NSCollectionView for the measured hot grid only"
+    },
+    "s7": {
+      "completedJourneyStages": 9,
+      "freshOfflineVisualSearchPassed": true,
+      "visualEmbeddingDimension": 512,
+      "instrumentationControlNetworkDenials": 1,
+      "shippingDeniedAttempts": 0,
+      "dnsAttempts": 0,
+      "tcpAttempts": 0,
+      "udpAttempts": 0,
+      "httpAttempts": 0,
+      "quicAttempts": 0,
+      "provenanceFileCount": 27,
+      "provenanceComplete": true,
+      "forbiddenSourceMatches": 0,
+      "forbiddenLinkedFrameworkMatches": 0,
+      "networkSymbolMatches": 0,
+      "telemetryUploadRemoteResourceOrUpdaterComponents": 0
+    }
+  },
+  "frozenDefaults": {
+    "store": {
+      "keyByteCount": 32,
+      "journalMode": "WAL",
+      "pageSize": 4096,
+      "busyTimeoutMilliseconds": 5000,
+      "maximumReaderCount": 5,
+      "maximumEncryptionOverheadFraction": 0.2,
+      "crashPointCount": 10000,
+      "runtimeNetworkingAllowed": false
+    },
+    "ui": {
+      "panelSize": [760, 620],
+      "minimumPanelSize": [640, 480],
+      "initialCardCount": 60,
+      "fixtureCardCount": 10000,
+      "timelineHours": 24,
+      "decodeCacheEntryLimit": 96,
+      "minimumFastScrollFramesPerSecond": 55,
+      "remoteResourcesAllowed": false
+    }
+  },
+  "decisions": [
+    "Decisions/0002-signed-helper-entrypoints.md",
+    "Decisions/0003-native-grid-fallback.md",
+    "Decisions/0004-offline-dependency-closure.md"
+  ],
+  "gates": {
+    "canonicalS5": {
+      "status": "passed",
+      "command": "./scripts/check-s5-storage-spike.sh Benchmarks/Results/S5/20260827T224019Z"
+    },
+    "canonicalS6": {
+      "status": "passed",
+      "command": "./scripts/check-s6-ui-spike.sh Benchmarks/Results/S6/20260827T222621Z",
+      "signedReleaseXCUITest": true
+    },
+    "canonicalS7": {
+      "status": "passed",
+      "command": "./scripts/check-s7-offline-spike.sh Benchmarks/Results/S7/20260827T223755Z"
+    },
+    "fullTestSuite": {
+      "status": "passed",
+      "command": "./scripts/test.sh",
+      "xctestUnitTests": 57,
+      "swiftTestingUnitTests": 4,
+      "integrationTests": 7,
+      "privacyTests": 4,
+      "performanceTests": 1,
+      "failures": 0
+    },
+    "contractRegression": {
+      "status": "passed",
+      "command": "./scripts/check-contracts.sh",
+      "fixtures": 11
+    },
+    "privacySmoke": {
+      "status": "passed",
+      "command": "./scripts/privacy-smoke.sh",
+      "runtimeNetworkingOrTelemetry": 0
+    },
+    "releaseBuild": {
+      "status": "passed",
+      "command": "./scripts/build-release.sh",
+      "automaticPackageResolution": false,
+      "architectures": ["arm64", "x86_64"]
+    },
+    "signedPosture": {
+      "status": "passed",
+      "command": "./scripts/signing-posture.sh",
+      "keychainBoundary": "signed app only; privileged --cli and --mcp modes verified by S5"
+    },
+    "releaseBinaryAudit": {
+      "status": "passed",
+      "command": "./scripts/check-dependencies.sh --binaries",
+      "forbiddenLinkedOrEmbeddedMarkers": 0
+    },
+    "diffWhitespace": {
+      "status": "passed",
+      "command": "git diff --check"
+    }
+  }
+}

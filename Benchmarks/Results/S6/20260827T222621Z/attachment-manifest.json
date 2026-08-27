@@ -1,0 +1,17 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00006030-000658C614D0001C",
+        "deviceName" : "My Mac",
+        "exportedFileName" : "4DE41DEA-64F0-41CA-9571-7A42051F893E.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "S6 native grid timeline dark pseudo compact_0_9059E0DE-8EC7-41F7-9207-BB95E016B454.png",
+        "timestamp" : 1787869682.852
+      }
+    ],
+    "testIdentifier" : "S6PerformanceUITests/testReleaseNativeGridTimelineAndAccessibilityJourney()",
+    "testIdentifierURL" : "test://com.apple.xcode/LocalMemory/LocalMemoryUITests/S6PerformanceUITests/testReleaseNativeGridTimelineAndAccessibilityJourney"
+  }
+]

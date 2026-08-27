@@ -1,0 +1,3 @@
+Timestamp               Ty Process[PID:TID]
+2026-08-28 00:38:09.200 E  kernel[0:15f5b0b] (Sandbox) Sandbox: curl(40442) deny(1) network-outbound /private/var/run/mDNSResponder
+2026-08-28 00:38:10.224 Df log[40444:15f5b1d] [com.apple.log:] log run noninteractively, parent: 40128 (bash), args: '/usr/bin/log' 'show' '--start' '2026-08-28 00:38:09' '--style' 'compact' '--predicate' 'eventMessage CONTAINS[c] "Sandbox: curl" AND eventMessage CONTAINS[c] "network"'

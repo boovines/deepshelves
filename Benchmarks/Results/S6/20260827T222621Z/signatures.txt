@@ -1,0 +1,56 @@
+Executable=/Users/justinhou/Development/deepshelves/.build/S6UIDerivedData/Build/Products/Release/Local Memory.app/Contents/MacOS/Local Memory
+Identifier=com.justinhou.deepshelves.localmemory
+Format=app bundle with Mach-O thin (arm64)
+CodeDirectory v=20500 size=17073 flags=0x10000(runtime) hashes=522+7 location=embedded
+VersionPlatform=1
+VersionMin=983040
+VersionSDK=1705216
+Hash type=sha256 size=32
+CandidateCDHash sha256=197f4de8abcf82e333c0c1d70415f5e7c1ea05bf
+CandidateCDHashFull sha256=197f4de8abcf82e333c0c1d70415f5e7c1ea05bfbc2d22fbbff2ba601eb4ecbd
+Hash choices=sha256
+CMSDigest=197f4de8abcf82e333c0c1d70415f5e7c1ea05bfbc2d22fbbff2ba601eb4ecbd
+CMSDigestType=2
+Executable Segment base=0
+Executable Segment limit=3375104
+Executable Segment flags=0x1
+Page size=16384
+CDHash=197f4de8abcf82e333c0c1d70415f5e7c1ea05bf
+Signature size=4790
+Authority=Apple Development: justin_hou25@icloud.com (K8SNDR5HV9)
+Authority=Apple Worldwide Developer Relations Certification Authority
+Authority=Apple Root CA
+Signed Time=Aug 28, 2026 at 12:27:32 AM
+Info.plist entries=23
+TeamIdentifier=NS5L7NNR8U
+Runtime Version=26.5.0
+Sealed Resources version=2 rules=13 files=18
+Internal requirements count=1 size=212
+Executable=/Users/justinhou/Development/deepshelves/.build/S6UIDerivedData/Build/Products/Release/LocalMemoryUITests-Runner.app/Contents/MacOS/LocalMemoryUITests-Runner
+Identifier=.xctrunner
+Format=app bundle with Mach-O universal (arm64)
+CodeDirectory v=20500 size=470 flags=0x10000(runtime) hashes=4+7 location=embedded
+VersionPlatform=1
+VersionMin=917504
+VersionSDK=1704960
+Hash type=sha256 size=32
+CandidateCDHash sha256=3ede5027d7f4691b84ef9cb0d19393dba10225b9
+CandidateCDHashFull sha256=3ede5027d7f4691b84ef9cb0d19393dba10225b905b115f82a9948d40f5a8661
+Hash choices=sha256
+CMSDigest=3ede5027d7f4691b84ef9cb0d19393dba10225b905b115f82a9948d40f5a8661
+CMSDigestType=2
+Executable Segment base=0
+Executable Segment limit=16384
+Executable Segment flags=0x1
+Page size=16384
+CDHash=3ede5027d7f4691b84ef9cb0d19393dba10225b9
+Signature size=4790
+Authority=Apple Development: justin_hou25@icloud.com (K8SNDR5HV9)
+Authority=Apple Worldwide Developer Relations Certification Authority
+Authority=Apple Root CA
+Signed Time=Aug 28, 2026 at 12:27:39 AM
+Info.plist entries=45
+TeamIdentifier=NS5L7NNR8U
+Runtime Version=26.4.0
+Sealed Resources version=2 rules=13 files=12
+Internal requirements count=1 size=184

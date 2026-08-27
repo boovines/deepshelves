@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-27T13:18:33Z",
+  "generatedAt": "2026-08-28T00:34:00Z",
   "buildEnvironment": {
     "architecture": "arm64",
     "macOSVersion": "26.5 (25F71)",
@@ -23,10 +23,12 @@
       "version": "7.11.1",
       "revision": "a285e4ca87ec6b3584c97b0ec25fc61fec02de60",
       "source": "https://github.com/sqlcipher/GRDB.swift",
-      "scope": "futureShippingDependency",
+      "scope": "shippingDependency",
       "runtimeFetchPolicy": "forbidden",
       "networkCapable": false,
-      "linkedShippingTargets": [],
+      "linkedShippingTargets": [
+        "LocalMemoryApp"
+      ],
       "license": {
         "name": "MIT",
         "spdx": "MIT",
@@ -50,10 +52,12 @@
       "version": "4.18.0",
       "revision": "f879fffaaa3ad3541a77830daad4a28726dfa927",
       "source": "https://github.com/sqlcipher/SQLCipher.swift",
-      "scope": "futureShippingDependency",
+      "scope": "shippingDependency",
       "runtimeFetchPolicy": "forbidden",
       "networkCapable": false,
-      "linkedShippingTargets": [],
+      "linkedShippingTargets": [
+        "LocalMemoryApp"
+      ],
       "license": {
         "name": "BSD-style SQLCipher license",
         "spdx": "LicenseRef-SQLCipher-BSD",
@@ -412,10 +416,12 @@
       "version": "S0-coreml-3e0a7bf",
       "revision": "3e0a7bfb9fe83da8a3efaa3fd8f7df24214bb947",
       "source": "https://huggingface.co/apple/coreml-mobileclip",
-      "scope": "bundledModelCandidate",
+      "scope": "bundledModelShipping",
       "runtimeFetchPolicy": "forbidden",
       "networkCapable": false,
-      "linkedShippingTargets": [],
+      "linkedShippingTargets": [
+        "LocalMemoryApp"
+      ],
       "license": {
         "name": "Apple Machine Learning Research Model License (research-only; no commercial product use)",
         "spdx": "LicenseRef-Apple-ML-Research-Model",

@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "forbiddenSourceMatches": 0,
+  "forbiddenLinkedFrameworkMatches": 0,
+  "networkSymbolMatches": 0,
+  "automaticUpdateComponentCount": 0,
+  "telemetryComponentCount": 0,
+  "crashUploadComponentCount": 0,
+  "remoteResourceComponentCount": 0,
+  "allowedDiagnosticURLCount": 1,
+  "allowedDiagnosticURLClassification": "inert GRDB SQLCipher linkage error text"
+}

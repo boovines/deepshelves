@@ -1,0 +1,13 @@
+{
+  "cardExposed" : true,
+  "criticalControlsUnclipped" : true,
+  "lightDarkSwitchPassed" : true,
+  "pseudoLocalizationPassed" : true,
+  "releaseConfiguration" : true,
+  "rootExposed" : true,
+  "schemaVersion" : 1,
+  "searchFieldExposed" : true,
+  "timelineExposed" : true,
+  "voiceOverNavigationProjectionPassed" : true,
+  "windowResizePassed" : true
+}

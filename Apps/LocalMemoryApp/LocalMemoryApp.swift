@@ -3,7 +3,9 @@ import Darwin
 import Foundation
 import MemoryCapture
 import MemoryContracts
+import MemoryDesignSystem
 import MemoryEnrichment
+import MemoryStore
 import SwiftUI
 
 @main
@@ -16,9 +18,14 @@ struct LocalMemoryApp: App {
     private let captureSpikeCrashActiveMode: Bool
     private let contextSpikeOutputDirectory: String?
     private let vectorSpikeArguments: (output: String, imageModel: String, textModel: String)?
+    private let s5SpikeArguments: (output: String, unsignedProbe: String, media: String)?
+    private let s6SpikeArguments: (output: String, media: String)?
+    private let s7SpikeArguments: (output: String, media: String)?
+    private let s6AutoExit: Bool
 
     init() {
         let arguments = ProcessInfo.processInfo.arguments
+        s6AutoExit = arguments.contains("--lm008-s6-auto-exit")
         shouldRequestCapturePermissions = arguments.contains("--request-capture-permissions")
         captureSpikeStaticMode = arguments.contains("--capture-spike-static")
         captureSpikeCrashActiveMode = arguments.contains("--capture-spike-crash-active")
@@ -39,6 +46,31 @@ struct LocalMemoryApp: App {
             )
         } else {
             vectorSpikeArguments = nil
+        }
+        if let flagIndex = arguments.firstIndex(of: "--lm008-s5-spike"),
+           arguments.indices.contains(flagIndex + 3)
+        {
+            s5SpikeArguments = (
+                arguments[flagIndex + 1],
+                arguments[flagIndex + 2],
+                arguments[flagIndex + 3]
+            )
+        } else {
+            s5SpikeArguments = nil
+        }
+        if let flagIndex = arguments.firstIndex(of: "--lm008-s6-spike"),
+           arguments.indices.contains(flagIndex + 2)
+        {
+            s6SpikeArguments = (arguments[flagIndex + 1], arguments[flagIndex + 2])
+        } else {
+            s6SpikeArguments = nil
+        }
+        if let flagIndex = arguments.firstIndex(of: "--lm008-s7-spike"),
+           arguments.indices.contains(flagIndex + 2)
+        {
+            s7SpikeArguments = (arguments[flagIndex + 1], arguments[flagIndex + 2])
+        } else {
+            s7SpikeArguments = nil
         }
         if let flagIndex = arguments.firstIndex(of: "--capture-spike"),
            arguments.indices.contains(flagIndex + 1)
@@ -64,12 +96,28 @@ struct LocalMemoryApp: App {
         if let vectorSpikeArguments {
             Self.launchVectorSpike(vectorSpikeArguments)
         }
+        if let s5SpikeArguments {
+            Self.launchS5Spike(s5SpikeArguments)
+        }
+        if let s7SpikeArguments {
+            Self.launchS7Spike(s7SpikeArguments)
+        }
+        LM008ChildModes.launchIfRequested(arguments: arguments)
     }
 
     var body: some Scene {
         WindowGroup("Local Memory") {
             Group {
-                if contextSpikeOutputDirectory != nil {
+                if let s6SpikeArguments {
+                    S6SpikeView(
+                        outputDirectory: URL(
+                            fileURLWithPath: s6SpikeArguments.output,
+                            isDirectory: true
+                        ),
+                        mediaURL: URL(fileURLWithPath: s6SpikeArguments.media),
+                        autoExit: s6AutoExit
+                    )
+                } else if contextSpikeOutputDirectory != nil {
                     ContextSpikeTargetView()
                 } else if captureSpikeOutputDirectory == nil {
                     BootstrapView(schemaVersion: BootstrapContract.schemaVersion)
@@ -110,7 +158,10 @@ struct LocalMemoryApp: App {
                     NSApplication.shared.terminate(nil)
                 }
         }
-        .defaultSize(width: 720, height: 480)
+        .defaultSize(
+            width: CGFloat(LM008UIDefaults.panelWidth),
+            height: CGFloat(LM008UIDefaults.panelHeight)
+        )
     }
 
     private static func launchVectorSpike(
@@ -138,6 +189,65 @@ struct LocalMemoryApp: App {
                 )
                 try? Data("S3/S4 spike failed: \(error)\n".utf8).write(
                     to: output.appending(path: "s3-s4-error.log"),
+                    options: .atomic
+                )
+                Darwin.exit(EXIT_FAILURE)
+            }
+        }
+    }
+
+    private static func launchS5Spike(
+        _ arguments: (output: String, unsignedProbe: String, media: String)
+    ) {
+        Task.detached(priority: .userInitiated) {
+            let output = URL(fileURLWithPath: arguments.output, isDirectory: true)
+            do {
+                guard let executable = Bundle.main.executableURL else {
+                    throw CocoaError(.executableNotLoadable)
+                }
+                _ = try await S5SpikeRunner.run(
+                    outputDirectory: output,
+                    signedExecutableURL: executable,
+                    unsignedProbeURL: URL(fileURLWithPath: arguments.unsignedProbe),
+                    deletionMediaFixtureURL: URL(fileURLWithPath: arguments.media)
+                )
+                Darwin.exit(EXIT_SUCCESS)
+            } catch {
+                try? FileManager.default.createDirectory(
+                    at: output,
+                    withIntermediateDirectories: true
+                )
+                try? Data("S5 spike failed: \(error)\n".utf8).write(
+                    to: output.appending(path: "s5-error.log"),
+                    options: .atomic
+                )
+                Darwin.exit(EXIT_FAILURE)
+            }
+        }
+    }
+
+    private static func launchS7Spike(
+        _ arguments: (output: String, media: String)
+    ) {
+        Task.detached(priority: .userInitiated) {
+            let output = URL(fileURLWithPath: arguments.output, isDirectory: true)
+            do {
+                guard let executable = Bundle.main.executableURL else {
+                    throw CocoaError(.executableNotLoadable)
+                }
+                _ = try await S7OfflineSpikeRunner.run(
+                    outputDirectory: output,
+                    mediaFixtureURL: URL(fileURLWithPath: arguments.media),
+                    signedExecutableURL: executable
+                )
+                Darwin.exit(EXIT_SUCCESS)
+            } catch {
+                try? FileManager.default.createDirectory(
+                    at: output,
+                    withIntermediateDirectories: true
+                )
+                try? Data("S7 spike failed: \(error)\n".utf8).write(
+                    to: output.appending(path: "s7-error.log"),
                     options: .atomic
                 )
                 Darwin.exit(EXIT_FAILURE)

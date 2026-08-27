@@ -1,0 +1,64 @@
+{
+  "deletion" : {
+    "databaseRowsAfterDeletion" : 0,
+    "filesScannedAfterDeletion" : 21,
+    "helperProjectionSentinelCount" : 0,
+    "mediaDecodeSentinelCount" : 0,
+    "mediaFilesDecodedAfterDeletion" : 0,
+    "plaintextMatchesAfterDeletion" : 0,
+    "seededMediaAbsentAfterDeletion" : true,
+    "seededMediaDecodedBeforeDeletion" : true
+  },
+  "encryption" : {
+    "cipherVersion" : "4.18.0 community",
+    "concurrentWorkload" : {
+      "failedOperationCount" : 0,
+      "integrityCheckPassed" : true,
+      "roleCount" : 5,
+      "successfulOperationCount" : 1000
+    },
+    "filesScannedBeforeDeletion" : 6,
+    "plaintextMatchesBeforeDeletion" : 0,
+    "sentinelCount" : 100,
+    "tempStore" : "FILE beside encrypted database via benchmark TMPDIR",
+    "walEnabled" : true
+  },
+  "faultInjection" : {
+    "boundariesExercised" : 10,
+    "consistentRecoveryCount" : 10000,
+    "crashPointCount" : 10000,
+    "orphanReadyMediaCount" : 0,
+    "searchableMissingMediaCount" : 0
+  },
+  "keychain" : {
+    "appModeHashMatched" : true,
+    "appModeStatus" : 0,
+    "cliModeHashMatched" : true,
+    "cliModeStatus" : 0,
+    "helperPackaging" : "signed application executable with --cli\/--mcp modes",
+    "keyByteCount" : 32,
+    "mcpModeHashMatched" : true,
+    "mcpModeStatus" : 0,
+    "mismatchedAccessGroupDenied" : true,
+    "mismatchedAccessGroupStatus" : -34018,
+    "unsignedHelperDenied" : true,
+    "unsignedProbeStatus" : -34018
+  },
+  "performance" : {
+    "encryptedP95Milliseconds" : 9.4265,
+    "encryptionOverheadFraction" : 0.00871228217020652,
+    "plaintextP95Milliseconds" : 9.345083,
+    "sampleCount" : 60
+  },
+  "processCrashes" : {
+    "boundaries" : [
+      "partial-write",
+      "ready-rename",
+      "database-commit",
+      "old-file-delete"
+    ],
+    "consistentRecoveryCount" : 4,
+    "forcedTerminationCount" : 4
+  },
+  "schemaVersion" : 1
+}

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "activeStory": "LM-008",
+  "activeStory": "LM-009",
   "stories": {
     "LM-001": {
       "status": "passed",
@@ -106,23 +106,33 @@
       "resumeProbe": null
     },
     "LM-008": {
-      "status": "active",
+      "status": "passed",
       "startedAt": "2026-08-27T19:34:25Z",
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": "Base checkpoint refs/tags/checkpoints/LM-007. Run S5-S7 SQLCipher, native-UI, and offline spikes and freeze measured defaults.",
+      "completedAt": "2026-08-27T22:47:29Z",
+      "gitRevision": "refs/tags/checkpoints/LM-008",
+      "evidence": [
+        "Results/LM-008/report.json",
+        "Decisions/0002-signed-helper-entrypoints.md",
+        "Decisions/0003-native-grid-fallback.md",
+        "Decisions/0004-offline-dependency-closure.md",
+        "Benchmarks/Results/S5/20260827T224019Z/s5-report.json",
+        "Benchmarks/Results/S6/20260827T222621Z/s6-report.json",
+        "Benchmarks/Results/S6/20260827T222621Z/s6-ui.png",
+        "Benchmarks/Results/S7/20260827T223755Z/network-audit.json",
+        "Benchmarks/Results/S7/20260827T223755Z/provenance.json"
+      ],
+      "notes": "Canonical S5 proves SQLCipher/WAL encryption, signed-app Keychain modes, denied unsigned/mismatched access, sub-1% measured overhead, 10,000 consistent crash recoveries, and forensic deletion including real HEVC decode. Canonical signed Release S6 passes all responsiveness, RSS, stale-selection, resize, appearance, VoiceOver, and pseudo-localization gates using the authorized NSCollectionView hot-grid fallback. Canonical S7 completes the fresh local journey under deny-all runtime networking with zero outbound attempts and complete shipping-file provenance. Defaults are frozen in configuration tests; all repository release/privacy/dependency gates pass.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null
     },
     "LM-009": {
-      "status": "pending",
-      "startedAt": null,
+      "status": "active",
+      "startedAt": "2026-08-27T22:47:29Z",
       "completedAt": null,
       "gitRevision": null,
       "evidence": [],
-      "notes": null,
+      "notes": "Base checkpoint refs/tags/checkpoints/LM-008. Implement SwiftUI application composition, app lifecycle actor, menu-bar extra, main-window scenes, and no-main-window launch.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null

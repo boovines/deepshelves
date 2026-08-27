@@ -1,0 +1,13 @@
+{
+  "git_revision": "f2b4f938ad639b5e6955cf041b3d2810e0d8b214",
+  "source_manifest_sha256": "55d6b2ddca1cc4fca09c3119f8a17fdf780e87ac3b20d42c19628667aa157c83",
+  "corpus_sha256": "eab8cb44cccf8497d312f3493c68886b6ed4c0dd67e682934152555ad754feb6",
+  "mac_model": "Mac15,6",
+  "ram_bytes": 19327352832,
+  "os_version": "26.5",
+  "os_build": "25F71",
+  "architecture": "arm64",
+  "xcode_version": "Xcode 26.5 Build version 17F42 ",
+  "configuration": "Release",
+  "keychainScope": "shared signed app executable modes; unsigned and mismatched probes denied"
+}

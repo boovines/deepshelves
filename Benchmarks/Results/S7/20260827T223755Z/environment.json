@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "gitRevision": "f2b4f938ad639b5e6955cf041b3d2810e0d8b214",
+  "sourceManifestSHA256": "3a7c48a49196beacce55b85775dc53fa9caf0dacdd0606000b21bd8e588aa577",
+  "dependencyManifestSHA256": "49dc29afe22d20691bc8a8eea0824c724284024bc45960ca595ccd4270de734f",
+  "macModel": "Mac15,6",
+  "osVersion": "26.5",
+  "osBuild": "25F71",
+  "architecture": "arm64",
+  "xcodeVersion": "Xcode 26.5 Build version 17F42 ",
+  "configuration": "Release",
+  "dependencyCacheVerified": true,
+  "automaticPackageResolutionDisabled": true,
+  "freshOfflineVisualSearchPassed": true,
+  "signedApplication": true,
+  "signedCLI": true,
+  "signedMCP": true,
+  "runtimeNetworkPolicy": "deny-all outbound",
+  "buildBootstrapPolicy": "pinned verified cache; normal Xcode build because SwiftPM child sandbox cannot nest inside sandbox-exec"
+}

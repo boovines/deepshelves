@@ -4,6 +4,7 @@ set -euo pipefail
 repo_root="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$repo_root"
 
+"$repo_root/scripts/materialize-dependencies.sh"
 expected_version="$(tr -d '[:space:]' < .xcodegen-version)"
 actual_version="$(xcodegen --version)"
 if [[ "$actual_version" != "Version: $expected_version" && "$actual_version" != "$expected_version" ]]; then
@@ -20,4 +21,3 @@ xcodebuild \
     -disableAutomaticPackageResolution \
     CODE_SIGNING_ALLOWED=NO \
     build
-

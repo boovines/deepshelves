@@ -41,10 +41,15 @@ for product in "${products[@]}"; do
         echo "Forbidden sandbox or network entitlement found in $product" >&2
         exit 1
     fi
-    if ! rg -q 'com\.justinhou\.deepshelves\.shared' <<<"$entitlements"; then
-        echo "Shared Keychain group is absent from $product" >&2
+    if [[ "$product" == *.app ]]; then
+        if ! rg -q 'com\.justinhou\.deepshelves\.shared' <<<"$entitlements"; then
+            echo "Shared Keychain group is absent from the signed application" >&2
+            exit 1
+        fi
+    elif rg -q 'keychain-access-groups|com\.justinhou\.deepshelves\.shared' <<<"$entitlements"; then
+        echo "Standalone launcher unexpectedly has Keychain privileges: $product" >&2
         exit 1
     fi
 done
 
-echo "signing-posture: signed products use Hardened Runtime, shared Keychain scope, and no sandbox/network entitlements"
+echo "signing-posture: signed products use Hardened Runtime and no sandbox/network entitlements; only the app has the shared Keychain scope"

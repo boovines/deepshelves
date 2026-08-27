@@ -58,7 +58,7 @@ final class DependencyManifestTests: XCTestCase {
         let mobileCLIP = try XCTUnwrap(components["coreml-mobileclip-s0"])
         XCTAssertEqual(mobileCLIP.artifacts.count, 6)
         XCTAssertEqual(mobileCLIP.runtimeFetchPolicy, "forbidden")
-        XCTAssertEqual(mobileCLIP.scope, "bundledModelCandidate")
+        XCTAssertEqual(mobileCLIP.scope, "bundledModelShipping")
 
         let whisper = try XCTUnwrap(components["whisperkit-small-en"])
         XCTAssertEqual(whisper.artifacts.count, 19)

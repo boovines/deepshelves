@@ -4,6 +4,7 @@ set -euo pipefail
 repo_root="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$repo_root"
 
+"$repo_root/scripts/materialize-dependencies.sh"
 xcodegen generate --spec project.yml
 xcodebuild \
     -project LocalMemory.xcodeproj \
@@ -13,4 +14,3 @@ xcodebuild \
     -disableAutomaticPackageResolution \
     CODE_SIGNING_ALLOWED=NO \
     test
-
