@@ -14,6 +14,12 @@ settings:
     CURRENT_PROJECT_VERSION: 1
     MARKETING_VERSION: 0.1.0
     CLANG_ENABLE_MODULES: YES
+    ENABLE_HARDENED_RUNTIME: YES
+    ENABLE_APP_SANDBOX: NO
+    CODE_SIGN_STYLE: Automatic
+    CODE_SIGN_IDENTITY: Apple Development
+    DEVELOPMENT_TEAM: NS5L7NNR8U
+    CODE_SIGN_INJECT_BASE_ENTITLEMENTS: NO
 packages:
   MemoryContracts:
     path: Packages/MemoryContracts
@@ -50,9 +56,10 @@ targets:
       - package: MemoryDesignSystem
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: app.deepshelves.localmemory
+        PRODUCT_BUNDLE_IDENTIFIER: com.justinhou.deepshelves.localmemory
         PRODUCT_NAME: Local Memory
         GENERATE_INFOPLIST_FILE: NO
+        CODE_SIGN_ENTITLEMENTS: Apps/LocalMemoryApp/LocalMemoryApp.entitlements
   LocalMemoryCLI:
     type: tool
     platform: macOS
@@ -62,8 +69,9 @@ targets:
       - package: MemoryContracts
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: app.deepshelves.localmemory.cli
+        PRODUCT_BUNDLE_IDENTIFIER: com.justinhou.deepshelves.localmemory.cli
         PRODUCT_NAME: local-memory
+        CODE_SIGN_ENTITLEMENTS: Apps/LocalMemoryCLI/LocalMemoryCLI.entitlements
   LocalMemoryMCP:
     type: tool
     platform: macOS
@@ -73,8 +81,9 @@ targets:
       - package: MemoryContracts
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: app.deepshelves.localmemory.mcp
+        PRODUCT_BUNDLE_IDENTIFIER: com.justinhou.deepshelves.localmemory.mcp
         PRODUCT_NAME: local-memory-mcp
+        CODE_SIGN_ENTITLEMENTS: Apps/LocalMemoryMCP/LocalMemoryMCP.entitlements
   LocalMemoryUnitTests:
     type: bundle.unit-test
     platform: macOS
@@ -82,6 +91,7 @@ targets:
       - Tests/Unit
     dependencies:
       - package: MemoryContracts
+      - package: MemoryStore
       - package: MemoryTestSupport
   LocalMemoryIntegrationTests:
     type: bundle.unit-test
@@ -118,6 +128,15 @@ targets:
       base:
         TEST_TARGET_NAME: LocalMemoryApp
 schemes:
+  LocalMemoryApp:
+    build:
+      targets:
+        LocalMemoryApp: all
+    run:
+      config: Debug
+      executable: LocalMemoryApp
+    archive:
+      config: Release
   LocalMemory:
     build:
       targets:

@@ -16,12 +16,15 @@
       "resumeProbe": null
     },
     "LM-002": {
-      "status": "pending",
-      "startedAt": null,
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": null,
+      "status": "passed",
+      "startedAt": "2026-08-27T07:37:57Z",
+      "completedAt": "2026-08-27T12:32:28Z",
+      "gitRevision": "refs/tags/checkpoints/LM-002",
+      "evidence": [
+        "Results/LM-002/H1-preflight.txt",
+        "Results/LM-002/entitlements.txt"
+      ],
+      "notes": "Fixed bundle IDs, team signing, Hardened Runtime, App Sandbox off, minimal shared Keychain group, macOS 15 minimum, and owner-only archive paths are verified. H1 was resolved; signed app/CLI/MCP, full tests, privacy smoke, and release build pass.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null

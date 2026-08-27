@@ -1,0 +1,121 @@
+LM-002 signing and entitlement evidence
+generated_at_utc: 2026-08-27T12:31:48Z
+valid_signing_identity:
+  1) 5F2CF76A05528002A43A04B748E50F81D795A4E9 "Apple Development: justin_hou25@icloud.com (K8SNDR5HV9)"
+     1 valid identities found
+
+build_settings[LocalMemoryApp]:
+    CODE_SIGN_ENTITLEMENTS = Apps/LocalMemoryApp/LocalMemoryApp.entitlements
+    CODE_SIGN_IDENTITY = Apple Development
+    CODE_SIGN_STYLE = Automatic
+    DEVELOPMENT_TEAM = NS5L7NNR8U
+    ENABLE_APP_SANDBOX = NO
+    ENABLE_HARDENED_RUNTIME = YES
+    MACOSX_DEPLOYMENT_TARGET = 15.0
+    PRODUCT_BUNDLE_IDENTIFIER = com.justinhou.deepshelves.localmemory
+
+build_settings[LocalMemoryCLI]:
+    CODE_SIGN_ENTITLEMENTS = Apps/LocalMemoryCLI/LocalMemoryCLI.entitlements
+    CODE_SIGN_IDENTITY = Apple Development
+    CODE_SIGN_STYLE = Automatic
+    DEVELOPMENT_TEAM = NS5L7NNR8U
+    ENABLE_APP_SANDBOX = NO
+    ENABLE_HARDENED_RUNTIME = YES
+    MACOSX_DEPLOYMENT_TARGET = 15.0
+    PRODUCT_BUNDLE_IDENTIFIER = com.justinhou.deepshelves.localmemory.cli
+
+build_settings[LocalMemoryMCP]:
+    CODE_SIGN_ENTITLEMENTS = Apps/LocalMemoryMCP/LocalMemoryMCP.entitlements
+    CODE_SIGN_IDENTITY = Apple Development
+    CODE_SIGN_STYLE = Automatic
+    DEVELOPMENT_TEAM = NS5L7NNR8U
+    ENABLE_APP_SANDBOX = NO
+    ENABLE_HARDENED_RUNTIME = YES
+    MACOSX_DEPLOYMENT_TARGET = 15.0
+    PRODUCT_BUNDLE_IDENTIFIER = com.justinhou.deepshelves.localmemory.mcp
+
+product: .build/SignedDerivedData/Build/Products/Release/Local Memory.app
+.build/SignedDerivedData/Build/Products/Release/Local Memory.app: valid on disk
+.build/SignedDerivedData/Build/Products/Release/Local Memory.app: satisfies its Designated Requirement
+Executable=/Users/justinhou/Development/deepshelves/.build/SignedDerivedData/Build/Products/Release/Local Memory.app/Contents/MacOS/Local Memory
+Identifier=com.justinhou.deepshelves.localmemory
+Format=app bundle with Mach-O universal (x86_64 arm64)
+CodeDirectory v=20500 size=593 flags=0x10000(runtime) hashes=7+7 location=embedded
+Hash type=sha256 size=32
+CandidateCDHash sha256=c25a735ad5e155936357fed10e3fd1995ab9f0d3
+CandidateCDHashFull sha256=c25a735ad5e155936357fed10e3fd1995ab9f0d3c5cc69da56000a0841fca52d
+Hash choices=sha256
+CMSDigest=c25a735ad5e155936357fed10e3fd1995ab9f0d3c5cc69da56000a0841fca52d
+CMSDigestType=2
+CDHash=c25a735ad5e155936357fed10e3fd1995ab9f0d3
+Signature size=4790
+Authority=Apple Development: justin_hou25@icloud.com (K8SNDR5HV9)
+Authority=Apple Worldwide Developer Relations Certification Authority
+Authority=Apple Root CA
+Signed Time=Aug 27, 2026 at 2:30:37 PM
+Info.plist entries=23
+TeamIdentifier=NS5L7NNR8U
+Runtime Version=26.5.0
+Sealed Resources version=2 rules=13 files=1
+warning: Specifying ':' in the path is deprecated and will not work in a future release
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "https://www.apple.com/DTDs/PropertyList-1.0.dtd"><plist version="1.0"><dict><key>com.apple.application-identifier</key><string>NS5L7NNR8U.com.justinhou.deepshelves.localmemory</string><key>com.apple.developer.team-identifier</key><string>NS5L7NNR8U</string><key>keychain-access-groups</key><array><string>NS5L7NNR8U.com.justinhou.deepshelves.shared</string></array></dict></plist>
+
+product: .build/SignedDerivedData/Build/Products/Release/local-memory
+.build/SignedDerivedData/Build/Products/Release/local-memory: valid on disk
+.build/SignedDerivedData/Build/Products/Release/local-memory: satisfies its Designated Requirement
+Executable=/Users/justinhou/Development/deepshelves/.build/SignedDerivedData/Build/Products/Release/local-memory
+Identifier=local-memory
+Format=Mach-O universal (x86_64 arm64)
+CodeDirectory v=20500 size=536 flags=0x10000(runtime) hashes=6+7 location=embedded
+Hash type=sha256 size=32
+CandidateCDHash sha256=df23e30dd09eb176db73e41d2d2e45e4a9fc0489
+CandidateCDHashFull sha256=df23e30dd09eb176db73e41d2d2e45e4a9fc04895e14e96707dc56fb3cfd3e06
+Hash choices=sha256
+CMSDigest=df23e30dd09eb176db73e41d2d2e45e4a9fc04895e14e96707dc56fb3cfd3e06
+CMSDigestType=2
+CDHash=df23e30dd09eb176db73e41d2d2e45e4a9fc0489
+Signature size=4790
+Authority=Apple Development: justin_hou25@icloud.com (K8SNDR5HV9)
+Authority=Apple Worldwide Developer Relations Certification Authority
+Authority=Apple Root CA
+Signed Time=Aug 27, 2026 at 2:30:43 PM
+Info.plist=not bound
+TeamIdentifier=NS5L7NNR8U
+Runtime Version=26.5.0
+Sealed Resources=none
+warning: Specifying ':' in the path is deprecated and will not work in a future release
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "https://www.apple.com/DTDs/PropertyList-1.0.dtd"><plist version="1.0"><dict><key>keychain-access-groups</key><array><string>NS5L7NNR8U.com.justinhou.deepshelves.shared</string></array></dict></plist>
+
+product: .build/SignedDerivedData/Build/Products/Release/local-memory-mcp
+.build/SignedDerivedData/Build/Products/Release/local-memory-mcp: valid on disk
+.build/SignedDerivedData/Build/Products/Release/local-memory-mcp: satisfies its Designated Requirement
+Executable=/Users/justinhou/Development/deepshelves/.build/SignedDerivedData/Build/Products/Release/local-memory-mcp
+Identifier=local-memory-mcp
+Format=Mach-O universal (x86_64 arm64)
+CodeDirectory v=20500 size=508 flags=0x10000(runtime) hashes=5+7 location=embedded
+Hash type=sha256 size=32
+CandidateCDHash sha256=ebd8d0b6a8c215bbefdfeeecd1562952dceaffa1
+CandidateCDHashFull sha256=ebd8d0b6a8c215bbefdfeeecd1562952dceaffa193cd5c87bef526ef3c1a47e8
+Hash choices=sha256
+CMSDigest=ebd8d0b6a8c215bbefdfeeecd1562952dceaffa193cd5c87bef526ef3c1a47e8
+CMSDigestType=2
+CDHash=ebd8d0b6a8c215bbefdfeeecd1562952dceaffa1
+Signature size=4790
+Authority=Apple Development: justin_hou25@icloud.com (K8SNDR5HV9)
+Authority=Apple Worldwide Developer Relations Certification Authority
+Authority=Apple Root CA
+Signed Time=Aug 27, 2026 at 2:30:46 PM
+Info.plist=not bound
+TeamIdentifier=NS5L7NNR8U
+Runtime Version=26.5.0
+Sealed Resources=none
+warning: Specifying ':' in the path is deprecated and will not work in a future release
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "https://www.apple.com/DTDs/PropertyList-1.0.dtd"><plist version="1.0"><dict><key>keychain-access-groups</key><array><string>NS5L7NNR8U.com.justinhou.deepshelves.shared</string></array></dict></plist>
+
+posture_assertions:
+PASS: all products verify with strict developer signatures
+PASS: all products have Hardened Runtime
+PASS: app sandbox is disabled
+PASS: no client/server network entitlement is present
+PASS: all products share the fixed DeepShelves keychain group
+PASS: minimum deployment target is macOS 15.0

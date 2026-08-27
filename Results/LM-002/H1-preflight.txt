@@ -1,0 +1,58 @@
+story: LM-002
+status: blocked_human
+gate: H1
+baseRevision: 6749ea54424fc07c0182d8c7726973cacd3cadfb
+observedAt: 2026-08-27T07:37:57Z
+
+completedBeforeGate:
+  - stable app/CLI/MCP bundle identifiers
+  - Hardened Runtime enabled for every shipping target
+  - App Sandbox disabled
+  - shared signed-helper Keychain entitlement files
+  - no network entitlement
+  - macOS 15 minimum deployment target
+  - owner-only archive path helper and tests
+
+verification:
+  privacySmoke: passed
+  affectedTests: TEST SUCCEEDED
+  unsignedReleaseBuild: BUILD SUCCEEDED
+  signingPosture: blocked before build
+
+rawIdentityProbe:
+  command: security find-identity -v -p codesigning
+  output: 0 valid identities found
+
+reason:
+  A stable Apple Development identity and its team identifier are required to sign all three products and prove that the shared Keychain access group is accepted without weakening its ACL.
+
+resumeProbe:
+  security find-identity -v -p codesigning | rg 'Apple Development:'
+
+resumeAttemptAt: 2026-08-27T12:01:56Z
+resumeAttemptResult:
+  - identity probe still returned 0 valid identities
+  - no Apple Development certificate was present in Keychain
+  - Xcode DVTDeveloperAccountManagerAppleIDLists contained a placeholder identifier but an empty active IDE.Prod account list
+  - no provisioning profiles were present
+  - HUMAN-ACTION.md was clarified to begin with Add Apple Account and then create Apple Development under the Personal Team
+
+resolvedAt: 2026-08-27T12:20:17Z
+resolution:
+  - user created Apple Development certificate for team NS5L7NNR8U
+  - certificate leaf was present but the Mac only had an expired 2023 WWDR intermediate, causing CSSMERR_TP_NOT_TRUSTED and zero valid identities
+  - downloaded AppleWWDRCAG3.cer from Apple's official PKI endpoint
+  - verified SHA-256 dcf21878c77f4198e4b4614f03d696d89c66c66008d4244e1b99161aac91601f
+  - added the public WWDR G3 intermediate to the login keychain without importing any private credential
+  - security find-identity then returned one valid Apple Development identity
+  - project DEVELOPMENT_TEAM fixed to NS5L7NNR8U
+
+keychainAuthorizationAttemptAt: 2026-08-27T12:26:06Z
+keychainAuthorizationResult:
+  - automatic signing created the Mac Team Provisioning Profile for com.justinhou.deepshelves.localmemory
+  - the original scheme launched app, CLI, and MCP codesign operations concurrently, producing three stacked prompts
+  - user reported that the entered password did not dismiss the frontmost login-keychain prompt
+  - the build was interrupted; process inspection confirmed no codesign caller remains, so any visible prompts are orphaned
+  - signing-posture.sh and project schemes were changed to sign app, CLI, and MCP sequentially
+  - a stale interrupted app signature produced a .cstemp format error on the immediate retry and will be cleaned before resuming
+  - H1 remains blocked only on verifying the login-keychain password/access control; no keychain reset is authorized
