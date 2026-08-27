@@ -1,0 +1,14 @@
+strict: true
+included:
+  - Apps
+  - Packages
+  - Tests
+excluded:
+  - .build
+  - LocalMemory.xcodeproj
+line_length:
+  warning: 100
+  error: 120
+identifier_name:
+  min_length: 2
+

@@ -1,0 +1,166 @@
+name: LocalMemory
+options:
+  minimumXcodeGenVersion: 2.46.0
+  deploymentTarget:
+    macOS: "15.0"
+  createIntermediateGroups: true
+  generateEmptyDirectories: true
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    SWIFT_STRICT_CONCURRENCY: complete
+    SWIFT_TREAT_WARNINGS_AS_ERRORS: YES
+    MACOSX_DEPLOYMENT_TARGET: "15.0"
+    CURRENT_PROJECT_VERSION: 1
+    MARKETING_VERSION: 0.1.0
+    CLANG_ENABLE_MODULES: YES
+packages:
+  MemoryContracts:
+    path: Packages/MemoryContracts
+  MemoryCapture:
+    path: Packages/MemoryCapture
+  MemoryStore:
+    path: Packages/MemoryStore
+  MemoryEnrichment:
+    path: Packages/MemoryEnrichment
+  MemorySearch:
+    path: Packages/MemorySearch
+  MemoryAgentAccess:
+    path: Packages/MemoryAgentAccess
+  MemoryDesignSystem:
+    path: Packages/MemoryDesignSystem
+  MemoryTestSupport:
+    path: Packages/MemoryTestSupport
+targets:
+  LocalMemoryApp:
+    type: application
+    platform: macOS
+    sources:
+      - Apps/LocalMemoryApp
+    info:
+      path: Apps/LocalMemoryApp/Info.plist
+      properties:
+        CFBundleDisplayName: Local Memory
+        CFBundleName: Local Memory
+        LSApplicationCategoryType: public.app-category.productivity
+        NSHighResolutionCapable: true
+        NSHumanReadableCopyright: Copyright 2026
+    dependencies:
+      - package: MemoryContracts
+      - package: MemoryDesignSystem
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: app.deepshelves.localmemory
+        PRODUCT_NAME: Local Memory
+        GENERATE_INFOPLIST_FILE: NO
+  LocalMemoryCLI:
+    type: tool
+    platform: macOS
+    sources:
+      - Apps/LocalMemoryCLI
+    dependencies:
+      - package: MemoryContracts
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: app.deepshelves.localmemory.cli
+        PRODUCT_NAME: local-memory
+  LocalMemoryMCP:
+    type: tool
+    platform: macOS
+    sources:
+      - Apps/LocalMemoryMCP
+    dependencies:
+      - package: MemoryContracts
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: app.deepshelves.localmemory.mcp
+        PRODUCT_NAME: local-memory-mcp
+  LocalMemoryUnitTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - Tests/Unit
+    dependencies:
+      - package: MemoryContracts
+      - package: MemoryTestSupport
+  LocalMemoryIntegrationTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - Tests/Integration
+    dependencies:
+      - package: MemoryContracts
+      - package: MemoryTestSupport
+  LocalMemoryPrivacyTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - Tests/Privacy
+    dependencies:
+      - package: MemoryContracts
+      - package: MemoryTestSupport
+  LocalMemoryPerformanceTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - Tests/Performance
+    dependencies:
+      - package: MemoryContracts
+      - package: MemoryTestSupport
+  LocalMemoryUITests:
+    type: bundle.ui-testing
+    platform: macOS
+    sources:
+      - Tests/UI
+    dependencies:
+      - target: LocalMemoryApp
+    settings:
+      base:
+        TEST_TARGET_NAME: LocalMemoryApp
+schemes:
+  LocalMemory:
+    build:
+      targets:
+        LocalMemoryApp: all
+        LocalMemoryCLI: all
+        LocalMemoryMCP: all
+        LocalMemoryUnitTests: [test]
+        LocalMemoryIntegrationTests: [test]
+        LocalMemoryPrivacyTests: [test]
+        LocalMemoryPerformanceTests: [test]
+    run:
+      config: Debug
+      executable: LocalMemoryApp
+    test:
+      config: Debug
+      gatherCoverageData: true
+      targets:
+        - LocalMemoryUnitTests
+        - LocalMemoryIntegrationTests
+        - LocalMemoryPrivacyTests
+        - LocalMemoryPerformanceTests
+    archive:
+      config: Release
+  LocalMemory-UI:
+    build:
+      targets:
+        LocalMemoryApp: all
+        LocalMemoryUITests: [test]
+    test:
+      config: Debug
+      targets:
+        - LocalMemoryUITests
+  LocalMemoryCLI:
+    build:
+      targets:
+        LocalMemoryCLI: all
+    run:
+      config: Debug
+      executable: LocalMemoryCLI
+  LocalMemoryMCP:
+    build:
+      targets:
+        LocalMemoryMCP: all
+    run:
+      config: Debug
+      executable: LocalMemoryMCP

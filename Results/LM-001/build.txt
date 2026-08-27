@@ -1,0 +1,50 @@
+story: LM-001
+status: passed
+checkpointRevision: refs/tags/checkpoints/LM-001
+testedPrecheckpointCommit: 83bed7c9e3b254b681225dacd237309c5f77d53f
+completedAt: 2026-08-27T07:34:00Z
+
+environment:
+  architecture: arm64
+  macOS: 26.5 (25F71)
+  Xcode: 26.5 (17F42)
+  XcodeGen: 2.46.0
+  freeDiskAtStart: 163 GiB
+
+repository:
+  local: /Users/justinhou/Development/deepshelves
+  origin: https://github.com/boovines/deepshelves.git
+  visibilityProbe: PRIVATE
+  defaultBranch: main
+
+planSnapshot:
+  source: /Users/justinhou/Development/coast-dup-plan
+  destination: Docs/Plan
+  verification: diff -rq returned no differences
+  aggregateSHA256: 24d9b64993eaa3a76386387252aa6ae45d91fb2c773755188047898002f46426
+
+verification:
+  - command: ./scripts/privacy-smoke.sh
+    result: passed; no runtime networking, telemetry, remote package, or network entitlement symbols
+  - command: ./scripts/test.sh
+    result: TEST SUCCEEDED; unit, integration, privacy, and performance bundles passed
+  - command: ./scripts/build-release.sh
+    result: BUILD SUCCEEDED; application, CLI, and MCP built with automatic package resolution disabled
+  - command: fresh no-local clone, then privacy smoke, tests, and release build
+    result: passed; clone remained clean except ignored generated/build products
+
+failureAndRecovery:
+  - initial xcodebuild probe could not load IDESimulatorFoundation because Xcode first-launch content was incomplete
+  - xcodebuild -runFirstLaunch completed successfully and subsequent generation/build/test probes passed
+  - no human H0 gate was required
+
+storyOutputs:
+  - private GitHub repository and origin
+  - canonical Docs/Plan snapshot
+  - project.yml and LocalMemory.xcworkspace
+  - native application, CLI, and MCP composition targets
+  - eight local Swift packages
+  - unit, integration, UI, privacy, and performance test targets
+  - pinned XcodeGen bootstrap version and formatter/linter configuration
+  - durable phase-state.json, progress.md, Decisions/, Results/, Fixtures/, and Benchmarks/
+
