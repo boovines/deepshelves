@@ -14,12 +14,13 @@ Install the build generator once with `brew bundle`, then generate the project:
 xcodegen generate --spec project.yml
 ```
 
-All source dependencies in LM-001 are local packages. After XcodeGen is installed, generation, tests, and builds run without network access.
+All packages in the shipping graph remain local. LM-004 pins the future database, MCP, model/runtime, build, and test closure in `Dependencies/dependencies.json`; its explicit online-cache and offline-verification procedure is documented in `Dependencies/README.md`. No runtime target downloads a package or model.
 
 ## Verification
 
 ```bash
 ./scripts/privacy-smoke.sh
+./scripts/check-dependencies.sh --static
 ./scripts/test.sh
 ./scripts/build-release.sh
 ```
@@ -29,4 +30,3 @@ The release script disables automatic package resolution and code signing for th
 ## Repository state
 
 `phase-state.json` is the machine-readable execution checkpoint. `progress.md` is append-only. Story evidence is stored beneath `Results/<story-id>/`. `HUMAN-ACTION.md` exists only during an enumerated human gate.
-

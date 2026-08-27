@@ -61,3 +61,14 @@ This file is append-only. Each story records measurements, failures, and durable
 - Search pages sort by fused score descending, capture time descending, then lowercase UUID lexical order. Timeline members sort chronologically and excluded/protected/policy-uncertain gaps reject application identity.
 - Eleven synthetic CC0 V1 fixtures are manifest-pinned by SHA-256. `scripts/check-contracts.sh` rebuilds the fixture generator, reproduces every byte, verifies every manifest hash, and runs 21 focused behavior/compatibility tests.
 - The full repository suite passes 27 tests with zero failures; privacy smoke and unsigned offline Release build pass. Evidence: `Results/LM-003/contracts.json`.
+
+## 2026-08-27 — LM-004 passed
+
+- The canonical dependency/model SBOM now pins 21 components by exact version and commit, records license text hashes, artifact sizes/SHA-256 values, linkage scope, runtime-fetch policy, and an update procedure. Forty-one source, binary, and model artifacts total 402,123,412 bytes.
+- The SQLCipher-maintained GRDB 7.11.1 fork is paired with SQLCipher.swift 4.18.0 and its package-declared XCFramework digest. This is the current supported SwiftPM shape for the fixed GRDB/SQLCipher architecture; database integration remains owned by LM-017/S5.
+- Official MCP Swift SDK 0.12.1 currently declares EventSource and HTTP/conformance dependencies. The upstream package, EventSource, and swift-nio are recorded but forbidden from shipping. LM-068 must form an audited official-source stdio-only local target and prove the release helper links none of them.
+- Argmax OSS 1.1.0 contains model-download configuration and an optional server build. It remains forbidden from shipping until optional audio creates a local-model-only target with `BUILD_ALL` disabled. The 19-file `small.en` 217 MB variant is pinned but remains off and build-time-install-only.
+- Apple's six-file MobileCLIP-S0 Core ML pair and the official tokenizer/reference source are byte-pinned. The model license is research-only and excludes commercial product use; the private research build may evaluate it, but redistribution or commercial release requires a different grant or approved model decision.
+- XcodeGen 2.46.0, Core ML SDK, Swift Testing, XCTest, and XCUIAutomation are tied to Xcode 26.5 build 17F42. Apple-licensed Xcode is installed separately rather than placed in the dependency cache.
+- A fresh cache fetched and verified all 41 artifacts. The offline verifier then passed with `curl` exported as a failing function, proving that `--offline` issued no network call. Full tests increased from 27 to 33 and pass; contract fixtures, privacy smoke, Release build, and linked-binary scans of app/CLI/MCP all pass.
+- Stable checkpoint: `refs/tags/checkpoints/LM-004`. Evidence: `Results/LM-004/dependencies.json`.

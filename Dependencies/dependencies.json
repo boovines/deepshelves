@@ -1,0 +1,646 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-27T13:18:33Z",
+  "buildEnvironment": {
+    "architecture": "arm64",
+    "macOSVersion": "26.5 (25F71)",
+    "xcodeBuild": "17F42",
+    "xcodeVersion": "26.5",
+    "macOSSDKBuild": "25F70",
+    "macOSSDKVersion": "26.5",
+    "swiftVersion": "6.3.2"
+  },
+  "policy": {
+    "automaticUpdates": "forbidden",
+    "postInstallScripts": "forbidden",
+    "runtimeDependencyDownloads": "forbidden",
+    "runtimeModelDownloads": "forbidden",
+    "shippingNetworkTransports": "forbidden"
+  },
+  "components": [
+    {
+      "id": "grdb-sqlcipher",
+      "version": "7.11.1",
+      "revision": "a285e4ca87ec6b3584c97b0ec25fc61fec02de60",
+      "source": "https://github.com/sqlcipher/GRDB.swift",
+      "scope": "futureShippingDependency",
+      "runtimeFetchPolicy": "forbidden",
+      "networkCapable": false,
+      "linkedShippingTargets": [],
+      "license": {
+        "name": "MIT",
+        "spdx": "MIT",
+        "source": "https://github.com/sqlcipher/GRDB.swift/blob/a285e4ca87ec6b3584c97b0ec25fc61fec02de60/LICENSE",
+        "expectedSize": 1062,
+        "sha256": "9853f9dce81365fcc1d9b46004633354450164b8d17904e92e80c444545f7e87"
+      },
+      "artifacts": [
+        {
+          "path": "grdb-sqlcipher-7.11.1.tar.gz",
+          "cachePath": "sources/grdb-sqlcipher-7.11.1.tar.gz",
+          "url": "https://codeload.github.com/sqlcipher/GRDB.swift/tar.gz/a285e4ca87ec6b3584c97b0ec25fc61fec02de60",
+          "expectedSize": 7519535,
+          "sha256": "5a2d2fd1c1ed758488bf20610e700b962309e504d5c3e62216df0305a0065d4f"
+        }
+      ],
+      "updateProcedure": "Select an SQLCipher-managed GRDB release, resolve its peeled commit, rerun S5, refresh source/license hashes, then update this manifest in one reviewed story."
+    },
+    {
+      "id": "sqlcipher-swift",
+      "version": "4.18.0",
+      "revision": "f879fffaaa3ad3541a77830daad4a28726dfa927",
+      "source": "https://github.com/sqlcipher/SQLCipher.swift",
+      "scope": "futureShippingDependency",
+      "runtimeFetchPolicy": "forbidden",
+      "networkCapable": false,
+      "linkedShippingTargets": [],
+      "license": {
+        "name": "BSD-style SQLCipher license",
+        "spdx": "LicenseRef-SQLCipher-BSD",
+        "source": "https://github.com/sqlcipher/SQLCipher.swift/blob/f879fffaaa3ad3541a77830daad4a28726dfa927/LICENSE.md",
+        "expectedSize": 23086,
+        "sha256": "930857b664903eef7d8ee4f110c111aa6f97acebf96f162669f4bf62722c2b31"
+      },
+      "artifacts": [
+        {
+          "path": "sqlcipher-swift-4.18.0.tar.gz",
+          "cachePath": "sources/sqlcipher-swift-4.18.0.tar.gz",
+          "url": "https://codeload.github.com/sqlcipher/SQLCipher.swift/tar.gz/f879fffaaa3ad3541a77830daad4a28726dfa927",
+          "expectedSize": 10642,
+          "sha256": "b5b47fadaa3f06062e7972631e759ea092ab276a11c8536eac6e84f05283d1eb"
+        },
+        {
+          "path": "SQLCipher.xcframework.zip",
+          "cachePath": "binaries/SQLCipher.xcframework-4.18.0.zip",
+          "url": "https://github.com/sqlcipher/SQLCipher.swift/releases/download/4.18.0/SQLCipher.xcframework.zip",
+          "expectedSize": 50471079,
+          "sha256": "904823c0e8ccd8e9c21a871238470e9ac57c7c20ff17341171008c32230154cb"
+        }
+      ],
+      "updateProcedure": "Update only with the GRDB pin; verify the release XCFramework checksum against Package.swift and rerun encryption, WAL, crash, and helper-access spikes."
+    },
+    {
+      "id": "mcp-swift-sdk",
+      "version": "0.12.1",
+      "revision": "a0ae212ebf6eab5f754c3129608bc5557637e605",
+      "source": "https://github.com/modelcontextprotocol/swift-sdk",
+      "scope": "forbiddenShipping",
+      "runtimeFetchPolicy": "forbidden",
+      "networkCapable": true,
+      "linkedShippingTargets": [],
+      "license": {
+        "name": "Apache-2.0 and MIT historical code",
+        "spdx": "Apache-2.0 AND MIT",
+        "source": "https://github.com/modelcontextprotocol/swift-sdk/blob/a0ae212ebf6eab5f754c3129608bc5557637e605/LICENSE",
+        "expectedSize": 12227,
+        "sha256": "0382b0057770ca05e9c350a50aa3b1c1fea84da0bc81d723bf00b9aa841be58a"
+      },
+      "artifacts": [
+        {
+          "path": "mcp-swift-sdk-0.12.1.tar.gz",
+          "cachePath": "sources/mcp-swift-sdk-0.12.1.tar.gz",
+          "url": "https://codeload.github.com/modelcontextprotocol/swift-sdk/tar.gz/a0ae212ebf6eab5f754c3129608bc5557637e605",
+          "expectedSize": 229445,
+          "sha256": "497caabc0cdf669fe442421b4fff13bf5ce7aa132bc747e851c9fdc63f56c0c5"
+        }
+      ],
+      "notes": "The upstream package includes EventSource and HTTP-capable transports. The unmodified package is prohibited from shipping. LM-068 must expose only official SDK stdio functionality through an audited local target and prove that EventSource/NIOHTTP are absent from the linked helper.",
+      "updateProcedure": "Review MCP protocol changes, resolve the exact release commit and full package closure, refresh hashes/licenses, reapply the stdio-only packaging boundary, and rerun two-client protocol plus linked-binary network audits."
+    },
+    {
+      "id": "swift-system",
+      "version": "1.4.0",
+      "revision": "c8a44d836fe7913603e246acab7c528c2e780168",
+      "source": "https://github.com/apple/swift-system",
+      "scope": "futureStdioDependency",
+      "runtimeFetchPolicy": "forbidden",
+      "networkCapable": false,
+      "linkedShippingTargets": [],
+      "license": {
+        "name": "Apache-2.0",
+        "spdx": "Apache-2.0",
+        "source": "https://github.com/apple/swift-system/blob/c8a44d836fe7913603e246acab7c528c2e780168/LICENSE.txt",
+        "expectedSize": 11750,
+        "sha256": "2245a990b635558be210fb3eb4f8a6f7a49aebc0fefbf5859146a65ddc7ddcf3"
+      },
+      "artifacts": [
+        {
+          "path": "swift-system-1.4.0.tar.gz",
+          "cachePath": "sources/swift-system-1.4.0.tar.gz",
+          "url": "https://codeload.github.com/apple/swift-system/tar.gz/c8a44d836fe7913603e246acab7c528c2e780168",
+          "expectedSize": 98804,
+          "sha256": "a0d8778a04ce76b44513df41ecb3a54fd5f7fa978c51d45bcb4e436163a47e7c"
+        }
+      ],
+      "updateProcedure": "Update only as part of the MCP stdio closure and rerun helper linkage and stdio cancellation tests."
+    },
+    {
+      "id": "swift-log",
+      "version": "1.6.2",
+      "revision": "96a2f8a0fa41e9e09af4585e2724c4e825410b91",
+      "source": "https://github.com/apple/swift-log",
+      "scope": "futureStdioDependency",
+      "runtimeFetchPolicy": "forbidden",
+      "networkCapable": false,
+      "linkedShippingTargets": [],
+      "license": {
+        "name": "Apache-2.0",
+        "spdx": "Apache-2.0",
+        "source": "https://github.com/apple/swift-log/blob/96a2f8a0fa41e9e09af4585e2724c4e825410b91/LICENSE.txt",
+        "expectedSize": 11358,
+        "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+      },
+      "artifacts": [
+        {
+          "path": "swift-log-1.6.2.tar.gz",
+          "cachePath": "sources/swift-log-1.6.2.tar.gz",
+          "url": "https://codeload.github.com/apple/swift-log/tar.gz/96a2f8a0fa41e9e09af4585e2724c4e825410b91",
+          "expectedSize": 50898,
+          "sha256": "8130c9b029a9c821360483c81f10666140b01907be7325294f450228226cde8e"
+        }
+      ],
+      "updateProcedure": "Update only as part of the MCP stdio closure and verify that logging remains content-free and local."
+    },
+    {
+      "id": "eventsource",
+      "version": "1.1.0",
+      "revision": "e83f076811f32757305b8bf69ac92d05626ffdd7",
+      "source": "https://github.com/mattt/eventsource",
+      "scope": "forbiddenShipping",
+      "runtimeFetchPolicy": "forbidden",
+      "networkCapable": true,
+      "linkedShippingTargets": [],
+      "license": {
+        "name": "Apache-2.0",
+        "spdx": "Apache-2.0",
+        "source": "https://github.com/mattt/EventSource/blob/e83f076811f32757305b8bf69ac92d05626ffdd7/LICENSE",
+        "expectedSize": 11346,
+        "sha256": "5a79e5efc0acd18c5db2b9079445f87942b4f342eebbf7f792ea296825563d82"
+      },
+      "artifacts": [
+        {
+          "path": "eventsource-1.1.0.tar.gz",
+          "cachePath": "sources/eventsource-1.1.0.tar.gz",
+          "url": "https://codeload.github.com/mattt/eventsource/tar.gz/e83f076811f32757305b8bf69ac92d05626ffdd7",
+          "expectedSize": 25452,
+          "sha256": "0844e3c09cea25b719cb5fdfd7343c4d296a0eb409605fa6113e6647bfb26f59"
+        }
+      ],
+      "updateProcedure": "Do not update or link; this records the upstream MCP closure solely so the forbidden transport remains visible to audits."
+    },
+    {
+      "id": "swift-nio",
+      "version": "2.94.0",
+      "revision": "5e72fc102906ebe75a3487595a653e6f43725552",
+      "source": "https://github.com/apple/swift-nio",
+      "scope": "forbiddenShipping",
+      "runtimeFetchPolicy": "forbidden",
+      "networkCapable": true,
+      "linkedShippingTargets": [],
+      "license": {
+        "name": "Apache-2.0",
+        "spdx": "Apache-2.0",
+        "source": "https://github.com/apple/swift-nio/blob/5e72fc102906ebe75a3487595a653e6f43725552/LICENSE.txt",
+        "expectedSize": 11358,
+        "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+      },
+      "artifacts": [
+        {
+          "path": "swift-nio-2.94.0.tar.gz",
+          "cachePath": "sources/swift-nio-2.94.0.tar.gz",
+          "url": "https://codeload.github.com/apple/swift-nio/tar.gz/5e72fc102906ebe75a3487595a653e6f43725552",
+          "expectedSize": 1405734,
+          "sha256": "60b1bfb532b01ab47aa3302fd4863faa4ddc158f854ad644b0e3c9eacf7d81f0"
+        }
+      ],
+      "updateProcedure": "Do not update or link; it is used only by upstream MCP conformance executables that DeepShelves does not ship."
+    },
+    {
+      "id": "swift-atomics",
+      "version": "1.3.0",
+      "revision": "b601256eab081c0f92f059e12818ac1d4f178ff7",
+      "source": "https://github.com/apple/swift-atomics",
+      "scope": "nonShippingTransitive",
+      "runtimeFetchPolicy": "forbidden",
+      "networkCapable": false,
+      "linkedShippingTargets": [],
+      "license": {
+        "name": "Apache-2.0",
+        "spdx": "Apache-2.0",
+        "source": "https://github.com/apple/swift-atomics/blob/b601256eab081c0f92f059e12818ac1d4f178ff7/LICENSE.txt",
+        "expectedSize": 11751,
+        "sha256": "770af8291f708538d8ff885a0bbc4e045cd700531741c4f99528d435c14d7f55"
+      },
+      "artifacts": [
+        {
+          "path": "swift-atomics-1.3.0.tar.gz",
+          "cachePath": "sources/swift-atomics-1.3.0.tar.gz",
+          "url": "https://codeload.github.com/apple/swift-atomics/tar.gz/b601256eab081c0f92f059e12818ac1d4f178ff7",
+          "expectedSize": 190070,
+          "sha256": "0abae8e56d69b1208e6a44912d4080f2dbeb5447de7f2b55f2f8b6e1d01dc312"
+        }
+      ],
+      "updateProcedure": "Update only if an audited dependency closure still requires it; it is not a direct product dependency."
+    },
+    {
+      "id": "swift-collections",
+      "version": "1.3.0",
+      "revision": "7b847a3b7008b2dc2f47ca3110d8c782fb2e5c7e",
+      "source": "https://github.com/apple/swift-collections",
+      "scope": "nonShippingTransitive",
+      "runtimeFetchPolicy": "forbidden",
+      "networkCapable": false,
+      "linkedShippingTargets": [],
+      "license": {
+        "name": "Apache-2.0",
+        "spdx": "Apache-2.0",
+        "source": "https://github.com/apple/swift-collections/blob/7b847a3b7008b2dc2f47ca3110d8c782fb2e5c7e/LICENSE.txt",
+        "expectedSize": 11751,
+        "sha256": "770af8291f708538d8ff885a0bbc4e045cd700531741c4f99528d435c14d7f55"
+      },
+      "artifacts": [
+        {
+          "path": "swift-collections-1.3.0.tar.gz",
+          "cachePath": "sources/swift-collections-1.3.0.tar.gz",
+          "url": "https://codeload.github.com/apple/swift-collections/tar.gz/7b847a3b7008b2dc2f47ca3110d8c782fb2e5c7e",
+          "expectedSize": 5747674,
+          "sha256": "b8491dab73991a482eea789a0f3d9b6a4c68d35117aec2fa73845d04b6f53ecc"
+        }
+      ],
+      "updateProcedure": "Update only if an audited dependency closure still requires it; it is not a direct product dependency."
+    },
+    {
+      "id": "swift-docc-plugin",
+      "version": "main@e977f65",
+      "revision": "e977f65879f82b375a044c8837597f690c067da6",
+      "source": "https://github.com/swiftlang/swift-docc-plugin",
+      "scope": "buildOnly",
+      "runtimeFetchPolicy": "forbidden",
+      "networkCapable": false,
+      "linkedShippingTargets": [],
+      "license": {
+        "name": "Apache-2.0",
+        "spdx": "Apache-2.0",
+        "source": "https://github.com/swiftlang/swift-docc-plugin/blob/e977f65879f82b375a044c8837597f690c067da6/LICENSE.txt",
+        "expectedSize": 11756,
+        "sha256": "11875c32f8de06e40b25b9e1dc78776baad9810032601c5325db6234c86d71e9"
+      },
+      "artifacts": [
+        {
+          "path": "swift-docc-plugin-e977f65.tar.gz",
+          "cachePath": "sources/swift-docc-plugin-e977f65.tar.gz",
+          "url": "https://codeload.github.com/swiftlang/swift-docc-plugin/tar.gz/e977f65879f82b375a044c8837597f690c067da6",
+          "expectedSize": 1377707,
+          "sha256": "3628f051c54ec1e1c94cbfa496fea94ba25de731c9ae6fe2112490e8fe24df9a"
+        }
+      ],
+      "notes": "Upstream declares a floating main branch; this manifest freezes the resolved commit. DeepShelves shipping builds do not need DocC and must not resolve this branch dynamically.",
+      "updateProcedure": "Refresh only when auditing a new MCP release; resolve main to an explicit commit before any cache fetch."
+    },
+    {
+      "id": "swift-docc-symbolkit",
+      "version": "1.0.0",
+      "revision": "b45d1f2ed151d057b54504d653e0da5552844e34",
+      "source": "https://github.com/swiftlang/swift-docc-symbolkit",
+      "scope": "buildOnly",
+      "runtimeFetchPolicy": "forbidden",
+      "networkCapable": false,
+      "linkedShippingTargets": [],
+      "license": {
+        "name": "Apache-2.0",
+        "spdx": "Apache-2.0",
+        "source": "https://github.com/swiftlang/swift-docc-symbolkit/blob/b45d1f2ed151d057b54504d653e0da5552844e34/LICENSE.txt",
+        "expectedSize": 11756,
+        "sha256": "11875c32f8de06e40b25b9e1dc78776baad9810032601c5325db6234c86d71e9"
+      },
+      "artifacts": [
+        {
+          "path": "swift-docc-symbolkit-1.0.0.tar.gz",
+          "cachePath": "sources/swift-docc-symbolkit-1.0.0.tar.gz",
+          "url": "https://codeload.github.com/swiftlang/swift-docc-symbolkit/tar.gz/b45d1f2ed151d057b54504d653e0da5552844e34",
+          "expectedSize": 164897,
+          "sha256": "aed4c7f9f733f982d0bb963a678685640abc8bbdaecb2608c66b7e08f8841646"
+        }
+      ],
+      "updateProcedure": "Refresh only with the frozen DocC build-only closure; never link it into product targets."
+    },
+    {
+      "id": "argmax-oss-swift",
+      "version": "1.1.0",
+      "revision": "1e2a163736dfa5a198e637ae44c114e1c6d5cc2d",
+      "source": "https://github.com/argmaxinc/argmax-oss-swift",
+      "scope": "forbiddenShipping",
+      "runtimeFetchPolicy": "forbidden",
+      "networkCapable": true,
+      "linkedShippingTargets": [],
+      "license": {
+        "name": "MIT with Apache-2.0 vendored notices",
+        "spdx": "MIT AND Apache-2.0",
+        "source": "https://github.com/argmaxinc/argmax-oss-swift/blob/1e2a163736dfa5a198e637ae44c114e1c6d5cc2d/LICENSE",
+        "expectedSize": 1069,
+        "sha256": "b8673adf319f1d6905c5c38cf69513f8857930fb3445566fa9839c6948bb85c4"
+      },
+      "artifacts": [
+        {
+          "path": "argmax-oss-swift-1.1.0.tar.gz",
+          "cachePath": "sources/argmax-oss-swift-1.1.0.tar.gz",
+          "url": "https://codeload.github.com/argmaxinc/argmax-oss-swift/tar.gz/1e2a163736dfa5a198e637ae44c114e1c6d5cc2d",
+          "expectedSize": 3335963,
+          "sha256": "825ed7d4bce17e32bb33b17ef18749e6699edb3b6bf5afb0a0cc84c3b9bd409c"
+        }
+      ],
+      "notes": "The source contains model-download configuration and optional HTTP server code. It remains unlinked until Phase 8 creates an audited local-model-only WhisperKit target with BUILD_ALL disabled.",
+      "updateProcedure": "Update only in the optional-audio phase; audit vendored notices, remove download/server reachability, verify local small.en loading, and rerun zero-network plus transcription gates."
+    },
+    {
+      "id": "swift-argument-parser",
+      "version": "1.7.0",
+      "revision": "c5d11a805e765f52ba34ec7284bd4fcd6ba68615",
+      "source": "https://github.com/apple/swift-argument-parser",
+      "scope": "nonShippingTransitive",
+      "runtimeFetchPolicy": "forbidden",
+      "networkCapable": false,
+      "linkedShippingTargets": [],
+      "license": {
+        "name": "Apache-2.0",
+        "spdx": "Apache-2.0",
+        "source": "https://github.com/apple/swift-argument-parser/blob/c5d11a805e765f52ba34ec7284bd4fcd6ba68615/LICENSE.txt",
+        "expectedSize": 11751,
+        "sha256": "770af8291f708538d8ff885a0bbc4e045cd700531741c4f99528d435c14d7f55"
+      },
+      "artifacts": [
+        {
+          "path": "swift-argument-parser-1.7.0.tar.gz",
+          "cachePath": "sources/swift-argument-parser-1.7.0.tar.gz",
+          "url": "https://codeload.github.com/apple/swift-argument-parser/tar.gz/c5d11a805e765f52ba34ec7284bd4fcd6ba68615",
+          "expectedSize": 694950,
+          "sha256": "255f3dcfd835e36b397b17c1b3a205e01ae06751db20fb89c81e918167ddc7ae"
+        }
+      ],
+      "updateProcedure": "Update only if an audited optional Argmax target requires it; WhisperKit library integration must not pull the Argmax CLI."
+    },
+    {
+      "id": "mobileclip-reference-source",
+      "version": "aecfb545",
+      "revision": "aecfb5453d022e9deff12f81a150ea8f35194baa",
+      "source": "https://github.com/apple/ml-mobileclip",
+      "scope": "modelReferenceSource",
+      "runtimeFetchPolicy": "forbidden",
+      "networkCapable": false,
+      "linkedShippingTargets": [],
+      "license": {
+        "name": "Apple Sample Code License",
+        "spdx": "LicenseRef-Apple-Sample-Code",
+        "source": "https://github.com/apple/ml-mobileclip/blob/aecfb5453d022e9deff12f81a150ea8f35194baa/LICENSE",
+        "expectedSize": 1540,
+        "sha256": "e7b09f708a137b12d14656d05dce036353b426f53eebd215106738a00a0a9357"
+      },
+      "artifacts": [
+        {
+          "path": "ml-mobileclip-aecfb545.tar.gz",
+          "cachePath": "sources/ml-mobileclip-aecfb545.tar.gz",
+          "url": "https://codeload.github.com/apple/ml-mobileclip/tar.gz/aecfb5453d022e9deff12f81a150ea8f35194baa",
+          "expectedSize": 3551274,
+          "sha256": "168600d03780e7d0a8a523b941b5d9a12e74b2760bc7a421642619e44be82ec3"
+        }
+      ],
+      "notes": "Pinned reference includes Apple's tokenizer implementation, clip-merges.txt, and clip-vocab.json. No repository post-install or download script may run.",
+      "updateProcedure": "Update only with the Core ML S0 model pair; rerun tokenizer/reference-vector parity and inspect code/model licenses."
+    },
+    {
+      "id": "coreml-mobileclip-s0",
+      "version": "S0-coreml-3e0a7bf",
+      "revision": "3e0a7bfb9fe83da8a3efaa3fd8f7df24214bb947",
+      "source": "https://huggingface.co/apple/coreml-mobileclip",
+      "scope": "bundledModelCandidate",
+      "runtimeFetchPolicy": "forbidden",
+      "networkCapable": false,
+      "linkedShippingTargets": [],
+      "license": {
+        "name": "Apple Machine Learning Research Model License (research-only; no commercial product use)",
+        "spdx": "LicenseRef-Apple-ML-Research-Model",
+        "source": "https://github.com/apple/ml-mobileclip/blob/aecfb5453d022e9deff12f81a150ea8f35194baa/LICENSE_MODELS",
+        "expectedSize": 5816,
+        "sha256": "30c59d255d2b4075ba11b81ce5aa0109c28d28138d66d52f7f5d8cbba814df8b"
+      },
+      "artifacts": [
+        {
+          "path": "mobileclip_s0_image.mlpackage/Data/com.apple.CoreML/model.mlmodel",
+          "cachePath": "models/mobileclip-s0/mobileclip_s0_image.mlpackage/Data/com.apple.CoreML/model.mlmodel",
+          "url": "https://huggingface.co/apple/coreml-mobileclip/resolve/3e0a7bfb9fe83da8a3efaa3fd8f7df24214bb947/mobileclip_s0_image.mlpackage/Data/com.apple.CoreML/model.mlmodel?download=true",
+          "expectedSize": 153260,
+          "sha256": "2c1afa132c41c6535817cc67894bd7484bc2cbd084ed5e2f12b24f611af17591"
+        },
+        {
+          "path": "mobileclip_s0_image.mlpackage/Data/com.apple.CoreML/weights/weight.bin",
+          "cachePath": "models/mobileclip-s0/mobileclip_s0_image.mlpackage/Data/com.apple.CoreML/weights/weight.bin",
+          "url": "https://huggingface.co/apple/coreml-mobileclip/resolve/3e0a7bfb9fe83da8a3efaa3fd8f7df24214bb947/mobileclip_s0_image.mlpackage/Data/com.apple.CoreML/weights/weight.bin?download=true",
+          "expectedSize": 22717696,
+          "sha256": "87d8f63997bbd2f38ba7defeaaa2c571928bdece56aa9629542198b3ce906ed6"
+        },
+        {
+          "path": "mobileclip_s0_image.mlpackage/Manifest.json",
+          "cachePath": "models/mobileclip-s0/mobileclip_s0_image.mlpackage/Manifest.json",
+          "url": "https://huggingface.co/apple/coreml-mobileclip/resolve/3e0a7bfb9fe83da8a3efaa3fd8f7df24214bb947/mobileclip_s0_image.mlpackage/Manifest.json?download=true",
+          "expectedSize": 617,
+          "sha256": "fe07dde983dae92c1799132816ce55f9ff8487f2681b530abf7222025aa27fa4"
+        },
+        {
+          "path": "mobileclip_s0_text.mlpackage/Data/com.apple.CoreML/model.mlmodel",
+          "cachePath": "models/mobileclip-s0/mobileclip_s0_text.mlpackage/Data/com.apple.CoreML/model.mlmodel",
+          "url": "https://huggingface.co/apple/coreml-mobileclip/resolve/3e0a7bfb9fe83da8a3efaa3fd8f7df24214bb947/mobileclip_s0_text.mlpackage/Data/com.apple.CoreML/model.mlmodel?download=true",
+          "expectedSize": 57953,
+          "sha256": "81eba836ff4dbc8ae021d70006288b533ba7eed3c2973d245b0d5ea047305bfd"
+        },
+        {
+          "path": "mobileclip_s0_text.mlpackage/Data/com.apple.CoreML/weights/weight.bin",
+          "cachePath": "models/mobileclip-s0/mobileclip_s0_text.mlpackage/Data/com.apple.CoreML/weights/weight.bin",
+          "url": "https://huggingface.co/apple/coreml-mobileclip/resolve/3e0a7bfb9fe83da8a3efaa3fd8f7df24214bb947/mobileclip_s0_text.mlpackage/Data/com.apple.CoreML/weights/weight.bin?download=true",
+          "expectedSize": 84871616,
+          "sha256": "34723e51445b2630106e94e1fdbebed80e7676b404fb839f4eb9bec97bdcad68"
+        },
+        {
+          "path": "mobileclip_s0_text.mlpackage/Manifest.json",
+          "cachePath": "models/mobileclip-s0/mobileclip_s0_text.mlpackage/Manifest.json",
+          "url": "https://huggingface.co/apple/coreml-mobileclip/resolve/3e0a7bfb9fe83da8a3efaa3fd8f7df24214bb947/mobileclip_s0_text.mlpackage/Manifest.json?download=true",
+          "expectedSize": 617,
+          "sha256": "a7cb0864a627468a953afd107262097ad74a0fcf82e49df7e00b9c86385bb7db"
+        }
+      ],
+      "notes": "The pinned license is research-only and excludes commercial product use. This private personal research build may evaluate it, but redistribution or commercial release requires a different grant or a separately approved model decision.",
+      "updateProcedure": "Never update in-app. In a build story, fetch this exact six-file set, verify every hash before compilation/loading, rerun S3 parity/recall/performance, and review license scope before any distribution."
+    },
+    {
+      "id": "whisperkit-small-en",
+      "version": "small.en-217MB",
+      "revision": "0f63a7800b00dd0226abd051b906c246e1907482",
+      "source": "https://huggingface.co/argmaxinc/whisperkit-coreml",
+      "scope": "optionalBuildTimeInstallOnly",
+      "runtimeFetchPolicy": "forbidden",
+      "networkCapable": false,
+      "linkedShippingTargets": [],
+      "license": {
+        "name": "MIT declared by Argmax model repository; upstream model terms require re-audit before distribution",
+        "spdx": "MIT",
+        "source": "https://github.com/argmaxinc/argmax-oss-swift/blob/1e2a163736dfa5a198e637ae44c114e1c6d5cc2d/LICENSE",
+        "expectedSize": 1069,
+        "sha256": "b8673adf319f1d6905c5c38cf69513f8857930fb3445566fa9839c6948bb85c4"
+      },
+      "artifacts": [
+        {"path":"openai_whisper-small.en_217MB/AudioEncoder.mlmodelc/analytics/coremldata.bin","cachePath":"models/whisperkit-small-en/AudioEncoder.mlmodelc/analytics/coremldata.bin","url":"https://huggingface.co/argmaxinc/whisperkit-coreml/resolve/0f63a7800b00dd0226abd051b906c246e1907482/openai_whisper-small.en_217MB/AudioEncoder.mlmodelc/analytics/coremldata.bin?download=true","expectedSize":243,"sha256":"dedfa7d9707c7a23e5dac213d0a7ed1bcb770586a8010c8b97b5415c7ab03a98"},
+        {"path":"openai_whisper-small.en_217MB/AudioEncoder.mlmodelc/coremldata.bin","cachePath":"models/whisperkit-small-en/AudioEncoder.mlmodelc/coremldata.bin","url":"https://huggingface.co/argmaxinc/whisperkit-coreml/resolve/0f63a7800b00dd0226abd051b906c246e1907482/openai_whisper-small.en_217MB/AudioEncoder.mlmodelc/coremldata.bin?download=true","expectedSize":347,"sha256":"3fdc970c253d212db32bbb47c713e54d1b28677f9ff845834020dab59cfc5e9c"},
+        {"path":"openai_whisper-small.en_217MB/AudioEncoder.mlmodelc/metadata.json","cachePath":"models/whisperkit-small-en/AudioEncoder.mlmodelc/metadata.json","url":"https://huggingface.co/argmaxinc/whisperkit-coreml/resolve/0f63a7800b00dd0226abd051b906c246e1907482/openai_whisper-small.en_217MB/AudioEncoder.mlmodelc/metadata.json?download=true","expectedSize":1942,"sha256":"cc5b8143fddf32493a28fbd9cdda8222a862912162a665f40290f94dcbf5b4b5"},
+        {"path":"openai_whisper-small.en_217MB/AudioEncoder.mlmodelc/model.mil","cachePath":"models/whisperkit-small-en/AudioEncoder.mlmodelc/model.mil","url":"https://huggingface.co/argmaxinc/whisperkit-coreml/resolve/0f63a7800b00dd0226abd051b906c246e1907482/openai_whisper-small.en_217MB/AudioEncoder.mlmodelc/model.mil?download=true","expectedSize":353689,"sha256":"233a772aceff5bf09aa5a1a51c03fdb2e0bca257b430f9b92bf461ad51ccd584"},
+        {"path":"openai_whisper-small.en_217MB/AudioEncoder.mlmodelc/model.mlmodel","cachePath":"models/whisperkit-small-en/AudioEncoder.mlmodelc/model.mlmodel","url":"https://huggingface.co/argmaxinc/whisperkit-coreml/resolve/0f63a7800b00dd0226abd051b906c246e1907482/openai_whisper-small.en_217MB/AudioEncoder.mlmodelc/model.mlmodel?download=true","expectedSize":293189,"sha256":"20bf50c2166e980a7b89b503a9b61e580198843408bf1a1f5493c7199f542221"},
+        {"path":"openai_whisper-small.en_217MB/AudioEncoder.mlmodelc/weights/weight.bin","cachePath":"models/whisperkit-small-en/AudioEncoder.mlmodelc/weights/weight.bin","url":"https://huggingface.co/argmaxinc/whisperkit-coreml/resolve/0f63a7800b00dd0226abd051b906c246e1907482/openai_whisper-small.en_217MB/AudioEncoder.mlmodelc/weights/weight.bin?download=true","expectedSize":62052160,"sha256":"87be26c3c1e2a804cd739fcd24a7c97ed3b860332c46de173ed69290f5982cb0"},
+        {"path":"openai_whisper-small.en_217MB/MelSpectrogram.mlmodelc/analytics/coremldata.bin","cachePath":"models/whisperkit-small-en/MelSpectrogram.mlmodelc/analytics/coremldata.bin","url":"https://huggingface.co/argmaxinc/whisperkit-coreml/resolve/0f63a7800b00dd0226abd051b906c246e1907482/openai_whisper-small.en_217MB/MelSpectrogram.mlmodelc/analytics/coremldata.bin?download=true","expectedSize":243,"sha256":"c4f367993f0198e9858a4d89fb054318982c91a9bb5946e29231421c2f1100b9"},
+        {"path":"openai_whisper-small.en_217MB/MelSpectrogram.mlmodelc/coremldata.bin","cachePath":"models/whisperkit-small-en/MelSpectrogram.mlmodelc/coremldata.bin","url":"https://huggingface.co/argmaxinc/whisperkit-coreml/resolve/0f63a7800b00dd0226abd051b906c246e1907482/openai_whisper-small.en_217MB/MelSpectrogram.mlmodelc/coremldata.bin?download=true","expectedSize":328,"sha256":"806321f1034184a10b04dc50816219dec8ae9789698712050c81edecb9bb5aa7"},
+        {"path":"openai_whisper-small.en_217MB/MelSpectrogram.mlmodelc/metadata.json","cachePath":"models/whisperkit-small-en/MelSpectrogram.mlmodelc/metadata.json","url":"https://huggingface.co/argmaxinc/whisperkit-coreml/resolve/0f63a7800b00dd0226abd051b906c246e1907482/openai_whisper-small.en_217MB/MelSpectrogram.mlmodelc/metadata.json?download=true","expectedSize":1878,"sha256":"6a95b18553edd73f018fe954d203d9c3cfa70dfa596d140c20f519ca471fe6be"},
+        {"path":"openai_whisper-small.en_217MB/MelSpectrogram.mlmodelc/model.mil","cachePath":"models/whisperkit-small-en/MelSpectrogram.mlmodelc/model.mil","url":"https://huggingface.co/argmaxinc/whisperkit-coreml/resolve/0f63a7800b00dd0226abd051b906c246e1907482/openai_whisper-small.en_217MB/MelSpectrogram.mlmodelc/model.mil?download=true","expectedSize":10134,"sha256":"7877c0f519a97a7c0dc1e0e9f8ae316bd864afcb2cffa89c770184b07e7767c9"},
+        {"path":"openai_whisper-small.en_217MB/MelSpectrogram.mlmodelc/weights/weight.bin","cachePath":"models/whisperkit-small-en/MelSpectrogram.mlmodelc/weights/weight.bin","url":"https://huggingface.co/argmaxinc/whisperkit-coreml/resolve/0f63a7800b00dd0226abd051b906c246e1907482/openai_whisper-small.en_217MB/MelSpectrogram.mlmodelc/weights/weight.bin?download=true","expectedSize":354080,"sha256":"801024dbc7a89c677be1f8b285de3409e35f7d1786c9c8d9d0d6842ac57a1c83"},
+        {"path":"openai_whisper-small.en_217MB/TextDecoder.mlmodelc/analytics/coremldata.bin","cachePath":"models/whisperkit-small-en/TextDecoder.mlmodelc/analytics/coremldata.bin","url":"https://huggingface.co/argmaxinc/whisperkit-coreml/resolve/0f63a7800b00dd0226abd051b906c246e1907482/openai_whisper-small.en_217MB/TextDecoder.mlmodelc/analytics/coremldata.bin?download=true","expectedSize":243,"sha256":"4ca8f36ba20e72c389a2c207022bd645e32db617d79cda7679930099099c0691"},
+        {"path":"openai_whisper-small.en_217MB/TextDecoder.mlmodelc/coremldata.bin","cachePath":"models/whisperkit-small-en/TextDecoder.mlmodelc/coremldata.bin","url":"https://huggingface.co/argmaxinc/whisperkit-coreml/resolve/0f63a7800b00dd0226abd051b906c246e1907482/openai_whisper-small.en_217MB/TextDecoder.mlmodelc/coremldata.bin?download=true","expectedSize":633,"sha256":"572ff1890dfadfdb9193d1dc3e2bca618fbebbdf65e40d1f6ad4d5cfbee8b806"},
+        {"path":"openai_whisper-small.en_217MB/TextDecoder.mlmodelc/metadata.json","cachePath":"models/whisperkit-small-en/TextDecoder.mlmodelc/metadata.json","url":"https://huggingface.co/argmaxinc/whisperkit-coreml/resolve/0f63a7800b00dd0226abd051b906c246e1907482/openai_whisper-small.en_217MB/TextDecoder.mlmodelc/metadata.json?download=true","expectedSize":4935,"sha256":"a84c1b3848f48edbd5101602ca39c5784884d4875e0cf4fe92d02cb610a7300e"},
+        {"path":"openai_whisper-small.en_217MB/TextDecoder.mlmodelc/model.mil","cachePath":"models/whisperkit-small-en/TextDecoder.mlmodelc/model.mil","url":"https://huggingface.co/argmaxinc/whisperkit-coreml/resolve/0f63a7800b00dd0226abd051b906c246e1907482/openai_whisper-small.en_217MB/TextDecoder.mlmodelc/model.mil?download=true","expectedSize":632709,"sha256":"e3ca09e9e27ede692cdc7180f3e809a0d1c7cc3985d0f31c687bca398e1dfca4"},
+        {"path":"openai_whisper-small.en_217MB/TextDecoder.mlmodelc/model.mlmodel","cachePath":"models/whisperkit-small-en/TextDecoder.mlmodelc/model.mlmodel","url":"https://huggingface.co/argmaxinc/whisperkit-coreml/resolve/0f63a7800b00dd0226abd051b906c246e1907482/openai_whisper-small.en_217MB/TextDecoder.mlmodelc/model.mlmodel?download=true","expectedSize":530863,"sha256":"768ef236a82b0836cd27b9b4d30310344766ea7d5df3385149c61082568a9a04"},
+        {"path":"openai_whisper-small.en_217MB/TextDecoder.mlmodelc/weights/weight.bin","cachePath":"models/whisperkit-small-en/TextDecoder.mlmodelc/weights/weight.bin","url":"https://huggingface.co/argmaxinc/whisperkit-coreml/resolve/0f63a7800b00dd0226abd051b906c246e1907482/openai_whisper-small.en_217MB/TextDecoder.mlmodelc/weights/weight.bin?download=true","expectedSize":153638256,"sha256":"e6cb706fa11e5352ad9e9c99b7e4bdbd9b0d73289c79303ada949a92a04c04af"},
+        {"path":"openai_whisper-small.en_217MB/config.json","cachePath":"models/whisperkit-small-en/config.json","url":"https://huggingface.co/argmaxinc/whisperkit-coreml/resolve/0f63a7800b00dd0226abd051b906c246e1907482/openai_whisper-small.en_217MB/config.json?download=true","expectedSize":1460,"sha256":"5cbba95e3fda213c33957ddcd76070270e0ae55f926909f332790a1824810219"},
+        {"path":"openai_whisper-small.en_217MB/generation_config.json","cachePath":"models/whisperkit-small-en/generation_config.json","url":"https://huggingface.co/argmaxinc/whisperkit-coreml/resolve/0f63a7800b00dd0226abd051b906c246e1907482/openai_whisper-small.en_217MB/generation_config.json?download=true","expectedSize":1076,"sha256":"6e822c9d1d1eed9a8733b3fbdd69d2f00222afac29dbfb173864988c1707a34d"}
+      ],
+      "notes": "Optional audio remains off. These resources are never silently downloaded and are installed only by an explicit future build-time action after H4 opt-in.",
+      "updateProcedure": "Use the explicit model installer build step, verify all 17 files before activation, keep audio optional/off by default, and rerun offline inference, latency, privacy, retention, and deletion gates."
+    },
+    {
+      "id": "xcodegen",
+      "version": "2.46.0",
+      "revision": "8445e778451c7e44237b90281bde622d764b0084",
+      "source": "https://github.com/yonaskolb/XcodeGen",
+      "scope": "buildOnly",
+      "runtimeFetchPolicy": "forbidden",
+      "networkCapable": false,
+      "linkedShippingTargets": [],
+      "license": {
+        "name": "MIT",
+        "spdx": "MIT",
+        "source": "https://github.com/yonaskolb/XcodeGen/blob/8445e778451c7e44237b90281bde622d764b0084/LICENSE",
+        "expectedSize": 1067,
+        "sha256": "1e210fcab168d549f41a7495d11a7092836bc38c742baa5e21c0883cd0f1d1a1"
+      },
+      "artifacts": [
+        {
+          "path": "xcodegen-2.46.0.tar.gz",
+          "cachePath": "tools/xcodegen-2.46.0.tar.gz",
+          "url": "https://codeload.github.com/yonaskolb/XcodeGen/tar.gz/8445e778451c7e44237b90281bde622d764b0084",
+          "expectedSize": 1569121,
+          "sha256": "a3270d0e5fce8f4dc2aa1801b0d932f6561cd24c0735e718d2455896b2359142"
+        }
+      ],
+      "notes": "The installed arm64 binary SHA-256 is 5b5d393779d405bbe78a2de8130f0bfaa4f90f7295cd3c8436d620b04aaee49a; Homebrew arm64 Tahoe bottle rebuild 1 is 69a3584c1c9118cd37e45565b8679e1c84663e783e720c68e85ef6000a52c870.",
+      "updateProcedure": "Update .xcodegen-version, project minimum, source cache hash, and generation golden together; regenerate and diff the full project before accepting."
+    },
+    {
+      "id": "coreml-toolchain",
+      "version": "macOS SDK 26.5 (25F70)",
+      "revision": "17F42",
+      "source": "xcode://MacOSX26.5.sdk/CoreML.framework",
+      "scope": "systemProvided",
+      "runtimeFetchPolicy": "forbidden",
+      "networkCapable": false,
+      "linkedShippingTargets": [],
+      "license": {
+        "name": "Apple Xcode and SDK Agreement",
+        "spdx": "LicenseRef-Apple-Xcode-SDK",
+        "source": "xcode://Xcode.app/Contents/Resources/en.lproj/License.rtf",
+        "expectedSize": 167800,
+        "sha256": "ba9e2515fe5e709adfc1acab91677eeacb0b6f44740072a2782fba0fb844bfec"
+      },
+      "artifacts": [
+        {
+          "path": "MacOSX26.5.sdk/System/Library/Frameworks/CoreML.framework/Versions/A/CoreML.tbd",
+          "url": "xcode://MacOSX26.5.sdk/System/Library/Frameworks/CoreML.framework/Versions/A/CoreML.tbd",
+          "expectedSize": 292348,
+          "sha256": "b15098b942416e4e7e335d8dc990eaf52cf739b456b219735ee6f3ecc74bb731"
+        }
+      ],
+      "updateProcedure": "Treat Xcode/SDK changes as toolchain updates; rerun all model compilation/parity and release gates before changing the pinned build environment."
+    },
+    {
+      "id": "swift-testing-toolchain",
+      "version": "Xcode 26.5 / Swift 6.3.2",
+      "revision": "17F42",
+      "source": "xcode://MacOSX.platform/Testing.framework",
+      "scope": "systemProvided",
+      "runtimeFetchPolicy": "forbidden",
+      "networkCapable": false,
+      "linkedShippingTargets": [],
+      "license": {
+        "name": "Apple Xcode and SDK Agreement",
+        "spdx": "LicenseRef-Apple-Xcode-SDK",
+        "source": "xcode://Xcode.app/Contents/Resources/en.lproj/License.rtf",
+        "expectedSize": 167800,
+        "sha256": "ba9e2515fe5e709adfc1acab91677eeacb0b6f44740072a2782fba0fb844bfec"
+      },
+      "artifacts": [
+        {
+          "path": "MacOSX.platform/Developer/Library/Frameworks/Testing.framework/Versions/A/Testing",
+          "url": "xcode://MacOSX.platform/Developer/Library/Frameworks/Testing.framework/Versions/A/Testing",
+          "expectedSize": 10781152,
+          "sha256": "fb85006ca83c36fb261eb1067cbe92db756c692daa29b154d28beee93d3eb143"
+        }
+      ],
+      "updateProcedure": "Update only with the pinned Xcode toolchain; rerun the complete test matrix and compiler-warning gate."
+    },
+    {
+      "id": "xctest-toolchain",
+      "version": "Xcode 26.5",
+      "revision": "17F42",
+      "source": "xcode://MacOSX.platform/XCTest.framework",
+      "scope": "systemProvided",
+      "runtimeFetchPolicy": "forbidden",
+      "networkCapable": false,
+      "linkedShippingTargets": [],
+      "license": {
+        "name": "Apple Xcode and SDK Agreement",
+        "spdx": "LicenseRef-Apple-Xcode-SDK",
+        "source": "xcode://Xcode.app/Contents/Resources/en.lproj/License.rtf",
+        "expectedSize": 167800,
+        "sha256": "ba9e2515fe5e709adfc1acab91677eeacb0b6f44740072a2782fba0fb844bfec"
+      },
+      "artifacts": [
+        {
+          "path": "MacOSX.platform/Developer/Library/Frameworks/XCTest.framework/Versions/A/XCTest",
+          "url": "xcode://MacOSX.platform/Developer/Library/Frameworks/XCTest.framework/Versions/A/XCTest",
+          "expectedSize": 323600,
+          "sha256": "61516c66afe906135fd68cf8c66c58ca2809193c783d78f2a7e356974e6b30c9"
+        }
+      ],
+      "updateProcedure": "Update only with the pinned Xcode toolchain; rerun unit, integration, privacy, and performance suites."
+    },
+    {
+      "id": "xcuitest-toolchain",
+      "version": "Xcode 26.5",
+      "revision": "17F42",
+      "source": "xcode://MacOSX.platform/XCUIAutomation.framework",
+      "scope": "systemProvided",
+      "runtimeFetchPolicy": "forbidden",
+      "networkCapable": false,
+      "linkedShippingTargets": [],
+      "license": {
+        "name": "Apple Xcode and SDK Agreement",
+        "spdx": "LicenseRef-Apple-Xcode-SDK",
+        "source": "xcode://Xcode.app/Contents/Resources/en.lproj/License.rtf",
+        "expectedSize": 167800,
+        "sha256": "ba9e2515fe5e709adfc1acab91677eeacb0b6f44740072a2782fba0fb844bfec"
+      },
+      "artifacts": [
+        {
+          "path": "MacOSX.platform/Developer/Library/Frameworks/XCUIAutomation.framework/Versions/A/XCUIAutomation",
+          "url": "xcode://MacOSX.platform/Developer/Library/Frameworks/XCUIAutomation.framework/Versions/A/XCUIAutomation",
+          "expectedSize": 7143824,
+          "sha256": "523281979bbf101e8342f5675c85bea576e3f3a4a3517b5f7422d8ca4072ad52"
+        }
+      ],
+      "updateProcedure": "Update only with the pinned Xcode toolchain; rerun every deterministic XCUITest and accessibility journey."
+    }
+  ]
+}

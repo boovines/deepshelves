@@ -1,0 +1,127 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-004",
+  "status": "passed",
+  "generatedAt": "2026-08-27T13:18:42Z",
+  "baseRevision": "4fda1f695489d540803511b1838ced117aebb28a",
+  "checkpoint": "refs/tags/checkpoints/LM-004",
+  "manifest": {
+    "path": "Dependencies/dependencies.json",
+    "sha256": "325f3e3b549a700000a48f6ae1a2e9d27e7387cea556b16c956982b06c845a85",
+    "components": 21,
+    "cachedArtifacts": 41,
+    "cachedBytes": 402123412,
+    "modelBytes": 325680167
+  },
+  "primaryPins": {
+    "GRDBSQLCipher": {
+      "version": "7.11.1",
+      "revision": "a285e4ca87ec6b3584c97b0ec25fc61fec02de60"
+    },
+    "SQLCipherSwift": {
+      "version": "4.18.0",
+      "revision": "f879fffaaa3ad3541a77830daad4a28726dfa927",
+      "xcframeworkSHA256": "904823c0e8ccd8e9c21a871238470e9ac57c7c20ff17341171008c32230154cb"
+    },
+    "MCPSwiftSDK": {
+      "version": "0.12.1",
+      "revision": "a0ae212ebf6eab5f754c3129608bc5557637e605",
+      "shippingScope": "forbidden until LM-068 creates and verifies an official-source stdio-only target"
+    },
+    "ArgmaxOSSWhisperKit": {
+      "version": "1.1.0",
+      "revision": "1e2a163736dfa5a198e637ae44c114e1c6d5cc2d",
+      "shippingScope": "forbidden until optional audio creates and verifies a local-model-only target"
+    },
+    "MobileCLIPS0CoreML": {
+      "revision": "3e0a7bfb9fe83da8a3efaa3fd8f7df24214bb947",
+      "files": 6,
+      "bytes": 107801759
+    },
+    "WhisperKitSmallEnglish": {
+      "revision": "0f63a7800b00dd0226abd051b906c246e1907482",
+      "variant": "openai_whisper-small.en_217MB",
+      "files": 19,
+      "bytes": 217878408,
+      "enabledByDefault": false
+    },
+    "XcodeGen": {
+      "version": "2.46.0",
+      "revision": "8445e778451c7e44237b90281bde622d764b0084"
+    },
+    "testToolchain": {
+      "xcodeVersion": "26.5",
+      "xcodeBuild": "17F42",
+      "swiftVersion": "6.3.2",
+      "components": [
+        "Swift Testing",
+        "XCTest",
+        "XCUIAutomation"
+      ]
+    }
+  },
+  "licenseFindings": [
+    "GRDB and XcodeGen are MIT; SQLCipher uses its BSD-style attribution license; MCP is Apache-2.0 with historical MIT code; Argmax OSS is MIT with vendored Apache-2.0 notices.",
+    "Apple MobileCLIP model weights are research-only and exclude commercial product use. This private personal research build may evaluate them, but redistribution/commercial use requires a different grant or approved model decision.",
+    "The Argmax converted small.en repository declares MIT; upstream model terms must be re-audited before any distribution."
+  ],
+  "networkBoundary": {
+    "forbiddenShippingComponents": [
+      "argmax-oss-swift",
+      "eventsource",
+      "mcp-swift-sdk",
+      "swift-nio"
+    ],
+    "linkedShippingTargets": [],
+    "runtimeDownloads": "forbidden",
+    "automaticUpdates": "forbidden",
+    "telemetry": "forbidden"
+  },
+  "gates": {
+    "manifestAndToolchainAudit": {
+      "status": "passed",
+      "command": "./scripts/check-dependencies.sh --static"
+    },
+    "freshOnlineCache": {
+      "status": "passed",
+      "command": "./scripts/bootstrap-dependencies.sh --fetch .dependency-cache",
+      "artifacts": 41
+    },
+    "offlineCache": {
+      "status": "passed",
+      "command": "./scripts/bootstrap-dependencies.sh --offline .dependency-cache",
+      "networkGuard": "curl was exported as a failing shell function; no invocation occurred"
+    },
+    "fullTestSuite": {
+      "status": "passed",
+      "command": "./scripts/test.sh",
+      "tests": 33,
+      "failures": 0
+    },
+    "contractRegression": {
+      "status": "passed",
+      "command": "./scripts/check-contracts.sh",
+      "fixtures": 11
+    },
+    "privacySmoke": {
+      "status": "passed",
+      "command": "./scripts/privacy-smoke.sh"
+    },
+    "releaseBuild": {
+      "status": "passed",
+      "command": "./scripts/build-release.sh",
+      "automaticPackageResolution": false
+    },
+    "releaseBinaryAudit": {
+      "status": "passed",
+      "command": "./scripts/check-dependencies.sh --binaries",
+      "binaries": 3,
+      "forbiddenLinkedOrEmbeddedMarkers": 0
+    },
+    "formatAndShellSyntax": {
+      "status": "passed",
+      "swiftFormatWarnings": 0,
+      "shellSyntaxErrors": 0
+    }
+  }
+}

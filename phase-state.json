@@ -43,12 +43,14 @@
       "resumeProbe": null
     },
     "LM-004": {
-      "status": "pending",
-      "startedAt": null,
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": null,
+      "status": "passed",
+      "startedAt": "2026-08-27T12:56:44Z",
+      "completedAt": "2026-08-27T13:18:42Z",
+      "gitRevision": "refs/tags/checkpoints/LM-004",
+      "evidence": [
+        "Results/LM-004/dependencies.json"
+      ],
+      "notes": "Pinned and byte-verified 21 software/model/toolchain components and 41 cache artifacts. Fresh online cache, curl-disabled offline verification, 33 tests, contracts, privacy, Release build, and three linked-binary scans pass. Network-capable upstream MCP/Argmax components remain explicitly forbidden from shipping pending audited narrow targets; MobileCLIP research-only licensing is recorded.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null
