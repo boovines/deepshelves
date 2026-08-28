@@ -39,6 +39,7 @@ struct LocalMemoryApp: App {
         Self.exportLM018FaultsAndExitIfRequested(arguments: arguments)
         Self.exportLM021BrowserContextAndExitIfRequested(arguments: arguments)
         Self.exportLM022PrivacyPolicyAndExitIfRequested(arguments: arguments)
+        Self.exportLM023ActivityMonitorAndExitIfRequested(arguments: arguments)
         let configuration = AppLaunchConfiguration(arguments: arguments)
         launchConfiguration = configuration
         shellKeyboardMonitor = ShellKeyboardCommandMonitor()
@@ -256,6 +257,26 @@ struct LocalMemoryApp: App {
         } catch {
             FileHandle.standardError.write(
                 Data("LM-022 privacy policy export failed: \(error)\n".utf8)
+            )
+            Darwin.exit(EXIT_FAILURE)
+        }
+    }
+
+    private static func exportLM023ActivityMonitorAndExitIfRequested(arguments: [String]) {
+        guard let exportIndex = arguments.firstIndex(of: "--lm023-export-activity-monitor"),
+              arguments.indices.contains(exportIndex + 1)
+        else {
+            return
+        }
+        do {
+            try LM023ActivityMonitorHarness.runBlocking().write(
+                to: URL(fileURLWithPath: arguments[exportIndex + 1]),
+                options: .atomic
+            )
+            Darwin.exit(EXIT_SUCCESS)
+        } catch {
+            FileHandle.standardError.write(
+                Data("LM-023 activity monitor export failed: \(error)\n".utf8)
             )
             Darwin.exit(EXIT_FAILURE)
         }

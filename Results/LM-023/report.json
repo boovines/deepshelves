@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-023",
+  "status": "passed",
+  "generatedAt": "2026-08-28T11:57:24Z",
+  "baseRevision": "93fb1aa51bb75a0df76afcb4ee5564859e193d2c",
+  "checkpoint": "refs/tags/checkpoints/LM-023",
+  "results": {
+    "activityStateMachine": {
+      "activeWindowNanoseconds": 1000000000,
+      "idleThresholdNanoseconds": 300000000000,
+      "exactStateTransitionCount": 15,
+      "inputClasses": [
+        "click",
+        "scroll",
+        "keyActivity"
+      ],
+      "lifecycleEvents": [
+        "willSleep",
+        "didWake",
+        "sessionLocked",
+        "sessionUnlocked"
+      ],
+      "ignoredSuspendedInputCount": 2,
+      "idleAcceptanceRejected": true,
+      "activityRecoveryPassed": true,
+      "targetChangeRecoveryPassed": true
+    },
+    "payloadProhibition": {
+      "activitySignalStoredFieldNames": [
+        "inputClass",
+        "monotonicNanoseconds"
+      ],
+      "sensitiveInputPayloadFieldCount": 0,
+      "shippingSourceAccessorScan": "passed",
+      "releaseBinaryPayloadFieldScan": "passed"
+    }
+  },
+  "gates": {
+    "signedActivityLifecycle": {
+      "status": "passed",
+      "targetedTests": 9,
+      "evidence": "Results/LM-023/activity-monitor.json",
+      "evidenceSha256": "e565bb92674b5c0787a4d880a8da1785b1df7cf1063d4779c5eaa908720fc6e9",
+      "fixture": "Fixtures/LM023/activity-state-timeline.json",
+      "fixtureSha256": "a87fc95ef3f6c8b3ba0c0a13aa9f5fb2363c8b38a7287174852ab562adb69977",
+      "log": "Results/LM-023/activity-monitor-tests.txt",
+      "logSha256": "1141972d187845a0fe75a066fdde0cbd22a57f3b067538bfb65a869c53f8ae98"
+    },
+    "unitAndRegressionTests": {
+      "status": "passed",
+      "xctestUnitTests": 158,
+      "swiftTestingTests": 9,
+      "integrationTests": 7,
+      "privacyTests": 4,
+      "performanceTests": 1,
+      "log": "Results/LM-023/full-tests.txt",
+      "sha256": "ee49b6f7f6a0ccf42dd10d19124819b1982300d62275179e9a997eb2d5c1f8a2"
+    },
+    "contracts": {
+      "status": "passed",
+      "fixtures": 11,
+      "log": "Results/LM-023/check-contracts.txt",
+      "sha256": "6fcd9374cbc23bdca9001faa097dee704407748dab919b081545478669522412"
+    },
+    "privacySmoke": {
+      "status": "passed",
+      "log": "Results/LM-023/privacy-smoke.txt",
+      "sha256": "9ea4b5449f9715c90a3a80909f275c987c95be1130414ae6e10f888fcbe4a8bc"
+    },
+    "releaseBuild": {
+      "status": "passed",
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ],
+      "log": "Results/LM-023/build-release.txt",
+      "sha256": "dcb74ec63f9313df24494798480af4de6d55290aafc67514180693108d82387b"
+    },
+    "signingPosture": {
+      "status": "passed",
+      "log": "Results/LM-023/signing-posture.txt",
+      "sha256": "b68e2c92995c059f494064bb47de7b99c433671389675fafb015fba602eae029"
+    },
+    "dependencyStatic": {
+      "status": "passed",
+      "log": "Results/LM-023/dependencies-static.txt",
+      "sha256": "875df9c029cf144be809a444a229a0b442b480941fcc10656c6df1830a36c0d5"
+    },
+    "releaseBinaryDependencyAudit": {
+      "status": "passed",
+      "log": "Results/LM-023/dependencies-binaries.txt",
+      "sha256": "ee19ec2fac69814d57606f8260d4120b82de9aecffb3286ca3159489700b0b32"
+    },
+    "diffWhitespace": {
+      "status": "passed"
+    }
+  }
+}

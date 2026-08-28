@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "seed": 1279938623,
+  "activeWindowNanoseconds": 1000000000,
+  "idleThresholdNanoseconds": 300000000000,
+  "inputClasses": [
+    "click",
+    "scroll",
+    "keyActivity"
+  ],
+  "lifecycleEvents": [
+    "willSleep",
+    "didWake",
+    "sessionLocked",
+    "sessionUnlocked"
+  ],
+  "rawKeyPayloadFieldCount": 0,
+  "clipboardPayloadFieldCount": 0,
+  "cursorPayloadFieldCount": 0
+}

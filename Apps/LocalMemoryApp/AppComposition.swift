@@ -159,6 +159,7 @@ struct AppLaunchConfiguration {
                     || argument.hasPrefix("--lm020-")
                     || argument.hasPrefix("--lm021-")
                     || argument.hasPrefix("--lm022-")
+                    || argument.hasPrefix("--lm023-")
                     || argument.hasPrefix("--capture-")
                     || argument.hasPrefix("--context-")
                     || argument == "--s3-s4-spike"

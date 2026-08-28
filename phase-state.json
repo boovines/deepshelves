@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "activeStory": "LM-023",
+  "activeStory": "LM-024",
   "stories": {
     "LM-001": {
       "status": "passed",
@@ -355,23 +355,28 @@
       "resumeProbe": null
     },
     "LM-023": {
-      "status": "active",
+      "status": "passed",
       "startedAt": "2026-08-28T11:44:09Z",
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": "Base checkpoint refs/tags/checkpoints/LM-022. Implement coarse input-class ActivityMonitor, five-minute idle state, sleep/wake/session-lock handling, and prohibit key or clipboard value capture.",
+      "completedAt": "2026-08-28T11:57:24Z",
+      "gitRevision": "refs/tags/checkpoints/LM-023",
+      "evidence": [
+        "Results/LM-023/report.json",
+        "Results/LM-023/activity-monitor.json",
+        "Results/LM-023/activity-monitor-tests.txt",
+        "Fixtures/LM023/activity-state-timeline.json"
+      ],
+      "notes": "The actor-backed monitor records only click, scroll, or keyActivity with monotonic time; five-minute idle, sleep, wake, session-lock, and session-unlock transitions fail closed until fresh activity. Suspended input is ignored, lifecycle sources are revocable, acceptance integrates with the capture gate, and source plus signed-binary scans find zero raw key, clipboard, or cursor payload fields.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null
     },
     "LM-024": {
-      "status": "pending",
-      "startedAt": null,
+      "status": "active",
+      "startedAt": "2026-08-28T11:57:24Z",
       "completedAt": null,
       "gitRevision": null,
       "evidence": [],
-      "notes": null,
+      "notes": "Base checkpoint refs/tags/checkpoints/LM-023. Implement revocable WindowCaptureEpoch, single-window SCContentFilter updates, stale-buffer rejection, measured acceptance and deduplication, and bounded newest-frame backpressure.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null

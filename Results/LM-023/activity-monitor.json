@@ -1,0 +1,115 @@
+{
+  "activeWindowNanoseconds" : 1000000000,
+  "activityRecoveryPassed" : true,
+  "activitySignalStoredFieldNames" : [
+    "inputClass",
+    "monotonicNanoseconds"
+  ],
+  "allInvariantsPassed" : true,
+  "exactStateTransitionCount" : 15,
+  "idleAcceptanceRejected" : true,
+  "idleThresholdNanoseconds" : 300000000000,
+  "ignoredSuspendedInputCount" : 2,
+  "inputClasses" : [
+    "click",
+    "scroll",
+    "keyActivity"
+  ],
+  "lifecycleEvents" : [
+    "willSleep",
+    "didWake",
+    "sessionLocked",
+    "sessionUnlocked"
+  ],
+  "records" : [
+    {
+      "acceptsCapture" : true,
+      "activity" : "active",
+      "id" : "initial-active"
+    },
+    {
+      "acceptsCapture" : true,
+      "activity" : "recentlyActive",
+      "id" : "recently-active-boundary"
+    },
+    {
+      "acceptsCapture" : false,
+      "activity" : "idle",
+      "id" : "five-minute-idle"
+    },
+    {
+      "acceptsCapture" : true,
+      "activity" : "active",
+      "id" : "click-recovers",
+      "lastInputClass" : "click"
+    },
+    {
+      "acceptsCapture" : false,
+      "activity" : "idle",
+      "id" : "sleep-suspends",
+      "suspension" : "sleep"
+    },
+    {
+      "acceptsCapture" : false,
+      "activity" : "idle",
+      "id" : "sleep-input-ignored",
+      "suspension" : "sleep"
+    },
+    {
+      "acceptsCapture" : false,
+      "activity" : "idle",
+      "id" : "wake-needs-activity"
+    },
+    {
+      "acceptsCapture" : true,
+      "activity" : "active",
+      "id" : "key-activity-recovers",
+      "lastInputClass" : "keyActivity"
+    },
+    {
+      "acceptsCapture" : false,
+      "activity" : "idle",
+      "id" : "session-lock-suspends",
+      "suspension" : "sessionLocked"
+    },
+    {
+      "acceptsCapture" : false,
+      "activity" : "idle",
+      "id" : "lock-input-ignored",
+      "suspension" : "sessionLocked"
+    },
+    {
+      "acceptsCapture" : false,
+      "activity" : "idle",
+      "id" : "unlock-needs-activity"
+    },
+    {
+      "acceptsCapture" : true,
+      "activity" : "active",
+      "id" : "scroll-recovers",
+      "lastInputClass" : "scroll"
+    },
+    {
+      "acceptsCapture" : false,
+      "activity" : "idle",
+      "id" : "sleep-precedes-lock",
+      "suspension" : "sleep"
+    },
+    {
+      "acceptsCapture" : false,
+      "activity" : "idle",
+      "id" : "wake-remains-locked",
+      "suspension" : "sessionLocked"
+    },
+    {
+      "acceptsCapture" : false,
+      "activity" : "idle",
+      "id" : "final-unlock-idle"
+    }
+  ],
+  "schemaVersion" : 1,
+  "seed" : 1279938623,
+  "sensitiveInputPayloadFieldCount" : 0,
+  "stateTransitionCount" : 15,
+  "targetChangeRecoveryPassed" : true
+}
