@@ -97,10 +97,11 @@ enum ContractChecks {
 
     static func requireSchemaVersion(_ version: Int, field: String = "schemaVersion") throws {
         try require(
-            version == BootstrapContract.schemaVersion,
+            version >= BootstrapContract.minimumReadableSchemaVersion
+                && version <= BootstrapContract.schemaVersion,
             field: field,
             violation: .unsupportedVersion,
-            detail: "only contract version 1 is supported"
+            detail: "contract version must be within the supported readable range"
         )
     }
 }

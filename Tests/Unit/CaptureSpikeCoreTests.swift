@@ -163,27 +163,38 @@ final class CaptureSpikeCoreTests: XCTestCase {
         var gate = FrameAcceptanceGate()
 
         XCTAssertEqual(
-            gate.evaluate(epochID: epochID, timestampNanoseconds: 0, signature: 1, lastActivityNanoseconds: 0),
+            gate.evaluate(
+                epochID: epochID, timestampNanoseconds: 0, signature: 1, lastActivityNanoseconds: 0),
             .accepted(index: true, reason: .firstEpochFrame)
         )
         XCTAssertEqual(
-            gate.evaluate(epochID: epochID, timestampNanoseconds: 500_000_000, signature: 2, lastActivityNanoseconds: 0),
+            gate.evaluate(
+                epochID: epochID, timestampNanoseconds: 500_000_000, signature: 2,
+                lastActivityNanoseconds: 0),
             .rejected(.activeRateLimit)
         )
         XCTAssertEqual(
-            gate.evaluate(epochID: epochID, timestampNanoseconds: 1_000_000_000, signature: 2, lastActivityNanoseconds: 0),
+            gate.evaluate(
+                epochID: epochID, timestampNanoseconds: 1_000_000_000, signature: 2,
+                lastActivityNanoseconds: 0),
             .accepted(index: false, reason: .visualChange)
         )
         XCTAssertEqual(
-            gate.evaluate(epochID: epochID, timestampNanoseconds: 2_000_000_000, signature: 2, lastActivityNanoseconds: 0),
+            gate.evaluate(
+                epochID: epochID, timestampNanoseconds: 2_000_000_000, signature: 2,
+                lastActivityNanoseconds: 0),
             .rejected(.staticDuplicate)
         )
         XCTAssertEqual(
-            gate.evaluate(epochID: epochID, timestampNanoseconds: 31_000_000_000, signature: 2, lastActivityNanoseconds: 0),
+            gate.evaluate(
+                epochID: epochID, timestampNanoseconds: 31_000_000_000, signature: 2,
+                lastActivityNanoseconds: 0),
             .accepted(index: true, reason: .staticHeartbeat)
         )
         XCTAssertEqual(
-            gate.evaluate(epochID: epochID, timestampNanoseconds: 301_000_000_000, signature: 3, lastActivityNanoseconds: 0),
+            gate.evaluate(
+                epochID: epochID, timestampNanoseconds: 301_000_000_000, signature: 3,
+                lastActivityNanoseconds: 0),
             .rejected(.idleSuspended)
         )
     }
@@ -359,38 +370,10 @@ final class CaptureSpikeCoreTests: XCTestCase {
             partialURL: partialURL,
             outputURL: outputURL
         )
-        var core = try MediaWriterCore(
-            chunkID: UUID(),
-            scope: MediaChunkScope(
-                epochID: UUID(),
-                targetWindowID: 9,
-                dimensions: PixelSize(width: 1_920, height: 1_080),
-                startedNanoseconds: 0
-            )
-        )
-        let plan = try core.planAppend(
-            frameID: UUID(),
-            captureEpochID: core.scope.epochID,
-            targetWindowID: core.scope.targetWindowID,
-            sourceDimensions: core.scope.dimensions,
-            sourcePresentationTimeMilliseconds: 1_000
-        )
-        try core.recordAccepted(plan)
-        let finalization = try core.finalization(
-            outputURL: outputURL,
-            codecFourCC: "hvc1",
-            hardwareAccelerationRequired: true,
-            integrity: integrity
-        )
-
         XCTAssertFalse(FileManager.default.fileExists(atPath: partialURL.path))
         XCTAssertEqual(try Data(contentsOf: outputURL), contents)
         XCTAssertEqual(integrity.byteCount, Int64(contents.count))
         XCTAssertEqual(integrity.sha256, Data(SHA256.hash(data: contents)))
-        XCTAssertEqual(finalization.frameCount, 1)
-        XCTAssertEqual(finalization.locators, core.locators)
-        XCTAssertEqual(finalization.byteCount, integrity.byteCount)
-        XCTAssertEqual(finalization.sha256, integrity.sha256)
         let attributes = try FileManager.default.attributesOfItem(atPath: outputURL.path)
         XCTAssertEqual(attributes[.posixPermissions] as? Int, 0o600)
     }
@@ -449,7 +432,7 @@ final class CaptureSpikeCoreTests: XCTestCase {
         XCTAssertTrue(CaptureCapabilityStatus(screenRecording: true, accessibility: true).isReady)
     }
 
-    func testCaptureGeometryPreservesAspectAndProducesEvenHEVCDimensions() throws {
+    func testCaptureGeometryPreservesAspectAndProducesEvenMediaDimensions() throws {
         XCTAssertEqual(
             CaptureGeometry.encodedSize(for: PointRect(x: 0, y: 0, width: 3_840, height: 2_160)),
             PixelSize(width: 1_920, height: 1_080)
@@ -460,14 +443,9 @@ final class CaptureSpikeCoreTests: XCTestCase {
         )
     }
 
-    func testHEVCProfileRequiresHardwareAndOneSecondFragments() throws {
-        let profile = HEVCEncodingProfile.production
-
-        XCTAssertEqual(profile.codecFourCC, "hvc1")
-        XCTAssertTrue(profile.requiresHardwareAcceleration)
-        XCTAssertEqual(profile.fragmentIntervalNanoseconds, 1_000_000_000)
-        XCTAssertEqual(profile.keyFrameIntervalSeconds, 1)
-        XCTAssertEqual(profile.averageBitRate, 2_000_000)
+    func testHEICProductionQualityIsExplicitAndBounded() throws {
+        XCTAssertEqual(ImageIOHEICFrameEncoder.productionQuality, 0.82)
+        XCTAssertTrue((0...1).contains(ImageIOHEICFrameEncoder.productionQuality))
     }
 
     func testFocusPollingCadenceRetainsOneSecondTransitionMargin() throws {
@@ -500,8 +478,8 @@ final class CaptureSpikeCoreTests: XCTestCase {
     }
 }
 
-private extension FrameCandidate {
-    func with(
+extension FrameCandidate {
+    fileprivate func with(
         epochID: UUID? = nil,
         targetWindowID: UInt32? = nil,
         dimensions: PixelSize? = nil,
@@ -518,8 +496,8 @@ private extension FrameCandidate {
     }
 }
 
-private extension FocusedWindowDescriptor {
-    func with(isMinimized: Bool) -> FocusedWindowDescriptor {
+extension FocusedWindowDescriptor {
+    fileprivate func with(isMinimized: Bool) -> FocusedWindowDescriptor {
         FocusedWindowDescriptor(
             processID: processID,
             bounds: bounds,
@@ -529,8 +507,8 @@ private extension FocusedWindowDescriptor {
     }
 }
 
-private extension ShareableWindowDescriptor {
-    func with(
+extension ShareableWindowDescriptor {
+    fileprivate func with(
         windowID: UInt32,
         title: String? = nil,
         isOnScreen: Bool? = nil,

@@ -47,6 +47,31 @@ final class ContractFixtureCompatibilityTests: XCTestCase {
         }
     }
 
+    func testV2HEICMediaFixturesRoundTripToIdenticalCanonicalBytes() throws {
+        let cases: [(String, (Data) throws -> Data)] = [
+            (
+                "heic-keyframe-manifest.json",
+                { try ContractJSON.roundTrip(HEICKeyframeManifest.self, fixture: $0) }
+            ),
+            ("media-chunk.json", { try ContractJSON.roundTrip(MediaChunk.self, fixture: $0) }),
+            (
+                "searchable-frame.json",
+                { try ContractJSON.roundTrip(SearchableFrame.self, fixture: $0) }
+            ),
+            ("search-page.json", { try ContractJSON.roundTrip(SearchPage.self, fixture: $0) }),
+        ]
+
+        for (name, roundTrip) in cases {
+            let fixture = try Data(
+                contentsOf: fixtureDirectory(version: "v2").appendingPathComponent(name))
+            XCTAssertEqual(
+                try roundTrip(fixture),
+                fixture,
+                "V2 fixture changed byte semantics: \(name)"
+            )
+        }
+    }
+
     func testFixtureManifestPinsSyntheticSourceLicenseAndSHA256() throws {
         let manifestURL =
             fixtureDirectory
@@ -58,9 +83,9 @@ final class ContractFixtureCompatibilityTests: XCTestCase {
             from: Data(contentsOf: manifestURL)
         )
 
-        XCTAssertEqual(manifest.schemaVersion, 1)
-        XCTAssertEqual(manifest.generatorVersion, "contract-fixture-generator-v1")
-        XCTAssertEqual(manifest.fixtures.count, 11)
+        XCTAssertEqual(manifest.schemaVersion, 2)
+        XCTAssertEqual(manifest.generatorVersion, "contract-fixture-generator-v2")
+        XCTAssertEqual(manifest.fixtures.count, 15)
         for entry in manifest.fixtures {
             XCTAssertEqual(entry.source, "synthetic")
             XCTAssertEqual(entry.license, "CC0-1.0")
@@ -150,11 +175,15 @@ final class ContractFixtureCompatibilityTests: XCTestCase {
     }
 
     private var fixtureDirectory: URL {
+        fixtureDirectory(version: "v1")
+    }
+
+    private func fixtureDirectory(version: String) -> URL {
         URL(fileURLWithPath: #filePath)
             .deletingLastPathComponent()
             .deletingLastPathComponent()
             .deletingLastPathComponent()
-            .appendingPathComponent("Fixtures/Contracts/v1", isDirectory: true)
+            .appendingPathComponent("Fixtures/Contracts/\(version)", isDirectory: true)
     }
 
     private func fixtureData(_ name: String) throws -> Data {

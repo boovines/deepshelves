@@ -6,11 +6,11 @@ The architecture is fixed. These time-boxed spikes validate numeric defaults bef
 
 Every run records git revision, Mac model, RAM, OS build, power mode, thermal state, release/debug configuration, input fixture hash, raw samples, and Instruments trace where applicable. Results live under `Benchmarks/Results/<spike>/<timestamp>/`; the conclusion is a short ADR in `Decisions/`.
 
-## S1 — Capture, deduplication, and HEVC
+## S1 — Capture, deduplication, and canonical media
 
 ### Prototype
 
-Build a release-mode command app using one ScreenCaptureKit `SCStream` filtered with `SCContentFilter(desktopIndependentWindow:)` to the uniquely resolved focused `SCWindow`. Exercise `updateContentFilter` across focus changes, tag buffers with capture epochs, receive at 2 fps, downscale to a maximum 1920-pixel long edge, accept at most 1 fps, and write single-epoch, fixed-dimension, variable-frame-rate HEVC chunks of at most 30 seconds through `AVAssetWriter` with hardware acceleration requested.
+Build a release-mode command app using one ScreenCaptureKit `SCStream` filtered with `SCContentFilter(desktopIndependentWindow:)` to the uniquely resolved focused `SCWindow`. Exercise `updateContentFilter` across focus changes, tag buffers with capture epochs, receive at 2 fps, downscale to a maximum 1920-pixel long edge, accept at most 1 fps, and write single-epoch, fixed-dimension logical chunks of independent HEIC keyframes lasting at most 30 seconds. ADR 0001 records why the originally measured hardware-HEVC representation was replaced.
 
 Corpus: one hour replayed/operated workload containing static documents, scrolling, code editing, video playback, window switching, resize/minimize, duplicate-title windows, sleep/wake, and ten excluded transitions. Adversarial scenes place encoded sentinel grids in background password managers, private browsers, notifications, desktop/menu/Dock regions, split-screen neighbors, and the immediately previous focused window.
 
@@ -24,14 +24,14 @@ Corpus: one hour replayed/operated workload containing static documents, scrolli
 - At least 99% of eligible unambiguous focus changes begin the correct window epoch within one second; every unresolved/ambiguous case emits no pixels.
 - Zero background, adjacent, excluded, notification, system-chrome, or stale-epoch sentinel pixels reach partial/final media or any derivative.
 - Every media chunk contains exactly one target window ID, one capture epoch, and one encoded dimension.
-- Chunks remain playable after forced termination at every second of a write.
+- Every published manifest/frame remains independently decodable and integrity-valid; forced termination never exposes a partial chunk as searchable.
 
 ### Allowed tuning sequence
 
-1. Tune visual-difference threshold and HEVC bitrate/quality.
+1. Tune visual-difference threshold and media quality.
 2. Reduce maximum long edge to 1680 if storage/CPU fails and OCR fixtures lose less than two percentage points recall.
 3. Reduce active acceptance to 0.5 fps only if transition frames remain immediate and retrieval Recall@10 loses less than two points.
-4. Use independently encoded HEIC keyframes instead of HEVC only if random decode or crash integrity cannot pass; this requires an ADR because storage layout changes.
+4. Use independently encoded HEIC keyframes instead of HEVC only if random decode or crash integrity cannot pass; ADR 0001 adopted this step on 2026-08-28 after two repeatable hardware-encoder kernel panics.
 
 There is no tuning step that permits composited-display capture. Window-resolution uncertainty always fails to a metadata-only gap.
 
@@ -106,7 +106,7 @@ If the shared Keychain design fails signing/access tests, embed CLI/MCP modes in
 
 ### Prototype
 
-Build the specified global panel and detail view against deterministic stores containing 10,000 cards, 24 hours of timeline markers, gaps, thumbnails, and HEVC chunks. Use lazy SwiftUI containers and an actor-owned decode cache. Measure with release build and XCUITest scroll/scrub scripts.
+Build the specified global panel and detail view against deterministic stores containing 10,000 cards, 24 hours of timeline markers, gaps, thumbnails, and HEIC keyframe chunks. Use lazy SwiftUI containers and an actor-owned exact-frame decode cache. Measure with release build and XCUITest scroll/scrub scripts.
 
 ### Pass gates
 

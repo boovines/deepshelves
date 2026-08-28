@@ -1,3 +1,2 @@
-fb98c3f8ca9f3c01ae31cee10a74c564f2abe9c19768c7283dd7425eeef71552  /Users/justinhou/Development/deepshelves/.build/LM025Safe/termination.8DquJd/.chunk.mov.partial.mov
-mock_software_mid_write_termination=passed
-partial_recovery_without_final_visibility=passed
+mock_boundary_mid_write_termination=passed
+incomplete_staging_never_visible=passed

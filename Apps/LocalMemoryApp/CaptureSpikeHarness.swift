@@ -41,7 +41,7 @@ enum CaptureSpikeHarness {
                 windowHarness?.startCycling()
             }
 
-            let mediaURL = outputDirectory.appendingPathComponent("capture.mov")
+            let mediaURL = outputDirectory.appendingPathComponent("capture", isDirectory: true)
             let report = try await CaptureSpikeRunner().run(
                 outputURL: mediaURL,
                 duration: .seconds(durationSeconds)
@@ -79,7 +79,8 @@ enum CaptureSpikeHarness {
     }
 
     private static func installWindows(staticMode: Bool) -> CaptureSpikeWindowHarness {
-        let primary = NSApplication.shared.keyWindow
+        let primary =
+            NSApplication.shared.keyWindow
             ?? NSApplication.shared.windows.first(where: { $0.isVisible })
             ?? NSWindow(
                 contentRect: NSRect(x: 300, y: 300, width: 720, height: 480),
@@ -97,7 +98,8 @@ enum CaptureSpikeHarness {
         secondary.title = primary.title
         secondary.isOpaque = true
         secondary.backgroundColor = NSColor(calibratedWhite: 0.55, alpha: 1)
-        secondary.contentView = staticMode
+        secondary.contentView =
+            staticMode
             ? SolidTargetView(frame: secondary.frame)
             : OfficeCorpusView(frame: secondary.frame)
         secondary.orderBack(nil)
@@ -105,9 +107,23 @@ enum CaptureSpikeHarness {
         let sentinelFixtures: [(String, NSRect)] = [
             ("PASSWORD MANAGER", targetFrame.offsetBy(dx: 140, dy: -100)),
             ("PRIVATE BROWSER", targetFrame.offsetBy(dx: -180, dy: 80)),
-            ("NOTIFICATION", NSRect(x: targetFrame.maxX - 260, y: targetFrame.maxY - 140, width: 260, height: 140)),
-            ("DESKTOP SYSTEM CHROME", NSRect(x: targetFrame.minX, y: targetFrame.minY - 80, width: targetFrame.width, height: 100)),
-            ("SPLIT SCREEN NEIGHBOR", NSRect(x: targetFrame.maxX, y: targetFrame.minY, width: targetFrame.width, height: targetFrame.height)),
+            (
+                "NOTIFICATION",
+                NSRect(
+                    x: targetFrame.maxX - 260, y: targetFrame.maxY - 140, width: 260, height: 140)
+            ),
+            (
+                "DESKTOP SYSTEM CHROME",
+                NSRect(
+                    x: targetFrame.minX, y: targetFrame.minY - 80, width: targetFrame.width,
+                    height: 100)
+            ),
+            (
+                "SPLIT SCREEN NEIGHBOR",
+                NSRect(
+                    x: targetFrame.maxX, y: targetFrame.minY, width: targetFrame.width,
+                    height: targetFrame.height)
+            ),
             ("PREVIOUS FOCUSED WINDOW", targetFrame.offsetBy(dx: 60, dy: 40)),
         ]
         let sentinels = sentinelFixtures.enumerated().map { index, fixture in
@@ -124,7 +140,8 @@ enum CaptureSpikeHarness {
             sentinel.orderBack(nil)
             return sentinel
         }
-        return CaptureSpikeWindowHarness(primary: primary, secondary: secondary, sentinels: sentinels)
+        return CaptureSpikeWindowHarness(
+            primary: primary, secondary: secondary, sentinels: sentinels)
     }
 
     private static func writeCorpusManifest(to outputDirectory: URL) throws {
@@ -152,7 +169,8 @@ enum CaptureSpikeHarness {
                 "excludedFocusedWindow",
             ],
         ]
-        let data = try JSONSerialization.data(withJSONObject: manifest, options: [.prettyPrinted, .sortedKeys])
+        let data = try JSONSerialization.data(
+            withJSONObject: manifest, options: [.prettyPrinted, .sortedKeys])
         try data.write(to: outputDirectory.appendingPathComponent("corpus.json"), options: .atomic)
     }
 }
@@ -209,9 +227,11 @@ private final class CaptureSpikeWindowHarness {
                     secondary.deminiaturize(nil)
                     primary.makeKeyAndOrderFront(nil)
                 default:
-                    NSWorkspace.shared.notificationCenter.post(name: NSWorkspace.willSleepNotification, object: nil)
+                    NSWorkspace.shared.notificationCenter.post(
+                        name: NSWorkspace.willSleepNotification, object: nil)
                     try? await Task.sleep(for: .milliseconds(400))
-                    NSWorkspace.shared.notificationCenter.post(name: NSWorkspace.didWakeNotification, object: nil)
+                    NSWorkspace.shared.notificationCenter.post(
+                        name: NSWorkspace.didWakeNotification, object: nil)
                     primary.makeKeyAndOrderFront(nil)
                 }
                 phase += 1
@@ -222,7 +242,9 @@ private final class CaptureSpikeWindowHarness {
     func stop() {
         cycleTask?.cancel()
         secondary.close()
-        sentinels.forEach { $0.close() }
+        for sentinel in sentinels {
+            sentinel.close()
+        }
     }
 }
 
@@ -289,7 +311,7 @@ private final class OfficeCorpusView: NSView {
 
     private func drawDocument(offset: CGFloat) {
         NSColor(calibratedWhite: 0.68, alpha: 1).setFill()
-        for row in 0 ..< 18 {
+        for row in 0..<18 {
             NSRect(
                 x: 50,
                 y: (CGFloat(row) * 24 + offset).truncatingRemainder(dividingBy: bounds.height),
@@ -300,7 +322,7 @@ private final class OfficeCorpusView: NSView {
     }
 
     private func drawCode(offset: CGFloat) {
-        for row in 0 ..< 22 {
+        for row in 0..<22 {
             (row.isMultiple(of: 3)
                 ? NSColor(calibratedRed: 0.45, green: 0.62, blue: 0.55, alpha: 1)
                 : NSColor(calibratedWhite: 0.36, alpha: 1)).setFill()
@@ -341,8 +363,8 @@ private final class CheckerboardSentinelView: NSView {
         let rows = 12
         let cellWidth = bounds.width / CGFloat(columns)
         let cellHeight = bounds.height / CGFloat(rows)
-        for row in 0 ..< rows {
-            for column in 0 ..< columns {
+        for row in 0..<rows {
+            for column in 0..<columns {
                 ((row + column + seed) % 2 == 0 ? NSColor.black : NSColor.white).setFill()
                 NSRect(
                     x: CGFloat(column) * cellWidth,

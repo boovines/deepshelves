@@ -1,52 +1,78 @@
 {
   "schemaVersion": 1,
   "storyID": "LM-025",
-  "status": "blocked",
+  "status": "passed",
+  "architecture": {
+    "decision": "independently encoded HEIC keyframes grouped in immutable logical chunk directories",
+    "adr": "Decisions/0001-capture-media.md",
+    "canonicalContractVersion": 2,
+    "legacyReadCompatibility": 1,
+    "hardwareVideoEncoderStatus": "removed from the shipping capture writer and permanently quarantined on this Mac"
+  },
+  "invariantProofs": {
+    "foregroundWindowIsolation": "MediaWriterCore rejects epoch, target-window, dimension, ordering, and duration mismatches before the encoder boundary; LM-024 remains the pixel-admission authority.",
+    "localOnlyStorage": "The writer has no network capability and publishes only below the caller-provided owner-only archive path.",
+    "privacyIdentity": "The manifest binds chunk, epoch, target window, fixed dimensions, ordered frame identities, exact paths, and logical presentation times.",
+    "atomicPublication": "Each asset and manifest is fsynced and no-replace renamed; the verified complete staging directory is then no-replace renamed and the parent directory fsynced.",
+    "integrity": "The canonical manifest digest plus every frame byte count and SHA-256 rejects missing, extra, reordered, substituted, duplicated, or corrupt assets.",
+    "searchEvidence": "Schema V2 SearchableFrame carries the exact immutable source HEIC path for its frame identity.",
+    "retention": "Logical chunks remain bounded to 30 seconds and full retirement removes the verified identity-scoped directory.",
+    "forensicDeletion": "Retained-only rewriting republishes unchanged allowed assets, proves deleted sentinel and frame identity absence, then permits old-directory retirement."
+  },
   "safeVerification": {
     "staleXcodeTestProcessGuard": "passed",
-    "pureSourceEncoderFrameworkScan": "passed",
-    "pureHarnessScenarios": 6,
-    "deterministicSoftwareFixtureEncoding": "passed",
-    "mockSoftwareMidWriteProcessTermination": "passed",
-    "partialRecoveryWithoutFinalVisibility": "passed",
-    "packageCompileOnlyBuild": "passed",
-    "swiftFormatForChangedProductionAndSafeHarnessSources": "passed",
+    "encoderProcessTripwire": "passed",
+    "shippingHardwareVideoEncoderRemovalScan": "passed",
+    "productionImageIOEncoder": "compile-only; never constructed by a test",
+    "pureBoundaryHarness": "passed",
+    "mockMidWriteProcessTermination": "passed",
+    "fakeIntegrationTests": 3,
+    "legacyAndCanonicalContractTests": "passed",
+    "privacySmoke": "passed",
+    "dependencyAudit": "passed",
+    "universalReleaseBuild": "passed under encoder-process tripwire",
+    "swiftFormat": "passed",
     "whitespaceValidation": "passed"
   },
-  "implementedAndSafelyVerified": [
+  "safeScenarios": [
     "single chunk, epoch, target-window, and fixed-dimension scope enforcement",
-    "aspect-preserving downscale plan with no upscaling",
-    "strictly increasing variable-frame-rate presentation times capped at 30 seconds",
-    "stable frame locators committed only after mock backend acceptance",
-    "strong retention of every accepted adaptor-pool buffer through finalization",
-    "frame count and duration finalization metadata",
-    "owner-only atomic partial-file publication with byte count and SHA-256",
-    "before-rename and after-rename-before-directory-sync fault boundaries",
-    "deterministic software-fixture encoding and real subprocess termination without VideoToolbox",
-    "compile-only production integration retaining required hardware acceleration"
+    "aspect-preserving downscale planning with no upscaling",
+    "strictly increasing variable logical presentation times capped at 30 seconds",
+    "canonical manifest and exact immutable frame locators",
+    "per-frame and canonical-manifest SHA-256 integrity",
+    "owner-only per-file and per-directory permissions",
+    "before-rename and after-rename-before-directory-sync fault recovery",
+    "real subprocess termination after one fake-boundary frame with no visible final chunk",
+    "retained-only rewrite without re-encoding and forensic deleted-sentinel absence",
+    "legacy V1 read compatibility and canonical V2 fixture reproduction"
   ],
-  "productionStaticRecovery": [
-    "constructs one AVAssetWriterInputPixelBufferAdaptor and uses its pool for every frame",
-    "copies both same-size and downscaled sources into adaptor-owned buffers",
-    "has no direct AVAssetWriterInput sample-buffer append bypass",
-    "retains every accepted adaptor buffer until finalization, failure, cancellation, or deinitialization completes",
-    "added an unconditional pre-construction quarantine to hardware integration tests"
-  ],
-  "quarantinedUnverifiedGates": [
-    "a real hardware-required HEVC encode through the post-refactor production writer",
-    "playable output with exact VFR duration, PTS, and frame count",
-    "random decode at every persisted frame locator",
-    "forced-termination playability at every second of a write",
-    "runtime confirmation that the selected encoder is hardware accelerated"
-  ],
+  "quarantine": {
+    "panics": 2,
+    "localTimes": ["14:43", "14:49"],
+    "signature": "dart-ave AppleT8110DART",
+    "prohibitedOnThisMac": [
+      "hardware HEVC encode",
+      "VideoToolbox encoder initialization",
+      "AVAssetWriter encoder probes",
+      "reproduction of either panic"
+    ],
+    "historicalEvidence": [
+      "Results/LM-025/panic-analysis.json",
+      "Results/LM-025/quarantine.md"
+    ]
+  },
   "evidence": [
+    "Results/LM-025/architecture-evaluation.json",
     "Results/LM-025/safe-tests.txt",
-    "Results/LM-025/swift-build.txt",
-    "Results/LM-025/source-audit.txt",
-    "Results/LM-025/retention-red.txt",
-    "Results/LM-025/retention-green.txt",
     "Results/LM-025/software-termination.txt",
-    "Results/LM-025/process-safety.txt",
+    "Results/LM-025/fake-integration-tests.txt",
+    "Results/LM-025/contracts.txt",
+    "Results/LM-025/source-audit.txt",
+    "Results/LM-025/swift-build.txt",
+    "Results/LM-025/release-build.txt",
+    "Results/LM-025/privacy-smoke.txt",
+    "Results/LM-025/dependencies.txt",
+    "Results/LM-025/swift-format.txt",
     "Results/LM-025/panic-analysis.json",
     "Results/LM-025/quarantine.md"
   ]

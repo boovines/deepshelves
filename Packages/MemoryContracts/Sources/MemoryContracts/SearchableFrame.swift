@@ -14,6 +14,7 @@ public struct SearchableFrame: Codable, Equatable, Sendable, ContractValidatable
     public let capturedAt: Date
     public let chunkID: UUID
     public let presentationTimeMS: Int64
+    public let mediaPath: String?
     public let thumbnailPath: String?
     public let foreground: ForegroundContext
     public let browser: BrowserContext?
@@ -29,6 +30,7 @@ public struct SearchableFrame: Codable, Equatable, Sendable, ContractValidatable
         capturedAt: Date,
         chunkID: UUID,
         presentationTimeMS: Int64,
+        mediaPath: String? = nil,
         thumbnailPath: String?,
         foreground: ForegroundContext,
         browser: BrowserContext?,
@@ -43,6 +45,7 @@ public struct SearchableFrame: Codable, Equatable, Sendable, ContractValidatable
         self.capturedAt = capturedAt
         self.chunkID = chunkID
         self.presentationTimeMS = presentationTimeMS
+        self.mediaPath = mediaPath
         self.thumbnailPath = thumbnailPath
         self.foreground = foreground
         self.browser = browser
@@ -66,6 +69,33 @@ public struct SearchableFrame: Codable, Equatable, Sendable, ContractValidatable
             violation: .outOfRange,
             detail: "presentation time cannot be negative"
         )
+        if schemaVersion >= 2 {
+            guard let mediaPath else {
+                throw ContractValidationError(
+                    field: "searchableFrame.mediaPath",
+                    violation: .missingRequiredValue,
+                    detail: "schema V2 frames require an exact source HEIC path"
+                )
+            }
+            try ContractChecks.validateRelativePath(
+                mediaPath,
+                field: "searchableFrame.mediaPath"
+            )
+            let expectedSuffix = "/frames/\(id.uuidString.lowercased()).heic"
+            try ContractChecks.require(
+                mediaPath.hasPrefix("media/") && mediaPath.hasSuffix(expectedSuffix),
+                field: "searchableFrame.mediaPath",
+                violation: .inconsistent,
+                detail: "source path must identify this immutable frame below a media chunk"
+            )
+        } else {
+            try ContractChecks.require(
+                mediaPath == nil,
+                field: "searchableFrame.mediaPath",
+                violation: .inconsistent,
+                detail: "legacy V1 frames use chunk plus presentation-time locators"
+            )
+        }
         if let thumbnailPath {
             try ContractChecks.validateRelativePath(
                 thumbnailPath, field: "searchableFrame.thumbnailPath")

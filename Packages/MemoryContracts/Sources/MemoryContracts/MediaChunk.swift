@@ -2,10 +2,12 @@ import Foundation
 
 public enum MediaCodec: String, Codable, Equatable, Sendable {
     case hevcMain
+    case heicKeyframes
 }
 
 public enum MediaContainer: String, Codable, Equatable, Sendable {
     case quickTimeMovie
+    case heicKeyframeDirectory
 }
 
 public enum MediaChunkState: String, Codable, Equatable, Sendable {
@@ -72,11 +74,20 @@ public struct MediaChunk: Codable, Equatable, Sendable, ContractValidatable {
             detail: "target window identifier must be positive"
         )
         try ContractChecks.validateRelativePath(relativePath, field: "mediaChunk.relativePath")
+        let validRepresentation =
+            switch (codec, container) {
+            case (.hevcMain, .quickTimeMovie):
+                relativePath.hasPrefix("media/") && relativePath.hasSuffix(".mov")
+            case (.heicKeyframes, .heicKeyframeDirectory):
+                relativePath.hasPrefix("media/") && relativePath.hasSuffix("/manifest.json")
+            default:
+                false
+            }
         try ContractChecks.require(
-            relativePath.hasPrefix("media/") && relativePath.hasSuffix(".mov"),
-            field: "mediaChunk.relativePath",
+            validRepresentation,
+            field: "mediaChunk.representation",
             violation: .inconsistent,
-            detail: "V1 media chunks live below media/ and use QuickTime .mov files"
+            detail: "codec, container, and archive path must identify one supported representation"
         )
         try ContractChecks.validateInterval(
             DateInterval(start: startedAt, end: endedAt),

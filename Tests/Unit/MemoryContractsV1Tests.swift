@@ -66,6 +66,45 @@ final class MemoryContractsV1Tests: XCTestCase {
         )
     }
 
+    func testV2HEICManifestRoundTripsExactFrameEvidence() throws {
+        let chunkID = try XCTUnwrap(
+            UUID(uuidString: "21000000-0000-0000-0000-000000000001"))
+        let epochID = try XCTUnwrap(
+            UUID(uuidString: "21000000-0000-0000-0000-000000000002"))
+        let frameID = try XCTUnwrap(
+            UUID(uuidString: "31000000-0000-0000-0000-000000000001"))
+        let entry = try HEICKeyframeEntry(
+            frameID: frameID,
+            presentationTimeMS: 0,
+            relativePath: "frames/31000000-0000-0000-0000-000000000001.heic",
+            byteCount: 1_024,
+            sha256: Data(repeating: 0x31, count: 32)
+        )
+        let manifest = try HEICKeyframeManifest(
+            chunkID: chunkID,
+            captureEpochID: epochID,
+            targetWindowID: 42,
+            width: 1_440,
+            height: 900,
+            frames: [entry]
+        )
+
+        XCTAssertEqual(
+            try ContractJSON.decode(
+                HEICKeyframeManifest.self,
+                from: ContractJSON.encode(manifest)
+            ),
+            manifest
+        )
+        XCTAssertEqual(
+            try entry.archiveRelativePath(
+                chunkManifestPath:
+                    "media/2026/05/03/21000000-0000-0000-0000-000000000001/manifest.json"
+            ),
+            "media/2026/05/03/21000000-0000-0000-0000-000000000001/frames/31000000-0000-0000-0000-000000000001.heic"
+        )
+    }
+
     func testSearchableFrameRoundTripsOnlyApprovedRelativeLocators() throws {
         let frame = try SearchableFrame(
             id: XCTUnwrap(UUID(uuidString: "30000000-0000-0000-0000-000000000001")),
@@ -81,6 +120,35 @@ final class MemoryContractsV1Tests: XCTestCase {
             visualState: .suppressed,
             isTransition: true,
             schemaVersion: 1
+        )
+
+        XCTAssertEqual(
+            try ContractJSON.decode(SearchableFrame.self, from: ContractJSON.encode(frame)),
+            frame
+        )
+    }
+
+    func testV2SearchableFrameCarriesExactSourceHEICPath() throws {
+        let frameID = try XCTUnwrap(
+            UUID(uuidString: "32000000-0000-0000-0000-000000000001"))
+        let frame = try SearchableFrame(
+            id: frameID,
+            captureEpochID: try XCTUnwrap(
+                UUID(uuidString: "32000000-0000-0000-0000-000000000002")),
+            targetWindowID: 42,
+            capturedAt: Date(timeIntervalSince1970: 1_777_777_715.5),
+            chunkID: try XCTUnwrap(
+                UUID(uuidString: "22000000-0000-0000-0000-000000000001")),
+            presentationTimeMS: 15_500,
+            mediaPath:
+                "media/2026/05/03/22000000-0000-0000-0000-000000000001/frames/32000000-0000-0000-0000-000000000001.heic",
+            thumbnailPath: nil,
+            foreground: try fixtureForeground(),
+            browser: try fixtureBrowser(),
+            textState: .pending,
+            visualState: .pending,
+            isTransition: false,
+            schemaVersion: 2
         )
 
         XCTAssertEqual(

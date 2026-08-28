@@ -1,6 +1,6 @@
 {
-  "schemaVersion": 1,
-  "generatorVersion": "contract-fixture-generator-v1",
+  "schemaVersion": 2,
+  "generatorVersion": "contract-fixture-generator-v2",
   "fixtures": [
     {
       "path": "Contracts/v1/access-policy.json",
@@ -78,6 +78,34 @@
       "license": "CC0-1.0",
       "sha256": "77cdf7af12044d4fc705193011acfef3a103757bdea8d366b5aa8c833d1f64c2",
       "semanticLabels": ["v1", "timeline", "typed-gap", "ordered"]
+    },
+    {
+      "path": "Contracts/v2/heic-keyframe-manifest.json",
+      "source": "synthetic",
+      "license": "CC0-1.0",
+      "sha256": "3e8bc8b7a809bc882e9e06bcec2d1a60268afe68f940571d1b8f7ab0ee058960",
+      "semanticLabels": ["v2", "heic-keyframes", "canonical-manifest", "per-frame-integrity"]
+    },
+    {
+      "path": "Contracts/v2/media-chunk.json",
+      "source": "synthetic",
+      "license": "CC0-1.0",
+      "sha256": "12b948dc258983fbd78ee66853f7149eac0f52cff1b44715364e95fdde06c487",
+      "semanticLabels": ["v2", "heic-keyframes", "single-epoch", "atomic-directory"]
+    },
+    {
+      "path": "Contracts/v2/search-page.json",
+      "source": "synthetic",
+      "license": "CC0-1.0",
+      "sha256": "4b6385da878b87d597369bb6e9714c958079149c2b808bf263bec62cf5ad386e",
+      "semanticLabels": ["v2", "exact-source-evidence", "stable-order"]
+    },
+    {
+      "path": "Contracts/v2/searchable-frame.json",
+      "source": "synthetic",
+      "license": "CC0-1.0",
+      "sha256": "1278881b88574ea57e473c03bd338430fa9b8a08aaf4ba4f2ca75fa6ebec0372",
+      "semanticLabels": ["v2", "searchable-frame", "exact-source-heic"]
     }
   ]
 }

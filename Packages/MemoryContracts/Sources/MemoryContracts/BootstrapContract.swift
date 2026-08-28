@@ -1,7 +1,8 @@
 import Foundation
 
 public enum BootstrapContract {
-    public static let schemaVersion = 1
+    public static let schemaVersion = 2
+    public static let minimumReadableSchemaVersion = 1
 }
 
 public struct BootstrapStatus: Codable, Equatable, Sendable {
@@ -15,4 +16,3 @@ public struct BootstrapStatus: Codable, Equatable, Sendable {
         self.state = state
     }
 }
-

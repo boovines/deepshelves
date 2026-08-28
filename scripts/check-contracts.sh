@@ -13,8 +13,9 @@ swiftc \
     Packages/MemoryContracts/Sources/MemoryContracts/*.swift \
     Benchmarks/ContractFixtureGenerator.swift \
     -o "$work_dir/contract-fixture-generator"
-"$work_dir/contract-fixture-generator" "$work_dir/v1"
+"$work_dir/contract-fixture-generator" "$work_dir/v1" "$work_dir/v2"
 diff -ru Fixtures/Contracts/v1 "$work_dir/v1"
+diff -ru Fixtures/Contracts/v2 "$work_dir/v2"
 
 while IFS=$'\t' read -r relative_path expected_hash; do
     actual_hash="$(shasum -a 256 "Fixtures/$relative_path" | awk '{print $1}')"
@@ -37,4 +38,4 @@ xcodebuild \
     -only-testing:LocalMemoryUnitTests/MemoryContractsV1Tests \
     -only-testing:LocalMemoryUnitTests/ContractFixtureCompatibilityTests
 
-echo "check-contracts: 11 canonical V1 fixtures reproduce byte-for-byte and all contract validation tests pass"
+echo "check-contracts: legacy V1 and canonical V2 fixtures reproduce byte-for-byte and all contract validation tests pass"

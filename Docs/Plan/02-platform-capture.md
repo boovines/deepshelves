@@ -28,7 +28,7 @@ This intentionally sacrifices some ambient spatial context for a much stronger a
 - ScreenCaptureKit `SCStream`
 - `SCContentFilter(desktopIndependentWindow:)` for exactly one `SCWindow`
 - `SCStream.updateContentFilter` when the approved focused window changes
-- AVAssetWriter with HEVC and hardware acceleration
+- Image I/O HEIC encoding behind an injectable frame-encoder boundary
 - NSWorkspace for application and sleep/wake events
 - Accessibility AX APIs for focused window, URL, and structured content
 - Coarse CGEventTap event classes only to detect user activity
@@ -128,22 +128,22 @@ Receiving and persistence are separate:
 
 Metadata-only gaps preserve timeline honesty when visual capture is unavailable.
 
-## HEVC chunks
+## HEIC keyframe chunks
 
-MediaWriter creates variable-frame-rate QuickTime chunks scoped to one capture epoch and one encoded dimension:
+MediaWriter creates immutable logical chunk directories of independently encoded HEIC frames scoped to one capture epoch and one encoded dimension:
 
 - Maximum duration 30 seconds
 - End immediately on target-window, epoch, or encoded-size change
-- AVAssetWriter and AVAssetWriterInput
-- HEVC Main profile
-- VideoToolbox hardware encoder required on Apple Silicon
-- Source presentation timestamps preserved
-- Keyframe at each chunk start
-- Atomic partial write, fsync, rename, then database commit
+- Image I/O HEIC encoder; no AVAssetWriter or VideoToolbox encoder in the shipping path
+- Every accepted frame is independently decodable
+- Source presentation timestamps preserved as ordered logical times
+- Per-frame byte count and SHA-256 in a canonical chunk manifest
+- Exact frame asset path carried by each searchable frame
+- Atomic per-frame partial publication inside staging, then atomic whole-directory rename, fsync, and database commit
 
-If hardware encoding is unavailable, stop canonical capture visibly and record a content-free diagnostic error. HEIC becomes the canonical archive format only if baseline spike S1 proves the documented fallback and an ADR changes the contract. Never silently use a high-CPU software encoder.
+ADR 0001 authorizes HEIC as the canonical archive format after two repeatable hardware-video kernel panics during LM-025. Production Image I/O encoding is compile-checked but no hardware HEVC/VideoToolbox encoder validation may execute on the affected Mac. Encoding failure stops canonical capture visibly and records a content-free diagnostic error.
 
-Every indexed frame points to a chunk ID and presentation timestamp. A 480-pixel HEIC thumbnail is generated asynchronously.
+Every indexed frame points to a chunk ID, logical presentation timestamp, and exact source HEIC path. A separate 480-pixel HEIC thumbnail is generated asynchronously.
 
 ## Activity signals
 
@@ -218,8 +218,8 @@ Place uniquely colored/encoded sentinel grids in background, excluded, notificat
 - Browser URL-to-target-window association fixtures
 - Window minimize/close/resize/secondary-display transitions
 - Eight-hour foreground soak and repeated sleep/wake
-- Kill during filter update, append, finish, rename, and DB commit
-- Instruments energy, CPU, memory, encoder, and WindowServer attribution
+- Kill during filter update, frame staging, manifest finalization, directory rename, and DB commit
+- Instruments energy, CPU, memory, Image I/O, and WindowServer attribution
 
 ## Sources
 
@@ -229,5 +229,5 @@ Place uniquely colored/encoded sentinel grids in background, excluded, notificat
 - [SCWindow identity and owning application](https://developer.apple.com/documentation/screencapturekit/scwindow)
 - [AXUIElement process identity](https://developer.apple.com/documentation/applicationservices/1459374-axuielementcreateapplication)
 - [AX window/top-level attributes](https://developer.apple.com/documentation/applicationservices/kaxwindowattribute)
-- [Apple AVAssetWriter](https://developer.apple.com/documentation/avfoundation/avassetwriter)
-- [VideoToolbox hardware encoding](https://developer.apple.com/documentation/videotoolbox/kvtvideoencoderspecification_enablehardwareacceleratedvideoencoder)
+- [Apple Image I/O](https://developer.apple.com/documentation/imageio)
+- [Uniform Type Identifiers HEIC](https://developer.apple.com/documentation/uniformtypeidentifiers/uttype-swift.struct/heic)

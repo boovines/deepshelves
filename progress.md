@@ -254,6 +254,12 @@ This file is append-only. Each story records measurements, failures, and durable
 - The safe harness now uses a deterministic software fixture encoder, verifies exact SHA-256 and owner-only atomic publication, covers both rename fault boundaries, and kills a real non-VideoToolbox child process after a synchronized mid-write partial. The partial remains recoverable and no final path becomes visible. All six scenarios, static adaptor/no-bypass audit, package compile-only build, format, and whitespace checks pass.
 - Hardware HEVC, AVAssetWriter media execution, random decode, and playable forced-termination fixtures remain quarantined and unexecuted. The two panic fingerprints remain the technical blocker; LM-025 is not passed and has no checkpoint tag. Evidence: `Results/LM-025/report.json`, `Results/LM-025/software-termination.txt`, and `Results/LM-025/panic-analysis.json`.
 
+## 2026-08-28 — LM-025 passed with the authorized HEIC-keyframe architecture
+
+- ADR 0001 now adopts independently encoded HEIC files grouped in immutable logical chunk directories. Canonical V2 manifests bind chunk, epoch, target window, fixed dimensions, ordered frame identities, exact paths, byte counts, and per-frame SHA-256; searchable frames cite the exact source asset. Legacy V1 HEVC fixtures remain read-compatible only.
+- The complete hidden directory publishes through synchronized per-file no-replace renames, a manifest written last, full inventory verification, one no-replace directory rename, and parent-directory synchronization. Retained-only deletion republishes unchanged allowed frames and proves the removed sentinel and identity are absent before retiring the old directory.
+- Safe boundary-fake, fault-injection, subprocess-termination, V1/V2 contract, privacy, compile-only Release, format, and source-audit gates pass under a live encoder-process tripwire. Production ImageIO HEIC is compile-only in this story. No AVAssetWriter, VideoToolbox, or hardware HEVC encoder path ran, and the two `dart-ave` panic artifacts remain permanently quarantined on this Mac. Evidence: `Results/LM-025/report.json` and `Results/LM-025/architecture-evaluation.json`.
+
 ## 2026-08-28 — LM-036 passed
 
 - `SearchQueryParser` implements a deterministic, Foundation-only, quote-aware grammar for explicit application and site filters, ISO and locale dates, half-open `before:`/`after:` bounds, and localized today, yesterday, and last-week phrases. Unknown applications, invalid sites, malformed operators, and ambiguous time language remain in the lexical query.

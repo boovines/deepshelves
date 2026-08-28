@@ -1,3 +1,6 @@
-process_guard=passed
-pure_source_encoder_scan=passed
-LM-025 pure media writer core/software fixture: 6 scenarios passed
+LM-025 HEIC keyframe writer tracer: passed
+pure_boundary_encoder=passed
+scope_identity_manifest_integrity=passed
+atomic_directory_faults=passed
+retained_only_republication=passed
+forensic_sentinel_absence=passed

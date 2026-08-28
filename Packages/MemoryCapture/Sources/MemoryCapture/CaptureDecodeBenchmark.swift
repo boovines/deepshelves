@@ -1,5 +1,6 @@
-@preconcurrency import AVFoundation
 import Foundation
+import ImageIO
+import MemoryContracts
 
 public struct CaptureDecodeBenchmarkReport: Codable, Equatable, Sendable {
     public let samplesMilliseconds: [Double]
@@ -12,7 +13,14 @@ public enum CaptureDecodeBenchmark {
         mediaPaths: [String],
         sampleCount: Int = 100
     ) async throws -> CaptureDecodeBenchmarkReport {
-        guard !mediaPaths.isEmpty else {
+        let frameURLs = try mediaPaths.flatMap { path -> [URL] in
+            let directory = URL(fileURLWithPath: path, isDirectory: true)
+            let data = try Data(
+                contentsOf: directory.appendingPathComponent("manifest.json"))
+            let manifest = try ContractJSON.decode(HEICKeyframeManifest.self, from: data)
+            return manifest.frames.map { directory.appendingPathComponent($0.relativePath) }
+        }
+        guard !frameURLs.isEmpty else {
             return CaptureDecodeBenchmarkReport(
                 samplesMilliseconds: [],
                 p95Milliseconds: 0,
@@ -21,15 +29,14 @@ public enum CaptureDecodeBenchmark {
         }
         var samples: [Double] = []
         samples.reserveCapacity(sampleCount)
-        for index in 0 ..< sampleCount {
-            let path = mediaPaths[index % mediaPaths.count]
-            let asset = AVURLAsset(url: URL(fileURLWithPath: path))
-            let generator = AVAssetImageGenerator(asset: asset)
-            generator.appliesPreferredTrackTransform = true
-            generator.requestedTimeToleranceBefore = .zero
-            generator.requestedTimeToleranceAfter = .zero
+        for index in 0..<sampleCount {
+            let url = frameURLs[index % frameURLs.count] as CFURL
             let started = DispatchTime.now().uptimeNanoseconds
-            _ = try await generator.image(at: .zero)
+            guard let source = CGImageSourceCreateWithURL(url, nil),
+                CGImageSourceCreateImageAtIndex(source, 0, nil) != nil
+            else {
+                throw CocoaError(.fileReadCorruptFile)
+            }
             let elapsed = DispatchTime.now().uptimeNanoseconds - started
             samples.append(Double(elapsed) / 1_000_000)
         }

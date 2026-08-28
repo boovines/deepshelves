@@ -12,7 +12,9 @@ Store a bounded rolling screen history locally without turning SQLite into a med
             archive.sqlite3-wal
             archive.sqlite3-shm
         media/
-            YYYY/MM/DD/<chunk-id>.mov
+            YYYY/MM/DD/<chunk-id>/
+                manifest.json
+                frames/<frame-id>.heic
         thumbnails/
             YYYY/MM/DD/<frame-id>.heic
         audio/
@@ -46,14 +48,14 @@ V1 logical tables are fixed by plan 10:
 - audit_events
 - archive_meta
 
-Do not store screenshots, video, thumbnails, or vector matrices as SQLite blobs. The database holds metadata, presentation timestamps, offsets, and relative paths; the filesystem holds media and the rebuildable flat vector file.
+Do not store source images, thumbnails, or vector matrices as SQLite blobs. The database holds metadata, logical presentation timestamps, exact source paths, offsets, and relative paths; the filesystem holds media and the rebuildable flat vector file.
 
 ## Canonical versus derived data
 
 Canonical:
 
 - Timestamp and app/window context
-- Original approved foreground-window frames encoded in single-epoch HEVC chunks of at most 30 seconds
+- Original approved foreground-window frames encoded as independent HEIC keyframes in single-epoch logical chunks of at most 30 seconds
 - Accessibility extraction
 - User rules and settings
 - Optional original audio
@@ -71,7 +73,9 @@ Derived data can always be rebuilt. Deleting a canonical record must cascade to 
 
 ## Media format
 
-Use variable-frame-rate HEVC QuickTime chunks from the first vertical slice. Each chunk belongs to exactly one approved window-capture epoch, has fixed encoded dimensions, lasts at most 30 seconds, and ends immediately on target-window, epoch, or dimension change. AVAssetWriter/VideoToolbox must use hardware encoding. Each searchable frame records its epoch, target window, chunk, and presentation timestamp; AVAssetImageGenerator provides frame extraction.
+Use independent HEIC frame assets grouped by a canonical manifest from the first vertical slice. Each logical chunk belongs to exactly one approved window-capture epoch, has fixed encoded dimensions, lasts at most 30 seconds, and ends immediately on target-window, epoch, or dimension change. Each searchable frame records its epoch, target window, chunk, logical presentation timestamp, and exact source path; detail retrieval opens that independently decodable asset without video seeking.
+
+The canonical manifest inventories ordered frame IDs, relative asset paths, logical times, byte counts, and SHA-256 digests. A hidden sibling directory is complete and validated before a no-replace atomic rename publishes it; only a subsequent database transaction makes it searchable.
 
 Generate a 480-pixel HEIC thumbnail only for indexed searchable frames. Search and ordinary timeline browsing use thumbnails; detail and zoom decode the source chunk.
 
@@ -87,7 +91,7 @@ Support both controls, with defaults of 30 days and 20 GB:
 Cleanup order:
 
 1. Remove expired temporary files.
-2. Delete oldest complete HEVC chunks and their searchable frames when retention or hard budget requires it.
+2. Delete oldest complete HEIC logical chunk directories and their searchable frames when retention or hard budget requires it.
 3. Do not preserve extracted text after its source media expires in V1; this keeps deletion semantics simple and honest.
 4. Delete orphaned thumbnails, embeddings, indexes, and summaries.
 5. Checkpoint and compact the database during idle time.
@@ -108,7 +112,7 @@ Deletion transaction:
 
 1. Mark frame/chunk IDs with a deletion tombstone.
 2. Remove them from query visibility immediately.
-3. For a fully covered chunk, delete it. For a partial overlap, rewrite that single-window chunk without deleted time ranges into a temporary file, verify it, and atomically replace the original.
+3. For a fully covered chunk, delete its directory. For a partial overlap, construct a replacement directory containing only retained independently encoded frames, verify every manifest digest, atomically swap database references, and dispose the old directory.
 4. Delete all derived rows/files and commit database deletion.
 5. Record a content-free local audit event.
 6. Retry orphan cleanup if the filesystem operation failed.
@@ -125,7 +129,7 @@ SQLCipher is required before personal dogfood:
 - Ensure the app, CLI, and MCP helper share the same signed Keychain access.
 - Test key loss and restore behavior explicitly.
 
-HEVC media and thumbnails rely on FileVault plus mode 0700/0600 in V1. They are not described as app-encrypted. Streaming application-level media encryption is deferred because it complicates AVFoundation random access and deletion rewriting; adding it requires an ADR and performance proof.
+HEIC source media and thumbnails rely on FileVault plus mode 0700/0600. They are not described as app-encrypted. Application-level media encryption is deferred; adding it requires an ADR and performance proof for exact-frame access, directory publication, and deletion replacement.
 
 ## Migrations and compatibility
 
@@ -155,7 +159,7 @@ Warn that Time Machine or third-party backup software may copy the local archive
 
 Gate: 100,000 synthetic captures ingest without corruption; kill tests leave no visible partial records.
 
-### S2: HEVC media, searchable-frame index, and thumbnail store
+### S2: HEIC keyframe media, searchable-frame index, and thumbnail store
 
 Gate: random timeline access under 150 ms for a 30-day fixture.
 

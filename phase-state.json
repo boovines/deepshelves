@@ -387,26 +387,31 @@
       "resumeProbe": null
     },
     "LM-025": {
-      "status": "blocked",
+      "status": "passed",
       "startedAt": "2026-08-28T12:14:05Z",
-      "completedAt": null,
-      "gitRevision": null,
+      "completedAt": "2026-08-28T17:04:26Z",
+      "gitRevision": "refs/tags/checkpoints/LM-025",
       "evidence": [
         "Results/LM-025/report.json",
+        "Results/LM-025/architecture-evaluation.json",
         "Results/LM-025/panic-analysis.json",
         "Results/LM-025/quarantine.md",
         "Results/LM-025/safe-tests.txt",
         "Results/LM-025/swift-build.txt",
         "Results/LM-025/source-audit.txt",
-        "Results/LM-025/retention-red.txt",
-        "Results/LM-025/retention-green.txt",
+        "Results/LM-025/contracts.txt",
+        "Results/LM-025/fake-integration-tests.txt",
+        "Results/LM-025/release-build.txt",
+        "Results/LM-025/privacy-smoke.txt",
+        "Results/LM-025/dependencies.txt",
+        "Results/LM-025/swift-format.txt",
         "Results/LM-025/software-termination.txt",
         "Results/LM-025/process-safety.txt"
       ],
-      "notes": "Safe implementation is resumable from refs/tags/checkpoints/LM-024: extracted pure scoped VFR/downscale/finalization core and atomic media publisher; every production frame is copied into the adaptor-owned pool, appended only through the adaptor, and strongly retained through finish/failure/cancel/deinit; hardware tests are quarantined before writer construction. Six pure/software-fixture scenarios, a real mock-process mid-write termination, hashing/publication fault gates, static audits, format/whitespace checks, and the compile-only package build pass. The first three S1 tuning fallbacks still initialize the prohibited hardware HEVC path; the HEIC fallback requires an ADR.",
-      "blockedReason": "Two focused hardware-required HEVC runs caused repeatable dart-ave AppleT8110DART kernel panics at 2026-08-28 14:43 and 14:49 local time. Under the active safety constraint, real hardware encode, playable VFR duration/PTS/frame-count validation, random decode, forced-termination playability, and runtime hardware-acceleration confirmation cannot run. Evidence and attempted safe fixes are in Results/LM-025/quarantine.md. Required decision: explicitly reauthorize validation after an OS/firmware change or on an isolated expendable Mac, or authorize an ADR for the documented HEIC-keyframe fallback.",
+      "notes": "Authorized ADR 0001 adopts canonical V2 independent HEIC keyframes in atomic logical-chunk directories while preserving foreground-window isolation, local-only storage, privacy identity, integrity, exact search evidence, retention, and forensic deletion. Safe fake-boundary, fault, subprocess-termination, V1/V2 contract, privacy, compile-only Release, and source-audit gates pass under an encoder-process tripwire. Production ImageIO HEIC is compile-only; no AVAssetWriter, VideoToolbox, or hardware HEVC encoder path ran. The two dart-ave panic artifacts remain permanently quarantined on this Mac.",
+      "blockedReason": null,
       "requestedHumanGate": null,
-      "resumeProbe": "First verify pgrep -x xcodebuild and pgrep -x xctest are empty. Do not remove the integration-test quarantine or construct HEVCMediaWriter until explicit written reauthorization identifies a safe validation host/state; otherwise begin the HEIC ADR decision without executing hardware HEVC."
+      "resumeProbe": null
     },
     "LM-026": {
       "status": "pending",

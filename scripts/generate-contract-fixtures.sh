@@ -11,6 +11,8 @@ swiftc \
     Packages/MemoryContracts/Sources/MemoryContracts/*.swift \
     Benchmarks/ContractFixtureGenerator.swift \
     -o "$tool_path"
-"$tool_path" "$repo_root/Fixtures/Contracts/v1"
+"$tool_path" \
+    "$repo_root/Fixtures/Contracts/v1" \
+    "$repo_root/Fixtures/Contracts/v2"
 
-echo "generate-contract-fixtures: wrote canonical V1 contract fixtures"
+echo "generate-contract-fixtures: wrote legacy V1 and canonical V2 contract fixtures"

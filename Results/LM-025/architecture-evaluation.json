@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "storyID": "LM-025",
+  "authorizedAt": "2026-08-28T17:04:26Z",
+  "decision": "adopt",
+  "candidate": "independent HEIC keyframes in an atomic logical-chunk directory",
+  "invariants": [
+    {"name": "foreground-window isolation", "preserved": true, "proof": "pre-encode epoch, target, focus-policy, and dimension admission"},
+    {"name": "local-only storage", "preserved": true, "proof": "filesystem-only writer source audit"},
+    {"name": "privacy identity", "preserved": true, "proof": "manifest binds chunk, epoch, window, dimensions, frame IDs, paths, and order"},
+    {"name": "atomic publication", "preserved": true, "proof": "fsync plus no-replace file and directory renames with fault injection"},
+    {"name": "integrity", "preserved": true, "proof": "canonical manifest digest and per-frame SHA-256 inventory"},
+    {"name": "search evidence", "preserved": true, "proof": "exact schema-V2 frame asset path"},
+    {"name": "retention", "preserved": true, "proof": "30-second logical chunk and identity-scoped retirement"},
+    {"name": "forensic deletion", "preserved": true, "proof": "retained-only copy, republish, sentinel absence, then old-directory retirement"}
+  ],
+  "runtimeSafety": {
+    "hardwareHEVCExecuted": false,
+    "videoToolboxEncoderExecuted": false,
+    "avAssetWriterExecuted": false,
+    "productionImageIOHEICExecutedByTests": false,
+    "boundaryFakesOnly": true
+  },
+  "followups": {
+    "LM-026": "coordinate database visibility with verified ready HEIC directories and exact frame paths",
+    "LM-028": "remeasure resource, storage, and decode budgets for HEIC keyframes",
+    "LM-043": "decode exact HEIC evidence assets and keep legacy V1 read compatibility",
+    "LM-058": "prove retained-only directory replacement and forensic deletion",
+    "LM-060": "include V2 manifest and per-frame digests in integrity verification",
+    "LM-061": "apply retention to immutable HEIC chunk directories",
+    "LM-082": "repeat long-soak, privacy, integrity, retention, and deletion gates against HEIC assets"
+  }
+}

@@ -1,6 +1,5 @@
 import AppKit
 import ApplicationServices
-@preconcurrency import AVFoundation
 import CoreMedia
 import CoreVideo
 import Foundation
@@ -49,11 +48,11 @@ public enum CaptureSpikeError: Error, CustomStringConvertible, Sendable {
 
     public var description: String {
         switch self {
-        case let .capabilitiesMissing(capabilities):
+        case .capabilitiesMissing(let capabilities):
             "Missing capabilities: \(capabilities.map(\.rawValue).joined(separator: ", "))"
         case .focusedWindowUnavailable:
             "No public-API focused window was available."
-        case let .windowResolution(reason):
+        case .windowResolution(let reason):
             "Focused window resolution failed closed: \(reason.rawValue)."
         case .resolvedWindowDisappeared:
             "The resolved ScreenCaptureKit window disappeared before capture."
@@ -63,13 +62,16 @@ public enum CaptureSpikeError: Error, CustomStringConvertible, Sendable {
     }
 }
 
-public final class CaptureSpikeRunner: NSObject, SCStreamOutput, SCStreamDelegate, @unchecked Sendable {
+public final class CaptureSpikeRunner: NSObject, SCStreamOutput, SCStreamDelegate,
+    @unchecked Sendable
+{
     private let stateLock = NSLock()
-    private let sampleQueue = DispatchQueue(label: "com.justinhou.deepshelves.capture-spike.samples")
+    private let sampleQueue = DispatchQueue(
+        label: "com.justinhou.deepshelves.capture-spike.samples")
     private let shareableContentProvider = BoundedShareableContentProvider()
 
     private var epoch: WindowCaptureEpoch?
-    private var writer: HEVCMediaWriter?
+    private var writer: HEICKeyframeWriter?
     private var acceptanceGate = FrameAcceptanceGate()
     private var prefilterEpochID: UUID?
     private var prefilterSignature: UInt64?
@@ -102,7 +104,8 @@ public final class CaptureSpikeRunner: NSObject, SCStreamOutput, SCStreamDelegat
         let initialTarget = try await resolveCurrentTarget().get()
         let initialFilter = SCContentFilter(desktopIndependentWindow: initialTarget.scWindow)
         let initialConfiguration = streamConfiguration(for: initialTarget.dimensions)
-        let stream = SCStream(filter: initialFilter, configuration: initialConfiguration, delegate: self)
+        let stream = SCStream(
+            filter: initialFilter, configuration: initialConfiguration, delegate: self)
         try stream.addStreamOutput(self, type: .screen, sampleHandlerQueue: sampleQueue)
         try await stream.startCapture()
         NSWorkspace.shared.notificationCenter.addObserver(
@@ -164,7 +167,7 @@ public final class CaptureSpikeRunner: NSObject, SCStreamOutput, SCStreamDelegat
                 }
             }
             if clock.now >= nextChunkRollover,
-               stateLock.withLock({ epoch != nil })
+                stateLock.withLock({ epoch != nil })
             {
                 let chunkURL = transitionOutputURL(base: outputURL, index: chunkIndex)
                 try await rolloverCurrentWriter(outputURL: chunkURL)
@@ -180,7 +183,7 @@ public final class CaptureSpikeRunner: NSObject, SCStreamOutput, SCStreamDelegat
             let transitionStarted = DispatchTime.now().uptimeNanoseconds
             try await revokeAndFinishCurrentWriter()
             switch try await resolveCurrentTarget() {
-            case let .approved(target):
+            case .approved(let target):
                 let configuration = streamConfiguration(for: target.dimensions)
                 try await stream.updateContentFilter(
                     SCContentFilter(desktopIndependentWindow: target.scWindow)
@@ -198,7 +201,7 @@ public final class CaptureSpikeRunner: NSObject, SCStreamOutput, SCStreamDelegat
                 stateLock.withLock {
                     eligibleFocusTransitions += 1
                 }
-            case let .gap(reason):
+            case .gap(let reason):
                 stateLock.withLock {
                     unresolvedOrExcludedTransitions += 1
                     if diagnostics.count < 32 {
@@ -258,13 +261,18 @@ public final class CaptureSpikeRunner: NSObject, SCStreamOutput, SCStreamDelegat
                 bounds: PointRect($0.frame),
                 title: $0.title,
                 isOnScreen: $0.isOnScreen,
-                isNormalContent: $0.windowLayer == 0 && !($0.title?.contains("PROHIBITED") ?? false),
+                isNormalContent: $0.windowLayer == 0
+                    && !($0.title?.contains("PROHIBITED") ?? false),
                 intersectsMainDisplay: $0.frame.intersects(mainDisplayFrame)
             )
         }
         switch WindowResolver.resolve(focused: focused, candidates: descriptors) {
-        case let .approved(approved):
-            guard let scWindow = shareableContent.windows.first(where: { $0.windowID == approved.windowID }) else {
+        case .approved(let approved):
+            guard
+                let scWindow = shareableContent.windows.first(where: {
+                    $0.windowID == approved.windowID
+                })
+            else {
                 throw CaptureSpikeError.resolvedWindowDisappeared
             }
             return .approved(
@@ -275,7 +283,7 @@ public final class CaptureSpikeRunner: NSObject, SCStreamOutput, SCStreamDelegat
                     dimensions: CaptureGeometry.encodedSize(for: approved.bounds)
                 )
             )
-        case let .gap(reason):
+        case .gap(let reason):
             return .gap(reason)
         }
     }
@@ -297,8 +305,8 @@ public final class CaptureSpikeRunner: NSObject, SCStreamOutput, SCStreamDelegat
             encodedSize: target.dimensions,
             filterAppliedNanoseconds: appliedAt
         )
-        let mediaWriter = try HEVCMediaWriter(
-            outputURL: outputURL,
+        let mediaWriter = try HEICKeyframeWriter(
+            outputDirectoryURL: outputURL,
             scope: MediaChunkScope(
                 epochID: epoch.id,
                 targetWindowID: epoch.targetWindowID,
@@ -332,19 +340,19 @@ public final class CaptureSpikeRunner: NSObject, SCStreamOutput, SCStreamDelegat
     }
 
     private func revokeAndFinishCurrentWriter() async throws {
-        let priorWriter = stateLock.withLock { () -> HEVCMediaWriter? in
+        let priorWriter = stateLock.withLock { () -> HEICKeyframeWriter? in
             epoch = nil
             let priorWriter = writer
             writer = nil
             return priorWriter
         }
         if let priorWriter {
-            try await priorWriter.finish()
+            _ = try priorWriter.finish()
         }
     }
 
     private func rolloverCurrentWriter(outputURL: URL) async throws {
-        let prior = stateLock.withLock { () -> (HEVCMediaWriter?, WindowCaptureEpoch?) in
+        let prior = stateLock.withLock { () -> (HEICKeyframeWriter?, WindowCaptureEpoch?) in
             let prior = (writer, epoch)
             epoch = nil
             writer = nil
@@ -353,9 +361,9 @@ public final class CaptureSpikeRunner: NSObject, SCStreamOutput, SCStreamDelegat
         guard let priorWriter = prior.0, let continuingEpoch = prior.1 else {
             return
         }
-        try await priorWriter.finish()
-        let nextWriter = try HEVCMediaWriter(
-            outputURL: outputURL,
+        _ = try priorWriter.finish()
+        let nextWriter = try HEICKeyframeWriter(
+            outputDirectoryURL: outputURL,
             scope: MediaChunkScope(
                 epochID: continuingEpoch.id,
                 targetWindowID: continuingEpoch.targetWindowID,
@@ -398,7 +406,8 @@ public final class CaptureSpikeRunner: NSObject, SCStreamOutput, SCStreamDelegat
 
     private func transitionOutputURL(base: URL, index: Int) -> URL {
         base.deletingLastPathComponent().appendingPathComponent(
-            "\(base.deletingPathExtension().lastPathComponent)-\(String(format: "%04d", index)).mov"
+            "\(base.lastPathComponent)-\(String(format: "%04d", index))",
+            isDirectory: true
         )
     }
 
@@ -423,40 +432,44 @@ public final class CaptureSpikeRunner: NSObject, SCStreamOutput, SCStreamDelegat
                 return
             }
             let signature = LumaFrameInspector.signature(of: imageBuffer)
-            guard shouldRunPreAppendChecks(
-                epochID: epoch.id,
-                signature: signature,
-                now: now
-            ) else {
+            guard
+                shouldRunPreAppendChecks(
+                    epochID: epoch.id,
+                    signature: signature,
+                    now: now
+                )
+            else {
                 return
             }
             let focused = FocusedWindowReader.current()
-            let focusMatches = focused.map {
-                WindowResolver.resolve(
-                    focused: $0,
-                    candidates: [
-                        ShareableWindowDescriptor(
-                            windowID: epoch.targetWindowID,
-                            processID: epoch.processID,
-                            bounds: epoch.approvedBounds,
-                            title: $0.title,
-                            isOnScreen: true,
-                            isNormalContent: true,
-                            intersectsMainDisplay: true
-                        ),
-                    ]
-                ) == .approved(
-                    ShareableWindowDescriptor(
-                        windowID: epoch.targetWindowID,
-                        processID: epoch.processID,
-                        bounds: epoch.approvedBounds,
-                        title: $0.title,
-                        isOnScreen: true,
-                        isNormalContent: true,
-                        intersectsMainDisplay: true
+            let focusMatches =
+                focused.map {
+                    WindowResolver.resolve(
+                        focused: $0,
+                        candidates: [
+                            ShareableWindowDescriptor(
+                                windowID: epoch.targetWindowID,
+                                processID: epoch.processID,
+                                bounds: epoch.approvedBounds,
+                                title: $0.title,
+                                isOnScreen: true,
+                                isNormalContent: true,
+                                intersectsMainDisplay: true
+                            )
+                        ]
                     )
-                )
-            } ?? false
+                        == .approved(
+                            ShareableWindowDescriptor(
+                                windowID: epoch.targetWindowID,
+                                processID: epoch.processID,
+                                bounds: epoch.approvedBounds,
+                                title: $0.title,
+                                isOnScreen: true,
+                                isNormalContent: true,
+                                intersectsMainDisplay: true
+                            )
+                        )
+                } ?? false
             let candidate = FrameCandidate(
                 epochID: epoch.id,
                 targetWindowID: epoch.targetWindowID,
@@ -471,9 +484,10 @@ public final class CaptureSpikeRunner: NSObject, SCStreamOutput, SCStreamDelegat
             guard admission == .accepted else {
                 staleOrPolicyFramesRejected += 1
                 if diagnostics.count < 8 {
-                    let focusedDescription = focused.map {
-                        "pid=\($0.processID) bounds=\($0.bounds) title=\($0.title ?? "")"
-                    } ?? "none"
+                    let focusedDescription =
+                        focused.map {
+                            "pid=\($0.processID) bounds=\($0.bounds) title=\($0.title ?? "")"
+                        } ?? "none"
                     diagnostics.append(
                         "rejected=\(admission) current=\(focusedDescription) approvedPid=\(epoch.processID) approvedBounds=\(epoch.approvedBounds) sample=\(candidate.dimensions) expected=\(epoch.encodedSize)"
                     )
@@ -486,23 +500,24 @@ public final class CaptureSpikeRunner: NSObject, SCStreamOutput, SCStreamDelegat
                 signature: signature,
                 lastActivityNanoseconds: lastActivityNanoseconds
             ) {
-            case let .accepted(index, _):
+            case .accepted(let index, _):
                 do {
-                    if try writer.append(
-                        sampleBuffer,
+                    _ = try writer.append(
+                        imageBuffer,
                         frameID: UUID(),
                         captureEpochID: epoch.id,
-                        targetWindowID: epoch.targetWindowID
-                    ) != nil {
-                        framesAccepted += 1
-                        if index {
-                            framesIndexed += 1
-                        }
-                        if LumaFrameInspector.containsSentinelContamination(imageBuffer) {
-                            contaminationFrames += 1
-                        }
-                    } else {
-                        backpressureDrops += 1
+                        targetWindowID: epoch.targetWindowID,
+                        sourcePresentationTimeMilliseconds: Int64(
+                            (CMSampleBufferGetPresentationTimeStamp(sampleBuffer).seconds * 1_000)
+                                .rounded()
+                        )
+                    )
+                    framesAccepted += 1
+                    if index {
+                        framesIndexed += 1
+                    }
+                    if LumaFrameInspector.containsSentinelContamination(imageBuffer) {
+                        contaminationFrames += 1
                     }
                 } catch {
                     writerErrors.append(String(describing: error))
@@ -531,7 +546,8 @@ public final class CaptureSpikeRunner: NSObject, SCStreamOutput, SCStreamDelegat
         }
         let lastForwarded = prefilterLastForwardedNanoseconds ?? 0
         guard now >= lastForwarded,
-              now - lastForwarded >= CaptureConstants.staticHeartbeatIntervalNanoseconds else {
+            now - lastForwarded >= CaptureConstants.staticHeartbeatIntervalNanoseconds
+        else {
             return false
         }
         prefilterLastForwardedNanoseconds = now
@@ -585,9 +601,9 @@ private enum TargetResolution {
 
     func get() throws -> ResolvedTarget {
         switch self {
-        case let .approved(target):
+        case .approved(let target):
             target
-        case let .gap(reason):
+        case .gap(let reason):
             throw CaptureSpikeError.windowResolution(reason)
         }
     }
@@ -600,11 +616,13 @@ private enum FocusedWindowReader {
         }
         let appElement = AXUIElementCreateApplication(application.processIdentifier)
         var focusedValue: CFTypeRef?
-        guard AXUIElementCopyAttributeValue(
-            appElement,
-            "AXFocusedWindow" as CFString,
-            &focusedValue
-        ) == .success, let focusedValue else {
+        guard
+            AXUIElementCopyAttributeValue(
+                appElement,
+                "AXFocusedWindow" as CFString,
+                &focusedValue
+            ) == .success, let focusedValue
+        else {
             return nil
         }
         let focusedElement = unsafeDowncast(focusedValue, to: AXUIElement.self)
@@ -617,7 +635,8 @@ private enum FocusedWindowReader {
         var titleValue: CFTypeRef?
         _ = AXUIElementCopyAttributeValue(focusedElement, "AXTitle" as CFString, &titleValue)
         var minimizedValue: CFTypeRef?
-        _ = AXUIElementCopyAttributeValue(focusedElement, "AXMinimized" as CFString, &minimizedValue)
+        _ = AXUIElementCopyAttributeValue(
+            focusedElement, "AXMinimized" as CFString, &minimizedValue)
         return FocusedWindowDescriptor(
             processID: application.processIdentifier,
             bounds: PointRect(x: position.x, y: position.y, width: size.width, height: size.height),
@@ -629,7 +648,8 @@ private enum FocusedWindowReader {
     private static func pointAttribute(_ name: String, from element: AXUIElement) -> CGPoint? {
         var value: CFTypeRef?
         guard AXUIElementCopyAttributeValue(element, name as CFString, &value) == .success,
-              let value else {
+            let value
+        else {
             return nil
         }
         let axValue = unsafeDowncast(value, to: AXValue.self)
@@ -640,7 +660,8 @@ private enum FocusedWindowReader {
     private static func sizeAttribute(_ name: String, from element: AXUIElement) -> CGSize? {
         var value: CFTypeRef?
         guard AXUIElementCopyAttributeValue(element, name as CFString, &value) == .success,
-              let value else {
+            let value
+        else {
             return nil
         }
         let axValue = unsafeDowncast(value, to: AXValue.self)
@@ -649,8 +670,8 @@ private enum FocusedWindowReader {
     }
 }
 
-private extension FocusedWindowDescriptor {
-    var signature: String {
+extension FocusedWindowDescriptor {
+    fileprivate var signature: String {
         [
             String(processID),
             String(format: "%.1f", bounds.x),
@@ -675,9 +696,9 @@ private enum LumaFrameInspector {
         let bytesPerRow = CVPixelBufferGetBytesPerRowOfPlane(pixelBuffer, 0)
         let bytes = base.assumingMemoryBound(to: UInt8.self)
         var hash: UInt64 = 1_469_598_103_934_665_603
-        for gridY in 0 ..< 64 {
+        for gridY in 0..<64 {
             let y = min(height - 1, gridY * height / 64)
-            for gridX in 0 ..< 64 {
+            for gridX in 0..<64 {
                 let x = min(width - 1, gridX * width / 64)
                 hash ^= UInt64(bytes[y * bytesPerRow + x])
                 hash &*= 1_099_511_628_211
@@ -698,9 +719,9 @@ private enum LumaFrameInspector {
         let bytes = base.assumingMemoryBound(to: UInt8.self)
         var extreme = 0
         let samples = 64 * 64
-        for gridY in 0 ..< 64 {
+        for gridY in 0..<64 {
             let y = min(height - 1, gridY * height / 64)
-            for gridX in 0 ..< 64 {
+            for gridX in 0..<64 {
                 let x = min(width - 1, gridX * width / 64)
                 let luma = bytes[y * bytesPerRow + x]
                 if luma < 32 || luma > 224 {
@@ -712,8 +733,8 @@ private enum LumaFrameInspector {
     }
 }
 
-private extension PointRect {
-    init(_ rect: CGRect) {
+extension PointRect {
+    fileprivate init(_ rect: CGRect) {
         self.init(
             x: rect.origin.x,
             y: rect.origin.y,
@@ -723,8 +744,8 @@ private extension PointRect {
     }
 }
 
-private extension CMSampleBuffer {
-    var pixelDimensions: PixelSize {
+extension CMSampleBuffer {
+    fileprivate var pixelDimensions: PixelSize {
         guard let imageBuffer else {
             return PixelSize(width: 0, height: 0)
         }
@@ -735,8 +756,8 @@ private extension CMSampleBuffer {
     }
 }
 
-private extension NSLock {
-    func withLock<T>(_ operation: () throws -> T) rethrows -> T {
+extension NSLock {
+    fileprivate func withLock<T>(_ operation: () throws -> T) rethrows -> T {
         lock()
         defer { unlock() }
         return try operation()
@@ -785,7 +806,8 @@ private final class ShareableContentContinuationBox: @unchecked Sendable {
     }
 
     func resolve(_ content: UnsafeSendableShareableContent?) {
-        let continuation = lock.withLock { () -> CheckedContinuation<UnsafeSendableShareableContent?, Never>? in
+        let continuation = lock.withLock {
+            () -> CheckedContinuation<UnsafeSendableShareableContent?, Never>? in
             defer { self.continuation = nil }
             return self.continuation
         }

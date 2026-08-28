@@ -1,0 +1,101 @@
+Tests/Pure/LM025HEICKeyframeHarness.swift:7:1: error: 'main' attribute cannot be used in a module that contains top-level code
+  1 | import CoreVideo
+    | |- note: top-level code defined in this source file
+    | `- note: pass '-parse-as-library' to compiler invocation if this is intentional
+  2 | import CryptoKit
+  3 | import Foundation
+    :
+  5 | import MemoryContracts
+  6 |
+  7 | @main
+    | `- error: 'main' attribute cannot be used in a module that contains top-level code
+  8 | enum LM025HEICKeyframeHarness {
+  9 |     static func main() throws {
+
+Tests/Pure/LM025HEICKeyframeHarness.swift:101:51: error: cannot find type 'HEICFrameEncoding' in scope
+ 99 | }
+100 |
+101 | private final class DeterministicBoundaryEncoder: HEICFrameEncoding, @unchecked Sendable {
+    |                                                   `- error: cannot find type 'HEICFrameEncoding' in scope
+102 |     private(set) var destinations: Set<PixelSize> = []
+103 |
+
+Tests/Pure/LM025HEICKeyframeHarness.swift:102:40: error: 'PixelSize' is ambiguous for type lookup in this context
+100 |
+101 | private final class DeterministicBoundaryEncoder: HEICFrameEncoding, @unchecked Sendable {
+102 |     private(set) var destinations: Set<PixelSize> = []
+    |                                        `- error: 'PixelSize' is ambiguous for type lookup in this context
+103 |
+104 |     func encode(
+
+/Users/justinhou/Development/deepshelves/Packages/MemoryCapture/Sources/MemoryCapture/MemoryCapture.swift:7:15: note: found this candidate
+  5 | }
+  6 |
+  7 | public struct PixelSize: Equatable, Sendable {
+    |               `- note: found this candidate
+  8 |     public let width: Int
+  9 |     public let height: Int
+
+/Users/justinhou/Development/deepshelves/Packages/MemoryContracts/Sources/MemoryContracts/GeometryAndContext.swift:34:15: note: found this candidate
+ 32 | }
+ 33 |
+ 34 | public struct PixelSize: Codable, Equatable, Sendable, ContractValidatable {
+    |               `- note: found this candidate
+ 35 |     public let width: Int
+ 36 |     public let height: Int
+
+Tests/Pure/LM025HEICKeyframeHarness.swift:106:32: error: 'PixelSize' is ambiguous for type lookup in this context
+104 |     func encode(
+105 |         _ source: CVPixelBuffer,
+106 |         destinationDimensions: PixelSize
+    |                                `- error: 'PixelSize' is ambiguous for type lookup in this context
+107 |     ) throws -> Data {
+108 |         destinations.insert(destinationDimensions)
+
+/Users/justinhou/Development/deepshelves/Packages/MemoryCapture/Sources/MemoryCapture/MemoryCapture.swift:7:15: note: found this candidate
+  5 | }
+  6 |
+  7 | public struct PixelSize: Equatable, Sendable {
+    |               `- note: found this candidate
+  8 |     public let width: Int
+  9 |     public let height: Int
+
+/Users/justinhou/Development/deepshelves/Packages/MemoryContracts/Sources/MemoryContracts/GeometryAndContext.swift:34:15: note: found this candidate
+ 32 | }
+ 33 |
+ 34 | public struct PixelSize: Codable, Equatable, Sendable, ContractValidatable {
+    |               `- note: found this candidate
+ 35 |     public let width: Int
+ 36 |     public let height: Int
+
+Tests/Pure/LM025HEICKeyframeHarness.swift:21:26: error: cannot find 'HEICKeyframeWriter' in scope
+ 19 |         let output = root.appendingPathComponent(chunkID.uuidString.lowercased(), isDirectory: true)
+ 20 |         let encoder = DeterministicBoundaryEncoder()
+ 21 |         let writer = try HEICKeyframeWriter(
+    |                          `- error: cannot find 'HEICKeyframeWriter' in scope
+ 22 |             outputDirectoryURL: output,
+ 23 |             chunkID: chunkID,
+
+Tests/Pure/LM025HEICKeyframeHarness.swift:52:54: error: cannot infer key path type from context; consider explicitly specifying a root type
+ 50 |         try require(finalization.durationMilliseconds == 1_750, "logical duration")
+ 51 |         try require(encoder.destinations == [PixelSize(width: 1_920, height: 1_080)], "downscale")
+ 52 |         try require(finalization.manifest.frames.map(\.frameID) == frameIDs, "frame identity")
+    |                                                      `- error: cannot infer key path type from context; consider explicitly specifying a root type
+ 53 |         try require(
+ 54 |             finalization.manifest.frames.map(\.presentationTimeMS) == [0, 400, 1_750],
+
+Tests/Pure/LM025HEICKeyframeHarness.swift:54:46: error: cannot infer key path type from context; consider explicitly specifying a root type
+ 52 |         try require(finalization.manifest.frames.map(\.frameID) == frameIDs, "frame identity")
+ 53 |         try require(
+ 54 |             finalization.manifest.frames.map(\.presentationTimeMS) == [0, 400, 1_750],
+    |                                              `- error: cannot infer key path type from context; consider explicitly specifying a root type
+ 55 |             "ordered logical times"
+ 56 |         )
+
+Tests/Pure/LM025HEICKeyframeHarness.swift:69:37: error: cannot infer contextual base in reference to member 'posixPermissions'
+ 67 |             try require(Data(SHA256.hash(data: bytes)) == entry.sha256, "frame digest")
+ 68 |             let attributes = try FileManager.default.attributesOfItem(atPath: assetURL.path)
+ 69 |             try require(attributes[.posixPermissions] as? Int == 0o600, "owner-only frame")
+    |                                     `- error: cannot infer contextual base in reference to member 'posixPermissions'
+ 70 |         }
+ 71 |         try require(

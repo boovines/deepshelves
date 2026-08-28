@@ -57,17 +57,30 @@ A `CaptureEnvelope` with pixels is valid only when `surfaceKind == foregroundWin
 | `id` | `UUID` | File identity |
 | `captureEpochID` | `UUID` | Exactly one approved foreground-window epoch |
 | `targetWindowID` | `UInt32` | Same target for every frame in the chunk |
-| `relativePath` | `String` | Relative to the archive root; no traversal |
+| `relativePath` | `String` | Relative manifest path under the archive root; no traversal |
 | `startedAt`, `endedAt` | `Date` | Half-open interval `[start, end)`, maximum 30 seconds |
-| `codec` | enum | `hevcMain` in V1 |
-| `container` | enum | `quickTimeMovie` in V1 |
+| `codec` | enum | `hevcMain` for legacy V1; `heicKeyframes` for canonical V2 |
+| `container` | enum | `quickTimeMovie` for legacy V1; `heicKeyframeDirectory` for canonical V2 |
 | `width`, `height` | `Int` | Positive, maximum long edge 1920 |
 | `frameCount` | `Int` | Matches committed frame locators |
-| `byteCount` | `Int64` | Verified after atomic rename |
-| `sha256` | `Data` | Integrity check of final file |
+| `byteCount` | `Int64` | Manifest plus all referenced frame assets, verified before/after atomic directory rename |
+| `sha256` | `Data` | SHA-256 of canonical manifest bytes; manifest carries each frame digest |
 | `state` | enum | `writing`, `ready`, `rewriting`, `quarantined` |
 
-A ready chunk is immutable. Removing a subset creates a replacement chunk, atomically swaps references, records a tombstone, then deletes the old file.
+A ready chunk is immutable. A canonical V2 chunk path ends in `/manifest.json`; sibling `frames/<frame-id>.heic` assets are the complete independently decodable source inventory. Removing a subset creates a replacement directory containing only retained assets, verifies it, atomically swaps references, records a tombstone, then deletes the old directory. V1 HEVC values remain decode-only compatibility cases.
+
+### `HEICKeyframeManifest`
+
+| Field | Type | Rule |
+|---|---|---|
+| `schemaVersion` | `Int` | Exactly `2` for this manifest contract |
+| `chunkID` | `UUID` | Matches parent `MediaChunk.id` and path component |
+| `captureEpochID` | `UUID` | One approved foreground-window epoch |
+| `targetWindowID` | `UInt32` | Same target for every frame |
+| `width`, `height` | `Int` | Fixed positive encoded dimensions, long edge ≤1920 |
+| `frames` | `[HEICKeyframeEntry]` | Nonempty, strictly increasing logical time, unique IDs and paths |
+
+Each entry carries `frameID`, `presentationTimeMS`, `relativePath` (`frames/<frame-id>.heic`), `byteCount`, and a 32-byte `sha256`. The canonical JSON bytes are hashed by the parent chunk. Missing, extra, reordered, substituted, duplicated, or corrupt assets fail verification and remain nonsearchable.
 
 ### `SearchableFrame`
 
@@ -78,7 +91,8 @@ A ready chunk is immutable. Removing a subset creates a replacement chunk, atomi
 | `targetWindowID` | `UInt32` | Matches parent chunk and approved context |
 | `capturedAt` | `Date` | Search/timeline time |
 | `chunkID` | `UUID` | Ready media chunk |
-| `presentationTimeMS` | `Int64` | Decode position in chunk |
+| `presentationTimeMS` | `Int64` | Logical ordering position in chunk |
+| `mediaPath` | `String?` | Required for schema V2; exact source `media/.../frames/<frame-id>.heic` path |
 | `thumbnailPath` | `String?` | 480-pixel HEIC, rebuildable |
 | `foreground` | `ForegroundContext` | Approved projection |
 | `browser` | `BrowserContext?` | Approved projection |
@@ -172,7 +186,7 @@ Schema version 1 contains these tables:
 
 - `archive_meta(key PRIMARY KEY, value)`
 - `media_chunks(id PRIMARY KEY, capture_epoch_id, target_window_id, relative_path UNIQUE, started_at, ended_at, codec, width, height, frame_count, byte_count, sha256, state)`
-- `frames(id PRIMARY KEY, captured_at, monotonic_ns, capture_epoch_id, target_window_id, chunk_id, pts_ms, thumbnail_path, bundle_id, app_name, window_title, window_x, window_y, window_w, window_h, browser_family, url_scheme, url_host, url_path, capture_reason, is_transition, text_state, visual_state, schema_version)`
+- `frames(id PRIMARY KEY, captured_at, monotonic_ns, capture_epoch_id, target_window_id, chunk_id, pts_ms, media_path, media_sha256, media_byte_count, thumbnail_path, bundle_id, app_name, window_title, window_x, window_y, window_w, window_h, browser_family, url_scheme, url_host, url_path, capture_reason, is_transition, text_state, visual_state, schema_version)`
 - `text_spans(id PRIMARY KEY, frame_id, source, text, x, y, w, h, confidence, language_code, sensitivity)`
 - `frame_fts` as FTS5 external-content index over approved merged text, title, app name, host, and path
 - `artifacts(id PRIMARY KEY, frame_id, kind, producer_name, producer_version, model_hash, locator_kind, locator_value, content_hash, state)`
@@ -190,7 +204,8 @@ Foreign keys are enabled. Frame-dependent rows cascade. FTS maintenance uses exp
 
     LocalMemory/
       database/archive.sqlite3
-      media/YYYY/MM/DD/<chunk-uuid>.mov
+      media/YYYY/MM/DD/<chunk-uuid>/manifest.json
+      media/YYYY/MM/DD/<chunk-uuid>/frames/<frame-uuid>.heic
       thumbnails/YYYY/MM/DD/<frame-uuid>.heic
       vectors/mobileclip-s0/<model-hash>.f16
       models/<model-name>/<model-hash>/...
@@ -198,11 +213,11 @@ Foreign keys are enabled. Frame-dependent rows cascade. FTS maintenance uses exp
       quarantine/...
       logs/local-memory.log
 
-The archive root and all children are owner-only. Writers use a sibling `.partial` file, `fsync`, atomic rename, then database commit. Startup removes orphan partials, quarantines corrupt completed files, repairs jobs, and never makes a corrupt artifact searchable.
+The archive root and all children are owner-only. Source-media writers use a hidden sibling staging directory, per-frame sibling partials, `fsync`, canonical-manifest validation, one no-replace directory rename, parent `fsync`, then database commit. Startup removes orphan staging directories, reconciles unreferenced ready directories, quarantines corrupt manifests/assets, repairs jobs, and never makes a corrupt artifact searchable.
 
 ## Serialization and compatibility
 
-- JSON contract version starts at `1` and is emitted by CLI/MCP.
+- JSON contract version `1` remains readable for legacy HEVC fixtures. Canonical HEIC archives, CLI, and MCP projections use version `2`.
 - Unknown additive fields are ignored by older readers; unknown enum cases fail closed.
 - Removing/renaming a field or changing time/filter semantics requires a new major contract version.
 - Every database migration has forward, fresh-install, interrupted-migration, and previous-version read tests.
@@ -238,7 +253,7 @@ Each query declares relevant frame IDs, graded relevance 0...3, expected filters
 
 - Deterministic generators for 100,000, 500,000, and 1,000,000 frame rows and vectors.
 - Media chunks truncated at header, middle, and tail; mismatched hashes; missing thumbnails and vector tails.
-- Process termination before media rename, after rename/before DB commit, and during chunk rewrite.
+- Process termination before frame rename, before chunk-directory rename, after rename/before DB commit, and during retained-frame replacement.
 - Permission revocation, display sleep, user switch, clock change, low disk, and model corruption.
 - Seven-day activity intervals whose totals are independently calculated.
 

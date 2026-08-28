@@ -5,11 +5,13 @@ struct ContractFixtureGenerator {
     static let baseDate = Date(timeIntervalSince1970: 1_777_700_000)
 
     static func main() throws {
-        guard CommandLine.arguments.count == 2 else {
+        guard CommandLine.arguments.count == 3 else {
             throw GeneratorError.usage
         }
         let output = URL(fileURLWithPath: CommandLine.arguments[1], isDirectory: true)
+        let v2Output = URL(fileURLWithPath: CommandLine.arguments[2], isDirectory: true)
         try FileManager.default.createDirectory(at: output, withIntermediateDirectories: true)
+        try FileManager.default.createDirectory(at: v2Output, withIntermediateDirectories: true)
 
         let foreground = try makeForeground()
         let browser = try makeBrowser()
@@ -207,6 +209,113 @@ struct ContractFixtureGenerator {
                 leaseExpiresAt: nil
             ),
             named: "processing-job.json",
+            into: output
+        )
+        try writeV2MediaFixtures(
+            foreground: foreground,
+            browser: browser,
+            into: v2Output
+        )
+    }
+
+    static func writeV2MediaFixtures(
+        foreground: ForegroundContext,
+        browser: BrowserContext,
+        into output: URL
+    ) throws {
+        let chunkID = id("21000000-0000-0000-0000-000000000001")
+        let epochID = id("11000000-0000-0000-0000-000000000002")
+        let frameID = id("31000000-0000-0000-0000-000000000001")
+        let manifestPath =
+            "media/2026/05/02/21000000-0000-0000-0000-000000000001/manifest.json"
+        let framePath =
+            "media/2026/05/02/21000000-0000-0000-0000-000000000001/frames/31000000-0000-0000-0000-000000000001.heic"
+        let entry = try HEICKeyframeEntry(
+            frameID: frameID,
+            presentationTimeMS: 0,
+            relativePath: "frames/31000000-0000-0000-0000-000000000001.heic",
+            byteCount: 1_024,
+            sha256: digest(0x31)
+        )
+        try write(
+            HEICKeyframeManifest(
+                chunkID: chunkID,
+                captureEpochID: epochID,
+                targetWindowID: 42,
+                width: 1_440,
+                height: 900,
+                frames: [entry]
+            ),
+            named: "heic-keyframe-manifest.json",
+            into: output
+        )
+        try write(
+            MediaChunk(
+                id: chunkID,
+                captureEpochID: epochID,
+                targetWindowID: 42,
+                relativePath: manifestPath,
+                startedAt: baseDate,
+                endedAt: baseDate.addingTimeInterval(0.001),
+                codec: .heicKeyframes,
+                container: .heicKeyframeDirectory,
+                width: 1_440,
+                height: 900,
+                frameCount: 1,
+                byteCount: 1_536,
+                sha256: digest(0x21),
+                state: .ready
+            ),
+            named: "media-chunk.json",
+            into: output
+        )
+        try write(
+            SearchableFrame(
+                id: frameID,
+                captureEpochID: epochID,
+                targetWindowID: 42,
+                capturedAt: baseDate.addingTimeInterval(0.001),
+                chunkID: chunkID,
+                presentationTimeMS: 0,
+                mediaPath: framePath,
+                thumbnailPath:
+                    "thumbnails/2026/05/02/31000000-0000-0000-0000-000000000001.heic",
+                foreground: foreground,
+                browser: browser,
+                textState: .ready,
+                visualState: .pending,
+                isTransition: true,
+                schemaVersion: 2
+            ),
+            named: "searchable-frame.json",
+            into: output
+        )
+        let result = try SearchResult(
+            frameID: frameID,
+            capturedAt: baseDate.addingTimeInterval(0.001),
+            foreground: foreground,
+            browser: browser,
+            thumbnailLocator: .archiveRelativePath(
+                "thumbnails/2026/05/02/31000000-0000-0000-0000-000000000001.heic"
+            ),
+            mediaLocator: .archiveRelativePath(framePath),
+            evidence: [
+                SearchEvidence(
+                    source: .accessibility,
+                    matchedText: "Synthetic fixture text",
+                    score: 1
+                )
+            ],
+            textRank: 1,
+            visualRank: 2,
+            fusedScore: 0.0325
+        )
+        try write(
+            SearchPage(
+                results: [result],
+                nextCursor: SearchCursor(token: "fixture.cursor.v2")
+            ),
+            named: "search-page.json",
             into: output
         )
     }

@@ -1,13 +1,19 @@
-54:    private let adaptor: AVAssetWriterInputPixelBufferAdaptor
-124:        let createdAdaptor = AVAssetWriterInputPixelBufferAdaptor(
-293:        guard let pool = adaptor.pixelBufferPool else {
-194:        guard adaptor.append(adaptorBuffer, withPresentationTime: presentationTime) else {
-198:            try retainedAdaptorBuffers.retainAccepted(adaptorBuffer)
-227:        defer { retainedAdaptorBuffers.releaseAfterFinalization() }
-105:            kVTVideoEncoderSpecification_RequireHardwareAcceleratedVideoEncoder as String: true,
-12:            "LM-025 hardware HEVC quarantine: two repeatable dart-ave AppleT8110DART "
-14:                + "Do not remove this skip until the hardware/OS gate is explicitly re-authorized."
-every_frame_uses_adaptor_pool=passed
-accepted_adaptor_buffers_retained_through_finalization=passed
-hardware_requirement_preserved=passed
-integration_hardware_quarantine=passed
+63:            let destination = CGImageDestinationCreateWithData(
+29:        .useSoftwareRenderer: true,
+241:        let manifest = try HEICKeyframeManifest(
+305:    public let manifest: HEICKeyframeManifest
+359:        let manifest = try ContractJSON.decode(HEICKeyframeManifest.self, from: manifestData)
+453:            HEICKeyframeManifest.self,
+511:            let replacementManifest = try HEICKeyframeManifest(
+553:            let manifest = try? ContractJSON.decode(HEICKeyframeManifest.self, from: data),
+325:                Darwin.renamex_np(source, destination, UInt32(RENAME_EXCL))
+586:                Darwin.renamex_np(source, destination, UInt32(RENAME_EXCL))
+20:        let encoder = SafeFakeHEICEncoder(payloads: [
+70:        let encoder = SafeFakeHEICEncoder(payloads: [Data("must-not-encode".utf8)])
+111:            encoder: SafeFakeHEICEncoder(payloads: [])
+136:private final class SafeFakeHEICEncoder: HEICFrameEncoding, @unchecked Sendable {
+hardware_video_encoder_removed=passed
+production_heic_encoder_compile_only=passed
+tests_use_boundary_fake_only=passed
+local_only_writer_scan=passed
+encoder_process_tripwire=passed

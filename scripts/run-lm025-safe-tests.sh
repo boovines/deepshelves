@@ -3,15 +3,22 @@ set -euo pipefail
 
 repo_root=$(cd "$(dirname "$0")/.." && pwd)
 result_root=${1:-"$repo_root/Results/LM-025"}
+build_root="$repo_root/.build/LM025HEICSafe"
 safe_log="$result_root/safe-tests.txt"
 build_log="$result_root/swift-build.txt"
 audit_log="$result_root/source-audit.txt"
 termination_log="$result_root/software-termination.txt"
-binary="$repo_root/.build/LM025Safe/lm025-media-writer-core-harness"
+contract_log="$result_root/contracts.txt"
+integration_log="$result_root/fake-integration-tests.txt"
 termination_root=""
 termination_pid=""
+watcher_pid=""
 
 cleanup() {
+  if [[ -n "$watcher_pid" ]] && kill -0 "$watcher_pid" 2>/dev/null; then
+    kill "$watcher_pid" 2>/dev/null || true
+    wait "$watcher_pid" 2>/dev/null || true
+  fi
   if [[ -n "$termination_pid" ]] && kill -0 "$termination_pid" 2>/dev/null; then
     kill -9 "$termination_pid" 2>/dev/null || true
     wait "$termination_pid" 2>/dev/null || true
@@ -22,46 +29,90 @@ cleanup() {
 }
 trap cleanup EXIT
 
-mkdir -p "$result_root" "$(dirname "$binary")"
+guard_processes() {
+  if pgrep -x xcodebuild >/dev/null || pgrep -x xctest >/dev/null \
+    || pgrep -x VTEncoderXPCService >/dev/null; then
+    echo "Refusing LM-025 safe gate while a test or video-encoder process is active" >&2
+    exit 90
+  fi
+}
 
-if pgrep -x xcodebuild >/dev/null || pgrep -x xctest >/dev/null \
-  || pgrep -f '(^|/)LocalMemoryIntegrationTests( |$)' >/dev/null; then
-  echo "Refusing LM-025 safe gate while an Xcode test process is active" >&2
-  exit 1
-fi
+start_encoder_tripwire() {
+  (
+    while true; do
+      if pgrep -x VTEncoderXPCService >/dev/null; then
+        pkill -x VTEncoderXPCService 2>/dev/null || true
+        echo "VideoToolbox encoder service appeared during safe gate" > "$result_root/ENCODER-TRIPWIRE-FAILED"
+        exit 91
+      fi
+      sleep 0.05
+    done
+  ) &
+  watcher_pid=$!
+}
 
-safe_sources=(
-  "$repo_root/Packages/MemoryCapture/Sources/MemoryCapture/MemoryCapture.swift"
-  "$repo_root/Packages/MemoryCapture/Sources/MemoryCapture/MediaWriterCore.swift"
-  "$repo_root/Packages/MemoryCapture/Sources/MemoryCapture/MediaChunkPublisher.swift"
-  "$repo_root/Tests/Pure/LM025MediaWriterCoreHarness.swift"
-)
+stop_encoder_tripwire() {
+  if [[ -n "$watcher_pid" ]] && kill -0 "$watcher_pid" 2>/dev/null; then
+    kill "$watcher_pid" 2>/dev/null || true
+    wait "$watcher_pid" 2>/dev/null || true
+  fi
+  watcher_pid=""
+  test ! -e "$result_root/ENCODER-TRIPWIRE-FAILED"
+  test -z "$(pgrep -x VTEncoderXPCService || true)"
+}
 
-if rg -n 'AVFoundation|VideoToolbox|AVAssetWriter|HEVCMediaWriter' "${safe_sources[@]}"; then
-  echo "Unsafe media framework or production encoder reference entered the pure LM-025 gate" >&2
+mkdir -p "$result_root" "$build_root"
+rm -f -- "$result_root/ENCODER-TRIPWIRE-FAILED"
+guard_processes
+
+unsafe_pattern='AVAssetWriter|AVVideoCodecType[.]hevc|VTCompressionSession|VideoToolbox|HEVCMediaWriter'
+if rg -n "$unsafe_pattern" \
+  "$repo_root/Packages/MemoryCapture/Sources" \
+  "$repo_root/Apps/LocalMemoryApp/CaptureSpikeHarness.swift"; then
+  echo "Quarantined hardware video encoder reference remains in the shipping capture path" >&2
   exit 1
 fi
 
 {
-  echo "process_guard=passed"
-  echo "pure_source_encoder_scan=passed"
-  xcrun swiftc "${safe_sources[@]}" -o "$binary"
-  "$binary"
+  xcrun swiftc -emit-library -emit-module \
+    -module-name MemoryContracts \
+    "$repo_root"/Packages/MemoryContracts/Sources/MemoryContracts/*.swift \
+    -o "$build_root/libMemoryContracts.dylib" \
+    -emit-module-path "$build_root/MemoryContracts.swiftmodule"
+  xcrun swiftc -emit-library -emit-module \
+    -module-name MemoryCapture \
+    -I "$build_root" -L "$build_root" -lMemoryContracts \
+    "$repo_root/Packages/MemoryCapture/Sources/MemoryCapture/MemoryCapture.swift" \
+    "$repo_root/Packages/MemoryCapture/Sources/MemoryCapture/MediaWriterCore.swift" \
+    "$repo_root/Packages/MemoryCapture/Sources/MemoryCapture/MediaChunkPublisher.swift" \
+    "$repo_root/Packages/MemoryCapture/Sources/MemoryCapture/HEICKeyframeWriter.swift" \
+    -o "$build_root/libMemoryCapture.dylib" \
+    -emit-module-path "$build_root/MemoryCapture.swiftmodule"
+  xcrun swiftc -parse-as-library \
+    -I "$build_root" -L "$build_root" -lMemoryContracts -lMemoryCapture \
+    "$repo_root/Tests/Pure/LM025HEICKeyframeHarness.swift" \
+    -o "$build_root/lm025-heic-keyframe-harness"
+  DYLD_LIBRARY_PATH="$build_root" "$build_root/lm025-heic-keyframe-harness"
+  echo "pure_boundary_encoder=passed"
+  echo "scope_identity_manifest_integrity=passed"
+  echo "atomic_directory_faults=passed"
+  echo "retained_only_republication=passed"
+  echo "forensic_sentinel_absence=passed"
 } 2>&1 | tee "$safe_log"
 
-termination_root=$(mktemp -d "$repo_root/.build/LM025Safe/termination.XXXXXX")
-termination_partial="$termination_root/.chunk.mov.partial.mov"
-termination_output="$termination_root/chunk.mov"
+termination_root=$(mktemp -d "$build_root/termination.XXXXXX")
+termination_output="$termination_root/chunk"
 termination_ready="$termination_root/ready"
 {
-  "$binary" --termination-child "$termination_partial" "$termination_ready" &
+  DYLD_LIBRARY_PATH="$build_root" "$build_root/lm025-heic-keyframe-harness" \
+    --termination-child "$termination_output" "$termination_ready" &
   termination_pid=$!
   for _ in {1..100}; do
     if [[ -s "$termination_ready" ]]; then
       break
     fi
     if ! kill -0 "$termination_pid" 2>/dev/null; then
-      echo "Mock software encoder child exited before termination point" >&2
+      echo "Fake HEIC boundary child exited before the termination point" >&2
       exit 1
     fi
     sleep 0.05
@@ -70,43 +121,67 @@ termination_ready="$termination_root/ready"
   kill -9 "$termination_pid"
   wait "$termination_pid" 2>/dev/null || true
   termination_pid=""
-  test -s "$termination_partial"
   test ! -e "$termination_output"
-  shasum -a 256 "$termination_partial"
-  rm -- "$termination_partial" "$termination_ready"
+  staging="$termination_root/.chunk.partial"
+  test -d "$staging/frames"
+  test "$(find "$staging/frames" -type f -name '*.heic' | wc -l | tr -d ' ')" -eq 1
+  test ! -e "$staging/manifest.json"
+  rm -rf -- "$staging"
   test ! -e "$termination_output"
-  echo "mock_software_mid_write_termination=passed"
-  echo "partial_recovery_without_final_visibility=passed"
+  echo "mock_boundary_mid_write_termination=passed"
+  echo "incomplete_staging_never_visible=passed"
 } 2>&1 | tee "$termination_log"
 
+guard_processes
+start_encoder_tripwire
 swift build --package-path "$repo_root/Packages/MemoryCapture" 2>&1 | tee "$build_log"
+stop_encoder_tripwire
 
-writer_source="$repo_root/Packages/MemoryCapture/Sources/MemoryCapture/HEVCMediaWriter.swift"
-integration_source="$repo_root/Tests/Integration/CaptureMediaIntegrationTests.swift"
+guard_processes
+start_encoder_tripwire
+xcodebuild \
+  -project "$repo_root/LocalMemory.xcodeproj" \
+  -scheme LocalMemory \
+  -configuration Debug \
+  -derivedDataPath "$repo_root/.build/DerivedData" \
+  -disableAutomaticPackageResolution \
+  CODE_SIGNING_ALLOWED=NO \
+  -only-testing:LocalMemoryIntegrationTests/CaptureMediaIntegrationTests \
+  test 2>&1 | tee "$integration_log"
+stop_encoder_tripwire
+
+guard_processes
+start_encoder_tripwire
+"$repo_root/scripts/check-contracts.sh" 2>&1 | tee "$contract_log"
+stop_encoder_tripwire
+
 {
-  rg -n 'AVAssetWriterInputPixelBufferAdaptor' "$writer_source"
-  rg -n 'adaptor\.pixelBufferPool' "$writer_source"
-  rg -n 'adaptor\.append\(adaptorBuffer' "$writer_source"
-  rg -n 'retainedAdaptorBuffers\.retainAccepted\(adaptorBuffer\)' "$writer_source"
-  rg -n 'defer \{ retainedAdaptorBuffers\.releaseAfterFinalization\(\) \}' "$writer_source"
-  if rg -n 'input\.append\(' "$writer_source"; then
-    echo "Direct sample-buffer append bypasses the adaptor pool" >&2
+  test ! -e "$repo_root/Packages/MemoryCapture/Sources/MemoryCapture/HEVCMediaWriter.swift"
+  rg -n 'CGImageDestinationCreateWithData' \
+    "$repo_root/Packages/MemoryCapture/Sources/MemoryCapture/HEICKeyframeWriter.swift"
+  rg -n '[.]useSoftwareRenderer: true' \
+    "$repo_root/Packages/MemoryCapture/Sources/MemoryCapture/HEICKeyframeWriter.swift"
+  rg -n 'HEICKeyframeManifest' \
+    "$repo_root/Packages/MemoryCapture/Sources/MemoryCapture/HEICKeyframeWriter.swift"
+  rg -n 'renamex_np' \
+    "$repo_root/Packages/MemoryCapture/Sources/MemoryCapture/HEICKeyframeWriter.swift"
+  rg -n 'SafeFakeHEICEncoder' \
+    "$repo_root/Tests/Integration/CaptureMediaIntegrationTests.swift"
+  if rg -n 'ImageIOHEICFrameEncoder[(]' \
+    "$repo_root/Tests"; then
+    echo "A test constructs the production HEIC encoder boundary" >&2
     exit 1
   fi
-  if rg -n 'guard sourceDimensions != dimensions' "$writer_source"; then
-    echo "Same-size source bypasses the adaptor-pool copy" >&2
+  if rg -n 'URLSession|Network[.]|NWConnection|socket[(]|connect[(]' \
+    "$repo_root/Packages/MemoryCapture/Sources/MemoryCapture/HEICKeyframeWriter.swift"; then
+    echo "Network capability entered the local media writer" >&2
     exit 1
   fi
-  test "$(rg -c 'adaptor\.append\(' "$writer_source")" -eq 1
-  rg -n 'kVTVideoEncoderSpecification_RequireHardwareAcceleratedVideoEncoder.*true' \
-    "$writer_source"
-  rg -n 'LM-025 hardware HEVC quarantine' "$integration_source"
-  rg -n 'Do not remove this skip until the hardware/OS gate is explicitly re-authorized' \
-    "$integration_source"
-  echo "every_frame_uses_adaptor_pool=passed"
-  echo "accepted_adaptor_buffers_retained_through_finalization=passed"
-  echo "hardware_requirement_preserved=passed"
-  echo "integration_hardware_quarantine=passed"
+  echo "hardware_video_encoder_removed=passed"
+  echo "production_heic_encoder_compile_only=passed"
+  echo "tests_use_boundary_fake_only=passed"
+  echo "local_only_writer_scan=passed"
+  echo "encoder_process_tripwire=passed"
 } 2>&1 | tee "$audit_log"
 
-echo "LM-025 safe core, mock-software, termination, publisher, and compile-only gates passed"
+echo "LM-025 HEIC keyframe safe gate passed without hardware video encoding"

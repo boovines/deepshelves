@@ -1,4 +1,5 @@
 import Foundation
+import MemoryContracts
 
 public struct MediaFrameLocator: Equatable, Sendable {
     public let frameID: UUID
@@ -10,26 +11,25 @@ public struct MediaFrameLocator: Equatable, Sendable {
         self.chunkID = chunkID
         self.presentationTimeMilliseconds = presentationTimeMilliseconds
     }
+
+    public var frameRelativePath: String {
+        "frames/\(frameID.uuidString.lowercased()).heic"
+    }
 }
 
-public struct HEVCMediaChunkFinalization: Equatable, Sendable {
+public struct HEICMediaChunkFinalization: Equatable, Sendable {
     public let chunkID: UUID
     public let scope: MediaChunkScope
-    public let outputURL: URL
-    public let codecFourCC: String
-    public let hardwareAccelerationRequired: Bool
+    public let outputDirectoryURL: URL
     public let durationMilliseconds: Int64
     public let frameCount: Int
     public let byteCount: Int64
     public let sha256: Data
     public let locators: [MediaFrameLocator]
+    public let manifest: HEICKeyframeManifest
 
     public var sha256Hex: String {
         sha256.map { String(format: "%02x", $0) }.joined()
-    }
-
-    public var presentationTimeMilliseconds: [Int64] {
-        locators.map(\.presentationTimeMilliseconds)
     }
 }
 
@@ -44,36 +44,6 @@ public enum MediaWriterCoreError: Error, Equatable, Sendable {
     case maximumDurationExceeded
     case staleAppendPlan
     case emptyChunk
-}
-
-public enum MediaBufferRetentionError: Error, Equatable, Sendable {
-    case finalizationCompleted
-}
-
-public final class MediaBufferRetentionLedger<Buffer>: @unchecked Sendable {
-    public private(set) var retainedCount = 0
-
-    private var retainedBuffers: [Buffer] = []
-    private var finalizationCompleted = false
-
-    public init() {}
-
-    public func retainAccepted(_ buffer: Buffer) throws {
-        guard !finalizationCompleted else {
-            throw MediaBufferRetentionError.finalizationCompleted
-        }
-        retainedBuffers.append(buffer)
-        retainedCount = retainedBuffers.count
-    }
-
-    public func releaseAfterFinalization() {
-        guard !finalizationCompleted else {
-            return
-        }
-        finalizationCompleted = true
-        retainedBuffers.removeAll()
-        retainedCount = 0
-    }
 }
 
 public struct MediaDownscalePlan: Equatable, Sendable {
@@ -181,26 +151,35 @@ public struct MediaWriterCore: Sendable {
         locators.append(plan.locator)
     }
 
-    public func finalization(
-        outputURL: URL,
-        codecFourCC: String,
-        hardwareAccelerationRequired: Bool,
+    public func heicFinalization(
+        outputDirectoryURL: URL,
+        manifest: HEICKeyframeManifest,
         integrity: PublishedMediaIntegrity
-    ) throws -> HEVCMediaChunkFinalization {
+    ) throws -> HEICMediaChunkFinalization {
         guard !locators.isEmpty else {
             throw MediaWriterCoreError.emptyChunk
         }
-        return HEVCMediaChunkFinalization(
+        guard manifest.chunkID == chunkID,
+            manifest.captureEpochID == scope.epochID,
+            manifest.targetWindowID == scope.targetWindowID,
+            manifest.width == scope.dimensions.width,
+            manifest.height == scope.dimensions.height,
+            manifest.frames.map(\.frameID) == locators.map(\.frameID),
+            manifest.frames.map(\.presentationTimeMS)
+                == locators.map(\.presentationTimeMilliseconds)
+        else {
+            throw MediaWriterCoreError.staleAppendPlan
+        }
+        return HEICMediaChunkFinalization(
             chunkID: chunkID,
             scope: scope,
-            outputURL: outputURL,
-            codecFourCC: codecFourCC,
-            hardwareAccelerationRequired: hardwareAccelerationRequired,
+            outputDirectoryURL: outputDirectoryURL,
             durationMilliseconds: durationMilliseconds,
             frameCount: frameCount,
             byteCount: integrity.byteCount,
             sha256: integrity.sha256,
-            locators: locators
+            locators: locators,
+            manifest: manifest
         )
     }
 

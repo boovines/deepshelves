@@ -11,7 +11,7 @@ The S6 prototype first used a pure SwiftUI `LazyVGrid` for 10,000 deterministic 
 
 ## Decision
 
-Replace only the hot 10,000-card collection with an `NSCollectionView` exposed through `NSViewRepresentable`. Retain SwiftUI for the search panel, detail composition, timeline, controls, state binding, appearance, localization, and accessibility surfaces. Retain `MemoryDesignSystem` constants, stable card identifiers, selection-generation cancellation, and the actor-owned HEVC decode cache.
+Replace only the hot 10,000-card collection with an `NSCollectionView` exposed through `NSViewRepresentable`. Retain SwiftUI for the search panel, detail composition, timeline, controls, state binding, appearance, localization, and accessibility surfaces. Retain `MemoryDesignSystem` constants, stable card identifiers, selection-generation cancellation, and the actor-owned source-HEIC decode cache.
 
 The collection uses native item reuse and O(1) indexed scrolling. This is not permission to migrate other surfaces to AppKit or to introduce a web UI.
 

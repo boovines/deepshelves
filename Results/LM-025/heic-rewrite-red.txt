@@ -1,0 +1,31 @@
+Tests/Pure/LM025HEICKeyframeHarness.swift:95:31: error: cannot find 'HEICKeyframeChunkRewriter' in scope
+ 93 |             isDirectory: true
+ 94 |         )
+ 95 |         let replacement = try HEICKeyframeChunkRewriter.republish(
+    |                               `- error: cannot find 'HEICKeyframeChunkRewriter' in scope
+ 96 |             sourceDirectoryURL: output,
+ 97 |             outputDirectoryURL: replacementOutput,
+
+Tests/Pure/LM025HEICKeyframeHarness.swift:102:45: error: cannot infer key path type from context; consider explicitly specifying a root type
+100 |         )
+101 |         try require(
+102 |             replacement.manifest.frames.map(\.frameID) == [frameIDs[0], frameIDs[2]],
+    |                                             `- error: cannot infer key path type from context; consider explicitly specifying a root type
+103 |             "retained identities"
+104 |         )
+
+Tests/Pure/LM025HEICKeyframeHarness.swift:106:45: error: cannot infer key path type from context; consider explicitly specifying a root type
+104 |         )
+105 |         try require(
+106 |             replacement.manifest.frames.map(\.presentationTimeMS) == [0, 1_750],
+    |                                             `- error: cannot infer key path type from context; consider explicitly specifying a root type
+107 |             "retained logical timing"
+108 |         )
+
+Tests/Pure/LM025HEICKeyframeHarness.swift:118:13: error: cannot find 'HEICKeyframeChunkRewriter' in scope
+116 |             "deleted frame identity absent"
+117 |         )
+118 |         try HEICKeyframeChunkRewriter.removeRetiredDirectory(
+    |             `- error: cannot find 'HEICKeyframeChunkRewriter' in scope
+119 |             output,
+120 |             expectedChunkID: chunkID

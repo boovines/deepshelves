@@ -77,7 +77,7 @@ Required before dogfood:
 - Random 256-bit key in macOS Keychain
 - Cipher activation verification on every open
 
-HEVC media, thumbnails, flat vectors, audio, and temporary files rely on FileVault and filesystem permissions in V1. The UI must describe this boundary accurately. Do not claim full archive encryption.
+HEIC source media, thumbnails, flat vectors, audio, and temporary files rely on FileVault and filesystem permissions. The UI must describe this boundary accurately. Do not claim full archive encryption.
 
 ## Diagnostics
 

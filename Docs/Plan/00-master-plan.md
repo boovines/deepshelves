@@ -30,7 +30,7 @@ The implementation is a clean-room, native macOS application written in Swift. T
 | UI standardization | Native SwiftUI controls, SF Symbols, semantic design tokens, Apple HIG |
 | Capture | ScreenCaptureKit SCStream filtered to exactly one approved foreground SCWindow |
 | Activity signals | NSWorkspace, Accessibility AX APIs, coarse CGEventTap event classes |
-| Media | Adaptive foreground-window keyframes encoded into ≤30-second, single-epoch HEVC QuickTime chunks |
+| Media | Adaptive foreground-window frames encoded as independent HEIC keyframes in ≤30-second, single-epoch logical chunks |
 | Database | GRDB over SQLite WAL with FTS5 |
 | Text extraction | Accessibility first, Apple Vision OCR fallback |
 | Visual retrieval | Bundled Core ML MobileCLIP-S0 image/text encoders |
@@ -61,7 +61,7 @@ Screenpipe remains a useful public behavioral and performance reference, but no 
 | Bucket | Plan | Primary output |
 |---|---|---|
 | Product definition | [01-product-fidelity.md](01-product-fidelity.md) | Fidelity matrix, journeys, non-goals, success measures |
-| Platform and capture | [02-platform-capture.md](02-platform-capture.md) | Native runtime, permissions, adaptive capture, HEVC chunks |
+| Platform and capture | [02-platform-capture.md](02-platform-capture.md) | Native runtime, permissions, adaptive capture, HEIC keyframe chunks |
 | Local enrichment | [03-enrichment-pipeline.md](03-enrichment-pipeline.md) | Accessibility, OCR, MobileCLIP, optional transcription |
 | Storage and lifecycle | [04-storage-lifecycle.md](04-storage-lifecycle.md) | GRDB schema, media layout, migrations, retention, deletion |
 | Retrieval | [05-retrieval-search.md](05-retrieval-search.md) | FTS5, visual vectors, query parser, fusion, evaluation |
@@ -88,7 +88,7 @@ Screenpipe remains a useful public behavioral and performance reference, but no 
         epoch/focus/policy recheck
                     |
           MediaWriter + DatabaseWriter
-          ≤30-second HEVC chunks + SQLite
+      ≤30-second HEIC keyframe chunks + SQLite
                     |
             EnrichmentScheduler actor
        AX text / Vision OCR / MobileCLIP
@@ -154,7 +154,7 @@ The Xcode application targets are thin composition roots. Domain logic belongs i
 - Reduce to one heartbeat every 30 seconds when static.
 - Stop accepting after five minutes idle while keeping recovery cheap.
 - Recheck privacy rules immediately before writing.
-- Encode accepted frames into variable-frame-rate HEVC chunks lasting at most 30 seconds; end a chunk on target-window, capture-epoch, or encoded-dimension change.
+- Encode accepted frames as independently addressable HEIC keyframes in logical chunks lasting at most 30 seconds; end a chunk on target-window, capture-epoch, or encoded-dimension change.
 - Generate 480-pixel thumbnails only for searchable frames.
 - Index at most one frame every two seconds plus immediate context transitions.
 
@@ -169,8 +169,8 @@ The Xcode application targets are thin composition roots. Domain logic belongs i
 - Default retention: 30 days.
 - Default hard cap: 20 GB.
 - Remove oldest complete chunks first when the cap is reached.
-- Delete-one-moment rewrites its containing ≤30-second single-window chunk.
-- Time-range deletion removes or rewrites every overlapping chunk.
+- Delete-one-moment republishes its containing ≤30-second single-window chunk directory with only retained frame assets.
+- Time-range deletion removes or republishes every overlapping chunk directory.
 - Every derived artifact cascades from canonical deletion.
 
 The UI must say that database text is app-encrypted while visual media is protected by macOS/FileVault. It must not claim blanket archive encryption.
@@ -222,9 +222,9 @@ Contract changes require a schema/migration version, fixture updates, previous-v
 
 | Phase | Stories | Outcome | Exit gate |
 |---|---|---|---|
-| 0 Foundation | LM-001–008 | Project, contracts, fixtures, spikes, first HEVC chunk | Defaults validated; release build works offline |
+| 0 Foundation | LM-001–008 | Project, contracts, fixtures, spikes, first canonical media decision | Defaults validated; release build works offline |
 | 1 Native UI | LM-009–016 | SwiftUI shell, menu bar, tokens, onboarding | UX spec, keyboard, VoiceOver, light/dark pass |
-| 2 Capture/store | LM-017–028 | Adaptive capture, privacy preflight, HEVC, GRDB | Eight-hour soak; zero excluded captures; kill-safe |
+| 2 Capture/store | LM-017–028 | Adaptive capture, privacy preflight, HEIC keyframes, GRDB | Eight-hour soak; zero excluded captures; kill-safe |
 | 3 Text recall | LM-029–038 | AX, OCR, FTS5, filters | Recall@5 ≥ 0.90; lexical p95 < 300 ms |
 | 4 Recall product | LM-039–048 | Search grid, detail, timeline, deletion | Lamp-today journey; timeline p95 < 200 ms |
 | 5 Visual recall | LM-049–055 | MobileCLIP, flat vectors, hybrid ranking | Visual Recall@10 ≥ 0.80; hybrid p95 < 750 ms |
@@ -292,8 +292,8 @@ The agent may automatically fix failures within the active story. It may not sil
 - [Coast privacy](https://coast.app/privacy)
 - [Coast terms](https://coast.app/terms)
 - [Apple ScreenCaptureKit](https://developer.apple.com/documentation/ScreenCaptureKit)
-- [Apple AVAssetWriter](https://developer.apple.com/documentation/avfoundation/avassetwriter)
-- [Apple VideoToolbox hardware encoding](https://developer.apple.com/documentation/videotoolbox/kvtvideoencoderspecification_enablehardwareacceleratedvideoencoder)
+- [Apple Image I/O](https://developer.apple.com/documentation/imageio)
+- [Uniform Type Identifiers HEIC](https://developer.apple.com/documentation/uniformtypeidentifiers/uttype-swift.struct/heic)
 - [Apple Vision OCR](https://developer.apple.com/documentation/vision/recognizing-text-in-images)
 - [Apple Core ML](https://developer.apple.com/documentation/CoreML)
 - [Apple MobileCLIP](https://github.com/apple/ml-mobileclip)
