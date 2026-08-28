@@ -1,0 +1,2 @@
+Testing started
+check-contracts: 11 canonical V1 fixtures reproduce byte-for-byte and all contract validation tests pass

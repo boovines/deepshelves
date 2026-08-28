@@ -37,6 +37,7 @@ struct LocalMemoryApp: App {
         let arguments = ProcessInfo.processInfo.arguments
         Self.exportLM017SchemaAndExitIfRequested(arguments: arguments)
         Self.exportLM018FaultsAndExitIfRequested(arguments: arguments)
+        Self.exportLM021BrowserContextAndExitIfRequested(arguments: arguments)
         let configuration = AppLaunchConfiguration(arguments: arguments)
         launchConfiguration = configuration
         shellKeyboardMonitor = ShellKeyboardCommandMonitor()
@@ -214,6 +215,26 @@ struct LocalMemoryApp: App {
         } catch {
             FileHandle.standardError.write(
                 Data("LM-018 fault export failed: \(error)\n".utf8)
+            )
+            Darwin.exit(EXIT_FAILURE)
+        }
+    }
+
+    private static func exportLM021BrowserContextAndExitIfRequested(arguments: [String]) {
+        guard let exportIndex = arguments.firstIndex(of: "--lm021-export-browser-context"),
+              arguments.indices.contains(exportIndex + 1)
+        else {
+            return
+        }
+        do {
+            try LM021BrowserContextHarness.run().write(
+                to: URL(fileURLWithPath: arguments[exportIndex + 1]),
+                options: .atomic
+            )
+            Darwin.exit(EXIT_SUCCESS)
+        } catch {
+            FileHandle.standardError.write(
+                Data("LM-021 browser context export failed: \(error)\n".utf8)
             )
             Darwin.exit(EXIT_FAILURE)
         }

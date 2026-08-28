@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-021",
+  "status": "passed",
+  "generatedAt": "2026-08-28T11:29:16Z",
+  "baseRevision": "7303f428ed6e9f9384d850fd3914c554df8c131a",
+  "checkpoint": "refs/tags/checkpoints/LM-021",
+  "results": {
+    "supportedAdapters": {
+      "browsers": [
+        "safari",
+        "chrome",
+        "arcDia",
+        "edge",
+        "firefox"
+      ],
+      "exactBundleAllowlist": true,
+      "publicAccessibilityAddressFieldsOnly": true,
+      "domInspection": false,
+      "browserDatabaseInspection": false,
+      "networkTrafficInspection": false
+    },
+    "contextMatrix": {
+      "contextCount": 600,
+      "exactResolutionCount": 600,
+      "exactAccuracy": 1.0,
+      "approvedCount": 480,
+      "privateCount": 30,
+      "uniqueTargetAssociationCount": 510,
+      "unavailableCounts": {
+        "ambiguousAddressField": 15,
+        "privateStateUnavailable": 15,
+        "targetWindowMismatch": 30,
+        "unsupportedURL": 15,
+        "urlUnavailable": 15
+      }
+    },
+    "serializationPrivacy": {
+      "sanitizedApprovedSerializationCount": 480,
+      "privateContentFieldCount": 0,
+      "credentialComponentOccurrences": 0,
+      "queryComponentOccurrences": 0,
+      "fragmentComponentOccurrences": 0,
+      "privateAddressOrTitleOccurrences": 0,
+      "privateOrUnknownAddressFieldsReadBySystemInspector": 0
+    }
+  },
+  "gates": {
+    "signedBrowserContextMatrix": {
+      "status": "passed",
+      "targetedTests": 7,
+      "evidence": "Results/LM-021/browser-context.json",
+      "evidenceSha256": "e341f99b351dec747503ebbaf4d671258bffab3de8911e01de7cbdb5fd0d83d0",
+      "fixture": "Fixtures/LM021/browser-context-matrix.json",
+      "fixtureSha256": "d3c4b543c1bc45ce71814034567a2e98bd21d7772577e8348958f02fdd5d6369",
+      "log": "Results/LM-021/browser-context-tests.txt",
+      "logSha256": "59c55dfcd7ef1300bbedc5b65300d350689fb45d6aa40ef20928a98e10645c86"
+    },
+    "unitAndRegressionTests": {
+      "status": "passed",
+      "xctestUnitTests": 138,
+      "swiftTestingTests": 9,
+      "integrationTests": 7,
+      "privacyTests": 4,
+      "performanceTests": 1,
+      "log": "Results/LM-021/unit-tests.txt",
+      "sha256": "47600e1246b8e1f901eaa48313d94a24d8d715e9b5078650992eb8fb4ccebfeb"
+    },
+    "contracts": {
+      "status": "passed",
+      "fixtures": 11,
+      "log": "Results/LM-021/contracts.txt",
+      "sha256": "21310c96b347b65f1bcbcedae72ef1896d34242bbbc8f25bce022cb218d7e9c0"
+    },
+    "privacySmoke": {
+      "status": "passed",
+      "log": "Results/LM-021/privacy-smoke.txt",
+      "sha256": "9ea4b5449f9715c90a3a80909f275c987c95be1130414ae6e10f888fcbe4a8bc"
+    },
+    "releaseBuild": {
+      "status": "passed",
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ],
+      "log": "Results/LM-021/release-build.txt",
+      "sha256": "9b29cb6882873242c341059b13af983e7d08f526e11a8deaf684bec0df8af127"
+    },
+    "signingPosture": {
+      "status": "passed",
+      "log": "Results/LM-021/signing-posture.txt",
+      "sha256": "eb0fd8e2b692e4c3e56ed9cad7211e904af5b31ac04a54618d63db02d573e9a1"
+    },
+    "dependencyStatic": {
+      "status": "passed",
+      "log": "Results/LM-021/dependency-static.txt",
+      "sha256": "875df9c029cf144be809a444a229a0b442b480941fcc10656c6df1830a36c0d5"
+    },
+    "releaseBinaryDependencyAudit": {
+      "status": "passed",
+      "log": "Results/LM-021/dependency-audit.txt",
+      "sha256": "ee19ec2fac69814d57606f8260d4120b82de9aecffb3286ca3159489700b0b32"
+    },
+    "forbiddenContextSourceScan": {
+      "status": "passed",
+      "privateAccessibilitySymbols": 0,
+      "networkSymbols": 0,
+      "domOrWebViewSymbols": 0,
+      "browserDatabasePaths": 0
+    },
+    "diffWhitespace": {
+      "status": "passed"
+    }
+  }
+}

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "activeStory": "LM-021",
+  "activeStory": "LM-022",
   "stories": {
     "LM-001": {
       "status": "passed",
@@ -323,23 +323,28 @@
       "resumeProbe": null
     },
     "LM-021": {
-      "status": "active",
+      "status": "passed",
       "startedAt": "2026-08-28T11:17:54Z",
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": "Base checkpoint refs/tags/checkpoints/LM-020. Implement supported-browser address-field adapters tied to the strictly resolved foreground window, normalized public URL context, and private-context suppression without pixels or stale cross-window metadata.",
+      "completedAt": "2026-08-28T11:29:16Z",
+      "gitRevision": "refs/tags/checkpoints/LM-021",
+      "evidence": [
+        "Results/LM-021/report.json",
+        "Results/LM-021/browser-context.json",
+        "Results/LM-021/browser-context-tests.txt",
+        "Fixtures/LM021/browser-context-matrix.json"
+      ],
+      "notes": "Explicit Safari, Chrome, Arc/Dia, Edge, and Firefox public-Accessibility adapters require an exact bundle allowlist plus the LM-020 target PID and normalized bounds. The signed 600-context matrix resolves exactly at 100%, all 480 approved URLs discard credentials/query/fragment, all 30 private outputs contain classification and target identity only, and ambiguous, unknown-private, mismatched, unavailable, or unsupported contexts fail closed without content.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null
     },
     "LM-022": {
-      "status": "pending",
-      "startedAt": null,
+      "status": "active",
+      "startedAt": "2026-08-28T11:29:16Z",
       "completedAt": null,
       "gitRevision": null,
       "evidence": [],
-      "notes": null,
+      "notes": "Base checkpoint refs/tags/checkpoints/LM-021. Implement the compiled application/site/private-window PrivacyPolicy, fixed non-removable exclusions, editable password-manager/private defaults, precedence, prefilter and final epoch recheck, content-free audit, and fail-closed property fixtures.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null

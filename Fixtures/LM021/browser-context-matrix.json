@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "seed": 1279938621,
+  "contextCount": 600,
+  "approvedCount": 480,
+  "privateCount": 30,
+  "unavailableCounts": {
+    "ambiguousAddressField": 15,
+    "privateStateUnavailable": 15,
+    "targetWindowMismatch": 30,
+    "unsupportedURL": 15,
+    "urlUnavailable": 15
+  },
+  "minimumExactAccuracy": 0.98
+}
