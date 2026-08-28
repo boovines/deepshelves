@@ -1,6 +1,7 @@
 import AppKit
 import Foundation
 import MemoryCapture
+import MemoryDesignSystem
 import MemoryStore
 import SwiftUI
 
@@ -105,16 +106,34 @@ struct AppLaunchConfiguration {
     let runsLM009EvidenceSequence: Bool
     let stateURL: URL
     let navigationStateURL: URL
+    let onboardingStateURL: URL
     let initialStatus: LocalMemoryRuntimeStatus
     let forcedMainWindowSize: MainWindowLaunchSize?
     let preferredColorScheme: ColorScheme?
     let opensSettingsAtLaunch: Bool
+    let opensOnboardingAtLaunch: Bool
+    let onboardingPermissionOverrides: [OnboardingPermissionKind: OnboardingPermissionStatus]
+    let suppressOnboardingSystemSettings: Bool
 
     init(arguments: [String]) {
         runsLM009EvidenceSequence = arguments.contains("--lm009-evidence-sequence")
         showsMenuPreview = arguments.contains("--lm009-menu-preview")
             || runsLM009EvidenceSequence
         opensSettingsAtLaunch = arguments.contains("--lm010-open-settings")
+        let forcesOnboarding = arguments.contains("--lm014-onboarding")
+        let suppressesOnboarding = arguments.contains("--lm014-skip-onboarding")
+            || arguments.contains { argument in
+                argument.hasPrefix("--lm008-")
+                    || argument.hasPrefix("--lm009-")
+                    || argument.hasPrefix("--lm010-")
+                    || argument.hasPrefix("--capture-")
+                    || argument.hasPrefix("--context-")
+                    || argument == "--s3-s4-spike"
+            }
+        opensOnboardingAtLaunch = forcesOnboarding || !suppressesOnboarding
+        suppressOnboardingSystemSettings = arguments.contains(
+            "--lm014-suppress-system-settings"
+        )
         opensMainWindow = showsMenuPreview
             || arguments.contains("--lm009-open-main")
             || arguments.contains("--lm010-shell")
@@ -140,6 +159,29 @@ struct AppLaunchConfiguration {
         } else {
             navigationStateURL = Self.defaultStateURL(fileName: "navigation-state.json")
         }
+
+        if let index = arguments.firstIndex(of: "--lm014-onboarding-state-file"),
+           arguments.indices.contains(index + 1)
+        {
+            onboardingStateURL = URL(fileURLWithPath: arguments[index + 1])
+        } else {
+            onboardingStateURL = Self.defaultStateURL(fileName: "onboarding-state.json")
+        }
+
+        var permissionOverrides: [OnboardingPermissionKind: OnboardingPermissionStatus] = [:]
+        if let index = arguments.firstIndex(of: "--lm014-screen-permission"),
+           arguments.indices.contains(index + 1),
+           let status = OnboardingPermissionStatus(rawValue: arguments[index + 1])
+        {
+            permissionOverrides[.screenRecording] = status
+        }
+        if let index = arguments.firstIndex(of: "--lm014-accessibility-permission"),
+           arguments.indices.contains(index + 1),
+           let status = OnboardingPermissionStatus(rawValue: arguments[index + 1])
+        {
+            permissionOverrides[.accessibility] = status
+        }
+        onboardingPermissionOverrides = permissionOverrides
 
         if let index = arguments.firstIndex(of: "--lm009-runtime"),
            arguments.indices.contains(index + 1),
@@ -193,7 +235,9 @@ struct AppLaunchConfiguration {
 
 struct MenuBarStatusLabel: View {
     @ObservedObject var model: AppLifecycleViewModel
+    @ObservedObject var onboardingModel: OnboardingViewModel
     let opensMainWindowAtLaunch: Bool
+    let opensOnboardingAtLaunch: Bool
 
     @Environment(\.openWindow) private var openWindow
     @State private var hasHandledLaunch = false
@@ -203,10 +247,16 @@ struct MenuBarStatusLabel: View {
             .accessibilityLabel(model.menuProjection.statusLabel)
             .accessibilityIdentifier("menuBar.statusItem")
             .task {
-                guard opensMainWindowAtLaunch, !hasHandledLaunch else { return }
+                guard !hasHandledLaunch else { return }
                 hasHandledLaunch = true
-                openWindow(id: "main")
-                NSApplication.shared.activate(ignoringOtherApps: true)
+                await onboardingModel.start()
+                if opensOnboardingAtLaunch, !onboardingModel.snapshot.isComplete {
+                    openWindow(id: "onboarding")
+                    NSApplication.shared.activate(ignoringOtherApps: true)
+                } else if opensMainWindowAtLaunch {
+                    openWindow(id: "main")
+                    NSApplication.shared.activate(ignoringOtherApps: true)
+                }
             }
     }
 }

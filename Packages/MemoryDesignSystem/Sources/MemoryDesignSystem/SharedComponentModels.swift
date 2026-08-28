@@ -219,6 +219,7 @@ public enum PermissionState: String, CaseIterable, Codable, Sendable {
     case unknown
     case granted
     case denied
+    case revoked
     case unavailable
 
     public var presentation: PermissionPresentation {
@@ -240,6 +241,13 @@ public enum PermissionState: String, CaseIterable, Codable, Sendable {
         case .denied:
             PermissionPresentation(
                 label: "Permission required",
+                systemImage: "exclamationmark.triangle.fill",
+                actionTitle: "Open System Settings",
+                colorToken: .statusPaused
+            )
+        case .revoked:
+            PermissionPresentation(
+                label: "Permission revoked",
                 systemImage: "exclamationmark.triangle.fill",
                 actionTitle: "Open System Settings",
                 colorToken: .statusPaused

@@ -1,0 +1,18 @@
+Window, Welcome to Local Memory
+Sidebar, four onboarding steps
+Step 1 of 4, Welcome
+Heading, Your screen memory stays on this Mac
+Text, Nothing is uploaded; normal use has no network access
+Button, Continue
+Step 2 of 4, Permissions
+Screen Recording, Required, Open System Settings
+Accessibility, Recommended, Open System Settings
+Step 3 of 4, Privacy
+Local Memory records only your active window. Background windows, notifications, the Dock, and the desktop are not stored.
+Background fixture window, not stored
+Active foreground fixture, stored
+Saved image contains active window only
+Step 4 of 4, Ready
+Text, 30-day retention and 20-GB storage cap
+Text, Archive is stored locally in Application Support
+Button, Finish

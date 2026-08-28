@@ -12,6 +12,7 @@ import SwiftUI
 struct LocalMemoryApp: App {
     @StateObject private var lifecycleModel: AppLifecycleViewModel
     @StateObject private var navigationModel: MainNavigationViewModel
+    @StateObject private var onboardingModel: OnboardingViewModel
 
     private let launchConfiguration: AppLaunchConfiguration
     private let capabilityProbeOutput: String?
@@ -39,6 +40,13 @@ struct LocalMemoryApp: App {
         )
         _navigationModel = StateObject(
             wrappedValue: MainNavigationViewModel(stateURL: configuration.navigationStateURL)
+        )
+        _onboardingModel = StateObject(
+            wrappedValue: OnboardingViewModel(
+                stateURL: configuration.onboardingStateURL,
+                overrides: configuration.onboardingPermissionOverrides,
+                suppressSystemSettings: configuration.suppressOnboardingSystemSettings
+            )
         )
         s6AutoExit = arguments.contains("--lm008-s6-auto-exit")
         shouldRequestCapturePermissions = arguments.contains("--request-capture-permissions")
@@ -213,6 +221,19 @@ struct LocalMemoryApp: App {
             height: CGFloat(MainWindowDefaults.settingsHeight)
         )
 
+        Window("Welcome to Local Memory", id: "onboarding") {
+            OnboardingSceneRoot(model: onboardingModel)
+                .preferredColorScheme(launchConfiguration.preferredColorScheme)
+        }
+        .defaultSize(
+            width: CGFloat(OnboardingDefaults.windowWidth),
+            height: CGFloat(OnboardingDefaults.windowHeight)
+        )
+        .defaultLaunchBehavior(.suppressed)
+        .defaultPosition(.center)
+        .restorationBehavior(.disabled)
+        .windowResizability(.contentSize)
+
         MenuBarExtra {
             AppMenuBarContent(
                 model: lifecycleModel,
@@ -221,7 +242,9 @@ struct LocalMemoryApp: App {
         } label: {
             MenuBarStatusLabel(
                 model: lifecycleModel,
-                opensMainWindowAtLaunch: launchConfiguration.opensMainWindow
+                onboardingModel: onboardingModel,
+                opensMainWindowAtLaunch: launchConfiguration.opensMainWindow,
+                opensOnboardingAtLaunch: launchConfiguration.opensOnboardingAtLaunch
             )
         }
         .menuBarExtraStyle(.window)

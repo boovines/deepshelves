@@ -1,0 +1,1 @@
+privacy-smoke: zero runtime networking, telemetry, remote packages, or network entitlements

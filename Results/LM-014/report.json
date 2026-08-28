@@ -1,0 +1,125 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-014",
+  "status": "passed",
+  "generatedAt": "2026-08-28T08:07:11Z",
+  "baseRevision": "91cb8c6e07bdf455e7aedbfcfa7190165b39b2c8",
+  "checkpoint": "refs/tags/checkpoints/LM-014",
+  "results": {
+    "steps": [
+      "welcome",
+      "permissions",
+      "privacy",
+      "ready"
+    ],
+    "window": {
+      "width": 760,
+      "height": 620,
+      "resumable": true
+    },
+    "visiblePermissions": [
+      "screenRecording",
+      "accessibility"
+    ],
+    "microphoneShown": false,
+    "permissionStatuses": [
+      "notDetermined",
+      "granted",
+      "denied",
+      "revoked"
+    ],
+    "implicitSystemPromptActions": 0,
+    "foregroundOnlyPreview": {
+      "syntheticOnly": true,
+      "backgroundFixtureStored": false,
+      "activeFixtureStored": true,
+      "savedImageShowsActiveWindowOnly": true
+    },
+    "storageCopy": {
+      "retentionDays": 30,
+      "storageCapGigabytes": 20,
+      "databaseEncryptionClaim": "app encryption is scheduled for the storage phase",
+      "visualMediaClaim": "macOS account permissions and FileVault when enabled"
+    },
+    "ownerOnlyState": {
+      "directoryMode": "0700",
+      "fileMode": "0600"
+    }
+  },
+  "evidence": {
+    "voiceOverTranscript": {
+      "path": "Results/LM-014/voiceover.txt",
+      "sha256": "822137b11ea5804ddb6c5cc2adefd02b3a6a5206754c3be9fce5cea4620c8e1354"
+    }
+  },
+  "gates": {
+    "signedUIRegression": {
+      "status": "passed",
+      "command": "./scripts/run-lm014-ui-tests.sh",
+      "tests": 10,
+      "onboardingPaths": [
+        "denied-relaunch",
+        "granted-completion",
+        "revoked-recovery"
+      ],
+      "failures": 0,
+      "log": "Results/LM-014/ui-tests.txt",
+      "logSHA256": "ffdd05b7e793ad9d4076c55fef23f3ef080b71610a5b1c4808cfd16f1382a244"
+    },
+    "fullTestSuite": {
+      "status": "passed",
+      "command": "./scripts/test.sh",
+      "xctestUnitTests": 86,
+      "swiftTestingUnitTests": 9,
+      "lm014XCTestUnitTests": 6,
+      "integrationTests": 7,
+      "privacyTests": 4,
+      "performanceTests": 1,
+      "failures": 0,
+      "log": "Results/LM-014/unit-tests.txt",
+      "logSHA256": "2626ad19ad908a194404147db9922da43ca0107bc4e1816bd457c0d6d345e90d"
+    },
+    "contractRegression": {
+      "status": "passed",
+      "command": "./scripts/check-contracts.sh",
+      "fixtures": 11,
+      "log": "Results/LM-014/contracts.txt",
+      "logSHA256": "0bd693369203db6356dabcd38b6535777ef52e405118a9f01c23d5d1ac16077c"
+    },
+    "privacySmoke": {
+      "status": "passed",
+      "command": "./scripts/privacy-smoke.sh",
+      "runtimeNetworkingOrTelemetry": 0,
+      "log": "Results/LM-014/privacy-smoke.txt",
+      "logSHA256": "9ea4b5449f9715c90a3a80909f275c987c95be1130414ae6e10f888fcbe4a8bc"
+    },
+    "releaseBuild": {
+      "status": "passed",
+      "command": "./scripts/build-release.sh",
+      "automaticPackageResolution": false,
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ],
+      "log": "Results/LM-014/release-build.txt",
+      "logSHA256": "6f5ef50396952184774b1643bbaab3f0a0413fdc33acf58511f88e4743c4d808"
+    },
+    "signedPosture": {
+      "status": "passed",
+      "command": "./scripts/signing-posture.sh",
+      "log": "Results/LM-014/signing-posture.txt",
+      "logSHA256": "ee830f68deffdd5327ac052f2f9ef4fe3426cecaf746cab56c989bd26a25c6d2"
+    },
+    "releaseBinaryAudit": {
+      "status": "passed",
+      "command": "./scripts/check-dependencies.sh --binaries",
+      "forbiddenLinkedOrEmbeddedMarkers": 0,
+      "log": "Results/LM-014/dependency-audit.txt",
+      "logSHA256": "ee19ec2fac69814d57606f8260d4120b82de9aecffb3286ca3159489700b0b32"
+    },
+    "diffWhitespace": {
+      "status": "passed",
+      "command": "git diff --check"
+    }
+  }
+}

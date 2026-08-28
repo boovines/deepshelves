@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "activeStory": "LM-014",
+  "activeStory": "LM-015",
   "stories": {
     "LM-001": {
       "status": "passed",
@@ -212,23 +212,28 @@
       "resumeProbe": null
     },
     "LM-014": {
-      "status": "active",
+      "status": "passed",
       "startedAt": "2026-08-28T04:38:23Z",
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": "Base checkpoint refs/tags/checkpoints/LM-013. Implement resumable four-step onboarding with explicit permission actions, truthful foreground-only/storage/privacy copy, and a synthetic live preview; XCUITest denied/granted/revoked paths without repeated prompts and attach a VoiceOver transcript.",
+      "completedAt": "2026-08-28T08:07:11Z",
+      "gitRevision": "refs/tags/checkpoints/LM-014",
+      "evidence": [
+        "Results/LM-014/report.json",
+        "Results/LM-014/voiceover.txt",
+        "Results/LM-014/unit-tests.txt",
+        "Results/LM-014/ui-tests.txt"
+      ],
+      "notes": "Resumable native four-step onboarding, explicit-only Screen Recording/Accessibility actions, truthful foreground-only and storage/privacy copy, synthetic background-exclusion preview, owner-only state, and completion handoff pass. Signed UI tests cover denied/relaunch, granted/completion, and revoked/recovery with no repeated prompt action; VoiceOver transcript and the full release/privacy gate suite pass.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null
     },
     "LM-015": {
-      "status": "pending",
-      "startedAt": null,
+      "status": "active",
+      "startedAt": "2026-08-28T08:07:11Z",
       "completedAt": null,
       "gitRevision": null,
       "evidence": [],
-      "notes": null,
+      "notes": "Base checkpoint refs/tags/checkpoints/LM-014. Implement configurable global shortcut and 760x620 AppKit-backed search panel with focus, display memory, escape behavior, shared navigation state, and recoverable collision handling.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null
