@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "storyID": "LM-036",
+  "status": "passed",
+  "generatedAt": "2026-08-28T15:43:50Z",
+  "baseRevision": "68ebdf3cc9dc212358dc392fea822ac94d8d41ce",
+  "checkpoint": "refs/tags/checkpoints/LM-036",
+  "results": {
+    "queryParser": {
+      "implementation": "Foundation-only deterministic grammar",
+      "caseCount": 100,
+      "uniqueIDCount": 100,
+      "categoryCount": 10,
+      "casesPerCategory": 10,
+      "localeIdentifiers": [
+        "de_DE",
+        "en_US",
+        "es_ES",
+        "fr_FR"
+      ],
+      "knownApplicationCount": 5,
+      "structuredFilterCaseCount": 70,
+      "ambiguousPhraseCaseCount": 10,
+      "hiddenFilterCount": 0
+    },
+    "grammar": {
+      "quotedPhrases": true,
+      "explicitApplicationTokens": true,
+      "explicitSiteTokens": true,
+      "explicitBeforeAfterBounds": true,
+      "localizedTodayYesterdayLastWeek": true,
+      "localeNumericDates": true,
+      "isoDates": true,
+      "unrecognizedTextPreserved": true
+    },
+    "videoSafety": {
+      "memorySearchEncoderFrameworkReferences": 0,
+      "unitHEVCMediaWriterConstructions": 0,
+      "hardwareEncoderTestsExecuted": 0,
+      "releaseGateMode": "compile-only"
+    }
+  },
+  "gates": {
+    "goldenCorpus": {
+      "status": "passed",
+      "fixture": "Fixtures/LM036/query-parse-goldens.json",
+      "sha256": "28df6ba03f19c5afab59df5c371d009d1ca518072c1b14c1c1ae1e0ae0d1b701",
+      "evidence": "Results/LM-036/query-parser.json",
+      "evidenceSha256": "704ab2e35fd203266d9c1126103512fc9312329fecb4b9879f7f272c9713bf80"
+    },
+    "packageTests": {
+      "status": "passed",
+      "testCount": 8,
+      "log": "Results/LM-036/package-tests.txt",
+      "sha256": "1452c105e5b51470efe7c37f535e72d3b5fb38651cee41df2edeee52097f4661"
+    },
+    "focusedParserTests": {
+      "status": "passed",
+      "log": "Results/LM-036/parser-tests.txt",
+      "sha256": "ff730dda8c11ebf1ee7fd54494c63959a96288c30487651e9f7f05bdad699c8c"
+    },
+    "fixtureReproducibility": {
+      "status": "passed",
+      "log": "Results/LM-036/fixture-check.txt",
+      "sha256": "a6eb9e0486ad0302c0dcc2a24d42c6ac2e3cc66bd847f29e5b426b44bd184bd3"
+    },
+    "contracts": {
+      "status": "passed",
+      "log": "Results/LM-036/contracts.txt",
+      "sha256": "04da3657085cda6f819e9527733c806a89d47907cbb35cce10fb0524a5a4b588"
+    },
+    "privacySmoke": {
+      "status": "passed",
+      "log": "Results/LM-036/privacy.txt",
+      "sha256": "9ea4b5449f9715c90a3a80909f275c987c95be1130414ae6e10f888fcbe4a8bc"
+    },
+    "releaseCompileOnly": {
+      "status": "passed",
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ],
+      "log": "Results/LM-036/release-build.txt",
+      "sha256": "fe9c64804e552da3ace7dc9c5bf458e85c1928be13b4e2b2d5fada515f2c5f92"
+    },
+    "storyGate": {
+      "status": "passed",
+      "log": "Results/LM-036/story-gate.txt",
+      "sha256": "6cbef60015c89efc3be796d968f3d9397df201651fd2b952c984b2178ac80ead"
+    }
+  }
+}

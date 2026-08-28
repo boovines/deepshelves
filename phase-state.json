@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "activeStory": "LM-025",
+  "activeStory": "LM-056",
   "stories": {
     "LM-001": {
       "status": "passed",
@@ -519,12 +519,18 @@
       "resumeProbe": null
     },
     "LM-036": {
-      "status": "pending",
-      "startedAt": null,
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": null,
+      "status": "passed",
+      "startedAt": "2026-08-28T15:34:04Z",
+      "completedAt": "2026-08-28T15:43:50Z",
+      "gitRevision": "refs/tags/checkpoints/LM-036",
+      "evidence": [
+        "Results/LM-036/report.json",
+        "Results/LM-036/query-parser.json",
+        "Fixtures/LM036/query-parse-goldens.json",
+        "Results/LM-036/package-tests.txt",
+        "Results/LM-036/story-gate.txt"
+      ],
+      "notes": "Deterministic Foundation-only grammar passed 100 unique query goldens across ten balanced categories and four locales. Explicit app/site/time filters always produce visible tokens; ambiguous or invalid phrases remain lexical. MemorySearch and its tests contain no encoder framework references, no hardware encoder test ran, and the Release gate was compile-only.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null
@@ -739,12 +745,12 @@
       "resumeProbe": null
     },
     "LM-056": {
-      "status": "pending",
-      "startedAt": null,
+      "status": "active",
+      "startedAt": "2026-08-28T15:43:50Z",
       "completedAt": null,
       "gitRevision": null,
       "evidence": [],
-      "notes": null,
+      "notes": "Earliest remaining pending story whose declared dependencies LM-022 and LM-016 are passed. Its policy/settings scope can be developed and verified with source-isolated tests that cannot initialize hardware video encoding.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null

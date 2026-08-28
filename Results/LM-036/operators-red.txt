@@ -1,0 +1,21 @@
+Building for debugging...
+[0/3] Write sources
+[1/3] Write swift-version--58304C5D6DBC2206.txt
+[3/5] Emitting module MemorySearchTests
+[4/5] Compiling MemorySearchTests SearchQueryParserTests.swift
+/Users/justinhou/Development/deepshelves/Packages/MemorySearch/Tests/MemorySearchTests/SearchQueryParserTests.swift:27:17: error: cannot find 'SearchApplicationDescriptor' in scope
+25 |             calendar: utcCalendar(localeIdentifier: "en_US"),
+26 |             applications: [
+27 |                 SearchApplicationDescriptor(
+   |                 `- error: cannot find 'SearchApplicationDescriptor' in scope
+28 |                     bundleID: "com.google.Chrome",
+29 |                     displayName: "Google Chrome",
+
+/Users/justinhou/Development/deepshelves/Packages/MemorySearch/Tests/MemorySearchTests/SearchQueryParserTests.swift:26:27: error: extra argument 'applications' in call
+24 |             referenceDate: makeDate("2026-08-28T12:00:00Z"),
+25 |             calendar: utcCalendar(localeIdentifier: "en_US"),
+26 |             applications: [
+   |                           `- error: extra argument 'applications' in call
+27 |                 SearchApplicationDescriptor(
+28 |                     bundleID: "com.google.Chrome",
+error: fatalError

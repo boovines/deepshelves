@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "storyID": "LM-036",
+  "referenceDate": "2026-08-28T12:00:00.000Z",
+  "fixture": {
+    "path": "Fixtures/LM036/query-parse-goldens.json",
+    "sha256": "28df6ba03f19c5afab59df5c371d009d1ca518072c1b14c1c1ae1e0ae0d1b701",
+    "caseCount": 100,
+    "uniqueIDCount": 100,
+    "applicationDescriptorCount": 5,
+    "structuredFilterCaseCount": 70,
+    "lexicalOnlyCaseCount": 30,
+    "ambiguousPhraseCaseCount": 10
+  },
+  "categoryCounts": {
+    "ambiguous": 10,
+    "app": 10,
+    "bound": 10,
+    "date": 10,
+    "lexical": 10,
+    "quote": 10,
+    "site": 10,
+    "today": 10,
+    "week": 10,
+    "yesterday": 10
+  },
+  "localeCounts": {
+    "de_DE": 8,
+    "en_US": 72,
+    "es_ES": 8,
+    "fr_FR": 12
+  },
+  "verifiedProperties": {
+    "deterministicRepeatedParse": true,
+    "quotedTextPreservedLexically": true,
+    "unknownApplicationsRemainLexical": true,
+    "invalidSitesRemainLexical": true,
+    "ambiguousTimePhrasesRemainLexical": true,
+    "halfOpenDateBounds": true,
+    "visibleTokenForEveryApplicationFilter": true,
+    "visibleTokenForEverySiteFilter": true,
+    "visibleTokenForEveryTimeFilter": true,
+    "hiddenFilterCount": 0
+  }
+}

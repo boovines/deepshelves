@@ -1,0 +1,2213 @@
+{
+  "applications" : [
+    {
+      "aliases" : [
+        "Chrome"
+      ],
+      "bundleID" : "com.google.Chrome",
+      "displayName" : "Google Chrome"
+    },
+    {
+      "aliases" : [
+
+      ],
+      "bundleID" : "com.apple.Safari",
+      "displayName" : "Safari"
+    },
+    {
+      "aliases" : [
+
+      ],
+      "bundleID" : "com.apple.finder",
+      "displayName" : "Finder"
+    },
+    {
+      "aliases" : [
+
+      ],
+      "bundleID" : "com.apple.Terminal",
+      "displayName" : "Terminal"
+    },
+    {
+      "aliases" : [
+
+      ],
+      "bundleID" : "com.anthropic.claudefordesktop",
+      "displayName" : "Claude"
+    }
+  ],
+  "cases" : [
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "lexical-001",
+      "lexicalQuery" : "lamp",
+      "locale" : "en_US",
+      "query" : "lamp",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "lexical-002",
+      "lexicalQuery" : "invoice number",
+      "locale" : "en_US",
+      "query" : "invoice number",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "lexical-003",
+      "lexicalQuery" : "project deadline",
+      "locale" : "en_US",
+      "query" : "  project   deadline  ",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "lexical-004",
+      "lexicalQuery" : "Café résumé",
+      "locale" : "en_US",
+      "query" : "Café résumé",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "lexical-005",
+      "lexicalQuery" : "before launch",
+      "locale" : "en_US",
+      "query" : "before launch",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "lexical-006",
+      "lexicalQuery" : "mail from Alex",
+      "locale" : "en_US",
+      "query" : "mail from Alex",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "lexical-007",
+      "lexicalQuery" : "Q3 roadmap",
+      "locale" : "en_US",
+      "query" : "Q3 roadmap",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "lexical-008",
+      "lexicalQuery" : "github pull request",
+      "locale" : "en_US",
+      "query" : "github pull request",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "lexical-009",
+      "lexicalQuery" : "error 409",
+      "locale" : "en_US",
+      "query" : "error 409",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "lexical-010",
+      "lexicalQuery" : "yellow lamp todayish",
+      "locale" : "en_US",
+      "query" : "yellow lamp todayish",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "quote-011",
+      "lexicalQuery" : "\"invoice number\" evidence",
+      "locale" : "en_US",
+      "query" : "\"invoice number\" evidence",
+      "quotedPhrases" : [
+        "invoice number"
+      ],
+      "tokens" : [
+
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "quote-012",
+      "lexicalQuery" : "\"project deadline\" evidence",
+      "locale" : "en_US",
+      "query" : "\"project deadline\" evidence",
+      "quotedPhrases" : [
+        "project deadline"
+      ],
+      "tokens" : [
+
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "quote-013",
+      "lexicalQuery" : "\"yellow lamp\" evidence",
+      "locale" : "en_US",
+      "query" : "\"yellow lamp\" evidence",
+      "quotedPhrases" : [
+        "yellow lamp"
+      ],
+      "tokens" : [
+
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "quote-014",
+      "lexicalQuery" : "\"exact error\" evidence",
+      "locale" : "en_US",
+      "query" : "\"exact error\" evidence",
+      "quotedPhrases" : [
+        "exact error"
+      ],
+      "tokens" : [
+
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "quote-015",
+      "lexicalQuery" : "\"meeting notes\" evidence",
+      "locale" : "en_US",
+      "query" : "\"meeting notes\" evidence",
+      "quotedPhrases" : [
+        "meeting notes"
+      ],
+      "tokens" : [
+
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "quote-016",
+      "lexicalQuery" : "\"pull request\" evidence",
+      "locale" : "en_US",
+      "query" : "\"pull request\" evidence",
+      "quotedPhrases" : [
+        "pull request"
+      ],
+      "tokens" : [
+
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "quote-017",
+      "lexicalQuery" : "\"budget draft\" evidence",
+      "locale" : "en_US",
+      "query" : "\"budget draft\" evidence",
+      "quotedPhrases" : [
+        "budget draft"
+      ],
+      "tokens" : [
+
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "quote-018",
+      "lexicalQuery" : "\"customer name\" evidence",
+      "locale" : "en_US",
+      "query" : "\"customer name\" evidence",
+      "quotedPhrases" : [
+        "customer name"
+      ],
+      "tokens" : [
+
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "quote-019",
+      "lexicalQuery" : "\"release checklist\" evidence",
+      "locale" : "en_US",
+      "query" : "\"release checklist\" evidence",
+      "quotedPhrases" : [
+        "release checklist"
+      ],
+      "tokens" : [
+
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "quote-020",
+      "lexicalQuery" : "\"search phrase\" evidence",
+      "locale" : "en_US",
+      "query" : "\"search phrase\" evidence",
+      "quotedPhrases" : [
+        "search phrase"
+      ],
+      "tokens" : [
+
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "today-021",
+      "lexicalQuery" : "moment0",
+      "locale" : "en_US",
+      "lowerBound" : "2026-08-28T00:00:00.000Z",
+      "query" : "moment0 today",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "today",
+          "kind" : "time",
+          "label" : "Today"
+        }
+      ],
+      "upperBound" : "2026-08-29T00:00:00.000Z"
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "today-022",
+      "lexicalQuery" : "moment1",
+      "locale" : "fr_FR",
+      "lowerBound" : "2026-08-28T00:00:00.000Z",
+      "query" : "moment1 aujourd’hui",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "today",
+          "kind" : "time",
+          "label" : "Aujourd’hui"
+        }
+      ],
+      "upperBound" : "2026-08-29T00:00:00.000Z"
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "today-023",
+      "lexicalQuery" : "moment2",
+      "locale" : "de_DE",
+      "lowerBound" : "2026-08-28T00:00:00.000Z",
+      "query" : "moment2 heute",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "today",
+          "kind" : "time",
+          "label" : "Heute"
+        }
+      ],
+      "upperBound" : "2026-08-29T00:00:00.000Z"
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "today-024",
+      "lexicalQuery" : "moment3",
+      "locale" : "es_ES",
+      "lowerBound" : "2026-08-28T00:00:00.000Z",
+      "query" : "moment3 hoy",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "today",
+          "kind" : "time",
+          "label" : "Hoy"
+        }
+      ],
+      "upperBound" : "2026-08-29T00:00:00.000Z"
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "today-025",
+      "lexicalQuery" : "moment4",
+      "locale" : "en_US",
+      "lowerBound" : "2026-08-28T00:00:00.000Z",
+      "query" : "moment4 today",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "today",
+          "kind" : "time",
+          "label" : "Today"
+        }
+      ],
+      "upperBound" : "2026-08-29T00:00:00.000Z"
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "today-026",
+      "lexicalQuery" : "moment5",
+      "locale" : "fr_FR",
+      "lowerBound" : "2026-08-28T00:00:00.000Z",
+      "query" : "moment5 aujourd’hui",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "today",
+          "kind" : "time",
+          "label" : "Aujourd’hui"
+        }
+      ],
+      "upperBound" : "2026-08-29T00:00:00.000Z"
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "today-027",
+      "lexicalQuery" : "moment6",
+      "locale" : "de_DE",
+      "lowerBound" : "2026-08-28T00:00:00.000Z",
+      "query" : "moment6 heute",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "today",
+          "kind" : "time",
+          "label" : "Heute"
+        }
+      ],
+      "upperBound" : "2026-08-29T00:00:00.000Z"
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "today-028",
+      "lexicalQuery" : "moment7",
+      "locale" : "es_ES",
+      "lowerBound" : "2026-08-28T00:00:00.000Z",
+      "query" : "moment7 hoy",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "today",
+          "kind" : "time",
+          "label" : "Hoy"
+        }
+      ],
+      "upperBound" : "2026-08-29T00:00:00.000Z"
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "today-029",
+      "lexicalQuery" : "moment8",
+      "locale" : "en_US",
+      "lowerBound" : "2026-08-28T00:00:00.000Z",
+      "query" : "moment8 today",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "today",
+          "kind" : "time",
+          "label" : "Today"
+        }
+      ],
+      "upperBound" : "2026-08-29T00:00:00.000Z"
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "today-030",
+      "lexicalQuery" : "moment9",
+      "locale" : "fr_FR",
+      "lowerBound" : "2026-08-28T00:00:00.000Z",
+      "query" : "moment9 aujourd’hui",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "today",
+          "kind" : "time",
+          "label" : "Aujourd’hui"
+        }
+      ],
+      "upperBound" : "2026-08-29T00:00:00.000Z"
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "yesterday-031",
+      "lexicalQuery" : "moment0",
+      "locale" : "en_US",
+      "lowerBound" : "2026-08-27T00:00:00.000Z",
+      "query" : "moment0 yesterday",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "yesterday",
+          "kind" : "time",
+          "label" : "Yesterday"
+        }
+      ],
+      "upperBound" : "2026-08-28T00:00:00.000Z"
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "yesterday-032",
+      "lexicalQuery" : "moment1",
+      "locale" : "fr_FR",
+      "lowerBound" : "2026-08-27T00:00:00.000Z",
+      "query" : "moment1 hier",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "yesterday",
+          "kind" : "time",
+          "label" : "Hier"
+        }
+      ],
+      "upperBound" : "2026-08-28T00:00:00.000Z"
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "yesterday-033",
+      "lexicalQuery" : "moment2",
+      "locale" : "de_DE",
+      "lowerBound" : "2026-08-27T00:00:00.000Z",
+      "query" : "moment2 gestern",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "yesterday",
+          "kind" : "time",
+          "label" : "Gestern"
+        }
+      ],
+      "upperBound" : "2026-08-28T00:00:00.000Z"
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "yesterday-034",
+      "lexicalQuery" : "moment3",
+      "locale" : "es_ES",
+      "lowerBound" : "2026-08-27T00:00:00.000Z",
+      "query" : "moment3 ayer",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "yesterday",
+          "kind" : "time",
+          "label" : "Ayer"
+        }
+      ],
+      "upperBound" : "2026-08-28T00:00:00.000Z"
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "yesterday-035",
+      "lexicalQuery" : "moment4",
+      "locale" : "en_US",
+      "lowerBound" : "2026-08-27T00:00:00.000Z",
+      "query" : "moment4 yesterday",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "yesterday",
+          "kind" : "time",
+          "label" : "Yesterday"
+        }
+      ],
+      "upperBound" : "2026-08-28T00:00:00.000Z"
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "yesterday-036",
+      "lexicalQuery" : "moment5",
+      "locale" : "fr_FR",
+      "lowerBound" : "2026-08-27T00:00:00.000Z",
+      "query" : "moment5 hier",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "yesterday",
+          "kind" : "time",
+          "label" : "Hier"
+        }
+      ],
+      "upperBound" : "2026-08-28T00:00:00.000Z"
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "yesterday-037",
+      "lexicalQuery" : "moment6",
+      "locale" : "de_DE",
+      "lowerBound" : "2026-08-27T00:00:00.000Z",
+      "query" : "moment6 gestern",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "yesterday",
+          "kind" : "time",
+          "label" : "Gestern"
+        }
+      ],
+      "upperBound" : "2026-08-28T00:00:00.000Z"
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "yesterday-038",
+      "lexicalQuery" : "moment7",
+      "locale" : "es_ES",
+      "lowerBound" : "2026-08-27T00:00:00.000Z",
+      "query" : "moment7 ayer",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "yesterday",
+          "kind" : "time",
+          "label" : "Ayer"
+        }
+      ],
+      "upperBound" : "2026-08-28T00:00:00.000Z"
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "yesterday-039",
+      "lexicalQuery" : "moment8",
+      "locale" : "en_US",
+      "lowerBound" : "2026-08-27T00:00:00.000Z",
+      "query" : "moment8 yesterday",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "yesterday",
+          "kind" : "time",
+          "label" : "Yesterday"
+        }
+      ],
+      "upperBound" : "2026-08-28T00:00:00.000Z"
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "yesterday-040",
+      "lexicalQuery" : "moment9",
+      "locale" : "fr_FR",
+      "lowerBound" : "2026-08-27T00:00:00.000Z",
+      "query" : "moment9 hier",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "yesterday",
+          "kind" : "time",
+          "label" : "Hier"
+        }
+      ],
+      "upperBound" : "2026-08-28T00:00:00.000Z"
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "week-041",
+      "lexicalQuery" : "roadmap0",
+      "locale" : "en_US",
+      "lowerBound" : "2026-08-17T00:00:00.000Z",
+      "query" : "roadmap0 last week",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "last-week",
+          "kind" : "time",
+          "label" : "Last week"
+        }
+      ],
+      "upperBound" : "2026-08-24T00:00:00.000Z"
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "week-042",
+      "lexicalQuery" : "roadmap1",
+      "locale" : "fr_FR",
+      "lowerBound" : "2026-08-17T00:00:00.000Z",
+      "query" : "roadmap1 semaine dernière",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "last-week",
+          "kind" : "time",
+          "label" : "Semaine dernière"
+        }
+      ],
+      "upperBound" : "2026-08-24T00:00:00.000Z"
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "week-043",
+      "lexicalQuery" : "roadmap2",
+      "locale" : "de_DE",
+      "lowerBound" : "2026-08-17T00:00:00.000Z",
+      "query" : "roadmap2 letzte woche",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "last-week",
+          "kind" : "time",
+          "label" : "Letzte Woche"
+        }
+      ],
+      "upperBound" : "2026-08-24T00:00:00.000Z"
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "week-044",
+      "lexicalQuery" : "roadmap3",
+      "locale" : "es_ES",
+      "lowerBound" : "2026-08-17T00:00:00.000Z",
+      "query" : "roadmap3 semana pasada",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "last-week",
+          "kind" : "time",
+          "label" : "Semana pasada"
+        }
+      ],
+      "upperBound" : "2026-08-24T00:00:00.000Z"
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "week-045",
+      "lexicalQuery" : "roadmap4",
+      "locale" : "en_US",
+      "lowerBound" : "2026-08-17T00:00:00.000Z",
+      "query" : "roadmap4 last week",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "last-week",
+          "kind" : "time",
+          "label" : "Last week"
+        }
+      ],
+      "upperBound" : "2026-08-24T00:00:00.000Z"
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "week-046",
+      "lexicalQuery" : "roadmap5",
+      "locale" : "fr_FR",
+      "lowerBound" : "2026-08-17T00:00:00.000Z",
+      "query" : "roadmap5 semaine dernière",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "last-week",
+          "kind" : "time",
+          "label" : "Semaine dernière"
+        }
+      ],
+      "upperBound" : "2026-08-24T00:00:00.000Z"
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "week-047",
+      "lexicalQuery" : "roadmap6",
+      "locale" : "de_DE",
+      "lowerBound" : "2026-08-17T00:00:00.000Z",
+      "query" : "roadmap6 letzte woche",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "last-week",
+          "kind" : "time",
+          "label" : "Letzte Woche"
+        }
+      ],
+      "upperBound" : "2026-08-24T00:00:00.000Z"
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "week-048",
+      "lexicalQuery" : "roadmap7",
+      "locale" : "es_ES",
+      "lowerBound" : "2026-08-17T00:00:00.000Z",
+      "query" : "roadmap7 semana pasada",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "last-week",
+          "kind" : "time",
+          "label" : "Semana pasada"
+        }
+      ],
+      "upperBound" : "2026-08-24T00:00:00.000Z"
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "week-049",
+      "lexicalQuery" : "roadmap8",
+      "locale" : "en_US",
+      "lowerBound" : "2026-08-17T00:00:00.000Z",
+      "query" : "roadmap8 last week",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "last-week",
+          "kind" : "time",
+          "label" : "Last week"
+        }
+      ],
+      "upperBound" : "2026-08-24T00:00:00.000Z"
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "week-050",
+      "lexicalQuery" : "roadmap9",
+      "locale" : "fr_FR",
+      "lowerBound" : "2026-08-17T00:00:00.000Z",
+      "query" : "roadmap9 semaine dernière",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "last-week",
+          "kind" : "time",
+          "label" : "Semaine dernière"
+        }
+      ],
+      "upperBound" : "2026-08-24T00:00:00.000Z"
+    },
+    {
+      "applicationBundleIDs" : [
+        "com.google.Chrome"
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "app-051",
+      "lexicalQuery" : "item0",
+      "locale" : "en_US",
+      "query" : "item0 app:\"Chrome\"",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "com.google.Chrome",
+          "kind" : "application",
+          "label" : "Google Chrome"
+        }
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+        "com.google.Chrome"
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "app-052",
+      "lexicalQuery" : "item1",
+      "locale" : "en_US",
+      "query" : "item1 app:\"Google Chrome\"",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "com.google.Chrome",
+          "kind" : "application",
+          "label" : "Google Chrome"
+        }
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+        "com.apple.Safari"
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "app-053",
+      "lexicalQuery" : "item2",
+      "locale" : "en_US",
+      "query" : "item2 app:\"Safari\"",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "com.apple.Safari",
+          "kind" : "application",
+          "label" : "Safari"
+        }
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+        "com.apple.finder"
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "app-054",
+      "lexicalQuery" : "item3",
+      "locale" : "en_US",
+      "query" : "item3 app:\"Finder\"",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "com.apple.finder",
+          "kind" : "application",
+          "label" : "Finder"
+        }
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+        "com.apple.Terminal"
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "app-055",
+      "lexicalQuery" : "item4",
+      "locale" : "en_US",
+      "query" : "item4 app:\"Terminal\"",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "com.apple.Terminal",
+          "kind" : "application",
+          "label" : "Terminal"
+        }
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+        "com.anthropic.claudefordesktop"
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "app-056",
+      "lexicalQuery" : "item5",
+      "locale" : "en_US",
+      "query" : "item5 app:\"Claude\"",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "com.anthropic.claudefordesktop",
+          "kind" : "application",
+          "label" : "Claude"
+        }
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+        "com.google.Chrome"
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "app-057",
+      "lexicalQuery" : "item6",
+      "locale" : "en_US",
+      "query" : "item6 app:\"chrome\"",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "com.google.Chrome",
+          "kind" : "application",
+          "label" : "Google Chrome"
+        }
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+        "com.apple.Safari"
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "app-058",
+      "lexicalQuery" : "item7",
+      "locale" : "en_US",
+      "query" : "item7 app:\"SAFARI\"",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "com.apple.Safari",
+          "kind" : "application",
+          "label" : "Safari"
+        }
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+        "com.apple.finder"
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "app-059",
+      "lexicalQuery" : "item8",
+      "locale" : "en_US",
+      "query" : "item8 app:\"finder\"",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "com.apple.finder",
+          "kind" : "application",
+          "label" : "Finder"
+        }
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+        "com.apple.Terminal"
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "app-060",
+      "lexicalQuery" : "item9",
+      "locale" : "en_US",
+      "query" : "item9 app:\"terminal\"",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "com.apple.Terminal",
+          "kind" : "application",
+          "label" : "Terminal"
+        }
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+        "github.com"
+      ],
+      "id" : "site-061",
+      "lexicalQuery" : "page0",
+      "locale" : "en_US",
+      "query" : "page0 site:GITHUB.COM",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "github.com",
+          "kind" : "site",
+          "label" : "github.com"
+        }
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+        "linear.app"
+      ],
+      "id" : "site-062",
+      "lexicalQuery" : "page1",
+      "locale" : "en_US",
+      "query" : "page1 site:linear.app",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "linear.app",
+          "kind" : "site",
+          "label" : "linear.app"
+        }
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+        "docs.swift.org"
+      ],
+      "id" : "site-063",
+      "lexicalQuery" : "page2",
+      "locale" : "en_US",
+      "query" : "page2 site:DOCS.SWIFT.ORG",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "docs.swift.org",
+          "kind" : "site",
+          "label" : "docs.swift.org"
+        }
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+        "example.co.uk"
+      ],
+      "id" : "site-064",
+      "lexicalQuery" : "page3",
+      "locale" : "en_US",
+      "query" : "page3 site:example.co.uk",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "example.co.uk",
+          "kind" : "site",
+          "label" : "example.co.uk"
+        }
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+        "openai.com"
+      ],
+      "id" : "site-065",
+      "lexicalQuery" : "page4",
+      "locale" : "en_US",
+      "query" : "page4 site:OPENAI.COM",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "openai.com",
+          "kind" : "site",
+          "label" : "openai.com"
+        }
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+        "apple.com"
+      ],
+      "id" : "site-066",
+      "lexicalQuery" : "page5",
+      "locale" : "en_US",
+      "query" : "page5 site:apple.com",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "apple.com",
+          "kind" : "site",
+          "label" : "apple.com"
+        }
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+        "support.apple.com"
+      ],
+      "id" : "site-067",
+      "lexicalQuery" : "page6",
+      "locale" : "en_US",
+      "query" : "page6 site:SUPPORT.APPLE.COM",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "support.apple.com",
+          "kind" : "site",
+          "label" : "support.apple.com"
+        }
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+        "developer.apple.com"
+      ],
+      "id" : "site-068",
+      "lexicalQuery" : "page7",
+      "locale" : "en_US",
+      "query" : "page7 site:developer.apple.com",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "developer.apple.com",
+          "kind" : "site",
+          "label" : "developer.apple.com"
+        }
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+        "anthropic.com"
+      ],
+      "id" : "site-069",
+      "lexicalQuery" : "page8",
+      "locale" : "en_US",
+      "query" : "page8 site:ANTHROPIC.COM",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "anthropic.com",
+          "kind" : "site",
+          "label" : "anthropic.com"
+        }
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+        "example.org"
+      ],
+      "id" : "site-070",
+      "lexicalQuery" : "page9",
+      "locale" : "en_US",
+      "query" : "page9 site:example.org",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "example.org",
+          "kind" : "site",
+          "label" : "example.org"
+        }
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "bound-071",
+      "lexicalQuery" : "record0",
+      "locale" : "en_US",
+      "lowerBound" : "2026-08-01T00:00:00.000Z",
+      "query" : "record0 after:2026-08-01",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "after:2026-08-01",
+          "kind" : "time",
+          "label" : "After 2026-08-01"
+        }
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "bound-072",
+      "lexicalQuery" : "record1",
+      "locale" : "en_US",
+      "query" : "record1 before:2026-09-01",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "before:2026-09-01",
+          "kind" : "time",
+          "label" : "Before 2026-09-01"
+        }
+      ],
+      "upperBound" : "2026-09-01T00:00:00.000Z"
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "bound-073",
+      "lexicalQuery" : "record2",
+      "locale" : "en_US",
+      "lowerBound" : "2026-08-01T00:00:00.000Z",
+      "query" : "record2 after:2026-08-01",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "after:2026-08-01",
+          "kind" : "time",
+          "label" : "After 2026-08-01"
+        }
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "bound-074",
+      "lexicalQuery" : "record3",
+      "locale" : "en_US",
+      "query" : "record3 before:2026-09-01",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "before:2026-09-01",
+          "kind" : "time",
+          "label" : "Before 2026-09-01"
+        }
+      ],
+      "upperBound" : "2026-09-01T00:00:00.000Z"
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "bound-075",
+      "lexicalQuery" : "record4",
+      "locale" : "en_US",
+      "lowerBound" : "2026-08-01T00:00:00.000Z",
+      "query" : "record4 after:2026-08-01",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "after:2026-08-01",
+          "kind" : "time",
+          "label" : "After 2026-08-01"
+        }
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "bound-076",
+      "lexicalQuery" : "record5",
+      "locale" : "en_US",
+      "query" : "record5 before:2026-09-01",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "before:2026-09-01",
+          "kind" : "time",
+          "label" : "Before 2026-09-01"
+        }
+      ],
+      "upperBound" : "2026-09-01T00:00:00.000Z"
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "bound-077",
+      "lexicalQuery" : "record6",
+      "locale" : "en_US",
+      "lowerBound" : "2026-08-01T00:00:00.000Z",
+      "query" : "record6 after:2026-08-01",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "after:2026-08-01",
+          "kind" : "time",
+          "label" : "After 2026-08-01"
+        }
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "bound-078",
+      "lexicalQuery" : "record7",
+      "locale" : "en_US",
+      "query" : "record7 before:2026-09-01",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "before:2026-09-01",
+          "kind" : "time",
+          "label" : "Before 2026-09-01"
+        }
+      ],
+      "upperBound" : "2026-09-01T00:00:00.000Z"
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "bound-079",
+      "lexicalQuery" : "record8",
+      "locale" : "en_US",
+      "lowerBound" : "2026-08-01T00:00:00.000Z",
+      "query" : "record8 after:2026-08-01",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "after:2026-08-01",
+          "kind" : "time",
+          "label" : "After 2026-08-01"
+        }
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "bound-080",
+      "lexicalQuery" : "record9",
+      "locale" : "en_US",
+      "query" : "record9 before:2026-09-01",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "before:2026-09-01",
+          "kind" : "time",
+          "label" : "Before 2026-09-01"
+        }
+      ],
+      "upperBound" : "2026-09-01T00:00:00.000Z"
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "date-081",
+      "lexicalQuery" : "document0",
+      "locale" : "en_US",
+      "lowerBound" : "2026-08-27T00:00:00.000Z",
+      "query" : "document0 8/27/2026",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "date:2026-08-27",
+          "kind" : "time",
+          "label" : "8/27/2026"
+        }
+      ],
+      "upperBound" : "2026-08-28T00:00:00.000Z"
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "date-082",
+      "lexicalQuery" : "document1",
+      "locale" : "fr_FR",
+      "lowerBound" : "2026-08-27T00:00:00.000Z",
+      "query" : "document1 27/08/2026",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "date:2026-08-27",
+          "kind" : "time",
+          "label" : "27/08/2026"
+        }
+      ],
+      "upperBound" : "2026-08-28T00:00:00.000Z"
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "date-083",
+      "lexicalQuery" : "document2",
+      "locale" : "de_DE",
+      "lowerBound" : "2026-08-27T00:00:00.000Z",
+      "query" : "document2 27.08.2026",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "date:2026-08-27",
+          "kind" : "time",
+          "label" : "27.08.2026"
+        }
+      ],
+      "upperBound" : "2026-08-28T00:00:00.000Z"
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "date-084",
+      "lexicalQuery" : "document3",
+      "locale" : "es_ES",
+      "lowerBound" : "2026-08-27T00:00:00.000Z",
+      "query" : "document3 27/8/2026",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "date:2026-08-27",
+          "kind" : "time",
+          "label" : "27/8/2026"
+        }
+      ],
+      "upperBound" : "2026-08-28T00:00:00.000Z"
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "date-085",
+      "lexicalQuery" : "document4",
+      "locale" : "en_US",
+      "lowerBound" : "2026-08-27T00:00:00.000Z",
+      "query" : "document4 8/27/2026",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "date:2026-08-27",
+          "kind" : "time",
+          "label" : "8/27/2026"
+        }
+      ],
+      "upperBound" : "2026-08-28T00:00:00.000Z"
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "date-086",
+      "lexicalQuery" : "document5",
+      "locale" : "fr_FR",
+      "lowerBound" : "2026-08-27T00:00:00.000Z",
+      "query" : "document5 27/08/2026",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "date:2026-08-27",
+          "kind" : "time",
+          "label" : "27/08/2026"
+        }
+      ],
+      "upperBound" : "2026-08-28T00:00:00.000Z"
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "date-087",
+      "lexicalQuery" : "document6",
+      "locale" : "de_DE",
+      "lowerBound" : "2026-08-27T00:00:00.000Z",
+      "query" : "document6 27.08.2026",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "date:2026-08-27",
+          "kind" : "time",
+          "label" : "27.08.2026"
+        }
+      ],
+      "upperBound" : "2026-08-28T00:00:00.000Z"
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "date-088",
+      "lexicalQuery" : "document7",
+      "locale" : "es_ES",
+      "lowerBound" : "2026-08-27T00:00:00.000Z",
+      "query" : "document7 27/8/2026",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "date:2026-08-27",
+          "kind" : "time",
+          "label" : "27/8/2026"
+        }
+      ],
+      "upperBound" : "2026-08-28T00:00:00.000Z"
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "date-089",
+      "lexicalQuery" : "document8",
+      "locale" : "en_US",
+      "lowerBound" : "2026-08-27T00:00:00.000Z",
+      "query" : "document8 8/27/2026",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "date:2026-08-27",
+          "kind" : "time",
+          "label" : "8/27/2026"
+        }
+      ],
+      "upperBound" : "2026-08-28T00:00:00.000Z"
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "date-090",
+      "lexicalQuery" : "document9",
+      "locale" : "fr_FR",
+      "lowerBound" : "2026-08-27T00:00:00.000Z",
+      "query" : "document9 27/08/2026",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+        {
+          "canonicalValue" : "date:2026-08-27",
+          "kind" : "time",
+          "label" : "27/08/2026"
+        }
+      ],
+      "upperBound" : "2026-08-28T00:00:00.000Z"
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "ambiguous-091",
+      "lexicalQuery" : "today's notes",
+      "locale" : "en_US",
+      "query" : "today's notes",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "ambiguous-092",
+      "lexicalQuery" : "app:Unknown item",
+      "locale" : "en_US",
+      "query" : "app:Unknown item",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "ambiguous-093",
+      "lexicalQuery" : "site:github issue",
+      "locale" : "en_US",
+      "query" : "site:github issue",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "ambiguous-094",
+      "lexicalQuery" : "app: missing",
+      "locale" : "en_US",
+      "query" : "app: missing",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "ambiguous-095",
+      "lexicalQuery" : "before launch",
+      "locale" : "en_US",
+      "query" : "before launch",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "ambiguous-096",
+      "lexicalQuery" : "after lunch",
+      "locale" : "en_US",
+      "query" : "after lunch",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "ambiguous-097",
+      "lexicalQuery" : "\"unfinished phrase",
+      "locale" : "en_US",
+      "query" : "\"unfinished phrase",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "ambiguous-098",
+      "lexicalQuery" : "site:user@example.com secret",
+      "locale" : "en_US",
+      "query" : "site:user@example.com secret",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "ambiguous-099",
+      "lexicalQuery" : "after:2026-02-30 invalid",
+      "locale" : "en_US",
+      "query" : "after:2026-02-30 invalid",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+
+      ]
+    },
+    {
+      "applicationBundleIDs" : [
+
+      ],
+      "hosts" : [
+
+      ],
+      "id" : "ambiguous-100",
+      "lexicalQuery" : "site:https://github.com path",
+      "locale" : "en_US",
+      "query" : "site:https://github.com path",
+      "quotedPhrases" : [
+
+      ],
+      "tokens" : [
+
+      ]
+    }
+  ],
+  "referenceDate" : "2026-08-28T12:00:00.000Z",
+  "schemaVersion" : 1
+}

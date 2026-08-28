@@ -56,6 +56,7 @@ targets:
       - package: MemoryContracts
       - package: MemoryDesignSystem
       - package: MemoryEnrichment
+      - package: MemorySearch
       - package: MemoryStore
     settings:
       base:
@@ -96,6 +97,7 @@ targets:
       - package: MemoryCapture
       - package: MemoryContracts
       - package: MemoryEnrichment
+      - package: MemorySearch
       - package: MemoryDesignSystem
       - package: MemoryStore
       - package: MemoryTestSupport

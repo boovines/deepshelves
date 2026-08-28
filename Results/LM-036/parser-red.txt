@@ -1,0 +1,52 @@
+Building for debugging...
+[0/7] /Users/justinhou/Development/deepshelves/Packages/MemorySearch/.build/arm64-apple-macosx/debug/MemorySearchPackageTests.derived/runner.swift
+[1/7] Write sources
+[4/7] Write swift-version--58304C5D6DBC2206.txt
+[6/9] Compiling MemorySearch MemorySearch.swift
+[7/9] Emitting module MemorySearch
+[8/11] Emitting module MemorySearchTests
+[9/11] Compiling MemorySearchTests SearchQueryParserTests.swift
+/Users/justinhou/Development/deepshelves/Packages/MemorySearch/Tests/MemorySearchTests/SearchQueryParserTests.swift:7:27: error: cannot find 'QueryParserContext' in scope
+ 5 | final class SearchQueryParserTests: XCTestCase {
+ 6 |     func testTodayBecomesVisibleDayFilterAndLeavesRemainingLexicalQuery() throws {
+ 7 |         let context = try QueryParserContext(
+   |                           `- error: cannot find 'QueryParserContext' in scope
+ 8 |             referenceDate: makeDate("2026-08-28T12:00:00Z"),
+ 9 |             calendar: utcCalendar(localeIdentifier: "en_US")
+
+/Users/justinhou/Development/deepshelves/Packages/MemorySearch/Tests/MemorySearchTests/SearchQueryParserTests.swift:11:22: error: cannot find 'SearchQueryParser' in scope
+ 9 |             calendar: utcCalendar(localeIdentifier: "en_US")
+10 |         )
+11 |         let parsed = SearchQueryParser(context: context).parse("lamp today")
+   |                      `- error: cannot find 'SearchQueryParser' in scope
+12 |
+13 |         XCTAssertEqual(parsed.lexicalQuery, "lamp")
+
+/Users/justinhou/Development/deepshelves/Packages/MemorySearch/Tests/MemorySearchTests/SearchQueryParserTests.swift:18:14: error: cannot find 'SearchQueryToken' in scope
+16 |         XCTAssertEqual(
+17 |             parsed.tokens,
+18 |             [SearchQueryToken(kind: .time, label: "Today", canonicalValue: "today")]
+   |              `- error: cannot find 'SearchQueryToken' in scope
+19 |         )
+20 |     }
+
+/Users/justinhou/Development/deepshelves/Packages/MemorySearch/Tests/MemorySearchTests/SearchQueryParserTests.swift:16:9: error: type 'Any' cannot conform to 'Equatable' [#ProtocolTypeNonConformance]
+14 |         XCTAssertEqual(parsed.timeBounds?.lowerBound, makeDate("2026-08-28T00:00:00Z"))
+15 |         XCTAssertEqual(parsed.timeBounds?.upperBound, makeDate("2026-08-29T00:00:00Z"))
+16 |         XCTAssertEqual(
+   |         |- error: type 'Any' cannot conform to 'Equatable' [#ProtocolTypeNonConformance]
+   |         |- note: only concrete types such as structs, enums and classes can conform to protocols
+   |         `- note: requirement from conditional conformance of '[Any]' to 'Equatable'
+17 |             parsed.tokens,
+18 |             [SearchQueryToken(kind: .time, label: "Today", canonicalValue: "today")]
+
+/Users/justinhou/Development/deepshelves/Packages/MemorySearch/Tests/MemorySearchTests/SearchQueryParserTests.swift:18:38: error: cannot infer contextual base in reference to member 'time'
+16 |         XCTAssertEqual(
+17 |             parsed.tokens,
+18 |             [SearchQueryToken(kind: .time, label: "Today", canonicalValue: "today")]
+   |                                      `- error: cannot infer contextual base in reference to member 'time'
+19 |         )
+20 |     }
+
+[#ProtocolTypeNonConformance]: <https://docs.swift.org/compiler/documentation/diagnostics/protocol-type-non-conformance>
+error: fatalError

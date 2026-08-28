@@ -1,0 +1,3 @@
+fixture_sha256=28df6ba03f19c5afab59df5c371d009d1ca518072c1b14c1c1ae1e0ae0d1b701
+query_goldens=100
+hidden_filter_property=covered

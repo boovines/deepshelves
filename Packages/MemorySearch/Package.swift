@@ -5,6 +5,8 @@ let package = Package(
     name: "MemorySearch",
     platforms: [.macOS(.v15)],
     products: [.library(name: "MemorySearch", targets: ["MemorySearch"])],
-    targets: [.target(name: "MemorySearch")]
+    targets: [
+        .target(name: "MemorySearch"),
+        .testTarget(name: "MemorySearchTests", dependencies: ["MemorySearch"]),
+    ]
 )
-
