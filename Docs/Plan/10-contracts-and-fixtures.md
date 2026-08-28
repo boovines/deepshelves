@@ -285,6 +285,15 @@ One hundred queries with at least three independent relevance labels per query:
 
 Each query declares relevant frame IDs, graded relevance 0...3, expected filters, and forbidden results. Reports calculate Recall@5, Recall@10, nDCG@10, MRR, p50, p95, and p99 latency.
 
+#### LM-038 frozen lexical corpus
+
+- Canonical fixture: `Fixtures/LM038/retrieval-judgments.json`
+- Frozen SHA-256: `640abc4d73f66c9555cb54df277b0963eeae02cd80651f7174d6bba238e02912`
+- Deterministic source: `Benchmarks/LM038FixtureGenerator.swift`; byte-for-byte regeneration is part of the story gate.
+- Lexical evaluation subset: all 30 exact, 20 app/site/time, 15 combined, and 10 adversarial queries. The 25 visual queries remain frozen for LM-053/LM-055 but are excluded from the LM-038 metric.
+- Ten app-only and ten site/time-only queries declare the five most recent relevant frames under their hard filter. Adversarial queries alone declare an empty relevance set.
+- `Results/LM-038/freeze-invalidation.json` records the pre-tuning invalidation of the first generated hash, whose default timestamp parser had incorrectly emitted empty site/time relevance. That invalid baseline and fixture are preserved; no search-engine behavior was tuned before the corrected freeze.
+
 ### Scale and failure fixtures
 
 - Deterministic generators for 100,000, 500,000, and 1,000,000 frame rows and vectors.

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "activeStory": null,
+  "activeStory": "LM-039",
   "stories": {
     "LM-001": {
       "status": "passed",
@@ -681,23 +681,39 @@
       "resumeProbe": null
     },
     "LM-038": {
-      "status": "pending",
-      "startedAt": null,
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": null,
+      "status": "passed",
+      "startedAt": "2026-08-28T21:12:00Z",
+      "completedAt": "2026-08-28T21:24:14Z",
+      "gitRevision": "refs/tags/checkpoints/LM-038",
+      "evidence": [
+        "Fixtures/LM038/retrieval-judgments.json",
+        "Fixtures/LM038/retrieval-judgments.sha256",
+        "Results/LM-038/retrieval.json",
+        "Results/LM-038/freeze-invalidation.json",
+        "Results/LM-038/invalid-freeze.json",
+        "Results/LM-038/invalid-baseline.txt",
+        "Results/LM-038/fixture-reproduction.txt",
+        "Results/LM-038/focused-tests.txt",
+        "Results/LM-038/static-audit.txt",
+        "Results/LM-038/contracts.txt",
+        "Results/LM-038/privacy.txt",
+        "Results/LM-038/release-build.txt",
+        "Results/LM-038/dependencies.txt",
+        "Results/LM-038/swift-format.txt",
+        "Results/LM-038/story-gate.txt"
+      ],
+      "notes": "The deterministic 500-frame/100-query corpus is frozen at SHA-256 640abc4d73f66c9555cb54df277b0963eeae02cd80651f7174d6bba238e02912 and the 75 lexical queries run three times each. Before engine tuning, the first generated freeze was invalidated because its default timestamp parser rejected fractional seconds and violated the contract by emitting empty site/time relevance; that hash, fixture, and failing baseline remain preserved. The corrected generator changed no query, filter, frame, grade, or engine behavior. Final Recall@5/10, MRR, nDCG@10, and adversarial precision are 1.0; p95 is 3.510 ms with zero forbidden results. Contracts/privacy/release/dependency gates passed under the encoder tripwire with zero app/media runtime.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null
     },
     "LM-039": {
-      "status": "pending",
-      "startedAt": null,
+      "status": "active",
+      "startedAt": "2026-08-28T21:24:14Z",
       "completedAt": null,
       "gitRevision": null,
       "evidence": [],
-      "notes": null,
+      "notes": "Activated from the completed LM-038 frozen retrieval gate. Bind the shared SearchEngine to global-panel and main-window search state using source-isolated model tests; keep runtime UI, Apple ImageIO, HEVC, AVAssetWriter, and VideoToolbox paths quarantined on this Mac.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null

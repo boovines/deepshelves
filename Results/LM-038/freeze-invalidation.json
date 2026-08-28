@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-038",
+  "invalidFixtureSHA256": "8d0e2c09dcf0131bbc5b67892593eedfc77a00c0a090dcb3fb2a25f9c40bf2ac",
+  "invalidatedBeforeEngineTuning": true,
+  "reason": "The generator used a default ISO8601DateFormatter that rejects the corpus fractional-second timestamps, leaving all ten site/time queries without the relevant frame IDs required by the frozen retrieval-judgment contract.",
+  "correctionScope": "Use the generator's already-configured fractional-second formatter for deterministic timestamp comparisons; do not change query text, filters, frames, ranking grades, or engine behavior.",
+  "invalidBaselinePreserved": "Results/LM-038/invalid-baseline.txt",
+  "invalidFixturePreserved": "Results/LM-038/invalid-freeze.json"
+}

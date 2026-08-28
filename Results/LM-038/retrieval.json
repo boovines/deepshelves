@@ -1,0 +1,1103 @@
+{
+  "diagnostics" : [
+    {
+      "category" : "exactTextTitleIdentifier",
+      "forbiddenResultCount" : 0,
+      "id" : "exact-00",
+      "medianLatencyMilliseconds" : 3.611792,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 1,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000000"
+      ]
+    },
+    {
+      "category" : "exactTextTitleIdentifier",
+      "forbiddenResultCount" : 0,
+      "id" : "exact-01",
+      "medianLatencyMilliseconds" : 2.755209,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 1,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000007"
+      ]
+    },
+    {
+      "category" : "exactTextTitleIdentifier",
+      "forbiddenResultCount" : 0,
+      "id" : "exact-02",
+      "medianLatencyMilliseconds" : 2.735375,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 1,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000014"
+      ]
+    },
+    {
+      "category" : "exactTextTitleIdentifier",
+      "forbiddenResultCount" : 0,
+      "id" : "exact-03",
+      "medianLatencyMilliseconds" : 3.103083,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 1,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000021"
+      ]
+    },
+    {
+      "category" : "exactTextTitleIdentifier",
+      "forbiddenResultCount" : 0,
+      "id" : "exact-04",
+      "medianLatencyMilliseconds" : 3.047375,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 1,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000028"
+      ]
+    },
+    {
+      "category" : "exactTextTitleIdentifier",
+      "forbiddenResultCount" : 0,
+      "id" : "exact-05",
+      "medianLatencyMilliseconds" : 2.548291,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 1,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000035"
+      ]
+    },
+    {
+      "category" : "exactTextTitleIdentifier",
+      "forbiddenResultCount" : 0,
+      "id" : "exact-06",
+      "medianLatencyMilliseconds" : 3.232583,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 1,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000042"
+      ]
+    },
+    {
+      "category" : "exactTextTitleIdentifier",
+      "forbiddenResultCount" : 0,
+      "id" : "exact-07",
+      "medianLatencyMilliseconds" : 2.814125,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 1,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000049"
+      ]
+    },
+    {
+      "category" : "exactTextTitleIdentifier",
+      "forbiddenResultCount" : 0,
+      "id" : "exact-08",
+      "medianLatencyMilliseconds" : 2.874292,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 1,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000056"
+      ]
+    },
+    {
+      "category" : "exactTextTitleIdentifier",
+      "forbiddenResultCount" : 0,
+      "id" : "exact-09",
+      "medianLatencyMilliseconds" : 2.719875,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 1,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000063"
+      ]
+    },
+    {
+      "category" : "exactTextTitleIdentifier",
+      "forbiddenResultCount" : 0,
+      "id" : "exact-10",
+      "medianLatencyMilliseconds" : 2.782125,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 1,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000070"
+      ]
+    },
+    {
+      "category" : "exactTextTitleIdentifier",
+      "forbiddenResultCount" : 0,
+      "id" : "exact-11",
+      "medianLatencyMilliseconds" : 2.792042,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 1,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000077"
+      ]
+    },
+    {
+      "category" : "exactTextTitleIdentifier",
+      "forbiddenResultCount" : 0,
+      "id" : "exact-12",
+      "medianLatencyMilliseconds" : 2.76275,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 1,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000084"
+      ]
+    },
+    {
+      "category" : "exactTextTitleIdentifier",
+      "forbiddenResultCount" : 0,
+      "id" : "exact-13",
+      "medianLatencyMilliseconds" : 2.78,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 1,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000091"
+      ]
+    },
+    {
+      "category" : "exactTextTitleIdentifier",
+      "forbiddenResultCount" : 0,
+      "id" : "exact-14",
+      "medianLatencyMilliseconds" : 2.849416,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 1,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000098"
+      ]
+    },
+    {
+      "category" : "exactTextTitleIdentifier",
+      "forbiddenResultCount" : 0,
+      "id" : "exact-15",
+      "medianLatencyMilliseconds" : 2.81375,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 1,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000105"
+      ]
+    },
+    {
+      "category" : "exactTextTitleIdentifier",
+      "forbiddenResultCount" : 0,
+      "id" : "exact-16",
+      "medianLatencyMilliseconds" : 2.796375,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 1,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000112"
+      ]
+    },
+    {
+      "category" : "exactTextTitleIdentifier",
+      "forbiddenResultCount" : 0,
+      "id" : "exact-17",
+      "medianLatencyMilliseconds" : 2.664541,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 1,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000119"
+      ]
+    },
+    {
+      "category" : "exactTextTitleIdentifier",
+      "forbiddenResultCount" : 0,
+      "id" : "exact-18",
+      "medianLatencyMilliseconds" : 2.637042,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 1,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000126"
+      ]
+    },
+    {
+      "category" : "exactTextTitleIdentifier",
+      "forbiddenResultCount" : 0,
+      "id" : "exact-19",
+      "medianLatencyMilliseconds" : 2.586333,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 1,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000133"
+      ]
+    },
+    {
+      "category" : "exactTextTitleIdentifier",
+      "forbiddenResultCount" : 0,
+      "id" : "exact-20",
+      "medianLatencyMilliseconds" : 2.55075,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 1,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000140"
+      ]
+    },
+    {
+      "category" : "exactTextTitleIdentifier",
+      "forbiddenResultCount" : 0,
+      "id" : "exact-21",
+      "medianLatencyMilliseconds" : 2.712792,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 1,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000147"
+      ]
+    },
+    {
+      "category" : "exactTextTitleIdentifier",
+      "forbiddenResultCount" : 0,
+      "id" : "exact-22",
+      "medianLatencyMilliseconds" : 2.921542,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 1,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000154"
+      ]
+    },
+    {
+      "category" : "exactTextTitleIdentifier",
+      "forbiddenResultCount" : 0,
+      "id" : "exact-23",
+      "medianLatencyMilliseconds" : 3.35025,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 1,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000161"
+      ]
+    },
+    {
+      "category" : "exactTextTitleIdentifier",
+      "forbiddenResultCount" : 0,
+      "id" : "exact-24",
+      "medianLatencyMilliseconds" : 3.078083,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 1,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000168"
+      ]
+    },
+    {
+      "category" : "exactTextTitleIdentifier",
+      "forbiddenResultCount" : 0,
+      "id" : "exact-25",
+      "medianLatencyMilliseconds" : 2.678084,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 1,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000175"
+      ]
+    },
+    {
+      "category" : "exactTextTitleIdentifier",
+      "forbiddenResultCount" : 0,
+      "id" : "exact-26",
+      "medianLatencyMilliseconds" : 2.745375,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 1,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000182"
+      ]
+    },
+    {
+      "category" : "exactTextTitleIdentifier",
+      "forbiddenResultCount" : 0,
+      "id" : "exact-27",
+      "medianLatencyMilliseconds" : 2.884875,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 1,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000189"
+      ]
+    },
+    {
+      "category" : "exactTextTitleIdentifier",
+      "forbiddenResultCount" : 0,
+      "id" : "exact-28",
+      "medianLatencyMilliseconds" : 2.599959,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 1,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000196"
+      ]
+    },
+    {
+      "category" : "exactTextTitleIdentifier",
+      "forbiddenResultCount" : 0,
+      "id" : "exact-29",
+      "medianLatencyMilliseconds" : 2.830625,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 1,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000203"
+      ]
+    },
+    {
+      "category" : "appSiteTimeFilter",
+      "forbiddenResultCount" : 0,
+      "id" : "app-00",
+      "medianLatencyMilliseconds" : 2.251708,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 5,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000490",
+        "38000000-0000-0000-0001-000000000480",
+        "38000000-0000-0000-0001-000000000470",
+        "38000000-0000-0000-0001-000000000460",
+        "38000000-0000-0000-0001-000000000450",
+        "38000000-0000-0000-0001-000000000440",
+        "38000000-0000-0000-0001-000000000430",
+        "38000000-0000-0000-0001-000000000420",
+        "38000000-0000-0000-0001-000000000410",
+        "38000000-0000-0000-0001-000000000400"
+      ]
+    },
+    {
+      "category" : "appSiteTimeFilter",
+      "forbiddenResultCount" : 0,
+      "id" : "app-01",
+      "medianLatencyMilliseconds" : 2.604125,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 5,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000491",
+        "38000000-0000-0000-0001-000000000481",
+        "38000000-0000-0000-0001-000000000471",
+        "38000000-0000-0000-0001-000000000461",
+        "38000000-0000-0000-0001-000000000451",
+        "38000000-0000-0000-0001-000000000441",
+        "38000000-0000-0000-0001-000000000431",
+        "38000000-0000-0000-0001-000000000421",
+        "38000000-0000-0000-0001-000000000411",
+        "38000000-0000-0000-0001-000000000401"
+      ]
+    },
+    {
+      "category" : "appSiteTimeFilter",
+      "forbiddenResultCount" : 0,
+      "id" : "app-02",
+      "medianLatencyMilliseconds" : 2.540833,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 5,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000492",
+        "38000000-0000-0000-0001-000000000482",
+        "38000000-0000-0000-0001-000000000472",
+        "38000000-0000-0000-0001-000000000462",
+        "38000000-0000-0000-0001-000000000452",
+        "38000000-0000-0000-0001-000000000442",
+        "38000000-0000-0000-0001-000000000432",
+        "38000000-0000-0000-0001-000000000422",
+        "38000000-0000-0000-0001-000000000412",
+        "38000000-0000-0000-0001-000000000402"
+      ]
+    },
+    {
+      "category" : "appSiteTimeFilter",
+      "forbiddenResultCount" : 0,
+      "id" : "app-03",
+      "medianLatencyMilliseconds" : 2.135542,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 5,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000493",
+        "38000000-0000-0000-0001-000000000483",
+        "38000000-0000-0000-0001-000000000473",
+        "38000000-0000-0000-0001-000000000463",
+        "38000000-0000-0000-0001-000000000453",
+        "38000000-0000-0000-0001-000000000443",
+        "38000000-0000-0000-0001-000000000433",
+        "38000000-0000-0000-0001-000000000423",
+        "38000000-0000-0000-0001-000000000413",
+        "38000000-0000-0000-0001-000000000403"
+      ]
+    },
+    {
+      "category" : "appSiteTimeFilter",
+      "forbiddenResultCount" : 0,
+      "id" : "app-04",
+      "medianLatencyMilliseconds" : 2.398791,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 5,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000494",
+        "38000000-0000-0000-0001-000000000484",
+        "38000000-0000-0000-0001-000000000474",
+        "38000000-0000-0000-0001-000000000464",
+        "38000000-0000-0000-0001-000000000454",
+        "38000000-0000-0000-0001-000000000444",
+        "38000000-0000-0000-0001-000000000434",
+        "38000000-0000-0000-0001-000000000424",
+        "38000000-0000-0000-0001-000000000414",
+        "38000000-0000-0000-0001-000000000404"
+      ]
+    },
+    {
+      "category" : "appSiteTimeFilter",
+      "forbiddenResultCount" : 0,
+      "id" : "app-05",
+      "medianLatencyMilliseconds" : 2.310167,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 5,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000495",
+        "38000000-0000-0000-0001-000000000485",
+        "38000000-0000-0000-0001-000000000475",
+        "38000000-0000-0000-0001-000000000465",
+        "38000000-0000-0000-0001-000000000455",
+        "38000000-0000-0000-0001-000000000445",
+        "38000000-0000-0000-0001-000000000435",
+        "38000000-0000-0000-0001-000000000425",
+        "38000000-0000-0000-0001-000000000415",
+        "38000000-0000-0000-0001-000000000405"
+      ]
+    },
+    {
+      "category" : "appSiteTimeFilter",
+      "forbiddenResultCount" : 0,
+      "id" : "app-06",
+      "medianLatencyMilliseconds" : 2.327167,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 5,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000496",
+        "38000000-0000-0000-0001-000000000486",
+        "38000000-0000-0000-0001-000000000476",
+        "38000000-0000-0000-0001-000000000466",
+        "38000000-0000-0000-0001-000000000456",
+        "38000000-0000-0000-0001-000000000446",
+        "38000000-0000-0000-0001-000000000436",
+        "38000000-0000-0000-0001-000000000426",
+        "38000000-0000-0000-0001-000000000416",
+        "38000000-0000-0000-0001-000000000406"
+      ]
+    },
+    {
+      "category" : "appSiteTimeFilter",
+      "forbiddenResultCount" : 0,
+      "id" : "app-07",
+      "medianLatencyMilliseconds" : 2.185,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 5,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000497",
+        "38000000-0000-0000-0001-000000000487",
+        "38000000-0000-0000-0001-000000000477",
+        "38000000-0000-0000-0001-000000000467",
+        "38000000-0000-0000-0001-000000000457",
+        "38000000-0000-0000-0001-000000000447",
+        "38000000-0000-0000-0001-000000000437",
+        "38000000-0000-0000-0001-000000000427",
+        "38000000-0000-0000-0001-000000000417",
+        "38000000-0000-0000-0001-000000000407"
+      ]
+    },
+    {
+      "category" : "appSiteTimeFilter",
+      "forbiddenResultCount" : 0,
+      "id" : "app-08",
+      "medianLatencyMilliseconds" : 2.597,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 5,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000498",
+        "38000000-0000-0000-0001-000000000488",
+        "38000000-0000-0000-0001-000000000478",
+        "38000000-0000-0000-0001-000000000468",
+        "38000000-0000-0000-0001-000000000458",
+        "38000000-0000-0000-0001-000000000448",
+        "38000000-0000-0000-0001-000000000438",
+        "38000000-0000-0000-0001-000000000428",
+        "38000000-0000-0000-0001-000000000418",
+        "38000000-0000-0000-0001-000000000408"
+      ]
+    },
+    {
+      "category" : "appSiteTimeFilter",
+      "forbiddenResultCount" : 0,
+      "id" : "app-09",
+      "medianLatencyMilliseconds" : 2.192291,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 5,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000499",
+        "38000000-0000-0000-0001-000000000489",
+        "38000000-0000-0000-0001-000000000479",
+        "38000000-0000-0000-0001-000000000469",
+        "38000000-0000-0000-0001-000000000459",
+        "38000000-0000-0000-0001-000000000449",
+        "38000000-0000-0000-0001-000000000439",
+        "38000000-0000-0000-0001-000000000429",
+        "38000000-0000-0000-0001-000000000419",
+        "38000000-0000-0000-0001-000000000409"
+      ]
+    },
+    {
+      "category" : "appSiteTimeFilter",
+      "forbiddenResultCount" : 0,
+      "id" : "site-time-00",
+      "medianLatencyMilliseconds" : 2.753375,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 5,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000161",
+        "38000000-0000-0000-0001-000000000151",
+        "38000000-0000-0000-0001-000000000141",
+        "38000000-0000-0000-0001-000000000131",
+        "38000000-0000-0000-0001-000000000121",
+        "38000000-0000-0000-0001-000000000111",
+        "38000000-0000-0000-0001-000000000101",
+        "38000000-0000-0000-0001-000000000091",
+        "38000000-0000-0000-0001-000000000081",
+        "38000000-0000-0000-0001-000000000071"
+      ]
+    },
+    {
+      "category" : "appSiteTimeFilter",
+      "forbiddenResultCount" : 0,
+      "id" : "site-time-01",
+      "medianLatencyMilliseconds" : 2.763791,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 5,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000172",
+        "38000000-0000-0000-0001-000000000162",
+        "38000000-0000-0000-0001-000000000152",
+        "38000000-0000-0000-0001-000000000142",
+        "38000000-0000-0000-0001-000000000132",
+        "38000000-0000-0000-0001-000000000122",
+        "38000000-0000-0000-0001-000000000112",
+        "38000000-0000-0000-0001-000000000102",
+        "38000000-0000-0000-0001-000000000092",
+        "38000000-0000-0000-0001-000000000082"
+      ]
+    },
+    {
+      "category" : "appSiteTimeFilter",
+      "forbiddenResultCount" : 0,
+      "id" : "site-time-02",
+      "medianLatencyMilliseconds" : 2.384292,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 5,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000178",
+        "38000000-0000-0000-0001-000000000168",
+        "38000000-0000-0000-0001-000000000158",
+        "38000000-0000-0000-0001-000000000148",
+        "38000000-0000-0000-0001-000000000138",
+        "38000000-0000-0000-0001-000000000128",
+        "38000000-0000-0000-0001-000000000118",
+        "38000000-0000-0000-0001-000000000108",
+        "38000000-0000-0000-0001-000000000098",
+        "38000000-0000-0000-0001-000000000088"
+      ]
+    },
+    {
+      "category" : "appSiteTimeFilter",
+      "forbiddenResultCount" : 0,
+      "id" : "site-time-03",
+      "medianLatencyMilliseconds" : 2.4315,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 5,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000191",
+        "38000000-0000-0000-0001-000000000181",
+        "38000000-0000-0000-0001-000000000171",
+        "38000000-0000-0000-0001-000000000161",
+        "38000000-0000-0000-0001-000000000151",
+        "38000000-0000-0000-0001-000000000141",
+        "38000000-0000-0000-0001-000000000131",
+        "38000000-0000-0000-0001-000000000121",
+        "38000000-0000-0000-0001-000000000111",
+        "38000000-0000-0000-0001-000000000101"
+      ]
+    },
+    {
+      "category" : "appSiteTimeFilter",
+      "forbiddenResultCount" : 0,
+      "id" : "site-time-04",
+      "medianLatencyMilliseconds" : 2.494792,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 5,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000202",
+        "38000000-0000-0000-0001-000000000192",
+        "38000000-0000-0000-0001-000000000182",
+        "38000000-0000-0000-0001-000000000172",
+        "38000000-0000-0000-0001-000000000162",
+        "38000000-0000-0000-0001-000000000152",
+        "38000000-0000-0000-0001-000000000142",
+        "38000000-0000-0000-0001-000000000132",
+        "38000000-0000-0000-0001-000000000122",
+        "38000000-0000-0000-0001-000000000112"
+      ]
+    },
+    {
+      "category" : "appSiteTimeFilter",
+      "forbiddenResultCount" : 0,
+      "id" : "site-time-05",
+      "medianLatencyMilliseconds" : 2.411417,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 5,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000208",
+        "38000000-0000-0000-0001-000000000198",
+        "38000000-0000-0000-0001-000000000188",
+        "38000000-0000-0000-0001-000000000178",
+        "38000000-0000-0000-0001-000000000168",
+        "38000000-0000-0000-0001-000000000158",
+        "38000000-0000-0000-0001-000000000148",
+        "38000000-0000-0000-0001-000000000138",
+        "38000000-0000-0000-0001-000000000128",
+        "38000000-0000-0000-0001-000000000118"
+      ]
+    },
+    {
+      "category" : "appSiteTimeFilter",
+      "forbiddenResultCount" : 0,
+      "id" : "site-time-06",
+      "medianLatencyMilliseconds" : 2.440334,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 5,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000221",
+        "38000000-0000-0000-0001-000000000211",
+        "38000000-0000-0000-0001-000000000201",
+        "38000000-0000-0000-0001-000000000191",
+        "38000000-0000-0000-0001-000000000181",
+        "38000000-0000-0000-0001-000000000171",
+        "38000000-0000-0000-0001-000000000161",
+        "38000000-0000-0000-0001-000000000151",
+        "38000000-0000-0000-0001-000000000141",
+        "38000000-0000-0000-0001-000000000131"
+      ]
+    },
+    {
+      "category" : "appSiteTimeFilter",
+      "forbiddenResultCount" : 0,
+      "id" : "site-time-07",
+      "medianLatencyMilliseconds" : 2.415,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 5,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000232",
+        "38000000-0000-0000-0001-000000000222",
+        "38000000-0000-0000-0001-000000000212",
+        "38000000-0000-0000-0001-000000000202",
+        "38000000-0000-0000-0001-000000000192",
+        "38000000-0000-0000-0001-000000000182",
+        "38000000-0000-0000-0001-000000000172",
+        "38000000-0000-0000-0001-000000000162",
+        "38000000-0000-0000-0001-000000000152",
+        "38000000-0000-0000-0001-000000000142"
+      ]
+    },
+    {
+      "category" : "appSiteTimeFilter",
+      "forbiddenResultCount" : 0,
+      "id" : "site-time-08",
+      "medianLatencyMilliseconds" : 2.432,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 5,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000238",
+        "38000000-0000-0000-0001-000000000228",
+        "38000000-0000-0000-0001-000000000218",
+        "38000000-0000-0000-0001-000000000208",
+        "38000000-0000-0000-0001-000000000198",
+        "38000000-0000-0000-0001-000000000188",
+        "38000000-0000-0000-0001-000000000178",
+        "38000000-0000-0000-0001-000000000168",
+        "38000000-0000-0000-0001-000000000158",
+        "38000000-0000-0000-0001-000000000148"
+      ]
+    },
+    {
+      "category" : "appSiteTimeFilter",
+      "forbiddenResultCount" : 0,
+      "id" : "site-time-09",
+      "medianLatencyMilliseconds" : 2.372208,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 5,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000251",
+        "38000000-0000-0000-0001-000000000241",
+        "38000000-0000-0000-0001-000000000231",
+        "38000000-0000-0000-0001-000000000221",
+        "38000000-0000-0000-0001-000000000211",
+        "38000000-0000-0000-0001-000000000201",
+        "38000000-0000-0000-0001-000000000191",
+        "38000000-0000-0000-0001-000000000181",
+        "38000000-0000-0000-0001-000000000171",
+        "38000000-0000-0000-0001-000000000161"
+      ]
+    },
+    {
+      "category" : "combinedAmbiguous",
+      "forbiddenResultCount" : 0,
+      "id" : "combined-00",
+      "medianLatencyMilliseconds" : 3.122875,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 1,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000300"
+      ]
+    },
+    {
+      "category" : "combinedAmbiguous",
+      "forbiddenResultCount" : 0,
+      "id" : "combined-01",
+      "medianLatencyMilliseconds" : 3.430125,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 1,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000301"
+      ]
+    },
+    {
+      "category" : "combinedAmbiguous",
+      "forbiddenResultCount" : 0,
+      "id" : "combined-02",
+      "medianLatencyMilliseconds" : 2.825041,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 1,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000302"
+      ]
+    },
+    {
+      "category" : "combinedAmbiguous",
+      "forbiddenResultCount" : 0,
+      "id" : "combined-03",
+      "medianLatencyMilliseconds" : 2.748,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 1,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000303"
+      ]
+    },
+    {
+      "category" : "combinedAmbiguous",
+      "forbiddenResultCount" : 0,
+      "id" : "combined-04",
+      "medianLatencyMilliseconds" : 2.833709,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 1,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000304"
+      ]
+    },
+    {
+      "category" : "combinedAmbiguous",
+      "forbiddenResultCount" : 0,
+      "id" : "combined-05",
+      "medianLatencyMilliseconds" : 2.812041,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 1,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000305"
+      ]
+    },
+    {
+      "category" : "combinedAmbiguous",
+      "forbiddenResultCount" : 0,
+      "id" : "combined-06",
+      "medianLatencyMilliseconds" : 2.79175,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 1,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000306"
+      ]
+    },
+    {
+      "category" : "combinedAmbiguous",
+      "forbiddenResultCount" : 0,
+      "id" : "combined-07",
+      "medianLatencyMilliseconds" : 2.85575,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 1,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000307"
+      ]
+    },
+    {
+      "category" : "combinedAmbiguous",
+      "forbiddenResultCount" : 0,
+      "id" : "combined-08",
+      "medianLatencyMilliseconds" : 2.955375,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 1,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000308"
+      ]
+    },
+    {
+      "category" : "combinedAmbiguous",
+      "forbiddenResultCount" : 0,
+      "id" : "combined-09",
+      "medianLatencyMilliseconds" : 2.892583,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 1,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000309"
+      ]
+    },
+    {
+      "category" : "combinedAmbiguous",
+      "forbiddenResultCount" : 0,
+      "id" : "combined-10",
+      "medianLatencyMilliseconds" : 2.882667,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 1,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000310"
+      ]
+    },
+    {
+      "category" : "combinedAmbiguous",
+      "forbiddenResultCount" : 0,
+      "id" : "combined-11",
+      "medianLatencyMilliseconds" : 3.0225,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 1,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000311"
+      ]
+    },
+    {
+      "category" : "combinedAmbiguous",
+      "forbiddenResultCount" : 0,
+      "id" : "combined-12",
+      "medianLatencyMilliseconds" : 3.060917,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 1,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000312"
+      ]
+    },
+    {
+      "category" : "combinedAmbiguous",
+      "forbiddenResultCount" : 0,
+      "id" : "combined-13",
+      "medianLatencyMilliseconds" : 2.799875,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 1,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000313"
+      ]
+    },
+    {
+      "category" : "combinedAmbiguous",
+      "forbiddenResultCount" : 0,
+      "id" : "combined-14",
+      "medianLatencyMilliseconds" : 2.733875,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 1,
+      "resultIDs" : [
+        "38000000-0000-0000-0001-000000000314"
+      ]
+    },
+    {
+      "category" : "noResultAdversarial",
+      "forbiddenResultCount" : 0,
+      "id" : "negative-00",
+      "medianLatencyMilliseconds" : 2.398333,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 0,
+      "resultIDs" : [
+
+      ]
+    },
+    {
+      "category" : "noResultAdversarial",
+      "forbiddenResultCount" : 0,
+      "id" : "negative-01",
+      "medianLatencyMilliseconds" : 2.424917,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 0,
+      "resultIDs" : [
+
+      ]
+    },
+    {
+      "category" : "noResultAdversarial",
+      "forbiddenResultCount" : 0,
+      "id" : "negative-02",
+      "medianLatencyMilliseconds" : 2.521291,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 0,
+      "resultIDs" : [
+
+      ]
+    },
+    {
+      "category" : "noResultAdversarial",
+      "forbiddenResultCount" : 0,
+      "id" : "negative-03",
+      "medianLatencyMilliseconds" : 2.461792,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 0,
+      "resultIDs" : [
+
+      ]
+    },
+    {
+      "category" : "noResultAdversarial",
+      "forbiddenResultCount" : 0,
+      "id" : "negative-04",
+      "medianLatencyMilliseconds" : 2.434834,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 0,
+      "resultIDs" : [
+
+      ]
+    },
+    {
+      "category" : "noResultAdversarial",
+      "forbiddenResultCount" : 0,
+      "id" : "negative-05",
+      "medianLatencyMilliseconds" : 2.360875,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 0,
+      "resultIDs" : [
+
+      ]
+    },
+    {
+      "category" : "noResultAdversarial",
+      "forbiddenResultCount" : 0,
+      "id" : "negative-06",
+      "medianLatencyMilliseconds" : 2.506375,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 0,
+      "resultIDs" : [
+
+      ]
+    },
+    {
+      "category" : "noResultAdversarial",
+      "forbiddenResultCount" : 0,
+      "id" : "negative-07",
+      "medianLatencyMilliseconds" : 2.434083,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 0,
+      "resultIDs" : [
+
+      ]
+    },
+    {
+      "category" : "noResultAdversarial",
+      "forbiddenResultCount" : 0,
+      "id" : "negative-08",
+      "medianLatencyMilliseconds" : 2.435916,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 0,
+      "resultIDs" : [
+
+      ]
+    },
+    {
+      "category" : "noResultAdversarial",
+      "forbiddenResultCount" : 0,
+      "id" : "negative-09",
+      "medianLatencyMilliseconds" : 2.519167,
+      "recallAt5" : 1,
+      "reciprocalRank" : 1,
+      "relevantCount" : 0,
+      "resultIDs" : [
+
+      ]
+    }
+  ],
+  "evaluatedQueryCount" : 75,
+  "excludedVisualQueryCount" : 25,
+  "fixtureSHA256" : "640abc4d73f66c9555cb54df277b0963eeae02cd80651f7174d6bba238e02912",
+  "forbiddenResultCount" : 0,
+  "frameCount" : 500,
+  "independentJudgmentsPerQuery" : 3,
+  "labelsEditedAfterFreeze" : false,
+  "meanReciprocalRank" : 1,
+  "ndcgAt10" : 1,
+  "noResultPrecision" : 1,
+  "p50LatencyMilliseconds" : 2.733875,
+  "p95LatencyMilliseconds" : 3.509875,
+  "p99LatencyMilliseconds" : 3.832625,
+  "recallAt1" : 0.786666666666667,
+  "recallAt10" : 1,
+  "recallAt5" : 1,
+  "schemaVersion" : 1,
+  "story" : "LM-038",
+  "totalQueryCount" : 100
+}

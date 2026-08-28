@@ -1,0 +1,291 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project /Users/justinhou/Development/deepshelves/LocalMemory.xcodeproj -scheme LocalMemory -configuration Release -derivedDataPath /Users/justinhou/Development/deepshelves/.build/DerivedData -disableAutomaticPackageResolution CODE_SIGNING_ALLOWED=NO ENABLE_TESTABILITY=YES "-only-testing:LocalMemoryUnitTests/LexicalRetrievalBenchmarkTests" "-only-testing:LocalMemoryUnitTests/LexicalSearchEngineTests" test
+
+Build settings from command line:
+    CODE_SIGNING_ALLOWED = NO
+    ENABLE_TESTABILITY = YES
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  MemorySoftwareHEIC: /Users/justinhou/Development/deepshelves/Packages/MemorySoftwareHEIC
+  MemoryTestSupport: /Users/justinhou/Development/deepshelves/Packages/MemoryTestSupport
+  GRDB: /Users/justinhou/Development/deepshelves/.build/Dependencies/GRDB.swift-a285e4ca87ec6b3584c97b0ec25fc61fec02de60 @ local
+  MemoryStore: /Users/justinhou/Development/deepshelves/Packages/MemoryStore
+  MemoryDesignSystem: /Users/justinhou/Development/deepshelves/Packages/MemoryDesignSystem
+  SQLCipher: /Users/justinhou/Development/deepshelves/.build/Dependencies/SQLCipher.swift @ local
+  MemoryEnrichment: /Users/justinhou/Development/deepshelves/Packages/MemoryEnrichment
+  MemoryCapture: /Users/justinhou/Development/deepshelves/Packages/MemoryCapture
+  MemorySearch: /Users/justinhou/Development/deepshelves/Packages/MemorySearch
+  MemoryContracts: /Users/justinhou/Development/deepshelves/Packages/MemoryContracts
+  MemoryAgentAccess: /Users/justinhou/Development/deepshelves/Packages/MemoryAgentAccess
+
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:macOS, arch:arm64, id:00006030-000658C614D0001C, name:My Mac }
+{ platform:macOS, arch:x86_64, id:00006030-000658C614D0001C, name:My Mac }
+{ platform:macOS, name:Any Mac }
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (30 targets)
+    Target 'LocalMemoryUnitTests' in project 'LocalMemory'
+        ➜ Explicit dependency on target 'MemoryCapture' in project 'MemoryCapture'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+        ➜ Explicit dependency on target 'MemoryEnrichment' in project 'MemoryEnrichment'
+        ➜ Explicit dependency on target 'MemorySearch' in project 'MemorySearch'
+        ➜ Explicit dependency on target 'MemoryDesignSystem' in project 'MemoryDesignSystem'
+        ➜ Explicit dependency on target 'MemorySoftwareHEIC' in project 'MemorySoftwareHEIC'
+        ➜ Explicit dependency on target 'MemoryStore' in project 'MemoryStore'
+        ➜ Explicit dependency on target 'MemoryTestSupport' in project 'MemoryTestSupport'
+    Target 'LocalMemoryPrivacyTests' in project 'LocalMemory'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+        ➜ Explicit dependency on target 'MemoryTestSupport' in project 'MemoryTestSupport'
+    Target 'LocalMemoryPerformanceTests' in project 'LocalMemory'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+        ➜ Explicit dependency on target 'MemoryTestSupport' in project 'MemoryTestSupport'
+    Target 'LocalMemoryMCP' in project 'LocalMemory'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+    Target 'LocalMemoryIntegrationTests' in project 'LocalMemory'
+        ➜ Explicit dependency on target 'MemoryCapture' in project 'MemoryCapture'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+        ➜ Explicit dependency on target 'MemoryEnrichment' in project 'MemoryEnrichment'
+        ➜ Explicit dependency on target 'MemoryStore' in project 'MemoryStore'
+        ➜ Explicit dependency on target 'MemoryTestSupport' in project 'MemoryTestSupport'
+    Target 'MemoryTestSupport' in project 'MemoryTestSupport'
+        ➜ Explicit dependency on target 'MemoryTestSupport' in project 'MemoryTestSupport'
+    Target 'MemoryTestSupport' in project 'MemoryTestSupport' (no dependencies)
+    Target 'LocalMemoryCLI' in project 'LocalMemory'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+    Target 'LocalMemoryApp' in project 'LocalMemory'
+        ➜ Explicit dependency on target 'MemoryCapture' in project 'MemoryCapture'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+        ➜ Explicit dependency on target 'MemoryDesignSystem' in project 'MemoryDesignSystem'
+        ➜ Explicit dependency on target 'MemoryEnrichment' in project 'MemoryEnrichment'
+        ➜ Explicit dependency on target 'MemorySearch' in project 'MemorySearch'
+        ➜ Explicit dependency on target 'MemoryStore' in project 'MemoryStore'
+    Target 'MemorySearch' in project 'MemorySearch'
+        ➜ Explicit dependency on target 'MemorySearch' in project 'MemorySearch'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+        ➜ Explicit dependency on target 'MemoryStore' in project 'MemoryStore'
+    Target 'MemorySearch' in project 'MemorySearch'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+        ➜ Explicit dependency on target 'MemoryStore' in project 'MemoryStore'
+    Target 'MemoryEnrichment' in project 'MemoryEnrichment'
+        ➜ Explicit dependency on target 'MemoryEnrichment' in project 'MemoryEnrichment'
+        ➜ Explicit dependency on target 'MemoryEnrichment_MemoryEnrichment' in project 'MemoryEnrichment'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+        ➜ Explicit dependency on target 'MemorySoftwareHEIC' in project 'MemorySoftwareHEIC'
+        ➜ Explicit dependency on target 'MemoryStore' in project 'MemoryStore'
+    Target 'MemoryEnrichment' in project 'MemoryEnrichment'
+        ➜ Explicit dependency on target 'MemoryEnrichment_MemoryEnrichment' in project 'MemoryEnrichment'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+        ➜ Explicit dependency on target 'MemorySoftwareHEIC' in project 'MemorySoftwareHEIC'
+        ➜ Explicit dependency on target 'MemoryStore' in project 'MemoryStore'
+    Target 'MemoryStore' in project 'MemoryStore'
+        ➜ Explicit dependency on target 'MemoryStore' in project 'MemoryStore'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+        ➜ Explicit dependency on target 'GRDB' in project 'GRDB'
+    Target 'MemoryStore' in project 'MemoryStore'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+        ➜ Explicit dependency on target 'GRDB' in project 'GRDB'
+    Target 'GRDB' in project 'GRDB'
+        ➜ Explicit dependency on target 'GRDB' in project 'GRDB'
+        ➜ Explicit dependency on target 'GRDB_GRDB' in project 'GRDB'
+        ➜ Explicit dependency on target 'GRDBSQLCipher' in project 'GRDB'
+        ➜ Explicit dependency on target 'SQLCipher' in project 'SQLCipher'
+    Target 'GRDB' in project 'GRDB'
+        ➜ Explicit dependency on target 'GRDB_GRDB' in project 'GRDB'
+        ➜ Explicit dependency on target 'GRDBSQLCipher' in project 'GRDB'
+        ➜ Explicit dependency on target 'SQLCipher' in project 'SQLCipher'
+    Target 'GRDBSQLCipher' in project 'GRDB'
+        ➜ Explicit dependency on target 'SQLCipher' in project 'SQLCipher'
+    Target 'SQLCipher' in project 'SQLCipher' (no dependencies)
+    Target 'GRDB_GRDB' in project 'GRDB' (no dependencies)
+    Target 'MemoryEnrichment_MemoryEnrichment' in project 'MemoryEnrichment' (no dependencies)
+    Target 'MemoryDesignSystem' in project 'MemoryDesignSystem'
+        ➜ Explicit dependency on target 'MemoryDesignSystem' in project 'MemoryDesignSystem'
+    Target 'MemoryDesignSystem' in project 'MemoryDesignSystem' (no dependencies)
+    Target 'MemoryCapture' in project 'MemoryCapture'
+        ➜ Explicit dependency on target 'MemoryCapture' in project 'MemoryCapture'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+        ➜ Explicit dependency on target 'MemorySoftwareHEIC' in project 'MemorySoftwareHEIC'
+    Target 'MemoryCapture' in project 'MemoryCapture'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+        ➜ Explicit dependency on target 'MemorySoftwareHEIC' in project 'MemorySoftwareHEIC'
+    Target 'MemorySoftwareHEIC' in project 'MemorySoftwareHEIC'
+        ➜ Explicit dependency on target 'MemorySoftwareHEIC' in project 'MemorySoftwareHEIC'
+        ➜ Explicit dependency on target 'MemorySoftwareHEIC_MemorySoftwareHEIC' in project 'MemorySoftwareHEIC'
+    Target 'MemorySoftwareHEIC' in project 'MemorySoftwareHEIC'
+        ➜ Explicit dependency on target 'MemorySoftwareHEIC_MemorySoftwareHEIC' in project 'MemorySoftwareHEIC'
+    Target 'MemorySoftwareHEIC_MemorySoftwareHEIC' in project 'MemorySoftwareHEIC' (no dependencies)
+    Target 'MemoryContracts' in project 'MemoryContracts'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+    Target 'MemoryContracts' in project 'MemoryContracts' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch x86_64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -x c -c /dev/null
+
+ReadFileContents /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/share/docc/features.json
+
+Build description signature: e8459875349a5c07fcad304714f9e129
+Build description path: /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/XCBuildData/e8459875349a5c07fcad304714f9e129.xcbuilddata
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk /Users/justinhou/Development/deepshelves/.build/DerivedData/SDKStatCaches.noindex/macosx26.5-25F70-e082c4a02f00227109f4ed75e425c832.sdkstatcache
+    cd /Users/justinhou/Development/deepshelves/LocalMemory.xcodeproj
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -o /Users/justinhou/Development/deepshelves/.build/DerivedData/SDKStatCaches.noindex/macosx26.5-25F70-e082c4a02f00227109f4ed75e425c832.sdkstatcache
+
+ProcessInfoPlistFile /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/GRDB_GRDB.bundle/Contents/Info.plist /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/GRDB.build/Release/GRDB_GRDB.build/empty-GRDB_GRDB.plist (in target 'GRDB_GRDB' from project 'GRDB')
+    cd /Users/justinhou/Development/deepshelves/.build/Dependencies/GRDB.swift-a285e4ca87ec6b3584c97b0ec25fc61fec02de60
+    builtin-infoPlistUtility /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/GRDB.build/Release/GRDB_GRDB.build/empty-GRDB_GRDB.plist -producttype com.apple.product-type.bundle -expandbuildsettings -platform macosx -o /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/GRDB_GRDB.bundle/Contents/Info.plist
+
+CopySwiftLibs /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/LocalMemoryPrivacyTests.xctest (in target 'LocalMemoryPrivacyTests' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/LocalMemoryPrivacyTests.xctest/Contents/MacOS/LocalMemoryPrivacyTests --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/LocalMemoryPrivacyTests.xctest/Contents/Frameworks --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/LocalMemoryPrivacyTests.xctest/Contents/PlugIns --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/LocalMemoryPrivacyTests.xctest/Contents/Library/SystemExtensions --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/LocalMemoryPrivacyTests.xctest/Contents/Extensions --platform macosx --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/LocalMemoryPrivacyTests.xctest/Contents/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryPrivacyTests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os --back-deploy-swift-span
+Ignoring --strip-bitcode because --sign was not passed
+
+ProcessInfoPlistFile /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/MemoryEnrichment_MemoryEnrichment.bundle/Contents/Info.plist /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/MemoryEnrichment.build/Release/MemoryEnrichment_MemoryEnrichment.build/empty-MemoryEnrichment_MemoryEnrichment.plist (in target 'MemoryEnrichment_MemoryEnrichment' from project 'MemoryEnrichment')
+    cd /Users/justinhou/Development/deepshelves/Packages/MemoryEnrichment
+    builtin-infoPlistUtility /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/MemoryEnrichment.build/Release/MemoryEnrichment_MemoryEnrichment.build/empty-MemoryEnrichment_MemoryEnrichment.plist -producttype com.apple.product-type.bundle -expandbuildsettings -platform macosx -o /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/MemoryEnrichment_MemoryEnrichment.bundle/Contents/Info.plist
+
+CopySwiftLibs /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/LocalMemoryPerformanceTests.xctest (in target 'LocalMemoryPerformanceTests' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/LocalMemoryPerformanceTests.xctest/Contents/MacOS/LocalMemoryPerformanceTests --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/LocalMemoryPerformanceTests.xctest/Contents/Frameworks --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/LocalMemoryPerformanceTests.xctest/Contents/PlugIns --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/LocalMemoryPerformanceTests.xctest/Contents/Library/SystemExtensions --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/LocalMemoryPerformanceTests.xctest/Contents/Extensions --platform macosx --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/LocalMemoryPerformanceTests.xctest/Contents/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryPerformanceTests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os --back-deploy-swift-span
+Ignoring --strip-bitcode because --sign was not passed
+
+Copy /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/Local_Memory.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/Local_Memory.swiftsourceinfo (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/Local_Memory.swiftsourceinfo /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/Local_Memory.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo
+
+Copy /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/Local_Memory.swiftmodule/x86_64-apple-macos.swiftmodule /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/Local_Memory.swiftmodule (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/Local_Memory.swiftmodule /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/Local_Memory.swiftmodule/x86_64-apple-macos.swiftmodule
+
+Copy /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/Local_Memory.swiftmodule/x86_64-apple-macos.abi.json /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/Local_Memory.abi.json (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/Local_Memory.abi.json /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/Local_Memory.swiftmodule/x86_64-apple-macos.abi.json
+
+Copy /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/Local_Memory.swiftmodule/arm64-apple-macos.abi.json /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/Local_Memory.abi.json (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/Local_Memory.abi.json /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/Local_Memory.swiftmodule/arm64-apple-macos.abi.json
+
+Copy /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/Local_Memory.swiftmodule/arm64-apple-macos.swiftdoc /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/Local_Memory.swiftdoc (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/Local_Memory.swiftdoc /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/Local_Memory.swiftmodule/arm64-apple-macos.swiftdoc
+
+Copy /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/Local_Memory.swiftmodule/x86_64-apple-macos.swiftdoc /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/Local_Memory.swiftdoc (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/Local_Memory.swiftdoc /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/Local_Memory.swiftmodule/x86_64-apple-macos.swiftdoc
+
+Copy /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/Local_Memory.swiftmodule/Project/x86_64-apple-macos.swiftsourceinfo /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/Local_Memory.swiftsourceinfo (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/Local_Memory.swiftsourceinfo /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/Local_Memory.swiftmodule/Project/x86_64-apple-macos.swiftsourceinfo
+
+CpResource /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/MemorySoftwareHEIC_MemorySoftwareHEIC.bundle/Contents/Resources/SoftwareHEIC /Users/justinhou/Development/deepshelves/Packages/MemorySoftwareHEIC/Sources/MemorySoftwareHEIC/Resources/SoftwareHEIC (in target 'MemorySoftwareHEIC_MemorySoftwareHEIC' from project 'MemorySoftwareHEIC')
+    cd /Users/justinhou/Development/deepshelves/Packages/MemorySoftwareHEIC
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks /Users/justinhou/Development/deepshelves/Packages/MemorySoftwareHEIC/Sources/MemorySoftwareHEIC/Resources/SoftwareHEIC /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/MemorySoftwareHEIC_MemorySoftwareHEIC.bundle/Contents/Resources
+warning: not stripping binary because it is signed: /Users/justinhou/Development/deepshelves/Packages/MemorySoftwareHEIC/Sources/MemorySoftwareHEIC/Resources/SoftwareHEIC/bin/lm-software-heicwarning: not stripping binary because it is signed: /Users/justinhou/Development/deepshelves/Packages/MemorySoftwareHEIC/Sources/MemorySoftwareHEIC/Resources/SoftwareHEIC/lib/libheif.1.23.2.dylibwarning: not stripping binary because it is signed: /Users/justinhou/Development/deepshelves/Packages/MemorySoftwareHEIC/Sources/MemorySoftwareHEIC/Resources/SoftwareHEIC/lib/libde265.0.2.1.dylibwarning: not stripping binary because it is signed: /Users/justinhou/Development/deepshelves/Packages/MemorySoftwareHEIC/Sources/MemorySoftwareHEIC/Resources/SoftwareHEIC/lib/libx265.217.dylib (in target 'MemorySoftwareHEIC_MemorySoftwareHEIC' from project 'MemorySoftwareHEIC')
+
+Copy /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/Local_Memory.swiftmodule/arm64-apple-macos.swiftmodule /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/Local_Memory.swiftmodule (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/Local_Memory.swiftmodule /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/Local_Memory.swiftmodule/arm64-apple-macos.swiftmodule
+
+ProcessInfoPlistFile /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/MemorySoftwareHEIC_MemorySoftwareHEIC.bundle/Contents/Info.plist /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/MemorySoftwareHEIC.build/Release/MemorySoftwareHEIC_MemorySoftwareHEIC.build/empty-MemorySoftwareHEIC_MemorySoftwareHEIC.plist (in target 'MemorySoftwareHEIC_MemorySoftwareHEIC' from project 'MemorySoftwareHEIC')
+    cd /Users/justinhou/Development/deepshelves/Packages/MemorySoftwareHEIC
+    builtin-infoPlistUtility /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/MemorySoftwareHEIC.build/Release/MemorySoftwareHEIC_MemorySoftwareHEIC.build/empty-MemorySoftwareHEIC_MemorySoftwareHEIC.plist -producttype com.apple.product-type.bundle -expandbuildsettings -platform macosx -o /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/MemorySoftwareHEIC_MemorySoftwareHEIC.bundle/Contents/Info.plist
+
+Copy /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/Local\ Memory.app/Contents/Resources/MemorySoftwareHEIC_MemorySoftwareHEIC.bundle /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/MemorySoftwareHEIC_MemorySoftwareHEIC.bundle (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/MemorySoftwareHEIC_MemorySoftwareHEIC.bundle /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/Local\ Memory.app/Contents/Resources
+
+Copy /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/LocalMemoryUnitTests.xctest/Contents/Resources/MemorySoftwareHEIC_MemorySoftwareHEIC.bundle /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/MemorySoftwareHEIC_MemorySoftwareHEIC.bundle (in target 'LocalMemoryUnitTests' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/MemorySoftwareHEIC_MemorySoftwareHEIC.bundle /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/LocalMemoryUnitTests.xctest/Contents/Resources
+
+Copy /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/LocalMemoryIntegrationTests.xctest/Contents/Resources/MemorySoftwareHEIC_MemorySoftwareHEIC.bundle /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/MemorySoftwareHEIC_MemorySoftwareHEIC.bundle (in target 'LocalMemoryIntegrationTests' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/MemorySoftwareHEIC_MemorySoftwareHEIC.bundle /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/LocalMemoryIntegrationTests.xctest/Contents/Resources
+
+CopySwiftLibs /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/LocalMemoryUnitTests.xctest (in target 'LocalMemoryUnitTests' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/LocalMemoryUnitTests.xctest/Contents/MacOS/LocalMemoryUnitTests --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/LocalMemoryUnitTests.xctest/Contents/Frameworks --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/LocalMemoryUnitTests.xctest/Contents/PlugIns --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/LocalMemoryUnitTests.xctest/Contents/Library/SystemExtensions --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/LocalMemoryUnitTests.xctest/Contents/Extensions --platform macosx --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/LocalMemoryUnitTests.xctest/Contents/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryUnitTests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os --back-deploy-swift-span
+Ignoring --strip-bitcode because --sign was not passed
+
+CopySwiftLibs /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/Local\ Memory.app (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/Local\ Memory.app/Contents/MacOS/Local\ Memory --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/Local\ Memory.app/Contents/Frameworks --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/Local\ Memory.app/Contents/PlugIns --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/Local\ Memory.app/Contents/Library/SystemExtensions --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/Local\ Memory.app/Contents/Extensions --platform macosx --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/Local\ Memory.app/Contents/Frameworks --strip-bitcode --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os --back-deploy-swift-span
+Ignoring --strip-bitcode because --sign was not passed
+
+ProcessInfoPlistFile /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/Local\ Memory.app/Contents/Info.plist /Users/justinhou/Development/deepshelves/Apps/LocalMemoryApp/Info.plist (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-infoPlistUtility /Users/justinhou/Development/deepshelves/Apps/LocalMemoryApp/Info.plist -producttype com.apple.product-type.application -genpkginfo /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/Local\ Memory.app/Contents/PkgInfo -expandbuildsettings -platform macosx -scanforprivacyfile /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/Local\ Memory.app/Contents/Frameworks/SQLCipher.framework -scanforprivacyfile /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/Local\ Memory.app/Contents/Resources/GRDB_GRDB.bundle -scanforprivacyfile /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/Local\ Memory.app/Contents/Resources/MemoryEnrichment_MemoryEnrichment.bundle -scanforprivacyfile /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/Local\ Memory.app/Contents/Resources/MemorySoftwareHEIC_MemorySoftwareHEIC.bundle -o /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/Local\ Memory.app/Contents/Info.plist
+
+CopySwiftLibs /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/LocalMemoryIntegrationTests.xctest (in target 'LocalMemoryIntegrationTests' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/LocalMemoryIntegrationTests.xctest/Contents/MacOS/LocalMemoryIntegrationTests --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/LocalMemoryIntegrationTests.xctest/Contents/Frameworks --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/LocalMemoryIntegrationTests.xctest/Contents/PlugIns --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/LocalMemoryIntegrationTests.xctest/Contents/Library/SystemExtensions --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/LocalMemoryIntegrationTests.xctest/Contents/Extensions --platform macosx --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/LocalMemoryIntegrationTests.xctest/Contents/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryIntegrationTests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os --back-deploy-swift-span
+Ignoring --strip-bitcode because --sign was not passed
+
+GenerateDSYMFile /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/Local\ Memory.app.dSYM /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/Local\ Memory.app/Contents/MacOS/Local\ Memory (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/dsymutil /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/Local\ Memory.app/Contents/MacOS/Local\ Memory -o /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Release/Local\ Memory.app.dSYM
+
+Test Suite 'Selected tests' started at 2026-08-28 23:22:18.472.
+Test Suite 'LocalMemoryUnitTests.xctest' started at 2026-08-28 23:22:18.473.
+Test Suite 'LexicalRetrievalBenchmarkTests' started at 2026-08-28 23:22:18.473.
+Test Case '-[LocalMemoryUnitTests.LexicalRetrievalBenchmarkTests testFrozenTextAppSiteTimeJudgmentsMeetRecallAndLatencyGate]' started.
+LM038_METRIC frames=500 queries=75 recall_at_5=1.000000 p95_ms=3.509875 forbidden=0
+Test Case '-[LocalMemoryUnitTests.LexicalRetrievalBenchmarkTests testFrozenTextAppSiteTimeJudgmentsMeetRecallAndLatencyGate]' passed (0.972 seconds).
+Test Suite 'LexicalRetrievalBenchmarkTests' passed at 2026-08-28 23:22:19.446.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.972 (0.973) seconds
+Test Suite 'LexicalSearchEngineTests' started at 2026-08-28 23:22:19.446.
+Test Case '-[LocalMemoryUnitTests.LexicalSearchEngineTests testAccessPolicyAndRequestFiltersApplyBeforeCandidates]' started.
+Test Case '-[LocalMemoryUnitTests.LexicalSearchEngineTests testAccessPolicyAndRequestFiltersApplyBeforeCandidates]' passed (0.021 seconds).
+Test Case '-[LocalMemoryUnitTests.LexicalSearchEngineTests testCursorRejectsTamperDifferentQueryAndDifferentSigningKey]' started.
+Test Case '-[LocalMemoryUnitTests.LexicalSearchEngineTests testCursorRejectsTamperDifferentQueryAndDifferentSigningKey]' passed (0.018 seconds).
+Test Case '-[LocalMemoryUnitTests.LexicalSearchEngineTests testEvidencePreservesEachMatchedSourceWithoutGeneratedClaims]' started.
+Test Case '-[LocalMemoryUnitTests.LexicalSearchEngineTests testEvidencePreservesEachMatchedSourceWithoutGeneratedClaims]' passed (0.032 seconds).
+Test Case '-[LocalMemoryUnitTests.LexicalSearchEngineTests testExpiredVisualOnlyEmptyAllowlistAndCancelledRequestsFailClosed]' started.
+Test Case '-[LocalMemoryUnitTests.LexicalSearchEngineTests testExpiredVisualOnlyEmptyAllowlistAndCancelledRequestsFailClosed]' passed (0.015 seconds).
+Test Case '-[LocalMemoryUnitTests.LexicalSearchEngineTests testFTSSyntaxLikeInputIsQuotedAsLiteralAndCannotBroadenResults]' started.
+Test Case '-[LocalMemoryUnitTests.LexicalSearchEngineTests testFTSSyntaxLikeInputIsQuotedAsLiteralAndCannotBroadenResults]' passed (0.016 seconds).
+Test Case '-[LocalMemoryUnitTests.LexicalSearchEngineTests testKeysetPaginationReturnsEveryEqualScoreExactlyOnceInStableUUIDOrder]' started.
+Test Case '-[LocalMemoryUnitTests.LexicalSearchEngineTests testKeysetPaginationReturnsEveryEqualScoreExactlyOnceInStableUUIDOrder]' passed (0.094 seconds).
+Test Case '-[LocalMemoryUnitTests.LexicalSearchEngineTests testPolicyMaximumResultsCapsTheCompletePaginationChain]' started.
+Test Case '-[LocalMemoryUnitTests.LexicalSearchEngineTests testPolicyMaximumResultsCapsTheCompletePaginationChain]' passed (0.033 seconds).
+Test Case '-[LocalMemoryUnitTests.LexicalSearchEngineTests testWeightedBM25AndExactMetadataBoostsHaveStableOrdering]' started.
+Test Case '-[LocalMemoryUnitTests.LexicalSearchEngineTests testWeightedBM25AndExactMetadataBoostsHaveStableOrdering]' passed (0.018 seconds).
+Test Suite 'LexicalSearchEngineTests' passed at 2026-08-28 23:22:19.695.
+	 Executed 8 tests, with 0 failures (0 unexpected) in 0.247 (0.249) seconds
+Test Suite 'LocalMemoryUnitTests.xctest' passed at 2026-08-28 23:22:19.695.
+	 Executed 9 tests, with 0 failures (0 unexpected) in 1.219 (1.222) seconds
+Test Suite 'Selected tests' passed at 2026-08-28 23:22:19.695.
+	 Executed 9 tests, with 0 failures (0 unexpected) in 1.219 (1.223) seconds
+2026-08-28 23:22:19.969 xcodebuild[49489:1826421] [MT] IDETestOperationsObserverDebug: 1.928 elapsed -- Testing started completed.
+2026-08-28 23:22:19.969 xcodebuild[49489:1826421] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-08-28 23:22:19.969 xcodebuild[49489:1826421] [MT] IDETestOperationsObserverDebug: 1.928 sec, +1.928 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/justinhou/Development/deepshelves/.build/DerivedData/Logs/Test/Test-LocalMemory-2026.08.28_23-22-14-+0200.xcresult
+
+** TEST SUCCEEDED **
+
+Testing started

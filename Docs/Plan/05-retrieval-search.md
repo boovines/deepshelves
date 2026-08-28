@@ -193,6 +193,14 @@ Keep Coast’s demonstrated “lamp + today” query as one acceptance fixture.
 
 Gate: Recall@5 at least 0.90 on exact and metadata queries; p95 below 300 ms on a 30-day fixture.
 
+LM-038 freezes the R1 corpus at `Fixtures/LM038/retrieval-judgments.json`. Its
+100 queries contain 30 exact text/title/identifier, 20 app/site/time-filter,
+25 visual/semantic, 15 combined ambiguous, and 10 no-result/adversarial cases.
+The lexical gate evaluates the 75 nonvisual cases three times each and publishes
+Recall@1/5/10, MRR, nDCG@10, no-result precision, forbidden-result count, and
+p50/p95/p99 latency in `Results/LM-038/retrieval.json`. The generator must
+reproduce the frozen bytes before the report is accepted.
+
 ### R2: Session grouping and timeline context
 
 Gate: duplicate result rate below 15% without lowering Recall@10.

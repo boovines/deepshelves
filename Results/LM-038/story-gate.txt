@@ -1,0 +1,10 @@
+frozen_corpus_reproduction=passed
+retrieval_release_tests=passed
+recall_at_5_gate=passed
+p95_latency_gate=passed
+no_result_and_forbidden_gate=passed
+contracts=passed
+privacy_smoke=passed
+release_compile_only=passed
+dependency_audit=passed
+encoder_process_tripwire=passed

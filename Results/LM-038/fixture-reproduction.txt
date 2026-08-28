@@ -1,0 +1,7 @@
+frozen_fixture_sha256=640abc4d73f66c9555cb54df277b0963eeae02cd80651f7174d6bba238e02912
+generator_reproduces_frozen_fixture=passed
+frame_count=500
+query_count=100
+lexical_query_count=75
+independent_judgments_per_query=3
+invalid_pre_tuning_freeze_preserved=passed

@@ -531,6 +531,7 @@ public final class ArchiveDatabase: @unchecked Sendable {
 
     func insertSearchFrameFixtureForTesting(
         suffix: Int,
+        frameID explicitFrameID: UUID? = nil,
         capturedAt: Date = Date(timeIntervalSince1970: 1_777_000_000),
         bundleIdentifier: String = "com.example.fixture",
         appName: String = "Fixture App",
@@ -538,9 +539,10 @@ public final class ArchiveDatabase: @unchecked Sendable {
         host: String? = nil,
         path: String? = nil
     ) throws -> UUID {
-        let frameID = UUID(
-            uuidString: String(format: "35000000-0000-0000-0000-%012d", suffix)
-        )!
+        let frameID =
+            explicitFrameID ?? UUID(
+                uuidString: String(format: "35000000-0000-0000-0000-%012d", suffix)
+            )!
         let chunkID = "search-chunk-\(suffix)"
         try writer.write { database in
             try database.execute(
