@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-031",
+  "status": "passed",
+  "fixtureCount": 200,
+  "highContrastLatinRecall": 1.0,
+  "minimumHighContrastLatinRecall": 0.90,
+  "fullRecall": 1.0,
+  "minimumFullRecall": 0.82,
+  "p95Milliseconds": 100.022542,
+  "orientationCases": 8,
+  "maximumConcurrentOCRJobs": 1,
+  "leaseDurationSeconds": 120,
+  "maximumAttempts": 3,
+  "imageInput": "in-memory CoreGraphics only",
+  "appleImageIOEncodeDecodeCalls": 0,
+  "hardwareEncoderTestsExecuted": 0,
+  "applicationLaunchesExecuted": 0
+}

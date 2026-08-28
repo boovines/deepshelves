@@ -528,12 +528,23 @@
       "resumeProbe": null
     },
     "LM-031": {
-      "status": "pending",
-      "startedAt": null,
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": null,
+      "status": "passed",
+      "startedAt": "2026-08-28T18:48:03Z",
+      "completedAt": "2026-08-28T19:03:11Z",
+      "gitRevision": "refs/tags/checkpoints/LM-031",
+      "evidence": [
+        "Results/LM-031/report.json",
+        "Results/LM-031/red.txt",
+        "Results/LM-031/focused-tests.txt",
+        "Results/LM-031/static-audit.txt",
+        "Results/LM-031/contracts.txt",
+        "Results/LM-031/privacy.txt",
+        "Results/LM-031/release-build.txt",
+        "Results/LM-031/dependencies.txt",
+        "Results/LM-031/swift-format.txt",
+        "Results/LM-031/story-gate.txt"
+      ],
+      "notes": "Vision OCR now accepts explicit eight-way orientation and source/crop geometry, converts Vision lower-left bounds into validated source-window upper-left bounds, preserves confidence/language provenance, and emits contract TextSpans. A 120-second injected lease store, actor-enforced single concurrency, nominal/fair-only thermal policy, cancellation-before-publication, three-attempt retry/permanent transitions, and user-visible failure copy pass. The production Apple Vision adapter runs on a detached utility task. All 200 in-memory CoreGraphics fixtures pass at 1.0 high-contrast and full recall with 100.023 ms p95 off the capture path. The legacy PNG/ImageIO helper now fails closed; zero ImageIO encode/decode calls, app launches, or hardware encoder tests ran.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null

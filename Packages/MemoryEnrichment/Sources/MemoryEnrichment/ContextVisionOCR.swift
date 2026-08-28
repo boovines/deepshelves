@@ -2,7 +2,7 @@ import CoreGraphics
 import CoreText
 import Foundation
 import ImageIO
-import UniformTypeIdentifiers
+import NaturalLanguage
 import Vision
 
 public struct OCRGroundTruthWord: Codable, Equatable, Sendable {
@@ -23,8 +23,7 @@ public struct RenderedOCRFixture {
 public enum S2OCRRendererError: Error, Equatable, Sendable {
     case cannotCreateBitmapContext
     case cannotCreateImage
-    case cannotCreatePNGDestination
-    case cannotFinalizePNG
+    case imageIORuntimeQuarantined
 }
 
 public enum S2OCRRenderer {
@@ -33,15 +32,17 @@ public enum S2OCRRenderer {
 
     public static func render(_ fixture: S2OCRFixture) throws -> RenderedOCRFixture {
         let colorSpace = CGColorSpaceCreateDeviceRGB()
-        guard let context = CGContext(
-            data: nil,
-            width: width,
-            height: height,
-            bitsPerComponent: 8,
-            bytesPerRow: width * 4,
-            space: colorSpace,
-            bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
-        ) else {
+        guard
+            let context = CGContext(
+                data: nil,
+                width: width,
+                height: height,
+                bitsPerComponent: 8,
+                bytesPerRow: width * 4,
+                space: colorSpace,
+                bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
+            )
+        else {
             throw S2OCRRendererError.cannotCreateBitmapContext
         }
 
@@ -67,7 +68,8 @@ public enum S2OCRRenderer {
                 kCTFontAttributeName: font,
                 kCTForegroundColorAttributeName: textColor,
             ]
-            let attributed = CFAttributedStringCreate(nil, word as CFString, attributes as CFDictionary)
+            let attributed = CFAttributedStringCreate(
+                nil, word as CFString, attributes as CFDictionary)
             let line = CTLineCreateWithAttributedString(attributed!)
             var ascent: CGFloat = 0
             var descent: CGFloat = 0
@@ -104,20 +106,68 @@ public enum S2OCRRenderer {
     }
 
     public static func pngData(for image: CGImage) throws -> Data {
-        let data = NSMutableData()
-        guard let destination = CGImageDestinationCreateWithData(
-            data,
-            UTType.png.identifier as CFString,
-            1,
-            nil
-        ) else {
-            throw S2OCRRendererError.cannotCreatePNGDestination
+        _ = image
+        throw S2OCRRendererError.imageIORuntimeQuarantined
+    }
+}
+
+public struct AppleVisionTextRecognizer: VisionTextRecognizing, Sendable {
+    public init() {}
+
+    public func recognize(_ input: OCRFrameInput) async throws -> [OCRRawObservation] {
+        try await Task.detached(priority: .utility) {
+            let request = VNRecognizeTextRequest()
+            request.recognitionLevel = .accurate
+            request.usesLanguageCorrection = false
+            request.automaticallyDetectsLanguage = true
+            request.minimumTextHeight = 0.02
+
+            let handler = VNImageRequestHandler(
+                cgImage: input.image,
+                orientation: input.orientation.cgImagePropertyOrientation,
+                options: [:]
+            )
+            try handler.perform([request])
+            try Task.checkCancellation()
+            return (request.results ?? []).compactMap { observation in
+                guard let candidate = observation.topCandidates(1).first else {
+                    return nil
+                }
+                let bounds = observation.boundingBox
+                return OCRRawObservation(
+                    text: candidate.string,
+                    confidence: candidate.confidence,
+                    languageCode: detectedLanguage(for: candidate.string),
+                    visionBounds: OCRNormalizedBounds(
+                        x: bounds.origin.x,
+                        y: bounds.origin.y,
+                        width: bounds.width,
+                        height: bounds.height
+                    )
+                )
+            }
+        }.value
+    }
+}
+
+private func detectedLanguage(for text: String) -> String? {
+    let recognizer = NLLanguageRecognizer()
+    recognizer.processString(text)
+    return recognizer.dominantLanguage?.rawValue ?? "en"
+}
+
+extension OCRImageOrientation {
+    fileprivate var cgImagePropertyOrientation: CGImagePropertyOrientation {
+        switch self {
+        case .up: .up
+        case .upMirrored: .upMirrored
+        case .down: .down
+        case .downMirrored: .downMirrored
+        case .left: .left
+        case .leftMirrored: .leftMirrored
+        case .right: .right
+        case .rightMirrored: .rightMirrored
         }
-        CGImageDestinationAddImage(destination, image, nil)
-        guard CGImageDestinationFinalize(destination) else {
-            throw S2OCRRendererError.cannotFinalizePNG
-        }
-        return data as Data
     }
 }
 
@@ -171,8 +221,8 @@ public enum OCRRecallScorer {
             let expectedKey = ContextTextNormalizer.comparisonKey(expected.text)
             let match = observations.indices.first { index in
                 guard !usedObservationIndices.contains(index),
-                      observations[index].normalizedText == expectedKey,
-                      let bounds = observations[index].bounds
+                    observations[index].normalizedText == expectedKey,
+                    let bounds = observations[index].bounds
                 else {
                     return false
                 }

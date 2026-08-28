@@ -1,0 +1,6 @@
+LM-031 TDD red, 2026-08-28T18:48:03Z
+
+Command: xcodebuild Release, VisionOCRPipelineTests only, encoder-process tripwire active.
+Expected failure: the OCR input/orientation/geometry, raw observation, pipeline,
+lease-store, worker, thermal, cancellation, retry, and permanent-failure APIs were absent.
+Result: exit 65 / TEST FAILED. No VTEncoderXPCService appeared.

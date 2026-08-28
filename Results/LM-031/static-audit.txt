@@ -1,0 +1,9 @@
+orientation_and_scale_correction=passed
+confidence_language_bounds=passed
+single_concurrency=passed
+thermal_deferral=passed
+cancellation_publication=zero
+retry_and_permanent_states=passed
+apple_imageio_encode_decode_calls=0
+hardware_encoder_tests_executed=0
+app_launch_tests_executed=0
