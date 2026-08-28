@@ -84,22 +84,44 @@ public struct EnrichmentBacklogPresentation: Equatable, Sendable {
     public let failedCount: Int
     public let statusText: String
     public let accessibilityValue: String
+    public let visualPendingCount: Int
+    public let visualFailedCount: Int
+    public let visualStatusText: String
 
     public init(
         pendingCount: Int,
         failedCount: Int,
         statusText: String,
-        accessibilityValue: String
+        accessibilityValue: String,
+        visualPendingCount: Int = 0,
+        visualFailedCount: Int = 0,
+        visualStatusText: String = "Visual search up to date"
     ) {
         self.pendingCount = pendingCount
         self.failedCount = failedCount
         self.statusText = statusText
         self.accessibilityValue = accessibilityValue
+        self.visualPendingCount = visualPendingCount
+        self.visualFailedCount = visualFailedCount
+        self.visualStatusText = visualStatusText
     }
 }
 
 extension EnrichmentBacklogSnapshot {
     public var presentation: EnrichmentBacklogPresentation {
+        let visual = byKind[.visualVector] ?? EnrichmentBacklogCounts()
+        let visualPending = visual.queued + visual.leased + visual.retryScheduled
+        let visualNoun = visualPending == 1 ? "item" : "items"
+        let visualFailedNoun = visual.permanentFailures == 1 ? "item" : "items"
+        let visualStatusText: String
+        if visualPending > 0 {
+            visualStatusText = "Visual search indexing: \(visualPending) \(visualNoun) remaining"
+        } else if visual.permanentFailures > 0 {
+            visualStatusText =
+                "Visual search unavailable for \(visual.permanentFailures) \(visualFailedNoun)"
+        } else {
+            visualStatusText = "Visual search up to date"
+        }
         let pendingNoun = totalPending == 1 ? "item" : "items"
         let failedNoun = permanentFailures == 1 ? "item" : "items"
         let statusText: String
@@ -112,12 +134,16 @@ extension EnrichmentBacklogSnapshot {
         }
         let accessibilityValue =
             "\(totalPending) pending, \(leased) active, "
-            + "\(retryScheduled) retrying, \(permanentFailures) failed"
+            + "\(retryScheduled) retrying, \(permanentFailures) failed, "
+            + "\(visualPending) visual pending"
         return EnrichmentBacklogPresentation(
             pendingCount: totalPending,
             failedCount: permanentFailures,
             statusText: statusText,
-            accessibilityValue: accessibilityValue
+            accessibilityValue: accessibilityValue,
+            visualPendingCount: visualPending,
+            visualFailedCount: visual.permanentFailures,
+            visualStatusText: visualStatusText
         )
     }
 }

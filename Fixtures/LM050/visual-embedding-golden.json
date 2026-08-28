@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "modelVersion": "mobileclip-s0-coreml-3e0a7bf",
+  "preprocessingVersion": "srgb-aspectfill-bgra256-v1",
+  "dimension": 512,
+  "inputPrefix": [3.0, 4.0],
+  "normalizedPrefix": [0.6, 0.8],
+  "expectedNorm": 1.0,
+  "canonicalFloat32SHA256": "2cdd74c082e797454606fd2bd5ac4852cb42e0081ffc90c1890bbc25b24c8065"
+}

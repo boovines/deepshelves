@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-050",
+  "status": "passed",
+  "producer": {
+    "modelVersion": "mobileclip-s0-coreml-3e0a7bf",
+    "jobVersion": "mobileclip-s0-coreml-3e0a7bf+image-v1",
+    "preprocessingVersion": "srgb-aspectfill-bgra256-v1",
+    "embeddingDimension": 512,
+    "normalization": "deterministic Double-accumulated L2 with canonical little-endian Float32 evidence",
+    "fixtureSHA256": "a5fec36e75a239f15c4fc985e96cec29da5c64f736df29d5743f71fc515ae9d9",
+    "canonicalVectorSHA256": "2cdd74c082e797454606fd2bd5ac4852cb42e0081ffc90c1890bbc25b24c8065"
+  },
+  "scheduling": {
+    "maximumConcurrentJobs": 1,
+    "leaseSeconds": 120,
+    "maximumAttempts": 3,
+    "retryDelaysSeconds": [5, 10],
+    "captureTransitionDefersWithoutLease": true,
+    "seriousThermalDefersWithoutLease": true,
+    "criticalThermalDefersAll": true,
+    "lowPowerModeDefersWithoutLease": true,
+    "batteryAtOrBelow20PercentDefersWithoutLease": true
+  },
+  "sourceIdentity": {
+    "requiresReadySchemaV2Frame": true,
+    "requiresReadyParentMedia": true,
+    "requiresReadyExactThumbnailArtifact": true,
+    "verifiesThumbnailSHA256BeforeDecode": true,
+    "revalidatesPolicyAndSourceAfterInference": true,
+    "suppressionFailsClosed": true
+  },
+  "invalidation": {
+    "oldArtifactsBecomeStale": true,
+    "oldVectorOffsetsBecomeStale": true,
+    "eligibleFramesReturnToPending": true,
+    "suppressedFramesRemainSuppressed": true,
+    "repeatedSynchronizationIsNoOp": true
+  },
+  "canonicalCaptureBudget": {
+    "evidence": "Results/LM-007/report.json",
+    "captureTimerP95Milliseconds": 11.117792,
+    "captureTimerIntervalsOver100Milliseconds": 0,
+    "maximumConcurrentInferenceJobs": 1,
+    "imageP95Milliseconds": 1.546083
+  },
+  "verification": {
+    "focusedReleaseUnitTests": 20,
+    "deterministicNormalization": "passed",
+    "retryAndPermanentFailure": "passed",
+    "honestBacklogProjection": "passed",
+    "contracts": "passed",
+    "privacySmoke": "passed",
+    "releaseCompileOnly": "passed",
+    "dependencyAudit": "passed"
+  },
+  "safety": {
+    "applicationLaunchesExecuted": 0,
+    "appleImageIORuntimeExecuted": false,
+    "hardwareEncoderTestsExecuted": 0,
+    "videoToolboxInvocations": 0,
+    "encoderTripwire": "passed"
+  }
+}

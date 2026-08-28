@@ -137,6 +137,14 @@ public final class ArchiveEnrichmentJobStore: @unchecked Sendable {
                 guard let version = producerVersions[kind] else { continue }
                 let aliases = Self.aliases(for: kind)
                 let placeholders = aliases.map { _ in "?" }.joined(separator: ", ")
+                if kind == .visualVector {
+                    try Self.invalidateVisualProjections(
+                        aliases: aliases,
+                        placeholders: placeholders,
+                        replacementVersion: version,
+                        database: database
+                    )
+                }
                 var arguments: [DatabaseValueConvertible?] = [
                     kind.rawValue,
                     version,
@@ -486,6 +494,49 @@ public final class ArchiveEnrichmentJobStore: @unchecked Sendable {
         case .mediaRewrite: [kind.rawValue, "media-rewrite"]
         case .vectorCompaction: [kind.rawValue, "vector-compaction"]
         }
+    }
+
+    private static func invalidateVisualProjections(
+        aliases: [String],
+        placeholders: String,
+        replacementVersion: String,
+        database: Database
+    ) throws {
+        let invalidatedParentsSQL = """
+            SELECT parent_id FROM processing_jobs
+            WHERE kind IN (\(placeholders))
+              AND producer_version <> ?
+              AND state <> 'cancelled'
+            """
+        let arguments = StatementArguments(aliases + [replacementVersion])
+        try database.execute(
+            sql: """
+                UPDATE artifacts
+                SET state = 'stale'
+                WHERE kind = 'visualVector'
+                  AND state NOT IN ('deleted', 'stale')
+                  AND frame_id IN (\(invalidatedParentsSQL))
+                """,
+            arguments: arguments
+        )
+        try database.execute(
+            sql: """
+                UPDATE vector_offsets
+                SET state = 'stale'
+                WHERE state <> 'stale'
+                  AND frame_id IN (\(invalidatedParentsSQL))
+                """,
+            arguments: arguments
+        )
+        try database.execute(
+            sql: """
+                UPDATE frames
+                SET visual_state = 'pending'
+                WHERE visual_state <> 'suppressed'
+                  AND id IN (\(invalidatedParentsSQL))
+                """,
+            arguments: arguments
+        )
     }
 
     private static func validPriority(_ value: Int) -> Bool {

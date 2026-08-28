@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "activeStory": "LM-050",
+  "activeStory": "LM-051",
   "stories": {
     "LM-001": {
       "status": "passed",
@@ -857,23 +857,27 @@
       "resumeProbe": null
     },
     "LM-050": {
-      "status": "active",
+      "status": "passed",
       "startedAt": "2026-08-28T22:17:17Z",
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": "Activated as the next dependency-safe story after LM-049 passed. Implement thermal/power-aware image embedding jobs, deterministic versioned normalized outputs, invalidation, retry behavior, and honest backlog projection without any hardware-video or Apple ImageIO runtime.",
+      "completedAt": "2026-08-28T22:33:10Z",
+      "gitRevision": "refs/tags/checkpoints/LM-050",
+      "evidence": [
+        "Results/LM-050/report.json",
+        "Results/LM-050/unit-tests.txt",
+        "Results/LM-050/story-gate.txt"
+      ],
+      "notes": "Visual embedding jobs accept only exact ready thumbnail evidence for pending V2 foreground frames, verify hashes, pin model/preprocessing identity, deterministically normalize finite 512-dimensional vectors, and revalidate policy/source identity after inference. Capture, thermal, Low Power Mode, and low-battery deferral consume no attempts; bounded retries become an honest terminal failure. Producer invalidation stales projections while preserving suppression. Twenty safe focused Release tests plus contracts, privacy, formatting, dependency, capture-budget, and compile-only Release gates passed under the encoder tripwire with no app, ImageIO, or hardware-video runtime.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null
     },
     "LM-051": {
-      "status": "pending",
-      "startedAt": null,
+      "status": "active",
+      "startedAt": "2026-08-28T22:33:10Z",
       "completedAt": null,
       "gitRevision": null,
       "evidence": [],
-      "notes": null,
+      "notes": "Activated after LM-050 passed. Implement append-safe model-versioned Float16 vector storage, checksummed SQLite offsets, compaction, crash-tail repair, and complete rebuild using only safe non-hardware tests.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null

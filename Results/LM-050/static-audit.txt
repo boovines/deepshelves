@@ -1,0 +1,11 @@
+fixture_sha256=a5fec36e75a239f15c4fc985e96cec29da5c64f736df29d5743f71fc515ae9d9
+producer_version=mobileclip-s0-coreml-3e0a7bf+image-v1
+preprocessing_version=srgb-aspectfill-bgra256-v1
+embedding_dimension=512
+canonical_float32_sha256=2cdd74c082e797454606fd2bd5ac4852cb42e0081ffc90c1890bbc25b24c8065
+capture_timer_p95_ms=11.117792
+capture_timer_intervals_over_100_ms=0
+maximum_concurrent_inference_jobs=1
+application_launches_executed=0
+hardware_encoder_tests_executed=0
+apple_imageio_runtime_executed=0

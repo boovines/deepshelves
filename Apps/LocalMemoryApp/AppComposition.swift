@@ -528,6 +528,16 @@ struct MenuBarStatusPanel: View {
                             .accessibilityLabel("Enrichment backlog")
                             .accessibilityValue(model.enrichmentBacklog.accessibilityValue)
                             .accessibilityIdentifier("menu.enrichmentBacklog")
+                        if model.enrichmentBacklog.visualPendingCount > 0
+                            || model.enrichmentBacklog.visualFailedCount > 0
+                        {
+                            Text(model.enrichmentBacklog.visualStatusText)
+                                .font(.caption2)
+                                .foregroundStyle(.secondary)
+                                .accessibilityLabel("Visual search indexing")
+                                .accessibilityValue(model.enrichmentBacklog.visualStatusText)
+                                .accessibilityIdentifier("menu.visualIndexing")
+                        }
                     }
                 }
                 Spacer(minLength: 8)
