@@ -665,6 +665,7 @@ private func makePublishedHEICFixture(
                 bundleIdentifier: "com.example.approved",
                 applicationName: "Approved",
                 windowTitle: "Approved Window",
+                windowBounds: try NormalizedRect(x: 0, y: 0, width: 1, height: 1),
                 mediaPath: "\(relativeDirectory)/\(relativePath)"
             )
         )

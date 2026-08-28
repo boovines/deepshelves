@@ -1,0 +1,9 @@
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:macOS, arch:arm64, id:00006030-000658C614D0001C, name:My Mac }
+{ platform:macOS, arch:x86_64, id:00006030-000658C614D0001C, name:My Mac }
+{ platform:macOS, name:Any Mac }
+2026-08-28 23:09:35.765 xcodebuild[28130:1760399] [MT] IDETestOperationsObserverDebug: 1.272 elapsed -- Testing started completed.
+2026-08-28 23:09:35.765 xcodebuild[28130:1760399] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-08-28 23:09:35.765 xcodebuild[28130:1760399] [MT] IDETestOperationsObserverDebug: 1.272 sec, +1.272 sec -- end
+Testing started
+check-contracts: legacy V1 and canonical V2 fixtures reproduce byte-for-byte and all contract validation tests pass

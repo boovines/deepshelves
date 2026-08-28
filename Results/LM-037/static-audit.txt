@@ -1,0 +1,9 @@
+access_policy_hard_filters=passed
+weighted_bm25_and_fixed_boosts=passed
+literal_fts_query=passed
+source_evidence_no_summary=passed
+signed_query_fingerprinted_keyset_cursor=passed
+policy_wide_result_cap=passed
+cancellation_boundaries=passed
+hardware_encoder_tests_executed=0
+application_launches_executed=0

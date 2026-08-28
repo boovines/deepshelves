@@ -658,12 +658,24 @@
       "resumeProbe": null
     },
     "LM-037": {
-      "status": "pending",
-      "startedAt": null,
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": null,
+      "status": "passed",
+      "startedAt": "2026-08-28T20:55:08Z",
+      "completedAt": "2026-08-28T21:11:07Z",
+      "gitRevision": "refs/tags/checkpoints/LM-037",
+      "evidence": [
+        "Results/LM-037/report.json",
+        "Results/LM-037/red.txt",
+        "Results/LM-037/focused-tests.txt",
+        "Results/LM-037/package-tests.txt",
+        "Results/LM-037/static-audit.txt",
+        "Results/LM-037/contracts.txt",
+        "Results/LM-037/privacy.txt",
+        "Results/LM-037/release-build.txt",
+        "Results/LM-037/dependencies.txt",
+        "Results/LM-037/swift-format.txt",
+        "Results/LM-037/story-gate.txt"
+      ],
+      "notes": "LexicalSearchEngine now applies AccessPolicy interval/app/host predicates to ready canonical merged records, quotes all user text as literal FTS5 terms, ranks six fields with fixed weighted BM25 and boosts, projects only matching durable source evidence, and supports cancellation-aware stable pagination. Versioned HMAC-SHA256 cursors bind the exact ordering tuple, complete query/policy fingerprint, and cumulative result count; tamper/scope drift fail closed and maxResults caps the full chain. Thirty-seven focused Release tests plus eight parser package tests, contracts/privacy/release/dependency gates passed under the encoder tripwire with zero app/media runtime.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null

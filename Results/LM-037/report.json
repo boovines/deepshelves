@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-037",
+  "status": "passed",
+  "engine": "LexicalSearchEngine",
+  "fields": [
+    "approved_text",
+    "window_title",
+    "app_name",
+    "url_host",
+    "url_path",
+    "transcript_text"
+  ],
+  "bm25Weights": [
+    6,
+    4,
+    2,
+    2,
+    1.5,
+    1
+  ],
+  "hardPolicyFiltersBeforeProjection": true,
+  "literalFTSQuery": true,
+  "stableOrder": [
+    "score_desc",
+    "captured_at_desc",
+    "frame_uuid_asc"
+  ],
+  "signedQueryFingerprintedCursor": true,
+  "policyWideResultCap": true,
+  "cancellationAware": true,
+  "sourceEvidenceOnly": true,
+  "focusedTests": 37,
+  "parserPackageTests": 8,
+  "hardwareEncoderTestsExecuted": 0,
+  "applicationLaunchesExecuted": 0
+}

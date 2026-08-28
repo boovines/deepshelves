@@ -1,0 +1,38 @@
+[0/1] Planning build
+Building for debugging...
+[0/2] Write swift-version--58304C5D6DBC2206.txt
+[1/3] Write sources
+[3/5] Compiling MemoryStore ArchiveLexicalSearch.swift
+[4/5] Emitting module MemoryStore
+[4/6] Write Objects.LinkFileList
+[5/6] Linking MemorySearchPackageTests
+Build complete! (2.84s)
+Test Suite 'All tests' started at 2026-08-28 23:09:17.664.
+Test Suite 'MemorySearchPackageTests.xctest' started at 2026-08-28 23:09:17.664.
+Test Suite 'SearchQueryParserTests' started at 2026-08-28 23:09:17.664.
+Test Case '-[MemorySearchTests.SearchQueryParserTests testAmbiguousOrInvalidSyntaxRemainsVisibleLexicalText]' started.
+Test Case '-[MemorySearchTests.SearchQueryParserTests testAmbiguousOrInvalidSyntaxRemainsVisibleLexicalText]' passed (0.004 seconds).
+Test Case '-[MemorySearchTests.SearchQueryParserTests testExplicitAfterAndBeforeDatesProduceVisibleHalfOpenBounds]' started.
+Test Case '-[MemorySearchTests.SearchQueryParserTests testExplicitAfterAndBeforeDatesProduceVisibleHalfOpenBounds]' passed (0.001 seconds).
+Test Case '-[MemorySearchTests.SearchQueryParserTests testLastWeekUsesLocaleCalendarWeekRatherThanSevenRollingDays]' started.
+Test Case '-[MemorySearchTests.SearchQueryParserTests testLastWeekUsesLocaleCalendarWeekRatherThanSevenRollingDays]' passed (0.001 seconds).
+Test Case '-[MemorySearchTests.SearchQueryParserTests testLocalizedYesterdayUsesCalendarDayBoundaries]' started.
+Test Case '-[MemorySearchTests.SearchQueryParserTests testLocalizedYesterdayUsesCalendarDayBoundaries]' passed (0.003 seconds).
+Test Case '-[MemorySearchTests.SearchQueryParserTests testOneHundredGoldenQueriesAreDeterministicAndExposeEveryFilter]' started.
+Test Case '-[MemorySearchTests.SearchQueryParserTests testOneHundredGoldenQueriesAreDeterministicAndExposeEveryFilter]' passed (0.096 seconds).
+Test Case '-[MemorySearchTests.SearchQueryParserTests testQuotedTextAndKnownApplicationAndSiteBecomeExplicitOutputs]' started.
+Test Case '-[MemorySearchTests.SearchQueryParserTests testQuotedTextAndKnownApplicationAndSiteBecomeExplicitOutputs]' passed (0.000 seconds).
+Test Case '-[MemorySearchTests.SearchQueryParserTests testStandaloneLocaleDateBecomesVisibleExactDayFilter]' started.
+Test Case '-[MemorySearchTests.SearchQueryParserTests testStandaloneLocaleDateBecomesVisibleExactDayFilter]' passed (0.001 seconds).
+Test Case '-[MemorySearchTests.SearchQueryParserTests testTodayBecomesVisibleDayFilterAndLeavesRemainingLexicalQuery]' started.
+Test Case '-[MemorySearchTests.SearchQueryParserTests testTodayBecomesVisibleDayFilterAndLeavesRemainingLexicalQuery]' passed (0.001 seconds).
+Test Suite 'SearchQueryParserTests' passed at 2026-08-28 23:09:17.772.
+	 Executed 8 tests, with 0 failures (0 unexpected) in 0.107 (0.108) seconds
+Test Suite 'MemorySearchPackageTests.xctest' passed at 2026-08-28 23:09:17.772.
+	 Executed 8 tests, with 0 failures (0 unexpected) in 0.107 (0.108) seconds
+Test Suite 'All tests' passed at 2026-08-28 23:09:17.772.
+	 Executed 8 tests, with 0 failures (0 unexpected) in 0.107 (0.109) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.

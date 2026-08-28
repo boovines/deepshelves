@@ -1,5 +1,6 @@
 import Foundation
 import GRDB
+import MemoryContracts
 
 public struct ArchiveCaptureIdentity: Equatable, Sendable {
     public let captureEpochID: UUID
@@ -33,6 +34,7 @@ public struct ArchiveFrameProjection: Equatable, Sendable {
     public let bundleIdentifier: String?
     public let applicationName: String?
     public let windowTitle: String?
+    public let windowBounds: NormalizedRect
     public let mediaPath: String
 
     public init(
@@ -45,6 +47,7 @@ public struct ArchiveFrameProjection: Equatable, Sendable {
         bundleIdentifier: String?,
         applicationName: String?,
         windowTitle: String?,
+        windowBounds: NormalizedRect,
         mediaPath: String
     ) {
         self.id = id
@@ -56,6 +59,7 @@ public struct ArchiveFrameProjection: Equatable, Sendable {
         self.bundleIdentifier = bundleIdentifier
         self.applicationName = applicationName
         self.windowTitle = windowTitle
+        self.windowBounds = windowBounds
         self.mediaPath = mediaPath
     }
 }
@@ -189,9 +193,10 @@ public final class ArchiveAtomicCoordinator: @unchecked Sendable {
                             id, captured_at, monotonic_ns, capture_epoch_id,
                             target_window_id, chunk_id, pts_ms, media_path,
                             media_sha256, media_byte_count, bundle_id, app_name,
-                            window_title, capture_reason, is_transition, text_state,
+                            window_title, window_x, window_y, window_w, window_h,
+                            capture_reason, is_transition, text_state,
                             visual_state, schema_version, approved_text, policy_generation
-                        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
+                        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
                                   'pending', 'pending', 2, '', ?)
                         """,
                     arguments: [
@@ -208,6 +213,10 @@ public final class ArchiveAtomicCoordinator: @unchecked Sendable {
                         projection.bundleIdentifier,
                         projection.applicationName,
                         projection.windowTitle,
+                        projection.windowBounds.x,
+                        projection.windowBounds.y,
+                        projection.windowBounds.width,
+                        projection.windowBounds.height,
                         projection.captureReason,
                         projection.isTransition ? 1 : 0,
                         identity.policyGeneration,

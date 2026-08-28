@@ -45,6 +45,25 @@ optional audio phase so evidence labeling and source weighting stay truthful.
 
 Use BM25 and weight structured/focused text above OCR and transcripts. Use FTS snippets and highlights in result cards.
 
+The lexical engine treats user text as literals, never as FTS5 operator syntax. Quoted
+phrases remain phrases; every other normalized term is quoted and combined with `AND`.
+Its fixed BM25 column weights are `6, 4, 2, 2, 1.5, 1` for approved screen text, title,
+application, host, path, and transcript. Deterministic exact/contains boosts are title
+`4/1.5`, application `3`, host `2.5`, and path `1.5`. Final lexical order is score
+descending, capture time descending, then lowercase frame UUID ascending.
+
+The user-created `AccessPolicy` interval, application allowlist, and browser-host allowlist
+are hard SQL predicates on ready canonical records. Empty application allowlists return
+no agent results; browser records also require their canonical host to be allowed. Request
+filters must already be policy subsets and further narrow those predicates. Expiry is
+checked before every page, and `maxResults` caps the complete signed cursor chain rather
+than each page independently.
+
+Evidence is projected only from matching durable non-suppressed spans or exact canonical
+title/application/URL/transcript fields. Search does not synthesize a claim or summary.
+Cancellation is checked before archive access, after the bounded SQL page, and before
+returning the contract page.
+
 ### Visual semantic
 
 Use paired MobileCLIP-S0 image and text embeddings. Store unit-normalized Float16 image vectors in a contiguous, model-versioned flat file. SQLite maps capture IDs to byte offsets and dimensions.
@@ -134,7 +153,7 @@ Each result includes:
 - Rank contributions for local debugging
 - Media and thumbnail locators authorized for the caller
 
-Use the opaque query-fingerprinted keyset cursor defined in plan 10 for every sort mode. Do not depend on an expiring result cache for pagination correctness.
+Use the opaque query-fingerprinted keyset cursor defined in plan 10 for every sort mode. Do not depend on an expiring result cache for pagination correctness. Lexical cursors carry the exact score bit pattern, capture timestamp, frame UUID, and cumulative policy result count; changing any query or policy scope rejects the cursor.
 
 ## Query understanding
 

@@ -531,6 +531,8 @@ public final class ArchiveDatabase: @unchecked Sendable {
 
     func insertSearchFrameFixtureForTesting(
         suffix: Int,
+        capturedAt: Date = Date(timeIntervalSince1970: 1_777_000_000),
+        bundleIdentifier: String = "com.example.fixture",
         appName: String = "Fixture App",
         windowTitle: String = "Fixture Window",
         host: String? = nil,
@@ -562,18 +564,23 @@ public final class ArchiveDatabase: @unchecked Sendable {
                     INSERT INTO frames(
                         id, captured_at, monotonic_ns, capture_epoch_id,
                         target_window_id, chunk_id, pts_ms, bundle_id, app_name,
-                        window_title, url_scheme, url_host, url_path,
+                        window_title, window_x, window_y, window_w, window_h,
+                        browser_family, url_scheme, url_host, url_path,
                         capture_reason, is_transition, text_state,
                         visual_state, schema_version, approved_text
-                    ) VALUES (?, '2026-08-28T00:00:00.500Z', 500000000,
-                              'search-epoch', 42, ?, 500, 'com.example.fixture', ?, ?,
-                              ?, ?, ?, 'visualChange', 0, 'pending', 'ready', 1, '')
+                    ) VALUES (?, ?, 500000000,
+                              'search-epoch', 42, ?, 500, ?, ?, ?,
+                              0, 0, 1, 1, ?, ?, ?, ?,
+                              'visualChange', 0, 'pending', 'ready', 1, '')
                     """,
                 arguments: [
                     frameID.uuidString.lowercased(),
+                    Self.encodeSearchFixtureDate(capturedAt),
                     chunkID,
+                    bundleIdentifier,
                     appName,
                     windowTitle,
+                    host == nil ? nil : "chrome",
                     host == nil ? nil : "https",
                     host,
                     path,
@@ -590,6 +597,12 @@ public final class ArchiveDatabase: @unchecked Sendable {
                 sql: "SELECT COUNT(*) FROM frame_fts WHERE frame_fts MATCH 'searchable'"
             ) ?? 0
         }
+    }
+
+    private static func encodeSearchFixtureDate(_ date: Date) -> String {
+        date.formatted(
+            Date.ISO8601FormatStyle(includingFractionalSeconds: true, timeZone: .gmt)
+        )
     }
 
     func mediaChunkStateForTesting(id: String) throws -> String? {

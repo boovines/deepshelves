@@ -159,7 +159,7 @@ Artifacts are disposable projections. Their parent frame is the deletion authori
 - component ranks and final fused score for debugging
 - `nextCursor` only on a result page, not per result
 
-Stable ordering is final score descending, capture time descending, then UUID lexical order. A cursor encodes the final ordering tuple and query fingerprint so pagination never skips equal-scored results.
+Stable ordering is final score descending, capture time descending, then UUID lexical order. A cursor encodes the final ordering tuple and query fingerprint so pagination never skips equal-scored results. The local lexical cursor is a versioned canonical JSON payload plus HMAC-SHA256 using an injected 256-bit local key. Its payload contains the query fingerprint, exact IEEE-754 score bits, canonical capture timestamp, lowercase frame UUID, and cumulative returned-result count. The fingerprint covers normalized literal query, effective interval, requested app/site filters, mode, policy identity/allowlists/expiry, and policy-wide maximum result count; cursor tamper or scope drift fails closed. Page size is not fingerprinted, so callers may safely reduce it mid-chain. No result cache is required.
 
 ### `TimelineSlice`
 

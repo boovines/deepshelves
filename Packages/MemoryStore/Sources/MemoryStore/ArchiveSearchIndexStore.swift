@@ -111,7 +111,7 @@ public struct ArchiveSearchIndexIntegrity: Equatable, Sendable {
 public final class ArchiveSearchIndexStore: @unchecked Sendable {
     public static let maximumMergedTextBytes = 1_048_576
 
-    private let archive: ArchiveDatabase
+    let archive: ArchiveDatabase
 
     public init(database: ArchiveDatabase) {
         archive = database
