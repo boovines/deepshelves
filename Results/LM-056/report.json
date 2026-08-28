@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "storyID": "LM-056",
+  "status": "passed",
+  "generatedAt": "2026-08-28T16:03:03Z",
+  "baseRevision": "5c90f1ff6cf74880d119a6396b9dc6b2aec52bc7",
+  "checkpoint": "refs/tags/checkpoints/LM-056",
+  "results": {
+    "settings": {
+      "applicationExclusions": true,
+      "siteExclusions": true,
+      "orderedRules": true,
+      "lastMatchingUserRuleWins": true,
+      "testThisContextPreview": true,
+      "ownerOnlyPersistence": true,
+      "immediatePolicyGenerationReload": true
+    },
+    "changeDuringCapture": {
+      "caseCount": 100,
+      "uniqueApplicationCount": 100,
+      "exactEffectiveTimeCount": 100,
+      "staleApprovalAcceptedCount": 0,
+      "postEffectivePersistedArtifactCount": 0,
+      "uiProjectionLeakCount": 0,
+      "helperProjectionLeakCount": 0,
+      "excludedGapIdentityCount": 0
+    },
+    "timeline": {
+      "typedReasonCount": 14,
+      "policyDenialReasonCount": 12,
+      "allowedDecisionGapCount": 0,
+      "approvedBundleIDOnPolicyGapCount": 0
+    },
+    "videoSafety": {
+      "hardwareEncoderTestsExecuted": 0,
+      "appLaunchTestsCompleted": 0,
+      "uiRuntime": "quarantined after VTEncoderXPCService appeared during the first accessibility wait",
+      "releaseGateMode": "compile-only",
+      "encoderTripwirePassed": true
+    }
+  },
+  "gates": {
+    "changeDuringCaptureCorpus": {
+      "status": "passed",
+      "fixture": "Fixtures/LM056/change-during-capture.json",
+      "sha256": "bdd5d230e3485efbcfea64009643aeeb75c2032e84581ea4f4d0dba0e1656921",
+      "fixtureCheck": "Results/LM-056/fixture-check.txt",
+      "fixtureCheckSha256": "407fa421a5d2266480ab50be6f38a36205d980ed32a2bc54ae4b7e634fdf0c5e"
+    },
+    "focusedTests": {
+      "status": "passed",
+      "testCount": 8,
+      "log": "Results/LM-056/settings-unit.txt",
+      "sha256": "3f2913a010695b81bdc86cb0b5747821ecd1159d137f7bf6cbb8de5749eb86ff"
+    },
+    "uiStaticAudit": {
+      "status": "passed",
+      "log": "Results/LM-056/ui-static-audit.txt",
+      "sha256": "e217ed59bebf27f061bea2c93a8a538de358ba9222173ce85a3eb4628b8b85f5"
+    },
+    "uiRuntimeQuarantine": {
+      "status": "quarantined",
+      "log": "Results/LM-056/ui-runtime-quarantine.txt",
+      "sha256": "ab320163faf87cee9bb1202082ab35f27f43d75117b1da96f9e6b4d676973673"
+    },
+    "contracts": {
+      "status": "passed",
+      "log": "Results/LM-056/contracts.txt",
+      "sha256": "9f49ffa861bff0ec7a38eb725274db98d949d1371571ee625008b43192c7e355"
+    },
+    "privacySmoke": {
+      "status": "passed",
+      "log": "Results/LM-056/privacy.txt",
+      "sha256": "9ea4b5449f9715c90a3a80909f275c987c95be1130414ae6e10f888fcbe4a8bc"
+    },
+    "releaseCompileOnly": {
+      "status": "passed",
+      "log": "Results/LM-056/release-build.txt",
+      "sha256": "0b8d8b400aa756c8e3e87da8b46a1a72e3984202f6c62986098ce97b64ec8aed"
+    },
+    "format": {
+      "status": "passed",
+      "log": "Results/LM-056/swift-format.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "storyGate": {
+      "status": "passed",
+      "log": "Results/LM-056/story-gate.txt",
+      "sha256": "437166197c0820f1c46b9becc7c84e78030c4357769a102e7ce3e5145ad1f699"
+    }
+  }
+}

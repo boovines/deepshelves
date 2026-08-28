@@ -1,0 +1,906 @@
+{
+  "cases" : [
+    {
+      "bundleIdentifier" : "com.example.lm056.private000",
+      "effectiveNanoseconds" : 5600000000,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-000",
+      "ruleID" : "exclude-change-000"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private001",
+      "effectiveNanoseconds" : 5600000100,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-001",
+      "ruleID" : "exclude-change-001"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private002",
+      "effectiveNanoseconds" : 5600000200,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-002",
+      "ruleID" : "exclude-change-002"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private003",
+      "effectiveNanoseconds" : 5600000300,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-003",
+      "ruleID" : "exclude-change-003"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private004",
+      "effectiveNanoseconds" : 5600000400,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-004",
+      "ruleID" : "exclude-change-004"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private005",
+      "effectiveNanoseconds" : 5600000500,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-005",
+      "ruleID" : "exclude-change-005"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private006",
+      "effectiveNanoseconds" : 5600000600,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-006",
+      "ruleID" : "exclude-change-006"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private007",
+      "effectiveNanoseconds" : 5600000700,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-007",
+      "ruleID" : "exclude-change-007"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private008",
+      "effectiveNanoseconds" : 5600000800,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-008",
+      "ruleID" : "exclude-change-008"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private009",
+      "effectiveNanoseconds" : 5600000900,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-009",
+      "ruleID" : "exclude-change-009"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private010",
+      "effectiveNanoseconds" : 5600001000,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-010",
+      "ruleID" : "exclude-change-010"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private011",
+      "effectiveNanoseconds" : 5600001100,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-011",
+      "ruleID" : "exclude-change-011"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private012",
+      "effectiveNanoseconds" : 5600001200,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-012",
+      "ruleID" : "exclude-change-012"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private013",
+      "effectiveNanoseconds" : 5600001300,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-013",
+      "ruleID" : "exclude-change-013"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private014",
+      "effectiveNanoseconds" : 5600001400,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-014",
+      "ruleID" : "exclude-change-014"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private015",
+      "effectiveNanoseconds" : 5600001500,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-015",
+      "ruleID" : "exclude-change-015"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private016",
+      "effectiveNanoseconds" : 5600001600,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-016",
+      "ruleID" : "exclude-change-016"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private017",
+      "effectiveNanoseconds" : 5600001700,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-017",
+      "ruleID" : "exclude-change-017"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private018",
+      "effectiveNanoseconds" : 5600001800,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-018",
+      "ruleID" : "exclude-change-018"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private019",
+      "effectiveNanoseconds" : 5600001900,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-019",
+      "ruleID" : "exclude-change-019"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private020",
+      "effectiveNanoseconds" : 5600002000,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-020",
+      "ruleID" : "exclude-change-020"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private021",
+      "effectiveNanoseconds" : 5600002100,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-021",
+      "ruleID" : "exclude-change-021"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private022",
+      "effectiveNanoseconds" : 5600002200,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-022",
+      "ruleID" : "exclude-change-022"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private023",
+      "effectiveNanoseconds" : 5600002300,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-023",
+      "ruleID" : "exclude-change-023"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private024",
+      "effectiveNanoseconds" : 5600002400,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-024",
+      "ruleID" : "exclude-change-024"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private025",
+      "effectiveNanoseconds" : 5600002500,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-025",
+      "ruleID" : "exclude-change-025"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private026",
+      "effectiveNanoseconds" : 5600002600,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-026",
+      "ruleID" : "exclude-change-026"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private027",
+      "effectiveNanoseconds" : 5600002700,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-027",
+      "ruleID" : "exclude-change-027"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private028",
+      "effectiveNanoseconds" : 5600002800,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-028",
+      "ruleID" : "exclude-change-028"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private029",
+      "effectiveNanoseconds" : 5600002900,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-029",
+      "ruleID" : "exclude-change-029"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private030",
+      "effectiveNanoseconds" : 5600003000,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-030",
+      "ruleID" : "exclude-change-030"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private031",
+      "effectiveNanoseconds" : 5600003100,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-031",
+      "ruleID" : "exclude-change-031"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private032",
+      "effectiveNanoseconds" : 5600003200,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-032",
+      "ruleID" : "exclude-change-032"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private033",
+      "effectiveNanoseconds" : 5600003300,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-033",
+      "ruleID" : "exclude-change-033"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private034",
+      "effectiveNanoseconds" : 5600003400,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-034",
+      "ruleID" : "exclude-change-034"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private035",
+      "effectiveNanoseconds" : 5600003500,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-035",
+      "ruleID" : "exclude-change-035"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private036",
+      "effectiveNanoseconds" : 5600003600,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-036",
+      "ruleID" : "exclude-change-036"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private037",
+      "effectiveNanoseconds" : 5600003700,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-037",
+      "ruleID" : "exclude-change-037"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private038",
+      "effectiveNanoseconds" : 5600003800,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-038",
+      "ruleID" : "exclude-change-038"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private039",
+      "effectiveNanoseconds" : 5600003900,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-039",
+      "ruleID" : "exclude-change-039"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private040",
+      "effectiveNanoseconds" : 5600004000,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-040",
+      "ruleID" : "exclude-change-040"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private041",
+      "effectiveNanoseconds" : 5600004100,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-041",
+      "ruleID" : "exclude-change-041"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private042",
+      "effectiveNanoseconds" : 5600004200,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-042",
+      "ruleID" : "exclude-change-042"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private043",
+      "effectiveNanoseconds" : 5600004300,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-043",
+      "ruleID" : "exclude-change-043"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private044",
+      "effectiveNanoseconds" : 5600004400,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-044",
+      "ruleID" : "exclude-change-044"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private045",
+      "effectiveNanoseconds" : 5600004500,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-045",
+      "ruleID" : "exclude-change-045"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private046",
+      "effectiveNanoseconds" : 5600004600,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-046",
+      "ruleID" : "exclude-change-046"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private047",
+      "effectiveNanoseconds" : 5600004700,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-047",
+      "ruleID" : "exclude-change-047"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private048",
+      "effectiveNanoseconds" : 5600004800,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-048",
+      "ruleID" : "exclude-change-048"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private049",
+      "effectiveNanoseconds" : 5600004900,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-049",
+      "ruleID" : "exclude-change-049"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private050",
+      "effectiveNanoseconds" : 5600005000,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-050",
+      "ruleID" : "exclude-change-050"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private051",
+      "effectiveNanoseconds" : 5600005100,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-051",
+      "ruleID" : "exclude-change-051"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private052",
+      "effectiveNanoseconds" : 5600005200,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-052",
+      "ruleID" : "exclude-change-052"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private053",
+      "effectiveNanoseconds" : 5600005300,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-053",
+      "ruleID" : "exclude-change-053"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private054",
+      "effectiveNanoseconds" : 5600005400,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-054",
+      "ruleID" : "exclude-change-054"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private055",
+      "effectiveNanoseconds" : 5600005500,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-055",
+      "ruleID" : "exclude-change-055"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private056",
+      "effectiveNanoseconds" : 5600005600,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-056",
+      "ruleID" : "exclude-change-056"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private057",
+      "effectiveNanoseconds" : 5600005700,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-057",
+      "ruleID" : "exclude-change-057"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private058",
+      "effectiveNanoseconds" : 5600005800,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-058",
+      "ruleID" : "exclude-change-058"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private059",
+      "effectiveNanoseconds" : 5600005900,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-059",
+      "ruleID" : "exclude-change-059"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private060",
+      "effectiveNanoseconds" : 5600006000,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-060",
+      "ruleID" : "exclude-change-060"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private061",
+      "effectiveNanoseconds" : 5600006100,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-061",
+      "ruleID" : "exclude-change-061"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private062",
+      "effectiveNanoseconds" : 5600006200,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-062",
+      "ruleID" : "exclude-change-062"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private063",
+      "effectiveNanoseconds" : 5600006300,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-063",
+      "ruleID" : "exclude-change-063"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private064",
+      "effectiveNanoseconds" : 5600006400,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-064",
+      "ruleID" : "exclude-change-064"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private065",
+      "effectiveNanoseconds" : 5600006500,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-065",
+      "ruleID" : "exclude-change-065"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private066",
+      "effectiveNanoseconds" : 5600006600,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-066",
+      "ruleID" : "exclude-change-066"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private067",
+      "effectiveNanoseconds" : 5600006700,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-067",
+      "ruleID" : "exclude-change-067"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private068",
+      "effectiveNanoseconds" : 5600006800,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-068",
+      "ruleID" : "exclude-change-068"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private069",
+      "effectiveNanoseconds" : 5600006900,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-069",
+      "ruleID" : "exclude-change-069"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private070",
+      "effectiveNanoseconds" : 5600007000,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-070",
+      "ruleID" : "exclude-change-070"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private071",
+      "effectiveNanoseconds" : 5600007100,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-071",
+      "ruleID" : "exclude-change-071"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private072",
+      "effectiveNanoseconds" : 5600007200,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-072",
+      "ruleID" : "exclude-change-072"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private073",
+      "effectiveNanoseconds" : 5600007300,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-073",
+      "ruleID" : "exclude-change-073"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private074",
+      "effectiveNanoseconds" : 5600007400,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-074",
+      "ruleID" : "exclude-change-074"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private075",
+      "effectiveNanoseconds" : 5600007500,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-075",
+      "ruleID" : "exclude-change-075"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private076",
+      "effectiveNanoseconds" : 5600007600,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-076",
+      "ruleID" : "exclude-change-076"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private077",
+      "effectiveNanoseconds" : 5600007700,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-077",
+      "ruleID" : "exclude-change-077"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private078",
+      "effectiveNanoseconds" : 5600007800,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-078",
+      "ruleID" : "exclude-change-078"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private079",
+      "effectiveNanoseconds" : 5600007900,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-079",
+      "ruleID" : "exclude-change-079"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private080",
+      "effectiveNanoseconds" : 5600008000,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-080",
+      "ruleID" : "exclude-change-080"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private081",
+      "effectiveNanoseconds" : 5600008100,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-081",
+      "ruleID" : "exclude-change-081"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private082",
+      "effectiveNanoseconds" : 5600008200,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-082",
+      "ruleID" : "exclude-change-082"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private083",
+      "effectiveNanoseconds" : 5600008300,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-083",
+      "ruleID" : "exclude-change-083"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private084",
+      "effectiveNanoseconds" : 5600008400,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-084",
+      "ruleID" : "exclude-change-084"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private085",
+      "effectiveNanoseconds" : 5600008500,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-085",
+      "ruleID" : "exclude-change-085"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private086",
+      "effectiveNanoseconds" : 5600008600,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-086",
+      "ruleID" : "exclude-change-086"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private087",
+      "effectiveNanoseconds" : 5600008700,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-087",
+      "ruleID" : "exclude-change-087"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private088",
+      "effectiveNanoseconds" : 5600008800,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-088",
+      "ruleID" : "exclude-change-088"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private089",
+      "effectiveNanoseconds" : 5600008900,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-089",
+      "ruleID" : "exclude-change-089"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private090",
+      "effectiveNanoseconds" : 5600009000,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-090",
+      "ruleID" : "exclude-change-090"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private091",
+      "effectiveNanoseconds" : 5600009100,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-091",
+      "ruleID" : "exclude-change-091"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private092",
+      "effectiveNanoseconds" : 5600009200,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-092",
+      "ruleID" : "exclude-change-092"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private093",
+      "effectiveNanoseconds" : 5600009300,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-093",
+      "ruleID" : "exclude-change-093"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private094",
+      "effectiveNanoseconds" : 5600009400,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-094",
+      "ruleID" : "exclude-change-094"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private095",
+      "effectiveNanoseconds" : 5600009500,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-095",
+      "ruleID" : "exclude-change-095"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private096",
+      "effectiveNanoseconds" : 5600009600,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-096",
+      "ruleID" : "exclude-change-096"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private097",
+      "effectiveNanoseconds" : 5600009700,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-097",
+      "ruleID" : "exclude-change-097"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private098",
+      "effectiveNanoseconds" : 5600009800,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-098",
+      "ruleID" : "exclude-change-098"
+    },
+    {
+      "bundleIdentifier" : "com.example.lm056.private099",
+      "effectiveNanoseconds" : 5600009900,
+      "expectedDenialReason" : "userRule",
+      "expectedGapReason" : "excluded",
+      "expectedPolicyGeneration" : 2,
+      "id" : "change-099",
+      "ruleID" : "exclude-change-099"
+    }
+  ],
+  "schemaVersion" : 1,
+  "seed" : 327712519478
+}

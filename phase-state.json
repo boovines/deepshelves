@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "activeStory": "LM-056",
+  "activeStory": "LM-057",
   "stories": {
     "LM-001": {
       "status": "passed",
@@ -745,23 +745,27 @@
       "resumeProbe": null
     },
     "LM-056": {
-      "status": "active",
+      "status": "passed",
       "startedAt": "2026-08-28T15:43:50Z",
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": "Earliest remaining pending story whose declared dependencies LM-022 and LM-016 are passed. Its policy/settings scope can be developed and verified with source-isolated tests that cannot initialize hardware video encoding.",
+      "completedAt": "2026-08-28T16:03:03Z",
+      "gitRevision": "refs/tags/checkpoints/LM-056",
+      "evidence": [
+        "Results/LM-056/report.json",
+        "Results/LM-056/settings-unit.txt",
+        "Results/LM-056/ui-runtime-quarantine.txt"
+      ],
+      "notes": "Application/site exclusions, ordered last-match rules, context preview, durable immediate generation reload, and content-free typed gaps pass an eight-test focused suite and a deterministic 100-case change-during-capture corpus with zero persistence/UI/helper leakage. XCUITest runtime is quarantined because its first Settings launch caused macOS to spawn VTEncoderXPCService; the process was stopped before the first case completed, no panic occurred, and compile/static accessibility evidence replaced runtime UI execution.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null
     },
     "LM-057": {
-      "status": "pending",
-      "startedAt": null,
+      "status": "active",
+      "startedAt": "2026-08-28T16:03:03Z",
       "completedAt": null,
       "gitRevision": null,
       "evidence": [],
-      "notes": null,
+      "notes": "Next dependency-ready story after LM-056. Browser/private policy and permission-health behavior can be implemented and verified with deterministic fixtures and source-isolated unit tests that cannot invoke hardware video encoding.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null

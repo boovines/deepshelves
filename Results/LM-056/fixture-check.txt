@@ -1,0 +1,4 @@
+fixture_sha256=bdd5d230e3485efbcfea64009643aeeb75c2032e84581ea4f4d0dba0e1656921
+change_during_capture_cases=100
+ui_projection_expected_leaks=0
+helper_projection_expected_leaks=0

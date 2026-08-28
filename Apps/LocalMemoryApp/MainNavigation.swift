@@ -1,5 +1,6 @@
 import AppKit
 import Foundation
+import MemoryContracts
 import MemoryDesignSystem
 import SwiftUI
 
@@ -84,29 +85,32 @@ final class MainNavigationViewModel: ObservableObject {
             return
         }
         guard snapshot.section != section else { return }
-        apply(MainNavigationSnapshot(
-            section: section,
-            selectedMomentID: snapshot.selectedMomentID,
-            inspectorRequested: snapshot.inspectorRequested
-        ))
+        apply(
+            MainNavigationSnapshot(
+                section: section,
+                selectedMomentID: snapshot.selectedMomentID,
+                inspectorRequested: snapshot.inspectorRequested
+            ))
     }
 
     func select(momentID: UUID) {
         guard isRestored, snapshot.selectedMomentID != momentID else { return }
-        apply(MainNavigationSnapshot(
-            section: snapshot.section,
-            selectedMomentID: momentID,
-            inspectorRequested: snapshot.inspectorRequested
-        ))
+        apply(
+            MainNavigationSnapshot(
+                section: snapshot.section,
+                selectedMomentID: momentID,
+                inspectorRequested: snapshot.inspectorRequested
+            ))
     }
 
     func setInspectorRequested(_ requested: Bool) {
         guard isRestored, snapshot.inspectorRequested != requested else { return }
-        apply(MainNavigationSnapshot(
-            section: snapshot.section,
-            selectedMomentID: snapshot.selectedMomentID,
-            inspectorRequested: requested
-        ))
+        apply(
+            MainNavigationSnapshot(
+                section: snapshot.section,
+                selectedMomentID: snapshot.selectedMomentID,
+                inspectorRequested: requested
+            ))
     }
 
     var canGoBack: Bool { history.canGoBack }
@@ -151,6 +155,55 @@ private struct ShellMoment: Identifiable, Equatable {
     let host: String
     let evidenceType: String
     let systemImage: String
+}
+
+private struct ShellTimelineGap: Identifiable, Equatable {
+    let reason: RecordingGapReason
+    let title: String
+    let interval: String
+    let systemImage: String
+
+    var id: RecordingGapReason { reason }
+    var accessibilityLabel: String { "\(title) gap, \(interval)" }
+}
+
+private enum ShellTimelineGapFixtures {
+    static let gaps: [ShellTimelineGap] = [
+        gap(.paused, "Paused", "9:40 AM to 9:50 AM", "pause.circle"),
+        gap(.idle, "Idle", "10:15 AM to 10:30 AM", "moon.zzz"),
+        gap(
+            .excluded, "Excluded; no application details stored", "10:45 AM to 11:00 AM",
+            "hand.raised"),
+        gap(.permissionLost, "Permission lost", "11:30 AM to 11:45 AM", "exclamationmark.shield"),
+        gap(
+            .filterFailed, "Browser protection", "12:10 PM to 12:15 PM",
+            "line.3.horizontal.decrease.circle"),
+        gap(.sleep, "Mac asleep", "12:30 PM to 1:00 PM", "powersleep"),
+        gap(.processStopped, "Local Memory stopped", "1:10 PM to 1:15 PM", "stop.circle"),
+        gap(.unresolvedWindow, "Window unresolved", "1:20 PM to 1:25 PM", "macwindow.badge.plus"),
+        gap(.ambiguousWindow, "Window ambiguous", "1:30 PM to 1:35 PM", "questionmark.square"),
+        gap(.minimizedWindow, "Window minimized", "1:40 PM to 1:45 PM", "macwindow"),
+        gap(
+            .unsupportedDisplay, "Display unsupported", "1:50 PM to 1:55 PM",
+            "display.trianglebadge.exclamationmark"),
+        gap(.protectedSurface, "Protected surface", "2:00 PM to 2:05 PM", "lock.shield"),
+        gap(.noWindow, "No foreground window", "2:10 PM to 2:15 PM", "rectangle.slash"),
+        gap(.unknown, "Recording unavailable", "2:20 PM to 2:25 PM", "questionmark.circle"),
+    ]
+
+    private static func gap(
+        _ reason: RecordingGapReason,
+        _ title: String,
+        _ interval: String,
+        _ systemImage: String
+    ) -> ShellTimelineGap {
+        ShellTimelineGap(
+            reason: reason,
+            title: title,
+            interval: interval,
+            systemImage: systemImage
+        )
+    }
 }
 
 private enum ShellMomentFixtures {
@@ -232,11 +285,11 @@ struct MainShellView: View {
                     navigationModel: navigationModel,
                     localizationMode: localizationMode
                 )
-                    .navigationSplitViewColumnWidth(
-                        min: CGFloat(MainWindowDefaults.sidebarWidthRange.lowerBound),
-                        ideal: CGFloat(MainWindowDefaults.sidebarIdealWidth),
-                        max: CGFloat(MainWindowDefaults.sidebarWidthRange.upperBound)
-                    )
+                .navigationSplitViewColumnWidth(
+                    min: CGFloat(MainWindowDefaults.sidebarWidthRange.lowerBound),
+                    ideal: CGFloat(MainWindowDefaults.sidebarIdealWidth),
+                    max: CGFloat(MainWindowDefaults.sidebarWidthRange.upperBound)
+                )
             } detail: {
                 MainSectionView(
                     navigationModel: navigationModel,
@@ -412,7 +465,8 @@ private struct MainSectionView: View {
                 model: DestructiveConfirmationModel(
                     title: "Forget this moment?",
                     removalScope: "The selected moment will be hidden immediately.",
-                    consequence: "Its short video chunk will be rewritten when deletion is implemented.",
+                    consequence:
+                        "Its short video chunk will be rewritten when deletion is implemented.",
                     confirmLabel: "Forget Moment"
                 ),
                 onCancel: { showsForgetConfirmation = false },
@@ -528,9 +582,20 @@ private struct MomentSectionCanvas: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text("Timeline accessibility list")
                         .font(.headline)
-                    Text("9:12 AM, Calendar moment")
-                    Text("Permission lost gap, 11:30 AM to 11:45 AM")
-                    Text("2:14 PM, Safari moment")
+                    ScrollView(.horizontal) {
+                        HStack(spacing: 12) {
+                            Text("9:12 AM, Calendar moment")
+                            ForEach(ShellTimelineGapFixtures.gaps) { gap in
+                                Label(gap.accessibilityLabel, systemImage: gap.systemImage)
+                                    .font(.caption)
+                                    .accessibilityLabel(gap.accessibilityLabel)
+                                    .accessibilityIdentifier(
+                                        "timeline.gap.\(gap.reason.rawValue)"
+                                    )
+                            }
+                            Text("2:14 PM, Safari moment")
+                        }
+                    }
                 }
                 .accessibilityElement(children: .contain)
                 .accessibilityLabel("Timeline accessibility list")
@@ -538,7 +603,8 @@ private struct MomentSectionCanvas: View {
             }
 
             if contentState == .ready {
-                List(Array(ShellMomentFixtures.moments.enumerated()), id: \.element.id) { index, moment in
+                List(Array(ShellMomentFixtures.moments.enumerated()), id: \.element.id) {
+                    index, moment in
                     Button {
                         searchIsFocused = false
                         focusedMomentID = moment.id
@@ -590,7 +656,8 @@ private struct MomentSectionCanvas: View {
                         ContentUnavailableView(
                             "Choose a moment",
                             systemImage: "rectangle.stack.badge.clock",
-                            description: Text("Select a synthetic fixture to inspect its local provenance.")
+                            description: Text(
+                                "Select a synthetic fixture to inspect its local provenance.")
                         )
                     }
                 }
@@ -644,7 +711,7 @@ private struct MomentSectionCanvas: View {
             ) {
                 navigationModel.select(section: .settings)
             }
-        case let .loading(elapsedMilliseconds):
+        case .loading(let elapsedMilliseconds):
             ProgressStatusView(
                 model: ProgressStatusModel(
                     label: localizationMode.localized("Loading local memory…"),
@@ -719,8 +786,10 @@ private struct ActivityShellView: View {
                 .accessibilityIdentifier("main.sectionTitle")
             Text("Activity estimates")
                 .font(.headline)
-            Text("Recorded, idle, paused, and missing time will be shown here without scores or rankings.")
-                .foregroundStyle(.secondary)
+            Text(
+                "Recorded, idle, paused, and missing time will be shown here without scores or rankings."
+            )
+            .foregroundStyle(.secondary)
             GroupBox("Activity accessibility table") {
                 Grid(alignment: .leading, horizontalSpacing: 16, verticalSpacing: 8) {
                     GridRow {
@@ -758,32 +827,49 @@ private struct EmbeddedSettingsShellView: View {
                 LabeledContent("Recording controls", value: "Managed locally")
             }
             Section("Open the full Settings window") {
-                Text("Use the toolbar Settings button for Capture, Privacy, Storage, Search, Agents, and Diagnostics.")
-                    .foregroundStyle(.secondary)
+                Text(
+                    "Use the toolbar Settings button for Capture, Privacy, Storage, Search, Agents, and Diagnostics."
+                )
+                .foregroundStyle(.secondary)
             }
         }
         .formStyle(.grouped)
     }
 }
 
+private enum LocalMemorySettingsSection: Hashable {
+    case capture
+    case privacy
+    case storage
+    case search
+    case agents
+    case about
+}
+
 struct LocalMemorySettingsView: View {
     @ObservedObject var searchPanelCoordinator: GlobalSearchPanelCoordinator
+    @ObservedObject var privacySettingsModel: PrivacySettingsViewModel
+    @State private var selection: LocalMemorySettingsSection
+
+    init(
+        searchPanelCoordinator: GlobalSearchPanelCoordinator,
+        privacySettingsModel: PrivacySettingsViewModel,
+        opensPrivacyAtLaunch: Bool
+    ) {
+        self.searchPanelCoordinator = searchPanelCoordinator
+        self.privacySettingsModel = privacySettingsModel
+        _selection = State(initialValue: opensPrivacyAtLaunch ? .privacy : .capture)
+    }
 
     var body: some View {
-        TabView {
+        TabView(selection: $selection) {
             CaptureSettingsPane(searchPanelCoordinator: searchPanelCoordinator)
-            .tabItem { Label("Capture", systemImage: "record.circle") }
+                .tabItem { Label("Capture", systemImage: "record.circle") }
+                .tag(LocalMemorySettingsSection.capture)
 
-            SettingsPane(
-                title: "Privacy",
-                systemImage: "hand.raised",
-                rows: [
-                    ("Applications", "No custom exclusions yet"),
-                    ("Sites", "Protected URL rules arrive later"),
-                    ("Private windows", "Fail closed"),
-                ]
-            )
-            .tabItem { Label("Privacy", systemImage: "hand.raised") }
+            PrivacySettingsPane(model: privacySettingsModel)
+                .tabItem { Label("Privacy", systemImage: "hand.raised") }
+                .tag(LocalMemorySettingsSection.privacy)
 
             SettingsPane(
                 title: "Storage",
@@ -795,6 +881,7 @@ struct LocalMemorySettingsView: View {
                 ]
             )
             .tabItem { Label("Storage", systemImage: "externaldrive") }
+            .tag(LocalMemorySettingsSection.storage)
 
             SettingsPane(
                 title: "Search & Models",
@@ -806,6 +893,7 @@ struct LocalMemorySettingsView: View {
                 ]
             )
             .tabItem { Label("Search", systemImage: "magnifyingglass") }
+            .tag(LocalMemorySettingsSection.search)
 
             SettingsPane(
                 title: "Agent Access",
@@ -817,6 +905,7 @@ struct LocalMemorySettingsView: View {
                 ]
             )
             .tabItem { Label("Agents", systemImage: "terminal") }
+            .tag(LocalMemorySettingsSection.agents)
 
             SettingsPane(
                 title: "About & Diagnostics",
@@ -828,6 +917,7 @@ struct LocalMemorySettingsView: View {
                 ]
             )
             .tabItem { Label("About", systemImage: "info.circle") }
+            .tag(LocalMemorySettingsSection.about)
         }
         .frame(
             width: CGFloat(MainWindowDefaults.settingsWidth),
@@ -864,7 +954,7 @@ private struct CaptureSettingsPane: View {
                     Text("Command–Shift–K")
                         .tag(GlobalSearchShortcut(key: .k, modifiers: [.command, .shift]))
                 }
-                    .accessibilityIdentifier("settings.shortcut")
+                .accessibilityIdentifier("settings.shortcut")
                 LabeledContent(
                     "Registration",
                     value: searchPanelCoordinator.registrationState.statusLabel

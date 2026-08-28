@@ -14,6 +14,7 @@ struct LocalMemoryApp: App {
     @StateObject private var navigationModel: MainNavigationViewModel
     @StateObject private var onboardingModel: OnboardingViewModel
     @StateObject private var searchPanelCoordinator: GlobalSearchPanelCoordinator
+    @StateObject private var privacySettingsModel: PrivacySettingsViewModel
     private let shellKeyboardMonitor: ShellKeyboardCommandMonitor
     private let archiveDatabase: ArchiveDatabase
 
@@ -67,33 +68,38 @@ struct LocalMemoryApp: App {
                 suppressSystemSettings: configuration.suppressOnboardingSystemSettings
             )
         )
+        _privacySettingsModel = StateObject(
+            wrappedValue: PrivacySettingsViewModel(
+                stateURL: configuration.privacyPolicyStateURL
+            )
+        )
         s6AutoExit = arguments.contains("--lm008-s6-auto-exit")
         shouldRequestCapturePermissions = arguments.contains("--request-capture-permissions")
         captureSpikeStaticMode = arguments.contains("--capture-spike-static")
         captureSpikeCrashActiveMode = arguments.contains("--capture-spike-crash-active")
         if let flagIndex = arguments.firstIndex(of: "--lm019-export-lifecycle"),
-           arguments.indices.contains(flagIndex + 1)
+            arguments.indices.contains(flagIndex + 1)
         {
             lm019LifecycleOutput = arguments[flagIndex + 1]
         } else {
             lm019LifecycleOutput = nil
         }
         if let flagIndex = arguments.firstIndex(of: "--lm020-export-resolver"),
-           arguments.indices.contains(flagIndex + 1)
+            arguments.indices.contains(flagIndex + 1)
         {
             lm020ResolverOutput = arguments[flagIndex + 1]
         } else {
             lm020ResolverOutput = nil
         }
         if let flagIndex = arguments.firstIndex(of: "--context-spike"),
-           arguments.indices.contains(flagIndex + 1)
+            arguments.indices.contains(flagIndex + 1)
         {
             contextSpikeOutputDirectory = arguments[flagIndex + 1]
         } else {
             contextSpikeOutputDirectory = nil
         }
         if let flagIndex = arguments.firstIndex(of: "--s3-s4-spike"),
-           arguments.indices.contains(flagIndex + 3)
+            arguments.indices.contains(flagIndex + 3)
         {
             vectorSpikeArguments = (
                 arguments[flagIndex + 1],
@@ -104,7 +110,7 @@ struct LocalMemoryApp: App {
             vectorSpikeArguments = nil
         }
         if let flagIndex = arguments.firstIndex(of: "--lm008-s5-spike"),
-           arguments.indices.contains(flagIndex + 3)
+            arguments.indices.contains(flagIndex + 3)
         {
             s5SpikeArguments = (
                 arguments[flagIndex + 1],
@@ -115,35 +121,35 @@ struct LocalMemoryApp: App {
             s5SpikeArguments = nil
         }
         if let flagIndex = arguments.firstIndex(of: "--lm008-s6-spike"),
-           arguments.indices.contains(flagIndex + 2)
+            arguments.indices.contains(flagIndex + 2)
         {
             s6SpikeArguments = (arguments[flagIndex + 1], arguments[flagIndex + 2])
         } else {
             s6SpikeArguments = nil
         }
         if let flagIndex = arguments.firstIndex(of: "--lm008-s7-spike"),
-           arguments.indices.contains(flagIndex + 2)
+            arguments.indices.contains(flagIndex + 2)
         {
             s7SpikeArguments = (arguments[flagIndex + 1], arguments[flagIndex + 2])
         } else {
             s7SpikeArguments = nil
         }
         if let flagIndex = arguments.firstIndex(of: "--capture-spike"),
-           arguments.indices.contains(flagIndex + 1)
+            arguments.indices.contains(flagIndex + 1)
         {
             captureSpikeOutputDirectory = arguments[flagIndex + 1]
         } else {
             captureSpikeOutputDirectory = nil
         }
         if let flagIndex = arguments.firstIndex(of: "--capture-spike-duration"),
-           arguments.indices.contains(flagIndex + 1)
+            arguments.indices.contains(flagIndex + 1)
         {
             captureSpikeDurationSeconds = Double(arguments[flagIndex + 1]) ?? 10
         } else {
             captureSpikeDurationSeconds = 10
         }
         if let flagIndex = arguments.firstIndex(of: "--capture-capability-probe"),
-           arguments.indices.contains(flagIndex + 1)
+            arguments.indices.contains(flagIndex + 1)
         {
             capabilityProbeOutput = arguments[flagIndex + 1]
         } else {
@@ -176,7 +182,7 @@ struct LocalMemoryApp: App {
 
     private static func exportLM017SchemaAndExitIfRequested(arguments: [String]) {
         guard let exportIndex = arguments.firstIndex(of: "--lm017-export-schema"),
-              arguments.indices.contains(exportIndex + 1)
+            arguments.indices.contains(exportIndex + 1)
         else {
             return
         }
@@ -203,7 +209,7 @@ struct LocalMemoryApp: App {
 
     private static func exportLM018FaultsAndExitIfRequested(arguments: [String]) {
         guard let exportIndex = arguments.firstIndex(of: "--lm018-export-faults"),
-              arguments.indices.contains(exportIndex + 1)
+            arguments.indices.contains(exportIndex + 1)
         else {
             return
         }
@@ -225,7 +231,7 @@ struct LocalMemoryApp: App {
 
     private static func exportLM021BrowserContextAndExitIfRequested(arguments: [String]) {
         guard let exportIndex = arguments.firstIndex(of: "--lm021-export-browser-context"),
-              arguments.indices.contains(exportIndex + 1)
+            arguments.indices.contains(exportIndex + 1)
         else {
             return
         }
@@ -245,7 +251,7 @@ struct LocalMemoryApp: App {
 
     private static func exportLM022PrivacyPolicyAndExitIfRequested(arguments: [String]) {
         guard let exportIndex = arguments.firstIndex(of: "--lm022-export-privacy-policy"),
-              arguments.indices.contains(exportIndex + 1)
+            arguments.indices.contains(exportIndex + 1)
         else {
             return
         }
@@ -265,7 +271,7 @@ struct LocalMemoryApp: App {
 
     private static func exportLM023ActivityMonitorAndExitIfRequested(arguments: [String]) {
         guard let exportIndex = arguments.firstIndex(of: "--lm023-export-activity-monitor"),
-              arguments.indices.contains(exportIndex + 1)
+            arguments.indices.contains(exportIndex + 1)
         else {
             return
         }
@@ -285,7 +291,7 @@ struct LocalMemoryApp: App {
 
     private static func exportLM024EpochCaptureAndExitIfRequested(arguments: [String]) {
         guard let exportIndex = arguments.firstIndex(of: "--lm024-export-epoch-capture"),
-              arguments.indices.contains(exportIndex + 1)
+            arguments.indices.contains(exportIndex + 1)
         else {
             return
         }
@@ -338,66 +344,67 @@ struct LocalMemoryApp: App {
                 }
             }
             .preferredColorScheme(launchConfiguration.preferredColorScheme)
-                .task {
-                    if let lm019LifecycleOutput {
-                        do {
-                            try await LM019LifecycleHarness.run(
-                                outputURL: URL(fileURLWithPath: lm019LifecycleOutput)
-                            )
-                            NSApplication.shared.terminate(nil)
-                        } catch {
-                            FileHandle.standardError.write(
-                                Data("LM-019 lifecycle export failed: \(error)\n".utf8)
-                            )
-                            Darwin.exit(EXIT_FAILURE)
-                        }
-                        return
-                    }
-                    if let lm020ResolverOutput {
-                        do {
-                            try await LM020WindowResolverHarness.run(
-                                outputURL: URL(fileURLWithPath: lm020ResolverOutput)
-                            )
-                            NSApplication.shared.terminate(nil)
-                        } catch {
-                            FileHandle.standardError.write(
-                                Data("LM-020 resolver export failed: \(error)\n".utf8)
-                            )
-                            Darwin.exit(EXIT_FAILURE)
-                        }
-                        return
-                    }
-                    if let contextSpikeOutputDirectory {
-                        await ContextSpikeHarness.run(
-                            outputDirectory: URL(fileURLWithPath: contextSpikeOutputDirectory)
-                        )
-                        return
-                    }
-                    if shouldRequestCapturePermissions {
-                        _ = CaptureCapabilities.requestFromUser()
-                        return
-                    }
-                    if let captureSpikeOutputDirectory {
-                        await CaptureSpikeHarness.run(
-                            outputDirectory: URL(fileURLWithPath: captureSpikeOutputDirectory),
-                            durationSeconds: captureSpikeDurationSeconds,
-                            staticMode: captureSpikeStaticMode
-                        )
-                        return
-                    }
-                    guard let capabilityProbeOutput else {
-                        return
-                    }
+            .task {
+                if let lm019LifecycleOutput {
                     do {
-                        let encoder = JSONEncoder()
-                        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
-                        let data = try encoder.encode(CaptureCapabilities.current())
-                        try data.write(to: URL(fileURLWithPath: capabilityProbeOutput), options: .atomic)
+                        try await LM019LifecycleHarness.run(
+                            outputURL: URL(fileURLWithPath: lm019LifecycleOutput)
+                        )
+                        NSApplication.shared.terminate(nil)
                     } catch {
-                        FileHandle.standardError.write(Data("capture capability probe failed\n".utf8))
+                        FileHandle.standardError.write(
+                            Data("LM-019 lifecycle export failed: \(error)\n".utf8)
+                        )
+                        Darwin.exit(EXIT_FAILURE)
                     }
-                    NSApplication.shared.terminate(nil)
+                    return
                 }
+                if let lm020ResolverOutput {
+                    do {
+                        try await LM020WindowResolverHarness.run(
+                            outputURL: URL(fileURLWithPath: lm020ResolverOutput)
+                        )
+                        NSApplication.shared.terminate(nil)
+                    } catch {
+                        FileHandle.standardError.write(
+                            Data("LM-020 resolver export failed: \(error)\n".utf8)
+                        )
+                        Darwin.exit(EXIT_FAILURE)
+                    }
+                    return
+                }
+                if let contextSpikeOutputDirectory {
+                    await ContextSpikeHarness.run(
+                        outputDirectory: URL(fileURLWithPath: contextSpikeOutputDirectory)
+                    )
+                    return
+                }
+                if shouldRequestCapturePermissions {
+                    _ = CaptureCapabilities.requestFromUser()
+                    return
+                }
+                if let captureSpikeOutputDirectory {
+                    await CaptureSpikeHarness.run(
+                        outputDirectory: URL(fileURLWithPath: captureSpikeOutputDirectory),
+                        durationSeconds: captureSpikeDurationSeconds,
+                        staticMode: captureSpikeStaticMode
+                    )
+                    return
+                }
+                guard let capabilityProbeOutput else {
+                    return
+                }
+                do {
+                    let encoder = JSONEncoder()
+                    encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+                    let data = try encoder.encode(CaptureCapabilities.current())
+                    try data.write(
+                        to: URL(fileURLWithPath: capabilityProbeOutput), options: .atomic)
+                } catch {
+                    FileHandle.standardError.write(Data("capture capability probe failed\n".utf8))
+                }
+                NSApplication.shared.terminate(nil)
+            }
         }
         .defaultSize(
             width: launchConfiguration.forcedMainWindowSize?.width
@@ -416,8 +423,12 @@ struct LocalMemoryApp: App {
         }
 
         Settings {
-            LocalMemorySettingsView(searchPanelCoordinator: searchPanelCoordinator)
-                .preferredColorScheme(launchConfiguration.preferredColorScheme)
+            LocalMemorySettingsView(
+                searchPanelCoordinator: searchPanelCoordinator,
+                privacySettingsModel: privacySettingsModel,
+                opensPrivacyAtLaunch: launchConfiguration.opensPrivacySettingsAtLaunch
+            )
+            .preferredColorScheme(launchConfiguration.preferredColorScheme)
         }
         .defaultSize(
             width: CGFloat(MainWindowDefaults.settingsWidth),
@@ -450,8 +461,10 @@ struct LocalMemoryApp: App {
                 opensMainWindowAtLaunch: launchConfiguration.opensMainWindow,
                 opensOnboardingAtLaunch: launchConfiguration.opensOnboardingAtLaunch,
                 opensSearchPanelAtLaunch: launchConfiguration.opensSearchPanelAtLaunch,
-                measuresWarmSearchPanelAtLaunch: launchConfiguration.measuresWarmSearchPanelAtLaunch,
-                opensSettingsWithoutMainAtLaunch: launchConfiguration.opensSettingsWithoutMainAtLaunch,
+                measuresWarmSearchPanelAtLaunch: launchConfiguration
+                    .measuresWarmSearchPanelAtLaunch,
+                opensSettingsWithoutMainAtLaunch: launchConfiguration
+                    .opensSettingsWithoutMainAtLaunch,
                 searchPanelCoordinator: searchPanelCoordinator
             )
         }

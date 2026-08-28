@@ -108,6 +108,7 @@ struct AppLaunchConfiguration {
     let navigationStateURL: URL
     let onboardingStateURL: URL
     let searchPanelStateURL: URL
+    let privacyPolicyStateURL: URL
     let initialStatus: LocalMemoryRuntimeStatus
     let forcedMainWindowSize: MainWindowLaunchSize?
     let preferredColorScheme: ColorScheme?
@@ -119,21 +120,28 @@ struct AppLaunchConfiguration {
     let simulatesShortcutCollision: Bool
     let measuresWarmSearchPanelAtLaunch: Bool
     let opensSettingsWithoutMainAtLaunch: Bool
+    let opensPrivacySettingsAtLaunch: Bool
     let shellContentState: ShellContentState
     let shellLocalizationMode: ShellLocalizationMode
 
     init(arguments: [String]) {
         runsLM009EvidenceSequence = arguments.contains("--lm009-evidence-sequence")
-        showsMenuPreview = arguments.contains("--lm009-menu-preview")
+        showsMenuPreview =
+            arguments.contains("--lm009-menu-preview")
             || runsLM009EvidenceSequence
-        opensSettingsAtLaunch = arguments.contains("--lm010-open-settings")
+        opensPrivacySettingsAtLaunch = arguments.contains("--lm056-open-privacy-settings")
+        opensSettingsAtLaunch =
+            arguments.contains("--lm010-open-settings")
             || arguments.contains("--lm015-shortcut-collision")
+            || opensPrivacySettingsAtLaunch
         opensSearchPanelAtLaunch = arguments.contains("--lm015-search-panel")
         simulatesShortcutCollision = arguments.contains("--lm015-shortcut-collision")
         measuresWarmSearchPanelAtLaunch = arguments.contains("--lm015-measure-warm")
-        opensSettingsWithoutMainAtLaunch = simulatesShortcutCollision
+        opensSettingsWithoutMainAtLaunch =
+            simulatesShortcutCollision
+            || opensPrivacySettingsAtLaunch
         if let index = arguments.firstIndex(of: "--lm016-content-state"),
-           arguments.indices.contains(index + 1)
+            arguments.indices.contains(index + 1)
         {
             switch arguments[index + 1] {
             case "empty": shellContentState = .empty
@@ -144,11 +152,13 @@ struct AppLaunchConfiguration {
         } else {
             shellContentState = .ready
         }
-        shellLocalizationMode = arguments.contains("--lm016-pseudo-localization")
+        shellLocalizationMode =
+            arguments.contains("--lm016-pseudo-localization")
             ? .pseudo
             : .english
         let forcesOnboarding = arguments.contains("--lm014-onboarding")
-        let suppressesOnboarding = arguments.contains("--lm014-skip-onboarding")
+        let suppressesOnboarding =
+            arguments.contains("--lm014-skip-onboarding")
             || arguments.contains { argument in
                 argument.hasPrefix("--lm008-")
                     || argument.hasPrefix("--lm009-")
@@ -161,6 +171,7 @@ struct AppLaunchConfiguration {
                     || argument.hasPrefix("--lm022-")
                     || argument.hasPrefix("--lm023-")
                     || argument.hasPrefix("--lm024-")
+                    || argument.hasPrefix("--lm056-")
                     || argument.hasPrefix("--capture-")
                     || argument.hasPrefix("--context-")
                     || argument == "--s3-s4-spike"
@@ -169,7 +180,8 @@ struct AppLaunchConfiguration {
         suppressOnboardingSystemSettings = arguments.contains(
             "--lm014-suppress-system-settings"
         )
-        opensMainWindow = showsMenuPreview
+        opensMainWindow =
+            showsMenuPreview
             || arguments.contains("--lm009-open-main")
             || arguments.contains("--lm010-shell")
             || (opensSettingsAtLaunch && !opensSettingsWithoutMainAtLaunch)
@@ -183,7 +195,7 @@ struct AppLaunchConfiguration {
             || arguments.contains("--lm008-s6-spike")
 
         if let index = arguments.firstIndex(of: "--lm009-state-file"),
-           arguments.indices.contains(index + 1)
+            arguments.indices.contains(index + 1)
         {
             stateURL = URL(fileURLWithPath: arguments[index + 1])
         } else {
@@ -191,7 +203,7 @@ struct AppLaunchConfiguration {
         }
 
         if let index = arguments.firstIndex(of: "--lm010-navigation-state-file"),
-           arguments.indices.contains(index + 1)
+            arguments.indices.contains(index + 1)
         {
             navigationStateURL = URL(fileURLWithPath: arguments[index + 1])
         } else {
@@ -199,7 +211,7 @@ struct AppLaunchConfiguration {
         }
 
         if let index = arguments.firstIndex(of: "--lm014-onboarding-state-file"),
-           arguments.indices.contains(index + 1)
+            arguments.indices.contains(index + 1)
         {
             onboardingStateURL = URL(fileURLWithPath: arguments[index + 1])
         } else {
@@ -207,31 +219,39 @@ struct AppLaunchConfiguration {
         }
 
         if let index = arguments.firstIndex(of: "--lm015-search-panel-state-file"),
-           arguments.indices.contains(index + 1)
+            arguments.indices.contains(index + 1)
         {
             searchPanelStateURL = URL(fileURLWithPath: arguments[index + 1])
         } else {
             searchPanelStateURL = Self.defaultStateURL(fileName: "search-panel-state.json")
         }
 
+        if let index = arguments.firstIndex(of: "--lm056-policy-state-file"),
+            arguments.indices.contains(index + 1)
+        {
+            privacyPolicyStateURL = URL(fileURLWithPath: arguments[index + 1])
+        } else {
+            privacyPolicyStateURL = Self.defaultStateURL(fileName: "privacy-policy.json")
+        }
+
         var permissionOverrides: [OnboardingPermissionKind: OnboardingPermissionStatus] = [:]
         if let index = arguments.firstIndex(of: "--lm014-screen-permission"),
-           arguments.indices.contains(index + 1),
-           let status = OnboardingPermissionStatus(rawValue: arguments[index + 1])
+            arguments.indices.contains(index + 1),
+            let status = OnboardingPermissionStatus(rawValue: arguments[index + 1])
         {
             permissionOverrides[.screenRecording] = status
         }
         if let index = arguments.firstIndex(of: "--lm014-accessibility-permission"),
-           arguments.indices.contains(index + 1),
-           let status = OnboardingPermissionStatus(rawValue: arguments[index + 1])
+            arguments.indices.contains(index + 1),
+            let status = OnboardingPermissionStatus(rawValue: arguments[index + 1])
         {
             permissionOverrides[.accessibility] = status
         }
         onboardingPermissionOverrides = permissionOverrides
 
         if let index = arguments.firstIndex(of: "--lm009-runtime"),
-           arguments.indices.contains(index + 1),
-           let parsed = Self.parseStatus(arguments[index + 1])
+            arguments.indices.contains(index + 1),
+            let parsed = Self.parseStatus(arguments[index + 1])
         {
             initialStatus = parsed
         } else {
@@ -239,7 +259,7 @@ struct AppLaunchConfiguration {
         }
 
         if let index = arguments.firstIndex(of: "--lm010-window-size"),
-           arguments.indices.contains(index + 1)
+            arguments.indices.contains(index + 1)
         {
             forcedMainWindowSize = MainWindowLaunchSize(rawValue: arguments[index + 1])
         } else {
@@ -247,7 +267,7 @@ struct AppLaunchConfiguration {
         }
 
         if let index = arguments.firstIndex(of: "--lm010-appearance"),
-           arguments.indices.contains(index + 1)
+            arguments.indices.contains(index + 1)
         {
             switch arguments[index + 1] {
             case "light": preferredColorScheme = .light

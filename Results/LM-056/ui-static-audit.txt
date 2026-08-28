@@ -1,0 +1,6 @@
+privacy_settings_accessibility_identifiers=passed
+rule_ordering_explanation=passed
+test_context_preview_projection=passed
+typed_timeline_gap_reasons=14
+excluded_timeline_identity_projection=absent
+ui_runtime=quarantined_after_VTEncoderXPCService_appearance

@@ -291,9 +291,15 @@ public actor PrivacyPolicy {
         compiledPolicy = CompiledPrivacyPolicy(configuration: configuration)
     }
 
-    public func replaceConfiguration(_ configuration: PrivacyPolicyConfiguration) {
+    @discardableResult
+    public func replaceConfiguration(_ configuration: PrivacyPolicyConfiguration) -> UInt64 {
         compiledPolicy = CompiledPrivacyPolicy(configuration: configuration)
         generation &+= 1
+        return generation
+    }
+
+    public func currentGeneration() -> UInt64 {
+        generation
     }
 
     public func prefilter(context: PrivacyEvaluationContext) -> PrivacyPrefilterResult {

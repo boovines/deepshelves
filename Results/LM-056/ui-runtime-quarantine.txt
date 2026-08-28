@@ -1,0 +1,14 @@
+LM-056 UI-runtime quarantine
+
+At 2026-08-28 17:55 Europe/Paris, the first source-isolated XCUITest launched the
+Local Memory Settings scene. Although the test and changed LM-056 sources contain
+no AVAssetWriter, HEVCMediaWriter, VideoToolbox, or VTCompressionSession reference,
+macOS spawned VTEncoderXPCService during the automation session. The test was
+terminated during its first accessibility wait, before its first case completed.
+The app, xcodebuild, XCTest runner, and encoder service were terminated and their
+absence was verified. No panic occurred.
+
+All LM-056 app-launch and XCUITest execution is therefore quarantined. Verification
+uses deterministic policy actors, in-memory/file persistence, mock projection gates,
+static accessibility checks, and compile-only Release builds. No hardware-encoder
+test or application runtime is part of the LM-056 passing gate.
