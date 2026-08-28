@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-009",
+  "status": "passed",
+  "generatedAt": "2026-08-28T02:53:31Z",
+  "baseRevision": "1433422e7c697df227eb3bf19b4384cd4a7c46bf",
+  "checkpoint": "refs/tags/checkpoints/LM-009",
+  "results": {
+    "defaultLaunchMainWindowCount": 0,
+    "mainScene": "SwiftUI.Window",
+    "menuBarExtraStyle": "window",
+    "runtimeStates": [
+      "recording",
+      "paused",
+      "permissionRequired",
+      "diskFull",
+      "indexing"
+    ],
+    "persistedRelaunchStatus": "paused",
+    "persistedMainWindowVisibility": false,
+    "stateParentMode": "0700",
+    "stateFileMode": "0600",
+    "corruptStateFallback": "permissionRequired",
+    "h0DeveloperModeEnabled": true
+  },
+  "evidence": {
+    "movie": {
+      "path": "Results/LM-009/LM-009.mov",
+      "sha256": "94c683b5b69c6a65945d0b096251d84c90f28f9c370c3fc9609bacbc4106f041",
+      "sizeBytes": 501503,
+      "codec": "h264",
+      "pixelFormat": "yuv420p",
+      "durationSeconds": 9.005,
+      "width": 1744,
+      "height": 1464,
+      "windowOnly": true,
+      "syntheticOnly": true
+    },
+    "contactSheet": {
+      "path": "Results/LM-009/LM-009-contact-sheet.png",
+      "sha256": "d379ab6b22d63240db6832bc0c631ed7e43f7337b21384c7d8eb7af02414c91e",
+      "sizeBytes": 74100
+    }
+  },
+  "gates": {
+    "fullTestSuite": {
+      "status": "passed",
+      "command": "./scripts/test.sh",
+      "xctestUnitTests": 57,
+      "swiftTestingUnitTests": 9,
+      "lm009SwiftTestingUnitTests": 5,
+      "integrationTests": 7,
+      "privacyTests": 4,
+      "performanceTests": 1,
+      "failures": 0,
+      "log": "Results/LM-009/unit-tests.txt",
+      "logSHA256": "b1cb7ed61924f666bce04250be7dcd7abaff474a94e5459c5f97e3c111f93c9c"
+    },
+    "signedReleaseUI": {
+      "status": "passed",
+      "command": "xcodebuild -project LocalMemory.xcodeproj -scheme LocalMemory-UI -configuration Release -derivedDataPath .build/LM009DerivedData -disableAutomaticPackageResolution -only-testing:LocalMemoryUITests/AppCompositionUITests -only-testing:LocalMemoryUITests/BootstrapUITests test",
+      "tests": 4,
+      "failures": 0,
+      "log": "Results/LM-009/ui-tests.txt",
+      "logSHA256": "058264104e6a089ed844333795518d4b91c5ac709a22e97f916baa1e957b8c11"
+    },
+    "contractRegression": {
+      "status": "passed",
+      "command": "./scripts/check-contracts.sh",
+      "fixtures": 11,
+      "log": "Results/LM-009/contracts.txt",
+      "logSHA256": "300d247a7d55469f352437ae77770a704b06db31c516634ca3e7429e823c2f62"
+    },
+    "privacySmoke": {
+      "status": "passed",
+      "command": "./scripts/privacy-smoke.sh",
+      "runtimeNetworkingOrTelemetry": 0,
+      "log": "Results/LM-009/privacy-smoke.txt",
+      "logSHA256": "9ea4b5449f9715c90a3a80909f275c987c95be1130414ae6e10f888fcbe4a8bc"
+    },
+    "releaseBuild": {
+      "status": "passed",
+      "command": "./scripts/build-release.sh",
+      "automaticPackageResolution": false,
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ],
+      "log": "Results/LM-009/release-build.txt",
+      "logSHA256": "44293adfc78e03e6062b110b945657d7655600e65ba7441c5ad11b305ac53331"
+    },
+    "signedPosture": {
+      "status": "passed",
+      "command": "./scripts/signing-posture.sh",
+      "log": "Results/LM-009/signing-posture.txt",
+      "logSHA256": "9179b4f00929da6e7cd771f9f4b5a2f9512fe957e7d9105047d347c2041c7921"
+    },
+    "releaseBinaryAudit": {
+      "status": "passed",
+      "command": "./scripts/check-dependencies.sh --binaries",
+      "forbiddenLinkedOrEmbeddedMarkers": 0,
+      "log": "Results/LM-009/dependency-audit.txt",
+      "logSHA256": "ee19ec2fac69814d57606f8260d4120b82de9aecffb3286ca3159489700b0b32"
+    },
+    "diffWhitespace": {
+      "status": "passed",
+      "command": "git diff --check"
+    }
+  }
+}

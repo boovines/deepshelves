@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "activeStory": "LM-009",
+  "activeStory": "LM-010",
   "stories": {
     "LM-001": {
       "status": "passed",
@@ -127,23 +127,29 @@
       "resumeProbe": null
     },
     "LM-009": {
-      "status": "active",
+      "status": "passed",
       "startedAt": "2026-08-27T22:47:29Z",
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": "Base checkpoint refs/tags/checkpoints/LM-008. Implement SwiftUI application composition, app lifecycle actor, menu-bar extra, main-window scenes, and no-main-window launch.",
+      "completedAt": "2026-08-28T02:53:31Z",
+      "gitRevision": "refs/tags/checkpoints/LM-009",
+      "evidence": [
+        "Results/LM-009/report.json",
+        "Results/LM-009/LM-009.mov",
+        "Results/LM-009/LM-009-contact-sheet.png",
+        "Results/LM-009/unit-tests.txt",
+        "Results/LM-009/ui-tests.txt"
+      ],
+      "notes": "H0 Developer Mode was verified enabled. The actor-backed lifecycle persists runtime state in owner-only storage while suppressing main-window restoration; the default signed Release launch has zero main windows. A shared SwiftUI MenuBarExtra and singleton Window project all five fake runtime states, pause/resume, navigation actions, settings, and quit. Unit, relaunch, signed UI, recording, privacy, contracts, Release, signing, and dependency gates pass.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null
     },
     "LM-010": {
-      "status": "pending",
-      "startedAt": null,
+      "status": "active",
+      "startedAt": "2026-08-28T02:53:31Z",
       "completedAt": null,
       "gitRevision": null,
       "evidence": [],
-      "notes": null,
+      "notes": "Base checkpoint refs/tags/checkpoints/LM-009. Implement split navigation, durable section/selection restoration, required geometry, collapsible detail inspector, and Settings scene using synthetic data first.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null

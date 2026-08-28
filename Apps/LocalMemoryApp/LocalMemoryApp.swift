@@ -10,6 +10,9 @@ import SwiftUI
 
 @main
 struct LocalMemoryApp: App {
+    @StateObject private var lifecycleModel: AppLifecycleViewModel
+
+    private let launchConfiguration: AppLaunchConfiguration
     private let capabilityProbeOutput: String?
     private let shouldRequestCapturePermissions: Bool
     private let captureSpikeOutputDirectory: String?
@@ -25,6 +28,14 @@ struct LocalMemoryApp: App {
 
     init() {
         let arguments = ProcessInfo.processInfo.arguments
+        let configuration = AppLaunchConfiguration(arguments: arguments)
+        launchConfiguration = configuration
+        _lifecycleModel = StateObject(
+            wrappedValue: AppLifecycleViewModel(
+                stateURL: configuration.stateURL,
+                initialStatus: configuration.initialStatus
+            )
+        )
         s6AutoExit = arguments.contains("--lm008-s6-auto-exit")
         shouldRequestCapturePermissions = arguments.contains("--request-capture-permissions")
         captureSpikeStaticMode = arguments.contains("--capture-spike-static")
@@ -106,9 +117,14 @@ struct LocalMemoryApp: App {
     }
 
     var body: some Scene {
-        WindowGroup("Local Memory") {
+        Window("Local Memory", id: "main") {
             Group {
-                if let s6SpikeArguments {
+                if launchConfiguration.showsMenuPreview {
+                    LM009MenuPreviewView(
+                        model: lifecycleModel,
+                        runsEvidenceSequence: launchConfiguration.runsLM009EvidenceSequence
+                    )
+                } else if let s6SpikeArguments {
                     S6SpikeView(
                         outputDirectory: URL(
                             fileURLWithPath: s6SpikeArguments.output,
@@ -120,7 +136,7 @@ struct LocalMemoryApp: App {
                 } else if contextSpikeOutputDirectory != nil {
                     ContextSpikeTargetView()
                 } else if captureSpikeOutputDirectory == nil {
-                    BootstrapView(schemaVersion: BootstrapContract.schemaVersion)
+                    AppShellPlaceholderView(model: lifecycleModel)
                 } else {
                     CaptureSpikeTargetView(animated: captureSpikeCrashActiveMode)
                 }
@@ -162,6 +178,21 @@ struct LocalMemoryApp: App {
             width: CGFloat(LM008UIDefaults.panelWidth),
             height: CGFloat(LM008UIDefaults.panelHeight)
         )
+        .defaultLaunchBehavior(.suppressed)
+        // LM-010 owns durable scene restoration. Until then, disable AppKit's
+        // saved no-window state so deterministic harness launches can request
+        // a presented scene while ordinary launches remain suppressed.
+        .restorationBehavior(.disabled)
+
+        MenuBarExtra {
+            AppMenuBarContent(model: lifecycleModel)
+        } label: {
+            MenuBarStatusLabel(
+                model: lifecycleModel,
+                opensMainWindowAtLaunch: launchConfiguration.opensMainWindow
+            )
+        }
+        .menuBarExtraStyle(.window)
     }
 
     private static func launchVectorSpike(
