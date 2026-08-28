@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-054",
+  "status": "passed",
+  "ranking": {
+    "algorithm": "reciprocal-rank fusion",
+    "k": 60,
+    "candidateLimitPerComponent": 100,
+    "componentScoresComparedDirectly": false,
+    "exactBoosts": {
+      "frameIdentifier": 0.025,
+      "title": 0.02,
+      "applicationOrBundleIdentifier": 0.015,
+      "hostOrFullURL": 0.01
+    },
+    "generalRecencyBoost": false,
+    "stableOrder": [
+      "fused score descending",
+      "capture time descending",
+      "lowercase UUID ascending"
+    ]
+  },
+  "deduplicationAndGrouping": {
+    "duplicateFrameIDsMergedAcrossComponents": true,
+    "sourceEvidenceUnionedWithoutGeneratedClaims": true,
+    "sameApplicationWindowSiteRequired": true,
+    "maximumGapSeconds": 30,
+    "durableSimilaritySignals": [
+      "exact canonical media SHA-256",
+      "same-epoch staticHeartbeat accepted below the capture perceptual threshold",
+      "approved extracted-text token Jaccard at least 0.8"
+    ],
+    "strongestCaptureRepresentative": true,
+    "suppressionRevalidatedBeforeGrouping": true
+  },
+  "pagination": {
+    "resultCacheRequired": false,
+    "componentCandidatesRecomputedPerPage": true,
+    "cursorAuthentication": "HMAC-SHA256",
+    "cursorFields": [
+      "query/policy fingerprint",
+      "exact fused-score bit pattern",
+      "canonical capture timestamp",
+      "lowercase frame UUID",
+      "cumulative returned count"
+    ],
+    "pageSizeExcludedFromFingerprint": true,
+    "tamperAndScopeDriftFailClosed": true,
+    "fixturePageSizes": [7, 7, 6],
+    "fixtureReturnedCount": 20,
+    "fixtureDuplicateCount": 0,
+    "fixtureSkippedCount": 0
+  },
+  "presentation": {
+    "productionMode": "hybrid",
+    "componentResultsPublished": false,
+    "settlementsPerGeneration": 1,
+    "lexicalInterimJumpCount": 0,
+    "modelUnavailableFallback": "lexical final page",
+    "integrityFailureFallback": false
+  },
+  "privacy": {
+    "imageLocatorRequiresExplicitPolicy": true,
+    "lexicalVisualAndHybridPathsEnforced": true,
+    "missingCurrentGroupingMetadataDropsCandidate": true,
+    "archiveGroupingReadOnly": true
+  },
+  "verification": {
+    "handComputedFixture": "Fixtures/LM054/fusion-cases.json",
+    "fixtureSHA256": "de9b57ce6ccbde66e7f69c063e73b33e704ef924b1a94202398b687210eddb1f",
+    "focusedReleaseTests": 55,
+    "contracts": "passed",
+    "privacySmoke": "passed",
+    "releaseCompileOnly": "passed",
+    "dependencyAudit": "passed",
+    "strictFormatting": "passed"
+  },
+  "safety": {
+    "applicationLaunchesExecuted": 0,
+    "appleImageIORuntimeExecuted": false,
+    "hardwareEncoderTestsExecuted": 0,
+    "videoToolboxInvocations": 0,
+    "encoderTripwire": "passed"
+  }
+}

@@ -1,0 +1,15 @@
+rrf_k=60
+exact_field_boosts=fixed
+duplicate_frame_merge=passed
+same_context_grouping=passed
+capture_perceptual_heartbeat_grouping=passed
+approved_text_similarity_threshold=0.8
+signed_keyset_cursor=passed
+result_cache_required=false
+policy_fingerprint_binding=passed
+page_size_reduction=passed
+settlements_per_generation=1
+lexical_interim_publications=0
+application_launches_executed=0
+hardware_encoder_tests_executed=0
+apple_imageio_runtime_executed=0

@@ -276,6 +276,42 @@ final class LexicalSearchEngineTests: XCTestCase {
 
         XCTAssertTrue(page.results.isEmpty)
     }
+
+    func testImageLocatorsRequireExplicitPolicyPermission() async throws {
+        let fixture = try SearchEngineFixture()
+        let frameID = try fixture.addFrame(suffix: 120, text: "image permission")
+        let frame = frameID.uuidString.lowercased()
+        let mediaPath = "media/fixture/frames/\(frame).heic"
+        let thumbnailPath = "thumbnails/fixture/\(frame).heic"
+        try fixture.archive.atomicWrite { database in
+            try database.execute(
+                sql: """
+                    UPDATE frames
+                    SET schema_version = 2, media_path = ?, media_sha256 = ?,
+                        media_byte_count = 64, policy_generation = 7, thumbnail_path = ?
+                    WHERE id = ?
+                    """,
+                arguments: [
+                    mediaPath, String(repeating: "a", count: 64), thumbnailPath, frame,
+                ]
+            )
+        }
+
+        let redacted = try await fixture.engine.search(
+            fixture.request(query: "permission", policy: fixture.policy()))
+        XCTAssertNil(redacted.results[0].thumbnailLocator)
+        guard case .opaqueResourceID = redacted.results[0].mediaLocator else {
+            return XCTFail("image-disabled policy must receive an opaque locator")
+        }
+
+        let authorized = try await fixture.engine.search(
+            fixture.request(
+                query: "permission",
+                policy: fixture.policy(allowImageResources: true)
+            ))
+        XCTAssertEqual(authorized.results[0].thumbnailLocator, .archiveRelativePath(thumbnailPath))
+        XCTAssertEqual(authorized.results[0].mediaLocator, .archiveRelativePath(mediaPath))
+    }
 }
 
 private final class SearchEngineFixture: @unchecked Sendable {
@@ -381,7 +417,8 @@ private final class SearchEngineFixture: @unchecked Sendable {
         allowedHosts: Set<String> = [],
         intervalEnd: Date? = nil,
         expiresAt: Date? = nil,
-        maxResults: Int = 100
+        maxResults: Int = 100,
+        allowImageResources: Bool = false
     ) throws -> AccessPolicy {
         let end = intervalEnd ?? date("2026-08-10T00:00:00Z")
         return try AccessPolicy(
@@ -393,6 +430,7 @@ private final class SearchEngineFixture: @unchecked Sendable {
             ),
             allowedBundleIDs: allowedBundleIDs,
             allowedHosts: allowedHosts,
+            allowImageResources: allowImageResources,
             maxResults: maxResults,
             expiresAt: expiresAt ?? end.addingTimeInterval(12 * 60 * 60),
             createdByUser: true

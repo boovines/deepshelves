@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "reciprocalRankK": 60,
+  "cases": [
+    {
+      "id": "duplicate-exact-title-and-static-session",
+      "query": "Quarterly Review",
+      "lexicalRanks": ["a", "b", "c"],
+      "visualRanks": ["c", "b", "d"],
+      "exactTitleFrame": "a",
+      "staticHeartbeatFrame": "d",
+      "groupRepresentative": "b",
+      "expectedOrder": ["a", "c", "b"],
+      "expectedScores": {
+        "a": 0.03639344262295082,
+        "b": 0.03225806451612903,
+        "c": 0.032266458495966696,
+        "d": 0.015873015873015872
+      }
+    },
+    {
+      "id": "equal-score-stable-uuid",
+      "query": "shape",
+      "lexicalRanks": ["e"],
+      "visualRanks": ["f"],
+      "expectedOrder": ["e", "f"],
+      "expectedScores": {
+        "e": 0.01639344262295082,
+        "f": 0.01639344262295082
+      }
+    }
+  ]
+}

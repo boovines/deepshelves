@@ -152,14 +152,17 @@ public final class LexicalSearchEngine: @unchecked Sendable {
             browser = nil
         }
         let mediaLocator: ContentLocator
-        if let path = candidate.mediaPath {
+        if request.accessPolicy.allowImageResources, let path = candidate.mediaPath {
             mediaLocator = .archiveRelativePath(path)
         } else {
             mediaLocator = .opaqueResourceID(
-                "legacy-frame-(candidate.frameID.uuidString.lowercased())"
+                "lexical-redacted-\(candidate.frameID.uuidString.lowercased())"
             )
         }
-        let thumbnail = candidate.thumbnailPath.map(ContentLocator.archiveRelativePath)
+        let thumbnail =
+            request.accessPolicy.allowImageResources
+            ? candidate.thumbnailPath.map(ContentLocator.archiveRelativePath)
+            : nil
         let evidence = evidence(candidate, lexical: lexical, request: request)
         guard !evidence.isEmpty else {
             throw LexicalSearchError.invalidStoredProjection

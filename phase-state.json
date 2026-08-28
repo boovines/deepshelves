@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "activeStory": "LM-054",
+  "activeStory": "LM-055",
   "stories": {
     "LM-001": {
       "status": "passed",
@@ -921,23 +921,28 @@
       "resumeProbe": null
     },
     "LM-054": {
-      "status": "active",
+      "status": "passed",
       "startedAt": "2026-08-28T23:28:52Z",
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": "Activated after LM-037 and LM-053 passed. Implement deterministic RRF k=60 fusion, exact-field boosts, dedup/grouping, stable pagination, and settle-once hybrid search behavior using only safe search/store tests.",
+      "completedAt": "2026-08-28T23:49:32Z",
+      "gitRevision": "refs/tags/checkpoints/LM-054",
+      "evidence": [
+        "Results/LM-054/report.json",
+        "Results/LM-054/fusion.json",
+        "Results/LM-054/unit-tests.txt",
+        "Results/LM-054/story-gate.txt"
+      ],
+      "notes": "Hybrid search recomputes bounded lexical and visual candidates per page and fuses their incomparable ranks with fixed RRF k=60 plus deterministic exact frame/title/app/bundle/host/URL boosts. Duplicate frame IDs merge evidence; same app/window/site sessions collapse only within 30 seconds when exact media identity, the capture-time perceptual static-heartbeat decision, or approved-text Jaccard >=0.8 proves similarity. Signed HMAC keyset cursors bind the query/policy/final tuple and cumulative cap without a result cache; a 7/7/6 fixture returned 20 unique results with no skips. The production UI waits for the single fused page, so lexical results are never published and reshuffled. Fifty-five focused Release tests, hand-computed fixture, contracts, privacy, formatting, dependency, and universal compile-only Release gates passed under the encoder tripwire without app, ImageIO, or video runtime.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null
     },
     "LM-055": {
-      "status": "pending",
-      "startedAt": null,
+      "status": "active",
+      "startedAt": "2026-08-28T23:49:32Z",
       "completedAt": null,
       "gitRevision": null,
       "evidence": [],
-      "notes": null,
+      "notes": "Activated after LM-054 passed. Tune hybrid retrieval on frozen labels and run the full million-frame latency, reindex, and recovery gate with all media runtimes quarantined.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null

@@ -1,0 +1,11 @@
+hand_computed_fusion=passed
+deterministic_ordering=passed
+stable_pagination=passed
+dedup_and_grouping=passed
+settle_once_hybrid_ui=passed
+image_resource_policy=passed
+contracts=passed
+privacy_smoke=passed
+release_compile_only=passed
+dependency_audit=passed
+encoder_process_tripwire=passed

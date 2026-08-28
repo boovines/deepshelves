@@ -26,10 +26,11 @@ enum AppSearchComposition {
             return makeFixtureModel(mode: fixtureMode)
         }
         let modelService = MobileCLIPModelService.bundled()
+        let cursorSigningKey = Data((0..<32).map { _ in UInt8.random(in: .min ... .max) })
         guard let database,
             let lexical = try? LexicalSearchEngine(
                 database: database,
-                cursorSigningKey: Data((0..<32).map { _ in UInt8.random(in: .min ... .max) })
+                cursorSigningKey: cursorSigningKey
             ),
             let model = try? VisualEmbeddingProducerIdentity.archiveVectorModel(),
             let embedder = try? VisualQueryEmbeddingProvider(
@@ -43,6 +44,12 @@ enum AppSearchComposition {
                 database: database,
                 model: model,
                 embedder: embedder
+            ),
+            let hybrid = try? HybridSearchEngine(
+                lexical: lexical,
+                visual: visual,
+                cursorSigningKey: cursorSigningKey,
+                groupingProvider: groupingProvider(database: database)
             )
         else {
             return SearchSessionModel(
@@ -50,7 +57,7 @@ enum AppSearchComposition {
                 requestBuilder: { _ in throw AppSearchCompositionError.archiveUnavailable }
             )
         }
-        let engine = LocalSearchEngine(lexical: lexical, visual: visual)
+        let engine = LocalSearchEngine(lexical: lexical, visual: visual, hybrid: hybrid)
         let policyID = UUID()
         return SearchSessionModel(engine: engine) { query in
             let now = Date()
@@ -75,10 +82,32 @@ enum AppSearchComposition {
                 interval: nil,
                 bundleIDs: [],
                 hosts: [],
-                mode: .textOnly,
+                mode: .hybrid,
                 pageSize: 50,
                 cursor: nil,
                 accessPolicy: policy
+            )
+        }
+    }
+
+    private static func groupingProvider(database: ArchiveDatabase)
+        -> HybridGroupingMetadataProvider
+    {
+        let store = ArchiveHybridGroupingStore(database: database)
+        return HybridGroupingMetadataProvider { frameIDs in
+            Dictionary(
+                uniqueKeysWithValues: try store.records(frameIDs: frameIDs).values.map { record in
+                    (
+                        record.frameID,
+                        HybridGroupingMetadata(
+                            frameID: record.frameID,
+                            captureEpochID: record.captureEpochID,
+                            captureReason: record.captureReason,
+                            mediaSHA256: record.mediaSHA256,
+                            approvedText: record.approvedText
+                        )
+                    )
+                }
             )
         }
     }

@@ -180,16 +180,25 @@ public final class VisualSearchEngine: @unchecked Sendable, SearchEngine {
 public final class LocalSearchEngine: @unchecked Sendable, SearchEngine {
     private let lexical: any SearchEngine
     private let visual: (any SearchEngine)?
+    private let hybrid: (any SearchEngine)?
 
-    public init(lexical: any SearchEngine, visual: (any SearchEngine)?) {
+    public init(
+        lexical: any SearchEngine,
+        visual: (any SearchEngine)?,
+        hybrid: (any SearchEngine)? = nil
+    ) {
         self.lexical = lexical
         self.visual = visual
+        self.hybrid = hybrid
     }
 
     public func search(_ request: SearchRequest) async throws -> SearchPage {
         switch request.mode {
-        case .textOnly, .hybrid:
+        case .textOnly:
             return try await lexical.search(request)
+        case .hybrid:
+            guard let hybrid else { return try await lexical.search(request) }
+            return try await hybrid.search(request)
         case .visualOnly:
             guard let visual else { throw LexicalSearchError.visualSearchUnavailable }
             return try await visual.search(request)

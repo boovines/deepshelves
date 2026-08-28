@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-054",
+  "status": "passed",
+  "fixture": {
+    "path": "Fixtures/LM054/fusion-cases.json",
+    "sha256": "de9b57ce6ccbde66e7f69c063e73b33e704ef924b1a94202398b687210eddb1f",
+    "caseCount": 2
+  },
+  "fusion": {
+    "algorithm": "reciprocal-rank fusion",
+    "k": 60,
+    "exactBoosts": {
+      "frameIdentifier": 0.025,
+      "title": 0.02,
+      "applicationOrBundleIdentifier": 0.015,
+      "hostOrFullURL": 0.01
+    },
+    "handComputedOrder": ["a", "c", "b"],
+    "duplicateFrameEvidenceMerged": true,
+    "stableTieOrder": ["e", "f"]
+  },
+  "grouping": {
+    "sameApplicationWindowSiteRequired": true,
+    "maximumGapSeconds": 30,
+    "minimumApprovedTextJaccard": 0.8,
+    "exactMediaHashAccepted": true,
+    "staticHeartbeatUsesCaptureTimePerceptualGate": true,
+    "strongestRepresentativeRetained": true
+  },
+  "pagination": {
+    "resultCacheRequired": false,
+    "cursorAuthentication": "HMAC-SHA256",
+    "queryAndPolicyFingerprintBound": true,
+    "pageSizeFingerprintBound": false,
+    "policyBoundedResultCount": 20,
+    "pageSizes": [7, 7, 6],
+    "duplicateCount": 0,
+    "skippedCount": 0
+  },
+  "presentation": {
+    "componentPagesPublished": 0,
+    "fusedSettlementsPerGeneration": 1,
+    "lexicalInterimJumpCount": 0
+  }
+}
