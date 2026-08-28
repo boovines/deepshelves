@@ -163,7 +163,9 @@ No agent may waive a privacy or data-loss test to advance the phase.
 
 ## Completion gate
 
-- Five-day dogfood run without archive corruption
+- Three-workday dogfood run without archive corruption. Codex remains stopped for the
+  entire observation window; the app records only its bounded local diagnostics, and the
+  user manually resumes the goal afterward.
 - All fidelity journeys pass
 - Retrieval targets pass on the private benchmark
 - Privacy suite proves excluded/deleted data absence

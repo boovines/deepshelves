@@ -68,12 +68,26 @@ The agent may not invent additional approval gates merely because work is diffic
 | H2 Screen/Accessibility TCC | First real capture and AX test | In System Settings, grant Screen & System Audio Recording and Accessibility to the fixed app bundle | App capability probes return granted and foreground-window sentinel test passes |
 | H3 Launch-at-login | SMAppService asks for user confirmation | Approve Local Memory under Login Items when prompted | Service status is enabled and relaunch test passes |
 | H4 Optional audio TCC | User elects to complete Phase 8 audio | Grant only the requested microphone/system-audio permission | Audio capability probe and local fixture capture pass |
-| H5 Five-day dogfood | LM-081 | Use the app during five normal workdays; record observed failures/false exclusions/UX friction in the supplied form | Agent ingests report, checks diagnostics, reproduces or dispositions every item |
+| H5 Three-workday dogfood | LM-081 | Use the app during three normal workdays; record observed failures/false exclusions/UX friction in the supplied form. The days need not be consecutive. | Agent ingests the report only after the user manually resumes, checks bounded local diagnostics, and reproduces or dispositions every item. |
 | H6 Fresh-install rehearsal | LM-083 | Follow the supplied install/permission/revoke/uninstall checklist on the target Mac | Agent reruns probes and records resulting state/evidence |
 | H7 Final subjective review | LM-085 | Review the deterministic UI gallery and five core journeys; list unacceptable issues or explicitly accept | Agent fixes listed blockers and records user acceptance; numeric/accessibility gates still run automatically |
 | H8 GitHub authentication | LM-001 cannot create/push the private `deepshelves` remote | Authenticate GitHub CLI for the intended account and confirm private visibility; do not authorize public creation | `gh auth status`, `git remote -v`, and repository visibility inspection pass; initial plan/build checkpoint pushes successfully |
 
 A paid Apple Developer Program membership and App Store submission are not required. Apple-account authentication, TCC consent, Keychain prompts, microphone consent, real-world dogfood, and subjective visual approval cannot be assumed automatable.
+
+### H5 credit-silent observation protocol
+
+H5 is an offline human observation window, not an agent-monitoring task. Before the first
+dogfood day, the agent must checkpoint LM-080, set LM-081 to `blocked_human`, write the
+observation form and exact resume probe to `HUMAN-ACTION.md`, and end its active turn. It
+must not create or leave running a Codex automation, scheduled task, heartbeat, sub-agent,
+polling loop, terminal watcher, or recurring status check. The Local Memory app may write
+only the bounded local diagnostics already required by LM-080.
+
+The user runs the app normally for three workdays and manually returns to the goal thread
+afterward. Codex usage during the observation window must be zero because no Codex task is
+active. On manual resume, the agent reads the supplied form and local diagnostics once,
+deletes `HUMAN-ACTION.md` after verifying the gate, and continues LM-081.
 
 ## Decisions the agent can make without pausing
 

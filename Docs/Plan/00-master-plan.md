@@ -271,7 +271,8 @@ The agent may automatically fix failures within the active story. It may not sil
 
 ## Definition of done
 
-1. Five normal workdays without disruptive resource use.
+1. Three normal workdays without disruptive resource use. During this observation window,
+   Codex is fully stopped and resumes only after the user manually returns with the report.
 2. Exact and visual retrieval meet thresholds.
 3. Search, screenshot detail, and timeline provide Coast-style recall.
 4. Pause, exclusions, retention, deletion, and export survive failure tests.
