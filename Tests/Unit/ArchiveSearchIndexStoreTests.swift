@@ -214,7 +214,7 @@ final class ArchiveSearchIndexStoreTests: XCTestCase {
         XCTAssertEqual(try store.mergedRecordCountForTesting(), 0)
     }
 
-    func testLocalSearchScopeIncludesOnlyDistinctFullyReadyApprovedMetadata() throws {
+    func testLocalSearchScopeIncludesDistinctNonSuppressedVisualOrTextMetadata() throws {
         let archive = try ArchiveDatabase.deterministicTestStore()
         let store = ArchiveSearchIndexStore(database: archive)
         let ready = try archive.insertSearchFrameFixtureForTesting(
@@ -253,8 +253,14 @@ final class ArchiveSearchIndexStoreTests: XCTestCase {
 
         let scope = try archive.localSearchScope()
 
-        XCTAssertEqual(scope.bundleIdentifiers, ["com.example.ready"])
-        XCTAssertEqual(scope.hosts, ["ready.example.test"])
+        XCTAssertEqual(
+            scope.bundleIdentifiers,
+            ["com.example.projection-suppressed", "com.example.ready"]
+        )
+        XCTAssertEqual(
+            scope.hosts,
+            ["projection-suppressed.example.test", "ready.example.test"]
+        )
     }
 }
 

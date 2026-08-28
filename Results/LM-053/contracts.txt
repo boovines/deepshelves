@@ -1,0 +1,15 @@
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:macOS, arch:arm64, id:00006030-000658C614D0001C, name:My Mac }
+{ platform:macOS, arch:x86_64, id:00006030-000658C614D0001C, name:My Mac }
+{ platform:macOS, name:Any Mac }
+/Users/justinhou/Development/deepshelves/Packages/MemoryStore/Sources/MemoryStore/ArchiveVectorStore.swift:308:17: warning: result of call to 'recoverCompactionIfNeeded(model:)' is unused
+            try recoverCompactionIfNeeded(model: model)
+                ^                        ~~~~~~~~~~~~~~
+/Users/justinhou/Development/deepshelves/Packages/MemoryStore/Sources/MemoryStore/ArchiveVectorStore.swift:357:17: warning: result of call to 'recoverCompactionIfNeeded(model:)' is unused
+            try recoverCompactionIfNeeded(model: model)
+                ^                        ~~~~~~~~~~~~~~
+2026-08-29 01:27:15.799 xcodebuild[67170:2451623] [MT] IDETestOperationsObserverDebug: 0.901 elapsed -- Testing started completed.
+2026-08-29 01:27:15.799 xcodebuild[67170:2451623] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-08-29 01:27:15.799 xcodebuild[67170:2451623] [MT] IDETestOperationsObserverDebug: 0.901 sec, +0.901 sec -- end
+Testing started
+check-contracts: legacy V1 and canonical V2 fixtures reproduce byte-for-byte and all contract validation tests pass

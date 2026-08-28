@@ -1,0 +1,14 @@
+shared_router=text+visual+lexical-hybrid-fallback
+query_encoder=paired-mobileclip-text-model
+query_model_hash_bound=passed
+visual_evidence_source=visual
+visual_evidence_matched_text=null
+policy_filter_before_scoring=passed
+policy_revalidation_before_projection=passed
+image_locator_policy_gate=passed
+frozen_visual_queries=25
+pipeline_recall_at_10=1.0
+canonical_real_model_recall_at_10=1.0
+application_launches_executed=0
+hardware_encoder_tests_executed=0
+apple_imageio_runtime_executed=0

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "activeStory": "LM-053",
+  "activeStory": "LM-054",
   "stories": {
     "LM-001": {
       "status": "passed",
@@ -904,23 +904,29 @@
       "resumeProbe": null
     },
     "LM-053": {
-      "status": "active",
+      "status": "passed",
       "startedAt": "2026-08-28T23:11:09Z",
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": "Activated after LM-049 and LM-052 passed. Add visual-only text-query embedding and candidate retrieval to the shared SearchEngine with visual evidence labels, pre-projection filters and AccessPolicy, and safe fake/model-text coverage only.",
+      "completedAt": "2026-08-28T23:28:52Z",
+      "gitRevision": "refs/tags/checkpoints/LM-053",
+      "evidence": [
+        "Results/LM-053/report.json",
+        "Results/LM-053/retrieval.json",
+        "Results/LM-053/unit-tests.txt",
+        "Results/LM-053/model-parity.txt",
+        "Results/LM-053/story-gate.txt"
+      ],
+      "notes": "The shared local SearchEngine now routes visual-only requests through the paired bundled MobileCLIP text encoder and LM-052's exact filtered scanner, while retaining lexical behavior for text and the honest pre-LM-054 hybrid fallback. Time, application, site, ready-state, and suppression policy execute before scoring; policy currency and canonical projection are revalidated after async embedding and before return. Visual evidence never invents matched text, archive image locators require explicit policy permission, and malformed durable context fails closed. Forty-two focused Release tests plus two real bundled-model parity tests passed. The frozen 25-query full-engine fixture reached Recall@10 1.0 with zero forbidden results; canonical real-model Recall@10 remains 1.0. Contracts, privacy, strict formatting, dependency, and universal compile-only Release gates passed under the encoder tripwire without app, ImageIO, or video runtime.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null
     },
     "LM-054": {
-      "status": "pending",
-      "startedAt": null,
+      "status": "active",
+      "startedAt": "2026-08-28T23:28:52Z",
       "completedAt": null,
       "gitRevision": null,
       "evidence": [],
-      "notes": null,
+      "notes": "Activated after LM-037 and LM-053 passed. Implement deterministic RRF k=60 fusion, exact-field boosts, dedup/grouping, stable pagination, and settle-once hybrid search behavior using only safe search/store tests.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null

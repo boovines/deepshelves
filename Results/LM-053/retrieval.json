@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-053",
+  "status": "passed",
+  "frozenJudgments": {
+    "path": "Fixtures/LM038/retrieval-judgments.json",
+    "sha256": "640abc4d73f66c9555cb54df277b0963eeae02cd80651f7174d6bba238e02912",
+    "visualQueryCount": 25,
+    "pipelineRecallAt10": 1.0,
+    "forbiddenResultCount": 0
+  },
+  "canonicalRealModelBaseline": {
+    "path": "Results/LM-007/report.json",
+    "imageCount": 500,
+    "textQueryCount": 100,
+    "visualRecallAt10": 1.0,
+    "textP95Milliseconds": 7.919458,
+    "minimumRecallAt10": 0.75
+  },
+  "parity": {
+    "path": "Results/LM-049/report.json",
+    "imageCosineSimilarity": 1.0,
+    "textCosineSimilarity": 0.9999998807907104,
+    "modelManifestSHA256": "758468b14a34070a0f6295fe8b6fd4d1b8cf536083cbb10c847fd5dae3cc762b"
+  }
+}

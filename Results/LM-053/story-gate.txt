@@ -1,0 +1,13 @@
+visual_only_text_embedding=passed
+exact_candidate_retrieval=passed
+visual_evidence_label=passed
+access_policy_before_projection=passed
+suppression_race_revalidation=passed
+frozen_recall_at_10=passed
+real_model_recall_baseline=passed
+lexical_fallback=passed
+contracts=passed
+privacy_smoke=passed
+release_compile_only=passed
+dependency_audit=passed
+encoder_process_tripwire=passed

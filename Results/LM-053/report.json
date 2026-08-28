@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-053",
+  "status": "passed",
+  "search": {
+    "sharedEngine": "LocalSearchEngine",
+    "mode": "visualOnly",
+    "queryEmbedding": "paired bundled MobileCLIP-S0 text encoder",
+    "modelIdentityBound": true,
+    "candidateRetrieval": "LM-052 exact filtered Float16 scan",
+    "evidenceSource": "visual",
+    "matchedText": null,
+    "stableOrdering": true,
+    "lexicalFallbackPreserved": true,
+    "hybridFusionDeferredTo": "LM-054"
+  },
+  "accessPolicy": {
+    "filtersBeforeScoring": [
+      "half-open capture interval",
+      "allowed and requested bundle identifiers",
+      "allowed and requested browser hosts",
+      "ready frame, media, vector offset, and visualVector artifact state",
+      "suppression state"
+    ],
+    "revalidatedAfterEmbedding": true,
+    "revalidatedBeforeProjection": true,
+    "expiredPolicyFailsClosed": true,
+    "imageResourcePathsRequireExplicitGrant": true,
+    "malformedCanonicalProjectionFailsClosed": true
+  },
+  "retrieval": {
+    "evidence": "Results/LM-053/retrieval.json",
+    "frozenFixture": "Fixtures/LM038/retrieval-judgments.json",
+    "frozenFixtureSHA256": "640abc4d73f66c9555cb54df277b0963eeae02cd80651f7174d6bba238e02912",
+    "visualQueryCount": 25,
+    "pipelineRecallAt10": 1.0,
+    "minimumRecallAt10": 0.75,
+    "forbiddenResultCount": 0,
+    "canonicalRealModelRecallAt10": 1.0,
+    "pairedTextCosineSimilarity": 0.9999998807907104
+  },
+  "verification": {
+    "focusedReleaseUnitTests": 42,
+    "bundledModelParityTests": 2,
+    "contracts": "passed",
+    "privacySmoke": "passed",
+    "releaseCompileOnly": "passed",
+    "dependencyAudit": "passed",
+    "strictFormatting": "passed"
+  },
+  "safety": {
+    "applicationLaunchesExecuted": 0,
+    "appleImageIORuntimeExecuted": false,
+    "hardwareEncoderTestsExecuted": 0,
+    "videoToolboxInvocations": 0,
+    "encoderTripwire": "passed"
+  }
+}

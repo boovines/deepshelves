@@ -16,6 +16,35 @@ public enum VisualEmbeddingJobError: Error, Equatable, Sendable {
 public enum VisualEmbeddingProducerIdentity {
     public static let jobVersion = "mobileclip-s0-coreml-3e0a7bf+image-v1"
     public static let preprocessingVersion = "srgb-aspectfill-bgra256-v1"
+
+    public static func archiveVectorModel() throws -> ArchiveVectorModelIdentity {
+        guard let modelHash = lowercaseHex(MobileCLIPRuntime.manifestSHA256) else {
+            throw VisualEmbeddingJobError.modelIdentityMismatch
+        }
+        return try ArchiveVectorModelIdentity(
+            modelHash: modelHash,
+            jobVersion: jobVersion,
+            producerName: "mobileclip-s0",
+            producerSemanticVersion: "1.0.0+coreml.3e0a7bf.image-v1",
+            preprocessingVersion: preprocessingVersion,
+            dimension: MobileCLIPRuntime.dimension
+        )
+    }
+
+    private static func lowercaseHex(_ encoded: String) -> Data? {
+        guard encoded.count == 64,
+            encoded.range(of: "^[0-9a-f]+$", options: .regularExpression) != nil
+        else { return nil }
+        var bytes = Data(capacity: 32)
+        var index = encoded.startIndex
+        while index < encoded.endIndex {
+            let next = encoded.index(index, offsetBy: 2)
+            guard let byte = UInt8(encoded[index..<next], radix: 16) else { return nil }
+            bytes.append(byte)
+            index = next
+        }
+        return bytes
+    }
 }
 
 public struct VisualEmbeddingSource: Equatable, Sendable {
@@ -258,19 +287,9 @@ public actor ArchiveVisualEmbeddingPublisher: VisualEmbeddingPublishing {
     private let model: ArchiveVectorModelIdentity
 
     public init(database: ArchiveDatabase) throws {
-        guard let modelHash = Self.lowercaseHex(MobileCLIPRuntime.manifestSHA256) else {
-            throw VisualEmbeddingJobError.modelIdentityMismatch
-        }
         vectorStore = try ArchiveVectorStore(database: database)
         visualStore = ArchiveVisualEmbeddingStore(database: database)
-        model = try ArchiveVectorModelIdentity(
-            modelHash: modelHash,
-            jobVersion: VisualEmbeddingProducerIdentity.jobVersion,
-            producerName: "mobileclip-s0",
-            producerSemanticVersion: "1.0.0+coreml.3e0a7bf.image-v1",
-            preprocessingVersion: VisualEmbeddingProducerIdentity.preprocessingVersion,
-            dimension: MobileCLIPRuntime.dimension
-        )
+        model = try VisualEmbeddingProducerIdentity.archiveVectorModel()
     }
 
     public func publish(_ publication: VisualEmbeddingPublication) async throws {
@@ -326,20 +345,6 @@ public actor ArchiveVisualEmbeddingPublisher: VisualEmbeddingPublishing {
         try vectorStore.recover(model: model)
     }
 
-    private static func lowercaseHex(_ encoded: String) -> Data? {
-        guard encoded.count == 64,
-            encoded.range(of: "^[0-9a-f]+$", options: .regularExpression) != nil
-        else { return nil }
-        var bytes = Data(capacity: 32)
-        var index = encoded.startIndex
-        while index < encoded.endIndex {
-            let next = encoded.index(index, offsetBy: 2)
-            guard let byte = UInt8(encoded[index..<next], radix: 16) else { return nil }
-            bytes.append(byte)
-            index = next
-        }
-        return bytes
-    }
 }
 
 public final class ArchiveVisualEmbeddingSourceProvider: @unchecked Sendable,

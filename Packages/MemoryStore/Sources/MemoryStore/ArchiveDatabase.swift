@@ -195,25 +195,24 @@ public final class ArchiveDatabase: @unchecked Sendable {
                     SELECT DISTINCT frames.bundle_id
                     FROM frames
                     JOIN media_chunks ON media_chunks.id = frames.chunk_id
-                    JOIN merged_text_records ON merged_text_records.frame_id = frames.id
-                    WHERE frames.visual_state = 'ready'
-                      AND media_chunks.state = 'ready'
-                      AND merged_text_records.state = 'ready'
+                    WHERE media_chunks.state = 'ready'
+                      AND frames.bundle_id IS NOT NULL
+                      AND frames.visual_state <> 'suppressed'
+                      AND (frames.text_state = 'ready' OR frames.visual_state = 'ready')
                     ORDER BY frames.bundle_id
                     """
             )
             let hosts = try String.fetchAll(
                 database,
                 sql: """
-                    SELECT DISTINCT merged_text_records.url_host
-                    FROM merged_text_records
-                    JOIN frames ON frames.id = merged_text_records.frame_id
+                    SELECT DISTINCT frames.url_host
+                    FROM frames
                     JOIN media_chunks ON media_chunks.id = frames.chunk_id
-                    WHERE frames.visual_state = 'ready'
-                      AND media_chunks.state = 'ready'
-                      AND merged_text_records.state = 'ready'
-                      AND merged_text_records.url_host IS NOT NULL
-                    ORDER BY merged_text_records.url_host
+                    WHERE media_chunks.state = 'ready'
+                      AND frames.url_host IS NOT NULL
+                      AND frames.visual_state <> 'suppressed'
+                      AND (frames.text_state = 'ready' OR frames.visual_state = 'ready')
+                    ORDER BY frames.url_host
                     """
             )
             return ArchiveLocalSearchScope(

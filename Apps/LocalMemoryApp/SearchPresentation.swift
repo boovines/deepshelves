@@ -1,5 +1,6 @@
 import Foundation
 import MemoryContracts
+import MemoryEnrichment
 import MemorySearch
 import MemoryStore
 import SwiftUI
@@ -24,10 +25,24 @@ enum AppSearchComposition {
         if let fixtureMode {
             return makeFixtureModel(mode: fixtureMode)
         }
+        let modelService = MobileCLIPModelService.bundled()
         guard let database,
-            let engine = try? LexicalSearchEngine(
+            let lexical = try? LexicalSearchEngine(
                 database: database,
                 cursorSigningKey: Data((0..<32).map { _ in UInt8.random(in: .min ... .max) })
+            ),
+            let model = try? VisualEmbeddingProducerIdentity.archiveVectorModel(),
+            let embedder = try? VisualQueryEmbeddingProvider(
+                modelHash: model.modelHash,
+                dimension: model.dimension,
+                operation: { query in
+                    try await modelService.embed(text: query)
+                }
+            ),
+            let visual = try? VisualSearchEngine(
+                database: database,
+                model: model,
+                embedder: embedder
             )
         else {
             return SearchSessionModel(
@@ -35,6 +50,7 @@ enum AppSearchComposition {
                 requestBuilder: { _ in throw AppSearchCompositionError.archiveUnavailable }
             )
         }
+        let engine = LocalSearchEngine(lexical: lexical, visual: visual)
         let policyID = UUID()
         return SearchSessionModel(engine: engine) { query in
             let now = Date()
@@ -49,6 +65,7 @@ enum AppSearchComposition {
                 allowedInterval: interval,
                 allowedBundleIDs: scope.bundleIdentifiers,
                 allowedHosts: scope.hosts,
+                allowImageResources: true,
                 maxResults: 100,
                 expiresAt: now.addingTimeInterval(24 * 60 * 60),
                 createdByUser: true

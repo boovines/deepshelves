@@ -131,15 +131,18 @@ public struct ArchiveVectorCompactionReport: Equatable, Sendable {
 public struct ArchiveVectorScanFilter: Equatable, Sendable {
     public let capturedAt: Range<Date>?
     public let bundleIdentifiers: Set<String>
+    public let allowedHosts: Set<String>?
     public let hosts: Set<String>
 
     public init(
         capturedAt: Range<Date>? = nil,
         bundleIdentifiers: Set<String> = [],
+        allowedHosts: Set<String>? = nil,
         hosts: Set<String> = []
     ) {
         self.capturedAt = capturedAt
         self.bundleIdentifiers = bundleIdentifiers
+        self.allowedHosts = allowedHosts
         self.hosts = hosts
     }
 }
@@ -620,6 +623,16 @@ public final class ArchiveVectorStore: @unchecked Sendable {
                     "frames.bundle_id IN (\(filter.bundleIdentifiers.map { _ in "?" }.joined(separator: ",")))"
                 )
                 arguments.append(contentsOf: filter.bundleIdentifiers.sorted())
+            }
+            if let allowedHosts = filter.allowedHosts {
+                if allowedHosts.isEmpty {
+                    predicates.append("frames.url_host IS NULL")
+                } else {
+                    predicates.append(
+                        "(frames.url_host IS NULL OR frames.url_host IN (\(allowedHosts.map { _ in "?" }.joined(separator: ","))))"
+                    )
+                    arguments.append(contentsOf: allowedHosts.sorted())
+                }
             }
             if !filter.hosts.isEmpty {
                 predicates.append(
