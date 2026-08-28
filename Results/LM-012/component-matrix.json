@@ -1,0 +1,32 @@
+{
+  "components" : [
+    "MemorySearchField",
+    "FilterToken",
+    "FilterTokenBar",
+    "CaptureStatusBadge",
+    "MemoryResultCard",
+    "EvidenceSnippet",
+    "PermissionRow",
+    "EmptyStateView",
+    "InlineErrorView",
+    "ProgressStatusView",
+    "DestructiveConfirmationSheet"
+  ],
+  "scenarioCount" : 143,
+  "schemaVersion" : 1,
+  "variants" : [
+    "normal",
+    "hover",
+    "pressed",
+    "focused",
+    "disabled",
+    "selected",
+    "loading",
+    "error",
+    "light",
+    "dark",
+    "increasedContrast",
+    "longLocalization",
+    "keyboardFocus"
+  ]
+}

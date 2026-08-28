@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "activeStory": "LM-012",
+  "activeStory": "LM-013",
   "stories": {
     "LM-001": {
       "status": "passed",
@@ -180,23 +180,27 @@
       "resumeProbe": null
     },
     "LM-012": {
-      "status": "active",
+      "status": "passed",
       "startedAt": "2026-08-28T04:16:30Z",
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": "Base checkpoint refs/tags/checkpoints/LM-011. Implement MemorySearchField, filter tokens, capture status badge, result card, evidence snippet, permission row, empty/error/progress views, and destructive confirmation sheet with a complete state, long-localization, and keyboard-focus preview/snapshot matrix.",
+      "completedAt": "2026-08-28T04:28:26Z",
+      "gitRevision": "refs/tags/checkpoints/LM-012",
+      "evidence": [
+        "Results/LM-012/component-matrix.json",
+        "Results/LM-012/report.json",
+        "Results/LM-012/unit-tests.txt"
+      ],
+      "notes": "All eleven shared controls compile as native SwiftUI and the byte-pinned 143-scenario matrix covers every required interaction, appearance, Increased Contrast, long-localization, and keyboard-focus state. Accessibility copy, safe destructive defaults, progress delay, semantic styling, and the complete release/privacy gate suite pass.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null
     },
     "LM-013": {
-      "status": "pending",
-      "startedAt": null,
+      "status": "active",
+      "startedAt": "2026-08-28T04:28:26Z",
       "completedAt": null,
       "gitRevision": null,
       "evidence": [],
-      "notes": null,
+      "notes": "Base checkpoint refs/tags/checkpoints/LM-012. Build the deterministic macOS NSHostingView screenshot harness for 1x/2x, light/dark/Increased Contrast, default/minimum sizes, and reviewed shared-control baselines, with a reproducible zero-diff snapshot-index.html gate.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null

@@ -286,10 +286,42 @@ public struct MemoryTokenEnvironment: Equatable, Sendable {
     }
 }
 
+private struct MemoryReduceMotionOverrideKey: EnvironmentKey {
+    static let defaultValue: Bool? = nil
+}
+
+private struct MemoryIncreasedContrastOverrideKey: EnvironmentKey {
+    static let defaultValue: Bool? = nil
+}
+
+private extension EnvironmentValues {
+    var memoryReduceMotionOverride: Bool? {
+        get { self[MemoryReduceMotionOverrideKey.self] }
+        set { self[MemoryReduceMotionOverrideKey.self] = newValue }
+    }
+
+    var memoryIncreasedContrastOverride: Bool? {
+        get { self[MemoryIncreasedContrastOverrideKey.self] }
+        set { self[MemoryIncreasedContrastOverrideKey.self] = newValue }
+    }
+}
+
+public extension View {
+    func memoryPreviewAccessibility(
+        reduceMotion: Bool? = nil,
+        increasedContrast: Bool? = nil
+    ) -> some View {
+        environment(\.memoryReduceMotionOverride, reduceMotion)
+            .environment(\.memoryIncreasedContrastOverride, increasedContrast)
+    }
+}
+
 public struct MemoryTokenReader<Content: View>: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.colorSchemeContrast) private var colorSchemeContrast
     @Environment(\.displayScale) private var displayScale
+    @Environment(\.memoryReduceMotionOverride) private var reduceMotionOverride
+    @Environment(\.memoryIncreasedContrastOverride) private var increasedContrastOverride
 
     private let content: (MemoryTokenEnvironment) -> Content
 
@@ -300,8 +332,9 @@ public struct MemoryTokenReader<Content: View>: View {
     public var body: some View {
         content(
             MemoryTokenEnvironment(
-                reduceMotion: reduceMotion,
-                increasedContrast: colorSchemeContrast == .increased,
+                reduceMotion: reduceMotionOverride ?? reduceMotion,
+                increasedContrast: increasedContrastOverride
+                    ?? (colorSchemeContrast == .increased),
                 displayScale: displayScale
             )
         )
