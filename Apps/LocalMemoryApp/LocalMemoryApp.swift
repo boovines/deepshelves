@@ -15,8 +15,8 @@ struct LocalMemoryApp: App {
     @StateObject private var onboardingModel: OnboardingViewModel
     @StateObject private var searchPanelCoordinator: GlobalSearchPanelCoordinator
     @StateObject private var privacySettingsModel: PrivacySettingsViewModel
+    @StateObject private var archiveSecurityModel: ArchiveSecurityViewModel
     private let shellKeyboardMonitor: ShellKeyboardCommandMonitor
-    private let archiveDatabase: ArchiveDatabase
 
     private let launchConfiguration: AppLaunchConfiguration
     private let capabilityProbeOutput: String?
@@ -45,7 +45,12 @@ struct LocalMemoryApp: App {
         let configuration = AppLaunchConfiguration(arguments: arguments)
         launchConfiguration = configuration
         shellKeyboardMonitor = ShellKeyboardCommandMonitor()
-        archiveDatabase = Self.bootstrapArchive(arguments: arguments)
+        _archiveSecurityModel = StateObject(
+            wrappedValue: ArchiveSecurityViewModel(
+                usesDeterministicStore: arguments.contains("--lm019-export-lifecycle")
+                    || arguments.contains("--lm020-export-resolver")
+            )
+        )
         _lifecycleModel = StateObject(
             wrappedValue: AppLifecycleViewModel(
                 stateURL: configuration.stateURL,
@@ -165,19 +170,6 @@ struct LocalMemoryApp: App {
             Self.launchS7Spike(s7SpikeArguments)
         }
         LM008ChildModes.launchIfRequested(arguments: arguments)
-    }
-
-    private static func bootstrapArchive(arguments: [String]) -> ArchiveDatabase {
-        do {
-            if arguments.contains("--lm019-export-lifecycle")
-                || arguments.contains("--lm020-export-resolver")
-            {
-                return try ArchiveDatabase.deterministicTestStore()
-            }
-            return try ArchiveDatabase()
-        } catch {
-            preconditionFailure("Local Memory archive bootstrap failed: \(error)")
-        }
     }
 
     private static func exportLM017SchemaAndExitIfRequested(arguments: [String]) {
@@ -426,6 +418,7 @@ struct LocalMemoryApp: App {
             LocalMemorySettingsView(
                 searchPanelCoordinator: searchPanelCoordinator,
                 privacySettingsModel: privacySettingsModel,
+                archiveSecurityModel: archiveSecurityModel,
                 opensPrivacyAtLaunch: launchConfiguration.opensPrivacySettingsAtLaunch
             )
             .preferredColorScheme(launchConfiguration.preferredColorScheme)

@@ -2,6 +2,7 @@ import AppKit
 import Foundation
 import MemoryContracts
 import MemoryDesignSystem
+import MemoryStore
 import SwiftUI
 
 enum MainWindowLaunchSize: String {
@@ -849,15 +850,18 @@ private enum LocalMemorySettingsSection: Hashable {
 struct LocalMemorySettingsView: View {
     @ObservedObject var searchPanelCoordinator: GlobalSearchPanelCoordinator
     @ObservedObject var privacySettingsModel: PrivacySettingsViewModel
+    @ObservedObject var archiveSecurityModel: ArchiveSecurityViewModel
     @State private var selection: LocalMemorySettingsSection
 
     init(
         searchPanelCoordinator: GlobalSearchPanelCoordinator,
         privacySettingsModel: PrivacySettingsViewModel,
+        archiveSecurityModel: ArchiveSecurityViewModel,
         opensPrivacyAtLaunch: Bool
     ) {
         self.searchPanelCoordinator = searchPanelCoordinator
         self.privacySettingsModel = privacySettingsModel
+        self.archiveSecurityModel = archiveSecurityModel
         _selection = State(initialValue: opensPrivacyAtLaunch ? .privacy : .capture)
     }
 
@@ -871,17 +875,9 @@ struct LocalMemorySettingsView: View {
                 .tabItem { Label("Privacy", systemImage: "hand.raised") }
                 .tag(LocalMemorySettingsSection.privacy)
 
-            SettingsPane(
-                title: "Storage",
-                systemImage: "externaldrive",
-                rows: [
-                    ("Default retention", "30 days"),
-                    ("Default cap", "20 GB"),
-                    ("Archive", "Stored locally"),
-                ]
-            )
-            .tabItem { Label("Storage", systemImage: "externaldrive") }
-            .tag(LocalMemorySettingsSection.storage)
+            ArchiveSecuritySettingsPane(model: archiveSecurityModel)
+                .tabItem { Label("Storage", systemImage: "externaldrive") }
+                .tag(LocalMemorySettingsSection.storage)
 
             SettingsPane(
                 title: "Search & Models",
@@ -925,6 +921,76 @@ struct LocalMemorySettingsView: View {
         )
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("settings.root")
+    }
+}
+
+private struct ArchiveSecuritySettingsPane: View {
+    @ObservedObject var model: ArchiveSecurityViewModel
+
+    var body: some View {
+        Form {
+            Label("Storage", systemImage: "externaldrive")
+                .font(.title2)
+                .accessibilityIdentifier("settings.title")
+            Section("Archive") {
+                LabeledContent("Default retention", value: "30 days")
+                LabeledContent("Default cap", value: "20 GB")
+                LabeledContent("Location", value: "Stored locally")
+                LabeledContent("Database text", value: encryptionStatus)
+                    .accessibilityIdentifier("storage.encryptionStatus")
+                Text(
+                    "Searchable text, settings, and audit rows are SQLCipher-encrypted. Visual media relies on owner-only permissions and FileVault when enabled."
+                )
+                .font(.caption)
+                .foregroundStyle(.secondary)
+            }
+
+            if model.state == .unrecoverableKey {
+                Section("Archive key unavailable") {
+                    Label(
+                        "The existing encrypted database cannot be opened because its Keychain key is missing or no longer unlocks it. Local Memory will not replace the key or overwrite the archive automatically.",
+                        systemImage: "key.slash"
+                    )
+                    .foregroundStyle(.orange)
+                    .accessibilityIdentifier("storage.unrecoverableKey")
+                    Text(
+                        "Reset permanently deletes the database, media, thumbnails, vectors, exports, and local logs. This cannot be undone."
+                    )
+                    Text("Type \(ArchiveResetCoordinator.requiredConfirmation) to continue.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    TextField(
+                        ArchiveResetCoordinator.requiredConfirmation,
+                        text: $model.typedResetConfirmation
+                    )
+                    .textFieldStyle(.roundedBorder)
+                    .accessibilityIdentifier("storage.resetConfirmation")
+                    Button("Delete Archive and Create a New Key", role: .destructive) {
+                        model.resetUnrecoverableArchive()
+                    }
+                    .disabled(!model.canReset)
+                    .accessibilityIdentifier("storage.resetArchive")
+                }
+            } else if case .unavailable(let errorCode) = model.state {
+                Section("Archive unavailable") {
+                    Label(
+                        "The local archive could not be opened",
+                        systemImage: "exclamationmark.triangle"
+                    )
+                    Text("No history is being stored. Error code: \(errorCode).")
+                        .foregroundStyle(.secondary)
+                }
+            }
+        }
+        .formStyle(.grouped)
+    }
+
+    private var encryptionStatus: String {
+        switch model.state {
+        case .ready: "Encrypted and verified"
+        case .unrecoverableKey: "Key missing — recording stopped"
+        case .unavailable: "Unavailable — recording stopped"
+        }
     }
 }
 

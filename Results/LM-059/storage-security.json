@@ -1,0 +1,28 @@
+{
+  "aclEvidence" : {
+    "mismatchedAccessGroupDenied" : true,
+    "sha256" : "3e0dbb9e570701ac985f384c1c347d350108bcab6af32149ab69ce39e884b9fd",
+    "signedAppModesMatched" : true,
+    "source" : "Benchmarks/Results/S5/20260827T224019Z/s5-report.json",
+    "standaloneHelpersHaveNoKeychainGroup" : true,
+    "unsignedHelperDenied" : true
+  },
+  "appLaunchTestsExecuted" : 0,
+  "cipherVersion" : "4.18.0 community",
+  "concurrentFailedOperations" : 0,
+  "concurrentSuccessfulOperations" : 1000,
+  "encryptedFilesScanned" : 3,
+  "encryptedP95Milliseconds" : 10.477708,
+  "encryptionOverheadFraction" : 0.14115008436882504,
+  "hardwareEncoderTestsExecuted" : 0,
+  "integrityCheckPassed" : true,
+  "keyMaterialLogged" : false,
+  "maximumEncryptionOverheadFraction" : 0.20000000000000001,
+  "performanceSampleCount" : 60,
+  "plaintextP95Milliseconds" : 9.1817089999999997,
+  "plaintextSentinelMatches" : 0,
+  "schemaVersion" : 1,
+  "sentinelCount" : 100,
+  "tempFilesConfinedBesideDatabase" : true,
+  "walEnabled" : true
+}

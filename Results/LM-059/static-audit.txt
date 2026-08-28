@@ -1,0 +1,7 @@
+production_key_required=passed
+cipher_activation_each_open=passed
+missing_key_fail_closed=passed
+typed_destructive_reset=passed
+reset_rollback=passed
+user_visible_recovery=passed
+ui_runtime=quarantined

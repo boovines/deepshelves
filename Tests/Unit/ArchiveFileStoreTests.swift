@@ -1,6 +1,7 @@
-@testable import MemoryStore
 import CryptoKit
 import XCTest
+
+@testable import MemoryStore
 
 final class ArchiveFileStoreTests: XCTestCase {
     func testRelativePathsFailClosedOnTraversalAbsoluteAndUnmanagedRoots() throws {
@@ -56,7 +57,8 @@ final class ArchiveFileStoreTests: XCTestCase {
                 return XCTFail("Unexpected error: \(error)")
             }
         }
-        XCTAssertFalse(FileManager.default.fileExists(atPath: external.appending(path: "escape.mov").path))
+        XCTAssertFalse(
+            FileManager.default.fileExists(atPath: external.appending(path: "escape.mov").path))
     }
 
     func testAtomicWriterFsyncsHashesAndCreatesOwnerOnlyFinal() throws {
@@ -86,7 +88,8 @@ final class ArchiveFileStoreTests: XCTestCase {
         let fixture = try LM018ArchiveFixture(name: "before-rename")
         defer { fixture.remove() }
         let archive = try ArchiveDatabase(
-            applicationSupportDirectory: fixture.applicationSupport
+            applicationSupportDirectory: fixture.applicationSupport,
+            encryptionKey: fixture.encryptionKey
         )
         let store = try XCTUnwrap(archive.fileStore)
         let path = try ArchiveRelativePath("media/2026/08/28/before.mov")
@@ -100,7 +103,8 @@ final class ArchiveFileStoreTests: XCTestCase {
         XCTAssertFalse(FileManager.default.fileExists(atPath: store.url(for: path).path))
 
         let reopened = try ArchiveDatabase(
-            applicationSupportDirectory: fixture.applicationSupport
+            applicationSupportDirectory: fixture.applicationSupport,
+            encryptionKey: fixture.encryptionKey
         )
 
         XCTAssertEqual(reopened.startupRecoveryReport.removedPartialFiles, 1)
@@ -112,13 +116,15 @@ final class ArchiveFileStoreTests: XCTestCase {
         let fixture = try LM018ArchiveFixture(name: "after-rename")
         defer { fixture.remove() }
         let archive = try ArchiveDatabase(
-            applicationSupportDirectory: fixture.applicationSupport
+            applicationSupportDirectory: fixture.applicationSupport,
+            encryptionKey: fixture.encryptionKey
         )
         let store = try XCTUnwrap(archive.fileStore)
         let path = try ArchiveRelativePath("media/2026/08/28/orphan.mov")
 
         XCTAssertThrowsError(
-            try store.write(Data("ready but uncommitted".utf8), to: path, fault: .afterRenameBeforeCommit)
+            try store.write(
+                Data("ready but uncommitted".utf8), to: path, fault: .afterRenameBeforeCommit)
         ) { error in
             XCTAssertEqual(
                 error as? ArchiveFileStoreError,
@@ -128,7 +134,8 @@ final class ArchiveFileStoreTests: XCTestCase {
         XCTAssertTrue(FileManager.default.fileExists(atPath: store.url(for: path).path))
 
         let reopened = try ArchiveDatabase(
-            applicationSupportDirectory: fixture.applicationSupport
+            applicationSupportDirectory: fixture.applicationSupport,
+            encryptionKey: fixture.encryptionKey
         )
 
         XCTAssertEqual(reopened.startupRecoveryReport.quarantinedOrphanFiles, 1)
@@ -141,7 +148,8 @@ final class ArchiveFileStoreTests: XCTestCase {
         let fixture = try LM018ArchiveFixture(name: "valid")
         defer { fixture.remove() }
         let archive = try ArchiveDatabase(
-            applicationSupportDirectory: fixture.applicationSupport
+            applicationSupportDirectory: fixture.applicationSupport,
+            encryptionKey: fixture.encryptionKey
         )
         let store = try XCTUnwrap(archive.fileStore)
         let path = try ArchiveRelativePath("media/2026/08/28/valid.mov")
@@ -156,7 +164,8 @@ final class ArchiveFileStoreTests: XCTestCase {
         XCTAssertEqual(try archive.searchableFrameCountForTesting(), 1)
 
         let reopened = try ArchiveDatabase(
-            applicationSupportDirectory: fixture.applicationSupport
+            applicationSupportDirectory: fixture.applicationSupport,
+            encryptionKey: fixture.encryptionKey
         )
 
         XCTAssertEqual(reopened.startupRecoveryReport.quarantinedCorruptFiles, 0)
@@ -170,7 +179,8 @@ final class ArchiveFileStoreTests: XCTestCase {
         let fixture = try LM018ArchiveFixture(name: "hash-mismatch")
         defer { fixture.remove() }
         let archive = try ArchiveDatabase(
-            applicationSupportDirectory: fixture.applicationSupport
+            applicationSupportDirectory: fixture.applicationSupport,
+            encryptionKey: fixture.encryptionKey
         )
         let store = try XCTUnwrap(archive.fileStore)
         let path = try ArchiveRelativePath("media/2026/08/28/corrupt.mov")
@@ -185,7 +195,8 @@ final class ArchiveFileStoreTests: XCTestCase {
         try Data("tampered".utf8).write(to: store.url(for: path))
 
         let reopened = try ArchiveDatabase(
-            applicationSupportDirectory: fixture.applicationSupport
+            applicationSupportDirectory: fixture.applicationSupport,
+            encryptionKey: fixture.encryptionKey
         )
 
         XCTAssertEqual(reopened.startupRecoveryReport.quarantinedCorruptFiles, 1)
@@ -199,7 +210,8 @@ final class ArchiveFileStoreTests: XCTestCase {
         let fixture = try LM018ArchiveFixture(name: "missing")
         defer { fixture.remove() }
         let archive = try ArchiveDatabase(
-            applicationSupportDirectory: fixture.applicationSupport
+            applicationSupportDirectory: fixture.applicationSupport,
+            encryptionKey: fixture.encryptionKey
         )
         let missingPath = try ArchiveRelativePath("media/2026/08/28/missing.mov")
         try archive.insertMissingReadyMediaFixtureForTesting(
@@ -210,7 +222,8 @@ final class ArchiveFileStoreTests: XCTestCase {
         try archive.insertLeasedJobFixtureForTesting(id: "interrupted-job")
 
         let reopened = try ArchiveDatabase(
-            applicationSupportDirectory: fixture.applicationSupport
+            applicationSupportDirectory: fixture.applicationSupport,
+            encryptionKey: fixture.encryptionKey
         )
 
         XCTAssertEqual(reopened.startupRecoveryReport.missingReadyFiles, 1)
@@ -232,7 +245,8 @@ final class ArchiveFileStoreTests: XCTestCase {
             withIntermediateDirectories: true
         )
         try Data("{}".utf8).write(to: nested)
-        try FileManager.default.setAttributes([.posixPermissions: 0o755], ofItemAtPath: nested.deletingLastPathComponent().path)
+        try FileManager.default.setAttributes(
+            [.posixPermissions: 0o755], ofItemAtPath: nested.deletingLastPathComponent().path)
         try FileManager.default.setAttributes([.posixPermissions: 0o644], ofItemAtPath: nested.path)
 
         _ = try ArchivePathProvider.prepare(
@@ -254,15 +268,18 @@ final class ArchiveFileStoreTests: XCTestCase {
             let permissions = try XCTUnwrap(attributes[.posixPermissions] as? NSNumber)
             XCTAssertEqual(permissions.intValue & 0o777, expected, file: file, line: line)
         } catch {
-            XCTFail("Unable to inspect permissions for \(url.path): \(error)", file: file, line: line)
+            XCTFail(
+                "Unable to inspect permissions for \(url.path): \(error)", file: file, line: line)
         }
     }
 
     private func regularFileCount(in root: URL) throws -> Int {
-        guard let enumerator = FileManager.default.enumerator(
-            at: root,
-            includingPropertiesForKeys: [.isRegularFileKey]
-        ) else {
+        guard
+            let enumerator = FileManager.default.enumerator(
+                at: root,
+                includingPropertiesForKeys: [.isRegularFileKey]
+            )
+        else {
             return 0
         }
         return try enumerator.reduce(into: 0) { count, value in
@@ -277,6 +294,7 @@ final class ArchiveFileStoreTests: XCTestCase {
 private struct LM018ArchiveFixture {
     let root: URL
     let applicationSupport: URL
+    let encryptionKey = Data(repeating: 0x18, count: LM008StoreDefaults.keyByteCount)
 
     init(name: String) throws {
         root = FileManager.default.temporaryDirectory.appending(

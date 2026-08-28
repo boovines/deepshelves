@@ -1,5 +1,6 @@
-@testable import MemoryStore
 import XCTest
+
+@testable import MemoryStore
 
 final class ArchiveDatabaseTests: XCTestCase {
     func testFreshBootstrapCreatesCompleteV1SchemaAndProductionPragmas() throws {
@@ -7,7 +8,8 @@ final class ArchiveDatabaseTests: XCTestCase {
         defer { fixture.remove() }
 
         let archive = try ArchiveDatabase(
-            applicationSupportDirectory: fixture.applicationSupport
+            applicationSupportDirectory: fixture.applicationSupport,
+            encryptionKey: fixture.encryptionKey
         )
 
         XCTAssertEqual(archive.paths?.databaseFile.lastPathComponent, "archive.sqlite3")
@@ -44,11 +46,13 @@ final class ArchiveDatabaseTests: XCTestCase {
         )
         try ArchiveDatabase.createVersionZeroFixture(
             at: paths.databaseFile,
+            encryptionKey: fixture.encryptionKey,
             marker: "version-zero-readable"
         )
 
         let archive = try ArchiveDatabase(
-            applicationSupportDirectory: fixture.applicationSupport
+            applicationSupportDirectory: fixture.applicationSupport,
+            encryptionKey: fixture.encryptionKey
         )
 
         XCTAssertEqual(
@@ -67,23 +71,31 @@ final class ArchiveDatabaseTests: XCTestCase {
         )
 
         XCTAssertThrowsError(
-            try ArchiveDatabase.runInterruptedV1Migration(at: paths.databaseFile)
+            try ArchiveDatabase.runInterruptedV1Migration(
+                at: paths.databaseFile,
+                encryptionKey: fixture.encryptionKey
+            )
         ) { error in
             XCTAssertEqual(error as? ArchiveDatabaseError, .injectedMigrationInterruption)
         }
 
-        let interrupted = try ArchiveDatabase.inspectUnencryptedDatabase(at: paths.databaseFile)
+        let interrupted = try ArchiveDatabase.inspectDatabase(
+            at: paths.databaseFile,
+            encryptionKey: fixture.encryptionKey
+        )
         XCTAssertEqual(interrupted.appliedMigrationIdentifiers, [])
         XCTAssertTrue(interrupted.logicalTableNames.isEmpty)
 
         let archive = try ArchiveDatabase(
-            applicationSupportDirectory: fixture.applicationSupport
+            applicationSupportDirectory: fixture.applicationSupport,
+            encryptionKey: fixture.encryptionKey
         )
         XCTAssertEqual(try archive.appliedMigrationIdentifiers(), ["v1_archive_schema"])
         XCTAssertEqual(Set(try archive.logicalTableNames()), ArchiveDatabase.v1LogicalTableNames)
 
         let reopened = try ArchiveDatabase(
-            applicationSupportDirectory: fixture.applicationSupport
+            applicationSupportDirectory: fixture.applicationSupport,
+            encryptionKey: fixture.encryptionKey
         )
         XCTAssertEqual(try reopened.appliedMigrationIdentifiers(), ["v1_archive_schema"])
     }
@@ -194,6 +206,7 @@ final class ArchiveDatabaseTests: XCTestCase {
 private struct TemporaryArchiveFixture {
     let root: URL
     let applicationSupport: URL
+    let encryptionKey = Data(repeating: 0x17, count: LM008StoreDefaults.keyByteCount)
 
     init(name: String) throws {
         root = FileManager.default.temporaryDirectory.appending(

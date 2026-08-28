@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "storyID": "LM-059",
+  "status": "passed",
+  "generatedAt": "2026-08-28T16:30:42Z",
+  "baseRevision": "b3fc9cf",
+  "checkpoint": "refs/tags/checkpoints/LM-059",
+  "results": {
+    "sqlCipher": {
+      "cipherVersion": "4.18.0 community",
+      "fileBackedArchiveRequiresKey": true,
+      "keyByteCount": 32,
+      "activationVerifiedOnEveryConnection": true,
+      "integrityVerifiedOnEveryOpen": true,
+      "walEnabled": true,
+      "tempStore": "FILE beside encrypted database",
+      "sentinelCount": 100,
+      "encryptedFilesScanned": 3,
+      "plaintextSentinelMatches": 0
+    },
+    "keychain": {
+      "freshArchiveGeneratesKey": true,
+      "existingArchiveRecoversKey": true,
+      "missingKeyNeverRegenerates": true,
+      "orphanArchiveDataNeverRegenerates": true,
+      "signedEmbeddedModesMatched": true,
+      "unsignedHelperDenied": true,
+      "mismatchedAccessGroupDenied": true,
+      "standaloneHelpersHaveNoKeychainGroup": true
+    },
+    "performance": {
+      "sampleCount": 60,
+      "plaintextP95Milliseconds": 9.1817089999999997,
+      "encryptedP95Milliseconds": 10.477708,
+      "encryptionOverheadFraction": 0.14115008436882504,
+      "maximumEncryptionOverheadFraction": 0.2
+    },
+    "reset": {
+      "requiredConfirmation": "DELETE LOCAL MEMORY ARCHIVE",
+      "nonExactConfirmationsRejected": 5,
+      "wholeArchiveDeleted": true,
+      "keyDeleted": true,
+      "keyDeleteFailureRollsBack": true,
+      "freshEncryptedBootstrapAfterReset": true,
+      "userVisibleRecovery": true
+    },
+    "videoSafety": {
+      "hardwareEncoderTestsExecuted": 0,
+      "appLaunchTestsExecuted": 0,
+      "uiRuntime": "quarantined",
+      "releaseGateMode": "compile-only",
+      "encoderTripwirePassed": true
+    }
+  },
+  "gates": {
+    "storageSecurity": {
+      "status": "passed",
+      "report": "Results/LM-059/storage-security.json",
+      "sha256": "08102c5091b5a8867ac66bc66a62e1386ea00f575149329e39879673549794e2"
+    },
+    "focusedTests": {
+      "status": "passed",
+      "testCount": 27,
+      "log": "Results/LM-059/storage-focused-tests.txt",
+      "sha256": "a5a868e83ddb2528e537480ff7af2e37b5b60da0ec3669dbd17a599f1afaa108"
+    },
+    "priorSignedS5ACL": {
+      "status": "passed",
+      "source": "Benchmarks/Results/S5/20260827T224019Z/s5-report.json",
+      "sourceSha256": "3e0dbb9e570701ac985f384c1c347d350108bcab6af32149ab69ce39e884b9fd",
+      "log": "Results/LM-059/prior-s5-validation.txt",
+      "logSha256": "cecee1de5ed57d6f904aa15752a2278f758eb855a4ba1b3a4e188317abcc062f"
+    },
+    "staticAudit": {
+      "status": "passed",
+      "log": "Results/LM-059/static-audit.txt",
+      "sha256": "89d774fe7af91c8974dbc960d9b7a005e504ffe0d450a0a82f8f47e8ff0981da"
+    },
+    "contracts": {
+      "status": "passed",
+      "log": "Results/LM-059/contracts.txt",
+      "sha256": "483f3139272c90fe8a872b2aa6cc37fca6b39784a637fcc10097d3ef3f8df608"
+    },
+    "privacySmoke": {
+      "status": "passed",
+      "log": "Results/LM-059/privacy.txt",
+      "sha256": "9ea4b5449f9715c90a3a80909f275c987c95be1130414ae6e10f888fcbe4a8bc"
+    },
+    "releaseCompileOnly": {
+      "status": "passed",
+      "log": "Results/LM-059/release-build.txt",
+      "sha256": "3cdf89d82c98b67f31dfda57b3db0152f7f7a45f306fcd0ee675521893ce5454"
+    },
+    "format": {
+      "status": "passed",
+      "log": "Results/LM-059/swift-format.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "storyGate": {
+      "status": "passed",
+      "log": "Results/LM-059/story-gate.txt",
+      "sha256": "93755204a21189cb4e9a63741a2fd2662405a744421fb88e764bc9e25fead8d1"
+    }
+  }
+}

@@ -3,6 +3,9 @@ import GRDB
 
 public enum ArchiveDatabaseError: Error, Equatable, Sendable {
     case invalidKeyLength
+    case missingCipherVersion
+    case cipherIntegrityFailure
+    case encryptedArchiveUnavailable
     case invalidPolicyDecisionAudit
     case injectedMigrationInterruption
 }
@@ -54,7 +57,7 @@ public final class ArchiveDatabase: @unchecked Sendable {
 
     public init(
         applicationSupportDirectory: URL? = nil,
-        encryptionKey: Data? = nil,
+        encryptionKey: Data,
         fileManager: FileManager = .default
     ) throws {
         let paths = try ArchivePathProvider.prepare(
@@ -66,15 +69,22 @@ public final class ArchiveDatabase: @unchecked Sendable {
             usesWAL: true,
             temporaryDirectory: paths.database
         )
-        let pool = try DatabasePool(
-            path: paths.databaseFile.path,
-            configuration: configuration
-        )
+        let pool: DatabasePool
         let migrator = ArchiveSchemaV1.migrator()
-        try migrator.migrate(pool)
+        do {
+            pool = try DatabasePool(
+                path: paths.databaseFile.path,
+                configuration: configuration
+            )
+            try migrator.migrate(pool)
+            try Self.verifyCipher(in: pool)
+        } catch let error as ArchiveDatabaseError {
+            throw error
+        } catch is DatabaseError {
+            throw ArchiveDatabaseError.encryptedArchiveUnavailable
+        }
         for databaseFile in Self.databaseFiles(at: paths.databaseFile)
-            where fileManager.fileExists(atPath: databaseFile.path)
-        {
+        where fileManager.fileExists(atPath: databaseFile.path) {
             try fileManager.setAttributes(
                 [.posixPermissions: ArchivePathProvider.filePermissions],
                 ofItemAtPath: databaseFile.path
@@ -113,7 +123,7 @@ public final class ArchiveDatabase: @unchecked Sendable {
 
     public static func deterministicTestStore() throws -> ArchiveDatabase {
         let configuration = try configuration(
-            encryptionKey: nil,
+            encryptionKey: Data(repeating: 0xD5, count: LM008StoreDefaults.keyByteCount),
             usesWAL: false,
             temporaryDirectory: nil
         )
@@ -172,9 +182,9 @@ public final class ArchiveDatabase: @unchecked Sendable {
         matchedRuleID: String?
     ) throws {
         guard result == "allowed" || result == "denied",
-              Self.isSafeAuditBundleIdentifier(bundleIdentifier),
-              Self.isSafeAuditHost(host),
-              Self.isSafeAuditRuleIdentifier(matchedRuleID)
+            Self.isSafeAuditBundleIdentifier(bundleIdentifier),
+            Self.isSafeAuditHost(host),
+            Self.isSafeAuditRuleIdentifier(matchedRuleID)
         else {
             throw ArchiveDatabaseError.invalidPolicyDecisionAudit
         }
@@ -260,6 +270,24 @@ public final class ArchiveDatabase: @unchecked Sendable {
         }
     }
 
+    public func cipherVersion() throws -> String {
+        try writer.read { database in
+            guard let version = try String.fetchOne(database, sql: "PRAGMA cipher_version"),
+                !version.isEmpty
+            else {
+                throw ArchiveDatabaseError.missingCipherVersion
+            }
+            return version
+        }
+    }
+
+    public func cipherIntegrityCheck() throws -> Bool {
+        try writer.read { database in
+            let rows = try String.fetchAll(database, sql: "PRAGMA cipher_integrity_check")
+            return rows.isEmpty || rows.allSatisfy { $0.lowercased() == "ok" }
+        }
+    }
+
     public func schemaSQL() throws -> String {
         try writer.read { database in
             let statements = try String.fetchAll(
@@ -279,27 +307,33 @@ public final class ArchiveDatabase: @unchecked Sendable {
                     END, name
                     """
             )
-            return statements
+            return
+                statements
                 .map { $0.hasSuffix(";") ? $0 : $0 + ";" }
                 .joined(separator: "\n\n") + "\n"
         }
     }
 
-    static func createVersionZeroFixture(at databaseURL: URL, marker: String) throws {
+    static func createVersionZeroFixture(
+        at databaseURL: URL,
+        encryptionKey: Data,
+        marker: String
+    ) throws {
         let queue = try DatabaseQueue(
             path: databaseURL.path,
             configuration: try configuration(
-                encryptionKey: nil,
+                encryptionKey: encryptionKey,
                 usesWAL: true,
                 temporaryDirectory: databaseURL.deletingLastPathComponent()
             )
         )
         try queue.write { database in
-            try database.execute(sql: """
-                CREATE TABLE version_zero_fixture (
-                    marker TEXT NOT NULL PRIMARY KEY
-                )
-                """)
+            try database.execute(
+                sql: """
+                    CREATE TABLE version_zero_fixture (
+                        marker TEXT NOT NULL PRIMARY KEY
+                    )
+                    """)
             try database.execute(
                 sql: "INSERT INTO version_zero_fixture(marker) VALUES (?)",
                 arguments: [marker]
@@ -313,11 +347,14 @@ public final class ArchiveDatabase: @unchecked Sendable {
         }
     }
 
-    static func runInterruptedV1Migration(at databaseURL: URL) throws {
+    static func runInterruptedV1Migration(
+        at databaseURL: URL,
+        encryptionKey: Data
+    ) throws {
         let queue = try DatabaseQueue(
             path: databaseURL.path,
             configuration: try configuration(
-                encryptionKey: nil,
+                encryptionKey: encryptionKey,
                 usesWAL: true,
                 temporaryDirectory: databaseURL.deletingLastPathComponent()
             )
@@ -328,11 +365,14 @@ public final class ArchiveDatabase: @unchecked Sendable {
         try migrator.migrate(queue)
     }
 
-    static func inspectUnencryptedDatabase(at databaseURL: URL) throws -> ArchiveDatabaseInspection {
+    static func inspectDatabase(
+        at databaseURL: URL,
+        encryptionKey: Data
+    ) throws -> ArchiveDatabaseInspection {
         let queue = try DatabaseQueue(
             path: databaseURL.path,
             configuration: try configuration(
-                encryptionKey: nil,
+                encryptionKey: encryptionKey,
                 usesWAL: true,
                 temporaryDirectory: databaseURL.deletingLastPathComponent()
             )
@@ -359,51 +399,56 @@ public final class ArchiveDatabase: @unchecked Sendable {
 
     func exerciseFrameCascadeForTesting() throws -> ArchiveCascadeResult {
         try writer.write { database in
-            try database.execute(sql: """
-                INSERT INTO media_chunks(
-                    id, capture_epoch_id, target_window_id, relative_path,
-                    started_at, ended_at, codec, width, height, frame_count,
-                    byte_count, sha256, state
-                ) VALUES (
-                    'chunk-1', 'epoch-1', 42, 'media/2026/01/01/chunk-1.mov',
-                    '2026-01-01T00:00:00.000Z', '2026-01-01T00:00:01.000Z',
-                    'hevc', 1280, 720, 1, 256, 'hash', 'ready'
-                )
-                """)
-            try database.execute(sql: """
-                INSERT INTO frames(
-                    id, captured_at, monotonic_ns, capture_epoch_id,
-                    target_window_id, chunk_id, pts_ms, capture_reason,
-                    is_transition, text_state, visual_state, schema_version
-                ) VALUES (
-                    'frame-1', '2026-01-01T00:00:00.500Z', 500000000,
-                    'epoch-1', 42, 'chunk-1', 500, 'transition',
-                    1, 'ready', 'ready', 1
-                )
-                """)
-            try database.execute(sql: """
-                INSERT INTO text_spans(
-                    id, frame_id, source, text, x, y, w, h,
-                    confidence, language_code, sensitivity
-                ) VALUES (
-                    'span-1', 'frame-1', 'accessibility', 'approved',
-                    0.1, 0.1, 0.2, 0.2, 1.0, 'en', 'normal'
-                )
-                """)
-            try database.execute(sql: """
-                INSERT INTO artifacts(
-                    id, frame_id, kind, producer_name, producer_version,
-                    model_hash, locator_kind, locator_value, content_hash, state
-                ) VALUES (
-                    'artifact-1', 'frame-1', 'thumbnail', 'fixture', '1',
-                    NULL, 'relativePath', 'thumbnails/frame-1.heic', 'hash', 'ready'
-                )
-                """)
-            try database.execute(sql: """
-                INSERT INTO vector_offsets(
-                    frame_id, model_hash, byte_offset, dimension, norm, state
-                ) VALUES ('frame-1', 'model-hash', 0, 512, 1.0, 'ready')
-                """)
+            try database.execute(
+                sql: """
+                    INSERT INTO media_chunks(
+                        id, capture_epoch_id, target_window_id, relative_path,
+                        started_at, ended_at, codec, width, height, frame_count,
+                        byte_count, sha256, state
+                    ) VALUES (
+                        'chunk-1', 'epoch-1', 42, 'media/2026/01/01/chunk-1.mov',
+                        '2026-01-01T00:00:00.000Z', '2026-01-01T00:00:01.000Z',
+                        'hevc', 1280, 720, 1, 256, 'hash', 'ready'
+                    )
+                    """)
+            try database.execute(
+                sql: """
+                    INSERT INTO frames(
+                        id, captured_at, monotonic_ns, capture_epoch_id,
+                        target_window_id, chunk_id, pts_ms, capture_reason,
+                        is_transition, text_state, visual_state, schema_version
+                    ) VALUES (
+                        'frame-1', '2026-01-01T00:00:00.500Z', 500000000,
+                        'epoch-1', 42, 'chunk-1', 500, 'transition',
+                        1, 'ready', 'ready', 1
+                    )
+                    """)
+            try database.execute(
+                sql: """
+                    INSERT INTO text_spans(
+                        id, frame_id, source, text, x, y, w, h,
+                        confidence, language_code, sensitivity
+                    ) VALUES (
+                        'span-1', 'frame-1', 'accessibility', 'approved',
+                        0.1, 0.1, 0.2, 0.2, 1.0, 'en', 'normal'
+                    )
+                    """)
+            try database.execute(
+                sql: """
+                    INSERT INTO artifacts(
+                        id, frame_id, kind, producer_name, producer_version,
+                        model_hash, locator_kind, locator_value, content_hash, state
+                    ) VALUES (
+                        'artifact-1', 'frame-1', 'thumbnail', 'fixture', '1',
+                        NULL, 'relativePath', 'thumbnails/frame-1.heic', 'hash', 'ready'
+                    )
+                    """)
+            try database.execute(
+                sql: """
+                    INSERT INTO vector_offsets(
+                        frame_id, model_hash, byte_offset, dimension, norm, state
+                    ) VALUES ('frame-1', 'model-hash', 0, 512, 1.0, 'ready')
+                    """)
             try database.execute(sql: "DELETE FROM frames WHERE id = 'frame-1'")
 
             return ArchiveCascadeResult(
@@ -550,13 +595,11 @@ public final class ArchiveDatabase: @unchecked Sendable {
     }
 
     private static func configuration(
-        encryptionKey: Data?,
+        encryptionKey: Data,
         usesWAL: Bool,
         temporaryDirectory: URL?
     ) throws -> Configuration {
-        if let encryptionKey,
-           encryptionKey.count != LM008StoreDefaults.keyByteCount
-        {
+        if encryptionKey.count != LM008StoreDefaults.keyByteCount {
             throw ArchiveDatabaseError.invalidKeyLength
         }
 
@@ -567,9 +610,16 @@ public final class ArchiveDatabase: @unchecked Sendable {
         )
         configuration.maximumReaderCount = LM008StoreDefaults.maximumReaderCount
         configuration.prepareDatabase { database in
-            if let encryptionKey {
-                try database.usePassphrase(encryptionKey)
+            try database.usePassphrase(encryptionKey)
+            guard
+                let cipherVersion = try String.fetchOne(
+                    database,
+                    sql: "PRAGMA cipher_version"
+                ), !cipherVersion.isEmpty
+            else {
+                throw ArchiveDatabaseError.missingCipherVersion
             }
+            try database.execute(sql: "PRAGMA cipher_memory_security = ON")
             try database.execute(sql: "PRAGMA foreign_keys = ON")
             try database.execute(sql: "PRAGMA secure_delete = ON")
             try database.execute(sql: "PRAGMA temp_store = FILE")
@@ -585,6 +635,20 @@ public final class ArchiveDatabase: @unchecked Sendable {
             try database.execute(sql: "PRAGMA synchronous = FULL")
         }
         return configuration
+    }
+
+    private static func verifyCipher(in writer: any DatabaseWriter) throws {
+        try writer.read { database in
+            guard let version = try String.fetchOne(database, sql: "PRAGMA cipher_version"),
+                !version.isEmpty
+            else {
+                throw ArchiveDatabaseError.missingCipherVersion
+            }
+            let rows = try String.fetchAll(database, sql: "PRAGMA cipher_integrity_check")
+            guard rows.isEmpty || rows.allSatisfy({ $0.lowercased() == "ok" }) else {
+                throw ArchiveDatabaseError.cipherIntegrityFailure
+            }
+        }
     }
 
     private static func sqlPlaceholders(count: Int) -> String {

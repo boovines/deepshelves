@@ -10,6 +10,7 @@ public enum SharedKeychainError: Error, Equatable, Sendable {
 public enum SharedKeychainKeyStore: Sendable {
     public static let accessGroup = "NS5L7NNR8U.com.justinhou.deepshelves.shared"
     public static let service = "com.justinhou.deepshelves.localmemory.archive-key"
+    public static let archiveAccount = "primary-archive-v1"
 
     public static func generateAndStore(account: String) throws -> Data {
         var bytes = [UInt8](repeating: 0, count: LM008StoreDefaults.keyByteCount)
@@ -18,6 +19,14 @@ public enum SharedKeychainKeyStore: Sendable {
             throw SharedKeychainError.randomGeneration(randomStatus)
         }
         let key = Data(bytes)
+        try store(key, account: account)
+        return key
+    }
+
+    public static func store(_ key: Data, account: String) throws {
+        guard key.count == LM008StoreDefaults.keyByteCount else {
+            throw SharedKeychainError.invalidResult
+        }
         try delete(account: account, ignoreMissing: true)
         let status = SecItemAdd(
             baseQuery(account: account, accessGroup: accessGroup).merging([
@@ -29,7 +38,6 @@ public enum SharedKeychainKeyStore: Sendable {
         guard status == errSecSuccess else {
             throw SharedKeychainError.keychain(status)
         }
-        return key
     }
 
     public static func fetch(
@@ -48,7 +56,7 @@ public enum SharedKeychainKeyStore: Sendable {
             throw SharedKeychainError.keychain(status)
         }
         guard let data = result as? Data,
-              data.count == LM008StoreDefaults.keyByteCount
+            data.count == LM008StoreDefaults.keyByteCount
         else {
             throw SharedKeychainError.invalidResult
         }

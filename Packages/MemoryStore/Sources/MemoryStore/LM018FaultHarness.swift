@@ -46,12 +46,10 @@ public enum LM018FaultHarness: Sendable {
         let traversalRejected = (try? ArchiveRelativePath("../outside.mov")) == nil
         let boundaries = [beforeRename, afterRename]
         let integrityCases = [hashMismatch.result, missing.result]
-        let allPassed = boundaries.allSatisfy(\.invariantPassed) &&
-            integrityCases.allSatisfy(\.invariantPassed) &&
-            missing.requeuedLeasedJobs == 1 &&
-            traversalRejected &&
-            permissionResult.directories &&
-            permissionResult.files
+        let allPassed =
+            boundaries.allSatisfy(\.invariantPassed) && integrityCases.allSatisfy(\.invariantPassed)
+            && missing.requeuedLeasedJobs == 1 && traversalRejected && permissionResult.directories
+            && permissionResult.files
         guard allPassed else {
             throw LM018FaultHarnessError.recoveryInvariantFailed
         }
@@ -74,7 +72,8 @@ public enum LM018FaultHarness: Sendable {
         let fixture = try Fixture(name: boundary.rawValue)
         defer { fixture.remove() }
         let archive = try ArchiveDatabase(
-            applicationSupportDirectory: fixture.applicationSupport
+            applicationSupportDirectory: fixture.applicationSupport,
+            encryptionKey: fixture.encryptionKey
         )
         guard let store = archive.fileStore else {
             throw LM018FaultHarnessError.recoveryInvariantFailed
@@ -89,21 +88,22 @@ public enum LM018FaultHarness: Sendable {
         let partialBefore = FileManager.default.fileExists(atPath: store.partialURL(for: path).path)
         let finalBefore = FileManager.default.fileExists(atPath: store.url(for: path).path)
         let recovered = try ArchiveDatabase(
-            applicationSupportDirectory: fixture.applicationSupport
+            applicationSupportDirectory: fixture.applicationSupport,
+            encryptionKey: fixture.encryptionKey
         )
         let searchable = try recovered.searchableFrameCountForTesting()
         let passed: Bool
         switch boundary {
         case .beforeRename:
-            passed = partialBefore && !finalBefore &&
-                recovered.startupRecoveryReport.removedPartialFiles == 1 &&
-                recovered.startupRecoveryReport.quarantinedOrphanFiles == 0 &&
-                searchable == 0
+            passed =
+                partialBefore && !finalBefore
+                && recovered.startupRecoveryReport.removedPartialFiles == 1
+                && recovered.startupRecoveryReport.quarantinedOrphanFiles == 0 && searchable == 0
         case .afterRenameBeforeCommit:
-            passed = !partialBefore && finalBefore &&
-                recovered.startupRecoveryReport.removedPartialFiles == 0 &&
-                recovered.startupRecoveryReport.quarantinedOrphanFiles == 1 &&
-                searchable == 0
+            passed =
+                !partialBefore && finalBefore
+                && recovered.startupRecoveryReport.removedPartialFiles == 0
+                && recovered.startupRecoveryReport.quarantinedOrphanFiles == 1 && searchable == 0
         }
         return LM018BoundaryFaultResult(
             boundary: boundary.rawValue,
@@ -123,7 +123,8 @@ public enum LM018FaultHarness: Sendable {
         let fixture = try Fixture(name: "hash-mismatch")
         defer { fixture.remove() }
         let archive = try ArchiveDatabase(
-            applicationSupportDirectory: fixture.applicationSupport
+            applicationSupportDirectory: fixture.applicationSupport,
+            encryptionKey: fixture.encryptionKey
         )
         guard let store = archive.fileStore else {
             throw LM018FaultHarnessError.recoveryInvariantFailed
@@ -138,7 +139,8 @@ public enum LM018FaultHarness: Sendable {
         }
         try Data("tampered".utf8).write(to: store.url(for: path))
         let recovered = try ArchiveDatabase(
-            applicationSupportDirectory: fixture.applicationSupport
+            applicationSupportDirectory: fixture.applicationSupport,
+            encryptionKey: fixture.encryptionKey
         )
         let searchable = try recovered.searchableFrameCountForTesting()
         let state = try recovered.mediaChunkStateForTesting(id: "hash-mismatch-chunk") ?? "missing"
@@ -149,8 +151,8 @@ public enum LM018FaultHarness: Sendable {
                 missingReadyFiles: recovered.startupRecoveryReport.missingReadyFiles,
                 searchableFramesAfterRecovery: searchable,
                 finalState: state,
-                invariantPassed: recovered.startupRecoveryReport.quarantinedCorruptFiles == 1 &&
-                    state == "quarantined" && searchable == 0
+                invariantPassed: recovered.startupRecoveryReport.quarantinedCorruptFiles == 1
+                    && state == "quarantined" && searchable == 0
             ),
             recovered.startupRecoveryReport
         )
@@ -163,7 +165,8 @@ public enum LM018FaultHarness: Sendable {
         let fixture = try Fixture(name: "missing")
         defer { fixture.remove() }
         let archive = try ArchiveDatabase(
-            applicationSupportDirectory: fixture.applicationSupport
+            applicationSupportDirectory: fixture.applicationSupport,
+            encryptionKey: fixture.encryptionKey
         )
         let path = try ArchiveRelativePath("media/2026/08/28/missing.mov")
         try archive.insertMissingReadyMediaFixtureForTesting(
@@ -173,7 +176,8 @@ public enum LM018FaultHarness: Sendable {
         )
         try archive.insertLeasedJobFixtureForTesting(id: "leased-job")
         let recovered = try ArchiveDatabase(
-            applicationSupportDirectory: fixture.applicationSupport
+            applicationSupportDirectory: fixture.applicationSupport,
+            encryptionKey: fixture.encryptionKey
         )
         let searchable = try recovered.searchableFrameCountForTesting()
         let state = try recovered.mediaChunkStateForTesting(id: "missing-chunk") ?? "missing"
@@ -185,8 +189,8 @@ public enum LM018FaultHarness: Sendable {
                 missingReadyFiles: recovered.startupRecoveryReport.missingReadyFiles,
                 searchableFramesAfterRecovery: searchable,
                 finalState: state,
-                invariantPassed: recovered.startupRecoveryReport.missingReadyFiles == 1 &&
-                    state == "quarantined" && searchable == 0 && jobState == "queued"
+                invariantPassed: recovered.startupRecoveryReport.missingReadyFiles == 1
+                    && state == "quarantined" && searchable == 0 && jobState == "queued"
             ),
             recovered.startupRecoveryReport.requeuedLeasedJobs
         )
@@ -200,9 +204,11 @@ public enum LM018FaultHarness: Sendable {
         )
         let nestedDirectory = paths.exports.appending(path: "fixture", directoryHint: .isDirectory)
         let file = nestedDirectory.appending(path: "report.json")
-        try FileManager.default.createDirectory(at: nestedDirectory, withIntermediateDirectories: true)
+        try FileManager.default.createDirectory(
+            at: nestedDirectory, withIntermediateDirectories: true)
         try Data("{}".utf8).write(to: file)
-        try FileManager.default.setAttributes([.posixPermissions: 0o755], ofItemAtPath: nestedDirectory.path)
+        try FileManager.default.setAttributes(
+            [.posixPermissions: 0o755], ofItemAtPath: nestedDirectory.path)
         try FileManager.default.setAttributes([.posixPermissions: 0o644], ofItemAtPath: file.path)
         _ = try ArchivePathProvider.prepare(
             applicationSupportDirectory: fixture.applicationSupport
@@ -221,6 +227,7 @@ public enum LM018FaultHarness: Sendable {
     private struct Fixture {
         let root: URL
         let applicationSupport: URL
+        let encryptionKey = Data(repeating: 0x18, count: LM008StoreDefaults.keyByteCount)
 
         init(name: String) throws {
             root = FileManager.default.temporaryDirectory.appending(

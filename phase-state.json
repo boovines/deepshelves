@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "activeStory": "LM-059",
+  "activeStory": null,
   "stories": {
     "LM-001": {
       "status": "passed",
@@ -787,12 +787,17 @@
       "resumeProbe": null
     },
     "LM-059": {
-      "status": "active",
+      "status": "passed",
       "startedAt": "2026-08-28T16:13:22Z",
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": "Next dependency-ready story after LM-057. SQLCipher, Keychain, encrypted temporary-state, and destructive reset work is independent of the quarantined media encoder and can be verified without launching the app or invoking VideoToolbox.",
+      "completedAt": "2026-08-28T16:30:42Z",
+      "gitRevision": "refs/tags/checkpoints/LM-059",
+      "evidence": [
+        "Results/LM-059/report.json",
+        "Results/LM-059/storage-security.json",
+        "Results/LM-059/storage-focused-tests.txt",
+        "Results/LM-059/story-gate.txt"
+      ],
+      "notes": "All file-backed archives require SQLCipher and a 256-bit Keychain key; cipher activation/integrity, encrypted WAL/temp placement, missing-key fail-closed behavior, exact typed whole-archive reset, and user-visible recovery pass. Release S5 measured 14.1% p95 overhead, 100 ciphertext sentinels had zero matches, and signed ACL evidence remains valid. Zero app launches or hardware encoder tests ran. No remaining pending story has all declared dependencies passed because LM-026 and the downstream graph require technically blocked LM-025.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null

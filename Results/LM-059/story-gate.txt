@@ -1,0 +1,16 @@
+sqlcipher_all_file_backed_archives=passed
+cipher_activation_and_integrity=passed
+database_wal_temp_sentinel_matches=0
+signed_embedded_helper_acl=passed
+unsigned_and_mismatched_acl=denied
+encryption_overhead_below_20_percent=passed
+key_material_log_matches=0
+unrecoverable_key_reset=typed_and_explicit
+ui_static_accessibility_audit=passed
+ui_runtime_hardware_quarantine=honored
+contracts=passed
+privacy_smoke=passed
+release_compile_only=passed
+hardware_encoder_tests_executed=0
+app_launch_tests_executed=0
+whitespace=passed
