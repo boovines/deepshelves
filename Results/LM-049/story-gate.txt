@@ -1,0 +1,12 @@
+pinned_manifest_and_exact_inventory=passed
+corruption_rewrite_symlink_extra_duplicate_rejection=passed
+frozen_tokenizer_preprocessing=passed
+deterministic_image_preprocessing=passed
+typed_startup_unavailable_state=passed
+canonical_s3_parity_vectors=passed
+bundled_image_text_inference=passed
+contracts=passed
+privacy_smoke=passed
+release_compile_only=passed
+dependency_audit=passed
+encoder_process_tripwire=passed

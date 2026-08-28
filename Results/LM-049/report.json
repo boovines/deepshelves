@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-049",
+  "status": "passed",
+  "model": {
+    "name": "MobileCLIP-S0 Core ML",
+    "version": "mobileclip-s0-coreml-3e0a7bf",
+    "embeddingDimension": 512,
+    "manifestSHA256": "758468b14a34070a0f6295fe8b6fd4d1b8cf536083cbb10c847fd5dae3cc762b",
+    "artifactCount": 12,
+    "bundledFootprintBytes": 112239644,
+    "runtimeDownloadAllowed": false
+  },
+  "preprocessing": {
+    "image": "sRGB aspect-fill center crop; deterministic bilinear resize; 256x256 opaque BGRA",
+    "textContextLength": 77,
+    "frozenText": "a red square",
+    "frozenTokenPrefix": [49406, 320, 736, 3999, 49407]
+  },
+  "canonicalS3": {
+    "report": "Results/LM-007/report.json",
+    "imageCosineSimilarity": 1.0,
+    "textCosineSimilarity": 0.9999998807907104,
+    "visualRecallAt10": 1.0,
+    "imageP95Milliseconds": 1.546083,
+    "textP95Milliseconds": 7.919458,
+    "imageParityVectorSHA256": "a3a3afd8b84c89adaef28aa446b89e06c18bba2f4971352ef6761952f2a2a6e4",
+    "textParityVectorSHA256": "cf50c94daf5e3dc186fa6ff018181639b4516b74495089478ef40d1f60010008",
+    "currentMinimumCosineSimilarity": 0.999999
+  },
+  "verification": {
+    "focusedReleaseUnitTests": 8,
+    "focusedReleaseInferenceTests": 2,
+    "manifestSelfRewriteRejected": true,
+    "duplicateArtifactRejected": true,
+    "unexpectedArtifactRejected": true,
+    "symbolicLinkRejected": true,
+    "corruptedModelResultCount": 0,
+    "typedUnavailableState": true,
+    "inferenceFailureIsFailClosed": true,
+    "contracts": "passed",
+    "privacySmoke": "passed",
+    "releaseCompileOnly": "passed",
+    "dependencyAudit": "passed"
+  },
+  "safety": {
+    "applicationLaunchesExecuted": 0,
+    "appleImageIORuntimeExecuted": false,
+    "hardwareEncoderTestsExecuted": 0,
+    "videoToolboxInvocations": 0,
+    "encoderTripwire": "passed"
+  }
+}

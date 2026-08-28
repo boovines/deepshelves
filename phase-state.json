@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "activeStory": "LM-049",
+  "activeStory": "LM-050",
   "stories": {
     "LM-001": {
       "status": "passed",
@@ -841,23 +841,28 @@
       "resumeProbe": null
     },
     "LM-049": {
-      "status": "active",
+      "status": "passed",
       "startedAt": "2026-08-28T22:01:26Z",
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": "Activated as the next dependency-safe story because LM-007 and LM-034 are passed. Integrate the pinned MobileCLIP-S0 image/text encoder closure, tokenizer/preprocessing, integrity verification, offline parity, and typed unavailable state without application, Apple ImageIO, or hardware-video runtime.",
+      "completedAt": "2026-08-28T22:17:17Z",
+      "gitRevision": "refs/tags/checkpoints/LM-049",
+      "evidence": [
+        "Results/LM-049/report.json",
+        "Results/LM-049/unit-tests.txt",
+        "Results/LM-049/inference-parity.txt",
+        "Results/LM-049/story-gate.txt"
+      ],
+      "notes": "The externally pinned 12-artifact MobileCLIP-S0 closure, exact inventory, deterministic image/text preprocessing, typed startup availability, fail-closed corruption behavior, and current bundled image/text inference against exact S3 parity vectors all pass. Contracts, privacy, formatting, dependency, and compile-only Release gates ran under the encoder tripwire with no app, ImageIO runtime, or hardware-video path.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null
     },
     "LM-050": {
-      "status": "pending",
-      "startedAt": null,
+      "status": "active",
+      "startedAt": "2026-08-28T22:17:17Z",
       "completedAt": null,
       "gitRevision": null,
       "evidence": [],
-      "notes": null,
+      "notes": "Activated as the next dependency-safe story after LM-049 passed. Implement thermal/power-aware image embedding jobs, deterministic versioned normalized outputs, invalidation, retry behavior, and honest backlog projection without any hardware-video or Apple ImageIO runtime.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null

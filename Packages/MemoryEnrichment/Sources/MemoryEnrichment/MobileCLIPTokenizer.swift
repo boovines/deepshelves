@@ -18,10 +18,6 @@ struct BytePair: Hashable {
         self.a = a
         self.b = b
     }
-    init(tuple: [String]) {
-        self.a = tuple[0]
-        self.b = tuple[1]
-    }
 
     static func == (lhs: BytePair, rhs: BytePair) -> Bool {
         return lhs.a == rhs.a && lhs.b == rhs.b
@@ -32,27 +28,23 @@ struct BytePair: Hashable {
     }
 }
 
-extension String {
-    fileprivate func ranges(of string: String, options: CompareOptions = .regularExpression)
-        -> [Range<Index>]
-    {
-        var result: [Range<Index>] = []
-        var start = startIndex
-        while let range = range(of: string, options: options, range: start ..< endIndex) {
-            result.append(range)
-            start =
-                range.lowerBound < range.upperBound
-                ? range.upperBound
-                : index(range.lowerBound, offsetBy: 1, limitedBy: endIndex) ?? endIndex
-        }
-        return result
-    }
+public enum MobileCLIPTokenizerError: Error, Equatable, Sendable {
+    case invalidMerge(Int)
+    case invalidPattern
+    case invalidTextRange
+    case missingByteEncoding(UInt8)
+    case missingToken(String)
+    case missingSpecialToken(String)
+    case unknownTokenID(Int)
 }
 
-final class CLIPTokenizer {
+final class CLIPTokenizer: @unchecked Sendable {
     let bpeRanks: [BytePair: Int]
     private let encoder: [String: Int]
     private let decoder: [Int: String]
+    private let regex: NSRegularExpression
+    private let startToken: Int
+    private let endToken: Int
     let contextLength = 77
 
     init(resourcesRoot: URL) throws {
@@ -60,47 +52,64 @@ final class CLIPTokenizer {
         let bpeMergesTxt = try String(contentsOf: url, encoding: .utf8)
         let arr = bpeMergesTxt.split(separator: "\n").map { String($0) }
         var bpeRanks: [BytePair: Int] = [:]
-        for i in 1 ..< arr.count {
+        for i in 1..<arr.count {
             let tuple = arr[i].split(separator: " ").map { String($0) }
-            let bp = BytePair(tuple: tuple)
+            guard tuple.count == 2 else {
+                throw MobileCLIPTokenizerError.invalidMerge(i)
+            }
+            let bp = BytePair(tuple[0], tuple[1])
             bpeRanks[bp] = i - 1
         }
         self.bpeRanks = bpeRanks
 
         let vocabularyURL = resourcesRoot.appending(path: "clip-vocab.json")
         let vocabularyData = try Data(contentsOf: vocabularyURL)
-        self.encoder = try JSONDecoder().decode([String: Int].self, from: vocabularyData)
+        let encoder = try JSONDecoder().decode([String: Int].self, from: vocabularyData)
+        self.encoder = encoder
 
-        self.decoder = Utils.invert(self.encoder)
+        self.decoder = Utils.invert(encoder)
+        guard let startToken = encoder["<|startoftext|>"] else {
+            throw MobileCLIPTokenizerError.missingSpecialToken("start")
+        }
+        guard let endToken = encoder["<|endoftext|>"] else {
+            throw MobileCLIPTokenizerError.missingSpecialToken("end")
+        }
+        self.startToken = startToken
+        self.endToken = endToken
+        do {
+            regex = try NSRegularExpression(
+                pattern:
+                    "<\\|startoftext\\|>|<\\|endoftext\\|>|'s|'t|'re|'ve|'m|'ll|'d|[\\p{L}]+|[\\p{N}]|[^\\s\\p{L}\\p{N}]+",
+                options: []
+            )
+        } catch {
+            throw MobileCLIPTokenizerError.invalidPattern
+        }
     }
 
-    func byteEncode(text: String) -> [String] {
-        let RE =
-            "<\\|startoftext\\|>|<\\|endoftext\\|>|'s|'t|'re|'ve|'m|'ll|'d|[\\p{L}]+|[\\p{N}]|[^\\s\\p{L}\\p{N}]+"
-
-        // Original code not working on earlier iOS versions
-        // let tokens = text.ranges(of: RE).map { String(text[$0]) }
-        // return tokens.map { (token) -> String in
-        //     return Array(token.utf8).map { byteEncoder[$0]! }.joined()
-        // }
-
-        // Modification by Hugues Thomas
-        let regex = try! NSRegularExpression(pattern: RE, options: [])
+    func byteEncode(text: String) throws -> [String] {
         let matches = regex.matches(
             in: text, options: [], range: NSRange(location: 0, length: text.utf16.count))
-        let tokens = matches.map { (match) -> String in
-            let range = Range(match.range, in: text)!
+        let tokens = try matches.map { (match) -> String in
+            guard let range = Range(match.range, in: text) else {
+                throw MobileCLIPTokenizerError.invalidTextRange
+            }
             return String(text[range])
         }
-        return tokens.map { (token) -> String in
-            return Array(token.utf8).map { byteEncoder[$0]! }.joined()
+        return try tokens.map { token -> String in
+            try Array(token.utf8).map { byte in
+                guard let encoded = byteEncoder[byte] else {
+                    throw MobileCLIPTokenizerError.missingByteEncoding(byte)
+                }
+                return encoded
+            }.joined()
         }
-
     }
 
     private func getPairs(word: [String]) -> Set<BytePair> {
+        guard word.count > 1 else { return [] }
         var s = Set<BytePair>()
-        for i in 0 ..< word.count - 1 {
+        for i in 0..<word.count - 1 {
             let bp = BytePair(
                 word[i],
                 word[i + 1]
@@ -129,19 +138,21 @@ final class CLIPTokenizer {
             if bigrams.count == 0 {
                 break
             }
-            let bigram = bigrams.min { (bp1, bp2) -> Bool in
-                return bpeRanks[bp1]! < bpeRanks[bp2]!
-            }!
+            guard
+                let bigram = bigrams.min(by: { bp1, bp2 in
+                    (bpeRanks[bp1] ?? .max) < (bpeRanks[bp2] ?? .max)
+                })
+            else { break }
             let first = bigram.a
             let second = bigram.b
             var newWord: [String] = []
             var i = 0
             while i < word.count {
-                if let j = word[i ..< word.count].firstIndex(of: first) {
-                    newWord.append(contentsOf: word[i ..< j])
+                if let j = word[i..<word.count].firstIndex(of: first) {
+                    newWord.append(contentsOf: word[i..<j])
                     i = j
                 } else {
-                    newWord.append(contentsOf: word[i ..< word.count])
+                    newWord.append(contentsOf: word[i..<word.count])
                     break
                 }
 
@@ -163,10 +174,10 @@ final class CLIPTokenizer {
         return word.joined(separator: " ")
     }
 
-    func tokenize(text: String) -> [String] {
+    func tokenize(text: String) throws -> [String] {
         var tokens: [String] = []
         let lowercased = text.lowercased()
-        for token in self.byteEncode(text: lowercased) {
+        for token in try self.byteEncode(text: lowercased) {
             let xx = self.bpe(token: token).split(separator: " ").map { String($0) }
             tokens.append(contentsOf: xx)
         }
@@ -174,27 +185,42 @@ final class CLIPTokenizer {
     }
 
     /// Main entry point
-    func encode(text: String) -> [Int] {
-        return tokenize(text: text).compactMap { encoder[$0] }
+    func encode(text: String) throws -> [Int] {
+        try tokenize(text: text).map { token in
+            guard let encoded = encoder[token] else {
+                throw MobileCLIPTokenizerError.missingToken(token)
+            }
+            return encoded
+        }
     }
 
     /// Decode
-    func decode(tokens: [Int]) -> String {
-        let text = tokens.map { decoder[$0]! }.joined(separator: "")
-        let utfCodepoints = text.map { byteDecoder[String($0)]! }
+    func decode(tokens: [Int]) throws -> String {
+        let text = try tokens.map { token in
+            guard let decoded = decoder[token] else {
+                throw MobileCLIPTokenizerError.unknownTokenID(token)
+            }
+            return decoded
+        }.joined(separator: "")
+        let utfCodepoints = try text.map { character in
+            guard let byte = byteDecoder[String(character)] else {
+                throw MobileCLIPTokenizerError.missingToken(String(character))
+            }
+            return byte
+        }
         return String(decoding: utfCodepoints, as: UTF8.self)
     }
 
-    func encode_full(text: String) -> [Int] {
-        let tokens = Array(encode(text: text).prefix(contextLength - 2))
+    func encodeFull(text: String) throws -> [Int] {
+        let tokens = Array(try encode(text: text).prefix(contextLength - 2))
 
         // Create the full input tokens as a multiarray of shape 1 x contextLength
         var fullTokens = Array(repeating: 0, count: contextLength)
-        fullTokens[0] = encoder["<|startoftext|>"]!
-        for i in 0 ..< tokens.count {
+        fullTokens[0] = startToken
+        for i in 0..<tokens.count {
             fullTokens[i + 1] = tokens[i]
         }
-        fullTokens[tokens.count + 1] = encoder["<|endoftext|>"]!
+        fullTokens[tokens.count + 1] = endToken
         return fullTokens
 
     }

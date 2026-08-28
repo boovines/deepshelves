@@ -10,26 +10,32 @@ public enum MobileCLIPRuntimeError: Error, Equatable, Sendable {
 }
 
 public struct MobileCLIPPixelBuffer: @unchecked Sendable {
-    fileprivate let value: CVPixelBuffer
+    let value: CVPixelBuffer
 
     public init(_ value: CVPixelBuffer) {
         self.value = value
     }
 }
 
-public actor MobileCLIPRuntime {
+public actor MobileCLIPRuntime: MobileCLIPEmbeddingRuntime {
     public static let dimension = 512
     public static let version = "mobileclip-s0-coreml-3e0a7bf"
+    public static let manifestSHA256 =
+        "758468b14a34070a0f6295fe8b6fd4d1b8cf536083cbb10c847fd5dae3cc762b"
+    public static let artifactCount = 12
+    public static let bundledFootprintBytes = 112_239_644
 
     private let imageModel: MLModel
     private let textModel: MLModel
     private let tokenizer: CLIPTokenizer
 
     public static func bundledResourceRoot() throws -> URL {
-        guard let root = Bundle.module.url(
-            forResource: "MobileCLIP-S0",
-            withExtension: nil
-        ) else {
+        guard
+            let root = Bundle.module.url(
+                forResource: "MobileCLIP-S0",
+                withExtension: nil
+            )
+        else {
             throw MobileCLIPRuntimeError.bundledResourcesUnavailable
         }
         return root
@@ -37,12 +43,24 @@ public actor MobileCLIPRuntime {
 
     public static func bundled(computeUnits: MLComputeUnits = .all) throws -> MobileCLIPRuntime {
         let root = try bundledResourceRoot()
+        _ = try verifyBundledResources(root: root)
         return try MobileCLIPRuntime(
             imageModelURL: root.appending(path: "mobileclip_s0_image.mlmodelc"),
             textModelURL: root.appending(path: "mobileclip_s0_text.mlmodelc"),
             tokenizerRoot: root,
-            manifestRoot: root,
+            manifestRoot: nil,
             computeUnits: computeUnits
+        )
+    }
+
+    public static func verifyBundledResources(root: URL? = nil) throws -> VerifiedModelResources {
+        let resourceRoot = try root ?? bundledResourceRoot()
+        return try ModelResourceIntegrity.verifyBundle(
+            root: resourceRoot,
+            expectedManifestSHA256: manifestSHA256,
+            expectedVersion: version,
+            expectedArtifactCount: artifactCount,
+            expectedBundledFootprintBytes: bundledFootprintBytes
         )
     }
 
@@ -78,13 +96,18 @@ public actor MobileCLIPRuntime {
 
     public func embed(image: MobileCLIPPixelBuffer) throws -> [Float] {
         let input = try MLDictionaryFeatureProvider(dictionary: [
-            "image": MLFeatureValue(pixelBuffer: image.value),
+            "image": MLFeatureValue(pixelBuffer: image.value)
         ])
         return try embedding(from: imageModel.prediction(from: input))
     }
 
+    public func embed(raster: ThumbnailRaster) throws -> [Float] {
+        let prepared = try MobileCLIPImagePreprocessor().prepare(raster)
+        return try embed(image: prepared.pixelBuffer())
+    }
+
     public func embed(text: String) throws -> [Float] {
-        let tokenIDs = tokenizer.encode_full(text: text)
+        let tokenIDs = try tokenizer.encodeFull(text: text)
         let array = try MLMultiArray(shape: [1, 77], dataType: .int32)
         for (index, token) in tokenIDs.enumerated() {
             array[index] = NSNumber(value: Int32(token))
@@ -100,7 +123,7 @@ public actor MobileCLIPRuntime {
         guard array.count == Self.dimension else {
             throw MobileCLIPRuntimeError.invalidEmbeddingDimension(array.count)
         }
-        var values = (0 ..< array.count).map { array[$0].floatValue }
+        var values = (0..<array.count).map { array[$0].floatValue }
         var normSquared: Float = 0
         vDSP_svesq(values, 1, &normSquared, vDSP_Length(values.count))
         let norm = sqrt(normSquared)
@@ -108,7 +131,8 @@ public actor MobileCLIPRuntime {
             var divisor = norm
             let count = values.count
             values.withUnsafeMutableBufferPointer { buffer in
-                vDSP_vsdiv(buffer.baseAddress!, 1, &divisor, buffer.baseAddress!, 1, vDSP_Length(count))
+                guard let address = buffer.baseAddress else { return }
+                vDSP_vsdiv(address, 1, &divisor, address, 1, vDSP_Length(count))
             }
         }
         return values
