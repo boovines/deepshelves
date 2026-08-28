@@ -31,13 +31,11 @@ public enum HEVCMediaWriterError: Error, Equatable, Sendable {
     case maximumDurationExceeded
     case cannotAddVideoInput
     case startWritingFailed(String)
-    case pixelBufferPoolCreationFailed(Int32)
+    case adaptorPixelBufferPoolUnavailable
     case pixelBufferAllocationFailed(Int32)
     case pixelTransferSessionFailed(Int32)
     case pixelTransferFailed(Int32)
-    case formatDescriptionFailed(Int32)
-    case sampleTimingFailed(Int32)
-    case sampleBufferCreationFailed(Int32)
+    case bufferRetentionClosed
     case appendFailed(String)
     case finishFailed(String)
     case validationFailed(String)
@@ -53,8 +51,9 @@ public final class HEVCMediaWriter: @unchecked Sendable {
 
     private let writer: AVAssetWriter
     private let input: AVAssetWriterInput
-    private let outputPool: CVPixelBufferPool
+    private let adaptor: AVAssetWriterInputPixelBufferAdaptor
     private let profile: HEVCEncodingProfile
+    private let retainedAdaptorBuffers = MediaBufferRetentionLedger<CVPixelBuffer>()
     private var transferSession: VTPixelTransferSession?
     private var core: MediaWriterCore
     private var started = false
@@ -94,7 +93,7 @@ public final class HEVCMediaWriter: @unchecked Sendable {
             )
         }
 
-        writer = try AVAssetWriter(outputURL: partialURL, fileType: .mov)
+        let createdWriter = try AVAssetWriter(outputURL: partialURL, fileType: .mov)
         let compression: [String: Any] = [
             AVVideoAverageBitRateKey: profile.averageBitRate,
             AVVideoExpectedSourceFrameRateKey: 1,
@@ -112,9 +111,9 @@ public final class HEVCMediaWriter: @unchecked Sendable {
             AVVideoCompressionPropertiesKey: compression,
             AVVideoEncoderSpecificationKey: encoderSpecification,
         ]
-        input = AVAssetWriterInput(mediaType: .video, outputSettings: settings)
-        input.expectsMediaDataInRealTime = true
-        input.mediaTimeScale = 1_000
+        let createdInput = AVAssetWriterInput(mediaType: .video, outputSettings: settings)
+        createdInput.expectsMediaDataInRealTime = true
+        createdInput.mediaTimeScale = 1_000
         let poolAttributes: [CFString: Any] = [
             kCVPixelBufferPixelFormatTypeKey:
                 kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange,
@@ -122,27 +121,23 @@ public final class HEVCMediaWriter: @unchecked Sendable {
             kCVPixelBufferHeightKey: dimensions.height,
             kCVPixelBufferIOSurfacePropertiesKey: [:] as CFDictionary,
         ]
-        var createdPool: CVPixelBufferPool?
-        let poolStatus = CVPixelBufferPoolCreate(
-            kCFAllocatorDefault,
-            nil,
-            poolAttributes as CFDictionary,
-            &createdPool
+        let createdAdaptor = AVAssetWriterInputPixelBufferAdaptor(
+            assetWriterInput: createdInput,
+            sourcePixelBufferAttributes: poolAttributes as [String: Any]
         )
-        guard poolStatus == kCVReturnSuccess, let createdPool else {
-            throw HEVCMediaWriterError.pixelBufferPoolCreationFailed(poolStatus)
-        }
-        outputPool = createdPool
-        guard writer.canAdd(input) else {
+        guard createdWriter.canAdd(createdInput) else {
             throw HEVCMediaWriterError.cannotAddVideoInput
         }
-        writer.add(input)
-        writer.movieTimeScale = 1_000
-        writer.movieFragmentInterval = CMTime(
+        createdWriter.add(createdInput)
+        createdWriter.movieTimeScale = 1_000
+        createdWriter.movieFragmentInterval = CMTime(
             value: CMTimeValue(profile.fragmentIntervalNanoseconds / 1_000_000),
             timescale: 1_000
         )
-        writer.initialMovieFragmentInterval = writer.movieFragmentInterval
+        createdWriter.initialMovieFragmentInterval = createdWriter.movieFragmentInterval
+        writer = createdWriter
+        input = createdInput
+        adaptor = createdAdaptor
     }
 
     public func append(
@@ -195,9 +190,14 @@ public final class HEVCMediaWriter: @unchecked Sendable {
             return nil
         }
 
-        let encodedSample = try outputSampleBuffer(from: sampleBuffer, sourceImage: sourceImage)
-        guard input.append(encodedSample) else {
+        let adaptorBuffer = try makeAdaptorBuffer(from: sourceImage)
+        guard adaptor.append(adaptorBuffer, withPresentationTime: presentationTime) else {
             throw HEVCMediaWriterError.appendFailed(writer.error?.localizedDescription ?? "unknown")
+        }
+        do {
+            try retainedAdaptorBuffers.retainAccepted(adaptorBuffer)
+        } catch {
+            throw HEVCMediaWriterError.bufferRetentionClosed
         }
 
         do {
@@ -220,9 +220,11 @@ public final class HEVCMediaWriter: @unchecked Sendable {
         finalized = true
         guard started else {
             writer.cancelWriting()
+            retainedAdaptorBuffers.releaseAfterFinalization()
             try? FileManager.default.removeItem(at: partialURL)
             return nil
         }
+        defer { retainedAdaptorBuffers.releaseAfterFinalization() }
 
         if let firstPresentationTime, let lastPresentationTime {
             let nominalEnd = CMTimeAdd(lastPresentationTime, CMTime(value: 1, timescale: 2))
@@ -265,13 +267,20 @@ public final class HEVCMediaWriter: @unchecked Sendable {
         }
         finalized = true
         writer.cancelWriting()
+        retainedAdaptorBuffers.releaseAfterFinalization()
         cleanupPartial()
     }
 
-    private func outputSampleBuffer(
-        from sourceSample: CMSampleBuffer,
-        sourceImage: CVPixelBuffer
-    ) throws -> CMSampleBuffer {
+    deinit {
+        guard !finalized else {
+            return
+        }
+        writer.cancelWriting()
+        retainedAdaptorBuffers.releaseAfterFinalization()
+        cleanupPartial()
+    }
+
+    private func makeAdaptorBuffer(from sourceImage: CVPixelBuffer) throws -> CVPixelBuffer {
         let sourceDimensions = PixelSize(
             width: CVPixelBufferGetWidth(sourceImage),
             height: CVPixelBufferGetHeight(sourceImage)
@@ -281,13 +290,13 @@ public final class HEVCMediaWriter: @unchecked Sendable {
         else {
             throw HEVCMediaWriterError.invalidDimensions
         }
-        guard sourceDimensions != dimensions else {
-            return sourceSample
+        guard let pool = adaptor.pixelBufferPool else {
+            throw HEVCMediaWriterError.adaptorPixelBufferPoolUnavailable
         }
         var destination: CVPixelBuffer?
         let allocationStatus = CVPixelBufferPoolCreatePixelBuffer(
             kCFAllocatorDefault,
-            outputPool,
+            pool,
             &destination
         )
         guard allocationStatus == kCVReturnSuccess, let destination else {
@@ -302,36 +311,7 @@ public final class HEVCMediaWriter: @unchecked Sendable {
         guard transferStatus == noErr else {
             throw HEVCMediaWriterError.pixelTransferFailed(transferStatus)
         }
-        var formatDescription: CMVideoFormatDescription?
-        let formatStatus = CMVideoFormatDescriptionCreateForImageBuffer(
-            allocator: kCFAllocatorDefault,
-            imageBuffer: destination,
-            formatDescriptionOut: &formatDescription
-        )
-        guard formatStatus == noErr, let formatDescription else {
-            throw HEVCMediaWriterError.formatDescriptionFailed(formatStatus)
-        }
-        var timing = CMSampleTimingInfo()
-        let timingStatus = CMSampleBufferGetSampleTimingInfo(
-            sourceSample,
-            at: 0,
-            timingInfoOut: &timing
-        )
-        guard timingStatus == noErr else {
-            throw HEVCMediaWriterError.sampleTimingFailed(timingStatus)
-        }
-        var scaledSample: CMSampleBuffer?
-        let sampleStatus = CMSampleBufferCreateReadyWithImageBuffer(
-            allocator: kCFAllocatorDefault,
-            imageBuffer: destination,
-            formatDescription: formatDescription,
-            sampleTiming: &timing,
-            sampleBufferOut: &scaledSample
-        )
-        guard sampleStatus == noErr, let scaledSample else {
-            throw HEVCMediaWriterError.sampleBufferCreationFailed(sampleStatus)
-        }
-        return scaledSample
+        return destination
     }
 
     private func pixelTransferSession() throws -> VTPixelTransferSession {

@@ -46,6 +46,36 @@ public enum MediaWriterCoreError: Error, Equatable, Sendable {
     case emptyChunk
 }
 
+public enum MediaBufferRetentionError: Error, Equatable, Sendable {
+    case finalizationCompleted
+}
+
+public final class MediaBufferRetentionLedger<Buffer>: @unchecked Sendable {
+    public private(set) var retainedCount = 0
+
+    private var retainedBuffers: [Buffer] = []
+    private var finalizationCompleted = false
+
+    public init() {}
+
+    public func retainAccepted(_ buffer: Buffer) throws {
+        guard !finalizationCompleted else {
+            throw MediaBufferRetentionError.finalizationCompleted
+        }
+        retainedBuffers.append(buffer)
+        retainedCount = retainedBuffers.count
+    }
+
+    public func releaseAfterFinalization() {
+        guard !finalizationCompleted else {
+            return
+        }
+        finalizationCompleted = true
+        retainedBuffers.removeAll()
+        retainedCount = 0
+    }
+}
+
 public struct MediaDownscalePlan: Equatable, Sendable {
     public let sourceDimensions: PixelSize
     public let destinationDimensions: PixelSize

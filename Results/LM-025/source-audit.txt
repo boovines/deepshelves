@@ -1,7 +1,13 @@
-199:        guard input.append(encodedSample) else {
-106:            kVTVideoEncoderSpecification_RequireHardwareAcceleratedVideoEncoder as String: true,
+54:    private let adaptor: AVAssetWriterInputPixelBufferAdaptor
+124:        let createdAdaptor = AVAssetWriterInputPixelBufferAdaptor(
+293:        guard let pool = adaptor.pixelBufferPool else {
+194:        guard adaptor.append(adaptorBuffer, withPresentationTime: presentationTime) else {
+198:            try retainedAdaptorBuffers.retainAccepted(adaptorBuffer)
+227:        defer { retainedAdaptorBuffers.releaseAfterFinalization() }
+105:            kVTVideoEncoderSpecification_RequireHardwareAcceleratedVideoEncoder as String: true,
 12:            "LM-025 hardware HEVC quarantine: two repeatable dart-ave AppleT8110DART "
 14:                + "Do not remove this skip until the hardware/OS gate is explicitly re-authorized."
-sample_buffer_append_path=passed
+every_frame_uses_adaptor_pool=passed
+accepted_adaptor_buffers_retained_through_finalization=passed
 hardware_requirement_preserved=passed
 integration_hardware_quarantine=passed

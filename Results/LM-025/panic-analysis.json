@@ -33,8 +33,8 @@
   ],
   "staticDiscriminator": {
     "downscaleRequiredForFailure": false,
-    "commonChangedPath": "The interrupted LM-025 draft routed both scaled and same-size frames through AVAssetWriterInputPixelBufferAdaptor; the earlier S1 implementation appended CMSampleBuffer directly.",
-    "recoveryRefactor": "The production writer now preserves direct AVAssetWriterInput.append(CMSampleBuffer) for same-size frames and uses a separately constructed CMSampleBuffer only after a required downscale. No post-refactor hardware path was executed."
+    "commonChangedPath": "The interrupted LM-025 draft routed both scaled and same-size frames through AVAssetWriterInputPixelBufferAdaptor without an application-level ownership ledger retaining accepted pool buffers through finalization.",
+    "recoveryRefactor": "Every source frame is now copied into the adaptor's pixelBufferPool, appended only through the adaptor, and strongly retained after acceptance until finish, failure, or cancellation completes. No post-refactor hardware path was executed."
   },
   "safetyAction": "No reproduction was attempted after the second panic. All HEVCMediaWriter/AVAssetWriter/VideoToolbox runtime tests are skipped before construction and remain quarantined pending explicit reauthorization."
 }

@@ -1,0 +1,1 @@
+LM-025 pure media writer core: 6 scenarios passed

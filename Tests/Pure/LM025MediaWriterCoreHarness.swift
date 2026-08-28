@@ -4,6 +4,15 @@ import Foundation
 @main
 enum LM025MediaWriterCoreHarness {
     static func main() throws {
+        if CommandLine.arguments.count == 4,
+            CommandLine.arguments[1] == "--termination-child"
+        {
+            try runTerminationChild(
+                partialURL: URL(fileURLWithPath: CommandLine.arguments[2]),
+                readyURL: URL(fileURLWithPath: CommandLine.arguments[3])
+            )
+        }
+
         let chunkID = UUID(uuidString: "11111111-2222-3333-4444-555555555555")!
         let epochID = UUID(uuidString: "AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE")!
         let scope = MediaChunkScope(
@@ -110,6 +119,30 @@ enum LM025MediaWriterCoreHarness {
         try backpressureCore.recordAccepted(acceptedByMockBackend)
         try require(backpressureCore.frameCount == 1, "accepted locator committed once")
 
+        let retention = MediaBufferRetentionLedger<LifetimeProbe>()
+        weak var firstRetainedProbe: LifetimeProbe?
+        weak var secondRetainedProbe: LifetimeProbe?
+        do {
+            var first: LifetimeProbe? = LifetimeProbe(id: 1)
+            var second: LifetimeProbe? = LifetimeProbe(id: 2)
+            firstRetainedProbe = first
+            secondRetainedProbe = second
+            try retention.retainAccepted(first!)
+            try retention.retainAccepted(second!)
+            first = nil
+            second = nil
+        }
+        try require(retention.retainedCount == 2, "accepted adaptor buffers retained")
+        try require(firstRetainedProbe != nil, "first buffer alive before finalization")
+        try require(secondRetainedProbe != nil, "second buffer alive before finalization")
+        retention.releaseAfterFinalization()
+        try require(retention.retainedCount == 0, "retained buffers released after finalization")
+        try require(firstRetainedProbe == nil, "first buffer released after finalization")
+        try require(secondRetainedProbe == nil, "second buffer released after finalization")
+        try expectRetention(.finalizationCompleted) {
+            try retention.retainAccepted(LifetimeProbe(id: 3))
+        }
+
         let fixtureRoot = FileManager.default.temporaryDirectory.appendingPathComponent(
             "deepshelves-lm025-publisher-\(UUID().uuidString.lowercased())",
             isDirectory: true
@@ -121,7 +154,15 @@ enum LM025MediaWriterCoreHarness {
         defer { try? FileManager.default.removeItem(at: fixtureRoot) }
         let outputURL = fixtureRoot.appendingPathComponent("chunk.mov")
         let partialURL = MediaChunkPublisher.partialURL(for: outputURL)
-        let contents = Data("mock-encoded-chunk".utf8)
+        var softwareEncoder = DeterministicSoftwareFrameEncoder()
+        for (frameID, presentationTime) in zip(frameIDs, [0, 400, 1_750]) {
+            softwareEncoder.append(
+                frameID: frameID,
+                presentationTimeMilliseconds: Int64(presentationTime),
+                payload: Data("software-frame-\(presentationTime)".utf8)
+            )
+        }
+        let contents = softwareEncoder.finalize()
         try contents.write(to: partialURL, options: .withoutOverwriting)
         let integrity = try MediaChunkPublisher.publish(
             partialURL: partialURL,
@@ -175,7 +216,26 @@ enum LM025MediaWriterCoreHarness {
         }
         try require(!FileManager.default.fileExists(atPath: afterPartial.path), "after partial")
         try require(FileManager.default.fileExists(atPath: afterOutput.path), "after final")
-        print("LM-025 pure media writer core: 5 scenarios passed")
+        print("LM-025 pure media writer core/software fixture: 6 scenarios passed")
+    }
+
+    private static func runTerminationChild(partialURL: URL, readyURL: URL) throws -> Never {
+        var encoder = DeterministicSoftwareFrameEncoder()
+        for index in 0..<3 {
+            encoder.append(
+                frameID: UUID(),
+                presentationTimeMilliseconds: Int64(index * 1_000),
+                payload: Data(repeating: UInt8(index + 1), count: 4_096)
+            )
+        }
+        try encoder.finalize().write(to: partialURL, options: .withoutOverwriting)
+        let handle = try FileHandle(forWritingTo: partialURL)
+        try handle.synchronize()
+        try handle.close()
+        try Data("ready".utf8).write(to: readyURL, options: .withoutOverwriting)
+        while true {
+            Thread.sleep(forTimeInterval: 1)
+        }
     }
 
     private static func require(_ condition: @autoclosure () -> Bool, _ label: String) throws {
@@ -206,6 +266,44 @@ enum LM025MediaWriterCoreHarness {
         } catch let error as MediaChunkPublisherError {
             try require(error == expected, "expected \(expected), received \(error)")
         }
+    }
+
+    private static func expectRetention<T>(
+        _ expected: MediaBufferRetentionError,
+        _ operation: () throws -> T
+    ) throws {
+        do {
+            _ = try operation()
+            throw HarnessError.missingError(String(describing: expected))
+        } catch let error as MediaBufferRetentionError {
+            try require(error == expected, "expected \(expected), received \(error)")
+        }
+    }
+}
+
+private final class LifetimeProbe {
+    let id: Int
+
+    init(id: Int) {
+        self.id = id
+    }
+}
+
+private struct DeterministicSoftwareFrameEncoder {
+    private var bytes = Data("LM025-SOFTWARE-FIXTURE-V1\n".utf8)
+
+    mutating func append(
+        frameID: UUID,
+        presentationTimeMilliseconds: Int64,
+        payload: Data
+    ) {
+        bytes.append(Data("\(frameID.uuidString),\(presentationTimeMilliseconds),".utf8))
+        bytes.append(payload)
+        bytes.append(0x0A)
+    }
+
+    func finalize() -> Data {
+        bytes
     }
 }
 

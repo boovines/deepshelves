@@ -1,0 +1,31 @@
+Tests/Pure/LM025MediaWriterCoreHarness.swift:236:21: error: cannot find type 'MediaBufferRetentionError' in scope
+234 |
+235 |     private static func expectRetention<T>(
+236 |         _ expected: MediaBufferRetentionError,
+    |                     `- error: cannot find type 'MediaBufferRetentionError' in scope
+237 |         _ operation: () throws -> T
+238 |     ) throws {
+
+Tests/Pure/LM025MediaWriterCoreHarness.swift:113:25: error: cannot find 'MediaBufferRetentionLedger' in scope
+111 |         try require(backpressureCore.frameCount == 1, "accepted locator committed once")
+112 |
+113 |         let retention = MediaBufferRetentionLedger<LifetimeProbe>()
+    |                         `- error: cannot find 'MediaBufferRetentionLedger' in scope
+114 |         weak var firstRetainedProbe: LifetimeProbe?
+115 |         weak var secondRetainedProbe: LifetimeProbe?
+
+Tests/Pure/LM025MediaWriterCoreHarness.swift:133:30: error: cannot infer contextual base in reference to member 'finalizationCompleted'
+131 |         try require(firstRetainedProbe == nil, "first buffer released after finalization")
+132 |         try require(secondRetainedProbe == nil, "second buffer released after finalization")
+133 |         try expectRetention(.finalizationCompleted) {
+    |                              `- error: cannot infer contextual base in reference to member 'finalizationCompleted'
+134 |             try retention.retainAccepted(LifetimeProbe(id: 3))
+135 |         }
+
+Tests/Pure/LM025MediaWriterCoreHarness.swift:242:30: error: cannot find type 'MediaBufferRetentionError' in scope
+240 |             _ = try operation()
+241 |             throw HarnessError.missingError(String(describing: expected))
+242 |         } catch let error as MediaBufferRetentionError {
+    |                              `- error: cannot find type 'MediaBufferRetentionError' in scope
+243 |             try require(error == expected, "expected \(expected), received \(error)")
+244 |         }

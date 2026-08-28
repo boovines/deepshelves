@@ -5,7 +5,10 @@
   "safeVerification": {
     "staleXcodeTestProcessGuard": "passed",
     "pureSourceEncoderFrameworkScan": "passed",
-    "pureHarnessScenarios": 5,
+    "pureHarnessScenarios": 6,
+    "deterministicSoftwareFixtureEncoding": "passed",
+    "mockSoftwareMidWriteProcessTermination": "passed",
+    "partialRecoveryWithoutFinalVisibility": "passed",
     "packageCompileOnlyBuild": "passed",
     "swiftFormatForChangedProductionAndSafeHarnessSources": "passed",
     "whitespaceValidation": "passed"
@@ -15,15 +18,18 @@
     "aspect-preserving downscale plan with no upscaling",
     "strictly increasing variable-frame-rate presentation times capped at 30 seconds",
     "stable frame locators committed only after mock backend acceptance",
+    "strong retention of every accepted adaptor-pool buffer through finalization",
     "frame count and duration finalization metadata",
     "owner-only atomic partial-file publication with byte count and SHA-256",
     "before-rename and after-rename-before-directory-sync fault boundaries",
+    "deterministic software-fixture encoding and real subprocess termination without VideoToolbox",
     "compile-only production integration retaining required hardware acceleration"
   ],
   "productionStaticRecovery": [
-    "removed AVAssetWriterInputPixelBufferAdaptor from the production writer",
-    "restored direct CMSampleBuffer append for same-size frames",
-    "isolated pixel transfer to the downscale-only path",
+    "constructs one AVAssetWriterInputPixelBufferAdaptor and uses its pool for every frame",
+    "copies both same-size and downscaled sources into adaptor-owned buffers",
+    "has no direct AVAssetWriterInput sample-buffer append bypass",
+    "retains every accepted adaptor buffer until finalization, failure, cancellation, or deinitialization completes",
     "added an unconditional pre-construction quarantine to hardware integration tests"
   ],
   "quarantinedUnverifiedGates": [
@@ -37,6 +43,9 @@
     "Results/LM-025/safe-tests.txt",
     "Results/LM-025/swift-build.txt",
     "Results/LM-025/source-audit.txt",
+    "Results/LM-025/retention-red.txt",
+    "Results/LM-025/retention-green.txt",
+    "Results/LM-025/software-termination.txt",
     "Results/LM-025/process-safety.txt",
     "Results/LM-025/panic-analysis.json",
     "Results/LM-025/quarantine.md"

@@ -1,6 +1,6 @@
 # LM-025 hardware media quarantine
 
-LM-025 is technically blocked, not `blocked_human`. Two focused runs of the new hardware-required HEVC writer produced repeatable `dart-ave` AppleT8110DART kernel panics at 14:43 and 14:49 local time. The second run removed downscaling as the one changed variable, so downscaling is not required to trigger the failure. Both runs shared the draft's `AVAssetWriterInputPixelBufferAdaptor` path; the previously passed S1 writer appended `CMSampleBuffer` directly.
+LM-025 is technically blocked, not `blocked_human`. Two focused runs of the new hardware-required HEVC writer produced repeatable `dart-ave` AppleT8110DART kernel panics at 14:43 and 14:49 local time. The second run removed downscaling as the one changed variable, so downscaling is not required to trigger the failure. Both runs shared an `AVAssetWriterInputPixelBufferAdaptor` path whose accepted pool buffers had no explicit application-level retention through finalization.
 
 ## Minimal reproduction and raw evidence
 
@@ -8,11 +8,11 @@ The quarantined test is `CaptureMediaIntegrationTests.testHardwareRequiredVFRWri
 
 ## Safe diagnosis and attempted fixes
 
-- Extracted `MediaWriterCore`, so scope, dimensions, VFR timing, backpressure commit semantics, locators, and finalization can be tested without AVFoundation or VideoToolbox.
+- Extracted `MediaWriterCore`, so scope, dimensions, VFR timing, backpressure commit semantics, locators, buffer lifetime, and finalization can be tested without AVFoundation or VideoToolbox.
 - Extracted `MediaChunkPublisher`, so permissions, SHA-256, atomic rename, directory synchronization, and both publication fault boundaries can be tested using mock bytes.
-- Removed `AVAssetWriterInputPixelBufferAdaptor` from the production writer. Same-size frames again use direct `AVAssetWriterInput.append(CMSampleBuffer)`; pixel transfer is isolated to the downscale-only branch.
+- Refactored the production writer so every frame—same-size or downscaled—is copied into the adaptor's own `pixelBufferPool`, appended only through the adaptor, and retained by a strong ownership ledger until finish, failure, cancellation, or deinitialization completes.
 - Added a pre-construction skip to all hardware media integration tests.
-- Passed the five-scenario pure harness, source audit, whitespace/format checks, and compile-only package build. No encoder or decoder runtime path was executed after quarantine.
+- Passed the six-scenario pure harness, deterministic software-fixture encoder, hashing/publication gates, real mock-process mid-write termination, source audit, whitespace/format checks, and compile-only package build. No VideoToolbox encoder or decoder runtime path was executed after quarantine.
 
 ## Fallback status and invariants
 
