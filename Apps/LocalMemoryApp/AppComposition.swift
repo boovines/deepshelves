@@ -104,14 +104,21 @@ struct AppLaunchConfiguration {
     let showsMenuPreview: Bool
     let runsLM009EvidenceSequence: Bool
     let stateURL: URL
+    let navigationStateURL: URL
     let initialStatus: LocalMemoryRuntimeStatus
+    let forcedMainWindowSize: MainWindowLaunchSize?
+    let preferredColorScheme: ColorScheme?
+    let opensSettingsAtLaunch: Bool
 
     init(arguments: [String]) {
         runsLM009EvidenceSequence = arguments.contains("--lm009-evidence-sequence")
         showsMenuPreview = arguments.contains("--lm009-menu-preview")
             || runsLM009EvidenceSequence
+        opensSettingsAtLaunch = arguments.contains("--lm010-open-settings")
         opensMainWindow = showsMenuPreview
             || arguments.contains("--lm009-open-main")
+            || arguments.contains("--lm010-shell")
+            || opensSettingsAtLaunch
             || arguments.contains("--request-capture-permissions")
             || arguments.contains("--capture-capability-probe")
             || arguments.contains("--capture-spike")
@@ -123,7 +130,15 @@ struct AppLaunchConfiguration {
         {
             stateURL = URL(fileURLWithPath: arguments[index + 1])
         } else {
-            stateURL = Self.defaultStateURL()
+            stateURL = Self.defaultStateURL(fileName: "runtime-state.json")
+        }
+
+        if let index = arguments.firstIndex(of: "--lm010-navigation-state-file"),
+           arguments.indices.contains(index + 1)
+        {
+            navigationStateURL = URL(fileURLWithPath: arguments[index + 1])
+        } else {
+            navigationStateURL = Self.defaultStateURL(fileName: "navigation-state.json")
         }
 
         if let index = arguments.firstIndex(of: "--lm009-runtime"),
@@ -133,6 +148,26 @@ struct AppLaunchConfiguration {
             initialStatus = parsed
         } else {
             initialStatus = .recording
+        }
+
+        if let index = arguments.firstIndex(of: "--lm010-window-size"),
+           arguments.indices.contains(index + 1)
+        {
+            forcedMainWindowSize = MainWindowLaunchSize(rawValue: arguments[index + 1])
+        } else {
+            forcedMainWindowSize = nil
+        }
+
+        if let index = arguments.firstIndex(of: "--lm010-appearance"),
+           arguments.indices.contains(index + 1)
+        {
+            switch arguments[index + 1] {
+            case "light": preferredColorScheme = .light
+            case "dark": preferredColorScheme = .dark
+            default: preferredColorScheme = nil
+            }
+        } else {
+            preferredColorScheme = nil
         }
     }
 
@@ -147,9 +182,9 @@ struct AppLaunchConfiguration {
         }
     }
 
-    private static func defaultStateURL() -> URL {
+    private static func defaultStateURL(fileName: String) -> URL {
         do {
-            return try ArchivePathProvider.prepare().root.appending(path: "runtime-state.json")
+            return try ArchivePathProvider.prepare().root.appending(path: fileName)
         } catch {
             preconditionFailure("Local Memory application support is unavailable: \(error)")
         }
@@ -178,14 +213,22 @@ struct MenuBarStatusLabel: View {
 
 struct AppMenuBarContent: View {
     @ObservedObject var model: AppLifecycleViewModel
+    @ObservedObject var navigationModel: MainNavigationViewModel
     @Environment(\.openWindow) private var openWindow
+    @Environment(\.openSettings) private var openSettings
 
     var body: some View {
         MenuBarStatusPanel(
             model: model,
-            openMainWindow: { openWindow(id: "main") },
-            openTimeline: { openWindow(id: "main") },
-            openSettings: { openWindow(id: "main") },
+            openMainWindow: {
+                navigationModel.select(section: .search)
+                openWindow(id: "main")
+            },
+            openTimeline: {
+                navigationModel.select(section: .timeline)
+                openWindow(id: "main")
+            },
+            openSettings: { openSettings() },
             quit: { NSApplication.shared.terminate(nil) }
         )
     }

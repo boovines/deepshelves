@@ -11,6 +11,7 @@ import SwiftUI
 @main
 struct LocalMemoryApp: App {
     @StateObject private var lifecycleModel: AppLifecycleViewModel
+    @StateObject private var navigationModel: MainNavigationViewModel
 
     private let launchConfiguration: AppLaunchConfiguration
     private let capabilityProbeOutput: String?
@@ -35,6 +36,9 @@ struct LocalMemoryApp: App {
                 stateURL: configuration.stateURL,
                 initialStatus: configuration.initialStatus
             )
+        )
+        _navigationModel = StateObject(
+            wrappedValue: MainNavigationViewModel(stateURL: configuration.navigationStateURL)
         )
         s6AutoExit = arguments.contains("--lm008-s6-auto-exit")
         shouldRequestCapturePermissions = arguments.contains("--request-capture-permissions")
@@ -136,11 +140,17 @@ struct LocalMemoryApp: App {
                 } else if contextSpikeOutputDirectory != nil {
                     ContextSpikeTargetView()
                 } else if captureSpikeOutputDirectory == nil {
-                    AppShellPlaceholderView(model: lifecycleModel)
+                    MainShellView(
+                        lifecycleModel: lifecycleModel,
+                        navigationModel: navigationModel,
+                        forcedWindowSize: launchConfiguration.forcedMainWindowSize,
+                        opensSettingsAtLaunch: launchConfiguration.opensSettingsAtLaunch
+                    )
                 } else {
                     CaptureSpikeTargetView(animated: captureSpikeCrashActiveMode)
                 }
             }
+            .preferredColorScheme(launchConfiguration.preferredColorScheme)
                 .task {
                     if let contextSpikeOutputDirectory {
                         await ContextSpikeHarness.run(
@@ -175,17 +185,39 @@ struct LocalMemoryApp: App {
                 }
         }
         .defaultSize(
-            width: CGFloat(LM008UIDefaults.panelWidth),
-            height: CGFloat(LM008UIDefaults.panelHeight)
+            width: launchConfiguration.forcedMainWindowSize?.width
+                ?? CGFloat(MainWindowDefaults.defaultWidth),
+            height: launchConfiguration.forcedMainWindowSize?.height
+                ?? CGFloat(MainWindowDefaults.defaultHeight)
         )
         .defaultLaunchBehavior(.suppressed)
-        // LM-010 owns durable scene restoration. Until then, disable AppKit's
-        // saved no-window state so deterministic harness launches can request
-        // a presented scene while ordinary launches remain suppressed.
-        .restorationBehavior(.disabled)
+        .restorationBehavior(.automatic)
+        .windowResizability(.contentMinSize)
+        .commands {
+            CommandMenu("Navigate") {
+                Button("Search") { navigationModel.select(section: .search) }
+                    .keyboardShortcut("1", modifiers: .command)
+                Button("Timeline") { navigationModel.select(section: .timeline) }
+                    .keyboardShortcut("2", modifiers: .command)
+                Button("Activity") { navigationModel.select(section: .activity) }
+                    .keyboardShortcut("3", modifiers: .command)
+            }
+        }
+
+        Settings {
+            LocalMemorySettingsView()
+                .preferredColorScheme(launchConfiguration.preferredColorScheme)
+        }
+        .defaultSize(
+            width: CGFloat(MainWindowDefaults.settingsWidth),
+            height: CGFloat(MainWindowDefaults.settingsHeight)
+        )
 
         MenuBarExtra {
-            AppMenuBarContent(model: lifecycleModel)
+            AppMenuBarContent(
+                model: lifecycleModel,
+                navigationModel: navigationModel
+            )
         } label: {
             MenuBarStatusLabel(
                 model: lifecycleModel,

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "activeStory": "LM-010",
+  "activeStory": "LM-011",
   "stories": {
     "LM-001": {
       "status": "passed",
@@ -144,23 +144,33 @@
       "resumeProbe": null
     },
     "LM-010": {
-      "status": "active",
+      "status": "passed",
       "startedAt": "2026-08-28T02:53:31Z",
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": "Base checkpoint refs/tags/checkpoints/LM-009. Implement split navigation, durable section/selection restoration, required geometry, collapsible detail inspector, and Settings scene using synthetic data first.",
+      "completedAt": "2026-08-28T04:08:41Z",
+      "gitRevision": "refs/tags/checkpoints/LM-010",
+      "evidence": [
+        "Results/LM-010/report.json",
+        "Results/LM-010/main-light-default.png",
+        "Results/LM-010/main-dark-default.png",
+        "Results/LM-010/main-light-minimum.png",
+        "Results/LM-010/main-dark-minimum.png",
+        "Results/LM-010/settings-light.png",
+        "Results/LM-010/settings-dark.png",
+        "Results/LM-010/unit-tests.txt",
+        "Results/LM-010/ui-tests.txt"
+      ],
+      "notes": "Native split navigation, durable owner-only section and selection restoration, required default/minimum geometry, inspector collapse below 900 points, and the native Settings scene pass deterministic light/dark evidence and the complete gate suite. H0 UI Automation authentication was verified by a signed seven-test XCUITest pass; resolved pre-authentication diagnostics remain preserved in Results/LM-010.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null
     },
     "LM-011": {
-      "status": "pending",
-      "startedAt": null,
+      "status": "active",
+      "startedAt": "2026-08-28T04:08:41Z",
       "completedAt": null,
       "gitRevision": null,
       "evidence": [],
-      "notes": null,
+      "notes": "Base checkpoint refs/tags/checkpoints/LM-010. Implement the complete semantic color, type, spacing, radius, hairline, control-height, and motion token catalog, including Reduce Motion and Increased Contrast behavior, with canonical Results/LM-011/tokens.json evidence.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null

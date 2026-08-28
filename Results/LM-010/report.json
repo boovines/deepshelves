@@ -1,0 +1,201 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-010",
+  "status": "passed",
+  "generatedAt": "2026-08-28T04:06:44Z",
+  "baseRevision": "46e0c05c4cb7ebb4ea133386fbeaebe64356374e",
+  "checkpoint": "refs/tags/checkpoints/LM-010",
+  "results": {
+    "mainWindow": {
+      "defaultWidth": 1120,
+      "defaultHeight": 760,
+      "minimumWidth": 840,
+      "minimumHeight": 560,
+      "restorationBehavior": "automatic scene restoration plus owner-only durable section and selection state"
+    },
+    "sidebar": {
+      "defaultWidth": 184,
+      "minimumWidth": 168,
+      "maximumWidth": 240,
+      "sections": [
+        "search",
+        "timeline",
+        "activity",
+        "settings"
+      ]
+    },
+    "inspector": {
+      "defaultWidth": 264,
+      "minimumWidth": 220,
+      "maximumWidth": 360,
+      "hiddenBelowWidth": 900,
+      "minimumWindowEvidence": "hidden"
+    },
+    "settingsWindow": {
+      "width": 680,
+      "height": 560,
+      "nativeToolbarSections": [
+        "Capture",
+        "Privacy",
+        "Storage",
+        "Search",
+        "Agents",
+        "About"
+      ]
+    },
+    "restoredFixture": {
+      "section": "timeline",
+      "selectedMomentID": "00000000-0000-4000-8000-000000000102",
+      "selectedTitle": "Afternoon research"
+    },
+    "stateParentMode": "0700",
+    "stateFileMode": "0600",
+    "malformedStateBehavior": "fail closed to the default snapshot and replace invalid state",
+    "defaultLaunchMainWindowCount": 0,
+    "syntheticOnly": true,
+    "h0UIAutomationAuthenticated": true
+  },
+  "screenshots": [
+    {
+      "path": "Results/LM-010/main-light-default.png",
+      "sha256": "7b951a91c6ef42b6a24348bfa2ff2ef47a74bd4e15937d7c487efb68ff465a12",
+      "sizeBytes": 664174,
+      "pixelWidth": 2464,
+      "pixelHeight": 1744,
+      "appearance": "light",
+      "surface": "main",
+      "geometry": "default"
+    },
+    {
+      "path": "Results/LM-010/main-dark-default.png",
+      "sha256": "9a2dc1b3797617121f330ad0e3e8f8ae9026b5e4e56364656cfee350dea65593",
+      "sizeBytes": 689183,
+      "pixelWidth": 2464,
+      "pixelHeight": 1744,
+      "appearance": "dark",
+      "surface": "main",
+      "geometry": "default"
+    },
+    {
+      "path": "Results/LM-010/main-light-minimum.png",
+      "sha256": "2deeb606e380d0a6624a4b3dfcd9ae401df981319527ef8a3e722db0d7d6afa5",
+      "sizeBytes": 495007,
+      "pixelWidth": 1904,
+      "pixelHeight": 1448,
+      "appearance": "light",
+      "surface": "main",
+      "geometry": "minimum"
+    },
+    {
+      "path": "Results/LM-010/main-dark-minimum.png",
+      "sha256": "10bd68b8e20408cf92881ccd569b62775ef5655fc7553670d1aa542ee5bfba27",
+      "sizeBytes": 506277,
+      "pixelWidth": 1904,
+      "pixelHeight": 1448,
+      "appearance": "dark",
+      "surface": "main",
+      "geometry": "minimum"
+    },
+    {
+      "path": "Results/LM-010/settings-light.png",
+      "sha256": "072082c2ccfe301d09f518e228489b73b8bf76487abc44437e0683a7b4392033",
+      "sizeBytes": 396006,
+      "pixelWidth": 1584,
+      "pixelHeight": 1520,
+      "appearance": "light",
+      "surface": "settings"
+    },
+    {
+      "path": "Results/LM-010/settings-dark.png",
+      "sha256": "c8d187be7ec5249035ba6367132b94fe6c7e3e250a1ff957c01adc5cede2843e",
+      "sizeBytes": 410796,
+      "pixelWidth": 1584,
+      "pixelHeight": 1520,
+      "appearance": "dark",
+      "surface": "settings"
+    }
+  ],
+  "gates": {
+    "fullTestSuite": {
+      "status": "passed",
+      "command": "./scripts/test.sh",
+      "xctestUnitTests": 62,
+      "swiftTestingUnitTests": 9,
+      "lm010XCTestUnitTests": 5,
+      "integrationTests": 7,
+      "privacyTests": 4,
+      "performanceTests": 1,
+      "failures": 0,
+      "log": "Results/LM-010/unit-tests.txt",
+      "logSHA256": "542ec090f55e5f5d5000d4cc946d9bf4549696042ce3c249ff69b9f7f20f626d"
+    },
+    "signedReleaseUI": {
+      "status": "passed",
+      "command": "./scripts/run-lm010-ui-tests.sh",
+      "tests": 7,
+      "lm010Tests": 3,
+      "failures": 0,
+      "log": "Results/LM-010/ui-tests.txt",
+      "logSHA256": "1c7d37838eb9e99ae88b687fccc506e3ab32fa859d886ed8fbed9eb1e17c2003"
+    },
+    "visualReview": {
+      "status": "passed",
+      "command": "./scripts/run-lm010-ui-evidence.sh",
+      "screenshots": 6,
+      "appearances": [
+        "light",
+        "dark"
+      ],
+      "windowOnly": true,
+      "syntheticOnly": true,
+      "reviewedForClipping": true
+    },
+    "contractRegression": {
+      "status": "passed",
+      "command": "./scripts/check-contracts.sh",
+      "fixtures": 11,
+      "log": "Results/LM-010/contracts.txt",
+      "logSHA256": "1fd5b4110a202886c5b3a61da99b71aa99b2948bc2f2c51965a8ce52f4d48926"
+    },
+    "privacySmoke": {
+      "status": "passed",
+      "command": "./scripts/privacy-smoke.sh",
+      "runtimeNetworkingOrTelemetry": 0,
+      "log": "Results/LM-010/privacy-smoke.txt",
+      "logSHA256": "9ea4b5449f9715c90a3a80909f275c987c95be1130414ae6e10f888fcbe4a8bc"
+    },
+    "releaseBuild": {
+      "status": "passed",
+      "command": "./scripts/build-release.sh",
+      "automaticPackageResolution": false,
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ],
+      "log": "Results/LM-010/release-build.txt",
+      "logSHA256": "bcc853cba9c2e017300101e97f4603de046b055db0bb72552867cdcc57a5d467"
+    },
+    "signedPosture": {
+      "status": "passed",
+      "command": "./scripts/signing-posture.sh",
+      "log": "Results/LM-010/signing-posture.txt",
+      "logSHA256": "bf97d872ad3033de5f24c7a1996730e2099fa357b82faabeab676a4a593776e2"
+    },
+    "releaseBinaryAudit": {
+      "status": "passed",
+      "command": "./scripts/check-dependencies.sh --binaries",
+      "forbiddenLinkedOrEmbeddedMarkers": 0,
+      "log": "Results/LM-010/dependency-audit.txt",
+      "logSHA256": "ee19ec2fac69814d57606f8260d4120b82de9aecffb3286ca3159489700b0b32"
+    },
+    "diffWhitespace": {
+      "status": "passed",
+      "command": "git diff --check"
+    }
+  },
+  "diagnostics": {
+    "resolvedIssue": "macOS testmanagerd retained timed-out automation clients after unauthenticated UI-test starts; clearing the stale user-scoped daemon and authenticating the next single runner restored both UI and ordinary XCTest sessions",
+    "preAuthenticationUIAttempts": 3,
+    "interruptedNonUIAttempts": 2
+  }
+}
