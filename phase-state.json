@@ -550,12 +550,23 @@
       "resumeProbe": null
     },
     "LM-032": {
-      "status": "pending",
-      "startedAt": null,
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": null,
+      "status": "passed",
+      "startedAt": "2026-08-28T19:05:24Z",
+      "completedAt": "2026-08-28T19:16:53Z",
+      "gitRevision": "refs/tags/checkpoints/LM-032",
+      "evidence": [
+        "Results/LM-032/report.json",
+        "Results/LM-032/red.txt",
+        "Results/LM-032/focused-tests.txt",
+        "Results/LM-032/static-audit.txt",
+        "Results/LM-032/contracts.txt",
+        "Results/LM-032/privacy.txt",
+        "Results/LM-032/release-build.txt",
+        "Results/LM-032/dependencies.txt",
+        "Results/LM-032/swift-format.txt",
+        "Results/LM-032/story-gate.txt"
+      ],
+      "notes": "AXOCRSpanMerger accepts only durable TextSpan projections, validates exact frame/source identity, removes suppressed content, prefers Accessibility over overlapping normalized OCR duplicates, selects deterministic best same-source observations, and preserves distinct-position text. ApprovedSearchMetadataProjector emits only normalized app/title and policy-approved HTTP(S) origin/path fields, excludes process identity, fails closed for private/unapproved browser context, and revalidates decoded projections. The 200-fixture/800-token S2 corpus has zero duplicate tokens and zero unique-text loss with byte-stable insertion-order permutations. Twenty-three safe focused Release tests, contracts, privacy, dependencies, formatting, and compile-only Release pass with zero app, ImageIO runtime, or encoder execution.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null

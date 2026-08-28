@@ -1,0 +1,12 @@
+focused_release_tests=passed
+s2_duplicate_rate=passed
+s2_unique_loss_rate=passed
+permutation_stability=passed
+approved_metadata_projection=passed
+raw_observation_discard=passed
+contracts=passed
+privacy_smoke=passed
+release_compile_only=passed
+dependency_audit=passed
+encoder_process_tripwire=passed
+whitespace=passed

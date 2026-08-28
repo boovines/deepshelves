@@ -1,0 +1,8 @@
+input_boundary=durable_text_span_only
+accessibility_precedence=passed
+suppressed_content_persisted=0
+transient_raw_observations_persisted=0
+private_or_sensitive_url_projection=failed_closed
+apple_imageio_encode_decode_calls=0
+hardware_encoder_tests_executed=0
+app_launch_tests_executed=0

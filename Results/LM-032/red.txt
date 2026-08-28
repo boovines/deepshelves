@@ -1,0 +1,10 @@
+/Users/justinhou/Development/deepshelves/Tests/Unit/AXOCRSpanMergeTests.swift:31:22: error: cannot find 'AXOCRSpanMerger' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/AXOCRSpanMergeTests.swift:60:26: error: cannot find 'AXOCRSpanMerger' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/AXOCRSpanMergeTests.swift:75:17: error: cannot find 'AXOCRSpanMerger' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/AXOCRSpanMergeTests.swift:82:17: error: cannot find 'AXOCRSpanMerger' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/AXOCRSpanMergeTests.swift:89:26: error: cannot find 'AXOCRSpanMerger' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/AXOCRSpanMergeTests.swift:110:30: error: cannot find 'ApprovedSearchMetadataProjector' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/AXOCRSpanMergeTests.swift:148:17: error: cannot find 'ApprovedSearchMetadataProjector' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/AXOCRSpanMergeTests.swift:151:17: error: cannot find 'ApprovedSearchMetadataProjector' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/AXOCRSpanMergeTests.swift:157:22: error: cannot find 'AXOCRSpanMerger' in scope
+** TEST FAILED **

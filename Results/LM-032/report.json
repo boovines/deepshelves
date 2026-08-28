@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-032",
+  "status": "passed",
+  "fixtureCount": 200,
+  "mergedTokenCount": 800,
+  "duplicateNormalizedTokenCount": 0,
+  "duplicateNormalizedTokenRate": 0,
+  "maximumDuplicateNormalizedTokenRate": 0.03,
+  "groundTruthTokenCount": 800,
+  "uniqueGroundTruthLossCount": 0,
+  "uniqueGroundTruthLossRate": 0,
+  "maximumUniqueGroundTruthLossRate": 0.01,
+  "insertionOrderStable": true,
+  "approvedMetadataRevalidatedOnDecode": true,
+  "transientRawObservationsPersisted": 0,
+  "appleImageIOEncodeDecodeCalls": 0,
+  "hardwareEncoderTestsExecuted": 0,
+  "applicationLaunchesExecuted": 0
+}
