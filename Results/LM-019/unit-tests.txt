@@ -1,0 +1,602 @@
+materialized-dependencies: GRDB 7.11.1 + SQLCipher 4.18.0 from verified offline cache
+⚙️  Generating plists...
+⚙️  Generating project...
+⚙️  Writing project...
+Created project at /Users/justinhou/Development/deepshelves/LocalMemory.xcodeproj
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project LocalMemory.xcodeproj -scheme LocalMemory -configuration Debug -derivedDataPath .build/DerivedData -disableAutomaticPackageResolution CODE_SIGNING_ALLOWED=NO test
+
+Build settings from command line:
+    CODE_SIGNING_ALLOWED = NO
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  MemoryDesignSystem: /Users/justinhou/Development/deepshelves/Packages/MemoryDesignSystem
+  SQLCipher: /Users/justinhou/Development/deepshelves/.build/Dependencies/SQLCipher.swift @ local
+  MemoryContracts: /Users/justinhou/Development/deepshelves/Packages/MemoryContracts
+  MemorySearch: /Users/justinhou/Development/deepshelves/Packages/MemorySearch
+  GRDB: /Users/justinhou/Development/deepshelves/.build/Dependencies/GRDB.swift-a285e4ca87ec6b3584c97b0ec25fc61fec02de60 @ local
+  MemoryCapture: /Users/justinhou/Development/deepshelves/Packages/MemoryCapture
+  MemoryStore: /Users/justinhou/Development/deepshelves/Packages/MemoryStore
+  MemoryAgentAccess: /Users/justinhou/Development/deepshelves/Packages/MemoryAgentAccess
+  MemoryEnrichment: /Users/justinhou/Development/deepshelves/Packages/MemoryEnrichment
+  MemoryTestSupport: /Users/justinhou/Development/deepshelves/Packages/MemoryTestSupport
+
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:macOS, arch:arm64, id:00006030-000658C614D0001C, name:My Mac }
+{ platform:macOS, arch:x86_64, id:00006030-000658C614D0001C, name:My Mac }
+{ platform:macOS, name:Any Mac }
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (25 targets)
+    Target 'LocalMemoryUnitTests' in project 'LocalMemory'
+        ➜ Explicit dependency on target 'MemoryCapture' in project 'MemoryCapture'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+        ➜ Explicit dependency on target 'MemoryEnrichment' in project 'MemoryEnrichment'
+        ➜ Explicit dependency on target 'MemoryDesignSystem' in project 'MemoryDesignSystem'
+        ➜ Explicit dependency on target 'MemoryStore' in project 'MemoryStore'
+        ➜ Explicit dependency on target 'MemoryTestSupport' in project 'MemoryTestSupport'
+    Target 'LocalMemoryPrivacyTests' in project 'LocalMemory'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+        ➜ Explicit dependency on target 'MemoryTestSupport' in project 'MemoryTestSupport'
+    Target 'LocalMemoryPerformanceTests' in project 'LocalMemory'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+        ➜ Explicit dependency on target 'MemoryTestSupport' in project 'MemoryTestSupport'
+    Target 'LocalMemoryMCP' in project 'LocalMemory'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+    Target 'LocalMemoryIntegrationTests' in project 'LocalMemory'
+        ➜ Explicit dependency on target 'MemoryCapture' in project 'MemoryCapture'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+        ➜ Explicit dependency on target 'MemoryEnrichment' in project 'MemoryEnrichment'
+        ➜ Explicit dependency on target 'MemoryStore' in project 'MemoryStore'
+        ➜ Explicit dependency on target 'MemoryTestSupport' in project 'MemoryTestSupport'
+    Target 'MemoryTestSupport' in project 'MemoryTestSupport'
+        ➜ Explicit dependency on target 'MemoryTestSupport' in project 'MemoryTestSupport'
+    Target 'MemoryTestSupport' in project 'MemoryTestSupport' (no dependencies)
+    Target 'LocalMemoryCLI' in project 'LocalMemory'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+    Target 'LocalMemoryApp' in project 'LocalMemory'
+        ➜ Explicit dependency on target 'MemoryCapture' in project 'MemoryCapture'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+        ➜ Explicit dependency on target 'MemoryDesignSystem' in project 'MemoryDesignSystem'
+        ➜ Explicit dependency on target 'MemoryEnrichment' in project 'MemoryEnrichment'
+        ➜ Explicit dependency on target 'MemoryStore' in project 'MemoryStore'
+    Target 'MemoryStore' in project 'MemoryStore'
+        ➜ Explicit dependency on target 'MemoryStore' in project 'MemoryStore'
+        ➜ Explicit dependency on target 'GRDB' in project 'GRDB'
+    Target 'MemoryStore' in project 'MemoryStore'
+        ➜ Explicit dependency on target 'GRDB' in project 'GRDB'
+    Target 'GRDB' in project 'GRDB'
+        ➜ Explicit dependency on target 'GRDB' in project 'GRDB'
+        ➜ Explicit dependency on target 'GRDB_GRDB' in project 'GRDB'
+        ➜ Explicit dependency on target 'GRDBSQLCipher' in project 'GRDB'
+        ➜ Explicit dependency on target 'SQLCipher' in project 'SQLCipher'
+    Target 'GRDB' in project 'GRDB'
+        ➜ Explicit dependency on target 'GRDB_GRDB' in project 'GRDB'
+        ➜ Explicit dependency on target 'GRDBSQLCipher' in project 'GRDB'
+        ➜ Explicit dependency on target 'SQLCipher' in project 'SQLCipher'
+    Target 'GRDBSQLCipher' in project 'GRDB'
+        ➜ Explicit dependency on target 'SQLCipher' in project 'SQLCipher'
+    Target 'SQLCipher' in project 'SQLCipher' (no dependencies)
+    Target 'GRDB_GRDB' in project 'GRDB' (no dependencies)
+    Target 'MemoryEnrichment' in project 'MemoryEnrichment'
+        ➜ Explicit dependency on target 'MemoryEnrichment' in project 'MemoryEnrichment'
+        ➜ Explicit dependency on target 'MemoryEnrichment_MemoryEnrichment' in project 'MemoryEnrichment'
+    Target 'MemoryEnrichment' in project 'MemoryEnrichment'
+        ➜ Explicit dependency on target 'MemoryEnrichment_MemoryEnrichment' in project 'MemoryEnrichment'
+    Target 'MemoryEnrichment_MemoryEnrichment' in project 'MemoryEnrichment' (no dependencies)
+    Target 'MemoryDesignSystem' in project 'MemoryDesignSystem'
+        ➜ Explicit dependency on target 'MemoryDesignSystem' in project 'MemoryDesignSystem'
+    Target 'MemoryDesignSystem' in project 'MemoryDesignSystem' (no dependencies)
+    Target 'MemoryContracts' in project 'MemoryContracts'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+    Target 'MemoryContracts' in project 'MemoryContracts' (no dependencies)
+    Target 'MemoryCapture' in project 'MemoryCapture'
+        ➜ Explicit dependency on target 'MemoryCapture' in project 'MemoryCapture'
+    Target 'MemoryCapture' in project 'MemoryCapture' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ProcessInfoPlistFile /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/GRDB_GRDB.bundle/Contents/Info.plist /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/GRDB.build/Debug/GRDB_GRDB.build/empty-GRDB_GRDB.plist (in target 'GRDB_GRDB' from project 'GRDB')
+    cd /Users/justinhou/Development/deepshelves/.build/Dependencies/GRDB.swift-a285e4ca87ec6b3584c97b0ec25fc61fec02de60
+    builtin-infoPlistUtility /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/GRDB.build/Debug/GRDB_GRDB.build/empty-GRDB_GRDB.plist -producttype com.apple.product-type.bundle -expandbuildsettings -platform macosx -o /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/GRDB_GRDB.bundle/Contents/Info.plist
+
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk /Users/justinhou/Development/deepshelves/.build/DerivedData/SDKStatCaches.noindex/macosx26.5-25F70-e082c4a02f00227109f4ed75e425c832.sdkstatcache
+    cd /Users/justinhou/Development/deepshelves/LocalMemory.xcodeproj
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -o /Users/justinhou/Development/deepshelves/.build/DerivedData/SDKStatCaches.noindex/macosx26.5-25F70-e082c4a02f00227109f4ed75e425c832.sdkstatcache
+
+ProcessInfoPlistFile /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/MemoryEnrichment_MemoryEnrichment.bundle/Contents/Info.plist /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/MemoryEnrichment.build/Debug/MemoryEnrichment_MemoryEnrichment.build/empty-MemoryEnrichment_MemoryEnrichment.plist (in target 'MemoryEnrichment_MemoryEnrichment' from project 'MemoryEnrichment')
+    cd /Users/justinhou/Development/deepshelves/Packages/MemoryEnrichment
+    builtin-infoPlistUtility /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/MemoryEnrichment.build/Debug/MemoryEnrichment_MemoryEnrichment.build/empty-MemoryEnrichment_MemoryEnrichment.plist -producttype com.apple.product-type.bundle -expandbuildsettings -platform macosx -o /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/MemoryEnrichment_MemoryEnrichment.bundle/Contents/Info.plist
+
+ProcessInfoPlistFile /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/Local\ Memory.app/Contents/Info.plist /Users/justinhou/Development/deepshelves/Apps/LocalMemoryApp/Info.plist (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-infoPlistUtility /Users/justinhou/Development/deepshelves/Apps/LocalMemoryApp/Info.plist -producttype com.apple.product-type.application -genpkginfo /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/Local\ Memory.app/Contents/PkgInfo -expandbuildsettings -platform macosx -scanforprivacyfile /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/Local\ Memory.app/Contents/Frameworks/SQLCipher.framework -scanforprivacyfile /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/Local\ Memory.app/Contents/Resources/GRDB_GRDB.bundle -scanforprivacyfile /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/Local\ Memory.app/Contents/Resources/MemoryEnrichment_MemoryEnrichment.bundle -o /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/Local\ Memory.app/Contents/Info.plist
+
+CopySwiftLibs /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/Local\ Memory.app (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/Local\ Memory.app/Contents/MacOS/Local\ Memory.debug.dylib --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/Local\ Memory.app/Contents/Frameworks --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/Local\ Memory.app/Contents/PlugIns --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/Local\ Memory.app/Contents/Library/SystemExtensions --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/Local\ Memory.app/Contents/Extensions --platform macosx --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/Local\ Memory.app/Contents/Frameworks --strip-bitcode --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryApp.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os --back-deploy-swift-span
+Ignoring --strip-bitcode because --sign was not passed
+
+Copy /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/local_memory.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryCLI.build/Objects-normal/arm64/local_memory.swiftsourceinfo (in target 'LocalMemoryCLI' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryCLI.build/Objects-normal/arm64/local_memory.swiftsourceinfo /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/local_memory.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo
+
+Copy /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/local_memory.swiftmodule/arm64-apple-macos.swiftdoc /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryCLI.build/Objects-normal/arm64/local_memory.swiftdoc (in target 'LocalMemoryCLI' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryCLI.build/Objects-normal/arm64/local_memory.swiftdoc /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/local_memory.swiftmodule/arm64-apple-macos.swiftdoc
+
+Copy /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/local_memory.swiftmodule/arm64-apple-macos.abi.json /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryCLI.build/Objects-normal/arm64/local_memory.abi.json (in target 'LocalMemoryCLI' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryCLI.build/Objects-normal/arm64/local_memory.abi.json /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/local_memory.swiftmodule/arm64-apple-macos.abi.json
+
+Copy /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/local_memory.swiftmodule/arm64-apple-macos.swiftmodule /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryCLI.build/Objects-normal/arm64/local_memory.swiftmodule (in target 'LocalMemoryCLI' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryCLI.build/Objects-normal/arm64/local_memory.swiftmodule /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/local_memory.swiftmodule/arm64-apple-macos.swiftmodule
+
+CopySwiftLibs /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/LocalMemoryUnitTests.xctest (in target 'LocalMemoryUnitTests' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/LocalMemoryUnitTests.xctest/Contents/MacOS/LocalMemoryUnitTests --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/LocalMemoryUnitTests.xctest/Contents/Frameworks --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/LocalMemoryUnitTests.xctest/Contents/PlugIns --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/LocalMemoryUnitTests.xctest/Contents/Library/SystemExtensions --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/LocalMemoryUnitTests.xctest/Contents/Extensions --platform macosx --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/LocalMemoryUnitTests.xctest/Contents/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryUnitTests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os --back-deploy-swift-span
+Ignoring --strip-bitcode because --sign was not passed
+
+CopySwiftLibs /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/LocalMemoryPrivacyTests.xctest (in target 'LocalMemoryPrivacyTests' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/LocalMemoryPrivacyTests.xctest/Contents/MacOS/LocalMemoryPrivacyTests --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/LocalMemoryPrivacyTests.xctest/Contents/Frameworks --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/LocalMemoryPrivacyTests.xctest/Contents/PlugIns --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/LocalMemoryPrivacyTests.xctest/Contents/Library/SystemExtensions --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/LocalMemoryPrivacyTests.xctest/Contents/Extensions --platform macosx --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/LocalMemoryPrivacyTests.xctest/Contents/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryPrivacyTests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os --back-deploy-swift-span
+Ignoring --strip-bitcode because --sign was not passed
+
+CopySwiftLibs /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/LocalMemoryPerformanceTests.xctest (in target 'LocalMemoryPerformanceTests' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/LocalMemoryPerformanceTests.xctest/Contents/MacOS/LocalMemoryPerformanceTests --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/LocalMemoryPerformanceTests.xctest/Contents/Frameworks --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/LocalMemoryPerformanceTests.xctest/Contents/PlugIns --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/LocalMemoryPerformanceTests.xctest/Contents/Library/SystemExtensions --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/LocalMemoryPerformanceTests.xctest/Contents/Extensions --platform macosx --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/LocalMemoryPerformanceTests.xctest/Contents/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryPerformanceTests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os --back-deploy-swift-span
+Ignoring --strip-bitcode because --sign was not passed
+
+Test Suite 'All tests' started at 2026-08-28 13:02:38.227.
+Test Suite 'LocalMemoryUnitTests.xctest' started at 2026-08-28 13:02:38.227.
+Test Suite 'ArchiveDatabaseTests' started at 2026-08-28 13:02:38.227.
+Test Case '-[LocalMemoryUnitTests.ArchiveDatabaseTests testArchiveKeyLengthFailsClosedBeforeOpeningDatabase]' started.
+Test Case '-[LocalMemoryUnitTests.ArchiveDatabaseTests testArchiveKeyLengthFailsClosedBeforeOpeningDatabase]' passed (0.004 seconds).
+Test Case '-[LocalMemoryUnitTests.ArchiveDatabaseTests testDeterministicTestStoresHaveIdenticalSchemaAndSeedMetadata]' started.
+Test Case '-[LocalMemoryUnitTests.ArchiveDatabaseTests testDeterministicTestStoresHaveIdenticalSchemaAndSeedMetadata]' passed (0.010 seconds).
+Test Case '-[LocalMemoryUnitTests.ArchiveDatabaseTests testFrameDependentRowsCascadeAndForeignKeysRemainClean]' started.
+Test Case '-[LocalMemoryUnitTests.ArchiveDatabaseTests testFrameDependentRowsCascadeAndForeignKeysRemainClean]' passed (0.003 seconds).
+Test Case '-[LocalMemoryUnitTests.ArchiveDatabaseTests testFreshBootstrapCreatesCompleteV1SchemaAndProductionPragmas]' started.
+Test Case '-[LocalMemoryUnitTests.ArchiveDatabaseTests testFreshBootstrapCreatesCompleteV1SchemaAndProductionPragmas]' passed (0.010 seconds).
+Test Case '-[LocalMemoryUnitTests.ArchiveDatabaseTests testInterruptedMigrationRollsBackAndCanResumeExactlyOnce]' started.
+Test Case '-[LocalMemoryUnitTests.ArchiveDatabaseTests testInterruptedMigrationRollsBackAndCanResumeExactlyOnce]' passed (0.018 seconds).
+Test Case '-[LocalMemoryUnitTests.ArchiveDatabaseTests testV1ColumnsMatchPlan10Contract]' started.
+Test Case '-[LocalMemoryUnitTests.ArchiveDatabaseTests testV1ColumnsMatchPlan10Contract]' passed (0.004 seconds).
+Test Case '-[LocalMemoryUnitTests.ArchiveDatabaseTests testVersionZeroArchiveMigratesForwardWithoutLosingReadableData]' started.
+Test Case '-[LocalMemoryUnitTests.ArchiveDatabaseTests testVersionZeroArchiveMigratesForwardWithoutLosingReadableData]' passed (0.012 seconds).
+Test Suite 'ArchiveDatabaseTests' passed at 2026-08-28 13:02:38.291.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.062 (0.064) seconds
+Test Suite 'ArchiveFileStoreTests' started at 2026-08-28 13:02:38.291.
+Test Case '-[LocalMemoryUnitTests.ArchiveFileStoreTests testAtomicWriterFsyncsHashesAndCreatesOwnerOnlyFinal]' started.
+Test Case '-[LocalMemoryUnitTests.ArchiveFileStoreTests testAtomicWriterFsyncsHashesAndCreatesOwnerOnlyFinal]' passed (0.005 seconds).
+Test Case '-[LocalMemoryUnitTests.ArchiveFileStoreTests testCrashAfterRenameBeforeCommitQuarantinesOrphanFinal]' started.
+Test Case '-[LocalMemoryUnitTests.ArchiveFileStoreTests testCrashAfterRenameBeforeCommitQuarantinesOrphanFinal]' passed (0.015 seconds).
+Test Case '-[LocalMemoryUnitTests.ArchiveFileStoreTests testCrashBeforeRenameLeavesOnlyPartialWhichStartupRemoves]' started.
+Test Case '-[LocalMemoryUnitTests.ArchiveFileStoreTests testCrashBeforeRenameLeavesOnlyPartialWhichStartupRemoves]' passed (0.014 seconds).
+Test Case '-[LocalMemoryUnitTests.ArchiveFileStoreTests testHashMismatchQuarantinesFinalAndSuppressesSearchProjection]' started.
+Test Case '-[LocalMemoryUnitTests.ArchiveFileStoreTests testHashMismatchQuarantinesFinalAndSuppressesSearchProjection]' passed (0.017 seconds).
+Test Case '-[LocalMemoryUnitTests.ArchiveFileStoreTests testMissingReadyFileAndInterruptedLeaseRecoverFailClosed]' started.
+Test Case '-[LocalMemoryUnitTests.ArchiveFileStoreTests testMissingReadyFileAndInterruptedLeaseRecoverFailClosed]' passed (0.014 seconds).
+Test Case '-[LocalMemoryUnitTests.ArchiveFileStoreTests testRelativePathsFailClosedOnTraversalAbsoluteAndUnmanagedRoots]' started.
+Test Case '-[LocalMemoryUnitTests.ArchiveFileStoreTests testRelativePathsFailClosedOnTraversalAbsoluteAndUnmanagedRoots]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.ArchiveFileStoreTests testReopenRepairsOwnerOnlyPermissionsRecursively]' started.
+Test Case '-[LocalMemoryUnitTests.ArchiveFileStoreTests testReopenRepairsOwnerOnlyPermissionsRecursively]' passed (0.005 seconds).
+Test Case '-[LocalMemoryUnitTests.ArchiveFileStoreTests testValidCommittedFileRemainsReadyAndSearchableAcrossStartup]' started.
+Test Case '-[LocalMemoryUnitTests.ArchiveFileStoreTests testValidCommittedFileRemainsReadyAndSearchableAcrossStartup]' passed (0.016 seconds).
+Test Case '-[LocalMemoryUnitTests.ArchiveFileStoreTests testWriterRejectsSymlinkParentWithoutTouchingExternalTarget]' started.
+Test Case '-[LocalMemoryUnitTests.ArchiveFileStoreTests testWriterRejectsSymlinkParentWithoutTouchingExternalTarget]' passed (0.005 seconds).
+Test Suite 'ArchiveFileStoreTests' passed at 2026-08-28 13:02:38.385.
+	 Executed 9 tests, with 0 failures (0 unexpected) in 0.091 (0.093) seconds
+Test Suite 'ArchivePathProviderTests' started at 2026-08-28 13:02:38.385.
+Test Case '-[LocalMemoryUnitTests.ArchivePathProviderTests testCreatesOwnerOnlyArchiveTree]' started.
+Test Case '-[LocalMemoryUnitTests.ArchivePathProviderTests testCreatesOwnerOnlyArchiveTree]' passed (0.004 seconds).
+Test Case '-[LocalMemoryUnitTests.ArchivePathProviderTests testRootNameCannotEscapeApplicationSupport]' started.
+Test Case '-[LocalMemoryUnitTests.ArchivePathProviderTests testRootNameCannotEscapeApplicationSupport]' passed (0.003 seconds).
+Test Suite 'ArchivePathProviderTests' passed at 2026-08-28 13:02:38.393.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.008 (0.008) seconds
+Test Suite 'BaselineDefaultsTests' started at 2026-08-28 13:02:38.394.
+Test Case '-[LocalMemoryUnitTests.BaselineDefaultsTests testS5DefaultsAreFrozen]' started.
+Test Case '-[LocalMemoryUnitTests.BaselineDefaultsTests testS5DefaultsAreFrozen]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.BaselineDefaultsTests testS6DefaultsAreFrozen]' started.
+Test Case '-[LocalMemoryUnitTests.BaselineDefaultsTests testS6DefaultsAreFrozen]' passed (0.000 seconds).
+Test Case '-[LocalMemoryUnitTests.BaselineDefaultsTests testS7DefaultsForbidRuntimeNetwork]' started.
+Test Case '-[LocalMemoryUnitTests.BaselineDefaultsTests testS7DefaultsForbidRuntimeNetwork]' passed (0.000 seconds).
+Test Suite 'BaselineDefaultsTests' passed at 2026-08-28 13:02:38.396.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
+Test Suite 'BootstrapContractTests' started at 2026-08-28 13:02:38.396.
+Test Case '-[LocalMemoryUnitTests.BootstrapContractTests testStatusRoundTripsThroughJSON]' started.
+Test Case '-[LocalMemoryUnitTests.BootstrapContractTests testStatusRoundTripsThroughJSON]' passed (0.001 seconds).
+Test Suite 'BootstrapContractTests' passed at 2026-08-28 13:02:38.396.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'CaptureSpikeCoreTests' started at 2026-08-28 13:02:38.397.
+Test Case '-[LocalMemoryUnitTests.CaptureSpikeCoreTests testAcceptanceGatePinsActiveStaticIndexAndIdleCadence]' started.
+Test Case '-[LocalMemoryUnitTests.CaptureSpikeCoreTests testAcceptanceGatePinsActiveStaticIndexAndIdleCadence]' passed (0.000 seconds).
+Test Case '-[LocalMemoryUnitTests.CaptureSpikeCoreTests testCapabilityStatusRequiresScreenRecordingAndAccessibility]' started.
+Test Case '-[LocalMemoryUnitTests.CaptureSpikeCoreTests testCapabilityStatusRequiresScreenRecordingAndAccessibility]' passed (0.000 seconds).
+Test Case '-[LocalMemoryUnitTests.CaptureSpikeCoreTests testCaptureGeometryPreservesAspectAndProducesEvenHEVCDimensions]' started.
+Test Case '-[LocalMemoryUnitTests.CaptureSpikeCoreTests testCaptureGeometryPreservesAspectAndProducesEvenHEVCDimensions]' passed (0.000 seconds).
+Test Case '-[LocalMemoryUnitTests.CaptureSpikeCoreTests testEpochAdmissionRejectsStaleAndMismatchedBuffers]' started.
+Test Case '-[LocalMemoryUnitTests.CaptureSpikeCoreTests testEpochAdmissionRejectsStaleAndMismatchedBuffers]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.CaptureSpikeCoreTests testFocusPollingCadenceRetainsOneSecondTransitionMargin]' started.
+Test Case '-[LocalMemoryUnitTests.CaptureSpikeCoreTests testFocusPollingCadenceRetainsOneSecondTransitionMargin]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.CaptureSpikeCoreTests testHEVCProfileRequiresHardwareAndOneSecondFragments]' started.
+Test Case '-[LocalMemoryUnitTests.CaptureSpikeCoreTests testHEVCProfileRequiresHardwareAndOneSecondFragments]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.CaptureSpikeCoreTests testMediaChunkScopePermitsOnlyOneEpochTargetDimensionAndThirtySeconds]' started.
+Test Case '-[LocalMemoryUnitTests.CaptureSpikeCoreTests testMediaChunkScopePermitsOnlyOneEpochTargetDimensionAndThirtySeconds]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.CaptureSpikeCoreTests testRefreshLeaseSuppressesDuplicatesAndIgnoresLateCompletion]' started.
+Test Case '-[LocalMemoryUnitTests.CaptureSpikeCoreTests testRefreshLeaseSuppressesDuplicatesAndIgnoresLateCompletion]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.CaptureSpikeCoreTests testResolverApprovesOnlyTheFocusedProcessesMatchingWindow]' started.
+Test Case '-[LocalMemoryUnitTests.CaptureSpikeCoreTests testResolverApprovesOnlyTheFocusedProcessesMatchingWindow]' passed (0.000 seconds).
+Test Case '-[LocalMemoryUnitTests.CaptureSpikeCoreTests testResolverEmitsTypedMetadataOnlyGapsForIneligibleSurfaces]' started.
+Test Case '-[LocalMemoryUnitTests.CaptureSpikeCoreTests testResolverEmitsTypedMetadataOnlyGapsForIneligibleSurfaces]' passed (0.000 seconds).
+Test Case '-[LocalMemoryUnitTests.CaptureSpikeCoreTests testResolverFailsClosedWhenGeometryAndTitleCannotDisambiguate]' started.
+Test Case '-[LocalMemoryUnitTests.CaptureSpikeCoreTests testResolverFailsClosedWhenGeometryAndTitleCannotDisambiguate]' passed (0.004 seconds).
+Test Case '-[LocalMemoryUnitTests.CaptureSpikeCoreTests testResolverFiltersIneligibleCandidatesAndUsesNormalizedTitleTieBreaker]' started.
+Test Case '-[LocalMemoryUnitTests.CaptureSpikeCoreTests testResolverFiltersIneligibleCandidatesAndUsesNormalizedTitleTieBreaker]' passed (0.000 seconds).
+Test Case '-[LocalMemoryUnitTests.CaptureSpikeCoreTests testWriterRolloverLeavesOneReceiveIntervalBeforeMaximumDuration]' started.
+Test Case '-[LocalMemoryUnitTests.CaptureSpikeCoreTests testWriterRolloverLeavesOneReceiveIntervalBeforeMaximumDuration]' passed (0.000 seconds).
+Test Suite 'CaptureSpikeCoreTests' passed at 2026-08-28 13:02:38.412.
+	 Executed 13 tests, with 0 failures (0 unexpected) in 0.011 (0.015) seconds
+Test Suite 'ContextSpikeCoreTests' started at 2026-08-28 13:02:38.412.
+Test Case '-[LocalMemoryUnitTests.ContextSpikeCoreTests testAXOCRMergeIsStableAndPrefersAXForOverlappingDuplicateText]' started.
+Test Case '-[LocalMemoryUnitTests.ContextSpikeCoreTests testAXOCRMergeIsStableAndPrefersAXForOverlappingDuplicateText]' passed (0.002 seconds).
+Test Case '-[LocalMemoryUnitTests.ContextSpikeCoreTests testAXProjectionIsBoundedAndSuppressesSecureFieldValues]' started.
+Test Case '-[LocalMemoryUnitTests.ContextSpikeCoreTests testAXProjectionIsBoundedAndSuppressesSecureFieldValues]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.ContextSpikeCoreTests testBrowserAdapterFailsClosedForPrivateOrUnavailableSiteContext]' started.
+Test Case '-[LocalMemoryUnitTests.ContextSpikeCoreTests testBrowserAdapterFailsClosedForPrivateOrUnavailableSiteContext]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.ContextSpikeCoreTests testBrowserAdapterRequiresTargetAssociationAndNormalizesURL]' started.
+Test Case '-[LocalMemoryUnitTests.ContextSpikeCoreTests testBrowserAdapterRequiresTargetAssociationAndNormalizesURL]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.ContextSpikeCoreTests testPrivacyProjectionDropsEveryArtifactForDeniedOrMismatchedContexts]' started.
+Test Case '-[LocalMemoryUnitTests.ContextSpikeCoreTests testPrivacyProjectionDropsEveryArtifactForDeniedOrMismatchedContexts]' passed (0.002 seconds).
+Test Case '-[LocalMemoryUnitTests.ContextSpikeCoreTests testS2FixtureCatalogPinsRequiredCountsAndContexts]' started.
+Test Case '-[LocalMemoryUnitTests.ContextSpikeCoreTests testS2FixtureCatalogPinsRequiredCountsAndContexts]' passed (0.003 seconds).
+Test Suite 'ContextSpikeCoreTests' passed at 2026-08-28 13:02:38.422.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.010 (0.011) seconds
+Test Suite 'ContractFixtureCompatibilityTests' started at 2026-08-28 13:02:38.423.
+Test Case '-[LocalMemoryUnitTests.ContractFixtureCompatibilityTests testArchivePathTraversalFailsClosed]' started.
+Test Case '-[LocalMemoryUnitTests.ContractFixtureCompatibilityTests testArchivePathTraversalFailsClosed]' passed (0.002 seconds).
+Test Case '-[LocalMemoryUnitTests.ContractFixtureCompatibilityTests testFixtureManifestPinsSyntheticSourceLicenseAndSHA256]' started.
+Test Case '-[LocalMemoryUnitTests.ContractFixtureCompatibilityTests testFixtureManifestPinsSyntheticSourceLicenseAndSHA256]' passed (0.004 seconds).
+Test Case '-[LocalMemoryUnitTests.ContractFixtureCompatibilityTests testInvalidHalfOpenOrOverlongIntervalFailsClosed]' started.
+Test Case '-[LocalMemoryUnitTests.ContractFixtureCompatibilityTests testInvalidHalfOpenOrOverlongIntervalFailsClosed]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.ContractFixtureCompatibilityTests testMalformedAgentPoliciesFailClosed]' started.
+Test Case '-[LocalMemoryUnitTests.ContractFixtureCompatibilityTests testMalformedAgentPoliciesFailClosed]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.ContractFixtureCompatibilityTests testNoncanonicalWallClockTimestampFailsClosed]' started.
+Test Case '-[LocalMemoryUnitTests.ContractFixtureCompatibilityTests testNoncanonicalWallClockTimestampFailsClosed]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.ContractFixtureCompatibilityTests testUnknownEnumCaseFailsClosed]' started.
+Test Case '-[LocalMemoryUnitTests.ContractFixtureCompatibilityTests testUnknownEnumCaseFailsClosed]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.ContractFixtureCompatibilityTests testV1FixturesRoundTripToIdenticalCanonicalBytes]' started.
+Test Case '-[LocalMemoryUnitTests.ContractFixtureCompatibilityTests testV1FixturesRoundTripToIdenticalCanonicalBytes]' passed (0.004 seconds).
+Test Case '-[LocalMemoryUnitTests.ContractFixtureCompatibilityTests testV1ReaderIgnoresUnknownAdditiveFields]' started.
+Test Case '-[LocalMemoryUnitTests.ContractFixtureCompatibilityTests testV1ReaderIgnoresUnknownAdditiveFields]' passed (0.001 seconds).
+Test Suite 'ContractFixtureCompatibilityTests' passed at 2026-08-28 13:02:38.440.
+	 Executed 8 tests, with 0 failures (0 unexpected) in 0.015 (0.017) seconds
+Test Suite 'DependencyManifestTests' started at 2026-08-28 13:02:38.440.
+Test Case '-[LocalMemoryUnitTests.DependencyManifestTests testManifestHasNoFloatingProductionRevision]' started.
+Test Case '-[LocalMemoryUnitTests.DependencyManifestTests testManifestHasNoFloatingProductionRevision]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.DependencyManifestTests testManifestPinsRequiredComponentsWithAuditableInputs]' started.
+Test Case '-[LocalMemoryUnitTests.DependencyManifestTests testManifestPinsRequiredComponentsWithAuditableInputs]' passed (0.002 seconds).
+Test Case '-[LocalMemoryUnitTests.DependencyManifestTests testModelAssetSetsAreCompleteAndRemainOutsideRuntimeDownloadPaths]' started.
+Test Case '-[LocalMemoryUnitTests.DependencyManifestTests testModelAssetSetsAreCompleteAndRemainOutsideRuntimeDownloadPaths]' passed (0.001 seconds).
+Test Suite 'DependencyManifestTests' passed at 2026-08-28 13:02:38.444.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.003 (0.004) seconds
+Test Suite 'DesignTokenTests' started at 2026-08-28 13:02:38.444.
+Test Case '-[LocalMemoryUnitTests.DesignTokenTests testAccessibilityEnvironmentCombinesSystemPoliciesAndDisplayScale]' started.
+Test Case '-[LocalMemoryUnitTests.DesignTokenTests testAccessibilityEnvironmentCombinesSystemPoliciesAndDisplayScale]' passed (0.000 seconds).
+Test Case '-[LocalMemoryUnitTests.DesignTokenTests testCanonicalSnapshotContainsNoLiteralRGBOrLightOnlyColor]' started.
+Test Case '-[LocalMemoryUnitTests.DesignTokenTests testCanonicalSnapshotContainsNoLiteralRGBOrLightOnlyColor]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.DesignTokenTests testColorsResolveThroughDynamicAppKitSources]' started.
+Test Case '-[LocalMemoryUnitTests.DesignTokenTests testColorsResolveThroughDynamicAppKitSources]' passed (0.013 seconds).
+Test Case '-[LocalMemoryUnitTests.DesignTokenTests testIncreasedContrastStrengthensSelectionAndHairlines]' started.
+Test Case '-[LocalMemoryUnitTests.DesignTokenTests testIncreasedContrastStrengthensSelectionAndHairlines]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.DesignTokenTests testMotionCatalogAndReduceMotionBehaviorMatchPlanEleven]' started.
+Test Case '-[LocalMemoryUnitTests.DesignTokenTests testMotionCatalogAndReduceMotionBehaviorMatchPlanEleven]' passed (0.000 seconds).
+Test Case '-[LocalMemoryUnitTests.DesignTokenTests testSemanticColorCatalogMatchesUXSpecification]' started.
+Test Case '-[LocalMemoryUnitTests.DesignTokenTests testSemanticColorCatalogMatchesUXSpecification]' passed (0.000 seconds).
+Test Case '-[LocalMemoryUnitTests.DesignTokenTests testSpacingShapeControlHeightAndTypographyCatalogsMatchPlanEleven]' started.
+Test Case '-[LocalMemoryUnitTests.DesignTokenTests testSpacingShapeControlHeightAndTypographyCatalogsMatchPlanEleven]' passed (0.001 seconds).
+Test Suite 'DesignTokenTests' passed at 2026-08-28 13:02:38.462.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.016 (0.018) seconds
+Test Suite 'GlobalSearchPanelStateTests' started at 2026-08-28 13:02:38.462.
+Test Case '-[LocalMemoryUnitTests.GlobalSearchPanelStateTests testDefaultShortcutAndPanelGeometryMatchTheFrozenUXContract]' started.
+Test Case '-[LocalMemoryUnitTests.GlobalSearchPanelStateTests testDefaultShortcutAndPanelGeometryMatchTheFrozenUXContract]' passed (0.000 seconds).
+Test Case '-[LocalMemoryUnitTests.GlobalSearchPanelStateTests testEmptyDisplayInventoryFailsClosed]' started.
+Test Case '-[LocalMemoryUnitTests.GlobalSearchPanelStateTests testEmptyDisplayInventoryFailsClosed]' passed (0.000 seconds).
+Test Case '-[LocalMemoryUnitTests.GlobalSearchPanelStateTests testEscapeAlwaysClosesTransientSearchPanelWithoutChangingNavigation]' started.
+Test Case '-[LocalMemoryUnitTests.GlobalSearchPanelStateTests testEscapeAlwaysClosesTransientSearchPanelWithoutChangingNavigation]' passed (0.000 seconds).
+Test Case '-[LocalMemoryUnitTests.GlobalSearchPanelStateTests testPanelStateRoundTripsOwnerOnlyAndRemembersDisplay]' started.
+Test Case '-[LocalMemoryUnitTests.GlobalSearchPanelStateTests testPanelStateRoundTripsOwnerOnlyAndRemembersDisplay]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.GlobalSearchPanelStateTests testPlacementFallsBackToPointerDisplayAndClampsToMinimumSize]' started.
+Test Case '-[LocalMemoryUnitTests.GlobalSearchPanelStateTests testPlacementFallsBackToPointerDisplayAndClampsToMinimumSize]' passed (0.000 seconds).
+Test Case '-[LocalMemoryUnitTests.GlobalSearchPanelStateTests testPlacementUsesRememberedDisplayAndCentersInsideItsVisibleFrame]' started.
+Test Case '-[LocalMemoryUnitTests.GlobalSearchPanelStateTests testPlacementUsesRememberedDisplayAndCentersInsideItsVisibleFrame]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.GlobalSearchPanelStateTests testShortcutCollisionHasOneRecoverableSettingsAction]' started.
+Test Case '-[LocalMemoryUnitTests.GlobalSearchPanelStateTests testShortcutCollisionHasOneRecoverableSettingsAction]' passed (0.001 seconds).
+Test Suite 'GlobalSearchPanelStateTests' passed at 2026-08-28 13:02:38.469.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.005 (0.007) seconds
+Test Suite 'MainNavigationStateTests' started at 2026-08-28 13:02:38.469.
+Test Case '-[LocalMemoryUnitTests.MainNavigationStateTests testInspectorCollapsesBelowNineHundredPointsOrWhenDismissed]' started.
+Test Case '-[LocalMemoryUnitTests.MainNavigationStateTests testInspectorCollapsesBelowNineHundredPointsOrWhenDismissed]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.MainNavigationStateTests testMalformedRestorationStateFailsClosed]' started.
+Test Case '-[LocalMemoryUnitTests.MainNavigationStateTests testMalformedRestorationStateFailsClosed]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.MainNavigationStateTests testNavigationStateRoundTripsWithOwnerOnlyPermissions]' started.
+Test Case '-[LocalMemoryUnitTests.MainNavigationStateTests testNavigationStateRoundTripsWithOwnerOnlyPermissions]' passed (0.003 seconds).
+Test Case '-[LocalMemoryUnitTests.MainNavigationStateTests testNavigationVocabularyAndDefaultsAreStable]' started.
+Test Case '-[LocalMemoryUnitTests.MainNavigationStateTests testNavigationVocabularyAndDefaultsAreStable]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.MainNavigationStateTests testWindowGeometryMatchesNativeUXSpecification]' started.
+Test Case '-[LocalMemoryUnitTests.MainNavigationStateTests testWindowGeometryMatchesNativeUXSpecification]' passed (0.000 seconds).
+Test Suite 'MainNavigationStateTests' passed at 2026-08-28 13:02:38.476.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.006 (0.007) seconds
+Test Suite 'MemoryContractsV1Tests' started at 2026-08-28 13:02:38.476.
+Test Case '-[LocalMemoryUnitTests.MemoryContractsV1Tests testCaptureEnvelopeRoundTripsWithCanonicalClockAndCoordinates]' started.
+Test Case '-[LocalMemoryUnitTests.MemoryContractsV1Tests testCaptureEnvelopeRoundTripsWithCanonicalClockAndCoordinates]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.MemoryContractsV1Tests testEmptyAgentAllowlistsMeanNoContentRatherThanAllContent]' started.
+Test Case '-[LocalMemoryUnitTests.MemoryContractsV1Tests testEmptyAgentAllowlistsMeanNoContentRatherThanAllContent]' passed (0.000 seconds).
+Test Case '-[LocalMemoryUnitTests.MemoryContractsV1Tests testEnrichmentArtifactRoundTripsAValidatedRelativeFileOffset]' started.
+Test Case '-[LocalMemoryUnitTests.MemoryContractsV1Tests testEnrichmentArtifactRoundTripsAValidatedRelativeFileOffset]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.MemoryContractsV1Tests testNormalizedCoordinatesRejectPixelsOutsideTheApprovedDisplay]' started.
+Test Case '-[LocalMemoryUnitTests.MemoryContractsV1Tests testNormalizedCoordinatesRejectPixelsOutsideTheApprovedDisplay]' passed (0.000 seconds).
+Test Case '-[LocalMemoryUnitTests.MemoryContractsV1Tests testPolicyUncertainGapCannotPersistApplicationIdentity]' started.
+Test Case '-[LocalMemoryUnitTests.MemoryContractsV1Tests testPolicyUncertainGapCannotPersistApplicationIdentity]' passed (0.000 seconds).
+Test Case '-[LocalMemoryUnitTests.MemoryContractsV1Tests testProcessingJobRoundTripsRecoverableRetryState]' started.
+Test Case '-[LocalMemoryUnitTests.MemoryContractsV1Tests testProcessingJobRoundTripsRecoverableRetryState]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.MemoryContractsV1Tests testReadyMediaChunkRoundTripsAsASingleThirtySecondEpoch]' started.
+Test Case '-[LocalMemoryUnitTests.MemoryContractsV1Tests testReadyMediaChunkRoundTripsAsASingleThirtySecondEpoch]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.MemoryContractsV1Tests testSearchableFrameRoundTripsOnlyApprovedRelativeLocators]' started.
+Test Case '-[LocalMemoryUnitTests.MemoryContractsV1Tests testSearchableFrameRoundTripsOnlyApprovedRelativeLocators]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.MemoryContractsV1Tests testSearchPageUsesStableScoreTimeAndUUIDOrdering]' started.
+Test Case '-[LocalMemoryUnitTests.MemoryContractsV1Tests testSearchPageUsesStableScoreTimeAndUUIDOrdering]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.MemoryContractsV1Tests testSearchRequestIsDeterministicallyClampedAndScopedByAgentPolicy]' started.
+Test Case '-[LocalMemoryUnitTests.MemoryContractsV1Tests testSearchRequestIsDeterministicallyClampedAndScopedByAgentPolicy]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.MemoryContractsV1Tests testTextSpanCanonicalizesUnicodeAndWhitespaceBeforePersistence]' started.
+Test Case '-[LocalMemoryUnitTests.MemoryContractsV1Tests testTextSpanCanonicalizesUnicodeAndWhitespaceBeforePersistence]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.MemoryContractsV1Tests testTimelineSlicePreservesOrderedFramesAndTypedGaps]' started.
+Test Case '-[LocalMemoryUnitTests.MemoryContractsV1Tests testTimelineSlicePreservesOrderedFramesAndTypedGaps]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.MemoryContractsV1Tests testVerifiedDeletionTombstoneContainsAuthorityAndCountsButNoContent]' started.
+Test Case '-[LocalMemoryUnitTests.MemoryContractsV1Tests testVerifiedDeletionTombstoneContainsAuthorityAndCountsButNoContent]' passed (0.001 seconds).
+Test Suite 'MemoryContractsV1Tests' passed at 2026-08-28 13:02:38.492.
+	 Executed 13 tests, with 0 failures (0 unexpected) in 0.011 (0.016) seconds
+Test Suite 'OnboardingStateTests' started at 2026-08-28 13:02:38.494.
+Test Case '-[LocalMemoryUnitTests.OnboardingStateTests testFourStepVocabularyAndTruthfulDefaultsAreStable]' started.
+Test Case '-[LocalMemoryUnitTests.OnboardingStateTests testFourStepVocabularyAndTruthfulDefaultsAreStable]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.OnboardingStateTests testGrantedDeniedAndRevokedTransitionsStayNavigable]' started.
+Test Case '-[LocalMemoryUnitTests.OnboardingStateTests testGrantedDeniedAndRevokedTransitionsStayNavigable]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.OnboardingStateTests testLaunchAndRelaunchNeverRegisterAnImplicitPermissionAction]' started.
+Test Case '-[LocalMemoryUnitTests.OnboardingStateTests testLaunchAndRelaunchNeverRegisterAnImplicitPermissionAction]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.OnboardingStateTests testOnboardingStateRoundTripsOwnerOnlyAndResumesExactStep]' started.
+Test Case '-[LocalMemoryUnitTests.OnboardingStateTests testOnboardingStateRoundTripsOwnerOnlyAndResumesExactStep]' passed (0.004 seconds).
+Test Case '-[LocalMemoryUnitTests.OnboardingStateTests testStepNavigationAndCompletionAreResumable]' started.
+Test Case '-[LocalMemoryUnitTests.OnboardingStateTests testStepNavigationAndCompletionAreResumable]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.OnboardingStateTests testVoiceOverTranscriptIsCanonicalAndContainsNoMicrophonePrompt]' started.
+Test Case '-[LocalMemoryUnitTests.OnboardingStateTests testVoiceOverTranscriptIsCanonicalAndContainsNoMicrophonePrompt]' passed (0.001 seconds).
+Test Suite 'OnboardingStateTests' passed at 2026-08-28 13:02:38.503.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.008 (0.009) seconds
+Test Suite 'S5CrashRecoveryTests' started at 2026-08-28 13:02:38.504.
+Test Case '-[LocalMemoryUnitTests.S5CrashRecoveryTests testInvalidCrashCountFailsClosed]' started.
+Test Case '-[LocalMemoryUnitTests.S5CrashRecoveryTests testInvalidCrashCountFailsClosed]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.S5CrashRecoveryTests testTenThousandFaultInjectedCrashPointsRecoverConsistently]' started.
+Test Case '-[LocalMemoryUnitTests.S5CrashRecoveryTests testTenThousandFaultInjectedCrashPointsRecoverConsistently]' passed (0.013 seconds).
+Test Suite 'S5CrashRecoveryTests' passed at 2026-08-28 13:02:38.518.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.014 (0.015) seconds
+Test Suite 'S7OfflineClosureTests' started at 2026-08-28 13:02:38.518.
+Test Case '-[LocalMemoryUnitTests.S7OfflineClosureTests testOfflineJourneyRejectsSkippedOrRepeatedStages]' started.
+Test Case '-[LocalMemoryUnitTests.S7OfflineClosureTests testOfflineJourneyRejectsSkippedOrRepeatedStages]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.S7OfflineClosureTests testOfflineJourneyRequiresEveryStageInOrder]' started.
+Test Case '-[LocalMemoryUnitTests.S7OfflineClosureTests testOfflineJourneyRequiresEveryStageInOrder]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.S7OfflineClosureTests testProvenanceRequiresCompleteImmutableIdentity]' started.
+Test Case '-[LocalMemoryUnitTests.S7OfflineClosureTests testProvenanceRequiresCompleteImmutableIdentity]' passed (0.000 seconds).
+Test Suite 'S7OfflineClosureTests' passed at 2026-08-28 13:02:38.521.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.002 (0.003) seconds
+Test Suite 'ScreenCaptureRuntimeTests' started at 2026-08-28 13:02:38.521.
+Test Case '-[LocalMemoryUnitTests.ScreenCaptureRuntimeTests testDisplayChangeStopsRefreshesAndRestartsTheSameEligibleWindow]' started.
+Test Case '-[LocalMemoryUnitTests.ScreenCaptureRuntimeTests testDisplayChangeStopsRefreshesAndRestartsTheSameEligibleWindow]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.ScreenCaptureRuntimeTests testIneligibleWindowCannotStartAStream]' started.
+Test Case '-[LocalMemoryUnitTests.ScreenCaptureRuntimeTests testIneligibleWindowCannotStartAStream]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.ScreenCaptureRuntimeTests testLifecycleStartsWithoutAnEligibleTargetAndCreatesNoStream]' started.
+Test Case '-[LocalMemoryUnitTests.ScreenCaptureRuntimeTests testLifecycleStartsWithoutAnEligibleTargetAndCreatesNoStream]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.ScreenCaptureRuntimeTests testMissingTargetAfterRefreshStopsWithoutFallingBackToADisplay]' started.
+Test Case '-[LocalMemoryUnitTests.ScreenCaptureRuntimeTests testMissingTargetAfterRefreshStopsWithoutFallingBackToADisplay]' passed (0.000 seconds).
+Test Case '-[LocalMemoryUnitTests.ScreenCaptureRuntimeTests testPermissionGrantRevokeAndRegrantRestartsOnlyTheForegroundWindowStream]' started.
+Test Case '-[LocalMemoryUnitTests.ScreenCaptureRuntimeTests testPermissionGrantRevokeAndRegrantRestartsOnlyTheForegroundWindowStream]' passed (0.000 seconds).
+Test Case '-[LocalMemoryUnitTests.ScreenCaptureRuntimeTests testPixelBufferIsForegroundWindowOnlyAndReleasedAfterMediaCommit]' started.
+Test Case '-[LocalMemoryUnitTests.ScreenCaptureRuntimeTests testPixelBufferIsForegroundWindowOnlyAndReleasedAfterMediaCommit]' passed (0.005 seconds).
+Test Case '-[LocalMemoryUnitTests.ScreenCaptureRuntimeTests testRefreshFailureCannotDeliverOrPersistAnyPixel]' started.
+Test Case '-[LocalMemoryUnitTests.ScreenCaptureRuntimeTests testRefreshFailureCannotDeliverOrPersistAnyPixel]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.ScreenCaptureRuntimeTests testRepeatedReconcileKeepsOneLongLivedStreamForTheSameTarget]' started.
+Test Case '-[LocalMemoryUnitTests.ScreenCaptureRuntimeTests testRepeatedReconcileKeepsOneLongLivedStreamForTheSameTarget]' passed (0.000 seconds).
+Test Case '-[LocalMemoryUnitTests.ScreenCaptureRuntimeTests testTimedOutRefreshSuppressesDuplicatesAndRejectsLateCompletionAfterReplacement]' started.
+Test Case '-[LocalMemoryUnitTests.ScreenCaptureRuntimeTests testTimedOutRefreshSuppressesDuplicatesAndRejectsLateCompletionAfterReplacement]' passed (0.000 seconds).
+Test Suite 'ScreenCaptureRuntimeTests' passed at 2026-08-28 13:02:38.532.
+	 Executed 9 tests, with 0 failures (0 unexpected) in 0.009 (0.011) seconds
+Test Suite 'SharedComponentTests' started at 2026-08-28 13:02:38.532.
+Test Case '-[LocalMemoryUnitTests.SharedComponentTests testCanonicalComponentMatrixIsCheckedInByteForByte]' started.
+Test Case '-[LocalMemoryUnitTests.SharedComponentTests testCanonicalComponentMatrixIsCheckedInByteForByte]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.SharedComponentTests testCaptureStatusNeverDependsOnColorAlone]' started.
+Test Case '-[LocalMemoryUnitTests.SharedComponentTests testCaptureStatusNeverDependsOnColorAlone]' passed (0.002 seconds).
+Test Case '-[LocalMemoryUnitTests.SharedComponentTests testComponentCatalogAndRequiredPreviewVariantsAreComplete]' started.
+Test Case '-[LocalMemoryUnitTests.SharedComponentTests testComponentCatalogAndRequiredPreviewVariantsAreComplete]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.SharedComponentTests testPermissionAndDestructiveModelsRemainTruthfulAndSafe]' started.
+Test Case '-[LocalMemoryUnitTests.SharedComponentTests testPermissionAndDestructiveModelsRemainTruthfulAndSafe]' passed (0.000 seconds).
+Test Case '-[LocalMemoryUnitTests.SharedComponentTests testPreviewMatrixPinsAppearanceContrastLocalizationAndKeyboardFocus]' started.
+Test Case '-[LocalMemoryUnitTests.SharedComponentTests testPreviewMatrixPinsAppearanceContrastLocalizationAndKeyboardFocus]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.SharedComponentTests testResultCardAccessibilityAnnouncesRequiredContextAndPosition]' started.
+Test Case '-[LocalMemoryUnitTests.SharedComponentTests testResultCardAccessibilityAnnouncesRequiredContextAndPosition]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.SharedComponentTests testSearchFieldAndProgressBehaviorMatchUXSpecification]' started.
+Test Case '-[LocalMemoryUnitTests.SharedComponentTests testSearchFieldAndProgressBehaviorMatchUXSpecification]' passed (0.000 seconds).
+Test Suite 'SharedComponentTests' passed at 2026-08-28 13:02:38.540.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.006 (0.008) seconds
+Test Suite 'ShellUXStateTests' started at 2026-08-28 13:02:38.540.
+Test Case '-[LocalMemoryUnitTests.ShellUXStateTests testAccessibilityTranscriptCoversDestinationsStatesAndResultSemantics]' started.
+Test Case '-[LocalMemoryUnitTests.ShellUXStateTests testAccessibilityTranscriptCoversDestinationsStatesAndResultSemantics]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.ShellUXStateTests testClockRelativeDayAndWeekStartUseLocaleAwareFoundationFormatting]' started.
+Test Case '-[LocalMemoryUnitTests.ShellUXStateTests testClockRelativeDayAndWeekStartUseLocaleAwareFoundationFormatting]' passed (0.008 seconds).
+Test Case '-[LocalMemoryUnitTests.ShellUXStateTests testIconOnlyControlsHaveNonemptyUniqueTooltips]' started.
+Test Case '-[LocalMemoryUnitTests.ShellUXStateTests testIconOnlyControlsHaveNonemptyUniqueTooltips]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.ShellUXStateTests testNavigationHistorySupportsBackForwardWithoutBranchLeakage]' started.
+Test Case '-[LocalMemoryUnitTests.ShellUXStateTests testNavigationHistorySupportsBackForwardWithoutBranchLeakage]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.ShellUXStateTests testPlanElevenKeyboardMapIsCompleteAndSafe]' started.
+Test Case '-[LocalMemoryUnitTests.ShellUXStateTests testPlanElevenKeyboardMapIsCompleteAndSafe]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.ShellUXStateTests testPlanElevenMinimumTargetAndBodyTextSizesAreLocked]' started.
+Test Case '-[LocalMemoryUnitTests.ShellUXStateTests testPlanElevenMinimumTargetAndBodyTextSizesAreLocked]' passed (0.000 seconds).
+Test Case '-[LocalMemoryUnitTests.ShellUXStateTests testPseudoLocalizationExpandsEnglishByAtLeastFortyPercent]' started.
+Test Case '-[LocalMemoryUnitTests.ShellUXStateTests testPseudoLocalizationExpandsEnglishByAtLeastFortyPercent]' passed (0.000 seconds).
+Test Case '-[LocalMemoryUnitTests.ShellUXStateTests testStandardContentStatesFollowQuietProgressAndRecoveryRules]' started.
+Test Case '-[LocalMemoryUnitTests.ShellUXStateTests testStandardContentStatesFollowQuietProgressAndRecoveryRules]' passed (0.000 seconds).
+Test Suite 'ShellUXStateTests' passed at 2026-08-28 13:02:38.555.
+	 Executed 8 tests, with 0 failures (0 unexpected) in 0.013 (0.014) seconds
+Test Suite 'SnapshotRendererTests' started at 2026-08-28 13:02:38.555.
+Test Case '-[LocalMemoryUnitTests.SnapshotRendererTests testCanonicalConfigurationMatrixCoversScaleAppearanceAndSize]' started.
+Test Case '-[LocalMemoryUnitTests.SnapshotRendererTests testCanonicalConfigurationMatrixCoversScaleAppearanceAndSize]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.SnapshotRendererTests testCheckedInManifestAndIndexCoverEveryApprovedBaseline]' started.
+Test Case '-[LocalMemoryUnitTests.SnapshotRendererTests testCheckedInManifestAndIndexCoverEveryApprovedBaseline]' passed (0.012 seconds).
+Test Case '-[LocalMemoryUnitTests.SnapshotRendererTests testInvalidSnapshotConfigurationFailsClosed]' started.
+Test Case '-[LocalMemoryUnitTests.SnapshotRendererTests testInvalidSnapshotConfigurationFailsClosed]' passed (0.001 seconds).
+Test Case '-[LocalMemoryUnitTests.SnapshotRendererTests testOffscreenHostingRendererProducesExactDeterministicPixels]' started.
+2026-08-28 13:02:38.600051+0200 xctest[8174:24404442] [Connection] Unable to get synchronousRemoteObjectProxy, error: Error Domain=NSCocoaErrorDomain Code=4097 "connection to service named com.apple.linkd.autoShortcut" UserInfo={NSDebugDescription=connection to service named com.apple.linkd.autoShortcut}
+2026-08-28 13:02:38.600683+0200 xctest[8174:24404442] [Application] Error registering app with intents framework: Error Domain=NSCocoaErrorDomain Code=4097 "connection to service named com.apple.linkd.autoShortcut" UserInfo={NSDebugDescription=connection to service named com.apple.linkd.autoShortcut}
+2026-08-28 13:02:38.601423+0200 xctest[8174:24404443] [Connection] Unable to get synchronousRemoteObjectProxy, error: Error Domain=NSCocoaErrorDomain Code=4097 "connection to service named com.apple.linkd.autoShortcut" UserInfo={NSDebugDescription=connection to service named com.apple.linkd.autoShortcut}
+2026-08-28 13:02:38.601475+0200 xctest[8174:24404443] [Connection] Unable to re-register with Process Instance Registry, error: Error Domain=NSCocoaErrorDomain Code=4097 "connection to service named com.apple.linkd.autoShortcut" UserInfo={NSDebugDescription=connection to service named com.apple.linkd.autoShortcut}
+2026-08-28 13:02:38.602530+0200 xctest[8174:24404441] [Connection] Unable to get synchronousRemoteObjectProxy, error: Error Domain=NSCocoaErrorDomain Code=4097 "connection to service named com.apple.linkd.autoShortcut" UserInfo={NSDebugDescription=connection to service named com.apple.linkd.autoShortcut}
+2026-08-28 13:02:38.602590+0200 xctest[8174:24404441] [Connection] Unable to re-register with Process Instance Registry, error: Error Domain=NSCocoaErrorDomain Code=4097 "connection to service named com.apple.linkd.autoShortcut" UserInfo={NSDebugDescription=connection to service named com.apple.linkd.autoShortcut}
+2026-08-28 13:02:38.603273+0200 xctest[8174:24404441] [Connection] Will NOT re-try to establish the connection
+2026-08-28 13:02:38.603324+0200 xctest[8174:24404442] [Connection] Unable to get synchronousRemoteObjectProxy, error: Error Domain=NSCocoaErrorDomain Code=4097 "connection to service named com.apple.linkd.autoShortcut" UserInfo={NSDebugDescription=connection to service named com.apple.linkd.autoShortcut}
+2026-08-28 13:02:38.603341+0200 xctest[8174:24404442] [Connection] Unable to re-register with Process Instance Registry, error: Error Domain=NSCocoaErrorDomain Code=4097 "connection to service named com.apple.linkd.autoShortcut" UserInfo={NSDebugDescription=connection to service named com.apple.linkd.autoShortcut}
+Test Case '-[LocalMemoryUnitTests.SnapshotRendererTests testOffscreenHostingRendererProducesExactDeterministicPixels]' passed (0.068 seconds).
+Test Suite 'SnapshotRendererTests' passed at 2026-08-28 13:02:38.638.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.082 (0.083) seconds
+Test Suite 'VectorSpikeCoreTests' started at 2026-08-28 13:02:38.638.
+Test Case '-[LocalMemoryUnitTests.VectorSpikeCoreTests testExactVectorFileRejectsTruncatedPayloadBeforeScoring]' started.
+Test Case '-[LocalMemoryUnitTests.VectorSpikeCoreTests testExactVectorFileRejectsTruncatedPayloadBeforeScoring]' passed (0.002 seconds).
+Test Case '-[LocalMemoryUnitTests.VectorSpikeCoreTests testExactVectorScanMatchesScalarReferenceAndUsesStableOrdering]' started.
+Test Case '-[LocalMemoryUnitTests.VectorSpikeCoreTests testExactVectorScanMatchesScalarReferenceAndUsesStableOrdering]' passed (0.003 seconds).
+Test Case '-[LocalMemoryUnitTests.VectorSpikeCoreTests testModelResourceIntegrityFailsClosedOnHashMismatch]' started.
+Test Case '-[LocalMemoryUnitTests.VectorSpikeCoreTests testModelResourceIntegrityFailsClosedOnHashMismatch]' passed (0.004 seconds).
+Test Suite 'VectorSpikeCoreTests' passed at 2026-08-28 13:02:38.648.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.009 (0.010) seconds
+Test Suite 'LocalMemoryUnitTests.xctest' passed at 2026-08-28 13:02:38.648.
+	 Executed 126 tests, with 0 failures (0 unexpected) in 0.381 (0.420) seconds
+Test Suite 'All tests' passed at 2026-08-28 13:02:38.648.
+	 Executed 126 tests, with 0 failures (0 unexpected) in 0.381 (0.421) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite "LM-009 application lifecycle" started.
+◇ Test "Every fake runtime state has an exact menu projection" started.
+✔ Test "Every fake runtime state has an exact menu projection" passed after 0.001 seconds.
+◇ Test "A relaunch restores runtime state but never restores a main window implicitly" started.
+✔ Test "A relaunch restores runtime state but never restores a main window implicitly" passed after 0.002 seconds.
+◇ Test "Pause toggling is deterministic and unavailable states do not pretend to resume" started.
+✔ Test "Pause toggling is deterministic and unavailable states do not pretend to resume" passed after 0.002 seconds.
+◇ Test "Corrupt state fails closed without presenting a window" started.
+✔ Test "Corrupt state fails closed without presenting a window" passed after 0.001 seconds.
+◇ Test "Normal launch is explicitly menu-bar only" started.
+✔ Test "Normal launch is explicitly menu-bar only" passed after 0.001 seconds.
+✔ Suite "LM-009 application lifecycle" passed after 0.007 seconds.
+◇ Suite "LM-008 S6 native UI spike core" started.
+◇ Test "The native fixture is deterministic, stable, and complete" started.
+✔ Test "The native fixture is deterministic, stable, and complete" passed after 0.008 seconds.
+◇ Test "The actor cache is bounded and refreshes recency" started.
+✔ Test "The actor cache is bounded and refreshes recency" passed after 0.001 seconds.
+◇ Test "Only the newest rapid selection can publish" started.
+✔ Test "Only the newest rapid selection can publish" passed after 0.001 seconds.
+◇ Test "S6 percentile uses the nearest-rank definition" started.
+✔ Test "S6 percentile uses the nearest-rank definition" passed after 0.001 seconds.
+✔ Suite "LM-008 S6 native UI spike core" passed after 0.009 seconds.
+✔ Test run with 9 tests in 2 suites passed after 0.016 seconds.
+Test Suite 'All tests' started at 2026-08-28 13:02:39.235.
+Test Suite 'LocalMemoryIntegrationTests.xctest' started at 2026-08-28 13:02:39.235.
+Test Suite 'BootstrapIntegrationTests' started at 2026-08-28 13:02:39.236.
+Test Case '-[LocalMemoryIntegrationTests.BootstrapIntegrationTests testContractVersionIsV1]' started.
+Test Case '-[LocalMemoryIntegrationTests.BootstrapIntegrationTests testContractVersionIsV1]' passed (0.001 seconds).
+Test Suite 'BootstrapIntegrationTests' passed at 2026-08-28 13:02:39.237.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'CaptureMediaIntegrationTests' started at 2026-08-28 13:02:39.237.
+Test Case '-[LocalMemoryIntegrationTests.CaptureMediaIntegrationTests testHardwareRequiredHEVCWriterProducesPlayableMovie]' started.
+2026-08-28 13:02:39.266686+0200 xctest[8176:24404472] [] (Fig) signalled err=0 at <>:85
+Test Case '-[LocalMemoryIntegrationTests.CaptureMediaIntegrationTests testHardwareRequiredHEVCWriterProducesPlayableMovie]' passed (0.276 seconds).
+Test Suite 'CaptureMediaIntegrationTests' passed at 2026-08-28 13:02:39.514.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.276 (0.277) seconds
+Test Suite 'ContextVisionIntegrationTests' started at 2026-08-28 13:02:39.514.
+Test Case '-[LocalMemoryIntegrationTests.ContextVisionIntegrationTests testVisionRecognizesRenderedGroundTruthWithBounds]' started.
+Test Case '-[LocalMemoryIntegrationTests.ContextVisionIntegrationTests testVisionRecognizesRenderedGroundTruthWithBounds]' passed (0.331 seconds).
+Test Suite 'ContextVisionIntegrationTests' passed at 2026-08-28 13:02:39.845.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.331 (0.331) seconds
+Test Suite 'MobileCLIPIntegrationTests' started at 2026-08-28 13:02:39.845.
+Test Case '-[LocalMemoryIntegrationTests.MobileCLIPIntegrationTests testBundledMobileCLIPProducesNormalizedImageAndTextEmbeddings]' started.
+Test Case '-[LocalMemoryIntegrationTests.MobileCLIPIntegrationTests testBundledMobileCLIPProducesNormalizedImageAndTextEmbeddings]' passed (0.935 seconds).
+Test Suite 'MobileCLIPIntegrationTests' passed at 2026-08-28 13:02:40.781.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.935 (0.935) seconds
+Test Suite 'SQLCipherSpikeIntegrationTests' started at 2026-08-28 13:02:40.781.
+Test Case '-[LocalMemoryIntegrationTests.SQLCipherSpikeIntegrationTests testConcurrentRepresentativeWorkloadRemainsConsistent]' started.
+Test Case '-[LocalMemoryIntegrationTests.SQLCipherSpikeIntegrationTests testConcurrentRepresentativeWorkloadRemainsConsistent]' passed (0.317 seconds).
+Test Case '-[LocalMemoryIntegrationTests.SQLCipherSpikeIntegrationTests testEncryptedDatabaseRoundTripRejectsWrongKeyAndHidesSentinel]' started.
+2026-08-28 13:02:41.397838+0200 xctest[8176:24404461] ERROR CORE sqlcipher_page_cipher: hmac check failed for pgno=1
+2026-08-28 13:02:41.397891+0200 xctest[8176:24404461] ERROR CORE sqlite3Codec: error decrypting page 1 data: 1
+2026-08-28 13:02:41.397899+0200 xctest[8176:24404461] ERROR CORE sqlcipher_codec_ctx_set_error 1
+Test Case '-[LocalMemoryIntegrationTests.SQLCipherSpikeIntegrationTests testEncryptedDatabaseRoundTripRejectsWrongKeyAndHidesSentinel]' passed (0.301 seconds).
+Test Case '-[LocalMemoryIntegrationTests.SQLCipherSpikeIntegrationTests testKeyLengthFailsClosed]' started.
+Test Case '-[LocalMemoryIntegrationTests.SQLCipherSpikeIntegrationTests testKeyLengthFailsClosed]' passed (0.002 seconds).
+Test Suite 'SQLCipherSpikeIntegrationTests' passed at 2026-08-28 13:02:41.401.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.620 (0.621) seconds
+Test Suite 'LocalMemoryIntegrationTests.xctest' passed at 2026-08-28 13:02:41.401.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 2.163 (2.166) seconds
+Test Suite 'All tests' passed at 2026-08-28 13:02:41.402.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 2.163 (2.167) seconds
+Test Suite 'All tests' started at 2026-08-28 13:02:41.841.
+Test Suite 'LocalMemoryPrivacyTests.xctest' started at 2026-08-28 13:02:41.842.
+Test Suite 'BootstrapPrivacyTests' started at 2026-08-28 13:02:41.843.
+Test Case '-[LocalMemoryPrivacyTests.BootstrapPrivacyTests testBootstrapStatusContainsNoUserContent]' started.
+Test Case '-[LocalMemoryPrivacyTests.BootstrapPrivacyTests testBootstrapStatusContainsNoUserContent]' passed (0.001 seconds).
+Test Suite 'BootstrapPrivacyTests' passed at 2026-08-28 13:02:41.844.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
+Test Suite 'DependencyClosurePrivacyTests' started at 2026-08-28 13:02:41.845.
+Test Case '-[LocalMemoryPrivacyTests.DependencyClosurePrivacyTests testDependencyBootstrapIsExplicitBuildTimeOnly]' started.
+Test Case '-[LocalMemoryPrivacyTests.DependencyClosurePrivacyTests testDependencyBootstrapIsExplicitBuildTimeOnly]' passed (0.001 seconds).
+Test Case '-[LocalMemoryPrivacyTests.DependencyClosurePrivacyTests testEveryKnownNetworkCapableDependencyIsForbiddenFromShipping]' started.
+Test Case '-[LocalMemoryPrivacyTests.DependencyClosurePrivacyTests testEveryKnownNetworkCapableDependencyIsForbiddenFromShipping]' passed (0.001 seconds).
+Test Case '-[LocalMemoryPrivacyTests.DependencyClosurePrivacyTests testShippingTargetsContainNoUpdateTelemetryOrRemoteModelPackage]' started.
+Test Case '-[LocalMemoryPrivacyTests.DependencyClosurePrivacyTests testShippingTargetsContainNoUpdateTelemetryOrRemoteModelPackage]' passed (0.001 seconds).
+Test Suite 'DependencyClosurePrivacyTests' passed at 2026-08-28 13:02:41.848.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.003 (0.004) seconds
+Test Suite 'LocalMemoryPrivacyTests.xctest' passed at 2026-08-28 13:02:41.848.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.004 (0.006) seconds
+Test Suite 'All tests' passed at 2026-08-28 13:02:41.848.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.004 (0.007) seconds
+Test Suite 'All tests' started at 2026-08-28 13:02:42.268.
+Test Suite 'LocalMemoryPerformanceTests.xctest' started at 2026-08-28 13:02:42.269.
+Test Suite 'BootstrapPerformanceTests' started at 2026-08-28 13:02:42.269.
+Test Case '-[LocalMemoryPerformanceTests.BootstrapPerformanceTests testStatusEncodingPerformance]' started.
+/Users/justinhou/Development/deepshelves/Tests/Performance/BootstrapPerformanceTests.swift:7: Test Case '-[LocalMemoryPerformanceTests.BootstrapPerformanceTests testStatusEncodingPerformance]' measured [Time, seconds] average: 0.000, relative standard deviation: 189.903%, values: [0.000209, 0.000019, 0.000013, 0.000011, 0.000011, 0.000010, 0.000010, 0.000010, 0.000010, 0.000010], performanceMetricID:com.apple.XCTPerformanceMetric_WallClockTime, baselineName: "", baselineAverage: , polarity: prefers smaller, maxPercentRegression: 10.000%, maxPercentRelativeStandardDeviation: 10.000%, maxRegression: 0.100, maxStandardDeviation: 0.100
+Test Case '-[LocalMemoryPerformanceTests.BootstrapPerformanceTests testStatusEncodingPerformance]' passed (0.785 seconds).
+Test Suite 'BootstrapPerformanceTests' passed at 2026-08-28 13:02:43.054.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.785 (0.785) seconds
+Test Suite 'LocalMemoryPerformanceTests.xctest' passed at 2026-08-28 13:02:43.054.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.785 (0.786) seconds
+Test Suite 'All tests' passed at 2026-08-28 13:02:43.054.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.785 (0.786) seconds
+2026-08-28 13:02:43.335 xcodebuild[8147:24404160] [MT] IDETestOperationsObserverDebug: 5.719 elapsed -- Testing started completed.
+2026-08-28 13:02:43.335 xcodebuild[8147:24404160] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-08-28 13:02:43.335 xcodebuild[8147:24404160] [MT] IDETestOperationsObserverDebug: 5.719 sec, +5.719 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/justinhou/Development/deepshelves/.build/DerivedData/Logs/Test/Test-LocalMemory-2026.08.28_13-02-36-+0200.xcresult
+
+** TEST SUCCEEDED **
+
+Testing started

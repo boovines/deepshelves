@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "activeStory": "LM-019",
+  "activeStory": "LM-020",
   "stories": {
     "LM-001": {
       "status": "passed",
@@ -291,23 +291,28 @@
       "resumeProbe": null
     },
     "LM-019": {
-      "status": "active",
+      "status": "passed",
       "startedAt": "2026-08-28T10:49:59Z",
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": "Base checkpoint refs/tags/checkpoints/LM-018. Implement ScreenCaptureKit permission probe, SCShareableContent refresh, pixel-buffer lifetime rules, and a restartable SCStream with no eligible target by default; verify grant/revoke/display-change lifecycle and prohibit composited-display pixel delivery.",
+      "completedAt": "2026-08-28T11:01:05Z",
+      "gitRevision": "refs/tags/checkpoints/LM-019",
+      "evidence": [
+        "Results/LM-019/report.json",
+        "Results/LM-019/lifecycle.json",
+        "Results/LM-019/lifecycle-tests.txt",
+        "Results/LM-019/unit-tests.txt"
+      ],
+      "notes": "MemoryCapture now has a non-prompting screen-recording probe, bounded lease-scoped SCShareableContent refresh, foreground-window-only non-Codable pixel-buffer leases, and a restartable single-window SCStream whose default is no eligible target. Fake grant/revoke/regrant, timeout, missing-target, and display-change cases plus a signed real TCC/shareable-content/stream restart pass; every real frame is desktop-independent foreground-window content, every lease is released, and the harness persists zero pixels.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null
     },
     "LM-020": {
-      "status": "pending",
-      "startedAt": null,
+      "status": "active",
+      "startedAt": "2026-08-28T11:01:05Z",
       "completedAt": null,
       "gitRevision": null,
       "evidence": [],
-      "notes": null,
+      "notes": "Base checkpoint refs/tags/checkpoints/LM-019. Implement NSWorkspace/AX foreground monitoring and strict public-API WindowResolver mapping by PID, AX identity, normalized geometry, title tie-breaker, and main-display eligibility; prove 500 transitions and typed zero-pixel gaps for ambiguous, minimized, protected, and unsupported-display cases.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null

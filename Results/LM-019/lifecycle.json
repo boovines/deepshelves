@@ -1,0 +1,19 @@
+{
+  "allInvariantsPassed" : true,
+  "compositedDisplayFramesDelivered" : 0,
+  "deliveredSurfaceKinds" : [
+    "foregroundWindow"
+  ],
+  "finalState" : "stoppedNoEligibleTarget",
+  "firstRunningState" : "running:37314:1",
+  "framesAfterDisplayRestart" : 2,
+  "framesBeforeDisplayRestart" : 1,
+  "framesPersisted" : 0,
+  "initialFramesDelivered" : 0,
+  "initialRefreshStatus" : "available",
+  "initialState" : "stoppedNoEligibleTarget",
+  "permission" : "granted",
+  "pixelBufferLeasesReleased" : 2,
+  "schemaVersion" : 1,
+  "targetWindowID" : 37314
+}

@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-019",
+  "status": "passed",
+  "generatedAt": "2026-08-28T11:01:05Z",
+  "baseRevision": "919964fe6937536ea5948ea696a84e879ed315c9",
+  "checkpoint": "refs/tags/checkpoints/LM-019",
+  "results": {
+    "permission": {
+      "signedRealProbe": "granted",
+      "fakeGrantRevokeRegrant": true
+    },
+    "shareableContent": {
+      "timeoutMilliseconds": 2000,
+      "replacementCooldownMilliseconds": 30000,
+      "lateLeaseCompletionRejected": true,
+      "realRefreshStatus": "available"
+    },
+    "streamLifecycle": {
+      "initialState": "stoppedNoEligibleTarget",
+      "initialFramesDelivered": 0,
+      "longLivedForSameTarget": true,
+      "displayChangeRestarted": true,
+      "permissionLossStopped": true,
+      "missingTargetStopped": true,
+      "finalState": "stoppedNoEligibleTarget"
+    },
+    "pixelSafety": {
+      "surfaceKinds": [
+        "foregroundWindow"
+      ],
+      "pixelBufferLeasesReleased": 2,
+      "compositedDisplayFramesDelivered": 0,
+      "framesPersistedByHarness": 0,
+      "forbiddenDisplayFilterConstructors": 0
+    }
+  },
+  "gates": {
+    "fakeAndRealLifecycle": {
+      "status": "passed",
+      "unitTests": 9,
+      "realFramesBeforeRestart": 1,
+      "realFramesAfterRestart": 2,
+      "evidence": "Results/LM-019/lifecycle.json",
+      "evidenceSha256": "48b75d6e29cfe15d45c1743b7a16ef55058bff52965a1510f7bf1e0369517bd5",
+      "log": "Results/LM-019/lifecycle-tests.txt",
+      "logSha256": "7b5e11969a173bd320aabcd60c7e07ec2afc829606c96cf0f0842cd8422ee604"
+    },
+    "unitAndRegressionTests": {
+      "status": "passed",
+      "xctestUnitTests": 126,
+      "swiftTestingTests": 9,
+      "integrationTests": 7,
+      "privacyTests": 4,
+      "performanceTests": 1,
+      "log": "Results/LM-019/unit-tests.txt",
+      "sha256": "247603e15aaf98d07b2a8dabaf9b27da55a07a9979311ea504b2f3c02531f7df"
+    },
+    "contracts": {
+      "status": "passed",
+      "fixtures": 11,
+      "log": "Results/LM-019/contracts.txt",
+      "sha256": "b92a240d9daa39da7eb2b032ab23390e28d3b0dee723aaa58b5dbf83e15b8179"
+    },
+    "privacySmoke": {
+      "status": "passed",
+      "log": "Results/LM-019/privacy-smoke.txt",
+      "sha256": "9ea4b5449f9715c90a3a80909f275c987c95be1130414ae6e10f888fcbe4a8bc"
+    },
+    "releaseBuild": {
+      "status": "passed",
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ],
+      "log": "Results/LM-019/release-build.txt",
+      "sha256": "ce88305c728f73ef27b6292191ae93dc3607257a0cfef1547db6144b37b5e3f4"
+    },
+    "signingPosture": {
+      "status": "passed",
+      "log": "Results/LM-019/signing-posture.txt",
+      "sha256": "50358ec824d2bb235cf103685bac1505a449de5095cb476072cd000a384903df"
+    },
+    "dependencyStatic": {
+      "status": "passed",
+      "log": "Results/LM-019/dependency-static.txt",
+      "sha256": "875df9c029cf144be809a444a229a0b442b480941fcc10656c6df1830a36c0d5"
+    },
+    "releaseBinaryDependencyAudit": {
+      "status": "passed",
+      "log": "Results/LM-019/dependency-audit.txt",
+      "sha256": "ee19ec2fac69814d57606f8260d4120b82de9aecffb3286ca3159489700b0b32"
+    },
+    "diffWhitespace": {
+      "status": "passed"
+    }
+  }
+}

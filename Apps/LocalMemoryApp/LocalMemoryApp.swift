@@ -24,6 +24,7 @@ struct LocalMemoryApp: App {
     private let captureSpikeDurationSeconds: Double
     private let captureSpikeStaticMode: Bool
     private let captureSpikeCrashActiveMode: Bool
+    private let lm019LifecycleOutput: String?
     private let contextSpikeOutputDirectory: String?
     private let vectorSpikeArguments: (output: String, imageModel: String, textModel: String)?
     private let s5SpikeArguments: (output: String, unsignedProbe: String, media: String)?
@@ -38,7 +39,7 @@ struct LocalMemoryApp: App {
         let configuration = AppLaunchConfiguration(arguments: arguments)
         launchConfiguration = configuration
         shellKeyboardMonitor = ShellKeyboardCommandMonitor()
-        archiveDatabase = Self.bootstrapArchive()
+        archiveDatabase = Self.bootstrapArchive(arguments: arguments)
         _lifecycleModel = StateObject(
             wrappedValue: AppLifecycleViewModel(
                 stateURL: configuration.stateURL,
@@ -65,6 +66,13 @@ struct LocalMemoryApp: App {
         shouldRequestCapturePermissions = arguments.contains("--request-capture-permissions")
         captureSpikeStaticMode = arguments.contains("--capture-spike-static")
         captureSpikeCrashActiveMode = arguments.contains("--capture-spike-crash-active")
+        if let flagIndex = arguments.firstIndex(of: "--lm019-export-lifecycle"),
+           arguments.indices.contains(flagIndex + 1)
+        {
+            lm019LifecycleOutput = arguments[flagIndex + 1]
+        } else {
+            lm019LifecycleOutput = nil
+        }
         if let flagIndex = arguments.firstIndex(of: "--context-spike"),
            arguments.indices.contains(flagIndex + 1)
         {
@@ -141,8 +149,11 @@ struct LocalMemoryApp: App {
         LM008ChildModes.launchIfRequested(arguments: arguments)
     }
 
-    private static func bootstrapArchive() -> ArchiveDatabase {
+    private static func bootstrapArchive(arguments: [String]) -> ArchiveDatabase {
         do {
+            if arguments.contains("--lm019-export-lifecycle") {
+                return try ArchiveDatabase.deterministicTestStore()
+            }
             return try ArchiveDatabase()
         } catch {
             preconditionFailure("Local Memory archive bootstrap failed: \(error)")
@@ -217,6 +228,8 @@ struct LocalMemoryApp: App {
                     )
                 } else if contextSpikeOutputDirectory != nil {
                     ContextSpikeTargetView()
+                } else if lm019LifecycleOutput != nil {
+                    CaptureSpikeTargetView(animated: true)
                 } else if captureSpikeOutputDirectory == nil {
                     MainShellView(
                         lifecycleModel: lifecycleModel,
@@ -232,6 +245,20 @@ struct LocalMemoryApp: App {
             }
             .preferredColorScheme(launchConfiguration.preferredColorScheme)
                 .task {
+                    if let lm019LifecycleOutput {
+                        do {
+                            try await LM019LifecycleHarness.run(
+                                outputURL: URL(fileURLWithPath: lm019LifecycleOutput)
+                            )
+                            NSApplication.shared.terminate(nil)
+                        } catch {
+                            FileHandle.standardError.write(
+                                Data("LM-019 lifecycle export failed: \(error)\n".utf8)
+                            )
+                            Darwin.exit(EXIT_FAILURE)
+                        }
+                        return
+                    }
                     if let contextSpikeOutputDirectory {
                         await ContextSpikeHarness.run(
                             outputDirectory: URL(fileURLWithPath: contextSpikeOutputDirectory)
