@@ -1,0 +1,483 @@
+{
+  "allInvariantsPassed" : true,
+  "currentFrameAcceptedCount" : 50,
+  "epochCount" : 50,
+  "exactRaceCount" : 50,
+  "filterApplicationCount" : 50,
+  "heartbeatQueueDropCount" : 33,
+  "luminanceGridSampleCount" : 4096,
+  "mediaQueueCapacity" : 4,
+  "mediaQueuePeakCount" : 4,
+  "nearDuplicateDeduplicatedCount" : 50,
+  "nearDuplicateSequenceCount" : 50,
+  "newestFrameRetained" : true,
+  "oldestQueueDropCount" : 63,
+  "raceCategoryCounts" : {
+    "filter" : 13,
+    "focus" : 13,
+    "resize" : 12,
+    "url" : 12
+  },
+  "rapidRaceCount" : 50,
+  "records" : [
+    {
+      "category" : "focus",
+      "currentAccepted" : true,
+      "filterGeneration" : 1,
+      "id" : "race-000",
+      "staleRejection" : "targetMismatch",
+      "targetWindowID" : 50001,
+      "transitionLatencyNanoseconds" : 10000000
+    },
+    {
+      "category" : "filter",
+      "currentAccepted" : true,
+      "filterGeneration" : 2,
+      "id" : "race-001",
+      "staleRejection" : "filterGenerationMismatch",
+      "targetWindowID" : 50002,
+      "transitionLatencyNanoseconds" : 11000000
+    },
+    {
+      "category" : "url",
+      "currentAccepted" : true,
+      "filterGeneration" : 3,
+      "id" : "race-002",
+      "staleRejection" : "policyDecisionMismatch",
+      "targetWindowID" : 50002,
+      "transitionLatencyNanoseconds" : 12000000
+    },
+    {
+      "category" : "resize",
+      "currentAccepted" : true,
+      "filterGeneration" : 4,
+      "id" : "race-003",
+      "staleRejection" : "dimensionMismatch",
+      "targetWindowID" : 50002,
+      "transitionLatencyNanoseconds" : 13000000
+    },
+    {
+      "category" : "focus",
+      "currentAccepted" : true,
+      "filterGeneration" : 5,
+      "id" : "race-004",
+      "staleRejection" : "targetMismatch",
+      "targetWindowID" : 50005,
+      "transitionLatencyNanoseconds" : 14000000
+    },
+    {
+      "category" : "filter",
+      "currentAccepted" : true,
+      "filterGeneration" : 6,
+      "id" : "race-005",
+      "staleRejection" : "filterGenerationMismatch",
+      "targetWindowID" : 50006,
+      "transitionLatencyNanoseconds" : 15000000
+    },
+    {
+      "category" : "url",
+      "currentAccepted" : true,
+      "filterGeneration" : 7,
+      "id" : "race-006",
+      "staleRejection" : "policyDecisionMismatch",
+      "targetWindowID" : 50006,
+      "transitionLatencyNanoseconds" : 16000000
+    },
+    {
+      "category" : "resize",
+      "currentAccepted" : true,
+      "filterGeneration" : 8,
+      "id" : "race-007",
+      "staleRejection" : "dimensionMismatch",
+      "targetWindowID" : 50006,
+      "transitionLatencyNanoseconds" : 17000000
+    },
+    {
+      "category" : "focus",
+      "currentAccepted" : true,
+      "filterGeneration" : 9,
+      "id" : "race-008",
+      "staleRejection" : "targetMismatch",
+      "targetWindowID" : 50009,
+      "transitionLatencyNanoseconds" : 18000000
+    },
+    {
+      "category" : "filter",
+      "currentAccepted" : true,
+      "filterGeneration" : 10,
+      "id" : "race-009",
+      "staleRejection" : "filterGenerationMismatch",
+      "targetWindowID" : 50010,
+      "transitionLatencyNanoseconds" : 19000000
+    },
+    {
+      "category" : "url",
+      "currentAccepted" : true,
+      "filterGeneration" : 11,
+      "id" : "race-010",
+      "staleRejection" : "policyDecisionMismatch",
+      "targetWindowID" : 50010,
+      "transitionLatencyNanoseconds" : 20000000
+    },
+    {
+      "category" : "resize",
+      "currentAccepted" : true,
+      "filterGeneration" : 12,
+      "id" : "race-011",
+      "staleRejection" : "dimensionMismatch",
+      "targetWindowID" : 50010,
+      "transitionLatencyNanoseconds" : 21000000
+    },
+    {
+      "category" : "focus",
+      "currentAccepted" : true,
+      "filterGeneration" : 13,
+      "id" : "race-012",
+      "staleRejection" : "targetMismatch",
+      "targetWindowID" : 50013,
+      "transitionLatencyNanoseconds" : 22000000
+    },
+    {
+      "category" : "filter",
+      "currentAccepted" : true,
+      "filterGeneration" : 14,
+      "id" : "race-013",
+      "staleRejection" : "filterGenerationMismatch",
+      "targetWindowID" : 50014,
+      "transitionLatencyNanoseconds" : 23000000
+    },
+    {
+      "category" : "url",
+      "currentAccepted" : true,
+      "filterGeneration" : 15,
+      "id" : "race-014",
+      "staleRejection" : "policyDecisionMismatch",
+      "targetWindowID" : 50014,
+      "transitionLatencyNanoseconds" : 24000000
+    },
+    {
+      "category" : "resize",
+      "currentAccepted" : true,
+      "filterGeneration" : 16,
+      "id" : "race-015",
+      "staleRejection" : "dimensionMismatch",
+      "targetWindowID" : 50014,
+      "transitionLatencyNanoseconds" : 25000000
+    },
+    {
+      "category" : "focus",
+      "currentAccepted" : true,
+      "filterGeneration" : 17,
+      "id" : "race-016",
+      "staleRejection" : "targetMismatch",
+      "targetWindowID" : 50017,
+      "transitionLatencyNanoseconds" : 26000000
+    },
+    {
+      "category" : "filter",
+      "currentAccepted" : true,
+      "filterGeneration" : 18,
+      "id" : "race-017",
+      "staleRejection" : "filterGenerationMismatch",
+      "targetWindowID" : 50018,
+      "transitionLatencyNanoseconds" : 27000000
+    },
+    {
+      "category" : "url",
+      "currentAccepted" : true,
+      "filterGeneration" : 19,
+      "id" : "race-018",
+      "staleRejection" : "policyDecisionMismatch",
+      "targetWindowID" : 50018,
+      "transitionLatencyNanoseconds" : 28000000
+    },
+    {
+      "category" : "resize",
+      "currentAccepted" : true,
+      "filterGeneration" : 20,
+      "id" : "race-019",
+      "staleRejection" : "dimensionMismatch",
+      "targetWindowID" : 50018,
+      "transitionLatencyNanoseconds" : 29000000
+    },
+    {
+      "category" : "focus",
+      "currentAccepted" : true,
+      "filterGeneration" : 21,
+      "id" : "race-020",
+      "staleRejection" : "targetMismatch",
+      "targetWindowID" : 50021,
+      "transitionLatencyNanoseconds" : 30000000
+    },
+    {
+      "category" : "filter",
+      "currentAccepted" : true,
+      "filterGeneration" : 22,
+      "id" : "race-021",
+      "staleRejection" : "filterGenerationMismatch",
+      "targetWindowID" : 50022,
+      "transitionLatencyNanoseconds" : 31000000
+    },
+    {
+      "category" : "url",
+      "currentAccepted" : true,
+      "filterGeneration" : 23,
+      "id" : "race-022",
+      "staleRejection" : "policyDecisionMismatch",
+      "targetWindowID" : 50022,
+      "transitionLatencyNanoseconds" : 32000000
+    },
+    {
+      "category" : "resize",
+      "currentAccepted" : true,
+      "filterGeneration" : 24,
+      "id" : "race-023",
+      "staleRejection" : "dimensionMismatch",
+      "targetWindowID" : 50022,
+      "transitionLatencyNanoseconds" : 33000000
+    },
+    {
+      "category" : "focus",
+      "currentAccepted" : true,
+      "filterGeneration" : 25,
+      "id" : "race-024",
+      "staleRejection" : "targetMismatch",
+      "targetWindowID" : 50025,
+      "transitionLatencyNanoseconds" : 34000000
+    },
+    {
+      "category" : "filter",
+      "currentAccepted" : true,
+      "filterGeneration" : 26,
+      "id" : "race-025",
+      "staleRejection" : "filterGenerationMismatch",
+      "targetWindowID" : 50026,
+      "transitionLatencyNanoseconds" : 35000000
+    },
+    {
+      "category" : "url",
+      "currentAccepted" : true,
+      "filterGeneration" : 27,
+      "id" : "race-026",
+      "staleRejection" : "policyDecisionMismatch",
+      "targetWindowID" : 50026,
+      "transitionLatencyNanoseconds" : 36000000
+    },
+    {
+      "category" : "resize",
+      "currentAccepted" : true,
+      "filterGeneration" : 28,
+      "id" : "race-027",
+      "staleRejection" : "dimensionMismatch",
+      "targetWindowID" : 50026,
+      "transitionLatencyNanoseconds" : 37000000
+    },
+    {
+      "category" : "focus",
+      "currentAccepted" : true,
+      "filterGeneration" : 29,
+      "id" : "race-028",
+      "staleRejection" : "targetMismatch",
+      "targetWindowID" : 50029,
+      "transitionLatencyNanoseconds" : 38000000
+    },
+    {
+      "category" : "filter",
+      "currentAccepted" : true,
+      "filterGeneration" : 30,
+      "id" : "race-029",
+      "staleRejection" : "filterGenerationMismatch",
+      "targetWindowID" : 50030,
+      "transitionLatencyNanoseconds" : 39000000
+    },
+    {
+      "category" : "url",
+      "currentAccepted" : true,
+      "filterGeneration" : 31,
+      "id" : "race-030",
+      "staleRejection" : "policyDecisionMismatch",
+      "targetWindowID" : 50030,
+      "transitionLatencyNanoseconds" : 40000000
+    },
+    {
+      "category" : "resize",
+      "currentAccepted" : true,
+      "filterGeneration" : 32,
+      "id" : "race-031",
+      "staleRejection" : "dimensionMismatch",
+      "targetWindowID" : 50030,
+      "transitionLatencyNanoseconds" : 41000000
+    },
+    {
+      "category" : "focus",
+      "currentAccepted" : true,
+      "filterGeneration" : 33,
+      "id" : "race-032",
+      "staleRejection" : "targetMismatch",
+      "targetWindowID" : 50033,
+      "transitionLatencyNanoseconds" : 42000000
+    },
+    {
+      "category" : "filter",
+      "currentAccepted" : true,
+      "filterGeneration" : 34,
+      "id" : "race-033",
+      "staleRejection" : "filterGenerationMismatch",
+      "targetWindowID" : 50034,
+      "transitionLatencyNanoseconds" : 43000000
+    },
+    {
+      "category" : "url",
+      "currentAccepted" : true,
+      "filterGeneration" : 35,
+      "id" : "race-034",
+      "staleRejection" : "policyDecisionMismatch",
+      "targetWindowID" : 50034,
+      "transitionLatencyNanoseconds" : 44000000
+    },
+    {
+      "category" : "resize",
+      "currentAccepted" : true,
+      "filterGeneration" : 36,
+      "id" : "race-035",
+      "staleRejection" : "dimensionMismatch",
+      "targetWindowID" : 50034,
+      "transitionLatencyNanoseconds" : 45000000
+    },
+    {
+      "category" : "focus",
+      "currentAccepted" : true,
+      "filterGeneration" : 37,
+      "id" : "race-036",
+      "staleRejection" : "targetMismatch",
+      "targetWindowID" : 50037,
+      "transitionLatencyNanoseconds" : 46000000
+    },
+    {
+      "category" : "filter",
+      "currentAccepted" : true,
+      "filterGeneration" : 38,
+      "id" : "race-037",
+      "staleRejection" : "filterGenerationMismatch",
+      "targetWindowID" : 50038,
+      "transitionLatencyNanoseconds" : 47000000
+    },
+    {
+      "category" : "url",
+      "currentAccepted" : true,
+      "filterGeneration" : 39,
+      "id" : "race-038",
+      "staleRejection" : "policyDecisionMismatch",
+      "targetWindowID" : 50038,
+      "transitionLatencyNanoseconds" : 48000000
+    },
+    {
+      "category" : "resize",
+      "currentAccepted" : true,
+      "filterGeneration" : 40,
+      "id" : "race-039",
+      "staleRejection" : "dimensionMismatch",
+      "targetWindowID" : 50038,
+      "transitionLatencyNanoseconds" : 49000000
+    },
+    {
+      "category" : "focus",
+      "currentAccepted" : true,
+      "filterGeneration" : 41,
+      "id" : "race-040",
+      "staleRejection" : "targetMismatch",
+      "targetWindowID" : 50041,
+      "transitionLatencyNanoseconds" : 50000000
+    },
+    {
+      "category" : "filter",
+      "currentAccepted" : true,
+      "filterGeneration" : 42,
+      "id" : "race-041",
+      "staleRejection" : "filterGenerationMismatch",
+      "targetWindowID" : 50042,
+      "transitionLatencyNanoseconds" : 51000000
+    },
+    {
+      "category" : "url",
+      "currentAccepted" : true,
+      "filterGeneration" : 43,
+      "id" : "race-042",
+      "staleRejection" : "policyDecisionMismatch",
+      "targetWindowID" : 50042,
+      "transitionLatencyNanoseconds" : 52000000
+    },
+    {
+      "category" : "resize",
+      "currentAccepted" : true,
+      "filterGeneration" : 44,
+      "id" : "race-043",
+      "staleRejection" : "dimensionMismatch",
+      "targetWindowID" : 50042,
+      "transitionLatencyNanoseconds" : 53000000
+    },
+    {
+      "category" : "focus",
+      "currentAccepted" : true,
+      "filterGeneration" : 45,
+      "id" : "race-044",
+      "staleRejection" : "targetMismatch",
+      "targetWindowID" : 50045,
+      "transitionLatencyNanoseconds" : 54000000
+    },
+    {
+      "category" : "filter",
+      "currentAccepted" : true,
+      "filterGeneration" : 46,
+      "id" : "race-045",
+      "staleRejection" : "filterGenerationMismatch",
+      "targetWindowID" : 50046,
+      "transitionLatencyNanoseconds" : 55000000
+    },
+    {
+      "category" : "url",
+      "currentAccepted" : true,
+      "filterGeneration" : 47,
+      "id" : "race-046",
+      "staleRejection" : "policyDecisionMismatch",
+      "targetWindowID" : 50046,
+      "transitionLatencyNanoseconds" : 56000000
+    },
+    {
+      "category" : "resize",
+      "currentAccepted" : true,
+      "filterGeneration" : 48,
+      "id" : "race-047",
+      "staleRejection" : "dimensionMismatch",
+      "targetWindowID" : 50046,
+      "transitionLatencyNanoseconds" : 57000000
+    },
+    {
+      "category" : "focus",
+      "currentAccepted" : true,
+      "filterGeneration" : 49,
+      "id" : "race-048",
+      "staleRejection" : "targetMismatch",
+      "targetWindowID" : 50049,
+      "transitionLatencyNanoseconds" : 58000000
+    },
+    {
+      "category" : "filter",
+      "currentAccepted" : true,
+      "filterGeneration" : 50,
+      "id" : "race-049",
+      "staleRejection" : "filterGenerationMismatch",
+      "targetWindowID" : 50050,
+      "transitionLatencyNanoseconds" : 59000000
+    }
+  ],
+  "schemaVersion" : 1,
+  "seed" : 1279938624,
+  "singleWindowFilterOnly" : true,
+  "staleFrameAcceptedCount" : 0,
+  "staleQueueDropCount" : 2,
+  "transitionLatencyP95Nanoseconds" : 57000000,
+  "transitionsWithinOneSecondCount" : 50,
+  "visualChangeAcceptedCount" : 50,
+  "visualDifferenceThreshold" : 2
+}

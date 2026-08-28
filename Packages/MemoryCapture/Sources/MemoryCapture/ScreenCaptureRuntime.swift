@@ -130,7 +130,7 @@ public struct ForegroundWindowCaptureTarget: @unchecked Sendable, Equatable {
         )
     }
 
-    fileprivate var screenCaptureKitWindow: SCWindow? {
+    var screenCaptureKitWindow: SCWindow? {
         platformWindow?.value
     }
 
@@ -371,6 +371,7 @@ public final class ForegroundWindowPixelBuffer: @unchecked Sendable {
 
     public let targetWindowID: UInt32
     public let capturedNanoseconds: UInt64
+    public let filterGeneration: UInt64
     public let surfaceKind: CaptureSurfaceKind = .foregroundWindow
     private let lock = NSLock()
     private var state: State
@@ -378,10 +379,12 @@ public final class ForegroundWindowPixelBuffer: @unchecked Sendable {
     public init(
         pixelBuffer: CVPixelBuffer,
         targetWindowID: UInt32,
-        capturedNanoseconds: UInt64
+        capturedNanoseconds: UInt64,
+        filterGeneration: UInt64 = 0
     ) {
         self.targetWindowID = targetWindowID
         self.capturedNanoseconds = capturedNanoseconds
+        self.filterGeneration = filterGeneration
         state = .ready(pixelBuffer)
     }
 

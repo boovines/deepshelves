@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "activeStory": "LM-024",
+  "activeStory": "LM-025",
   "stories": {
     "LM-001": {
       "status": "passed",
@@ -371,23 +371,28 @@
       "resumeProbe": null
     },
     "LM-024": {
-      "status": "active",
+      "status": "passed",
       "startedAt": "2026-08-28T11:57:24Z",
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": "Base checkpoint refs/tags/checkpoints/LM-023. Implement revocable WindowCaptureEpoch, single-window SCContentFilter updates, stale-buffer rejection, measured acceptance and deduplication, and bounded newest-frame backpressure.",
+      "completedAt": "2026-08-28T12:14:05Z",
+      "gitRevision": "refs/tags/checkpoints/LM-024",
+      "evidence": [
+        "Results/LM-024/report.json",
+        "Results/LM-024/epoch-capture.json",
+        "Results/LM-024/epoch-capture-tests.txt",
+        "Fixtures/LM024/epoch-race-and-dedup.json"
+      ],
+      "notes": "The revocable epoch manager serializes filter applications, installs only the latest successful generation, and leaves no active epoch on revocation, failure, or superseded completion. The one-stream production adapter uses only desktop-independent SCWindow filters and immutable generation-tagged output adapters. Immediate admission repeats policy/epoch checks; the signed 50-race corpus accepted zero stale frames with 57 ms p95 current-target readiness. Measured 64x64 luminance dedup and a capacity-four newest-frame queue pass all near-duplicate and overload cases.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null
     },
     "LM-025": {
-      "status": "pending",
-      "startedAt": null,
+      "status": "active",
+      "startedAt": "2026-08-28T12:14:05Z",
       "completedAt": null,
       "gitRevision": null,
       "evidence": [],
-      "notes": null,
+      "notes": "Base checkpoint refs/tags/checkpoints/LM-024. Implement downscale and at-most-30-second, single-epoch, fixed-dimension variable-frame-rate hardware HEVC MediaWriter, frame locators, hash, and finalization.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null

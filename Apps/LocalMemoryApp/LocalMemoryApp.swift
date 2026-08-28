@@ -40,6 +40,7 @@ struct LocalMemoryApp: App {
         Self.exportLM021BrowserContextAndExitIfRequested(arguments: arguments)
         Self.exportLM022PrivacyPolicyAndExitIfRequested(arguments: arguments)
         Self.exportLM023ActivityMonitorAndExitIfRequested(arguments: arguments)
+        Self.exportLM024EpochCaptureAndExitIfRequested(arguments: arguments)
         let configuration = AppLaunchConfiguration(arguments: arguments)
         launchConfiguration = configuration
         shellKeyboardMonitor = ShellKeyboardCommandMonitor()
@@ -277,6 +278,26 @@ struct LocalMemoryApp: App {
         } catch {
             FileHandle.standardError.write(
                 Data("LM-023 activity monitor export failed: \(error)\n".utf8)
+            )
+            Darwin.exit(EXIT_FAILURE)
+        }
+    }
+
+    private static func exportLM024EpochCaptureAndExitIfRequested(arguments: [String]) {
+        guard let exportIndex = arguments.firstIndex(of: "--lm024-export-epoch-capture"),
+              arguments.indices.contains(exportIndex + 1)
+        else {
+            return
+        }
+        do {
+            try LM024EpochCaptureHarness.runBlocking().write(
+                to: URL(fileURLWithPath: arguments[exportIndex + 1]),
+                options: .atomic
+            )
+            Darwin.exit(EXIT_SUCCESS)
+        } catch {
+            FileHandle.standardError.write(
+                Data("LM-024 epoch capture export failed: \(error)\n".utf8)
             )
             Darwin.exit(EXIT_FAILURE)
         }

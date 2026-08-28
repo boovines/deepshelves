@@ -450,7 +450,9 @@ public final class CaptureSpikeRunner: NSObject, SCStreamOutput, SCStreamDelegat
                 focusedWindowID: focusMatches ? epoch.targetWindowID : nil,
                 dimensions: sampleBuffer.pixelDimensions,
                 deliveredNanoseconds: now,
-                policyApproved: focusMatches
+                policyApproved: focusMatches,
+                filterGeneration: epoch.filterGeneration,
+                policyDecisionID: epoch.policyDecisionID
             )
             let admission = FrameAdmission.evaluate(candidate, against: epoch)
             guard admission == .accepted else {

@@ -43,6 +43,7 @@ public struct WindowCaptureEpoch: Equatable, Sendable {
     public let approvedBounds: PointRect
     public let policyDecisionID: UUID?
     public let encodedSize: PixelSize
+    public let filterGeneration: UInt64
     public let filterAppliedNanoseconds: UInt64
 
     public init(
@@ -53,6 +54,7 @@ public struct WindowCaptureEpoch: Equatable, Sendable {
         approvedBounds: PointRect = PointRect(x: 0, y: 0, width: 0, height: 0),
         policyDecisionID: UUID? = nil,
         encodedSize: PixelSize,
+        filterGeneration: UInt64 = 0,
         filterAppliedNanoseconds: UInt64
     ) {
         self.id = id
@@ -62,6 +64,7 @@ public struct WindowCaptureEpoch: Equatable, Sendable {
         self.approvedBounds = approvedBounds
         self.policyDecisionID = policyDecisionID
         self.encodedSize = encodedSize
+        self.filterGeneration = filterGeneration
         self.filterAppliedNanoseconds = filterAppliedNanoseconds
     }
 }
@@ -73,6 +76,8 @@ public struct FrameCandidate: Equatable, Sendable {
     public let dimensions: PixelSize
     public let deliveredNanoseconds: UInt64
     public let policyApproved: Bool
+    public let filterGeneration: UInt64
+    public let policyDecisionID: UUID?
 
     public init(
         epochID: UUID,
@@ -80,7 +85,9 @@ public struct FrameCandidate: Equatable, Sendable {
         focusedWindowID: UInt32?,
         dimensions: PixelSize,
         deliveredNanoseconds: UInt64,
-        policyApproved: Bool
+        policyApproved: Bool,
+        filterGeneration: UInt64 = 0,
+        policyDecisionID: UUID? = nil
     ) {
         self.epochID = epochID
         self.targetWindowID = targetWindowID
@@ -88,15 +95,20 @@ public struct FrameCandidate: Equatable, Sendable {
         self.dimensions = dimensions
         self.deliveredNanoseconds = deliveredNanoseconds
         self.policyApproved = policyApproved
+        self.filterGeneration = filterGeneration
+        self.policyDecisionID = policyDecisionID
     }
 }
 
 public enum FrameRejectionReason: String, Equatable, Sendable {
+    case epochRevoked
     case epochMismatch
+    case filterGenerationMismatch
     case beforeFilterApplied
     case targetMismatch
     case focusMismatch
     case policyDenied
+    case policyDecisionMismatch
     case dimensionMismatch
 }
 
@@ -108,10 +120,17 @@ public enum FrameAdmissionDecision: Equatable, Sendable {
 public enum FrameAdmission: Sendable {
     public static func evaluate(
         _ candidate: FrameCandidate,
-        against epoch: WindowCaptureEpoch
+        against epoch: WindowCaptureEpoch,
+        epochIsActive: Bool = true
     ) -> FrameAdmissionDecision {
+        guard epochIsActive else {
+            return .rejected(.epochRevoked)
+        }
         guard candidate.epochID == epoch.id else {
             return .rejected(.epochMismatch)
+        }
+        guard candidate.filterGeneration == epoch.filterGeneration else {
+            return .rejected(.filterGenerationMismatch)
         }
         guard candidate.deliveredNanoseconds >= epoch.filterAppliedNanoseconds else {
             return .rejected(.beforeFilterApplied)
@@ -124,6 +143,9 @@ public enum FrameAdmission: Sendable {
         }
         guard candidate.policyApproved else {
             return .rejected(.policyDenied)
+        }
+        guard candidate.policyDecisionID == epoch.policyDecisionID else {
+            return .rejected(.policyDecisionMismatch)
         }
         guard candidate.dimensions == epoch.encodedSize else {
             return .rejected(.dimensionMismatch)

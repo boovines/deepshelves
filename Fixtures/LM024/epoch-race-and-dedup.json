@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "seed": 1279938624,
+  "rapidRaceCount": 50,
+  "nearDuplicateSequenceCount": 50,
+  "luminanceGridWidth": 64,
+  "luminanceGridHeight": 64,
+  "visualDifferenceThreshold": 2.0,
+  "mediaQueueCapacity": 4,
+  "maximumTransitionLatencyNanoseconds": 1000000000
+}
