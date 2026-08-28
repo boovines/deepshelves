@@ -517,6 +517,101 @@
       "updateProcedure": "Use the explicit model installer build step, verify all 17 files before activation, keep audio optional/off by default, and rerun offline inference, latency, privacy, retention, and deletion gates."
     },
     {
+      "id": "libheif-software-heic",
+      "version": "1.23.2",
+      "revision": "v1.23.2",
+      "source": "https://github.com/strukturag/libheif",
+      "scope": "shippingDependency",
+      "runtimeFetchPolicy": "forbidden",
+      "networkCapable": false,
+      "linkedShippingTargets": [
+        "LocalMemoryApp"
+      ],
+      "license": {
+        "name": "GNU Lesser General Public License v3 or later",
+        "spdx": "LGPL-3.0-or-later",
+        "source": "https://github.com/strukturag/libheif/blob/v1.23.2/COPYING",
+        "expectedSize": 44366,
+        "sha256": "fa81ce652315b013359d6e8e4744335f31a50c7c192907176d3632f78a3b4596"
+      },
+      "artifacts": [
+        {
+          "path": "libheif-1.23.2.tar.gz",
+          "cachePath": "sources/libheif-1.23.2.tar.gz",
+          "url": "https://github.com/strukturag/libheif/releases/download/v1.23.2/libheif-1.23.2.tar.gz",
+          "expectedSize": 2111195,
+          "sha256": "8bd5d41d19dc84536d118b04774709f244df6104ef66d623dad5fa4650143405"
+        }
+      ],
+      "derivedArtifact": {
+        "cachePath": "binaries/software-heic-libheif-1.23.2-x265-4.3-arm64-macos15.tar.gz",
+        "expectedSize": 2273651,
+        "sha256": "ff359032e30591fce5614a60ca0f9be4e0f9e06acea7b64981051d0f867a5e50"
+      },
+      "notes": "Built without plugin loading and with only the built-in x265 encoder and libde265 decoder. The pinned closure has no ImageIO, AVFoundation, MediaToolbox, or VideoToolbox linkage and targets macOS 15 arm64.",
+      "updateProcedure": "Review upstream security advisories and license changes, update all three software-HEIC pins together, rebuild from an empty source cache, verify the complete Mach-O closure and minimum OS, then rerun the software codec tripwire, capture, thumbnail, retention, and deletion gates."
+    },
+    {
+      "id": "x265-software-heic",
+      "version": "4.3",
+      "revision": "release-4.3",
+      "source": "https://github.com/Multicorewareinc/x265",
+      "scope": "shippingDependency",
+      "runtimeFetchPolicy": "forbidden",
+      "networkCapable": false,
+      "linkedShippingTargets": [
+        "LocalMemoryApp"
+      ],
+      "license": {
+        "name": "GNU General Public License v2 or later",
+        "spdx": "GPL-2.0-or-later",
+        "source": "https://github.com/Multicorewareinc/x265/blob/Release_4.3/COPYING",
+        "expectedSize": 18120,
+        "sha256": "d8afb1bcc7a2cfc603683b168d6987ef0a48e59e0da3693bf55c5d33b67e2b49"
+      },
+      "artifacts": [
+        {
+          "path": "x265_4.3.tar.gz",
+          "cachePath": "sources/x265-4.3.tar.gz",
+          "url": "https://github.com/Multicorewareinc/x265/releases/download/4.3/x265_4.3.tar.gz",
+          "expectedSize": 2052112,
+          "sha256": "83c53e4c8bbb8f1e33ed59e10a7d621d1d7801ca853910c3eb41f038b8ffb121"
+        }
+      ],
+      "notes": "Statically selected by the local libheif helper as the software-only HEVC still-image encoder. This GPL dependency is acceptable for the private personal build but must be reviewed before any distribution.",
+      "updateProcedure": "Update only with libheif and libde265; audit license scope, build flags, Mach-O linkage, reproducibility, software-only tripwire behavior, output fidelity, CPU, memory, and storage."
+    },
+    {
+      "id": "libde265-software-heic",
+      "version": "1.1.1",
+      "revision": "release-v1.1.1",
+      "source": "https://github.com/strukturag/libde265",
+      "scope": "shippingDependency",
+      "runtimeFetchPolicy": "forbidden",
+      "networkCapable": false,
+      "linkedShippingTargets": [
+        "LocalMemoryApp"
+      ],
+      "license": {
+        "name": "GNU Lesser General Public License v3 or later",
+        "spdx": "LGPL-3.0-or-later",
+        "source": "https://github.com/strukturag/libde265/blob/v1.1.1/COPYING",
+        "expectedSize": 44339,
+        "sha256": "02cc1585a20677992e0ba578fa692635dc193735f2691dc81de924b51c4e8020"
+      },
+      "artifacts": [
+        {
+          "path": "libde265-1.1.1.tar.gz",
+          "cachePath": "sources/libde265-1.1.1.tar.gz",
+          "url": "https://github.com/strukturag/libde265/releases/download/v1.1.1/libde265-1.1.1.tar.gz",
+          "expectedSize": 315566,
+          "sha256": "fd48a927e94ed74fc7ce8829d222b9d8599fcbfe8b6448ba66705babc56ab219"
+        }
+      ],
+      "notes": "Built as the sole software HEVC decoder in the local libheif helper with its encoder and command-line tools excluded from the shipped closure.",
+      "updateProcedure": "Update only with libheif and x265; review security advisories, rebuild the minimal closure, and rerun malformed-input, integrity, decode, retention, and deletion gates."
+    },
+    {
       "id": "xcodegen",
       "version": "2.46.0",
       "revision": "8445e778451c7e44237b90281bde622d764b0084",

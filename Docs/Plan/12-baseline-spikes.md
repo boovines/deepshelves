@@ -10,7 +10,7 @@ Every run records git revision, Mac model, RAM, OS build, power mode, thermal st
 
 ### Prototype
 
-Build a release-mode command app using one ScreenCaptureKit `SCStream` filtered with `SCContentFilter(desktopIndependentWindow:)` to the uniquely resolved focused `SCWindow`. Exercise `updateContentFilter` across focus changes, tag buffers with capture epochs, receive at 2 fps, downscale to a maximum 1920-pixel long edge, accept at most 1 fps, and write single-epoch, fixed-dimension logical chunks of independent HEIC keyframes lasting at most 30 seconds. ADR 0001 records why the originally measured hardware-HEVC representation was replaced.
+Build a release-mode command app using one ScreenCaptureKit `SCStream` filtered with `SCContentFilter(desktopIndependentWindow:)` to the uniquely resolved focused `SCWindow`. Exercise `updateContentFilter` across focus changes, tag buffers with capture epochs, receive at 2 fps, downscale to a maximum 1920-pixel long edge, accept at most 1 fps, and write single-epoch, fixed-dimension logical chunks of independent HEIC keyframes lasting at most 30 seconds through the integrity-pinned software-only libheif/x265 boundary. ADR 0001 records why the originally measured hardware-HEVC and Apple ImageIO paths were replaced.
 
 Corpus: one hour replayed/operated workload containing static documents, scrolling, code editing, video playback, window switching, resize/minimize, duplicate-title windows, sleep/wake, and ten excluded transitions. Adversarial scenes place encoded sentinel grids in background password managers, private browsers, notifications, desktop/menu/Dock regions, split-screen neighbors, and the immediately previous focused window.
 
@@ -31,7 +31,7 @@ Corpus: one hour replayed/operated workload containing static documents, scrolli
 1. Tune visual-difference threshold and media quality.
 2. Reduce maximum long edge to 1680 if storage/CPU fails and OCR fixtures lose less than two percentage points recall.
 3. Reduce active acceptance to 0.5 fps only if transition frames remain immediate and retrieval Recall@10 loses less than two points.
-4. Use independently encoded HEIC keyframes instead of HEVC only if random decode or crash integrity cannot pass; ADR 0001 adopted this step on 2026-08-28 after two repeatable hardware-encoder kernel panics.
+4. Use independently encoded HEIC keyframes instead of HEVC only if random decode or crash integrity cannot pass; ADR 0001 adopted this step on 2026-08-28 after two repeatable hardware-encoder kernel panics and later pinned a software-only codec after Apple ImageIO proved capable of starting VideoToolbox.
 
 There is no tuning step that permits composited-display capture. Window-resolution uncertainty always fails to a metadata-only gap.
 

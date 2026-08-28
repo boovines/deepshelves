@@ -38,17 +38,26 @@ required_ids=(
     argmax-oss-swift
     coreml-mobileclip-s0
     grdb-sqlcipher
+    libde265-software-heic
+    libheif-software-heic
     mcp-swift-sdk
     sqlcipher-swift
     swift-testing-toolchain
     whisperkit-small-en
     xcodegen
+    x265-software-heic
     xctest-toolchain
     xcuitest-toolchain
 )
 for component in "${required_ids[@]}"; do
     jq -e --arg id "$component" 'any(.components[]; .id == $id)' "$manifest" >/dev/null
 done
+
+jq -e '
+  .components[] | select(.id == "libheif-software-heic") |
+  .derivedArtifact.expectedSize == 2273651 and
+  .derivedArtifact.sha256 == "ff359032e30591fce5614a60ca0f9be4e0f9e06acea7b64981051d0f867a5e50"
+' "$manifest" >/dev/null
 
 expected_xcodegen="$(tr -d '[:space:]' < .xcodegen-version)"
 manifest_xcodegen="$(jq -r '.components[] | select(.id == "xcodegen") | .version' "$manifest")"
@@ -99,6 +108,18 @@ if [[ "$mode" == "--binaries" ]]; then
         fi
         if strings "$binary" | rg -i "$forbidden_binary"; then
             echo "Forbidden dependency marker embedded in $binary" >&2
+            exit 1
+        fi
+    done
+
+    software_heic_root="Packages/MemorySoftwareHEIC/Sources/MemorySoftwareHEIC/Resources/SoftwareHEIC"
+    (
+        cd "$software_heic_root"
+        shasum -a 256 -c SHA256SUMS >/dev/null
+    )
+    for binary in "$software_heic_root/bin/lm-software-heic" "$software_heic_root/lib/"*.dylib; do
+        if otool -L "$binary" | rg 'ImageIO|AVFoundation|MediaToolbox|VideoToolbox'; then
+            echo "Forbidden Apple media framework linked by software HEIC runtime" >&2
             exit 1
         fi
     done

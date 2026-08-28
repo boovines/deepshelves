@@ -37,12 +37,12 @@ final class CaptureMediaIntegrationTests: XCTestCase {
         XCTAssertFalse(FileManager.default.fileExists(atPath: writer.stagingDirectoryURL.path))
     }
 
-    func testLegacyDecodeBenchmarkFailsClosedWithoutInvokingImageIO() async {
+    func testDecodeBenchmarkRejectsMissingMediaBeforeOpeningFrameBytes() async {
         do {
             _ = try await CaptureDecodeBenchmark.run(mediaPaths: ["must-not-open.heic"])
-            XCTFail("Expected the legacy runtime decoder to remain quarantined")
+            XCTFail("Expected missing media to fail closed")
         } catch {
-            XCTAssertEqual(error as? HEICFrameEncoderError, .runtimeQuarantined)
+            XCTAssertEqual(error as? CaptureDecodeBenchmarkError, .mediaUnavailable)
         }
     }
 

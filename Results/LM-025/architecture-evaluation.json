@@ -19,7 +19,11 @@
     "videoToolboxEncoderExecuted": false,
     "avAssetWriterExecuted": false,
     "productionImageIOHEICExecutedByTests": false,
-    "boundaryFakesOnly": true
+    "boundaryFakesOnly": false,
+    "softwareHEICEncodeDecodeExecuted": true,
+    "softwareCodec": "libheif 1.23.2 + x265 4.3 + libde265 1.1.1",
+    "appleMediaFrameworkLinkage": false,
+    "encoderServiceTripwire": "passed"
   },
   "followups": {
     "LM-026": "coordinate database visibility with verified ready HEIC directories and exact frame paths",

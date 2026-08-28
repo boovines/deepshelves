@@ -6,6 +6,15 @@ The full upstream MCP package and Argmax OSS package are explicitly `forbiddenSh
 
 Apple's pinned MobileCLIP weights use the Apple Machine Learning Research Model License, which limits them to research use and excludes commercial product use. They may be evaluated in this private personal research build. They must not be redistributed or used for a commercial release without a different license grant or an explicitly approved model decision.
 
+The canonical HEIC boundary is built locally from pinned libheif 1.23.2,
+x265 4.3, and libde265 1.1.1 source archives. `materialize-dependencies.sh`
+reproduces the arm64/macOS-15 helper when its derived archive is absent, verifies the
+expected archive hash, and copies the hash-manifested runtime into the local Swift package
+resource directory. The helper is GPL/LGPL software; the private personal build may use
+it, but any distribution requires source/license compliance and a separate release review.
+The derived helper has no Apple media-framework or network linkage and never downloads a
+runtime codec.
+
 ## Create the cache while online
 
 Run this only as an explicit build/bootstrap action:

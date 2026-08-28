@@ -42,7 +42,7 @@ enum CaptureSpikeHarness {
             }
 
             let mediaURL = outputDirectory.appendingPathComponent("capture", isDirectory: true)
-            let report = try await CaptureSpikeRunner().run(
+            let report = try await CaptureSpikeRunner.production().run(
                 outputURL: mediaURL,
                 duration: .seconds(durationSeconds)
             )

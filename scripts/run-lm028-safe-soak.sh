@@ -95,6 +95,7 @@ run_monitored "$result_root/focused-tests.txt" \
     CODE_SIGNING_ALLOWED=NO \
     ENABLE_TESTABILITY=YES \
     -only-testing:LocalMemoryUnitTests/CaptureSoakModelTests \
+    -only-testing:LocalMemoryUnitTests/SoftwareHEICCodecTests \
     -only-testing:LocalMemoryUnitTests/WindowCaptureEpochTests \
     -only-testing:LocalMemoryUnitTests/ForegroundWindowResolverTests \
     -only-testing:LocalMemoryUnitTests/PrivacyPolicyTests \
@@ -180,7 +181,7 @@ run_monitored "$result_root/release-build.txt" "$repo_root/scripts/build-release
   fi
   rg -Fq 'frameEncoder: any HEICFrameEncoding = QuarantinedHEICFrameEncoder()' \
     "$repo_root/Packages/MemoryCapture/Sources/MemoryCapture/CaptureSpikeRunner.swift"
-  rg -Fq 'throw HEICFrameEncoderError.runtimeQuarantined' \
+  rg -Fq 'let codec = try SoftwareHEICCodec()' \
     "$repo_root/Packages/MemoryCapture/Sources/MemoryCapture/CaptureDecodeBenchmark.swift"
   if rg -n 'import ImageIO|CGImageSourceCreate' \
     "$repo_root/Packages/MemoryCapture/Sources/MemoryCapture/CaptureDecodeBenchmark.swift"; then
@@ -193,11 +194,11 @@ run_monitored "$result_root/release-build.txt" "$repo_root/scripts/build-release
   echo "bounded_queue_capacity=4"
   echo "fake_encoder_boundary_only=passed"
   echo "production_encoder_requires_explicit_injection=passed"
-  echo "legacy_capture_and_decode_harnesses_fail_closed=passed"
+  echo "production_capture_requires_explicit_software_codec=passed"
   echo "actual_app_launches=0"
   echo "hardware_encoder_tests_executed=0"
   echo "apple_imageio_runtime_tests_executed=0"
-  echo "software_heic_decode_only=passed"
+  echo "software_heic_encode_decode=passed"
 } | tee "$result_root/static-audit.txt"
 
 perl -pi -e 's/[ \t]+$//' \
@@ -223,7 +224,7 @@ jq -n \
     productionImageIOExecuted: false,
     appRuntimeExecuted: false,
     hardwareEncoderTestsExecuted: 0,
-    remainingGate: "A real eight-hour production HEIC capture/decode/resource soak requires a codec runtime proven not to initialize VTEncoderXPCService on this Mac."
+    remainingGate: "Run the required real eight-hour foreground-window production capture/decode/resource soak with the now-proven software-only codec beneath the encoder-service tripwire."
   }' >"$result_root/report.json"
 
 git -C "$repo_root" diff --check

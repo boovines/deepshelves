@@ -389,8 +389,8 @@
     "LM-025": {
       "status": "passed",
       "startedAt": "2026-08-28T12:14:05Z",
-      "completedAt": "2026-08-28T17:04:26Z",
-      "gitRevision": "refs/tags/checkpoints/LM-025",
+      "completedAt": "2026-08-28T20:25:09Z",
+      "gitRevision": "refs/tags/checkpoints/LM-025-software-heic",
       "evidence": [
         "Results/LM-025/report.json",
         "Results/LM-025/architecture-evaluation.json",
@@ -406,9 +406,10 @@
         "Results/LM-025/dependencies.txt",
         "Results/LM-025/swift-format.txt",
         "Results/LM-025/software-termination.txt",
-        "Results/LM-025/process-safety.txt"
+        "Results/LM-025/process-safety.txt",
+        "Results/LM-025/software-codec-amendment.json"
       ],
-      "notes": "Authorized ADR 0001 adopts canonical V2 independent HEIC keyframes in atomic logical-chunk directories while preserving foreground-window isolation, local-only storage, privacy identity, integrity, exact search evidence, retention, and forensic deletion. Safe fake-boundary, fault, subprocess-termination, V1/V2 contract, privacy, compile-only Release, and source-audit gates pass under an encoder-process tripwire. Production ImageIO HEIC is compile-only; no AVAssetWriter, VideoToolbox, or hardware HEVC encoder path ran. The two dart-ave panic artifacts remain permanently quarantined on this Mac.",
+      "notes": "Authorized ADR 0001 adopts canonical V2 independent HEIC keyframes and now pins a reproducible local libheif 1.23.2 + x265 4.3 + libde265 1.1.1 runtime. Foreground-window admission still occurs before encode; manifest identity, atomic publication, integrity, exact search evidence, retention, and forensic deletion remain unchanged. Five real software-codec Release tests, five capture integrations, fault/termination fixtures, contracts, privacy, dependency, and release gates pass under the encoder-service tripwire. The shipping capture target has no ImageIO, AVAssetWriter, VideoToolbox, or hardware encoder linkage; both dart-ave panic paths remain permanently quarantined.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null
@@ -572,10 +573,10 @@
       "resumeProbe": null
     },
     "LM-033": {
-      "status": "blocked",
+      "status": "passed",
       "startedAt": "2026-08-28T19:18:23Z",
-      "completedAt": "2026-08-28T19:28:03Z",
-      "gitRevision": "refs/tags/checkpoints/LM-033-blocked",
+      "completedAt": "2026-08-28T20:25:09Z",
+      "gitRevision": "refs/tags/checkpoints/LM-033",
       "evidence": [
         "Results/LM-033/report.json",
         "Results/LM-033/blocker.md",
@@ -587,10 +588,11 @@
         "Results/LM-033/release-build.txt",
         "Results/LM-033/dependencies.txt",
         "Results/LM-033/swift-format.txt",
-        "Results/LM-033/story-gate.txt"
+        "Results/LM-033/story-gate.txt",
+        "Results/LM-033/software-codec.json"
       ],
-      "notes": "All safe implementation work passes. ThumbnailRasterizer applies all eight orientations, converts Display-P3/linear-sRGB pixels to tagged sRGB, aspect-fits without upscaling to a 480-pixel long edge, and remains pure in-memory. ThumbnailGenerator verifies the exact source-frame hash before injected decode, requires an injected encoder, hashes output, publishes through ArchiveFileStore atomically at mode 0600, produces a ready thumbnail artifact, reuses verified files, rebuilds missing files, and verifies hashes before deletion. Fourteen focused Release tests plus contracts, privacy, dependencies, formatting, and compile-only Release pass under the encoder tripwire with zero app or media-runtime execution.",
-      "blockedReason": "Production validation against real HEIC source and thumbnail bytes requires decode and encode fidelity testing. Apple ImageIO encode/decode is quarantined because a metadata-only sips probe spawned VTEncoderXPCService, and earlier hardware HEVC tests caused two repeatable kernel panics. The remaining real-HEIC aspect/orientation/color gate cannot run safely on this Mac until an isolated validation host or an approved codec boundary proves it cannot initialize VideoToolbox.",
+      "notes": "ThumbnailRasterizer covers all eight orientations, Display-P3/linear-sRGB conversion, and 480-pixel aspect fit. The adopted integrity-pinned software codec performs genuine HEIC encode/decode through libheif+x265+libde265 with no Apple media-framework linkage. Ten focused Release tests cover runtime tamper/inventory, video-range capture conversion, real-HEIC aspect/orientation/sRGB fidelity, source/output hashes, atomic mode-0600 publication, reuse, missing-file rebuild, malformed input, and verified deletion. Contracts, privacy, dependency, formatting, universal Release, binary linkage, and encoder-process tripwire gates pass; no app or hardware encoder test ran.",
+      "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null
     },

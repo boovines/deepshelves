@@ -7,12 +7,13 @@ let package = Package(
     products: [.library(name: "MemoryEnrichment", targets: ["MemoryEnrichment"])],
     dependencies: [
         .package(path: "../MemoryContracts"),
+        .package(path: "../MemorySoftwareHEIC"),
         .package(path: "../MemoryStore"),
     ],
     targets: [
         .target(
             name: "MemoryEnrichment",
-            dependencies: ["MemoryContracts", "MemoryStore"],
+            dependencies: ["MemoryContracts", "MemorySoftwareHEIC", "MemoryStore"],
             resources: [.copy("Resources/MobileCLIP-S0")]
         )
     ]

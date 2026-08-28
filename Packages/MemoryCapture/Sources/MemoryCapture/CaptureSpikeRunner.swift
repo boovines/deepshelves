@@ -101,6 +101,10 @@ public final class CaptureSpikeRunner: NSObject, SCStreamOutput, SCStreamDelegat
         super.init()
     }
 
+    public static func production() throws -> CaptureSpikeRunner {
+        CaptureSpikeRunner(frameEncoder: try SoftwareHEICFrameEncoder())
+    }
+
     public func run(outputURL: URL, duration: Duration) async throws -> CaptureSpikeReport {
         let capabilityStatus = CaptureCapabilities.current()
         guard capabilityStatus.isReady else {

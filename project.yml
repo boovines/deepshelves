@@ -25,6 +25,8 @@ packages:
     path: Packages/MemoryContracts
   MemoryCapture:
     path: Packages/MemoryCapture
+  MemorySoftwareHEIC:
+    path: Packages/MemorySoftwareHEIC
   MemoryStore:
     path: Packages/MemoryStore
   MemoryEnrichment:
@@ -99,6 +101,7 @@ targets:
       - package: MemoryEnrichment
       - package: MemorySearch
       - package: MemoryDesignSystem
+      - package: MemorySoftwareHEIC
       - package: MemoryStore
       - package: MemoryTestSupport
   LocalMemoryIntegrationTests:

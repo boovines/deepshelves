@@ -1,19 +1,20 @@
-63:            let destination = CGImageDestinationCreateWithData(
-29:        .useSoftwareRenderer: true,
-241:        let manifest = try HEICKeyframeManifest(
-305:    public let manifest: HEICKeyframeManifest
-359:        let manifest = try ContractJSON.decode(HEICKeyframeManifest.self, from: manifestData)
-453:            HEICKeyframeManifest.self,
-511:            let replacementManifest = try HEICKeyframeManifest(
-553:            let manifest = try? ContractJSON.decode(HEICKeyframeManifest.self, from: data),
-325:                Darwin.renamex_np(source, destination, UInt32(RENAME_EXCL))
-586:                Darwin.renamex_np(source, destination, UInt32(RENAME_EXCL))
-20:        let encoder = SafeFakeHEICEncoder(payloads: [
-70:        let encoder = SafeFakeHEICEncoder(payloads: [Data("must-not-encode".utf8)])
-111:            encoder: SafeFakeHEICEncoder(payloads: [])
-136:private final class SafeFakeHEICEncoder: HEICFrameEncoding, @unchecked Sendable {
+5:public struct SoftwareHEICFrameEncoder: HEICFrameEncoding {
+13:        quality: Int = SoftwareHEICFrameEncoder.productionQuality
+19:    public init(quality: Int = SoftwareHEICFrameEncoder.productionQuality) throws {
+185:        let manifest = try HEICKeyframeManifest(
+249:    public let manifest: HEICKeyframeManifest
+303:        let manifest = try ContractJSON.decode(HEICKeyframeManifest.self, from: manifestData)
+397:            HEICKeyframeManifest.self,
+455:            let replacementManifest = try HEICKeyframeManifest(
+497:            let manifest = try? ContractJSON.decode(HEICKeyframeManifest.self, from: data),
+269:                Darwin.renamex_np(source, destination, UInt32(RENAME_EXCL))
+530:                Darwin.renamex_np(source, destination, UInt32(RENAME_EXCL))
+60:        let encoder = SafeFakeHEICEncoder(payloads: [
+110:        let encoder = SafeFakeHEICEncoder(payloads: [Data("must-not-encode".utf8)])
+151:            encoder: SafeFakeHEICEncoder(payloads: [])
+176:private final class SafeFakeHEICEncoder: HEICFrameEncoding, @unchecked Sendable {
 hardware_video_encoder_removed=passed
-production_heic_encoder_compile_only=passed
-tests_use_boundary_fake_only=passed
+production_software_heic_roundtrip=passed
+boundary_fake_fault_tests=passed
 local_only_writer_scan=passed
 encoder_process_tripwire=passed

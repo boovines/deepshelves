@@ -1,6 +1,7 @@
 import CryptoKit
 import Foundation
 import MemoryContracts
+import MemorySoftwareHEIC
 import MemoryStore
 
 public enum ThumbnailPipelineError: Error, Equatable, Sendable {
@@ -278,6 +279,44 @@ public struct QuarantinedThumbnailHEICEncoder: ThumbnailHEICEncoding {
     public init() {}
     public func encode(_ raster: ThumbnailRaster) throws -> Data {
         throw ThumbnailPipelineError.runtimeCodecQuarantined
+    }
+}
+
+public struct SoftwareThumbnailHEICCodec: ThumbnailHEICDecoding, ThumbnailHEICEncoding {
+    private let codec: SoftwareHEICCodec
+
+    public init(codec: SoftwareHEICCodec) {
+        self.codec = codec
+    }
+
+    public init() throws {
+        codec = try SoftwareHEICCodec()
+    }
+
+    public func decode(_ data: Data) throws -> ThumbnailSourceImage {
+        let decoded = try codec.decode(data)
+        return try ThumbnailSourceImage(
+            raster: ThumbnailRaster(
+                width: decoded.width,
+                height: decoded.height,
+                rgba8: decoded.rgba8,
+                colorSpace: .sRGB
+            ),
+            orientation: .up
+        )
+    }
+
+    public func encode(_ raster: ThumbnailRaster) throws -> Data {
+        guard raster.colorSpace == .sRGB else {
+            throw ThumbnailPipelineError.unsupportedColorSpace
+        }
+        return try codec.encode(
+            SoftwareHEICRaster(
+                width: raster.width,
+                height: raster.height,
+                rgba8: raster.rgba8
+            )
+        )
     }
 }
 

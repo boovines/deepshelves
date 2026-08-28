@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-025",
+  "amendment": "pinned-software-heic-runtime",
+  "status": "passed",
+  "runtime": "libheif 1.23.2 + x265 4.3 + libde265 1.1.1",
+  "derivedArchiveBytes": 2273651,
+  "derivedArchiveSHA256": "ff359032e30591fce5614a60ca0f9be4e0f9e06acea7b64981051d0f867a5e50",
+  "reproducibleCleanBuilds": 2,
+  "appleMediaFrameworkLinkage": false,
+  "networkCapability": false,
+  "temporaryDirectoryMode": "0700",
+  "temporaryFileMode": "0600",
+  "realSoftwareHEICReleaseTests": 5,
+  "captureIntegrationTests": 5,
+  "videoToolboxProcessObserved": false,
+  "hardwareEncoderTestsExecuted": 0,
+  "hardwareQuarantinePreserved": true
+}

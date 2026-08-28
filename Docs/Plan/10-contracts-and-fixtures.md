@@ -82,6 +82,15 @@ A ready chunk is immutable. A canonical V2 chunk path ends in `/manifest.json`; 
 
 Each entry carries `frameID`, `presentationTimeMS`, `relativePath` (`frames/<frame-id>.heic`), `byteCount`, and a 32-byte `sha256`. The canonical JSON bytes are hashed by the parent chunk. Missing, extra, reordered, substituted, duplicated, or corrupt assets fail verification and remain nonsearchable.
 
+Canonical V2 frame and thumbnail bytes are HEIC produced and decoded by the pinned local
+software codec boundary in ADR 0001. The boundary is not part of archive identity: media
+identity remains the canonical manifest plus exact per-frame byte count and SHA-256. The
+shipping helper inventory is fixed to libheif 1.23.2, x265 4.3, and libde265 1.1.1; it must
+verify its own bundled hashes, have no network or Apple media-framework linkage, use only
+owner-only temporary files, and fail closed before publication on integrity, timeout,
+format, dimension, or process error. Codec replacement therefore requires fidelity and
+migration evidence but does not silently rewrite existing source-frame identity.
+
 ### `SearchableFrame`
 
 | Field | Type | Rule |
@@ -216,6 +225,12 @@ The append-only schema V2 migration adds nullable `media_path`, `media_sha256`, 
       logs/local-memory.log
 
 The archive root and all children are owner-only. Source-media writers use a hidden sibling staging directory, per-frame sibling partials, `fsync`, canonical-manifest validation, one no-replace directory rename, parent `fsync`, then database commit. Startup removes orphan staging directories, reconciles unreferenced ready directories, quarantines corrupt manifests/assets, repairs jobs, and never makes a corrupt artifact searchable.
+
+Codec interchange files live only in a unique mode-`0700` system-temporary directory with
+mode-`0600` children and are removed after the direct local helper process returns. They
+are never searchable, never referenced by a database row or manifest, and must be included
+in termination and forensic-deletion residue scans. Helper diagnostics may contain only a
+typed status/exit code, never archive paths, pixels, OCR text, titles, URLs, or user data.
 
 ## Serialization and compatibility
 

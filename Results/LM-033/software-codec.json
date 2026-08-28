@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "architecture": "arm64",
+  "minimumMacOS": "15.0",
+  "components": {
+    "libheif": "1.23.2",
+    "x265": "4.3",
+    "libde265": "1.1.1"
+  },
+  "sourceArchiveSHA256": {
+    "libheif": "8bd5d41d19dc84536d118b04774709f244df6104ef66d623dad5fa4650143405",
+    "x265": "83c53e4c8bbb8f1e33ed59e10a7d621d1d7801ca853910c3eb41f038b8ffb121",
+    "libde265": "fd48a927e94ed74fc7ce8829d222b9d8599fcbfe8b6448ba66705babc56ab219"
+  },
+  "derivedArchive": {
+    "bytes": 2273651,
+    "sha256": "ff359032e30591fce5614a60ca0f9be4e0f9e06acea7b64981051d0f867a5e50",
+    "cleanBuildsCompared": 2,
+    "reproducible": true
+  },
+  "linkage": {
+    "imageIO": false,
+    "avFoundation": false,
+    "mediaToolbox": false,
+    "videoToolbox": false,
+    "networkFramework": false
+  },
+  "realHEICReleaseTests": 5,
+  "thumbnailReleaseTests": 5,
+  "temporaryDirectoryMode": "0700",
+  "temporaryFileMode": "0600",
+  "videoToolboxProcessObserved": false,
+  "hardwareEncoderTestsExecuted": 0
+}

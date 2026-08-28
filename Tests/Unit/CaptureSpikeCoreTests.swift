@@ -444,8 +444,8 @@ final class CaptureSpikeCoreTests: XCTestCase {
     }
 
     func testHEICProductionQualityIsExplicitAndBounded() throws {
-        XCTAssertEqual(ImageIOHEICFrameEncoder.productionQuality, 0.82)
-        XCTAssertTrue((0...1).contains(ImageIOHEICFrameEncoder.productionQuality))
+        XCTAssertEqual(SoftwareHEICFrameEncoder.productionQuality, 82)
+        XCTAssertTrue((0...100).contains(SoftwareHEICFrameEncoder.productionQuality))
     }
 
     func testFocusPollingCadenceRetainsOneSecondTransitionMargin() throws {

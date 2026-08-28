@@ -2,8 +2,8 @@
 { platform:macOS, arch:arm64, id:00006030-000658C614D0001C, name:My Mac }
 { platform:macOS, arch:x86_64, id:00006030-000658C614D0001C, name:My Mac }
 { platform:macOS, name:Any Mac }
-2026-08-28 21:26:21.582 xcodebuild[39774:1274575] [MT] IDETestOperationsObserverDebug: 0.984 elapsed -- Testing started completed.
-2026-08-28 21:26:21.582 xcodebuild[39774:1274575] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
-2026-08-28 21:26:21.582 xcodebuild[39774:1274575] [MT] IDETestOperationsObserverDebug: 0.984 sec, +0.984 sec -- end
+2026-08-28 22:22:57.549 xcodebuild[52181:1529990] [MT] IDETestOperationsObserverDebug: 0.733 elapsed -- Testing started completed.
+2026-08-28 22:22:57.549 xcodebuild[52181:1529990] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-08-28 22:22:57.549 xcodebuild[52181:1529990] [MT] IDETestOperationsObserverDebug: 0.733 sec, +0.733 sec -- end
 Testing started
 check-contracts: legacy V1 and canonical V2 fixtures reproduce byte-for-byte and all contract validation tests pass

@@ -8,11 +8,14 @@ let package = Package(
         .library(name: "MemoryCapture", targets: ["MemoryCapture"]),
         .executable(name: "LM028SoakHarness", targets: ["LM028SoakHarness"]),
     ],
-    dependencies: [.package(path: "../MemoryContracts")],
+    dependencies: [
+        .package(path: "../MemoryContracts"),
+        .package(path: "../MemorySoftwareHEIC"),
+    ],
     targets: [
         .target(
             name: "MemoryCapture",
-            dependencies: ["MemoryContracts"]
+            dependencies: ["MemoryContracts", "MemorySoftwareHEIC"]
         ),
         .executableTarget(
             name: "LM028SoakHarness",

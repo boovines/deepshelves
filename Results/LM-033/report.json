@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "story": "LM-033",
-  "status": "blocked",
+  "status": "passed",
   "safeImplementationPassed": true,
   "maximumThumbnailLongEdge": 480,
   "orientationCases": 8,
@@ -12,7 +12,9 @@
   "ownerOnlyFileMode": "0600",
   "missingFileRebuild": true,
   "verifiedDeletion": true,
-  "productionRealHEICCodecValidation": "blocked_quarantined",
+  "productionRealHEICCodecValidation": "passed_software_only",
+  "softwareRuntimeIntegrityValidation": true,
+  "videoToolboxLinkage": false,
   "appleImageIOEncodeDecodeCalls": 0,
   "hardwareEncoderTestsExecuted": 0,
   "applicationLaunchesExecuted": 0

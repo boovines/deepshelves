@@ -29,7 +29,7 @@ run_encoder_monitored() {
       pkill -x VTEncoderXPCService 2>/dev/null || true
       break
     fi
-    sleep 0.1
+    sleep 0.05
   done
   set +e
   wait "$command_pid"
@@ -48,8 +48,13 @@ run_encoder_monitored() {
 assert_safe_process_state
 
 focused_sources=(
+  "$repo_root/Packages/MemorySoftwareHEIC/Package.swift"
+  "$repo_root/Packages/MemorySoftwareHEIC/Sources/MemorySoftwareHEIC/SoftwareHEICCodec.swift"
+  "$repo_root/Packages/MemoryCapture/Sources/MemoryCapture/HEICKeyframeWriter.swift"
+  "$repo_root/Packages/MemoryCapture/Sources/MemoryCapture/SoftwareHEICFrameEncoder.swift"
   "$repo_root/Packages/MemoryEnrichment/Package.swift"
   "$repo_root/Packages/MemoryEnrichment/Sources/MemoryEnrichment/ThumbnailPipeline.swift"
+  "$repo_root/Tests/Unit/SoftwareHEICCodecTests.swift"
   "$repo_root/Tests/Unit/ThumbnailPipelineTests.swift"
 )
 if rg -n 'ImageIO|CGImageDestination|CGImageSource|AVAssetWriter|VideoToolbox|VTCompressionSession|hevc_videotoolbox|\bsips\b' \
@@ -59,6 +64,17 @@ if rg -n 'ImageIO|CGImageDestination|CGImageSource|AVAssetWriter|VideoToolbox|VT
 fi
 
 "$repo_root/scripts/materialize-dependencies.sh" >/dev/null
+software_heic_root="$repo_root/Packages/MemorySoftwareHEIC/Sources/MemorySoftwareHEIC/Resources/SoftwareHEIC"
+(
+  cd "$software_heic_root"
+  shasum -a 256 -c SHA256SUMS >/dev/null
+)
+for binary in "$software_heic_root/bin/lm-software-heic" "$software_heic_root/lib/"*.dylib; do
+  if otool -L "$binary" | rg 'ImageIO|AVFoundation|MediaToolbox|VideoToolbox'; then
+    echo "Forbidden Apple media framework linked by software HEIC runtime" >&2
+    exit 1
+  fi
+done
 xcodegen generate --spec "$repo_root/project.yml" >/dev/null
 run_encoder_monitored "$result_root/focused-tests.txt" \
   xcodebuild \
@@ -69,6 +85,7 @@ run_encoder_monitored "$result_root/focused-tests.txt" \
     -disableAutomaticPackageResolution \
     CODE_SIGNING_ALLOWED=NO \
     ENABLE_TESTABILITY=YES \
+    -only-testing:LocalMemoryUnitTests/SoftwareHEICCodecTests \
     -only-testing:LocalMemoryUnitTests/ThumbnailPipelineTests \
     -only-testing:LocalMemoryUnitTests/ArchiveFileStoreTests \
     test
@@ -93,12 +110,19 @@ source_file="$repo_root/Packages/MemoryEnrichment/Sources/MemoryEnrichment/Thumb
   rg -Fq 'case rebuiltMissing' "$source_file"
   rg -Fq 'throw ThumbnailPipelineError.runtimeCodecQuarantined' "$source_file"
   rg -Fq 'try FileManager.default.removeItem(at: url)' "$source_file"
+  rg -Fq 'public struct SoftwareThumbnailHEICCodec' "$source_file"
+  rg -Fq 'public struct SoftwareHEICFrameEncoder' \
+    "$repo_root/Packages/MemoryCapture/Sources/MemoryCapture/SoftwareHEICFrameEncoder.swift"
+  rg -Fq 'try verifyRuntime()' \
+    "$repo_root/Packages/MemorySoftwareHEIC/Sources/MemorySoftwareHEIC/SoftwareHEICCodec.swift"
   echo "aspect_orientation_color_safe_fixtures=passed"
+  echo "real_heic_software_roundtrip=passed"
   echo "source_and_thumbnail_hashes=passed"
   echo "atomic_publication_and_mode_0600=passed"
   echo "missing_file_rebuild=passed"
   echo "verified_deletion=passed"
-  echo "production_real_heic_codec=blocked_quarantined"
+  echo "production_real_heic_codec=passed_software_only"
+  echo "runtime_tamper_and_inventory=passed"
   echo "apple_imageio_encode_decode_calls=0"
   echo "hardware_encoder_tests_executed=0"
   echo "app_launch_tests_executed=0"
@@ -107,7 +131,7 @@ source_file="$repo_root/Packages/MemoryEnrichment/Sources/MemoryEnrichment/Thumb
 jq -n '{
   schemaVersion: 1,
   story: "LM-033",
-  status: "blocked",
+  status: "passed",
   safeImplementationPassed: true,
   maximumThumbnailLongEdge: 480,
   orientationCases: 8,
@@ -118,7 +142,9 @@ jq -n '{
   ownerOnlyFileMode: "0600",
   missingFileRebuild: true,
   verifiedDeletion: true,
-  productionRealHEICCodecValidation: "blocked_quarantined",
+  productionRealHEICCodecValidation: "passed_software_only",
+  softwareRuntimeIntegrityValidation: true,
+  videoToolboxLinkage: false,
   appleImageIOEncodeDecodeCalls: 0,
   hardwareEncoderTestsExecuted: 0,
   applicationLaunchesExecuted: 0
@@ -131,6 +157,7 @@ assert_safe_process_state
 
 {
   echo "safe_focused_release_tests=passed"
+  echo "real_software_heic_release_tests=passed"
   echo "aspect_orientation_color_model=passed"
   echo "hash_atomic_rebuild_delete=passed"
   echo "contracts=passed"
@@ -138,7 +165,7 @@ assert_safe_process_state
   echo "release_compile_only=passed"
   echo "dependency_audit=passed"
   echo "encoder_process_tripwire=passed"
-  echo "production_real_heic_codec=blocked_quarantined"
+  echo "production_real_heic_codec=passed_software_only"
 } | tee "$result_root/story-gate.txt"
 
-echo "LM-033 safe thumbnail gate passed; production real-HEIC codec gate remains blocked"
+echo "LM-033 real software-HEIC thumbnail gate passed without Apple media codecs"

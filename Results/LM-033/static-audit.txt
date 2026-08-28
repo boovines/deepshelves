@@ -1,9 +1,11 @@
 aspect_orientation_color_safe_fixtures=passed
+real_heic_software_roundtrip=passed
 source_and_thumbnail_hashes=passed
 atomic_publication_and_mode_0600=passed
 missing_file_rebuild=passed
 verified_deletion=passed
-production_real_heic_codec=blocked_quarantined
+production_real_heic_codec=passed_software_only
+runtime_tamper_and_inventory=passed
 apple_imageio_encode_decode_calls=0
 hardware_encoder_tests_executed=0
 app_launch_tests_executed=0

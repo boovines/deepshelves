@@ -1,11 +1,8 @@
-import CoreImage
 import CoreVideo
 import CryptoKit
 import Darwin
 import Foundation
-import ImageIO
 import MemoryContracts
-import UniformTypeIdentifiers
 
 public protocol HEICFrameEncoding: Sendable {
     func encode(
@@ -15,9 +12,8 @@ public protocol HEICFrameEncoding: Sendable {
 }
 
 public enum HEICFrameEncoderError: Error, Equatable, Sendable {
-    case imageCreationFailed
-    case destinationCreationFailed
-    case finalizationFailed
+    case unsupportedPixelFormat
+    case pixelBufferUnavailable
     case emptyPayload
     case runtimeQuarantined
 }
@@ -30,70 +26,6 @@ public struct QuarantinedHEICFrameEncoder: HEICFrameEncoding {
         destinationDimensions: PixelSize
     ) throws -> Data {
         throw HEICFrameEncoderError.runtimeQuarantined
-    }
-}
-
-public final class ImageIOHEICFrameEncoder: HEICFrameEncoding, @unchecked Sendable {
-    public static let productionQuality = 0.82
-
-    private let context = CIContext(options: [
-        .cacheIntermediates: false,
-        .useSoftwareRenderer: true,
-    ])
-    private let quality: Double
-
-    public init(quality: Double = ImageIOHEICFrameEncoder.productionQuality) {
-        self.quality = min(max(quality, 0), 1)
-    }
-
-    public func encode(
-        _ source: CVPixelBuffer,
-        destinationDimensions: PixelSize
-    ) throws -> Data {
-        let sourceImage = CIImage(cvPixelBuffer: source)
-        let scaleX = CGFloat(destinationDimensions.width) / sourceImage.extent.width
-        let scaleY = CGFloat(destinationDimensions.height) / sourceImage.extent.height
-        let scaled = sourceImage.transformed(
-            by: CGAffineTransform(scaleX: scaleX, y: scaleY)
-        )
-        let bounds = CGRect(
-            x: 0,
-            y: 0,
-            width: destinationDimensions.width,
-            height: destinationDimensions.height
-        )
-        let colorSpace = CGColorSpace(name: CGColorSpace.sRGB)
-        guard
-            let image = context.createCGImage(
-                scaled, from: bounds, format: .RGBA8, colorSpace: colorSpace)
-        else {
-            throw HEICFrameEncoderError.imageCreationFailed
-        }
-
-        let output = NSMutableData()
-        guard
-            let destination = CGImageDestinationCreateWithData(
-                output,
-                UTType.heic.identifier as CFString,
-                1,
-                nil
-            )
-        else {
-            throw HEICFrameEncoderError.destinationCreationFailed
-        }
-        CGImageDestinationAddImage(
-            destination,
-            image,
-            [kCGImageDestinationLossyCompressionQuality: quality] as CFDictionary
-        )
-        guard CGImageDestinationFinalize(destination) else {
-            throw HEICFrameEncoderError.finalizationFailed
-        }
-        let data = output as Data
-        guard !data.isEmpty else {
-            throw HEICFrameEncoderError.emptyPayload
-        }
-        return data
     }
 }
 

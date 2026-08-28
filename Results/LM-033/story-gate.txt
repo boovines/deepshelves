@@ -1,4 +1,5 @@
 safe_focused_release_tests=passed
+real_software_heic_release_tests=passed
 aspect_orientation_color_model=passed
 hash_atomic_rebuild_delete=passed
 contracts=passed
@@ -6,4 +7,4 @@ privacy_smoke=passed
 release_compile_only=passed
 dependency_audit=passed
 encoder_process_tripwire=passed
-production_real_heic_codec=blocked_quarantined
+production_real_heic_codec=passed_software_only

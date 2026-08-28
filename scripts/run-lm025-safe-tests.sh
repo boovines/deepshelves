@@ -64,6 +64,7 @@ stop_encoder_tripwire() {
 mkdir -p "$result_root" "$build_root"
 rm -f -- "$result_root/ENCODER-TRIPWIRE-FAILED"
 guard_processes
+"$repo_root/scripts/materialize-dependencies.sh" >/dev/null
 
 unsafe_pattern='AVAssetWriter|AVVideoCodecType[.]hevc|VTCompressionSession|VideoToolbox|HEVCMediaWriter'
 if rg -n "$unsafe_pattern" \
@@ -146,6 +147,7 @@ xcodebuild \
   -derivedDataPath "$repo_root/.build/DerivedData" \
   -disableAutomaticPackageResolution \
   CODE_SIGNING_ALLOWED=NO \
+  -only-testing:LocalMemoryUnitTests/SoftwareHEICCodecTests \
   -only-testing:LocalMemoryIntegrationTests/CaptureMediaIntegrationTests \
   test 2>&1 | tee "$integration_log"
 stop_encoder_tripwire
@@ -157,10 +159,20 @@ stop_encoder_tripwire
 
 {
   test ! -e "$repo_root/Packages/MemoryCapture/Sources/MemoryCapture/HEVCMediaWriter.swift"
-  rg -n 'CGImageDestinationCreateWithData' \
-    "$repo_root/Packages/MemoryCapture/Sources/MemoryCapture/HEICKeyframeWriter.swift"
-  rg -n '[.]useSoftwareRenderer: true' \
-    "$repo_root/Packages/MemoryCapture/Sources/MemoryCapture/HEICKeyframeWriter.swift"
+  if rg -n 'import ImageIO|CGImageDestination|CGImageSource' \
+    "$repo_root/Packages/MemoryCapture/Sources/MemoryCapture"; then
+    echo "Apple ImageIO remains in the shipping capture path" >&2
+    exit 1
+  fi
+  rg -n 'SoftwareHEICFrameEncoder' \
+    "$repo_root/Packages/MemoryCapture/Sources/MemoryCapture/SoftwareHEICFrameEncoder.swift"
+  software_heic_root="$repo_root/Packages/MemorySoftwareHEIC/Sources/MemorySoftwareHEIC/Resources/SoftwareHEIC"
+  (cd "$software_heic_root" && shasum -a 256 -c SHA256SUMS >/dev/null)
+  for binary in "$software_heic_root/bin/lm-software-heic" "$software_heic_root/lib/"*.dylib; do
+    if otool -L "$binary" | rg 'ImageIO|AVFoundation|MediaToolbox|VideoToolbox'; then
+      exit 1
+    fi
+  done
   rg -n 'HEICKeyframeManifest' \
     "$repo_root/Packages/MemoryCapture/Sources/MemoryCapture/HEICKeyframeWriter.swift"
   rg -n 'renamex_np' \
@@ -178,10 +190,14 @@ stop_encoder_tripwire
     exit 1
   fi
   echo "hardware_video_encoder_removed=passed"
-  echo "production_heic_encoder_compile_only=passed"
-  echo "tests_use_boundary_fake_only=passed"
+  echo "production_software_heic_roundtrip=passed"
+  echo "boundary_fake_fault_tests=passed"
   echo "local_only_writer_scan=passed"
   echo "encoder_process_tripwire=passed"
 } 2>&1 | tee "$audit_log"
+
+perl -pi -e 's/[ \t]+$//' "$integration_log" "$build_log"
+perl -0777 -pi -e 's/\n+\z/\n/' "$integration_log" "$build_log"
+git -C "$repo_root" diff --check
 
 echo "LM-025 HEIC keyframe safe gate passed without hardware video encoding"

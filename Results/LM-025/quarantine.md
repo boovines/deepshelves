@@ -12,7 +12,7 @@ Do not run any test, probe, benchmark, app path, or one-variable experiment on t
 
 ## Authorized resolution
 
-ADR 0001 now selects independently encoded HEIC keyframes in immutable logical chunk directories. The shipping capture target contains no AVAssetWriter, VideoToolbox, HEVC codec, or former HEVC writer reference. Production ImageIO HEIC encoding is compiled but was not executed by LM-025 tests; all runtime verification used deterministic fakes at the narrow encoding boundary.
+ADR 0001 now selects independently encoded HEIC keyframes in immutable logical chunk directories. The shipping capture target contains no ImageIO, AVAssetWriter, VideoToolbox, hardware video encoder, or former HEVC writer reference. Its pinned local helper uses libheif with x265 and libde265 for software-only still-image encoding and decoding; the complete closure has no Apple media-framework linkage. Real software HEIC tests and deterministic fault fakes both pass under the encoder-service tripwire.
 
 Safe verification proves foreground-window identity scoping, local-only operation, canonical manifest and per-frame integrity, exact search evidence paths, owner-only permissions, atomic no-replace publication, mid-write recovery, retained-only republishing, retention removal, and deleted-sentinel absence. The architecture decision therefore passes LM-025 without waiving or weakening a privacy, integrity, deletion, or foreground-window invariant.
 
