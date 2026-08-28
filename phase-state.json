@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "activeStory": "LM-018",
+  "activeStory": "LM-019",
   "stories": {
     "LM-001": {
       "status": "passed",
@@ -275,23 +275,28 @@
       "resumeProbe": null
     },
     "LM-018": {
-      "status": "active",
+      "status": "passed",
       "startedAt": "2026-08-28T10:37:16Z",
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": "Base checkpoint refs/tags/checkpoints/LM-017. Implement owner-only archive file creation, validated relative paths, sibling partial/atomic writing, startup orphan recovery, quarantine, and integrity hashes with injected rename/commit-boundary fault fixtures.",
+      "completedAt": "2026-08-28T10:49:59Z",
+      "gitRevision": "refs/tags/checkpoints/LM-018",
+      "evidence": [
+        "Results/LM-018/report.json",
+        "Results/LM-018/faults.json",
+        "Results/LM-018/fault-tests.txt",
+        "Results/LM-018/unit-tests.txt"
+      ],
+      "notes": "MemoryStore now enforces serialized relative-path validation and symlink containment, writes owner-only sibling partials with file/directory durability and SHA-256 before database commit, and performs fail-closed startup recovery. Injected before-rename and after-rename/before-commit crashes, hash mismatch, missing ready media, interrupted leases, recursive ACL repair, and searchable-projection suppression all pass with the complete release/privacy suite.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null
     },
     "LM-019": {
-      "status": "pending",
-      "startedAt": null,
+      "status": "active",
+      "startedAt": "2026-08-28T10:49:59Z",
       "completedAt": null,
       "gitRevision": null,
       "evidence": [],
-      "notes": null,
+      "notes": "Base checkpoint refs/tags/checkpoints/LM-018. Implement ScreenCaptureKit permission probe, SCShareableContent refresh, pixel-buffer lifetime rules, and a restartable SCStream with no eligible target by default; verify grant/revoke/display-change lifecycle and prohibit composited-display pixel delivery.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null

@@ -1,0 +1,47 @@
+{
+  "allInvariantsPassed" : true,
+  "boundaries" : [
+    {
+      "boundary" : "beforeRename",
+      "finalPresentBeforeRecovery" : false,
+      "invariantPassed" : true,
+      "partialPresentBeforeRecovery" : true,
+      "quarantinedOrphanFiles" : 0,
+      "removedPartialFiles" : 1,
+      "searchableFramesAfterRecovery" : 0
+    },
+    {
+      "boundary" : "afterRenameBeforeCommit",
+      "finalPresentBeforeRecovery" : true,
+      "invariantPassed" : true,
+      "partialPresentBeforeRecovery" : false,
+      "quarantinedOrphanFiles" : 1,
+      "removedPartialFiles" : 0,
+      "searchableFramesAfterRecovery" : 0
+    }
+  ],
+  "generatedFrom" : "MemoryStore production atomic writer and startup recovery",
+  "integrityCases" : [
+    {
+      "caseName" : "sha256-mismatch",
+      "finalState" : "quarantined",
+      "invariantPassed" : true,
+      "missingReadyFiles" : 0,
+      "quarantinedCorruptFiles" : 1,
+      "searchableFramesAfterRecovery" : 0
+    },
+    {
+      "caseName" : "missing-ready-file",
+      "finalState" : "quarantined",
+      "invariantPassed" : true,
+      "missingReadyFiles" : 1,
+      "quarantinedCorruptFiles" : 0,
+      "searchableFramesAfterRecovery" : 0
+    }
+  ],
+  "ownerOnlyDirectories" : true,
+  "ownerOnlyFiles" : true,
+  "pathTraversalRejected" : true,
+  "requeuedLeasedJobs" : 1,
+  "schemaVersion" : 1
+}

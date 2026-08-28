@@ -34,6 +34,7 @@ struct LocalMemoryApp: App {
     init() {
         let arguments = ProcessInfo.processInfo.arguments
         Self.exportLM017SchemaAndExitIfRequested(arguments: arguments)
+        Self.exportLM018FaultsAndExitIfRequested(arguments: arguments)
         let configuration = AppLaunchConfiguration(arguments: arguments)
         launchConfiguration = configuration
         shellKeyboardMonitor = ShellKeyboardCommandMonitor()
@@ -170,6 +171,28 @@ struct LocalMemoryApp: App {
         } catch {
             FileHandle.standardError.write(
                 Data("LM-017 schema export failed: \(error)\n".utf8)
+            )
+            Darwin.exit(EXIT_FAILURE)
+        }
+    }
+
+    private static func exportLM018FaultsAndExitIfRequested(arguments: [String]) {
+        guard let exportIndex = arguments.firstIndex(of: "--lm018-export-faults"),
+              arguments.indices.contains(exportIndex + 1)
+        else {
+            return
+        }
+        do {
+            let encoder = JSONEncoder()
+            encoder.outputFormatting = [.prettyPrinted, .sortedKeys, .withoutEscapingSlashes]
+            try encoder.encode(LM018FaultHarness.run()).write(
+                to: URL(fileURLWithPath: arguments[exportIndex + 1]),
+                options: .atomic
+            )
+            Darwin.exit(EXIT_SUCCESS)
+        } catch {
+            FileHandle.standardError.write(
+                Data("LM-018 fault export failed: \(error)\n".utf8)
             )
             Darwin.exit(EXIT_FAILURE)
         }

@@ -23,6 +23,7 @@ public struct ArchivePaths: Equatable, Sendable {
 public enum ArchivePathError: Error, Equatable, Sendable {
     case applicationSupportUnavailable
     case rootEscapesApplicationSupport
+    case symbolicLinkForbidden(String)
 }
 
 public enum ArchivePathProvider: Sendable {
@@ -69,6 +70,7 @@ public enum ArchivePathProvider: Sendable {
         )
 
         for directory in paths.directories {
+            try rejectSymbolicLink(at: directory, fileManager: fileManager)
             try fileManager.createDirectory(
                 at: directory,
                 withIntermediateDirectories: true,
@@ -79,6 +81,95 @@ public enum ArchivePathProvider: Sendable {
                 ofItemAtPath: directory.path
             )
         }
+        try enforceOwnerOnlyTree(at: paths.root, fileManager: fileManager)
         return paths
+    }
+
+    static func createOwnerOnlyDirectory(
+        at directory: URL,
+        beneath root: URL,
+        fileManager: FileManager = .default
+    ) throws {
+        let standardizedRoot = root.standardizedFileURL
+        let standardizedDirectory = directory.standardizedFileURL
+        guard standardizedDirectory.path.hasPrefix(standardizedRoot.path + "/") else {
+            throw ArchivePathError.rootEscapesApplicationSupport
+        }
+
+        var current = standardizedRoot
+        let rootComponents = standardizedRoot.pathComponents
+        for component in standardizedDirectory.pathComponents.dropFirst(rootComponents.count) {
+            current.appendPathComponent(component, isDirectory: true)
+            try rejectSymbolicLink(at: current, fileManager: fileManager)
+            if !fileManager.fileExists(atPath: current.path) {
+                try fileManager.createDirectory(
+                    at: current,
+                    withIntermediateDirectories: false,
+                    attributes: [.posixPermissions: directoryPermissions]
+                )
+            }
+            try fileManager.setAttributes(
+                [.posixPermissions: directoryPermissions],
+                ofItemAtPath: current.path
+            )
+        }
+    }
+
+    static func enforceOwnerOnlyTree(
+        at root: URL,
+        fileManager: FileManager = .default
+    ) throws {
+        try rejectSymbolicLink(at: root, fileManager: fileManager)
+        try fileManager.setAttributes(
+            [.posixPermissions: directoryPermissions],
+            ofItemAtPath: root.path
+        )
+        guard let enumerator = fileManager.enumerator(
+            at: root,
+            includingPropertiesForKeys: [.isDirectoryKey, .isRegularFileKey, .isSymbolicLinkKey],
+            options: []
+        ) else {
+            return
+        }
+        for case let url as URL in enumerator {
+            let values = try url.resourceValues(
+                forKeys: [.isDirectoryKey, .isRegularFileKey, .isSymbolicLinkKey]
+            )
+            if values.isSymbolicLink == true {
+                enumerator.skipDescendants()
+                throw ArchivePathError.symbolicLinkForbidden(url.path)
+            }
+            if values.isDirectory == true {
+                try fileManager.setAttributes(
+                    [.posixPermissions: directoryPermissions],
+                    ofItemAtPath: url.path
+                )
+            } else if values.isRegularFile == true {
+                try fileManager.setAttributes(
+                    [.posixPermissions: filePermissions],
+                    ofItemAtPath: url.path
+                )
+            }
+        }
+    }
+
+    static func rejectSymbolicLink(
+        at url: URL,
+        fileManager: FileManager = .default
+    ) throws {
+        do {
+            let attributes = try fileManager.attributesOfItem(atPath: url.path)
+            if attributes[.type] as? FileAttributeType == .typeSymbolicLink {
+                throw ArchivePathError.symbolicLinkForbidden(url.path)
+            }
+        } catch {
+            let cocoaError = error as NSError
+            if cocoaError.domain == NSCocoaErrorDomain,
+               cocoaError.code == NSFileReadNoSuchFileError
+            {
+                return
+            }
+            throw error
+        }
     }
 }

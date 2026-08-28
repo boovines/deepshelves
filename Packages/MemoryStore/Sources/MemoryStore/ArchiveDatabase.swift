@@ -32,6 +32,8 @@ public final class ArchiveDatabase: @unchecked Sendable {
 
     public let paths: ArchivePaths?
     public let isDeterministicTestStore: Bool
+    public let fileStore: ArchiveFileStore?
+    public let startupRecoveryReport: ArchiveStartupRecoveryReport
 
     private let writer: any DatabaseWriter
     private let migrator: DatabaseMigrator
@@ -64,9 +66,17 @@ public final class ArchiveDatabase: @unchecked Sendable {
                 ofItemAtPath: databaseFile.path
             )
         }
+        let fileStore = ArchiveFileStore(paths: paths, fileManager: fileManager)
+        let recoveryReport = try ArchiveStartupRecovery.recover(
+            paths: paths,
+            writer: pool,
+            fileManager: fileManager
+        )
 
         self.paths = paths
         isDeterministicTestStore = false
+        self.fileStore = fileStore
+        startupRecoveryReport = recoveryReport
         writer = pool
         self.migrator = migrator
     }
@@ -75,12 +85,16 @@ public final class ArchiveDatabase: @unchecked Sendable {
         writer: any DatabaseWriter,
         paths: ArchivePaths?,
         isDeterministicTestStore: Bool,
-        migrator: DatabaseMigrator
+        migrator: DatabaseMigrator,
+        fileStore: ArchiveFileStore?,
+        startupRecoveryReport: ArchiveStartupRecoveryReport
     ) {
         self.writer = writer
         self.paths = paths
         self.isDeterministicTestStore = isDeterministicTestStore
         self.migrator = migrator
+        self.fileStore = fileStore
+        self.startupRecoveryReport = startupRecoveryReport
     }
 
     public static func deterministicTestStore() throws -> ArchiveDatabase {
@@ -96,7 +110,9 @@ public final class ArchiveDatabase: @unchecked Sendable {
             writer: queue,
             paths: nil,
             isDeterministicTestStore: true,
-            migrator: migrator
+            migrator: migrator,
+            fileStore: nil,
+            startupRecoveryReport: .empty
         )
     }
 
@@ -317,6 +333,125 @@ public final class ArchiveDatabase: @unchecked Sendable {
                 result[table] = try database.columns(in: table).map(\.name)
             }
             return result
+        }
+    }
+
+    func insertReadyMediaFixtureForTesting(
+        chunkID: String,
+        frameID: String,
+        integrity: ArchiveFileIntegrity
+    ) throws {
+        try insertMediaFixtureForTesting(
+            chunkID: chunkID,
+            frameID: frameID,
+            relativePath: integrity.relativePath,
+            byteCount: integrity.byteCount,
+            sha256: integrity.sha256Hex
+        )
+    }
+
+    func insertMissingReadyMediaFixtureForTesting(
+        chunkID: String,
+        frameID: String,
+        relativePath: ArchiveRelativePath
+    ) throws {
+        try insertMediaFixtureForTesting(
+            chunkID: chunkID,
+            frameID: frameID,
+            relativePath: relativePath,
+            byteCount: 64,
+            sha256: String(repeating: "0", count: 64)
+        )
+    }
+
+    func insertLeasedJobFixtureForTesting(id: String) throws {
+        try writer.write { database in
+            try database.execute(
+                sql: """
+                    INSERT INTO processing_jobs(
+                        id, parent_id, kind, priority, state, attempts,
+                        next_attempt_at, producer_version, error_code, lease_expires_at
+                    ) VALUES (?, 'independent-parent', 'fixture', 1, 'leased', 1,
+                              NULL, '1', NULL, '2099-01-01T00:00:00.000Z')
+                    """,
+                arguments: [id]
+            )
+        }
+    }
+
+    func searchableFrameCountForTesting() throws -> Int {
+        try writer.read { database in
+            try Int.fetchOne(
+                database,
+                sql: "SELECT COUNT(*) FROM frame_fts WHERE frame_fts MATCH 'searchable'"
+            ) ?? 0
+        }
+    }
+
+    func mediaChunkStateForTesting(id: String) throws -> String? {
+        try writer.read { database in
+            try String.fetchOne(
+                database,
+                sql: "SELECT state FROM media_chunks WHERE id = ?",
+                arguments: [id]
+            )
+        }
+    }
+
+    func processingJobStateForTesting(id: String) throws -> String? {
+        try writer.read { database in
+            try String.fetchOne(
+                database,
+                sql: "SELECT state FROM processing_jobs WHERE id = ?",
+                arguments: [id]
+            )
+        }
+    }
+
+    private func insertMediaFixtureForTesting(
+        chunkID: String,
+        frameID: String,
+        relativePath: ArchiveRelativePath,
+        byteCount: Int64,
+        sha256: String
+    ) throws {
+        try writer.write { database in
+            try database.execute(
+                sql: """
+                    INSERT INTO media_chunks(
+                        id, capture_epoch_id, target_window_id, relative_path,
+                        started_at, ended_at, codec, width, height, frame_count,
+                        byte_count, sha256, state
+                    ) VALUES (?, 'epoch-fixture', 42, ?,
+                              '2026-08-28T00:00:00.000Z', '2026-08-28T00:00:01.000Z',
+                              'hevcMain', 1280, 720, 1, ?, ?, 'ready')
+                    """,
+                arguments: [chunkID, relativePath.rawValue, byteCount, sha256]
+            )
+            try database.execute(
+                sql: """
+                    INSERT INTO frames(
+                        id, captured_at, monotonic_ns, capture_epoch_id,
+                        target_window_id, chunk_id, pts_ms, bundle_id, app_name,
+                        window_title, capture_reason, is_transition, text_state,
+                        visual_state, schema_version, approved_text
+                    ) VALUES (?, '2026-08-28T00:00:00.500Z', 500000000,
+                              'epoch-fixture', 42, ?, 500, 'com.example.fixture',
+                              'Fixture', 'Approved Fixture', 'visualChange', 0,
+                              'ready', 'ready', 1, 'searchable approved fixture')
+                    """,
+                arguments: [frameID, chunkID]
+            )
+            try database.execute(
+                sql: """
+                    INSERT INTO frame_fts(
+                        rowid, approved_text, window_title, app_name, url_host, url_path
+                    )
+                    SELECT rowid, approved_text, window_title, app_name, url_host, url_path
+                    FROM frames WHERE id = ?
+                    """,
+                arguments: [frameID]
+            )
         }
     }
 

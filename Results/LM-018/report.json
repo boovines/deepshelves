@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-018",
+  "status": "passed",
+  "generatedAt": "2026-08-28T10:49:59Z",
+  "baseRevision": "aa044ec3404bc01a9f93a7c64693e090148f36ed",
+  "checkpoint": "refs/tags/checkpoints/LM-018",
+  "results": {
+    "writePath": {
+      "managedRoots": 6,
+      "validatedSerializedRelativePaths": true,
+      "siblingPartial": true,
+      "fileFsyncBeforeRename": true,
+      "atomicSiblingRename": true,
+      "directoryFsyncAfterRename": true,
+      "databaseCommitAfterRename": true,
+      "sha256Bytes": 32,
+      "fileMode": "0600",
+      "directoryMode": "0700",
+      "symlinkEscapeRejected": true
+    },
+    "startupRecovery": {
+      "orphanPartialsRemoved": true,
+      "orphanFinalsQuarantined": true,
+      "corruptFinalsQuarantined": true,
+      "missingReadyFilesSuppressed": true,
+      "searchableCorruptArtifacts": 0,
+      "interruptedLeasesRequeued": true
+    },
+    "faultInjection": {
+      "boundaries": 2,
+      "integrityCases": 2,
+      "allInvariantsPassed": true
+    }
+  },
+  "gates": {
+    "faultTests": {
+      "status": "passed",
+      "tests": 9,
+      "log": "Results/LM-018/fault-tests.txt",
+      "sha256": "6ecd1b0c12d6598ecdea5b591e3afaef13b46cdb47520899f87bb5aa71f733ce"
+    },
+    "faultEvidence": {
+      "status": "passed",
+      "log": "Results/LM-018/faults.json",
+      "sha256": "bb6885e5450b086d8b58c563f0b2d86eddc908b9d8049a87bd59e8078ca0be56"
+    },
+    "unitAndRegressionTests": {
+      "status": "passed",
+      "xctestUnitTests": 117,
+      "swiftTestingTests": 9,
+      "integrationTests": 7,
+      "privacyTests": 4,
+      "performanceTests": 1,
+      "log": "Results/LM-018/unit-tests.txt",
+      "sha256": "915ebddb24c8603d4a793e12d309f49eecafdcd84f0f61bd4a83eaf76708ca82"
+    },
+    "contracts": {
+      "status": "passed",
+      "fixtures": 11,
+      "log": "Results/LM-018/contracts.txt",
+      "sha256": "42a794609e52ac4a73fb15f4cd1891fdd452d8a0ec915462cda8abfdc461cfd3"
+    },
+    "privacySmoke": {
+      "status": "passed",
+      "log": "Results/LM-018/privacy-smoke.txt",
+      "sha256": "9ea4b5449f9715c90a3a80909f275c987c95be1130414ae6e10f888fcbe4a8bc"
+    },
+    "releaseBuild": {
+      "status": "passed",
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ],
+      "log": "Results/LM-018/release-build.txt",
+      "sha256": "476c36b7686f33581d7f042ad6cc1d58ece48330b8a8e5d4e3dfe544302db113"
+    },
+    "signingPosture": {
+      "status": "passed",
+      "log": "Results/LM-018/signing-posture.txt",
+      "sha256": "c8b74b4f7c6d7be0433cb54d1f5751b91f96f48c44760354572613b5988f8a3b"
+    },
+    "releaseBinaryDependencyAudit": {
+      "status": "passed",
+      "log": "Results/LM-018/dependency-audit.txt",
+      "sha256": "ee19ec2fac69814d57606f8260d4120b82de9aecffb3286ca3159489700b0b32"
+    },
+    "diffWhitespace": {
+      "status": "passed"
+    }
+  }
+}
