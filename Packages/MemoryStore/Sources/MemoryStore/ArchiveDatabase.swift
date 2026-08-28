@@ -3,7 +3,21 @@ import GRDB
 
 public enum ArchiveDatabaseError: Error, Equatable, Sendable {
     case invalidKeyLength
+    case invalidPolicyDecisionAudit
     case injectedMigrationInterruption
+}
+
+public struct ArchivePolicyDecisionRecord: Equatable, Sendable {
+    public let id: UUID
+    public let decidedAt: Date
+    public let bundleIdentifier: String?
+    public let host: String?
+    public let privateContext: Bool
+    public let result: String
+    public let matchedRuleID: String?
+
+    /// The V1 audit contract has no title, URL, text, pixel, media, or derived-content fields.
+    public var contentFieldCount: Int { 0 }
 }
 
 public struct ArchiveDatabaseConfigurationSnapshot: Equatable, Sendable {
@@ -145,6 +159,86 @@ public final class ArchiveDatabase: @unchecked Sendable {
                 sql: "SELECT value FROM archive_meta WHERE key = ?",
                 arguments: [key]
             )
+        }
+    }
+
+    public func recordPolicyDecision(
+        id: UUID,
+        decidedAt: Date,
+        bundleIdentifier: String?,
+        host: String?,
+        privateContext: Bool,
+        result: String,
+        matchedRuleID: String?
+    ) throws {
+        guard result == "allowed" || result == "denied",
+              Self.isSafeAuditBundleIdentifier(bundleIdentifier),
+              Self.isSafeAuditHost(host),
+              Self.isSafeAuditRuleIdentifier(matchedRuleID)
+        else {
+            throw ArchiveDatabaseError.invalidPolicyDecisionAudit
+        }
+        let timestamp = decidedAt.formatted(
+            Date.ISO8601FormatStyle(includingFractionalSeconds: true, timeZone: .gmt)
+        )
+        try writer.write { database in
+            try database.execute(
+                sql: """
+                    INSERT INTO policy_decisions(
+                        id, decided_at, bundle_id, host,
+                        private_context, result, matched_rule_id
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?)
+                    """,
+                arguments: [
+                    id.uuidString.lowercased(),
+                    timestamp,
+                    bundleIdentifier,
+                    host,
+                    privateContext ? 1 : 0,
+                    result,
+                    matchedRuleID,
+                ]
+            )
+        }
+    }
+
+    public func policyDecisionRecords() throws -> [ArchivePolicyDecisionRecord] {
+        try writer.read { database in
+            let rows = try Row.fetchAll(
+                database,
+                sql: """
+                    SELECT id, decided_at, bundle_id, host,
+                           private_context, result, matched_rule_id
+                    FROM policy_decisions
+                    ORDER BY decided_at, id
+                    """
+            )
+            let dateStyle = Date.ISO8601FormatStyle(
+                includingFractionalSeconds: true,
+                timeZone: .gmt
+            )
+            return try rows.map { row in
+                let encodedID: String = row["id"]
+                let encodedDate: String = row["decided_at"]
+                guard let id = UUID(uuidString: encodedID) else {
+                    throw ArchiveDatabaseError.invalidPolicyDecisionAudit
+                }
+                let decidedAt: Date
+                do {
+                    decidedAt = try dateStyle.parse(encodedDate)
+                } catch {
+                    throw ArchiveDatabaseError.invalidPolicyDecisionAudit
+                }
+                return ArchivePolicyDecisionRecord(
+                    id: id,
+                    decidedAt: decidedAt,
+                    bundleIdentifier: row["bundle_id"],
+                    host: row["host"],
+                    privateContext: (row["private_context"] as Int) == 1,
+                    result: row["result"],
+                    matchedRuleID: row["matched_rule_id"]
+                )
+            }
         }
     }
 
@@ -502,6 +596,35 @@ public final class ArchiveDatabase: @unchecked Sendable {
         case 1: "FILE"
         case 2: "MEMORY"
         default: "DEFAULT"
+        }
+    }
+
+    private static func isSafeAuditBundleIdentifier(_ value: String?) -> Bool {
+        guard let value else { return true }
+        return isSafeAuditScalar(value, permittedPunctuation: ".-")
+    }
+
+    private static func isSafeAuditHost(_ value: String?) -> Bool {
+        guard let value else { return true }
+        return value == value.lowercased(with: Locale(identifier: "en_US_POSIX"))
+            && isSafeAuditScalar(value, permittedPunctuation: ".-")
+    }
+
+    private static func isSafeAuditRuleIdentifier(_ value: String?) -> Bool {
+        guard let value else { return true }
+        return isSafeAuditScalar(value, permittedPunctuation: ".:_-")
+    }
+
+    private static func isSafeAuditScalar(
+        _ value: String,
+        permittedPunctuation: String
+    ) -> Bool {
+        guard !value.isEmpty, value.count <= 255 else { return false }
+        let punctuation = Set(permittedPunctuation.unicodeScalars)
+        return value.unicodeScalars.allSatisfy { scalar in
+            scalar.properties.isAlphabetic
+                || scalar.properties.numericType != nil
+                || punctuation.contains(scalar)
         }
     }
 

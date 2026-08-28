@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-022",
+  "status": "passed",
+  "generatedAt": "2026-08-28T11:44:09Z",
+  "baseRevision": "13cdac94235f1d330f3e95207291981d90dafa7f",
+  "checkpoint": "refs/tags/checkpoints/LM-022",
+  "results": {
+    "compiledPolicy": {
+      "fixedExclusionCount": 7,
+      "fixedExclusionOverrideCount": 0,
+      "fixedExclusionsEncodedAsEditableState": false,
+      "passwordManagerDefaultsVersion": "2026-08-01.v1",
+      "passwordManagerDefaultsEditable": true,
+      "privateBrowserDefaultEditable": true,
+      "orderedUserRulesUseLastMatch": true
+    },
+    "privacyCorpus": {
+      "fixtureCount": 1000,
+      "exactDecisionCount": 1000,
+      "deniedCount": 1000,
+      "reasonCounts": {
+        "ambiguousTarget": 200,
+        "browserContextUnavailable": 200,
+        "missingTarget": 200,
+        "privateBrowserDefault": 200,
+        "userRule": 200
+      }
+    },
+    "zeroArtifactProjection": {
+      "backgroundSentinelSceneCount": 1000,
+      "persistedPixelPayloadCount": 0,
+      "persistedTextPayloadCount": 0,
+      "persistedDerivedArtifactCount": 0,
+      "persistedCachePayloadCount": 0
+    },
+    "nonContentAudit": {
+      "auditRowCount": 1000,
+      "auditContentFieldCount": 0,
+      "deniedAuditContextFieldCount": 0,
+      "contentBearingFieldInjectionRejected": true
+    },
+    "finalRecheck": {
+      "targetIdentityRaceRejected": true,
+      "captureEpochRaceRejected": true,
+      "policyGenerationRaceRejected": true
+    }
+  },
+  "gates": {
+    "signedPrivacyPolicyCorpus": {
+      "status": "passed",
+      "targetedTests": 11,
+      "evidence": "Results/LM-022/privacy-policy.json",
+      "evidenceSha256": "71a50b4b23ac043cb71ea23c1a2a2166d958a3a183e36cd90191e057446bde26",
+      "fixture": "Fixtures/LM022/privacy-policy-corpus.json",
+      "fixtureSha256": "1f5a9c44de3fc0a39f72c98b900ce5e2cebc815fd587cd8598833153c4fecd71",
+      "log": "Results/LM-022/privacy-policy-tests.txt",
+      "logSha256": "dbd4b1a59c6b985674490e9a49e08a37ca02f8f5c3d580303f6f21bea55d29b0"
+    },
+    "unitAndRegressionTests": {
+      "status": "passed",
+      "xctestUnitTests": 149,
+      "swiftTestingTests": 9,
+      "integrationTests": 7,
+      "privacyTests": 4,
+      "performanceTests": 1,
+      "log": "Results/LM-022/full-tests.txt",
+      "sha256": "2bf1cdef30454c797fc952f3a8d43b39342aec041bbd20fc6159a071576a8007"
+    },
+    "contracts": {
+      "status": "passed",
+      "fixtures": 11,
+      "log": "Results/LM-022/contracts.txt",
+      "sha256": "5ab8b0fa2141ce5f9322aba50584cd7dfd67a2b8dc77239e6a72ad4b970acffa"
+    },
+    "privacySmoke": {
+      "status": "passed",
+      "log": "Results/LM-022/privacy-smoke.txt",
+      "sha256": "9ea4b5449f9715c90a3a80909f275c987c95be1130414ae6e10f888fcbe4a8bc"
+    },
+    "releaseBuild": {
+      "status": "passed",
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ],
+      "log": "Results/LM-022/release-build.txt",
+      "sha256": "bbfa1b2c238cb5dead74e63be235950986aba05115c20ca6c605be9f5bf97f22"
+    },
+    "signingPosture": {
+      "status": "passed",
+      "log": "Results/LM-022/signing-posture.txt",
+      "sha256": "d744a310fd28a48f7a1e95a0e822b4fddbdc60700aa3fb429ea22d882bb7145a"
+    },
+    "dependencyStatic": {
+      "status": "passed",
+      "log": "Results/LM-022/dependencies.txt",
+      "sha256": "875df9c029cf144be809a444a229a0b442b480941fcc10656c6df1830a36c0d5"
+    },
+    "releaseBinaryDependencyAudit": {
+      "status": "passed",
+      "log": "Results/LM-022/dependency-binaries.txt",
+      "sha256": "ee19ec2fac69814d57606f8260d4120b82de9aecffb3286ca3159489700b0b32"
+    },
+    "diffWhitespace": {
+      "status": "passed"
+    }
+  }
+}

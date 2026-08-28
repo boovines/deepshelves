@@ -247,7 +247,7 @@ public struct PrivateBrowserContextOutput: Codable, Equatable, Sendable {
     }
 }
 
-public enum BrowserContextUnavailableReason: String, Codable, Equatable, Sendable {
+public enum BrowserContextUnavailableReason: String, Codable, CaseIterable, Equatable, Sendable {
     case unsupportedBrowser
     case targetWindowMismatch
     case ambiguousAddressField

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "activeStory": "LM-022",
+  "activeStory": "LM-023",
   "stories": {
     "LM-001": {
       "status": "passed",
@@ -339,23 +339,28 @@
       "resumeProbe": null
     },
     "LM-022": {
-      "status": "active",
+      "status": "passed",
       "startedAt": "2026-08-28T11:29:16Z",
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": "Base checkpoint refs/tags/checkpoints/LM-021. Implement the compiled application/site/private-window PrivacyPolicy, fixed non-removable exclusions, editable password-manager/private defaults, precedence, prefilter and final epoch recheck, content-free audit, and fail-closed property fixtures.",
+      "completedAt": "2026-08-28T11:44:09Z",
+      "gitRevision": "refs/tags/checkpoints/LM-022",
+      "evidence": [
+        "Results/LM-022/report.json",
+        "Results/LM-022/privacy-policy.json",
+        "Results/LM-022/privacy-policy-tests.txt",
+        "Fixtures/LM022/privacy-policy-corpus.json"
+      ],
+      "notes": "The compiled policy preserves non-removable self/login/permission exclusions outside editable serialization, keeps versioned password-manager and private-browser defaults editable, applies ordered user rules with last-match behavior, fails closed for runtime and browser uncertainty, and binds final approval to target, browser context, capture epoch, and policy generation. The signed 1,000-case corpus denied every prohibited case exactly, projected zero pixel/text/derived/cache artifacts, and persisted only 1,000 content-free audit rows.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null
     },
     "LM-023": {
-      "status": "pending",
-      "startedAt": null,
+      "status": "active",
+      "startedAt": "2026-08-28T11:44:09Z",
       "completedAt": null,
       "gitRevision": null,
       "evidence": [],
-      "notes": null,
+      "notes": "Base checkpoint refs/tags/checkpoints/LM-022. Implement coarse input-class ActivityMonitor, five-minute idle state, sleep/wake/session-lock handling, and prohibit key or clipboard value capture.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null

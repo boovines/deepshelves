@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "seed": 1279938622,
+  "caseCount": 1000,
+  "categories": {
+    "ambiguousTarget": 200,
+    "missingTarget": 200,
+    "privateContext": 200,
+    "siteDenied": 200,
+    "urlContextUnavailable": 200
+  },
+  "pixelPayloadCountForEveryCase": 0,
+  "derivedArtifactCountForEveryCase": 0
+}

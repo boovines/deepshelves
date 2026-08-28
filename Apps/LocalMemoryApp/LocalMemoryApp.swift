@@ -38,6 +38,7 @@ struct LocalMemoryApp: App {
         Self.exportLM017SchemaAndExitIfRequested(arguments: arguments)
         Self.exportLM018FaultsAndExitIfRequested(arguments: arguments)
         Self.exportLM021BrowserContextAndExitIfRequested(arguments: arguments)
+        Self.exportLM022PrivacyPolicyAndExitIfRequested(arguments: arguments)
         let configuration = AppLaunchConfiguration(arguments: arguments)
         launchConfiguration = configuration
         shellKeyboardMonitor = ShellKeyboardCommandMonitor()
@@ -235,6 +236,26 @@ struct LocalMemoryApp: App {
         } catch {
             FileHandle.standardError.write(
                 Data("LM-021 browser context export failed: \(error)\n".utf8)
+            )
+            Darwin.exit(EXIT_FAILURE)
+        }
+    }
+
+    private static func exportLM022PrivacyPolicyAndExitIfRequested(arguments: [String]) {
+        guard let exportIndex = arguments.firstIndex(of: "--lm022-export-privacy-policy"),
+              arguments.indices.contains(exportIndex + 1)
+        else {
+            return
+        }
+        do {
+            try LM022PrivacyPolicyHarness.runBlocking().write(
+                to: URL(fileURLWithPath: arguments[exportIndex + 1]),
+                options: .atomic
+            )
+            Darwin.exit(EXIT_SUCCESS)
+        } catch {
+            FileHandle.standardError.write(
+                Data("LM-022 privacy policy export failed: \(error)\n".utf8)
             )
             Darwin.exit(EXIT_FAILURE)
         }
