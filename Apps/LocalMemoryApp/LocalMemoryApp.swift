@@ -11,6 +11,7 @@ import SwiftUI
 @main
 struct LocalMemoryApp: App {
     @StateObject private var lifecycleModel: AppLifecycleViewModel
+    @StateObject private var launchAtLoginModel: LaunchAtLoginViewModel
     @StateObject private var navigationModel: MainNavigationViewModel
     @StateObject private var onboardingModel: OnboardingViewModel
     @StateObject private var searchPanelCoordinator: GlobalSearchPanelCoordinator
@@ -45,18 +46,19 @@ struct LocalMemoryApp: App {
         let configuration = AppLaunchConfiguration(arguments: arguments)
         launchConfiguration = configuration
         shellKeyboardMonitor = ShellKeyboardCommandMonitor()
-        _archiveSecurityModel = StateObject(
-            wrappedValue: ArchiveSecurityViewModel(
-                usesDeterministicStore: arguments.contains("--lm019-export-lifecycle")
-                    || arguments.contains("--lm020-export-resolver")
-            )
+        let archiveSecurityModel = ArchiveSecurityViewModel(
+            usesDeterministicStore: arguments.contains("--lm019-export-lifecycle")
+                || arguments.contains("--lm020-export-resolver")
         )
+        _archiveSecurityModel = StateObject(wrappedValue: archiveSecurityModel)
         _lifecycleModel = StateObject(
             wrappedValue: AppLifecycleViewModel(
                 stateURL: configuration.stateURL,
-                initialStatus: configuration.initialStatus
+                initialStatus: configuration.initialStatus,
+                gapSink: archiveSecurityModel.database
             )
         )
+        _launchAtLoginModel = StateObject(wrappedValue: LaunchAtLoginViewModel())
         let navigationModel = MainNavigationViewModel(stateURL: configuration.navigationStateURL)
         _navigationModel = StateObject(wrappedValue: navigationModel)
         _searchPanelCoordinator = StateObject(
@@ -416,6 +418,8 @@ struct LocalMemoryApp: App {
 
         Settings {
             LocalMemorySettingsView(
+                lifecycleModel: lifecycleModel,
+                launchAtLoginModel: launchAtLoginModel,
                 searchPanelCoordinator: searchPanelCoordinator,
                 privacySettingsModel: privacySettingsModel,
                 archiveSecurityModel: archiveSecurityModel,

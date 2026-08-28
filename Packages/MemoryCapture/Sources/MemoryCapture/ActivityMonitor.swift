@@ -49,6 +49,18 @@ public struct ActivitySnapshot: Equatable, Sendable {
     public let lastActivityNanoseconds: UInt64?
     public let lastInputClass: ActivityInputClass?
 
+    public init(
+        activity: ActivityState,
+        suspension: ActivitySuspension?,
+        lastActivityNanoseconds: UInt64?,
+        lastInputClass: ActivityInputClass?
+    ) {
+        self.activity = activity
+        self.suspension = suspension
+        self.lastActivityNanoseconds = lastActivityNanoseconds
+        self.lastInputClass = lastInputClass
+    }
+
     public var acceptsCapture: Bool {
         suspension == nil && activity != .idle
     }

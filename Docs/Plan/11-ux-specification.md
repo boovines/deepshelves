@@ -195,6 +195,13 @@ Activity is descriptive, never evaluative.
 
 Status, launch at login, global shortcut, `Foreground window only` as a fixed privacy mode, active/static/idle policy as read-only advanced details, and permission health. Advanced timing and full-display capture are not user-tunable in V1 because they would make privacy/performance outcomes indeterminate.
 
+The menu and Capture Settings use one lifecycle projection. Recording, user-paused, idle,
+sleep/lock, permission-required, low-disk, target-unavailable, and stopped states display
+their exact cause while `Foreground window only` remains visible. Status may never say
+Recording unless the coordinator currently permits capture for the exact active target.
+Launch at login defaults off; its toggle is the only registration action. If macOS reports
+approval required, show the Login Items instruction and keep the status unconfirmed.
+
 ### Privacy
 
 Application exclusions, site exclusions, private-browser handling, temporary pause, `Forget last 15 minutes`, and policy-test preview. Rules show precedence and last-match behavior. If URL detection becomes unavailable, the row shows `Browser capture paused to protect site exclusions`.

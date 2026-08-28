@@ -1,0 +1,7 @@
+focused_release_tests=passed
+contracts=passed
+privacy_smoke=passed
+release_compile_only=passed
+dependency_audit=passed
+encoder_process_tripwire=passed
+whitespace=passed

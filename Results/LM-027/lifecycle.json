@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "privacyMode": "foregroundWindowOnly",
+  "uiBudgetMilliseconds": 250,
+  "captureAllowedOnlyForExactApprovedRunningTarget": true,
+  "targetGapCases": 6,
+  "targetGaps": [
+    "unresolvedWindow",
+    "ambiguousWindow",
+    "minimizedWindow",
+    "unsupportedDisplay",
+    "protectedSurface",
+    "noWindow"
+  ],
+  "visibleStopCauses": [
+    "lowDisk",
+    "databaseFailure",
+    "processStopped"
+  ],
+  "canonicalStopGap": "processStopped",
+  "lifecycleGapsContainIdentity": false,
+  "persistedRecordingRelaunch": "stoppedPendingReconciliation",
+  "launchAtLoginRegistrationExecuted": false,
+  "h3Triggered": false,
+  "hardwareEncoderTestsExecuted": 0,
+  "applicationLaunchesExecuted": 0
+}

@@ -848,17 +848,23 @@ private enum LocalMemorySettingsSection: Hashable {
 }
 
 struct LocalMemorySettingsView: View {
+    @ObservedObject var lifecycleModel: AppLifecycleViewModel
+    @ObservedObject var launchAtLoginModel: LaunchAtLoginViewModel
     @ObservedObject var searchPanelCoordinator: GlobalSearchPanelCoordinator
     @ObservedObject var privacySettingsModel: PrivacySettingsViewModel
     @ObservedObject var archiveSecurityModel: ArchiveSecurityViewModel
     @State private var selection: LocalMemorySettingsSection
 
     init(
+        lifecycleModel: AppLifecycleViewModel,
+        launchAtLoginModel: LaunchAtLoginViewModel,
         searchPanelCoordinator: GlobalSearchPanelCoordinator,
         privacySettingsModel: PrivacySettingsViewModel,
         archiveSecurityModel: ArchiveSecurityViewModel,
         opensPrivacyAtLaunch: Bool
     ) {
+        self.lifecycleModel = lifecycleModel
+        self.launchAtLoginModel = launchAtLoginModel
         self.searchPanelCoordinator = searchPanelCoordinator
         self.privacySettingsModel = privacySettingsModel
         self.archiveSecurityModel = archiveSecurityModel
@@ -867,9 +873,13 @@ struct LocalMemorySettingsView: View {
 
     var body: some View {
         TabView(selection: $selection) {
-            CaptureSettingsPane(searchPanelCoordinator: searchPanelCoordinator)
-                .tabItem { Label("Capture", systemImage: "record.circle") }
-                .tag(LocalMemorySettingsSection.capture)
+            CaptureSettingsPane(
+                lifecycleModel: lifecycleModel,
+                launchAtLoginModel: launchAtLoginModel,
+                searchPanelCoordinator: searchPanelCoordinator
+            )
+            .tabItem { Label("Capture", systemImage: "record.circle") }
+            .tag(LocalMemorySettingsSection.capture)
 
             PrivacySettingsPane(model: privacySettingsModel)
                 .tabItem { Label("Privacy", systemImage: "hand.raised") }
@@ -995,6 +1005,8 @@ private struct ArchiveSecuritySettingsPane: View {
 }
 
 private struct CaptureSettingsPane: View {
+    @ObservedObject var lifecycleModel: AppLifecycleViewModel
+    @ObservedObject var launchAtLoginModel: LaunchAtLoginViewModel
     @ObservedObject var searchPanelCoordinator: GlobalSearchPanelCoordinator
 
     var body: some View {
@@ -1003,9 +1015,35 @@ private struct CaptureSettingsPane: View {
                 .font(.title2)
                 .accessibilityIdentifier("settings.title")
             Section {
-                LabeledContent("Status", value: "Fake runtime until capture integration")
+                LabeledContent("Status", value: lifecycleModel.menuProjection.statusLabel)
+                    .accessibilityIdentifier("settings.captureStatus")
+                if let detail = lifecycleModel.menuProjection.detailLabel {
+                    Text(detail)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .accessibilityIdentifier("settings.captureDetail")
+                }
                 LabeledContent("Privacy mode", value: "Foreground window only")
-                LabeledContent("Launch at login", value: "Connected in a later phase")
+                Toggle(
+                    "Launch at login",
+                    isOn: Binding(
+                        get: { launchAtLoginModel.isEnabled },
+                        set: { launchAtLoginModel.setEnabled($0) }
+                    )
+                )
+                .accessibilityIdentifier("settings.launchAtLogin")
+                LabeledContent("Login item status", value: launchAtLoginModel.snapshot.statusLabel)
+                    .accessibilityIdentifier("settings.launchAtLoginStatus")
+                if launchAtLoginModel.snapshot.humanGate == .approveInLoginItems {
+                    Text("Approve Local Memory in System Settings › General › Login Items.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .accessibilityIdentifier("settings.launchAtLoginApproval")
+                }
+                if let errorCode = launchAtLoginModel.errorCode {
+                    LabeledContent("Login item diagnostic", value: errorCode)
+                        .accessibilityIdentifier("settings.launchAtLoginError")
+                }
             }
             Section("Global search shortcut") {
                 Picker(
@@ -1039,7 +1077,10 @@ private struct CaptureSettingsPane: View {
             }
         }
         .formStyle(.grouped)
-        .task { await searchPanelCoordinator.start() }
+        .task {
+            await searchPanelCoordinator.start()
+            await launchAtLoginModel.start()
+        }
     }
 }
 

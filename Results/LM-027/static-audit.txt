@@ -1,0 +1,11 @@
+foreground_window_only_admission=passed
+stale_stream_target_rejected=passed
+ui_projection_budget=passed
+safe_restart=passed
+typed_gap_persistence=passed
+launch_at_login_explicit_action=passed
+pause_resume_reconciles_capture_inputs=passed
+production_launch_never_claims_recording_without_target=passed
+h3_not_triggered_no_real_registration=passed
+hardware_encoder_tests_executed=0
+app_launch_tests_executed=0

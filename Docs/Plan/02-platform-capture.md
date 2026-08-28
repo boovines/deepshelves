@@ -181,6 +181,25 @@ Permission status comes from capability probes, not button clicks. Keep a fixed 
 
 ## Backpressure, lifecycle, and failure behavior
 
+`CaptureLifecycleCoordinator` is the single fail-closed projection between capture inputs,
+the menu/settings UI, and `activity_intervals`. It admits capture only when recording is
+enabled, the process/archive/storage/filter are healthy, Screen Recording permission is
+granted, activity is neither idle nor suspended, and one approved target window exactly
+matches the running stream. Every other combination clears the active target before it
+projects a visible cause. The visible projection budget is 250 ms.
+
+The canonical timeline mapping remains intentionally small: user pause, idle, permission
+loss, filter failure, sleep/session lock, and each resolver failure retain their exact
+`RecordingGapReason`; low disk, archive failure, and process interruption are the three
+exact visible stop causes within the canonical `processStopped` timeline class. No lifecycle
+gap stores application identity. A previously recording/indexing persisted state always
+relaunches as `processStopped`, restores the gap from the last persisted lifecycle timestamp,
+and must reconcile every current input before capture resumes.
+
+Launch at login is opt-in. Reading `SMAppService.mainApp.status` never registers the service.
+Only the user's Settings toggle may call `register()`/`unregister()`. A
+`requiresApproval` result displays the H3 Login Items action and does not imply success.
+
 - Capture-to-media queue capacity 4; drop redundant heartbeats first.
 - Never block SCStream callbacks on database/model work.
 - Derived jobs persist in SQLite without retaining pixels.

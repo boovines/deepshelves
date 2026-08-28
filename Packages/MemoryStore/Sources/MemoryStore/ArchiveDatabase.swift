@@ -7,6 +7,7 @@ public enum ArchiveDatabaseError: Error, Equatable, Sendable {
     case cipherIntegrityFailure
     case encryptedArchiveUnavailable
     case invalidPolicyDecisionAudit
+    case invalidActivityGap
     case injectedMigrationInterruption
 }
 
@@ -559,6 +560,10 @@ public final class ArchiveDatabase: @unchecked Sendable {
 
     func atomicWrite<T>(_ updates: (Database) throws -> T) throws -> T {
         try writer.write(updates)
+    }
+
+    func atomicRead<T>(_ read: (Database) throws -> T) throws -> T {
+        try writer.read(read)
     }
 
     func frameColumnNamesForTesting() throws -> Set<String> {

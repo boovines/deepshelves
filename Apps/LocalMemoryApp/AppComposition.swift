@@ -1,6 +1,7 @@
 import AppKit
 import Foundation
 import MemoryCapture
+import MemoryContracts
 import MemoryDesignSystem
 import MemoryStore
 import SwiftUI
@@ -8,15 +9,23 @@ import SwiftUI
 @MainActor
 final class AppLifecycleViewModel: ObservableObject {
     @Published private(set) var snapshot: AppLifecycleSnapshot
+    @Published private(set) var captureSnapshot: CaptureLifecycleSnapshot?
 
     private let lifecycle: LocalMemoryAppLifecycle
+    private let captureCoordinator: CaptureLifecycleCoordinator
     private let initialStatus: LocalMemoryRuntimeStatus
     private var startupTask: Task<AppLifecycleSnapshot, Error>?
+    private var latestCaptureInputs: CaptureLifecycleInputs?
 
-    init(stateURL: URL, initialStatus: LocalMemoryRuntimeStatus) {
+    init(
+        stateURL: URL,
+        initialStatus: LocalMemoryRuntimeStatus,
+        gapSink: (any RecordingGapPersisting)? = nil
+    ) {
         lifecycle = LocalMemoryAppLifecycle(
             store: FileAppLifecycleStateStore(fileURL: stateURL)
         )
+        captureCoordinator = CaptureLifecycleCoordinator(gapSink: gapSink)
         self.initialStatus = initialStatus
         snapshot = AppLifecycleSnapshot(
             status: initialStatus,
@@ -30,7 +39,7 @@ final class AppLifecycleViewModel: ObservableObject {
     }
 
     var menuProjection: RuntimeMenuProjection {
-        snapshot.status.menuProjection
+        captureSnapshot?.menuProjection ?? snapshot.status.menuProjection
     }
 
     func start() async {
@@ -47,7 +56,14 @@ final class AppLifecycleViewModel: ObservableObject {
             task = createdTask
         }
         do {
-            snapshot = try await task.value
+            let launched = try await task.value
+            if launched.recoveryReason == .interruptedCapture {
+                await captureCoordinator.restoreOpenGap(
+                    reason: .processStopped,
+                    startedAt: launched.interruptedAt ?? Date()
+                )
+            }
+            snapshot = launched
         } catch {
             snapshot = AppLifecycleSnapshot(
                 status: .permissionRequired,
@@ -59,9 +75,17 @@ final class AppLifecycleViewModel: ObservableObject {
     }
 
     func performPrimaryAction() {
+        if let captureSnapshot, let latestCaptureInputs {
+            let shouldEnable = captureSnapshot.cause == .paused
+            reconcileCapture(
+                latestCaptureInputs.replacing(recordingEnabled: shouldEnable)
+            )
+            return
+        }
         Task {
             await start()
             do {
+                captureSnapshot = nil
                 snapshot = try await lifecycle.performPrimaryAction()
             } catch {
                 snapshot = AppLifecycleSnapshot(
@@ -78,6 +102,7 @@ final class AppLifecycleViewModel: ObservableObject {
         Task {
             await start()
             do {
+                captureSnapshot = nil
                 snapshot = try await lifecycle.transition(to: status)
             } catch {
                 snapshot = AppLifecycleSnapshot(
@@ -95,6 +120,71 @@ final class AppLifecycleViewModel: ObservableObject {
             await start()
             if let updated = try? await lifecycle.setMainWindowVisible(visible) {
                 snapshot = updated
+            }
+        }
+    }
+
+    func applyCaptureSnapshot(_ captureSnapshot: CaptureLifecycleSnapshot) {
+        self.captureSnapshot = captureSnapshot
+        snapshot = AppLifecycleSnapshot(
+            status: captureSnapshot.runtimeStatus,
+            launchCount: snapshot.launchCount,
+            mainWindowVisible: snapshot.mainWindowVisible,
+            recoveryReason: snapshot.recoveryReason,
+            interruptedAt: snapshot.interruptedAt
+        )
+        Task {
+            _ = try? await lifecycle.transition(to: captureSnapshot.runtimeStatus)
+        }
+    }
+
+    func reconcileCapture(_ inputs: CaptureLifecycleInputs) {
+        latestCaptureInputs = inputs
+        let observedAt = Date()
+        let observedAtNanoseconds = DispatchTime.now().uptimeNanoseconds
+        Task {
+            do {
+                let captureSnapshot = try await captureCoordinator.reconcile(
+                    inputs,
+                    observedAt: observedAt,
+                    observedAtNanoseconds: observedAtNanoseconds
+                )
+                applyCaptureSnapshot(captureSnapshot)
+            } catch {
+                transition(to: .stopped)
+            }
+        }
+    }
+}
+
+@MainActor
+final class LaunchAtLoginViewModel: ObservableObject {
+    @Published private(set) var snapshot = LaunchAtLoginSnapshot(
+        status: .disabled,
+        humanGate: nil
+    )
+    @Published private(set) var errorCode: String?
+
+    private let controller: LaunchAtLoginController
+
+    init(controller: LaunchAtLoginController = LaunchAtLoginController()) {
+        self.controller = controller
+    }
+
+    var isEnabled: Bool { snapshot.status == .enabled }
+
+    func start() async {
+        snapshot = await controller.refresh()
+    }
+
+    func setEnabled(_ enabled: Bool) {
+        Task {
+            do {
+                snapshot = try await controller.setEnabled(enabled)
+                errorCode = nil
+            } catch {
+                snapshot = await controller.refresh()
+                errorCode = "LM-LOGIN-ITEM"
             }
         }
     }
@@ -255,7 +345,7 @@ struct AppLaunchConfiguration {
         {
             initialStatus = parsed
         } else {
-            initialStatus = .recording
+            initialStatus = showsMenuPreview ? .recording : .targetUnavailable
         }
 
         if let index = arguments.firstIndex(of: "--lm010-window-size"),
@@ -283,8 +373,12 @@ struct AppLaunchConfiguration {
         switch rawValue {
         case "recording": .recording
         case "paused": .paused
+        case "idle": .idle
+        case "sleeping": .sleeping
+        case "target-unavailable": .targetUnavailable
         case "permission-required": .permissionRequired
         case "disk-full": .diskFull
+        case "stopped": .stopped
         case "indexing": .indexing
         default: nil
         }
@@ -393,9 +487,14 @@ struct MenuBarStatusPanel: View {
                         .font(.headline)
                         .accessibilityLabel(model.menuProjection.statusLabel)
                         .accessibilityIdentifier("menu.status")
-                    Text("Foreground window only")
+                    Text(model.menuProjection.detailLabel ?? "Foreground window only")
                         .font(.caption)
                         .foregroundStyle(.secondary)
+                    if model.menuProjection.detailLabel != nil {
+                        Text("Foreground window only")
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+                    }
                 }
                 Spacer(minLength: 8)
             }
@@ -405,11 +504,11 @@ struct MenuBarStatusPanel: View {
 
             Button(model.menuProjection.primaryActionLabel) {
                 switch model.snapshot.status {
-                case .recording, .paused, .indexing:
+                case .recording, .paused, .idle, .sleeping, .targetUnavailable, .indexing:
                     model.performPrimaryAction()
                 case .permissionRequired:
                     openSettings()
-                case .diskFull:
+                case .diskFull, .stopped:
                     openSettings()
                 }
             }
@@ -447,8 +546,8 @@ struct MenuBarStatusPanel: View {
     private var statusColor: Color {
         switch model.snapshot.status {
         case .recording: .red
-        case .paused: .orange
-        case .permissionRequired, .diskFull: .orange
+        case .paused, .idle, .sleeping, .targetUnavailable: .orange
+        case .permissionRequired, .diskFull, .stopped: .orange
         case .indexing: .indigo
         }
     }
@@ -524,8 +623,12 @@ struct LM009MenuPreviewView: View {
 
     private static let evidenceStatuses: [LocalMemoryRuntimeStatus] = [
         .paused,
+        .idle,
+        .sleeping,
+        .targetUnavailable,
         .permissionRequired,
         .diskFull,
+        .stopped,
         .indexing,
         .recording,
     ]

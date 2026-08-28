@@ -1,0 +1,14 @@
+{
+  "story": "LM-027",
+  "status": "passed",
+  "focusedReleaseTests": "passed",
+  "contracts": "passed",
+  "privacySmoke": "passed",
+  "releaseCompileOnly": "passed",
+  "dependencyAudit": "passed",
+  "encoderProcessTripwire": "passed",
+  "appRuntime": "not launched",
+  "h3": "not triggered",
+  "uiBudgetMilliseconds": 250,
+  "hardwareEncoderTestsExecuted": 0
+}

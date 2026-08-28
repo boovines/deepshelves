@@ -7,8 +7,12 @@ public enum AppLifecycleDefaults: Sendable {
 public enum LocalMemoryRuntimeStatus: String, CaseIterable, Codable, Sendable {
     case recording
     case paused
+    case idle
+    case sleeping
+    case targetUnavailable
     case permissionRequired
     case diskFull
+    case stopped
     case indexing
 
     public var menuProjection: RuntimeMenuProjection {
@@ -25,6 +29,24 @@ public enum LocalMemoryRuntimeStatus: String, CaseIterable, Codable, Sendable {
                 statusSymbol: "pause.circle",
                 primaryActionLabel: "Resume Recording"
             )
+        case .idle:
+            RuntimeMenuProjection(
+                statusLabel: "Idle",
+                statusSymbol: "moon.zzz",
+                primaryActionLabel: "Pause Recording"
+            )
+        case .sleeping:
+            RuntimeMenuProjection(
+                statusLabel: "Recording asleep",
+                statusSymbol: "powersleep",
+                primaryActionLabel: "Pause Recording"
+            )
+        case .targetUnavailable:
+            RuntimeMenuProjection(
+                statusLabel: "Waiting for a foreground window",
+                statusSymbol: "rectangle.slash",
+                primaryActionLabel: "Pause Recording"
+            )
         case .permissionRequired:
             RuntimeMenuProjection(
                 statusLabel: "Recording unavailable",
@@ -36,6 +58,12 @@ public enum LocalMemoryRuntimeStatus: String, CaseIterable, Codable, Sendable {
                 statusLabel: "Recording unavailable",
                 statusSymbol: "externaldrive.badge.exclamationmark",
                 primaryActionLabel: "Manage Storage…"
+            )
+        case .stopped:
+            RuntimeMenuProjection(
+                statusLabel: "Recording stopped",
+                statusSymbol: "stop.circle",
+                primaryActionLabel: "Review Status…"
             )
         case .indexing:
             RuntimeMenuProjection(
@@ -51,20 +79,24 @@ public struct RuntimeMenuProjection: Equatable, Sendable {
     public let statusLabel: String
     public let statusSymbol: String
     public let primaryActionLabel: String
+    public let detailLabel: String?
 
     public init(
         statusLabel: String,
         statusSymbol: String,
-        primaryActionLabel: String
+        primaryActionLabel: String,
+        detailLabel: String? = nil
     ) {
         self.statusLabel = statusLabel
         self.statusSymbol = statusSymbol
         self.primaryActionLabel = primaryActionLabel
+        self.detailLabel = detailLabel
     }
 }
 
 public enum AppLifecycleRecoveryReason: String, Codable, Sendable {
     case invalidPersistedState
+    case interruptedCapture
 }
 
 public struct AppLifecycleSnapshot: Equatable, Sendable {
@@ -72,17 +104,20 @@ public struct AppLifecycleSnapshot: Equatable, Sendable {
     public let launchCount: Int
     public let mainWindowVisible: Bool
     public let recoveryReason: AppLifecycleRecoveryReason?
+    public let interruptedAt: Date?
 
     public init(
         status: LocalMemoryRuntimeStatus,
         launchCount: Int,
         mainWindowVisible: Bool,
-        recoveryReason: AppLifecycleRecoveryReason?
+        recoveryReason: AppLifecycleRecoveryReason?,
+        interruptedAt: Date? = nil
     ) {
         self.status = status
         self.launchCount = launchCount
         self.mainWindowVisible = mainWindowVisible
         self.recoveryReason = recoveryReason
+        self.interruptedAt = interruptedAt
     }
 }
 
@@ -136,6 +171,7 @@ public struct FileAppLifecycleStateStore: Sendable {
 private struct PersistedAppLifecycleState: Codable, Sendable {
     let status: LocalMemoryRuntimeStatus
     let launchCount: Int
+    let updatedAt: Date?
 }
 
 public actor LocalMemoryAppLifecycle {
@@ -157,11 +193,17 @@ public actor LocalMemoryAppLifecycle {
             recoveryReason = .invalidPersistedState
         }
 
+        let persistedStatus = persisted?.status
+        let interruptedCapture = persistedStatus == .recording || persistedStatus == .indexing
+        let effectiveRecoveryReason = interruptedCapture ? .interruptedCapture : recoveryReason
         let launched = AppLifecycleSnapshot(
-            status: recoveryReason == nil ? (persisted?.status ?? initialStatus) : .permissionRequired,
+            status: effectiveRecoveryReason == .invalidPersistedState
+                ? .permissionRequired
+                : interruptedCapture ? .stopped : (persistedStatus ?? initialStatus),
             launchCount: (persisted?.launchCount ?? 0) + 1,
             mainWindowVisible: AppLifecycleDefaults.opensMainWindowAtLaunch,
-            recoveryReason: recoveryReason
+            recoveryReason: effectiveRecoveryReason,
+            interruptedAt: interruptedCapture ? persisted?.updatedAt : nil
         )
         try persist(launched)
         snapshot = launched
@@ -178,7 +220,8 @@ public actor LocalMemoryAppLifecycle {
             status: status,
             launchCount: current.launchCount,
             mainWindowVisible: current.mainWindowVisible,
-            recoveryReason: current.recoveryReason
+            recoveryReason: current.recoveryReason,
+            interruptedAt: status == .stopped ? current.interruptedAt : nil
         )
         try persist(updated)
         snapshot = updated
@@ -191,7 +234,8 @@ public actor LocalMemoryAppLifecycle {
             status: current.status,
             launchCount: current.launchCount,
             mainWindowVisible: visible,
-            recoveryReason: current.recoveryReason
+            recoveryReason: current.recoveryReason,
+            interruptedAt: current.interruptedAt
         )
         snapshot = updated
         return updated
@@ -201,11 +245,11 @@ public actor LocalMemoryAppLifecycle {
         let current = try requireSnapshot()
         let nextStatus: LocalMemoryRuntimeStatus
         switch current.status {
-        case .recording, .indexing:
+        case .recording, .indexing, .idle, .sleeping, .targetUnavailable:
             nextStatus = .paused
         case .paused:
             nextStatus = .recording
-        case .permissionRequired, .diskFull:
+        case .permissionRequired, .diskFull, .stopped:
             nextStatus = current.status
         }
         return try transition(to: nextStatus)
@@ -222,7 +266,8 @@ public actor LocalMemoryAppLifecycle {
         try store.save(
             PersistedAppLifecycleState(
                 status: snapshot.status,
-                launchCount: snapshot.launchCount
+                launchCount: snapshot.launchCount,
+                updatedAt: Date()
             )
         )
     }

@@ -259,6 +259,20 @@ Each query declares relevant frame IDs, graded relevance 0...3, expected filters
 - Permission revocation, display sleep, user switch, clock change, low disk, and model corruption.
 - Seven-day activity intervals whose totals are independently calculated.
 
+### LM-027 lifecycle fixture contract
+
+Lifecycle fixtures compose the existing permission probe, `ActivitySnapshot`, exact
+`WindowResolution`, `ScreenCaptureLifecycleState`, archive health, storage health, process
+health, and user pause state. Capture is permitted only for the all-healthy tuple with a
+running stream whose window ID equals the approved resolver target. A mismatched running
+stream is `unresolvedWindow`, never an approval.
+
+Completed unavailable intervals are inserted into encrypted `activity_intervals`; they have
+`state = gap`, one canonical `gap_reason`, and no application name or content field. The
+frozen mapping is: pause→`paused`, idle→`idle`, sleep/lock→`sleep`, permission→`permissionLost`,
+filter→`filterFailed`, resolver failures→their same-named reason, and low-disk/archive/process
+stops→`processStopped`. The live projection separately retains the exact stop cause.
+
 ### UI fixtures
 
 Deterministic stores for onboarding, empty archive, active capture, paused, permission lost, indexing backlog, search loading, no results, mixed results, corrupt media, deletion progress, activity gaps, and MCP policy approval. Screenshot baselines are captured at 1x and 2x in light/dark appearance and Increased Contrast.
