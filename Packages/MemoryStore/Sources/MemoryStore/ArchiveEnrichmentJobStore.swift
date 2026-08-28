@@ -42,6 +42,24 @@ public struct EnrichmentJobLease: Equatable, Sendable {
     public let attemptCount: Int
     public let producerVersion: String
     public let expiresAt: Date
+
+    public init(
+        jobID: UUID,
+        parentID: UUID,
+        kind: ProcessingJobKind,
+        priority: Int,
+        attemptCount: Int,
+        producerVersion: String,
+        expiresAt: Date
+    ) {
+        self.jobID = jobID
+        self.parentID = parentID
+        self.kind = kind
+        self.priority = priority
+        self.attemptCount = attemptCount
+        self.producerVersion = producerVersion
+        self.expiresAt = expiresAt
+    }
 }
 
 public struct EnrichmentJobRecord: Equatable, Sendable {

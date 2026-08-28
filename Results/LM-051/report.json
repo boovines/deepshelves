@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-051",
+  "status": "passed",
+  "format": {
+    "magic": "DSVEC002",
+    "headerBytes": 192,
+    "dimension": 512,
+    "vectorBytes": 1024,
+    "storagePrecision": "Float16",
+    "path": "vectors/mobileclip-s0/<model-hash>.f16",
+    "headerIdentity": [
+      "modelSHA256",
+      "producerVersionSHA256",
+      "preprocessingVersionSHA256",
+      "generationUUID",
+      "headerSHA256"
+    ]
+  },
+  "publication": {
+    "protocol": [
+      "validate exact foreground source and live lease",
+      "append Float16 bytes and fsync",
+      "commit staged offset and artifact",
+      "scheduler commits job success",
+      "verify bytes and atomically promote staged evidence to ready"
+    ],
+    "idempotentRetry": true,
+    "staleLeaseRejected": true,
+    "stagedEvidenceSearchable": false,
+    "perVectorSHA256": true,
+    "float16NormVerified": true,
+    "ownerOnlyFileMode": "0600"
+  },
+  "recovery": {
+    "orphanTailTruncated": true,
+    "succeededStagePromoted": true,
+    "truncatedPayloadRejected": true,
+    "checksumCorruptionRejected": true,
+    "wrongModelRejected": true,
+    "duplicateOffsetRejected": true,
+    "compactionSwapRollback": true,
+    "compactionDatabaseFinishRecovery": true,
+    "completeRebuildRequeuesJobs": true
+  },
+  "propertyFixture": {
+    "inputVectors": 40,
+    "retainedVectors": 26,
+    "removedStaleVectors": 14,
+    "compactedBytes": 26816,
+    "permutedReadNormTolerance": 0.002
+  },
+  "canonicalS4": {
+    "evidence": "Results/LM-007/report.json",
+    "vectorCount": 1000000,
+    "dimension": 512,
+    "vectorFileBytes": 1024000128,
+    "filteredP95Milliseconds": 64.117458,
+    "incrementalRSSMegabytes": 2.875,
+    "stableOrderingMatched": true,
+    "truncatedFileDetectedBeforeResults": true
+  },
+  "verification": {
+    "focusedReleaseUnitTests": 17,
+    "contracts": "passed",
+    "privacySmoke": "passed",
+    "releaseCompileOnly": "passed",
+    "dependencyAudit": "passed"
+  },
+  "safety": {
+    "applicationLaunchesExecuted": 0,
+    "appleImageIORuntimeExecuted": false,
+    "hardwareEncoderTestsExecuted": 0,
+    "videoToolboxInvocations": 0,
+    "encoderTripwire": "passed"
+  }
+}

@@ -103,6 +103,8 @@ public struct VisualEmbeddingVector: Equatable, Sendable {
 
 public struct VisualEmbeddingPublication: Equatable, Sendable {
     public let jobID: UUID
+    public let attemptCount: Int
+    public let leaseExpiresAt: Date
     public let frameID: UUID
     public let captureEpochID: UUID
     public let targetWindowID: UInt32
@@ -116,6 +118,7 @@ public struct VisualEmbeddingPublication: Equatable, Sendable {
 
 public protocol VisualEmbeddingPublishing: Sendable {
     func publish(_ publication: VisualEmbeddingPublication) async throws
+    func markSucceeded(_ lease: EnrichmentJobLease) async throws
     func markPermanentlyFailed(frameID: UUID, producerVersion: String) async throws
 }
 
@@ -182,6 +185,8 @@ public actor VisualEmbeddingJobProcessor {
 
         let publication = VisualEmbeddingPublication(
             jobID: lease.jobID,
+            attemptCount: lease.attemptCount,
+            leaseExpiresAt: lease.expiresAt,
             frameID: source.frameID,
             captureEpochID: source.captureEpochID,
             targetWindowID: source.targetWindowID,
@@ -234,8 +239,106 @@ public actor VisualEmbeddingJobRunner {
         }
         if case .permanentlyFailed(let lease) = outcome {
             try await processor.markPermanentlyFailed(lease)
+        } else if case .succeeded(let lease) = outcome {
+            try await processor.markSucceeded(lease)
         }
         return outcome
+    }
+}
+
+extension VisualEmbeddingJobProcessor {
+    public func markSucceeded(_ lease: EnrichmentJobLease) async throws {
+        try await publisher.markSucceeded(lease)
+    }
+}
+
+public actor ArchiveVisualEmbeddingPublisher: VisualEmbeddingPublishing {
+    private let vectorStore: ArchiveVectorStore
+    private let visualStore: ArchiveVisualEmbeddingStore
+    private let model: ArchiveVectorModelIdentity
+
+    public init(database: ArchiveDatabase) throws {
+        guard let modelHash = Self.lowercaseHex(MobileCLIPRuntime.manifestSHA256) else {
+            throw VisualEmbeddingJobError.modelIdentityMismatch
+        }
+        vectorStore = try ArchiveVectorStore(database: database)
+        visualStore = ArchiveVisualEmbeddingStore(database: database)
+        model = try ArchiveVectorModelIdentity(
+            modelHash: modelHash,
+            jobVersion: VisualEmbeddingProducerIdentity.jobVersion,
+            producerName: "mobileclip-s0",
+            producerSemanticVersion: "1.0.0+coreml.3e0a7bf.image-v1",
+            preprocessingVersion: VisualEmbeddingProducerIdentity.preprocessingVersion,
+            dimension: MobileCLIPRuntime.dimension
+        )
+    }
+
+    public func publish(_ publication: VisualEmbeddingPublication) async throws {
+        guard publication.producerVersion == model.jobVersion,
+            publication.preprocessingVersion == model.preprocessingVersion,
+            publication.model.manifestSHA256 == model.modelHashHex,
+            publication.model.embeddingDimension == model.dimension
+        else {
+            throw VisualEmbeddingJobError.modelIdentityMismatch
+        }
+        let lease = EnrichmentJobLease(
+            jobID: publication.jobID,
+            parentID: publication.frameID,
+            kind: .visualVector,
+            priority: EnrichmentJobPriority.visualEmbedding,
+            attemptCount: publication.attemptCount,
+            producerVersion: publication.producerVersion,
+            expiresAt: publication.leaseExpiresAt
+        )
+        do {
+            _ = try vectorStore.stage(
+                ArchiveVectorAppendRequest(
+                    lease: lease,
+                    captureEpochID: publication.captureEpochID,
+                    targetWindowID: publication.targetWindowID,
+                    policyGeneration: publication.policyGeneration,
+                    sourceHash: publication.sourceHash,
+                    model: model,
+                    values: publication.vector.values
+                )
+            )
+        } catch {
+            throw VisualEmbeddingJobError.publicationUnavailable
+        }
+    }
+
+    public func markSucceeded(_ lease: EnrichmentJobLease) async throws {
+        do {
+            try vectorStore.finalize(lease, model: model)
+        } catch {
+            throw VisualEmbeddingJobError.publicationUnavailable
+        }
+    }
+
+    public func markPermanentlyFailed(frameID: UUID, producerVersion: String) async throws {
+        try visualStore.markPermanentlyFailed(
+            frameID: frameID,
+            producerVersion: producerVersion
+        )
+    }
+
+    public func recover() async throws -> ArchiveVectorRecoveryReport {
+        try vectorStore.recover(model: model)
+    }
+
+    private static func lowercaseHex(_ encoded: String) -> Data? {
+        guard encoded.count == 64,
+            encoded.range(of: "^[0-9a-f]+$", options: .regularExpression) != nil
+        else { return nil }
+        var bytes = Data(capacity: 32)
+        var index = encoded.startIndex
+        while index < encoded.endIndex {
+            let next = encoded.index(index, offsetBy: 2)
+            guard let byte = UInt8(encoded[index..<next], radix: 16) else { return nil }
+            bytes.append(byte)
+            index = next
+        }
+        return bytes
     }
 }
 

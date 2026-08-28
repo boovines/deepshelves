@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "activeStory": "LM-051",
+  "activeStory": "LM-052",
   "stories": {
     "LM-001": {
       "status": "passed",
@@ -872,23 +872,27 @@
       "resumeProbe": null
     },
     "LM-051": {
-      "status": "active",
+      "status": "passed",
       "startedAt": "2026-08-28T22:33:10Z",
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": "Activated after LM-050 passed. Implement append-safe model-versioned Float16 vector storage, checksummed SQLite offsets, compaction, crash-tail repair, and complete rebuild using only safe non-hardware tests.",
+      "completedAt": "2026-08-28T22:52:56Z",
+      "gitRevision": "refs/tags/checkpoints/LM-051",
+      "evidence": [
+        "Results/LM-051/report.json",
+        "Results/LM-051/unit-tests.txt",
+        "Results/LM-051/story-gate.txt"
+      ],
+      "notes": "DSVEC002 provides an immutable model/producer/preprocessing/generation/checksum header and aligned Float16 records. Fsync-before-staging and scheduler-success-before-ready publication makes crash tails and staged rows unsearchable; exact retries are idempotent. Reads verify header, model, generation, offset, locator, hash, and norm. Recovery truncates orphan tails, compaction rolls back or finishes across both crash boundaries, and complete rebuild requeues eligible frames. Seventeen safe Release tests plus canonical S4, contracts, privacy, formatting, dependency, and universal compile-only Release gates passed under the encoder tripwire.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null
     },
     "LM-052": {
-      "status": "pending",
-      "startedAt": null,
+      "status": "active",
+      "startedAt": "2026-08-28T22:52:56Z",
       "completedAt": null,
       "gitRevision": null,
       "evidence": [],
-      "notes": null,
+      "notes": "Activated after LM-051 passed. Implement the production memory-mapped, chunked, cancellation-aware Accelerate exact cosine scan over prefiltered ready offsets with stable top-k using only safe non-hardware tests.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null

@@ -1,0 +1,15 @@
+append_fsync_and_staged_publication=passed
+scheduler_success_ready_promotion=passed
+idempotent_duplicate_retry=passed
+crash_tail_repair=passed
+truncation_checksum_wrong_model_fail_closed=passed
+duplicate_offset_rejection=passed
+compaction_swap_rollback=passed
+compaction_database_finish_recovery=passed
+complete_rebuild_requeue=passed
+million_vector_baseline=passed
+contracts=passed
+privacy_smoke=passed
+release_compile_only=passed
+dependency_audit=passed
+encoder_process_tripwire=passed

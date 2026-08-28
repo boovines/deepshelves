@@ -516,10 +516,15 @@ private actor FixtureVisualPublisher: VisualEmbeddingPublishing {
     }
 
     private(set) var publications: [VisualEmbeddingPublication] = []
+    private(set) var succeededLeases: [EnrichmentJobLease] = []
     private(set) var permanentFailures: [Failure] = []
 
     func publish(_ publication: VisualEmbeddingPublication) async throws {
         publications.append(publication)
+    }
+
+    func markSucceeded(_ lease: EnrichmentJobLease) async throws {
+        succeededLeases.append(lease)
     }
 
     func markPermanentlyFailed(frameID: UUID, producerVersion: String) async throws {

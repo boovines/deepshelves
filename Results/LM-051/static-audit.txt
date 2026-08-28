@@ -1,0 +1,13 @@
+format_magic=DSVEC002
+format_header_bytes=192
+vector_dimension=512
+vector_bytes=1024
+storage_precision=Float16
+header_identity=model+producer+preprocessing+generation+sha256
+publication_protocol=fsync-stage-scheduler-success-ready
+forty_vector_property_retained=26
+forty_vector_property_removed=14
+forty_vector_compacted_bytes=26816
+application_launches_executed=0
+hardware_encoder_tests_executed=0
+apple_imageio_runtime_executed=0
