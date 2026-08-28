@@ -1,0 +1,10 @@
+shared_search_model=passed
+rapid_typing_stale_result_unit_proof=passed
+ready_only_policy_scope=passed
+ui_fixture_compile_only=passed
+contracts=passed
+privacy_smoke=passed
+release_compile_only=passed
+dependency_audit=passed
+encoder_process_tripwire=passed
+xcui_runtime_gate=quarantined

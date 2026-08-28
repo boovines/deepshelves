@@ -2,6 +2,7 @@ import AppKit
 import Foundation
 import MemoryContracts
 import MemoryDesignSystem
+import MemorySearch
 import MemoryStore
 import SwiftUI
 
@@ -272,6 +273,7 @@ private enum ShellMomentFixtures {
 struct MainShellView: View {
     @ObservedObject var lifecycleModel: AppLifecycleViewModel
     @ObservedObject var navigationModel: MainNavigationViewModel
+    @ObservedObject var searchModel: SearchSessionModel
     let forcedWindowSize: MainWindowLaunchSize?
     let opensSettingsAtLaunch: Bool
     let contentState: ShellContentState
@@ -294,6 +296,7 @@ struct MainShellView: View {
             } detail: {
                 MainSectionView(
                     navigationModel: navigationModel,
+                    searchModel: searchModel,
                     contentState: contentState,
                     localizationMode: localizationMode,
                     availableWidth: geometry.size.width
@@ -371,6 +374,7 @@ private struct MainSidebar: View {
 
 private struct MainSectionView: View {
     @ObservedObject var navigationModel: MainNavigationViewModel
+    @ObservedObject var searchModel: SearchSessionModel
     let contentState: ShellContentState
     let localizationMode: ShellLocalizationMode
     let availableWidth: CGFloat
@@ -400,6 +404,7 @@ private struct MainSectionView: View {
                         symbol: "magnifyingglass",
                         selectedMoment: selectedMoment,
                         navigationModel: navigationModel,
+                        searchModel: searchModel,
                         contentState: contentState,
                         localizationMode: localizationMode
                     )
@@ -410,6 +415,7 @@ private struct MainSectionView: View {
                         symbol: "clock.arrow.circlepath",
                         selectedMoment: selectedMoment,
                         navigationModel: navigationModel,
+                        searchModel: searchModel,
                         contentState: .ready,
                         localizationMode: localizationMode
                     )
@@ -552,9 +558,9 @@ private struct MomentSectionCanvas: View {
     let symbol: String
     let selectedMoment: ShellMoment?
     @ObservedObject var navigationModel: MainNavigationViewModel
+    @ObservedObject var searchModel: SearchSessionModel
     let contentState: ShellContentState
     let localizationMode: ShellLocalizationMode
-    @State private var query = ""
     @FocusState private var searchIsFocused: Bool
     @FocusState private var focusedMomentID: UUID?
 
@@ -571,7 +577,7 @@ private struct MomentSectionCanvas: View {
             }
 
             if title == "Search" {
-                TextField("Search your local memory", text: $query)
+                TextField("Search your local memory", text: queryBinding)
                     .textFieldStyle(.roundedBorder)
                     .focused($searchIsFocused)
                     .accessibilityLabel("Search your local memory")
@@ -604,69 +610,81 @@ private struct MomentSectionCanvas: View {
             }
 
             if contentState == .ready {
-                List(Array(ShellMomentFixtures.moments.enumerated()), id: \.element.id) {
-                    index, moment in
-                    Button {
-                        searchIsFocused = false
-                        focusedMomentID = moment.id
-                        navigationModel.select(momentID: moment.id)
-                    } label: {
-                        HStack {
-                            Image(systemName: moment.systemImage)
-                                .frame(width: CGFloat(MainWindowDefaults.momentSymbolWidth))
-                                .accessibilityHidden(true)
-                            VStack(alignment: .leading) {
-                                Text(moment.title)
+                if title == "Search" {
+                    SharedSearchResultsView(
+                        searchModel: searchModel,
+                        navigationModel: navigationModel,
+                        surface: .main
+                    )
+                } else {
+                    List(Array(ShellMomentFixtures.moments.enumerated()), id: \.element.id) {
+                        index, moment in
+                        Button {
+                            searchIsFocused = false
+                            focusedMomentID = moment.id
+                            navigationModel.select(momentID: moment.id)
+                        } label: {
+                            HStack {
+                                Image(systemName: moment.systemImage)
+                                    .frame(width: CGFloat(MainWindowDefaults.momentSymbolWidth))
+                                    .accessibilityHidden(true)
+                                VStack(alignment: .leading) {
+                                    Text(moment.title)
+                                        .font(.headline)
+                                    Text("\(moment.application) · \(moment.time)")
+                                        .font(.caption)
+                                        .foregroundStyle(.secondary)
+                                }
+                                Spacer()
+                                if selectedMoment?.id == moment.id {
+                                    Image(systemName: "checkmark")
+                                        .accessibilityLabel("Selected")
+                                }
+                            }
+                            .contentShape(Rectangle())
+                        }
+                        .buttonStyle(.plain)
+                        .focused($focusedMomentID, equals: moment.id)
+                        .accessibilityLabel(
+                            "\(moment.time), \(moment.application), \(moment.host), "
+                                + "\(moment.evidenceType), \(index + 1) of "
+                                + "\(ShellMomentFixtures.moments.count)"
+                        )
+                        .accessibilityHint("Open moment detail")
+                        .accessibilityIdentifier("moment.\(moment.accessibilitySlug)")
+                    }
+                    GroupBox {
+                        if let selectedMoment {
+                            VStack {
+                                Image(systemName: "rectangle.inset.filled.and.person.filled")
+                                    .font(
+                                        .system(
+                                            size: CGFloat(MainWindowDefaults.previewSymbolSize)
+                                        )
+                                    )
+                                    .foregroundStyle(.secondary)
+                                    .accessibilityHidden(true)
+                                Text(selectedMoment.title)
                                     .font(.headline)
-                                Text("\(moment.application) · \(moment.time)")
-                                    .font(.caption)
+                                Text("Synthetic screenshot placeholder")
                                     .foregroundStyle(.secondary)
                             }
-                            Spacer()
-                            if selectedMoment?.id == moment.id {
-                                Image(systemName: "checkmark")
-                                    .accessibilityLabel("Selected")
-                            }
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        } else {
+                            ContentUnavailableView(
+                                "Choose a moment",
+                                systemImage: "rectangle.stack.badge.clock",
+                                description: Text(
+                                    "Select a synthetic fixture to inspect its local provenance.")
+                            )
                         }
-                        .contentShape(Rectangle())
                     }
-                    .buttonStyle(.plain)
-                    .focused($focusedMomentID, equals: moment.id)
-                    .accessibilityLabel(
-                        "\(moment.time), \(moment.application), \(moment.host), "
-                            + "\(moment.evidenceType), \(index + 1) of "
-                            + "\(ShellMomentFixtures.moments.count)"
+                    .frame(
+                        maxWidth: .infinity,
+                        minHeight: CGFloat(MainWindowDefaults.previewMinimumHeight),
+                        maxHeight: .infinity
                     )
-                    .accessibilityHint("Open moment detail")
-                    .accessibilityIdentifier("moment.\(moment.accessibilitySlug)")
                 }
-                GroupBox {
-                    if let selectedMoment {
-                        VStack {
-                            Image(systemName: "rectangle.inset.filled.and.person.filled")
-                                .font(.system(size: CGFloat(MainWindowDefaults.previewSymbolSize)))
-                                .foregroundStyle(.secondary)
-                                .accessibilityHidden(true)
-                            Text(selectedMoment.title)
-                                .font(.headline)
-                            Text("Synthetic screenshot placeholder")
-                                .foregroundStyle(.secondary)
-                        }
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    } else {
-                        ContentUnavailableView(
-                            "Choose a moment",
-                            systemImage: "rectangle.stack.badge.clock",
-                            description: Text(
-                                "Select a synthetic fixture to inspect its local provenance.")
-                        )
-                    }
-                }
-                .frame(
-                    maxWidth: .infinity,
-                    minHeight: CGFloat(MainWindowDefaults.previewMinimumHeight),
-                    maxHeight: .infinity
-                )
             } else {
                 standardState
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -694,6 +712,13 @@ private struct MomentSectionCanvas: View {
                 focusedMomentID = selectedID
             }
         }
+    }
+
+    private var queryBinding: Binding<String> {
+        Binding(
+            get: { searchModel.query },
+            set: { searchModel.updateQuery($0) }
+        )
     }
 
     @ViewBuilder

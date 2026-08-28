@@ -224,6 +224,7 @@ struct AppLaunchConfiguration {
     let opensPrivacySettingsAtLaunch: Bool
     let shellContentState: ShellContentState
     let shellLocalizationMode: ShellLocalizationMode
+    let searchFixtureMode: AppSearchFixtureMode?
 
     init(arguments: [String]) {
         runsLM009EvidenceSequence = arguments.contains("--lm009-evidence-sequence")
@@ -257,6 +258,17 @@ struct AppLaunchConfiguration {
             arguments.contains("--lm016-pseudo-localization")
             ? .pseudo
             : .english
+        if let index = arguments.firstIndex(of: "--lm039-search-fixture"),
+            arguments.indices.contains(index + 1)
+        {
+            searchFixtureMode = AppSearchFixtureMode(rawValue: arguments[index + 1])
+        } else if arguments.contains(where: {
+            $0.hasPrefix("--lm010-") || $0.hasPrefix("--lm015-")
+        }) {
+            searchFixtureMode = .warm
+        } else {
+            searchFixtureMode = nil
+        }
         let forcesOnboarding = arguments.contains("--lm014-onboarding")
         let suppressesOnboarding =
             arguments.contains("--lm014-skip-onboarding")
@@ -272,6 +284,7 @@ struct AppLaunchConfiguration {
                     || argument.hasPrefix("--lm022-")
                     || argument.hasPrefix("--lm023-")
                     || argument.hasPrefix("--lm024-")
+                    || argument.hasPrefix("--lm039-")
                     || argument.hasPrefix("--lm056-")
                     || argument.hasPrefix("--capture-")
                     || argument.hasPrefix("--context-")

@@ -1,10 +1,11 @@
 import AppKit
 import Carbon.HIToolbox
 import MemoryDesignSystem
+import MemorySearch
 import SwiftUI
 
 private let globalSearchHotKeyID = EventHotKeyID(
-    signature: OSType(0x4C4D5352),
+    signature: OSType(0x4C4D_5352),
     id: 1
 )
 
@@ -97,6 +98,7 @@ final class GlobalSearchPanelCoordinator: NSObject, ObservableObject, NSWindowDe
     @Published private(set) var warmPresentationMilliseconds: Int?
 
     private let navigationModel: MainNavigationViewModel
+    private let searchModel: SearchSessionModel
     private let store: FileGlobalSearchPanelStateStore
     private let simulatesShortcutCollision: Bool
     private var registrar: CarbonGlobalSearchShortcutRegistrar!
@@ -105,10 +107,12 @@ final class GlobalSearchPanelCoordinator: NSObject, ObservableObject, NSWindowDe
 
     init(
         navigationModel: MainNavigationViewModel,
+        searchModel: SearchSessionModel,
         stateURL: URL,
         simulatesShortcutCollision: Bool
     ) {
         self.navigationModel = navigationModel
+        self.searchModel = searchModel
         store = FileGlobalSearchPanelStateStore(fileURL: stateURL)
         self.simulatesShortcutCollision = simulatesShortcutCollision
         super.init()
@@ -145,7 +149,8 @@ final class GlobalSearchPanelCoordinator: NSObject, ObservableObject, NSWindowDe
         panel.makeKeyAndOrderFront(nil)
         panel.displayIfNeeded()
         let duration = start.duration(to: .now).components
-        lastPresentationMilliseconds = Int(duration.seconds * 1_000)
+        lastPresentationMilliseconds =
+            Int(duration.seconds * 1_000)
             + Int(duration.attoseconds / 1_000_000_000_000_000)
         if isWarm {
             warmPresentationMilliseconds = lastPresentationMilliseconds
@@ -241,6 +246,7 @@ final class GlobalSearchPanelCoordinator: NSObject, ObservableObject, NSWindowDe
         panel.contentView = NSHostingView(
             rootView: GlobalSearchPanelView(
                 navigationModel: navigationModel,
+                searchModel: searchModel,
                 coordinator: self
             )
         )
@@ -262,10 +268,12 @@ final class GlobalSearchPanelCoordinator: NSObject, ObservableObject, NSWindowDe
                 containsPointer: screen.visibleFrame.contains(pointer)
             )
         }
-        guard let placement = try? GlobalSearchPanelPlacement.resolve(
-            displays: screens,
-            rememberedDisplayIdentifier: snapshot.rememberedDisplayIdentifier
-        ) else {
+        guard
+            let placement = try? GlobalSearchPanelPlacement.resolve(
+                displays: screens,
+                rememberedDisplayIdentifier: snapshot.rememberedDisplayIdentifier
+            )
+        else {
             panel.center()
             return
         }
@@ -317,23 +325,9 @@ private final class GlobalSearchNSPanel: NSPanel {
 
 private struct GlobalSearchPanelView: View {
     @ObservedObject var navigationModel: MainNavigationViewModel
+    @ObservedObject var searchModel: SearchSessionModel
     @ObservedObject var coordinator: GlobalSearchPanelCoordinator
-    @State private var query = ""
     @FocusState private var searchIsFocused: Bool
-
-    private let moments = [
-        (UUID(uuidString: "00000000-0000-4000-8000-000000000101")!, "Morning planning", "Calendar", "9:12 AM", "calendar"),
-        (UUID(uuidString: "00000000-0000-4000-8000-000000000102")!, "Afternoon research", "Safari", "2:14 PM", "safari"),
-        (UUID(uuidString: "00000000-0000-4000-8000-000000000103")!, "Evening notes", "Notes", "5:42 PM", "note.text"),
-    ]
-
-    private var filteredMoments: [(UUID, String, String, String, String)] {
-        guard !query.isEmpty else { return moments }
-        return moments.filter {
-            $0.1.localizedCaseInsensitiveContains(query)
-                || $0.2.localizedCaseInsensitiveContains(query)
-        }
-    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -342,7 +336,7 @@ private struct GlobalSearchPanelView: View {
                     .font(.title2)
                     .foregroundStyle(.secondary)
                     .accessibilityHidden(true)
-                TextField("Search your local memory", text: $query)
+                TextField("Search your local memory", text: queryBinding)
                     .textFieldStyle(.plain)
                     .font(.title2)
                     .focused($searchIsFocused)
@@ -359,39 +353,12 @@ private struct GlobalSearchPanelView: View {
 
             Divider()
 
-            if filteredMoments.isEmpty {
-                ContentUnavailableView.search(text: query)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-            } else {
-                List(filteredMoments, id: \.0) { moment in
-                    Button {
-                        navigationModel.select(section: .search)
-                        navigationModel.select(momentID: moment.0)
-                    } label: {
-                        HStack(spacing: 12) {
-                            Image(systemName: moment.4)
-                                .frame(width: 28)
-                                .accessibilityHidden(true)
-                            VStack(alignment: .leading, spacing: 3) {
-                                Text(moment.1).font(.headline)
-                                Text("\(moment.2) · \(moment.3)")
-                                    .font(.caption)
-                                    .foregroundStyle(.secondary)
-                            }
-                            Spacer()
-                            if navigationModel.snapshot.selectedMomentID == moment.0 {
-                                Image(systemName: "checkmark.circle.fill")
-                                    .foregroundStyle(.tint)
-                                    .accessibilityLabel("Selected")
-                            }
-                        }
-                        .contentShape(Rectangle())
-                    }
-                    .buttonStyle(.plain)
-                    .accessibilityIdentifier("search.result.\(moment.0.uuidString.lowercased())")
-                }
-                .listStyle(.inset)
-            }
+            SharedSearchResultsView(
+                searchModel: searchModel,
+                navigationModel: navigationModel,
+                surface: .panel
+            )
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
 
             HStack {
                 Text("Shared with \(navigationModel.snapshot.section.title)")
@@ -430,5 +397,12 @@ private struct GlobalSearchPanelView: View {
         let cold = coordinator.coldPresentationMilliseconds.map(String.init) ?? "pending"
         let warm = coordinator.warmPresentationMilliseconds.map(String.init) ?? "pending"
         return "Cold \(cold) ms · Warm \(warm) ms"
+    }
+
+    private var queryBinding: Binding<String> {
+        Binding(
+            get: { searchModel.query },
+            set: { searchModel.updateQuery($0) }
+        )
     }
 }

@@ -1,0 +1,9 @@
+root_owned_shared_search_model=passed
+debounced_generation_cancellation=passed
+exactly_once_settlement=passed
+ready_only_local_policy_scope=passed
+warm_slow_error_fixtures_compile=passed
+hardware_encoder_tests_executed=0
+apple_imageio_runtime_executed=0
+application_launches_executed=0
+xcui_runtime_executed=0

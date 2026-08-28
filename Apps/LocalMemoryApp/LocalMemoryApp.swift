@@ -5,6 +5,7 @@ import MemoryCapture
 import MemoryContracts
 import MemoryDesignSystem
 import MemoryEnrichment
+import MemorySearch
 import MemoryStore
 import SwiftUI
 
@@ -15,6 +16,7 @@ struct LocalMemoryApp: App {
     @StateObject private var navigationModel: MainNavigationViewModel
     @StateObject private var onboardingModel: OnboardingViewModel
     @StateObject private var searchPanelCoordinator: GlobalSearchPanelCoordinator
+    @StateObject private var searchModel: SearchSessionModel
     @StateObject private var privacySettingsModel: PrivacySettingsViewModel
     @StateObject private var archiveSecurityModel: ArchiveSecurityViewModel
     private let shellKeyboardMonitor: ShellKeyboardCommandMonitor
@@ -61,9 +63,15 @@ struct LocalMemoryApp: App {
         _launchAtLoginModel = StateObject(wrappedValue: LaunchAtLoginViewModel())
         let navigationModel = MainNavigationViewModel(stateURL: configuration.navigationStateURL)
         _navigationModel = StateObject(wrappedValue: navigationModel)
+        let searchModel = AppSearchComposition.makeModel(
+            database: archiveSecurityModel.database,
+            fixtureMode: configuration.searchFixtureMode
+        )
+        _searchModel = StateObject(wrappedValue: searchModel)
         _searchPanelCoordinator = StateObject(
             wrappedValue: GlobalSearchPanelCoordinator(
                 navigationModel: navigationModel,
+                searchModel: searchModel,
                 stateURL: configuration.searchPanelStateURL,
                 simulatesShortcutCollision: configuration.simulatesShortcutCollision
             )
@@ -328,6 +336,7 @@ struct LocalMemoryApp: App {
                     MainShellView(
                         lifecycleModel: lifecycleModel,
                         navigationModel: navigationModel,
+                        searchModel: searchModel,
                         forcedWindowSize: launchConfiguration.forcedMainWindowSize,
                         opensSettingsAtLaunch: launchConfiguration.opensSettingsAtLaunch,
                         contentState: launchConfiguration.shellContentState,

@@ -11,6 +11,10 @@ public enum ArchiveDatabaseError: Error, Equatable, Sendable {
     case injectedMigrationInterruption
 }
 
+enum ArchiveDatabaseFixtureError: Error, Equatable, Sendable {
+    case missingFrame(String)
+}
+
 public struct ArchivePolicyDecisionRecord: Equatable, Sendable {
     public let id: UUID
     public let decidedAt: Date
@@ -29,6 +33,16 @@ public struct ArchiveDatabaseConfigurationSnapshot: Equatable, Sendable {
     public let foreignKeysEnabled: Bool
     public let tempStore: String
     public let temporaryDirectory: String?
+}
+
+public struct ArchiveLocalSearchScope: Equatable, Sendable {
+    public let bundleIdentifiers: Set<String>
+    public let hosts: Set<String>
+
+    public init(bundleIdentifiers: Set<String>, hosts: Set<String>) {
+        self.bundleIdentifiers = bundleIdentifiers
+        self.hosts = hosts
+    }
 }
 
 struct ArchiveDatabaseInspection: Equatable, Sendable {
@@ -170,6 +184,42 @@ public final class ArchiveDatabase: @unchecked Sendable {
     public func appliedMigrationIdentifiers() throws -> [String] {
         try writer.read { database in
             try migrator.appliedMigrations(database)
+        }
+    }
+
+    public func localSearchScope() throws -> ArchiveLocalSearchScope {
+        try writer.read { database in
+            let bundleIdentifiers = try String.fetchAll(
+                database,
+                sql: """
+                    SELECT DISTINCT frames.bundle_id
+                    FROM frames
+                    JOIN media_chunks ON media_chunks.id = frames.chunk_id
+                    JOIN merged_text_records ON merged_text_records.frame_id = frames.id
+                    WHERE frames.visual_state = 'ready'
+                      AND media_chunks.state = 'ready'
+                      AND merged_text_records.state = 'ready'
+                    ORDER BY frames.bundle_id
+                    """
+            )
+            let hosts = try String.fetchAll(
+                database,
+                sql: """
+                    SELECT DISTINCT merged_text_records.url_host
+                    FROM merged_text_records
+                    JOIN frames ON frames.id = merged_text_records.frame_id
+                    JOIN media_chunks ON media_chunks.id = frames.chunk_id
+                    WHERE frames.visual_state = 'ready'
+                      AND media_chunks.state = 'ready'
+                      AND merged_text_records.state = 'ready'
+                      AND merged_text_records.url_host IS NOT NULL
+                    ORDER BY merged_text_records.url_host
+                    """
+            )
+            return ArchiveLocalSearchScope(
+                bundleIdentifiers: Set(bundleIdentifiers),
+                hosts: Set(hosts)
+            )
         }
     }
 
@@ -598,6 +648,38 @@ public final class ArchiveDatabase: @unchecked Sendable {
                 database,
                 sql: "SELECT COUNT(*) FROM frame_fts WHERE frame_fts MATCH 'searchable'"
             ) ?? 0
+        }
+    }
+
+    func setSearchFrameVisibilityForTesting(
+        frameID: UUID,
+        visualState: String = "ready",
+        chunkState: String = "ready",
+        mergedTextState: String = "ready"
+    ) throws {
+        try writer.write { database in
+            let frameID = frameID.uuidString.lowercased()
+            guard
+                let chunkID = try String.fetchOne(
+                    database,
+                    sql: "SELECT chunk_id FROM frames WHERE id = ?",
+                    arguments: [frameID]
+                )
+            else {
+                throw ArchiveDatabaseFixtureError.missingFrame(frameID)
+            }
+            try database.execute(
+                sql: "UPDATE frames SET visual_state = ? WHERE id = ?",
+                arguments: [visualState, frameID]
+            )
+            try database.execute(
+                sql: "UPDATE media_chunks SET state = ? WHERE id = ?",
+                arguments: [chunkState, chunkID]
+            )
+            try database.execute(
+                sql: "UPDATE merged_text_records SET state = ? WHERE frame_id = ?",
+                arguments: [mergedTextState, frameID]
+            )
         }
     }
 

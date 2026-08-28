@@ -213,6 +213,49 @@ final class ArchiveSearchIndexStoreTests: XCTestCase {
         XCTAssertTrue(try store.matchingFrameIDsForTesting(query: "SECRET").isEmpty)
         XCTAssertEqual(try store.mergedRecordCountForTesting(), 0)
     }
+
+    func testLocalSearchScopeIncludesOnlyDistinctFullyReadyApprovedMetadata() throws {
+        let archive = try ArchiveDatabase.deterministicTestStore()
+        let store = ArchiveSearchIndexStore(database: archive)
+        let ready = try archive.insertSearchFrameFixtureForTesting(
+            suffix: 71,
+            bundleIdentifier: "com.example.ready",
+            host: "ready.example.test"
+        )
+        let duplicate = try archive.insertSearchFrameFixtureForTesting(
+            suffix: 72,
+            bundleIdentifier: "com.example.ready",
+            host: "ready.example.test"
+        )
+        let suppressed = try archive.insertSearchFrameFixtureForTesting(
+            suffix: 73,
+            bundleIdentifier: "com.example.suppressed",
+            host: "suppressed.example.test"
+        )
+        let projectionSuppressed = try archive.insertSearchFrameFixtureForTesting(
+            suffix: 74,
+            bundleIdentifier: "com.example.projection-suppressed",
+            host: "projection-suppressed.example.test"
+        )
+        for (offset, frameID) in [ready, duplicate, suppressed, projectionSuppressed].enumerated() {
+            _ = try store.publish(
+                seed(frameID: frameID, suffix: 700 + offset, text: "approved scope fixture")
+            )
+        }
+        try archive.setSearchFrameVisibilityForTesting(
+            frameID: suppressed,
+            visualState: "suppressed"
+        )
+        try archive.setSearchFrameVisibilityForTesting(
+            frameID: projectionSuppressed,
+            mergedTextState: "suppressed"
+        )
+
+        let scope = try archive.localSearchScope()
+
+        XCTAssertEqual(scope.bundleIdentifiers, ["com.example.ready"])
+        XCTAssertEqual(scope.hosts, ["ready.example.test"])
+    }
 }
 
 private func seed(

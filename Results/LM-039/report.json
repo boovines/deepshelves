@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-039",
+  "status": "blocked",
+  "safeSuite": "passed",
+  "sharedRootOwnedModel": true,
+  "debounceMilliseconds": 150,
+  "generationCancellation": true,
+  "exactlyOnceSettlement": true,
+  "readyOnlyPolicyScope": true,
+  "focusedReleaseUnitTests": 14,
+  "warmSlowErrorFixturesCompile": true,
+  "xcuiRuntimeExecuted": false,
+  "applicationLaunchesExecuted": 0,
+  "appleImageIORuntimeExecuted": false,
+  "hardwareEncoderTestsExecuted": 0,
+  "videoToolboxInvocations": 0,
+  "encoderTripwire": "passed",
+  "remainingGate": "Execute the compiled warm, slow, and error SearchStateBindingUITests on a known-safe validation Mac without VTEncoderXPCService appearing."
+}

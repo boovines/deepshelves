@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "activeStory": "LM-039",
+  "activeStory": "LM-044",
   "stories": {
     "LM-001": {
       "status": "passed",
@@ -708,13 +708,25 @@
       "resumeProbe": null
     },
     "LM-039": {
-      "status": "active",
+      "status": "blocked",
       "startedAt": "2026-08-28T21:24:14Z",
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": "Activated from the completed LM-038 frozen retrieval gate. Bind the shared SearchEngine to global-panel and main-window search state using source-isolated model tests; keep runtime UI, Apple ImageIO, HEVC, AVAssetWriter, and VideoToolbox paths quarantined on this Mac.",
-      "blockedReason": null,
+      "completedAt": "2026-08-28T21:51:00Z",
+      "gitRevision": "refs/tags/checkpoints/LM-039-blocked",
+      "evidence": [
+        "Results/LM-039/report.json",
+        "Results/LM-039/blocker.md",
+        "Results/LM-039/safe-unit-tests.txt",
+        "Results/LM-039/ui-compile-only.txt",
+        "Results/LM-039/static-audit.txt",
+        "Results/LM-039/contracts.txt",
+        "Results/LM-039/privacy.txt",
+        "Results/LM-039/release-build.txt",
+        "Results/LM-039/dependencies.txt",
+        "Results/LM-039/swift-format.txt",
+        "Results/LM-039/story-gate.txt"
+      ],
+      "notes": "One root-owned SearchSessionModel now drives both the main Search section and global panel. A 150 ms debounce, task cancellation, generation checks, immediate stale-result clearing, and exactly-once settlement pass six focused model tests; the production policy scope admits only fully ready approved records. Warm/slow/error XCUITest fixtures compile, and 14 safe focused Release tests plus contracts, privacy, formatting, dependencies, and universal compile pass under the encoder tripwire with zero app or media runtime.",
+      "blockedReason": "The acceptance contract requires warm/slow/error XCUITest runtime execution. Application launch remains quarantined on this Mac after unexpected VTEncoderXPCService activity in the environment with two prior dart-ave hardware-video kernel panics; compile-only proof cannot replace the runtime gate.",
       "requestedHumanGate": null,
       "resumeProbe": null
     },
@@ -763,12 +775,12 @@
       "resumeProbe": null
     },
     "LM-044": {
-      "status": "pending",
-      "startedAt": null,
+      "status": "active",
+      "startedAt": "2026-08-28T21:51:00Z",
       "completedAt": null,
       "gitRevision": null,
       "evidence": [],
-      "notes": null,
+      "notes": "Activated as the next dependency-safe story because LM-027 and LM-037 are passed. Implement the interval-owned TimelineSlice query and typed gaps using source-isolated tests; keep application, Apple ImageIO, hardware HEVC, AVAssetWriter, and VideoToolbox runtime quarantined.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null
