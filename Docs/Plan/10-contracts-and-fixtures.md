@@ -208,7 +208,8 @@ Schema version 1 establishes these tables:
 - `media_chunks(id PRIMARY KEY, capture_epoch_id, target_window_id, relative_path UNIQUE, started_at, ended_at, codec, width, height, frame_count, byte_count, sha256, state)`
 - `frames(id PRIMARY KEY, captured_at, monotonic_ns, capture_epoch_id, target_window_id, chunk_id, pts_ms, thumbnail_path, bundle_id, app_name, window_title, window_x, window_y, window_w, window_h, browser_family, url_scheme, url_host, url_path, capture_reason, is_transition, text_state, visual_state, schema_version)`
 - `text_spans(id PRIMARY KEY, frame_id, source, text, x, y, w, h, confidence, language_code, sensitivity)`
-- `frame_fts` as FTS5 external-content index over approved merged text, title, app name, host, and path
+- `merged_text_records(frame_id PRIMARY KEY, approved_text, transcript_text, window_title, app_name, url_host, url_path, producer_version, state)`
+- `frame_fts` as an FTS5 external-content index over `merged_text_records` approved text, title, app name, host, path, and the separately reserved transcript field
 - `artifacts(id PRIMARY KEY, frame_id, kind, producer_name, producer_version, model_hash, locator_kind, locator_value, content_hash, state)`
 - `vector_offsets(frame_id PRIMARY KEY, model_hash, byte_offset, dimension, norm, state)`
 - `activity_intervals(id PRIMARY KEY, started_at, ended_at, bundle_id, app_name, state, gap_reason)`
@@ -218,9 +219,16 @@ Schema version 1 establishes these tables:
 - `deletion_tombstones(id PRIMARY KEY, encoded_tombstone, state)`
 - `audit_events(id PRIMARY KEY, occurred_at, actor, action, policy_id, result_count, query_hash)`
 
-Foreign keys are enabled. Frame-dependent rows cascade. FTS maintenance uses explicit transactions rather than implicit triggers so tests can observe each step. SQLCipher uses a Keychain-held 256-bit random key. WAL and temporary SQLite files must remain beside the encrypted database.
+Foreign keys are enabled. Frame-dependent rows cascade. FTS maintenance uses explicit transactions rather than implicit triggers so tests can observe each step. An update sends the exact old external-content values through the FTS5 `delete` command before replacing the merged record; frame deletion removes the index row before the cascade. Rebuild uses `delete-all` followed by stable row-order insertion from ready merged records. SQLCipher uses a Keychain-held 256-bit random key. WAL and temporary SQLite files must remain beside the encrypted database.
 
 The append-only schema V2 migration adds nullable `media_path`, `media_sha256`, `media_byte_count`, and `policy_generation` columns so legacy V1 rows remain readable. Insert/update triggers require every `schema_version >= 2` frame to carry its exact `media/.../frames/<frame-id>.heic` locator, 64-character lowercase digest, positive byte count, and positive final policy generation. Only `ArchiveAtomicCoordinator` creates canonical V2 rows: it verifies the complete manifest/assets, repeats capture epoch/target/policy identity inside the same database transaction, and commits the ready chunk, exact frame rows, and queued retryable jobs together.
+
+The append-only database schema V3 migration makes optional `TextSpan` bounds and
+Accessibility confidence nullable as required by the contract, adds
+`merged_text_records`, and rebuilds `frame_fts` against that external-content authority.
+It reserves `transcript_text` without enabling audio. Legacy ready V2 frame text is copied
+with producer version `legacy-v2`; the serialized capture/CLI/MCP contract remains V2.
+The archive `schema_version` becomes `3` while `contract_version` remains `2`.
 
 ## Filesystem contract
 

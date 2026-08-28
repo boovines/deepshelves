@@ -153,6 +153,27 @@ not consume an attempt or lease. The UI reads one atomic backlog snapshot contai
 ready, leased, scheduled-retry, succeeded, permanent-failure, cancelled, and per-kind
 counts; its visible status is derived only from that snapshot.
 
+### Merged text and lexical publication
+
+The durable publication boundary accepts only validated, non-suppressed `TextSpan`
+projections for one exact frame. Accessibility and Vision OCR spans form the approved
+merged text in deterministic reading order. Transcript spans have a separate, initially
+empty field so optional audio can be added later without mixing its provenance into
+screen text. Raw AX nodes and Vision observations never enter this boundary.
+
+`merged_text_records` is the canonical external-content table for lexical search. It
+copies only the already-approved window title, application name, lowercase host, and
+query/fragment-free path from the frame row. Publication replaces durable spans, the
+merged record, the frame text state, and its FTS row in one explicit transaction.
+Updates first issue the FTS5 external-content delete command with the exact old values;
+frame deletion removes the FTS row before the foreign-key cascade. No implicit trigger
+may maintain search evidence.
+
+Rebuild empties only the derived FTS index and deterministically repopulates it from
+ready merged records whose frame and parent media are both ready. The integrity snapshot
+compares ready frames, ready merged records, and FTS docsize row IDs, reporting missing
+and unexpected rows rather than trusting external-content query passthrough.
+
 ## Quality evaluation
 
 Create a 500-frame private fixture covering:

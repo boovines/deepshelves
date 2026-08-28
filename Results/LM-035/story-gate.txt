@@ -1,0 +1,10 @@
+focused_release_tests=passed
+schema_v3_migration=passed
+insert_update_delete_rebuild_parity=passed
+mid_transaction_rollback=passed
+suppressed_input_and_stale_term_absence=passed
+contracts=passed
+privacy_smoke=passed
+release_compile_only=passed
+dependency_audit=passed
+encoder_process_tripwire=passed

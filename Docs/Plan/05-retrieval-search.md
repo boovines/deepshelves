@@ -25,7 +25,10 @@ The command palette should parse natural time phrases and recognized operator fo
 
 ### Lexical
 
-Use SQLite FTS5 with a contentless or external-content table linked to canonical capture text.
+Use SQLite FTS5 with `merged_text_records` as its external-content table. Maintenance is
+explicit and transactional; there are no FTS synchronization triggers. Integrity checks
+compare the FTS docsize row inventory with ready merged records rather than counting
+external-content query rows.
 
 Indexed fields with different weights:
 
@@ -35,6 +38,10 @@ Indexed fields with different weights:
 - Application name
 - Website host
 - Transcript
+
+The concrete column order is approved merged screen text, window title, application name,
+host, path, and transcript text. Transcript remains a separate reserved column until the
+optional audio phase so evidence labeling and source weighting stay truthful.
 
 Use BM25 and weight structured/focused text above OCR and transcripts. Use FTS snippets and highlights in result cards.
 

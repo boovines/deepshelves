@@ -1,0 +1,8 @@
+external_content_authority=merged_text_records
+explicit_insert_update_delete_rebuild=passed
+ready_frame_docsize_integrity=passed
+reserved_transcript_provenance=passed
+startup_quarantine_suppression=passed
+implicit_fts_triggers=0
+hardware_encoder_tests_executed=0
+application_launches_executed=0

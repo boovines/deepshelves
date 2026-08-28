@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-035",
+  "status": "passed",
+  "databaseSchemaVersion": 3,
+  "serializedContractVersion": 2,
+  "externalContentTable": "merged_text_records",
+  "indexedFields": [
+    "approved_text",
+    "window_title",
+    "app_name",
+    "url_host",
+    "url_path",
+    "transcript_text"
+  ],
+  "explicitTransactionalMaintenance": true,
+  "implicitFTSTriggers": 0,
+  "readyFrameDocsizeParity": true,
+  "atomicRollbackVerified": true,
+  "forensicFrameDeletionVerified": true,
+  "suppressedInputFailsClosed": true,
+  "focusedTests": 29,
+  "hardwareEncoderTestsExecuted": 0,
+  "applicationLaunchesExecuted": 0
+}

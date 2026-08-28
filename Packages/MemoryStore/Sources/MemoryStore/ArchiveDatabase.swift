@@ -529,6 +529,60 @@ public final class ArchiveDatabase: @unchecked Sendable {
         }
     }
 
+    func insertSearchFrameFixtureForTesting(
+        suffix: Int,
+        appName: String = "Fixture App",
+        windowTitle: String = "Fixture Window",
+        host: String? = nil,
+        path: String? = nil
+    ) throws -> UUID {
+        let frameID = UUID(
+            uuidString: String(format: "35000000-0000-0000-0000-%012d", suffix)
+        )!
+        let chunkID = "search-chunk-\(suffix)"
+        try writer.write { database in
+            try database.execute(
+                sql: """
+                    INSERT INTO media_chunks(
+                        id, capture_epoch_id, target_window_id, relative_path,
+                        started_at, ended_at, codec, width, height, frame_count,
+                        byte_count, sha256, state
+                    ) VALUES (?, 'search-epoch', 42, ?,
+                              '2026-08-28T00:00:00.000Z', '2026-08-28T00:00:01.000Z',
+                              'heicKeyframes', 1280, 720, 1, 64, ?, 'ready')
+                    """,
+                arguments: [
+                    chunkID,
+                    "media/2026/08/28/\(chunkID)/manifest.json",
+                    String(repeating: "a", count: 64),
+                ]
+            )
+            try database.execute(
+                sql: """
+                    INSERT INTO frames(
+                        id, captured_at, monotonic_ns, capture_epoch_id,
+                        target_window_id, chunk_id, pts_ms, bundle_id, app_name,
+                        window_title, url_scheme, url_host, url_path,
+                        capture_reason, is_transition, text_state,
+                        visual_state, schema_version, approved_text
+                    ) VALUES (?, '2026-08-28T00:00:00.500Z', 500000000,
+                              'search-epoch', 42, ?, 500, 'com.example.fixture', ?, ?,
+                              ?, ?, ?, 'visualChange', 0, 'pending', 'ready', 1, '')
+                    """,
+                arguments: [
+                    frameID.uuidString.lowercased(),
+                    chunkID,
+                    appName,
+                    windowTitle,
+                    host == nil ? nil : "https",
+                    host,
+                    path,
+                ]
+            )
+        }
+        return frameID
+    }
+
     func searchableFrameCountForTesting() throws -> Int {
         try writer.read { database in
             try Int.fetchOne(
@@ -738,11 +792,25 @@ public final class ArchiveDatabase: @unchecked Sendable {
             )
             try database.execute(
                 sql: """
-                    INSERT INTO frame_fts(
-                        rowid, approved_text, window_title, app_name, url_host, url_path
+                    INSERT INTO merged_text_records(
+                        frame_id, approved_text, transcript_text, window_title,
+                        app_name, url_host, url_path, producer_version, state
                     )
-                    SELECT rowid, approved_text, window_title, app_name, url_host, url_path
+                    SELECT id, approved_text, '', window_title,
+                           app_name, url_host, url_path, 'fixture-v1', 'ready'
                     FROM frames WHERE id = ?
+                    """,
+                arguments: [frameID]
+            )
+            try database.execute(
+                sql: """
+                    INSERT INTO frame_fts(
+                        rowid, approved_text, window_title, app_name,
+                        url_host, url_path, transcript_text
+                    )
+                    SELECT rowid, approved_text, window_title, app_name,
+                           url_host, url_path, transcript_text
+                    FROM merged_text_records WHERE frame_id = ?
                     """,
                 arguments: [frameID]
             )

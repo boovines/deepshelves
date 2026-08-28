@@ -13,6 +13,7 @@ enum ArchiveSchemaV1 {
         "frame_fts",
         "frames",
         "media_chunks",
+        "merged_text_records",
         "policy_decisions",
         "processing_jobs",
         "text_spans",
@@ -41,6 +42,7 @@ enum ArchiveSchemaV1 {
             try afterV1Schema?()
         }
         ArchiveSchemaV2.register(in: &migrator)
+        ArchiveSchemaV3.register(in: &migrator)
         return migrator
     }
 

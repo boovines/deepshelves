@@ -18,9 +18,9 @@ final class ArchiveDatabaseTests: XCTestCase {
         XCTAssertEqual(Set(try archive.logicalTableNames()), ArchiveDatabase.v1LogicalTableNames)
         XCTAssertEqual(
             try archive.appliedMigrationIdentifiers(),
-            ["v1_archive_schema", "v2_heic_frame_locators"]
+            ["v1_archive_schema", "v2_heic_frame_locators", "v3_merged_text_fts"]
         )
-        XCTAssertEqual(try archive.archiveMetaValue(forKey: "schema_version"), "2")
+        XCTAssertEqual(try archive.archiveMetaValue(forKey: "schema_version"), "3")
 
         let configuration = try archive.configurationSnapshot()
         XCTAssertEqual(configuration.journalMode, "WAL")
@@ -38,7 +38,8 @@ final class ArchiveDatabaseTests: XCTestCase {
 
         let schema = try archive.schemaSQL()
         XCTAssertTrue(schema.contains("CREATE VIRTUAL TABLE frame_fts USING fts5"))
-        XCTAssertTrue(schema.contains("content='frames'"))
+        XCTAssertTrue(schema.contains("content='merged_text_records'"))
+        XCTAssertTrue(schema.contains("transcript_text"))
         XCTAssertTrue(schema.contains("ON DELETE CASCADE"))
         XCTAssertTrue(schema.contains("CREATE TRIGGER frames_v2_locator_insert"))
         XCTAssertTrue(schema.contains("CREATE TRIGGER frames_v2_locator_update"))
@@ -67,7 +68,7 @@ final class ArchiveDatabaseTests: XCTestCase {
         )
         XCTAssertEqual(
             try archive.appliedMigrationIdentifiers(),
-            ["v1_archive_schema", "v2_heic_frame_locators"]
+            ["v1_archive_schema", "v2_heic_frame_locators", "v3_merged_text_fts"]
         )
         XCTAssertEqual(Set(try archive.logicalTableNames()), ArchiveDatabase.v1LogicalTableNames)
     }
@@ -101,7 +102,7 @@ final class ArchiveDatabaseTests: XCTestCase {
         )
         XCTAssertEqual(
             try archive.appliedMigrationIdentifiers(),
-            ["v1_archive_schema", "v2_heic_frame_locators"]
+            ["v1_archive_schema", "v2_heic_frame_locators", "v3_merged_text_fts"]
         )
         XCTAssertEqual(Set(try archive.logicalTableNames()), ArchiveDatabase.v1LogicalTableNames)
 
@@ -111,7 +112,7 @@ final class ArchiveDatabaseTests: XCTestCase {
         )
         XCTAssertEqual(
             try reopened.appliedMigrationIdentifiers(),
-            ["v1_archive_schema", "v2_heic_frame_locators"]
+            ["v1_archive_schema", "v2_heic_frame_locators", "v3_merged_text_fts"]
         )
     }
 
@@ -137,8 +138,8 @@ final class ArchiveDatabaseTests: XCTestCase {
         XCTAssertNil(first.paths)
         XCTAssertNil(second.paths)
         XCTAssertEqual(try first.schemaSQL(), try second.schemaSQL())
-        XCTAssertEqual(try first.archiveMetaValue(forKey: "schema_version"), "2")
-        XCTAssertEqual(try second.archiveMetaValue(forKey: "schema_version"), "2")
+        XCTAssertEqual(try first.archiveMetaValue(forKey: "schema_version"), "3")
+        XCTAssertEqual(try second.archiveMetaValue(forKey: "schema_version"), "3")
         XCTAssertTrue(try first.configurationSnapshot().foreignKeysEnabled)
     }
 
@@ -179,8 +180,13 @@ final class ArchiveDatabaseTests: XCTestCase {
                 "id", "frame_id", "source", "text", "x", "y", "w", "h",
                 "confidence", "language_code", "sensitivity",
             ],
+            "merged_text_records": [
+                "frame_id", "approved_text", "transcript_text", "window_title",
+                "app_name", "url_host", "url_path", "producer_version", "state",
+            ],
             "frame_fts": [
                 "approved_text", "window_title", "app_name", "url_host", "url_path",
+                "transcript_text",
             ],
             "artifacts": [
                 "id", "frame_id", "kind", "producer_name", "producer_version",
@@ -222,9 +228,9 @@ final class ArchiveDatabaseTests: XCTestCase {
 
         XCTAssertEqual(
             try archive.appliedMigrationIdentifiers(),
-            ["v1_archive_schema", "v2_heic_frame_locators"]
+            ["v1_archive_schema", "v2_heic_frame_locators", "v3_merged_text_fts"]
         )
-        XCTAssertEqual(try archive.archiveMetaValue(forKey: "schema_version"), "2")
+        XCTAssertEqual(try archive.archiveMetaValue(forKey: "schema_version"), "3")
         XCTAssertEqual(try archive.archiveMetaValue(forKey: "contract_version"), "2")
         let columns = try archive.frameColumnNamesForTesting()
         XCTAssertTrue(columns.contains("media_path"))

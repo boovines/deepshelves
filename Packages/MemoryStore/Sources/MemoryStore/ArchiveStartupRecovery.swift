@@ -184,11 +184,30 @@ enum ArchiveStartupRecovery {
                     ) ?? 0
                 try database.execute(
                     sql: """
-                        DELETE FROM frame_fts
-                        WHERE rowid IN (
-                            SELECT rowid FROM frames
-                            WHERE chunk_id = ? AND approved_text <> ''
+                        INSERT INTO frame_fts(
+                            frame_fts, rowid, approved_text, window_title,
+                            app_name, url_host, url_path, transcript_text
                         )
+                        SELECT 'delete', merged_text_records.rowid,
+                               merged_text_records.approved_text,
+                               merged_text_records.window_title,
+                               merged_text_records.app_name,
+                               merged_text_records.url_host,
+                               merged_text_records.url_path,
+                               merged_text_records.transcript_text
+                        FROM merged_text_records
+                        JOIN frames ON frames.id = merged_text_records.frame_id
+                        WHERE frames.chunk_id = ? AND merged_text_records.state = 'ready'
+                        """,
+                    arguments: [chunkID]
+                )
+                try database.execute(
+                    sql: """
+                        UPDATE merged_text_records
+                        SET approved_text = '', transcript_text = '',
+                            window_title = NULL, app_name = NULL,
+                            url_host = NULL, url_path = NULL, state = 'suppressed'
+                        WHERE frame_id IN (SELECT id FROM frames WHERE chunk_id = ?)
                         """,
                     arguments: [chunkID]
                 )
