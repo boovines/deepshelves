@@ -1,0 +1,2 @@
+rendered 12 verified deterministic baselines
+lm013-snapshots: 12 baselines reproduce byte-for-byte with zero unapproved diffs

@@ -30,6 +30,7 @@ public struct MemorySearchField: View {
                 TextField(model.placeholder, text: $text)
                     .textFieldStyle(.plain)
                     .font(MemoryTypeToken.body.font)
+                    .layoutPriority(1)
                     .focused($isFocused)
                     .onSubmit(onSubmit)
                     .accessibilityLabel("Search screen memory")
@@ -343,34 +344,32 @@ public struct PermissionRow: View {
 
     public var body: some View {
         let presentation = state.presentation
-        HStack(alignment: .top, spacing: MemorySpacing.medium) {
-            Image(systemName: presentation.systemImage)
-                .foregroundStyle(presentation.colorToken.color)
-                .frame(width: MemoryControlHeight.compact, height: MemoryControlHeight.compact)
-                .accessibilityHidden(true)
-
-            VStack(alignment: .leading, spacing: MemorySpacing.xSmall) {
-                HStack {
+        VStack(alignment: .leading, spacing: MemorySpacing.small) {
+            HStack(alignment: .top, spacing: MemorySpacing.small) {
+                Image(systemName: presentation.systemImage)
+                    .foregroundStyle(presentation.colorToken.color)
+                    .frame(width: MemoryControlHeight.compact, height: MemoryControlHeight.compact)
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: MemorySpacing.xSmall) {
                     Text(title)
                         .font(MemoryTypeToken.headline.font)
                     Text(requirement)
                         .font(MemoryTypeToken.caption.font)
                         .foregroundStyle(MemoryColorToken.textSecondary.color)
                 }
-                Text(explanation)
-                    .font(MemoryTypeToken.callout.font)
-                    .foregroundStyle(MemoryColorToken.textSecondary.color)
-                    .fixedSize(horizontal: false, vertical: true)
-                Text(presentation.label)
-                    .font(MemoryTypeToken.caption.font)
-                    .foregroundStyle(presentation.colorToken.color)
             }
-
-            Spacer(minLength: MemorySpacing.medium)
-
+            Text(explanation)
+                .font(MemoryTypeToken.callout.font)
+                .foregroundStyle(MemoryColorToken.textSecondary.color)
+                .fixedSize(horizontal: false, vertical: true)
+            Text(presentation.label)
+                .font(MemoryTypeToken.caption.font)
+                .foregroundStyle(presentation.colorToken.color)
+                .fixedSize(horizontal: false, vertical: true)
             if let actionTitle = presentation.actionTitle {
                 Button(actionTitle, action: onAction)
                     .frame(minHeight: MemoryControlHeight.standard)
+                    .fixedSize(horizontal: true, vertical: false)
                     .disabled(interactionState == .disabled)
             }
         }
@@ -492,6 +491,7 @@ public struct ProgressStatusView: View {
                 Text(model.label)
                     .font(MemoryTypeToken.callout.font)
                     .foregroundStyle(MemoryColorToken.textSecondary.color)
+                    .fixedSize(horizontal: false, vertical: true)
             }
             .accessibilityElement(children: .combine)
             .accessibilityLabel(model.label)
@@ -502,23 +502,26 @@ public struct ProgressStatusView: View {
 public struct DestructiveConfirmationSheet: View {
     public let model: DestructiveConfirmationModel
     public let isConfirming: Bool
+    public let compact: Bool
     public let onCancel: () -> Void
     public let onConfirm: () -> Void
 
     public init(
         model: DestructiveConfirmationModel,
         isConfirming: Bool = false,
+        compact: Bool = false,
         onCancel: @escaping () -> Void = {},
         onConfirm: @escaping () -> Void = {}
     ) {
         self.model = model
         self.isConfirming = isConfirming
+        self.compact = compact
         self.onCancel = onCancel
         self.onConfirm = onConfirm
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: MemorySpacing.large) {
+        VStack(alignment: .leading, spacing: compact ? MemorySpacing.medium : MemorySpacing.large) {
             HStack(alignment: .top, spacing: MemorySpacing.medium) {
                 Image(systemName: "trash.fill")
                     .font(MemoryTypeToken.title2.font)
@@ -545,7 +548,7 @@ public struct DestructiveConfirmationSheet: View {
                     .frame(minHeight: MemoryControlHeight.standard)
             }
         }
-        .padding(MemorySpacing.xLarge)
+        .padding(compact ? MemorySpacing.medium : MemorySpacing.xLarge)
         .frame(minWidth: 420)
         .accessibilityElement(children: .contain)
     }

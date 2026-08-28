@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "activeStory": "LM-013",
+  "activeStory": "LM-014",
   "stories": {
     "LM-001": {
       "status": "passed",
@@ -195,23 +195,29 @@
       "resumeProbe": null
     },
     "LM-013": {
-      "status": "active",
+      "status": "passed",
       "startedAt": "2026-08-28T04:28:26Z",
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": "Base checkpoint refs/tags/checkpoints/LM-012. Build the deterministic macOS NSHostingView screenshot harness for 1x/2x, light/dark/Increased Contrast, default/minimum sizes, and reviewed shared-control baselines, with a reproducible zero-diff snapshot-index.html gate.",
+      "completedAt": "2026-08-28T04:38:23Z",
+      "gitRevision": "refs/tags/checkpoints/LM-013",
+      "evidence": [
+        "Results/LM-013/snapshot-index.html",
+        "Results/LM-013/snapshot-manifest.json",
+        "Results/LM-013/snapshot-check.txt",
+        "Results/LM-013/report.json",
+        "Results/LM-013/unit-tests.txt"
+      ],
+      "notes": "Twelve reviewed 1x/2x light/dark/Increased Contrast baselines cover default and minimum sizes through an offscreen NSHostingView renderer. All controls remain visible at minimum size, every PNG is manifest-pinned, the isolated rerender produces zero byte diffs, and the complete release/privacy gate suite passes.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null
     },
     "LM-014": {
-      "status": "pending",
-      "startedAt": null,
+      "status": "active",
+      "startedAt": "2026-08-28T04:38:23Z",
       "completedAt": null,
       "gitRevision": null,
       "evidence": [],
-      "notes": null,
+      "notes": "Base checkpoint refs/tags/checkpoints/LM-013. Implement resumable four-step onboarding with explicit permission actions, truthful foreground-only/storage/privacy copy, and a synthetic live preview; XCUITest denied/granted/revoked paths without repeated prompts and attach a VoiceOver transcript.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null

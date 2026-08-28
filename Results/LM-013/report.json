@@ -1,0 +1,132 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-013",
+  "status": "passed",
+  "generatedAt": "2026-08-28T04:37:15Z",
+  "baseRevision": "3e3ec470a9879ec5b731b1f819754d5c59cd1c23",
+  "checkpoint": "refs/tags/checkpoints/LM-013",
+  "results": {
+    "renderer": "offscreen NSHostingView with explicit NSAppearance and NSBitmapImageRep backing scale",
+    "baselineCount": 12,
+    "totalBaselineBytes": 2028566,
+    "scales": [
+      1,
+      2
+    ],
+    "appearances": [
+      "light",
+      "dark",
+      "increased-contrast"
+    ],
+    "logicalSizes": [
+      {
+        "name": "default",
+        "width": 1120,
+        "height": 760
+      },
+      {
+        "name": "minimum",
+        "width": 840,
+        "height": 560
+      }
+    ],
+    "syntheticOnly": true,
+    "networkResources": 0,
+    "animationsDisabled": true,
+    "byteIdenticalRerender": true,
+    "unapprovedDiffs": 0,
+    "visualReview": {
+      "reviewedAppearances": [
+        "light",
+        "dark",
+        "increased-contrast"
+      ],
+      "reviewedSizes": [
+        "default",
+        "minimum"
+      ],
+      "reviewedScales": [
+        1,
+        2
+      ],
+      "allElevenControlsVisibleAtMinimumSize": true,
+      "criticalControlClipping": 0,
+      "customWebLikeControls": 0
+    }
+  },
+  "evidence": {
+    "manifest": {
+      "path": "Results/LM-013/snapshot-manifest.json",
+      "sha256": "da828dc526edc22e9002cde0c1cd8c3d02aa3dbd1489ff21a293fe607c99f3f4"
+    },
+    "index": {
+      "path": "Results/LM-013/snapshot-index.html",
+      "sha256": "f15c9596945dbb232bbcc34564a7c5b0ae6bd295cf20c840c1622ae05165469a"
+    }
+  },
+  "gates": {
+    "snapshotReproduction": {
+      "status": "passed",
+      "command": "./scripts/run-lm013-snapshots.sh --check",
+      "baselines": 12,
+      "unapprovedDiffs": 0,
+      "log": "Results/LM-013/snapshot-check.txt",
+      "logSHA256": "a0dcd57aeeea57450dccefb6318322ee4732fc3d1119bde6e8972c5f15df819e"
+    },
+    "fullTestSuite": {
+      "status": "passed",
+      "command": "./scripts/test.sh",
+      "xctestUnitTests": 80,
+      "swiftTestingUnitTests": 9,
+      "lm013XCTestUnitTests": 4,
+      "integrationTests": 7,
+      "privacyTests": 4,
+      "performanceTests": 1,
+      "failures": 0,
+      "log": "Results/LM-013/unit-tests.txt",
+      "logSHA256": "c2103af9c18e129ce6533687e8589be19a1057825b627169773f3a72b55a4a62"
+    },
+    "contractRegression": {
+      "status": "passed",
+      "command": "./scripts/check-contracts.sh",
+      "fixtures": 11,
+      "log": "Results/LM-013/contracts.txt",
+      "logSHA256": "13352d35e5f7de887d09e4b3d5a05c952838abab3875dbfcd768aa973a32933f"
+    },
+    "privacySmoke": {
+      "status": "passed",
+      "command": "./scripts/privacy-smoke.sh",
+      "runtimeNetworkingOrTelemetry": 0,
+      "log": "Results/LM-013/privacy-smoke.txt",
+      "logSHA256": "9ea4b5449f9715c90a3a80909f275c987c95be1130414ae6e10f888fcbe4a8bc"
+    },
+    "releaseBuild": {
+      "status": "passed",
+      "command": "./scripts/build-release.sh",
+      "automaticPackageResolution": false,
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ],
+      "log": "Results/LM-013/release-build.txt",
+      "logSHA256": "81b2c8ca59655324198c01f092534fc470e47d9aa222b5383e495d86894a579d"
+    },
+    "signedPosture": {
+      "status": "passed",
+      "command": "./scripts/signing-posture.sh",
+      "log": "Results/LM-013/signing-posture.txt",
+      "logSHA256": "f91e6d2a28e3fd6b44e6d20a5a3f5dfcc5e8645542d95caf3d9b70720678ee2e"
+    },
+    "releaseBinaryAudit": {
+      "status": "passed",
+      "command": "./scripts/check-dependencies.sh --binaries",
+      "forbiddenLinkedOrEmbeddedMarkers": 0,
+      "log": "Results/LM-013/dependency-audit.txt",
+      "logSHA256": "ee19ec2fac69814d57606f8260d4120b82de9aecffb3286ca3159489700b0b32"
+    },
+    "diffWhitespace": {
+      "status": "passed",
+      "command": "git diff --check"
+    }
+  }
+}
