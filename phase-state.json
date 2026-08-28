@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "activeStory": "LM-020",
+  "activeStory": "LM-021",
   "stories": {
     "LM-001": {
       "status": "passed",
@@ -307,23 +307,28 @@
       "resumeProbe": null
     },
     "LM-020": {
-      "status": "active",
+      "status": "passed",
       "startedAt": "2026-08-28T11:01:05Z",
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": "Base checkpoint refs/tags/checkpoints/LM-019. Implement NSWorkspace/AX foreground monitoring and strict public-API WindowResolver mapping by PID, AX identity, normalized geometry, title tie-breaker, and main-display eligibility; prove 500 transitions and typed zero-pixel gaps for ambiguous, minimized, protected, and unsupported-display cases.",
+      "completedAt": "2026-08-28T11:17:54Z",
+      "gitRevision": "refs/tags/checkpoints/LM-020",
+      "evidence": [
+        "Results/LM-020/report.json",
+        "Results/LM-020/resolver.json",
+        "Results/LM-020/resolver-tests.txt",
+        "Fixtures/LM020/window-transition-corpus.json"
+      ],
+      "notes": "NSWorkspace activation transitions, bounded public Accessibility inspection, and one-refresh-per-transition strict PID/AX identity/geometry resolution now expose only an exact eligible foreground main-display SCWindow. The deterministic 500-transition corpus resolves all 350 eligible windows and emits six typed 25-case metadata-only gap classes with zero pixels; the signed real app probe matches foreground, AX, and resolved-window PIDs under granted Accessibility and Screen Recording permissions.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null
     },
     "LM-021": {
-      "status": "pending",
-      "startedAt": null,
+      "status": "active",
+      "startedAt": "2026-08-28T11:17:54Z",
       "completedAt": null,
       "gitRevision": null,
       "evidence": [],
-      "notes": null,
+      "notes": "Base checkpoint refs/tags/checkpoints/LM-020. Implement supported-browser address-field adapters tied to the strictly resolved foreground window, normalized public URL context, and private-context suppression without pixels or stale cross-window metadata.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null

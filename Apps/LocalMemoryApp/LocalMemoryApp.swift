@@ -25,6 +25,7 @@ struct LocalMemoryApp: App {
     private let captureSpikeStaticMode: Bool
     private let captureSpikeCrashActiveMode: Bool
     private let lm019LifecycleOutput: String?
+    private let lm020ResolverOutput: String?
     private let contextSpikeOutputDirectory: String?
     private let vectorSpikeArguments: (output: String, imageModel: String, textModel: String)?
     private let s5SpikeArguments: (output: String, unsignedProbe: String, media: String)?
@@ -72,6 +73,13 @@ struct LocalMemoryApp: App {
             lm019LifecycleOutput = arguments[flagIndex + 1]
         } else {
             lm019LifecycleOutput = nil
+        }
+        if let flagIndex = arguments.firstIndex(of: "--lm020-export-resolver"),
+           arguments.indices.contains(flagIndex + 1)
+        {
+            lm020ResolverOutput = arguments[flagIndex + 1]
+        } else {
+            lm020ResolverOutput = nil
         }
         if let flagIndex = arguments.firstIndex(of: "--context-spike"),
            arguments.indices.contains(flagIndex + 1)
@@ -151,7 +159,9 @@ struct LocalMemoryApp: App {
 
     private static func bootstrapArchive(arguments: [String]) -> ArchiveDatabase {
         do {
-            if arguments.contains("--lm019-export-lifecycle") {
+            if arguments.contains("--lm019-export-lifecycle")
+                || arguments.contains("--lm020-export-resolver")
+            {
                 return try ArchiveDatabase.deterministicTestStore()
             }
             return try ArchiveDatabase()
@@ -228,7 +238,7 @@ struct LocalMemoryApp: App {
                     )
                 } else if contextSpikeOutputDirectory != nil {
                     ContextSpikeTargetView()
-                } else if lm019LifecycleOutput != nil {
+                } else if lm019LifecycleOutput != nil || lm020ResolverOutput != nil {
                     CaptureSpikeTargetView(animated: true)
                 } else if captureSpikeOutputDirectory == nil {
                     MainShellView(
@@ -254,6 +264,20 @@ struct LocalMemoryApp: App {
                         } catch {
                             FileHandle.standardError.write(
                                 Data("LM-019 lifecycle export failed: \(error)\n".utf8)
+                            )
+                            Darwin.exit(EXIT_FAILURE)
+                        }
+                        return
+                    }
+                    if let lm020ResolverOutput {
+                        do {
+                            try await LM020WindowResolverHarness.run(
+                                outputURL: URL(fileURLWithPath: lm020ResolverOutput)
+                            )
+                            NSApplication.shared.terminate(nil)
+                        } catch {
+                            FileHandle.standardError.write(
+                                Data("LM-020 resolver export failed: \(error)\n".utf8)
                             )
                             Darwin.exit(EXIT_FAILURE)
                         }

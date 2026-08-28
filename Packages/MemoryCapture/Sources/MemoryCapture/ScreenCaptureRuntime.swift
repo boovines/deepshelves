@@ -36,6 +36,11 @@ public struct ForegroundWindowCaptureTarget: @unchecked Sendable, Equatable {
     public let displayID: UInt32
     public let width: Int
     public let height: Int
+    public let title: String?
+    public let bounds: PointRect
+    public let isOnScreen: Bool
+    public let isNormalContent: Bool
+    public let intersectsMainDisplay: Bool
     public let isEligibleForegroundWindow: Bool
     public let surfaceKind: CaptureSurfaceKind
     private let platformWindow: UnsafeSendableSCWindow?
@@ -46,6 +51,11 @@ public struct ForegroundWindowCaptureTarget: @unchecked Sendable, Equatable {
         displayID: UInt32,
         width: Int,
         height: Int,
+        title: String?,
+        bounds: PointRect,
+        isOnScreen: Bool,
+        isNormalContent: Bool,
+        intersectsMainDisplay: Bool,
         isEligibleForegroundWindow: Bool,
         platformWindow: SCWindow?
     ) {
@@ -54,6 +64,11 @@ public struct ForegroundWindowCaptureTarget: @unchecked Sendable, Equatable {
         self.displayID = displayID
         self.width = width
         self.height = height
+        self.title = title
+        self.bounds = bounds
+        self.isOnScreen = isOnScreen
+        self.isNormalContent = isNormalContent
+        self.intersectsMainDisplay = intersectsMainDisplay
         self.isEligibleForegroundWindow = isEligibleForegroundWindow
         surfaceKind = .foregroundWindow
         self.platformWindow = platformWindow.map(UnsafeSendableSCWindow.init)
@@ -65,6 +80,11 @@ public struct ForegroundWindowCaptureTarget: @unchecked Sendable, Equatable {
         displayID: UInt32,
         width: Int,
         height: Int,
+        title: String? = nil,
+        bounds: PointRect? = nil,
+        isOnScreen: Bool? = nil,
+        isNormalContent: Bool? = nil,
+        intersectsMainDisplay: Bool? = nil,
         isEligibleForegroundWindow: Bool = true
     ) -> Self {
         Self(
@@ -73,6 +93,11 @@ public struct ForegroundWindowCaptureTarget: @unchecked Sendable, Equatable {
             displayID: displayID,
             width: width,
             height: height,
+            title: title,
+            bounds: bounds ?? PointRect(x: 0, y: 0, width: Double(width), height: Double(height)),
+            isOnScreen: isOnScreen ?? isEligibleForegroundWindow,
+            isNormalContent: isNormalContent ?? isEligibleForegroundWindow,
+            intersectsMainDisplay: intersectsMainDisplay ?? isEligibleForegroundWindow,
             isEligibleForegroundWindow: isEligibleForegroundWindow,
             platformWindow: nil
         )
@@ -81,6 +106,7 @@ public struct ForegroundWindowCaptureTarget: @unchecked Sendable, Equatable {
     fileprivate static func screenCaptureKit(
         window: SCWindow,
         displayID: UInt32,
+        intersectsMainDisplay: Bool,
         isEligibleForegroundWindow: Bool
     ) -> Self {
         Self(
@@ -89,6 +115,16 @@ public struct ForegroundWindowCaptureTarget: @unchecked Sendable, Equatable {
             displayID: displayID,
             width: Int(window.frame.width),
             height: Int(window.frame.height),
+            title: window.title,
+            bounds: PointRect(
+                x: window.frame.origin.x,
+                y: window.frame.origin.y,
+                width: window.frame.width,
+                height: window.frame.height
+            ),
+            isOnScreen: window.isOnScreen,
+            isNormalContent: window.windowLayer == 0,
+            intersectsMainDisplay: intersectsMainDisplay,
             isEligibleForegroundWindow: isEligibleForegroundWindow,
             platformWindow: window
         )
@@ -98,12 +134,49 @@ public struct ForegroundWindowCaptureTarget: @unchecked Sendable, Equatable {
         platformWindow?.value
     }
 
+    public var descriptor: ShareableWindowDescriptor {
+        ShareableWindowDescriptor(
+            windowID: windowID,
+            processID: processID,
+            bounds: bounds,
+            title: title,
+            isOnScreen: isOnScreen,
+            isNormalContent: isNormalContent,
+            intersectsMainDisplay: intersectsMainDisplay
+        )
+    }
+
+    public static func fixture(_ descriptor: ShareableWindowDescriptor) -> Self {
+        fixture(
+            windowID: descriptor.windowID,
+            processID: descriptor.processID,
+            displayID: descriptor.intersectsMainDisplay ? 1 : 0,
+            width: Int(descriptor.bounds.width),
+            height: Int(descriptor.bounds.height),
+            title: descriptor.title,
+            bounds: descriptor.bounds,
+            isOnScreen: descriptor.isOnScreen,
+            isNormalContent: descriptor.isNormalContent,
+            intersectsMainDisplay: descriptor.intersectsMainDisplay,
+            isEligibleForegroundWindow: descriptor.isOnScreen
+                && descriptor.isNormalContent
+                && descriptor.intersectsMainDisplay
+                && descriptor.bounds.width > 0
+                && descriptor.bounds.height > 0
+        )
+    }
+
     public static func == (lhs: Self, rhs: Self) -> Bool {
         lhs.windowID == rhs.windowID
             && lhs.processID == rhs.processID
             && lhs.displayID == rhs.displayID
             && lhs.width == rhs.width
             && lhs.height == rhs.height
+            && lhs.title == rhs.title
+            && lhs.bounds == rhs.bounds
+            && lhs.isOnScreen == rhs.isOnScreen
+            && lhs.isNormalContent == rhs.isNormalContent
+            && lhs.intersectsMainDisplay == rhs.intersectsMainDisplay
             && lhs.isEligibleForegroundWindow == rhs.isEligibleForegroundWindow
             && lhs.surfaceKind == rhs.surfaceKind
     }
@@ -260,6 +333,7 @@ public final class ScreenCaptureKitShareableWindowRefresher: ShareableWindowRefr
             return ForegroundWindowCaptureTarget.screenCaptureKit(
                 window: window,
                 displayID: intersectsMain ? mainDisplayID : 0,
+                intersectsMainDisplay: intersectsMain,
                 isEligibleForegroundWindow: eligible
             )
         }

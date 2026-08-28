@@ -1,0 +1,3744 @@
+{
+  "allInvariantsPassed" : true,
+  "corpus" : {
+    "approvedCount" : 350,
+    "exactResolutionCount" : 500,
+    "gapCounts" : {
+      "ambiguousWindow" : 25,
+      "minimizedWindow" : 25,
+      "noWindow" : 25,
+      "protectedSurface" : 25,
+      "unresolvedWindow" : 25,
+      "unsupportedDisplay" : 25
+    },
+    "records" : [
+      {
+        "actual" : "approved:20000",
+        "actualWindowID" : 20000,
+        "expected" : "approved:20000",
+        "expectedWindowID" : 20000,
+        "id" : "approved-000",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20001",
+        "actualWindowID" : 20001,
+        "expected" : "approved:20001",
+        "expectedWindowID" : 20001,
+        "id" : "approved-001",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20002",
+        "actualWindowID" : 20002,
+        "expected" : "approved:20002",
+        "expectedWindowID" : 20002,
+        "id" : "approved-002",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20003",
+        "actualWindowID" : 20003,
+        "expected" : "approved:20003",
+        "expectedWindowID" : 20003,
+        "id" : "approved-003",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20004",
+        "actualWindowID" : 20004,
+        "expected" : "approved:20004",
+        "expectedWindowID" : 20004,
+        "id" : "approved-004",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20005",
+        "actualWindowID" : 20005,
+        "expected" : "approved:20005",
+        "expectedWindowID" : 20005,
+        "id" : "approved-005",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20006",
+        "actualWindowID" : 20006,
+        "expected" : "approved:20006",
+        "expectedWindowID" : 20006,
+        "id" : "approved-006",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20007",
+        "actualWindowID" : 20007,
+        "expected" : "approved:20007",
+        "expectedWindowID" : 20007,
+        "id" : "approved-007",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20008",
+        "actualWindowID" : 20008,
+        "expected" : "approved:20008",
+        "expectedWindowID" : 20008,
+        "id" : "approved-008",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20009",
+        "actualWindowID" : 20009,
+        "expected" : "approved:20009",
+        "expectedWindowID" : 20009,
+        "id" : "approved-009",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20010",
+        "actualWindowID" : 20010,
+        "expected" : "approved:20010",
+        "expectedWindowID" : 20010,
+        "id" : "approved-010",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20011",
+        "actualWindowID" : 20011,
+        "expected" : "approved:20011",
+        "expectedWindowID" : 20011,
+        "id" : "approved-011",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20012",
+        "actualWindowID" : 20012,
+        "expected" : "approved:20012",
+        "expectedWindowID" : 20012,
+        "id" : "approved-012",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20013",
+        "actualWindowID" : 20013,
+        "expected" : "approved:20013",
+        "expectedWindowID" : 20013,
+        "id" : "approved-013",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20014",
+        "actualWindowID" : 20014,
+        "expected" : "approved:20014",
+        "expectedWindowID" : 20014,
+        "id" : "approved-014",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20015",
+        "actualWindowID" : 20015,
+        "expected" : "approved:20015",
+        "expectedWindowID" : 20015,
+        "id" : "approved-015",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20016",
+        "actualWindowID" : 20016,
+        "expected" : "approved:20016",
+        "expectedWindowID" : 20016,
+        "id" : "approved-016",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20017",
+        "actualWindowID" : 20017,
+        "expected" : "approved:20017",
+        "expectedWindowID" : 20017,
+        "id" : "approved-017",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20018",
+        "actualWindowID" : 20018,
+        "expected" : "approved:20018",
+        "expectedWindowID" : 20018,
+        "id" : "approved-018",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20019",
+        "actualWindowID" : 20019,
+        "expected" : "approved:20019",
+        "expectedWindowID" : 20019,
+        "id" : "approved-019",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20020",
+        "actualWindowID" : 20020,
+        "expected" : "approved:20020",
+        "expectedWindowID" : 20020,
+        "id" : "approved-020",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20021",
+        "actualWindowID" : 20021,
+        "expected" : "approved:20021",
+        "expectedWindowID" : 20021,
+        "id" : "approved-021",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20022",
+        "actualWindowID" : 20022,
+        "expected" : "approved:20022",
+        "expectedWindowID" : 20022,
+        "id" : "approved-022",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20023",
+        "actualWindowID" : 20023,
+        "expected" : "approved:20023",
+        "expectedWindowID" : 20023,
+        "id" : "approved-023",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20024",
+        "actualWindowID" : 20024,
+        "expected" : "approved:20024",
+        "expectedWindowID" : 20024,
+        "id" : "approved-024",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20025",
+        "actualWindowID" : 20025,
+        "expected" : "approved:20025",
+        "expectedWindowID" : 20025,
+        "id" : "approved-025",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20026",
+        "actualWindowID" : 20026,
+        "expected" : "approved:20026",
+        "expectedWindowID" : 20026,
+        "id" : "approved-026",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20027",
+        "actualWindowID" : 20027,
+        "expected" : "approved:20027",
+        "expectedWindowID" : 20027,
+        "id" : "approved-027",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20028",
+        "actualWindowID" : 20028,
+        "expected" : "approved:20028",
+        "expectedWindowID" : 20028,
+        "id" : "approved-028",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20029",
+        "actualWindowID" : 20029,
+        "expected" : "approved:20029",
+        "expectedWindowID" : 20029,
+        "id" : "approved-029",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20030",
+        "actualWindowID" : 20030,
+        "expected" : "approved:20030",
+        "expectedWindowID" : 20030,
+        "id" : "approved-030",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20031",
+        "actualWindowID" : 20031,
+        "expected" : "approved:20031",
+        "expectedWindowID" : 20031,
+        "id" : "approved-031",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20032",
+        "actualWindowID" : 20032,
+        "expected" : "approved:20032",
+        "expectedWindowID" : 20032,
+        "id" : "approved-032",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20033",
+        "actualWindowID" : 20033,
+        "expected" : "approved:20033",
+        "expectedWindowID" : 20033,
+        "id" : "approved-033",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20034",
+        "actualWindowID" : 20034,
+        "expected" : "approved:20034",
+        "expectedWindowID" : 20034,
+        "id" : "approved-034",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20035",
+        "actualWindowID" : 20035,
+        "expected" : "approved:20035",
+        "expectedWindowID" : 20035,
+        "id" : "approved-035",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20036",
+        "actualWindowID" : 20036,
+        "expected" : "approved:20036",
+        "expectedWindowID" : 20036,
+        "id" : "approved-036",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20037",
+        "actualWindowID" : 20037,
+        "expected" : "approved:20037",
+        "expectedWindowID" : 20037,
+        "id" : "approved-037",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20038",
+        "actualWindowID" : 20038,
+        "expected" : "approved:20038",
+        "expectedWindowID" : 20038,
+        "id" : "approved-038",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20039",
+        "actualWindowID" : 20039,
+        "expected" : "approved:20039",
+        "expectedWindowID" : 20039,
+        "id" : "approved-039",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20040",
+        "actualWindowID" : 20040,
+        "expected" : "approved:20040",
+        "expectedWindowID" : 20040,
+        "id" : "approved-040",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20041",
+        "actualWindowID" : 20041,
+        "expected" : "approved:20041",
+        "expectedWindowID" : 20041,
+        "id" : "approved-041",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20042",
+        "actualWindowID" : 20042,
+        "expected" : "approved:20042",
+        "expectedWindowID" : 20042,
+        "id" : "approved-042",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20043",
+        "actualWindowID" : 20043,
+        "expected" : "approved:20043",
+        "expectedWindowID" : 20043,
+        "id" : "approved-043",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20044",
+        "actualWindowID" : 20044,
+        "expected" : "approved:20044",
+        "expectedWindowID" : 20044,
+        "id" : "approved-044",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20045",
+        "actualWindowID" : 20045,
+        "expected" : "approved:20045",
+        "expectedWindowID" : 20045,
+        "id" : "approved-045",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20046",
+        "actualWindowID" : 20046,
+        "expected" : "approved:20046",
+        "expectedWindowID" : 20046,
+        "id" : "approved-046",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20047",
+        "actualWindowID" : 20047,
+        "expected" : "approved:20047",
+        "expectedWindowID" : 20047,
+        "id" : "approved-047",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20048",
+        "actualWindowID" : 20048,
+        "expected" : "approved:20048",
+        "expectedWindowID" : 20048,
+        "id" : "approved-048",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20049",
+        "actualWindowID" : 20049,
+        "expected" : "approved:20049",
+        "expectedWindowID" : 20049,
+        "id" : "approved-049",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20050",
+        "actualWindowID" : 20050,
+        "expected" : "approved:20050",
+        "expectedWindowID" : 20050,
+        "id" : "approved-050",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20051",
+        "actualWindowID" : 20051,
+        "expected" : "approved:20051",
+        "expectedWindowID" : 20051,
+        "id" : "approved-051",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20052",
+        "actualWindowID" : 20052,
+        "expected" : "approved:20052",
+        "expectedWindowID" : 20052,
+        "id" : "approved-052",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20053",
+        "actualWindowID" : 20053,
+        "expected" : "approved:20053",
+        "expectedWindowID" : 20053,
+        "id" : "approved-053",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20054",
+        "actualWindowID" : 20054,
+        "expected" : "approved:20054",
+        "expectedWindowID" : 20054,
+        "id" : "approved-054",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20055",
+        "actualWindowID" : 20055,
+        "expected" : "approved:20055",
+        "expectedWindowID" : 20055,
+        "id" : "approved-055",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20056",
+        "actualWindowID" : 20056,
+        "expected" : "approved:20056",
+        "expectedWindowID" : 20056,
+        "id" : "approved-056",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20057",
+        "actualWindowID" : 20057,
+        "expected" : "approved:20057",
+        "expectedWindowID" : 20057,
+        "id" : "approved-057",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20058",
+        "actualWindowID" : 20058,
+        "expected" : "approved:20058",
+        "expectedWindowID" : 20058,
+        "id" : "approved-058",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20059",
+        "actualWindowID" : 20059,
+        "expected" : "approved:20059",
+        "expectedWindowID" : 20059,
+        "id" : "approved-059",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20060",
+        "actualWindowID" : 20060,
+        "expected" : "approved:20060",
+        "expectedWindowID" : 20060,
+        "id" : "approved-060",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20061",
+        "actualWindowID" : 20061,
+        "expected" : "approved:20061",
+        "expectedWindowID" : 20061,
+        "id" : "approved-061",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20062",
+        "actualWindowID" : 20062,
+        "expected" : "approved:20062",
+        "expectedWindowID" : 20062,
+        "id" : "approved-062",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20063",
+        "actualWindowID" : 20063,
+        "expected" : "approved:20063",
+        "expectedWindowID" : 20063,
+        "id" : "approved-063",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20064",
+        "actualWindowID" : 20064,
+        "expected" : "approved:20064",
+        "expectedWindowID" : 20064,
+        "id" : "approved-064",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20065",
+        "actualWindowID" : 20065,
+        "expected" : "approved:20065",
+        "expectedWindowID" : 20065,
+        "id" : "approved-065",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20066",
+        "actualWindowID" : 20066,
+        "expected" : "approved:20066",
+        "expectedWindowID" : 20066,
+        "id" : "approved-066",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20067",
+        "actualWindowID" : 20067,
+        "expected" : "approved:20067",
+        "expectedWindowID" : 20067,
+        "id" : "approved-067",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20068",
+        "actualWindowID" : 20068,
+        "expected" : "approved:20068",
+        "expectedWindowID" : 20068,
+        "id" : "approved-068",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20069",
+        "actualWindowID" : 20069,
+        "expected" : "approved:20069",
+        "expectedWindowID" : 20069,
+        "id" : "approved-069",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20070",
+        "actualWindowID" : 20070,
+        "expected" : "approved:20070",
+        "expectedWindowID" : 20070,
+        "id" : "approved-070",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20071",
+        "actualWindowID" : 20071,
+        "expected" : "approved:20071",
+        "expectedWindowID" : 20071,
+        "id" : "approved-071",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20072",
+        "actualWindowID" : 20072,
+        "expected" : "approved:20072",
+        "expectedWindowID" : 20072,
+        "id" : "approved-072",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20073",
+        "actualWindowID" : 20073,
+        "expected" : "approved:20073",
+        "expectedWindowID" : 20073,
+        "id" : "approved-073",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20074",
+        "actualWindowID" : 20074,
+        "expected" : "approved:20074",
+        "expectedWindowID" : 20074,
+        "id" : "approved-074",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20075",
+        "actualWindowID" : 20075,
+        "expected" : "approved:20075",
+        "expectedWindowID" : 20075,
+        "id" : "approved-075",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20076",
+        "actualWindowID" : 20076,
+        "expected" : "approved:20076",
+        "expectedWindowID" : 20076,
+        "id" : "approved-076",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20077",
+        "actualWindowID" : 20077,
+        "expected" : "approved:20077",
+        "expectedWindowID" : 20077,
+        "id" : "approved-077",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20078",
+        "actualWindowID" : 20078,
+        "expected" : "approved:20078",
+        "expectedWindowID" : 20078,
+        "id" : "approved-078",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20079",
+        "actualWindowID" : 20079,
+        "expected" : "approved:20079",
+        "expectedWindowID" : 20079,
+        "id" : "approved-079",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20080",
+        "actualWindowID" : 20080,
+        "expected" : "approved:20080",
+        "expectedWindowID" : 20080,
+        "id" : "approved-080",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20081",
+        "actualWindowID" : 20081,
+        "expected" : "approved:20081",
+        "expectedWindowID" : 20081,
+        "id" : "approved-081",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20082",
+        "actualWindowID" : 20082,
+        "expected" : "approved:20082",
+        "expectedWindowID" : 20082,
+        "id" : "approved-082",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20083",
+        "actualWindowID" : 20083,
+        "expected" : "approved:20083",
+        "expectedWindowID" : 20083,
+        "id" : "approved-083",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20084",
+        "actualWindowID" : 20084,
+        "expected" : "approved:20084",
+        "expectedWindowID" : 20084,
+        "id" : "approved-084",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20085",
+        "actualWindowID" : 20085,
+        "expected" : "approved:20085",
+        "expectedWindowID" : 20085,
+        "id" : "approved-085",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20086",
+        "actualWindowID" : 20086,
+        "expected" : "approved:20086",
+        "expectedWindowID" : 20086,
+        "id" : "approved-086",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20087",
+        "actualWindowID" : 20087,
+        "expected" : "approved:20087",
+        "expectedWindowID" : 20087,
+        "id" : "approved-087",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20088",
+        "actualWindowID" : 20088,
+        "expected" : "approved:20088",
+        "expectedWindowID" : 20088,
+        "id" : "approved-088",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20089",
+        "actualWindowID" : 20089,
+        "expected" : "approved:20089",
+        "expectedWindowID" : 20089,
+        "id" : "approved-089",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20090",
+        "actualWindowID" : 20090,
+        "expected" : "approved:20090",
+        "expectedWindowID" : 20090,
+        "id" : "approved-090",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20091",
+        "actualWindowID" : 20091,
+        "expected" : "approved:20091",
+        "expectedWindowID" : 20091,
+        "id" : "approved-091",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20092",
+        "actualWindowID" : 20092,
+        "expected" : "approved:20092",
+        "expectedWindowID" : 20092,
+        "id" : "approved-092",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20093",
+        "actualWindowID" : 20093,
+        "expected" : "approved:20093",
+        "expectedWindowID" : 20093,
+        "id" : "approved-093",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20094",
+        "actualWindowID" : 20094,
+        "expected" : "approved:20094",
+        "expectedWindowID" : 20094,
+        "id" : "approved-094",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20095",
+        "actualWindowID" : 20095,
+        "expected" : "approved:20095",
+        "expectedWindowID" : 20095,
+        "id" : "approved-095",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20096",
+        "actualWindowID" : 20096,
+        "expected" : "approved:20096",
+        "expectedWindowID" : 20096,
+        "id" : "approved-096",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20097",
+        "actualWindowID" : 20097,
+        "expected" : "approved:20097",
+        "expectedWindowID" : 20097,
+        "id" : "approved-097",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20098",
+        "actualWindowID" : 20098,
+        "expected" : "approved:20098",
+        "expectedWindowID" : 20098,
+        "id" : "approved-098",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20099",
+        "actualWindowID" : 20099,
+        "expected" : "approved:20099",
+        "expectedWindowID" : 20099,
+        "id" : "approved-099",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20100",
+        "actualWindowID" : 20100,
+        "expected" : "approved:20100",
+        "expectedWindowID" : 20100,
+        "id" : "approved-100",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20101",
+        "actualWindowID" : 20101,
+        "expected" : "approved:20101",
+        "expectedWindowID" : 20101,
+        "id" : "approved-101",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20102",
+        "actualWindowID" : 20102,
+        "expected" : "approved:20102",
+        "expectedWindowID" : 20102,
+        "id" : "approved-102",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20103",
+        "actualWindowID" : 20103,
+        "expected" : "approved:20103",
+        "expectedWindowID" : 20103,
+        "id" : "approved-103",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20104",
+        "actualWindowID" : 20104,
+        "expected" : "approved:20104",
+        "expectedWindowID" : 20104,
+        "id" : "approved-104",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20105",
+        "actualWindowID" : 20105,
+        "expected" : "approved:20105",
+        "expectedWindowID" : 20105,
+        "id" : "approved-105",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20106",
+        "actualWindowID" : 20106,
+        "expected" : "approved:20106",
+        "expectedWindowID" : 20106,
+        "id" : "approved-106",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20107",
+        "actualWindowID" : 20107,
+        "expected" : "approved:20107",
+        "expectedWindowID" : 20107,
+        "id" : "approved-107",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20108",
+        "actualWindowID" : 20108,
+        "expected" : "approved:20108",
+        "expectedWindowID" : 20108,
+        "id" : "approved-108",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20109",
+        "actualWindowID" : 20109,
+        "expected" : "approved:20109",
+        "expectedWindowID" : 20109,
+        "id" : "approved-109",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20110",
+        "actualWindowID" : 20110,
+        "expected" : "approved:20110",
+        "expectedWindowID" : 20110,
+        "id" : "approved-110",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20111",
+        "actualWindowID" : 20111,
+        "expected" : "approved:20111",
+        "expectedWindowID" : 20111,
+        "id" : "approved-111",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20112",
+        "actualWindowID" : 20112,
+        "expected" : "approved:20112",
+        "expectedWindowID" : 20112,
+        "id" : "approved-112",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20113",
+        "actualWindowID" : 20113,
+        "expected" : "approved:20113",
+        "expectedWindowID" : 20113,
+        "id" : "approved-113",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20114",
+        "actualWindowID" : 20114,
+        "expected" : "approved:20114",
+        "expectedWindowID" : 20114,
+        "id" : "approved-114",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20115",
+        "actualWindowID" : 20115,
+        "expected" : "approved:20115",
+        "expectedWindowID" : 20115,
+        "id" : "approved-115",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20116",
+        "actualWindowID" : 20116,
+        "expected" : "approved:20116",
+        "expectedWindowID" : 20116,
+        "id" : "approved-116",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20117",
+        "actualWindowID" : 20117,
+        "expected" : "approved:20117",
+        "expectedWindowID" : 20117,
+        "id" : "approved-117",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20118",
+        "actualWindowID" : 20118,
+        "expected" : "approved:20118",
+        "expectedWindowID" : 20118,
+        "id" : "approved-118",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20119",
+        "actualWindowID" : 20119,
+        "expected" : "approved:20119",
+        "expectedWindowID" : 20119,
+        "id" : "approved-119",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20120",
+        "actualWindowID" : 20120,
+        "expected" : "approved:20120",
+        "expectedWindowID" : 20120,
+        "id" : "approved-120",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20121",
+        "actualWindowID" : 20121,
+        "expected" : "approved:20121",
+        "expectedWindowID" : 20121,
+        "id" : "approved-121",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20122",
+        "actualWindowID" : 20122,
+        "expected" : "approved:20122",
+        "expectedWindowID" : 20122,
+        "id" : "approved-122",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20123",
+        "actualWindowID" : 20123,
+        "expected" : "approved:20123",
+        "expectedWindowID" : 20123,
+        "id" : "approved-123",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20124",
+        "actualWindowID" : 20124,
+        "expected" : "approved:20124",
+        "expectedWindowID" : 20124,
+        "id" : "approved-124",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20125",
+        "actualWindowID" : 20125,
+        "expected" : "approved:20125",
+        "expectedWindowID" : 20125,
+        "id" : "approved-125",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20126",
+        "actualWindowID" : 20126,
+        "expected" : "approved:20126",
+        "expectedWindowID" : 20126,
+        "id" : "approved-126",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20127",
+        "actualWindowID" : 20127,
+        "expected" : "approved:20127",
+        "expectedWindowID" : 20127,
+        "id" : "approved-127",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20128",
+        "actualWindowID" : 20128,
+        "expected" : "approved:20128",
+        "expectedWindowID" : 20128,
+        "id" : "approved-128",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20129",
+        "actualWindowID" : 20129,
+        "expected" : "approved:20129",
+        "expectedWindowID" : 20129,
+        "id" : "approved-129",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20130",
+        "actualWindowID" : 20130,
+        "expected" : "approved:20130",
+        "expectedWindowID" : 20130,
+        "id" : "approved-130",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20131",
+        "actualWindowID" : 20131,
+        "expected" : "approved:20131",
+        "expectedWindowID" : 20131,
+        "id" : "approved-131",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20132",
+        "actualWindowID" : 20132,
+        "expected" : "approved:20132",
+        "expectedWindowID" : 20132,
+        "id" : "approved-132",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20133",
+        "actualWindowID" : 20133,
+        "expected" : "approved:20133",
+        "expectedWindowID" : 20133,
+        "id" : "approved-133",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20134",
+        "actualWindowID" : 20134,
+        "expected" : "approved:20134",
+        "expectedWindowID" : 20134,
+        "id" : "approved-134",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20135",
+        "actualWindowID" : 20135,
+        "expected" : "approved:20135",
+        "expectedWindowID" : 20135,
+        "id" : "approved-135",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20136",
+        "actualWindowID" : 20136,
+        "expected" : "approved:20136",
+        "expectedWindowID" : 20136,
+        "id" : "approved-136",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20137",
+        "actualWindowID" : 20137,
+        "expected" : "approved:20137",
+        "expectedWindowID" : 20137,
+        "id" : "approved-137",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20138",
+        "actualWindowID" : 20138,
+        "expected" : "approved:20138",
+        "expectedWindowID" : 20138,
+        "id" : "approved-138",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20139",
+        "actualWindowID" : 20139,
+        "expected" : "approved:20139",
+        "expectedWindowID" : 20139,
+        "id" : "approved-139",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20140",
+        "actualWindowID" : 20140,
+        "expected" : "approved:20140",
+        "expectedWindowID" : 20140,
+        "id" : "approved-140",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20141",
+        "actualWindowID" : 20141,
+        "expected" : "approved:20141",
+        "expectedWindowID" : 20141,
+        "id" : "approved-141",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20142",
+        "actualWindowID" : 20142,
+        "expected" : "approved:20142",
+        "expectedWindowID" : 20142,
+        "id" : "approved-142",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20143",
+        "actualWindowID" : 20143,
+        "expected" : "approved:20143",
+        "expectedWindowID" : 20143,
+        "id" : "approved-143",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20144",
+        "actualWindowID" : 20144,
+        "expected" : "approved:20144",
+        "expectedWindowID" : 20144,
+        "id" : "approved-144",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20145",
+        "actualWindowID" : 20145,
+        "expected" : "approved:20145",
+        "expectedWindowID" : 20145,
+        "id" : "approved-145",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20146",
+        "actualWindowID" : 20146,
+        "expected" : "approved:20146",
+        "expectedWindowID" : 20146,
+        "id" : "approved-146",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20147",
+        "actualWindowID" : 20147,
+        "expected" : "approved:20147",
+        "expectedWindowID" : 20147,
+        "id" : "approved-147",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20148",
+        "actualWindowID" : 20148,
+        "expected" : "approved:20148",
+        "expectedWindowID" : 20148,
+        "id" : "approved-148",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20149",
+        "actualWindowID" : 20149,
+        "expected" : "approved:20149",
+        "expectedWindowID" : 20149,
+        "id" : "approved-149",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20150",
+        "actualWindowID" : 20150,
+        "expected" : "approved:20150",
+        "expectedWindowID" : 20150,
+        "id" : "approved-150",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20151",
+        "actualWindowID" : 20151,
+        "expected" : "approved:20151",
+        "expectedWindowID" : 20151,
+        "id" : "approved-151",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20152",
+        "actualWindowID" : 20152,
+        "expected" : "approved:20152",
+        "expectedWindowID" : 20152,
+        "id" : "approved-152",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20153",
+        "actualWindowID" : 20153,
+        "expected" : "approved:20153",
+        "expectedWindowID" : 20153,
+        "id" : "approved-153",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20154",
+        "actualWindowID" : 20154,
+        "expected" : "approved:20154",
+        "expectedWindowID" : 20154,
+        "id" : "approved-154",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20155",
+        "actualWindowID" : 20155,
+        "expected" : "approved:20155",
+        "expectedWindowID" : 20155,
+        "id" : "approved-155",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20156",
+        "actualWindowID" : 20156,
+        "expected" : "approved:20156",
+        "expectedWindowID" : 20156,
+        "id" : "approved-156",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20157",
+        "actualWindowID" : 20157,
+        "expected" : "approved:20157",
+        "expectedWindowID" : 20157,
+        "id" : "approved-157",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20158",
+        "actualWindowID" : 20158,
+        "expected" : "approved:20158",
+        "expectedWindowID" : 20158,
+        "id" : "approved-158",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20159",
+        "actualWindowID" : 20159,
+        "expected" : "approved:20159",
+        "expectedWindowID" : 20159,
+        "id" : "approved-159",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20160",
+        "actualWindowID" : 20160,
+        "expected" : "approved:20160",
+        "expectedWindowID" : 20160,
+        "id" : "approved-160",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20161",
+        "actualWindowID" : 20161,
+        "expected" : "approved:20161",
+        "expectedWindowID" : 20161,
+        "id" : "approved-161",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20162",
+        "actualWindowID" : 20162,
+        "expected" : "approved:20162",
+        "expectedWindowID" : 20162,
+        "id" : "approved-162",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20163",
+        "actualWindowID" : 20163,
+        "expected" : "approved:20163",
+        "expectedWindowID" : 20163,
+        "id" : "approved-163",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20164",
+        "actualWindowID" : 20164,
+        "expected" : "approved:20164",
+        "expectedWindowID" : 20164,
+        "id" : "approved-164",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20165",
+        "actualWindowID" : 20165,
+        "expected" : "approved:20165",
+        "expectedWindowID" : 20165,
+        "id" : "approved-165",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20166",
+        "actualWindowID" : 20166,
+        "expected" : "approved:20166",
+        "expectedWindowID" : 20166,
+        "id" : "approved-166",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20167",
+        "actualWindowID" : 20167,
+        "expected" : "approved:20167",
+        "expectedWindowID" : 20167,
+        "id" : "approved-167",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20168",
+        "actualWindowID" : 20168,
+        "expected" : "approved:20168",
+        "expectedWindowID" : 20168,
+        "id" : "approved-168",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20169",
+        "actualWindowID" : 20169,
+        "expected" : "approved:20169",
+        "expectedWindowID" : 20169,
+        "id" : "approved-169",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20170",
+        "actualWindowID" : 20170,
+        "expected" : "approved:20170",
+        "expectedWindowID" : 20170,
+        "id" : "approved-170",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20171",
+        "actualWindowID" : 20171,
+        "expected" : "approved:20171",
+        "expectedWindowID" : 20171,
+        "id" : "approved-171",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20172",
+        "actualWindowID" : 20172,
+        "expected" : "approved:20172",
+        "expectedWindowID" : 20172,
+        "id" : "approved-172",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20173",
+        "actualWindowID" : 20173,
+        "expected" : "approved:20173",
+        "expectedWindowID" : 20173,
+        "id" : "approved-173",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20174",
+        "actualWindowID" : 20174,
+        "expected" : "approved:20174",
+        "expectedWindowID" : 20174,
+        "id" : "approved-174",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20175",
+        "actualWindowID" : 20175,
+        "expected" : "approved:20175",
+        "expectedWindowID" : 20175,
+        "id" : "approved-175",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20176",
+        "actualWindowID" : 20176,
+        "expected" : "approved:20176",
+        "expectedWindowID" : 20176,
+        "id" : "approved-176",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20177",
+        "actualWindowID" : 20177,
+        "expected" : "approved:20177",
+        "expectedWindowID" : 20177,
+        "id" : "approved-177",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20178",
+        "actualWindowID" : 20178,
+        "expected" : "approved:20178",
+        "expectedWindowID" : 20178,
+        "id" : "approved-178",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20179",
+        "actualWindowID" : 20179,
+        "expected" : "approved:20179",
+        "expectedWindowID" : 20179,
+        "id" : "approved-179",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20180",
+        "actualWindowID" : 20180,
+        "expected" : "approved:20180",
+        "expectedWindowID" : 20180,
+        "id" : "approved-180",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20181",
+        "actualWindowID" : 20181,
+        "expected" : "approved:20181",
+        "expectedWindowID" : 20181,
+        "id" : "approved-181",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20182",
+        "actualWindowID" : 20182,
+        "expected" : "approved:20182",
+        "expectedWindowID" : 20182,
+        "id" : "approved-182",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20183",
+        "actualWindowID" : 20183,
+        "expected" : "approved:20183",
+        "expectedWindowID" : 20183,
+        "id" : "approved-183",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20184",
+        "actualWindowID" : 20184,
+        "expected" : "approved:20184",
+        "expectedWindowID" : 20184,
+        "id" : "approved-184",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20185",
+        "actualWindowID" : 20185,
+        "expected" : "approved:20185",
+        "expectedWindowID" : 20185,
+        "id" : "approved-185",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20186",
+        "actualWindowID" : 20186,
+        "expected" : "approved:20186",
+        "expectedWindowID" : 20186,
+        "id" : "approved-186",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20187",
+        "actualWindowID" : 20187,
+        "expected" : "approved:20187",
+        "expectedWindowID" : 20187,
+        "id" : "approved-187",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20188",
+        "actualWindowID" : 20188,
+        "expected" : "approved:20188",
+        "expectedWindowID" : 20188,
+        "id" : "approved-188",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20189",
+        "actualWindowID" : 20189,
+        "expected" : "approved:20189",
+        "expectedWindowID" : 20189,
+        "id" : "approved-189",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20190",
+        "actualWindowID" : 20190,
+        "expected" : "approved:20190",
+        "expectedWindowID" : 20190,
+        "id" : "approved-190",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20191",
+        "actualWindowID" : 20191,
+        "expected" : "approved:20191",
+        "expectedWindowID" : 20191,
+        "id" : "approved-191",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20192",
+        "actualWindowID" : 20192,
+        "expected" : "approved:20192",
+        "expectedWindowID" : 20192,
+        "id" : "approved-192",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20193",
+        "actualWindowID" : 20193,
+        "expected" : "approved:20193",
+        "expectedWindowID" : 20193,
+        "id" : "approved-193",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20194",
+        "actualWindowID" : 20194,
+        "expected" : "approved:20194",
+        "expectedWindowID" : 20194,
+        "id" : "approved-194",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20195",
+        "actualWindowID" : 20195,
+        "expected" : "approved:20195",
+        "expectedWindowID" : 20195,
+        "id" : "approved-195",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20196",
+        "actualWindowID" : 20196,
+        "expected" : "approved:20196",
+        "expectedWindowID" : 20196,
+        "id" : "approved-196",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20197",
+        "actualWindowID" : 20197,
+        "expected" : "approved:20197",
+        "expectedWindowID" : 20197,
+        "id" : "approved-197",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20198",
+        "actualWindowID" : 20198,
+        "expected" : "approved:20198",
+        "expectedWindowID" : 20198,
+        "id" : "approved-198",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20199",
+        "actualWindowID" : 20199,
+        "expected" : "approved:20199",
+        "expectedWindowID" : 20199,
+        "id" : "approved-199",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20200",
+        "actualWindowID" : 20200,
+        "expected" : "approved:20200",
+        "expectedWindowID" : 20200,
+        "id" : "approved-200",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20201",
+        "actualWindowID" : 20201,
+        "expected" : "approved:20201",
+        "expectedWindowID" : 20201,
+        "id" : "approved-201",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20202",
+        "actualWindowID" : 20202,
+        "expected" : "approved:20202",
+        "expectedWindowID" : 20202,
+        "id" : "approved-202",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20203",
+        "actualWindowID" : 20203,
+        "expected" : "approved:20203",
+        "expectedWindowID" : 20203,
+        "id" : "approved-203",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20204",
+        "actualWindowID" : 20204,
+        "expected" : "approved:20204",
+        "expectedWindowID" : 20204,
+        "id" : "approved-204",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20205",
+        "actualWindowID" : 20205,
+        "expected" : "approved:20205",
+        "expectedWindowID" : 20205,
+        "id" : "approved-205",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20206",
+        "actualWindowID" : 20206,
+        "expected" : "approved:20206",
+        "expectedWindowID" : 20206,
+        "id" : "approved-206",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20207",
+        "actualWindowID" : 20207,
+        "expected" : "approved:20207",
+        "expectedWindowID" : 20207,
+        "id" : "approved-207",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20208",
+        "actualWindowID" : 20208,
+        "expected" : "approved:20208",
+        "expectedWindowID" : 20208,
+        "id" : "approved-208",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20209",
+        "actualWindowID" : 20209,
+        "expected" : "approved:20209",
+        "expectedWindowID" : 20209,
+        "id" : "approved-209",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20210",
+        "actualWindowID" : 20210,
+        "expected" : "approved:20210",
+        "expectedWindowID" : 20210,
+        "id" : "approved-210",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20211",
+        "actualWindowID" : 20211,
+        "expected" : "approved:20211",
+        "expectedWindowID" : 20211,
+        "id" : "approved-211",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20212",
+        "actualWindowID" : 20212,
+        "expected" : "approved:20212",
+        "expectedWindowID" : 20212,
+        "id" : "approved-212",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20213",
+        "actualWindowID" : 20213,
+        "expected" : "approved:20213",
+        "expectedWindowID" : 20213,
+        "id" : "approved-213",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20214",
+        "actualWindowID" : 20214,
+        "expected" : "approved:20214",
+        "expectedWindowID" : 20214,
+        "id" : "approved-214",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20215",
+        "actualWindowID" : 20215,
+        "expected" : "approved:20215",
+        "expectedWindowID" : 20215,
+        "id" : "approved-215",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20216",
+        "actualWindowID" : 20216,
+        "expected" : "approved:20216",
+        "expectedWindowID" : 20216,
+        "id" : "approved-216",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20217",
+        "actualWindowID" : 20217,
+        "expected" : "approved:20217",
+        "expectedWindowID" : 20217,
+        "id" : "approved-217",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20218",
+        "actualWindowID" : 20218,
+        "expected" : "approved:20218",
+        "expectedWindowID" : 20218,
+        "id" : "approved-218",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20219",
+        "actualWindowID" : 20219,
+        "expected" : "approved:20219",
+        "expectedWindowID" : 20219,
+        "id" : "approved-219",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20220",
+        "actualWindowID" : 20220,
+        "expected" : "approved:20220",
+        "expectedWindowID" : 20220,
+        "id" : "approved-220",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20221",
+        "actualWindowID" : 20221,
+        "expected" : "approved:20221",
+        "expectedWindowID" : 20221,
+        "id" : "approved-221",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20222",
+        "actualWindowID" : 20222,
+        "expected" : "approved:20222",
+        "expectedWindowID" : 20222,
+        "id" : "approved-222",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20223",
+        "actualWindowID" : 20223,
+        "expected" : "approved:20223",
+        "expectedWindowID" : 20223,
+        "id" : "approved-223",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20224",
+        "actualWindowID" : 20224,
+        "expected" : "approved:20224",
+        "expectedWindowID" : 20224,
+        "id" : "approved-224",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20225",
+        "actualWindowID" : 20225,
+        "expected" : "approved:20225",
+        "expectedWindowID" : 20225,
+        "id" : "approved-225",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20226",
+        "actualWindowID" : 20226,
+        "expected" : "approved:20226",
+        "expectedWindowID" : 20226,
+        "id" : "approved-226",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20227",
+        "actualWindowID" : 20227,
+        "expected" : "approved:20227",
+        "expectedWindowID" : 20227,
+        "id" : "approved-227",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20228",
+        "actualWindowID" : 20228,
+        "expected" : "approved:20228",
+        "expectedWindowID" : 20228,
+        "id" : "approved-228",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20229",
+        "actualWindowID" : 20229,
+        "expected" : "approved:20229",
+        "expectedWindowID" : 20229,
+        "id" : "approved-229",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20230",
+        "actualWindowID" : 20230,
+        "expected" : "approved:20230",
+        "expectedWindowID" : 20230,
+        "id" : "approved-230",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20231",
+        "actualWindowID" : 20231,
+        "expected" : "approved:20231",
+        "expectedWindowID" : 20231,
+        "id" : "approved-231",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20232",
+        "actualWindowID" : 20232,
+        "expected" : "approved:20232",
+        "expectedWindowID" : 20232,
+        "id" : "approved-232",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20233",
+        "actualWindowID" : 20233,
+        "expected" : "approved:20233",
+        "expectedWindowID" : 20233,
+        "id" : "approved-233",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20234",
+        "actualWindowID" : 20234,
+        "expected" : "approved:20234",
+        "expectedWindowID" : 20234,
+        "id" : "approved-234",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20235",
+        "actualWindowID" : 20235,
+        "expected" : "approved:20235",
+        "expectedWindowID" : 20235,
+        "id" : "approved-235",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20236",
+        "actualWindowID" : 20236,
+        "expected" : "approved:20236",
+        "expectedWindowID" : 20236,
+        "id" : "approved-236",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20237",
+        "actualWindowID" : 20237,
+        "expected" : "approved:20237",
+        "expectedWindowID" : 20237,
+        "id" : "approved-237",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20238",
+        "actualWindowID" : 20238,
+        "expected" : "approved:20238",
+        "expectedWindowID" : 20238,
+        "id" : "approved-238",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20239",
+        "actualWindowID" : 20239,
+        "expected" : "approved:20239",
+        "expectedWindowID" : 20239,
+        "id" : "approved-239",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20240",
+        "actualWindowID" : 20240,
+        "expected" : "approved:20240",
+        "expectedWindowID" : 20240,
+        "id" : "approved-240",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20241",
+        "actualWindowID" : 20241,
+        "expected" : "approved:20241",
+        "expectedWindowID" : 20241,
+        "id" : "approved-241",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20242",
+        "actualWindowID" : 20242,
+        "expected" : "approved:20242",
+        "expectedWindowID" : 20242,
+        "id" : "approved-242",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20243",
+        "actualWindowID" : 20243,
+        "expected" : "approved:20243",
+        "expectedWindowID" : 20243,
+        "id" : "approved-243",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20244",
+        "actualWindowID" : 20244,
+        "expected" : "approved:20244",
+        "expectedWindowID" : 20244,
+        "id" : "approved-244",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20245",
+        "actualWindowID" : 20245,
+        "expected" : "approved:20245",
+        "expectedWindowID" : 20245,
+        "id" : "approved-245",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20246",
+        "actualWindowID" : 20246,
+        "expected" : "approved:20246",
+        "expectedWindowID" : 20246,
+        "id" : "approved-246",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20247",
+        "actualWindowID" : 20247,
+        "expected" : "approved:20247",
+        "expectedWindowID" : 20247,
+        "id" : "approved-247",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20248",
+        "actualWindowID" : 20248,
+        "expected" : "approved:20248",
+        "expectedWindowID" : 20248,
+        "id" : "approved-248",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20249",
+        "actualWindowID" : 20249,
+        "expected" : "approved:20249",
+        "expectedWindowID" : 20249,
+        "id" : "approved-249",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20250",
+        "actualWindowID" : 20250,
+        "expected" : "approved:20250",
+        "expectedWindowID" : 20250,
+        "id" : "approved-250",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20251",
+        "actualWindowID" : 20251,
+        "expected" : "approved:20251",
+        "expectedWindowID" : 20251,
+        "id" : "approved-251",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20252",
+        "actualWindowID" : 20252,
+        "expected" : "approved:20252",
+        "expectedWindowID" : 20252,
+        "id" : "approved-252",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20253",
+        "actualWindowID" : 20253,
+        "expected" : "approved:20253",
+        "expectedWindowID" : 20253,
+        "id" : "approved-253",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20254",
+        "actualWindowID" : 20254,
+        "expected" : "approved:20254",
+        "expectedWindowID" : 20254,
+        "id" : "approved-254",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20255",
+        "actualWindowID" : 20255,
+        "expected" : "approved:20255",
+        "expectedWindowID" : 20255,
+        "id" : "approved-255",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20256",
+        "actualWindowID" : 20256,
+        "expected" : "approved:20256",
+        "expectedWindowID" : 20256,
+        "id" : "approved-256",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20257",
+        "actualWindowID" : 20257,
+        "expected" : "approved:20257",
+        "expectedWindowID" : 20257,
+        "id" : "approved-257",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20258",
+        "actualWindowID" : 20258,
+        "expected" : "approved:20258",
+        "expectedWindowID" : 20258,
+        "id" : "approved-258",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20259",
+        "actualWindowID" : 20259,
+        "expected" : "approved:20259",
+        "expectedWindowID" : 20259,
+        "id" : "approved-259",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20260",
+        "actualWindowID" : 20260,
+        "expected" : "approved:20260",
+        "expectedWindowID" : 20260,
+        "id" : "approved-260",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20261",
+        "actualWindowID" : 20261,
+        "expected" : "approved:20261",
+        "expectedWindowID" : 20261,
+        "id" : "approved-261",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20262",
+        "actualWindowID" : 20262,
+        "expected" : "approved:20262",
+        "expectedWindowID" : 20262,
+        "id" : "approved-262",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20263",
+        "actualWindowID" : 20263,
+        "expected" : "approved:20263",
+        "expectedWindowID" : 20263,
+        "id" : "approved-263",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20264",
+        "actualWindowID" : 20264,
+        "expected" : "approved:20264",
+        "expectedWindowID" : 20264,
+        "id" : "approved-264",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20265",
+        "actualWindowID" : 20265,
+        "expected" : "approved:20265",
+        "expectedWindowID" : 20265,
+        "id" : "approved-265",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20266",
+        "actualWindowID" : 20266,
+        "expected" : "approved:20266",
+        "expectedWindowID" : 20266,
+        "id" : "approved-266",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20267",
+        "actualWindowID" : 20267,
+        "expected" : "approved:20267",
+        "expectedWindowID" : 20267,
+        "id" : "approved-267",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20268",
+        "actualWindowID" : 20268,
+        "expected" : "approved:20268",
+        "expectedWindowID" : 20268,
+        "id" : "approved-268",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20269",
+        "actualWindowID" : 20269,
+        "expected" : "approved:20269",
+        "expectedWindowID" : 20269,
+        "id" : "approved-269",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20270",
+        "actualWindowID" : 20270,
+        "expected" : "approved:20270",
+        "expectedWindowID" : 20270,
+        "id" : "approved-270",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20271",
+        "actualWindowID" : 20271,
+        "expected" : "approved:20271",
+        "expectedWindowID" : 20271,
+        "id" : "approved-271",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20272",
+        "actualWindowID" : 20272,
+        "expected" : "approved:20272",
+        "expectedWindowID" : 20272,
+        "id" : "approved-272",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20273",
+        "actualWindowID" : 20273,
+        "expected" : "approved:20273",
+        "expectedWindowID" : 20273,
+        "id" : "approved-273",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20274",
+        "actualWindowID" : 20274,
+        "expected" : "approved:20274",
+        "expectedWindowID" : 20274,
+        "id" : "approved-274",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20275",
+        "actualWindowID" : 20275,
+        "expected" : "approved:20275",
+        "expectedWindowID" : 20275,
+        "id" : "approved-275",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20276",
+        "actualWindowID" : 20276,
+        "expected" : "approved:20276",
+        "expectedWindowID" : 20276,
+        "id" : "approved-276",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20277",
+        "actualWindowID" : 20277,
+        "expected" : "approved:20277",
+        "expectedWindowID" : 20277,
+        "id" : "approved-277",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20278",
+        "actualWindowID" : 20278,
+        "expected" : "approved:20278",
+        "expectedWindowID" : 20278,
+        "id" : "approved-278",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20279",
+        "actualWindowID" : 20279,
+        "expected" : "approved:20279",
+        "expectedWindowID" : 20279,
+        "id" : "approved-279",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20280",
+        "actualWindowID" : 20280,
+        "expected" : "approved:20280",
+        "expectedWindowID" : 20280,
+        "id" : "approved-280",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20281",
+        "actualWindowID" : 20281,
+        "expected" : "approved:20281",
+        "expectedWindowID" : 20281,
+        "id" : "approved-281",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20282",
+        "actualWindowID" : 20282,
+        "expected" : "approved:20282",
+        "expectedWindowID" : 20282,
+        "id" : "approved-282",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20283",
+        "actualWindowID" : 20283,
+        "expected" : "approved:20283",
+        "expectedWindowID" : 20283,
+        "id" : "approved-283",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20284",
+        "actualWindowID" : 20284,
+        "expected" : "approved:20284",
+        "expectedWindowID" : 20284,
+        "id" : "approved-284",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20285",
+        "actualWindowID" : 20285,
+        "expected" : "approved:20285",
+        "expectedWindowID" : 20285,
+        "id" : "approved-285",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20286",
+        "actualWindowID" : 20286,
+        "expected" : "approved:20286",
+        "expectedWindowID" : 20286,
+        "id" : "approved-286",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20287",
+        "actualWindowID" : 20287,
+        "expected" : "approved:20287",
+        "expectedWindowID" : 20287,
+        "id" : "approved-287",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20288",
+        "actualWindowID" : 20288,
+        "expected" : "approved:20288",
+        "expectedWindowID" : 20288,
+        "id" : "approved-288",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20289",
+        "actualWindowID" : 20289,
+        "expected" : "approved:20289",
+        "expectedWindowID" : 20289,
+        "id" : "approved-289",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20290",
+        "actualWindowID" : 20290,
+        "expected" : "approved:20290",
+        "expectedWindowID" : 20290,
+        "id" : "approved-290",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20291",
+        "actualWindowID" : 20291,
+        "expected" : "approved:20291",
+        "expectedWindowID" : 20291,
+        "id" : "approved-291",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20292",
+        "actualWindowID" : 20292,
+        "expected" : "approved:20292",
+        "expectedWindowID" : 20292,
+        "id" : "approved-292",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20293",
+        "actualWindowID" : 20293,
+        "expected" : "approved:20293",
+        "expectedWindowID" : 20293,
+        "id" : "approved-293",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20294",
+        "actualWindowID" : 20294,
+        "expected" : "approved:20294",
+        "expectedWindowID" : 20294,
+        "id" : "approved-294",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20295",
+        "actualWindowID" : 20295,
+        "expected" : "approved:20295",
+        "expectedWindowID" : 20295,
+        "id" : "approved-295",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20296",
+        "actualWindowID" : 20296,
+        "expected" : "approved:20296",
+        "expectedWindowID" : 20296,
+        "id" : "approved-296",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20297",
+        "actualWindowID" : 20297,
+        "expected" : "approved:20297",
+        "expectedWindowID" : 20297,
+        "id" : "approved-297",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20298",
+        "actualWindowID" : 20298,
+        "expected" : "approved:20298",
+        "expectedWindowID" : 20298,
+        "id" : "approved-298",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20299",
+        "actualWindowID" : 20299,
+        "expected" : "approved:20299",
+        "expectedWindowID" : 20299,
+        "id" : "approved-299",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20300",
+        "actualWindowID" : 20300,
+        "expected" : "approved:20300",
+        "expectedWindowID" : 20300,
+        "id" : "approved-300",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20301",
+        "actualWindowID" : 20301,
+        "expected" : "approved:20301",
+        "expectedWindowID" : 20301,
+        "id" : "approved-301",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20302",
+        "actualWindowID" : 20302,
+        "expected" : "approved:20302",
+        "expectedWindowID" : 20302,
+        "id" : "approved-302",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20303",
+        "actualWindowID" : 20303,
+        "expected" : "approved:20303",
+        "expectedWindowID" : 20303,
+        "id" : "approved-303",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20304",
+        "actualWindowID" : 20304,
+        "expected" : "approved:20304",
+        "expectedWindowID" : 20304,
+        "id" : "approved-304",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20305",
+        "actualWindowID" : 20305,
+        "expected" : "approved:20305",
+        "expectedWindowID" : 20305,
+        "id" : "approved-305",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20306",
+        "actualWindowID" : 20306,
+        "expected" : "approved:20306",
+        "expectedWindowID" : 20306,
+        "id" : "approved-306",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20307",
+        "actualWindowID" : 20307,
+        "expected" : "approved:20307",
+        "expectedWindowID" : 20307,
+        "id" : "approved-307",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20308",
+        "actualWindowID" : 20308,
+        "expected" : "approved:20308",
+        "expectedWindowID" : 20308,
+        "id" : "approved-308",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20309",
+        "actualWindowID" : 20309,
+        "expected" : "approved:20309",
+        "expectedWindowID" : 20309,
+        "id" : "approved-309",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20310",
+        "actualWindowID" : 20310,
+        "expected" : "approved:20310",
+        "expectedWindowID" : 20310,
+        "id" : "approved-310",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20311",
+        "actualWindowID" : 20311,
+        "expected" : "approved:20311",
+        "expectedWindowID" : 20311,
+        "id" : "approved-311",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20312",
+        "actualWindowID" : 20312,
+        "expected" : "approved:20312",
+        "expectedWindowID" : 20312,
+        "id" : "approved-312",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20313",
+        "actualWindowID" : 20313,
+        "expected" : "approved:20313",
+        "expectedWindowID" : 20313,
+        "id" : "approved-313",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20314",
+        "actualWindowID" : 20314,
+        "expected" : "approved:20314",
+        "expectedWindowID" : 20314,
+        "id" : "approved-314",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20315",
+        "actualWindowID" : 20315,
+        "expected" : "approved:20315",
+        "expectedWindowID" : 20315,
+        "id" : "approved-315",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20316",
+        "actualWindowID" : 20316,
+        "expected" : "approved:20316",
+        "expectedWindowID" : 20316,
+        "id" : "approved-316",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20317",
+        "actualWindowID" : 20317,
+        "expected" : "approved:20317",
+        "expectedWindowID" : 20317,
+        "id" : "approved-317",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20318",
+        "actualWindowID" : 20318,
+        "expected" : "approved:20318",
+        "expectedWindowID" : 20318,
+        "id" : "approved-318",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20319",
+        "actualWindowID" : 20319,
+        "expected" : "approved:20319",
+        "expectedWindowID" : 20319,
+        "id" : "approved-319",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20320",
+        "actualWindowID" : 20320,
+        "expected" : "approved:20320",
+        "expectedWindowID" : 20320,
+        "id" : "approved-320",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20321",
+        "actualWindowID" : 20321,
+        "expected" : "approved:20321",
+        "expectedWindowID" : 20321,
+        "id" : "approved-321",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20322",
+        "actualWindowID" : 20322,
+        "expected" : "approved:20322",
+        "expectedWindowID" : 20322,
+        "id" : "approved-322",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20323",
+        "actualWindowID" : 20323,
+        "expected" : "approved:20323",
+        "expectedWindowID" : 20323,
+        "id" : "approved-323",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20324",
+        "actualWindowID" : 20324,
+        "expected" : "approved:20324",
+        "expectedWindowID" : 20324,
+        "id" : "approved-324",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20325",
+        "actualWindowID" : 20325,
+        "expected" : "approved:20325",
+        "expectedWindowID" : 20325,
+        "id" : "approved-325",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20326",
+        "actualWindowID" : 20326,
+        "expected" : "approved:20326",
+        "expectedWindowID" : 20326,
+        "id" : "approved-326",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20327",
+        "actualWindowID" : 20327,
+        "expected" : "approved:20327",
+        "expectedWindowID" : 20327,
+        "id" : "approved-327",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20328",
+        "actualWindowID" : 20328,
+        "expected" : "approved:20328",
+        "expectedWindowID" : 20328,
+        "id" : "approved-328",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20329",
+        "actualWindowID" : 20329,
+        "expected" : "approved:20329",
+        "expectedWindowID" : 20329,
+        "id" : "approved-329",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20330",
+        "actualWindowID" : 20330,
+        "expected" : "approved:20330",
+        "expectedWindowID" : 20330,
+        "id" : "approved-330",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20331",
+        "actualWindowID" : 20331,
+        "expected" : "approved:20331",
+        "expectedWindowID" : 20331,
+        "id" : "approved-331",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20332",
+        "actualWindowID" : 20332,
+        "expected" : "approved:20332",
+        "expectedWindowID" : 20332,
+        "id" : "approved-332",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20333",
+        "actualWindowID" : 20333,
+        "expected" : "approved:20333",
+        "expectedWindowID" : 20333,
+        "id" : "approved-333",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20334",
+        "actualWindowID" : 20334,
+        "expected" : "approved:20334",
+        "expectedWindowID" : 20334,
+        "id" : "approved-334",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20335",
+        "actualWindowID" : 20335,
+        "expected" : "approved:20335",
+        "expectedWindowID" : 20335,
+        "id" : "approved-335",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20336",
+        "actualWindowID" : 20336,
+        "expected" : "approved:20336",
+        "expectedWindowID" : 20336,
+        "id" : "approved-336",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20337",
+        "actualWindowID" : 20337,
+        "expected" : "approved:20337",
+        "expectedWindowID" : 20337,
+        "id" : "approved-337",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20338",
+        "actualWindowID" : 20338,
+        "expected" : "approved:20338",
+        "expectedWindowID" : 20338,
+        "id" : "approved-338",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20339",
+        "actualWindowID" : 20339,
+        "expected" : "approved:20339",
+        "expectedWindowID" : 20339,
+        "id" : "approved-339",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20340",
+        "actualWindowID" : 20340,
+        "expected" : "approved:20340",
+        "expectedWindowID" : 20340,
+        "id" : "approved-340",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20341",
+        "actualWindowID" : 20341,
+        "expected" : "approved:20341",
+        "expectedWindowID" : 20341,
+        "id" : "approved-341",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20342",
+        "actualWindowID" : 20342,
+        "expected" : "approved:20342",
+        "expectedWindowID" : 20342,
+        "id" : "approved-342",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20343",
+        "actualWindowID" : 20343,
+        "expected" : "approved:20343",
+        "expectedWindowID" : 20343,
+        "id" : "approved-343",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20344",
+        "actualWindowID" : 20344,
+        "expected" : "approved:20344",
+        "expectedWindowID" : 20344,
+        "id" : "approved-344",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20345",
+        "actualWindowID" : 20345,
+        "expected" : "approved:20345",
+        "expectedWindowID" : 20345,
+        "id" : "approved-345",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20346",
+        "actualWindowID" : 20346,
+        "expected" : "approved:20346",
+        "expectedWindowID" : 20346,
+        "id" : "approved-346",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20347",
+        "actualWindowID" : 20347,
+        "expected" : "approved:20347",
+        "expectedWindowID" : 20347,
+        "id" : "approved-347",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20348",
+        "actualWindowID" : 20348,
+        "expected" : "approved:20348",
+        "expectedWindowID" : 20348,
+        "id" : "approved-348",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "approved:20349",
+        "actualWindowID" : 20349,
+        "expected" : "approved:20349",
+        "expectedWindowID" : 20349,
+        "id" : "approved-349",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:ambiguousWindow",
+        "expected" : "gap:ambiguousWindow",
+        "id" : "ambiguousWindow-000",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:ambiguousWindow",
+        "expected" : "gap:ambiguousWindow",
+        "id" : "ambiguousWindow-001",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:ambiguousWindow",
+        "expected" : "gap:ambiguousWindow",
+        "id" : "ambiguousWindow-002",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:ambiguousWindow",
+        "expected" : "gap:ambiguousWindow",
+        "id" : "ambiguousWindow-003",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:ambiguousWindow",
+        "expected" : "gap:ambiguousWindow",
+        "id" : "ambiguousWindow-004",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:ambiguousWindow",
+        "expected" : "gap:ambiguousWindow",
+        "id" : "ambiguousWindow-005",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:ambiguousWindow",
+        "expected" : "gap:ambiguousWindow",
+        "id" : "ambiguousWindow-006",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:ambiguousWindow",
+        "expected" : "gap:ambiguousWindow",
+        "id" : "ambiguousWindow-007",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:ambiguousWindow",
+        "expected" : "gap:ambiguousWindow",
+        "id" : "ambiguousWindow-008",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:ambiguousWindow",
+        "expected" : "gap:ambiguousWindow",
+        "id" : "ambiguousWindow-009",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:ambiguousWindow",
+        "expected" : "gap:ambiguousWindow",
+        "id" : "ambiguousWindow-010",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:ambiguousWindow",
+        "expected" : "gap:ambiguousWindow",
+        "id" : "ambiguousWindow-011",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:ambiguousWindow",
+        "expected" : "gap:ambiguousWindow",
+        "id" : "ambiguousWindow-012",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:ambiguousWindow",
+        "expected" : "gap:ambiguousWindow",
+        "id" : "ambiguousWindow-013",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:ambiguousWindow",
+        "expected" : "gap:ambiguousWindow",
+        "id" : "ambiguousWindow-014",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:ambiguousWindow",
+        "expected" : "gap:ambiguousWindow",
+        "id" : "ambiguousWindow-015",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:ambiguousWindow",
+        "expected" : "gap:ambiguousWindow",
+        "id" : "ambiguousWindow-016",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:ambiguousWindow",
+        "expected" : "gap:ambiguousWindow",
+        "id" : "ambiguousWindow-017",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:ambiguousWindow",
+        "expected" : "gap:ambiguousWindow",
+        "id" : "ambiguousWindow-018",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:ambiguousWindow",
+        "expected" : "gap:ambiguousWindow",
+        "id" : "ambiguousWindow-019",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:ambiguousWindow",
+        "expected" : "gap:ambiguousWindow",
+        "id" : "ambiguousWindow-020",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:ambiguousWindow",
+        "expected" : "gap:ambiguousWindow",
+        "id" : "ambiguousWindow-021",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:ambiguousWindow",
+        "expected" : "gap:ambiguousWindow",
+        "id" : "ambiguousWindow-022",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:ambiguousWindow",
+        "expected" : "gap:ambiguousWindow",
+        "id" : "ambiguousWindow-023",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:ambiguousWindow",
+        "expected" : "gap:ambiguousWindow",
+        "id" : "ambiguousWindow-024",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:minimizedWindow",
+        "expected" : "gap:minimizedWindow",
+        "id" : "minimizedWindow-000",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:minimizedWindow",
+        "expected" : "gap:minimizedWindow",
+        "id" : "minimizedWindow-001",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:minimizedWindow",
+        "expected" : "gap:minimizedWindow",
+        "id" : "minimizedWindow-002",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:minimizedWindow",
+        "expected" : "gap:minimizedWindow",
+        "id" : "minimizedWindow-003",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:minimizedWindow",
+        "expected" : "gap:minimizedWindow",
+        "id" : "minimizedWindow-004",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:minimizedWindow",
+        "expected" : "gap:minimizedWindow",
+        "id" : "minimizedWindow-005",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:minimizedWindow",
+        "expected" : "gap:minimizedWindow",
+        "id" : "minimizedWindow-006",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:minimizedWindow",
+        "expected" : "gap:minimizedWindow",
+        "id" : "minimizedWindow-007",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:minimizedWindow",
+        "expected" : "gap:minimizedWindow",
+        "id" : "minimizedWindow-008",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:minimizedWindow",
+        "expected" : "gap:minimizedWindow",
+        "id" : "minimizedWindow-009",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:minimizedWindow",
+        "expected" : "gap:minimizedWindow",
+        "id" : "minimizedWindow-010",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:minimizedWindow",
+        "expected" : "gap:minimizedWindow",
+        "id" : "minimizedWindow-011",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:minimizedWindow",
+        "expected" : "gap:minimizedWindow",
+        "id" : "minimizedWindow-012",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:minimizedWindow",
+        "expected" : "gap:minimizedWindow",
+        "id" : "minimizedWindow-013",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:minimizedWindow",
+        "expected" : "gap:minimizedWindow",
+        "id" : "minimizedWindow-014",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:minimizedWindow",
+        "expected" : "gap:minimizedWindow",
+        "id" : "minimizedWindow-015",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:minimizedWindow",
+        "expected" : "gap:minimizedWindow",
+        "id" : "minimizedWindow-016",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:minimizedWindow",
+        "expected" : "gap:minimizedWindow",
+        "id" : "minimizedWindow-017",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:minimizedWindow",
+        "expected" : "gap:minimizedWindow",
+        "id" : "minimizedWindow-018",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:minimizedWindow",
+        "expected" : "gap:minimizedWindow",
+        "id" : "minimizedWindow-019",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:minimizedWindow",
+        "expected" : "gap:minimizedWindow",
+        "id" : "minimizedWindow-020",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:minimizedWindow",
+        "expected" : "gap:minimizedWindow",
+        "id" : "minimizedWindow-021",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:minimizedWindow",
+        "expected" : "gap:minimizedWindow",
+        "id" : "minimizedWindow-022",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:minimizedWindow",
+        "expected" : "gap:minimizedWindow",
+        "id" : "minimizedWindow-023",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:minimizedWindow",
+        "expected" : "gap:minimizedWindow",
+        "id" : "minimizedWindow-024",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:noWindow",
+        "expected" : "gap:noWindow",
+        "id" : "noWindow-000",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:noWindow",
+        "expected" : "gap:noWindow",
+        "id" : "noWindow-001",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:noWindow",
+        "expected" : "gap:noWindow",
+        "id" : "noWindow-002",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:noWindow",
+        "expected" : "gap:noWindow",
+        "id" : "noWindow-003",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:noWindow",
+        "expected" : "gap:noWindow",
+        "id" : "noWindow-004",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:noWindow",
+        "expected" : "gap:noWindow",
+        "id" : "noWindow-005",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:noWindow",
+        "expected" : "gap:noWindow",
+        "id" : "noWindow-006",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:noWindow",
+        "expected" : "gap:noWindow",
+        "id" : "noWindow-007",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:noWindow",
+        "expected" : "gap:noWindow",
+        "id" : "noWindow-008",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:noWindow",
+        "expected" : "gap:noWindow",
+        "id" : "noWindow-009",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:noWindow",
+        "expected" : "gap:noWindow",
+        "id" : "noWindow-010",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:noWindow",
+        "expected" : "gap:noWindow",
+        "id" : "noWindow-011",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:noWindow",
+        "expected" : "gap:noWindow",
+        "id" : "noWindow-012",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:noWindow",
+        "expected" : "gap:noWindow",
+        "id" : "noWindow-013",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:noWindow",
+        "expected" : "gap:noWindow",
+        "id" : "noWindow-014",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:noWindow",
+        "expected" : "gap:noWindow",
+        "id" : "noWindow-015",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:noWindow",
+        "expected" : "gap:noWindow",
+        "id" : "noWindow-016",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:noWindow",
+        "expected" : "gap:noWindow",
+        "id" : "noWindow-017",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:noWindow",
+        "expected" : "gap:noWindow",
+        "id" : "noWindow-018",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:noWindow",
+        "expected" : "gap:noWindow",
+        "id" : "noWindow-019",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:noWindow",
+        "expected" : "gap:noWindow",
+        "id" : "noWindow-020",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:noWindow",
+        "expected" : "gap:noWindow",
+        "id" : "noWindow-021",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:noWindow",
+        "expected" : "gap:noWindow",
+        "id" : "noWindow-022",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:noWindow",
+        "expected" : "gap:noWindow",
+        "id" : "noWindow-023",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:noWindow",
+        "expected" : "gap:noWindow",
+        "id" : "noWindow-024",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:protectedSurface",
+        "expected" : "gap:protectedSurface",
+        "id" : "protectedSurface-000",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:protectedSurface",
+        "expected" : "gap:protectedSurface",
+        "id" : "protectedSurface-001",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:protectedSurface",
+        "expected" : "gap:protectedSurface",
+        "id" : "protectedSurface-002",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:protectedSurface",
+        "expected" : "gap:protectedSurface",
+        "id" : "protectedSurface-003",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:protectedSurface",
+        "expected" : "gap:protectedSurface",
+        "id" : "protectedSurface-004",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:protectedSurface",
+        "expected" : "gap:protectedSurface",
+        "id" : "protectedSurface-005",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:protectedSurface",
+        "expected" : "gap:protectedSurface",
+        "id" : "protectedSurface-006",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:protectedSurface",
+        "expected" : "gap:protectedSurface",
+        "id" : "protectedSurface-007",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:protectedSurface",
+        "expected" : "gap:protectedSurface",
+        "id" : "protectedSurface-008",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:protectedSurface",
+        "expected" : "gap:protectedSurface",
+        "id" : "protectedSurface-009",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:protectedSurface",
+        "expected" : "gap:protectedSurface",
+        "id" : "protectedSurface-010",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:protectedSurface",
+        "expected" : "gap:protectedSurface",
+        "id" : "protectedSurface-011",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:protectedSurface",
+        "expected" : "gap:protectedSurface",
+        "id" : "protectedSurface-012",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:protectedSurface",
+        "expected" : "gap:protectedSurface",
+        "id" : "protectedSurface-013",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:protectedSurface",
+        "expected" : "gap:protectedSurface",
+        "id" : "protectedSurface-014",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:protectedSurface",
+        "expected" : "gap:protectedSurface",
+        "id" : "protectedSurface-015",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:protectedSurface",
+        "expected" : "gap:protectedSurface",
+        "id" : "protectedSurface-016",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:protectedSurface",
+        "expected" : "gap:protectedSurface",
+        "id" : "protectedSurface-017",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:protectedSurface",
+        "expected" : "gap:protectedSurface",
+        "id" : "protectedSurface-018",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:protectedSurface",
+        "expected" : "gap:protectedSurface",
+        "id" : "protectedSurface-019",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:protectedSurface",
+        "expected" : "gap:protectedSurface",
+        "id" : "protectedSurface-020",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:protectedSurface",
+        "expected" : "gap:protectedSurface",
+        "id" : "protectedSurface-021",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:protectedSurface",
+        "expected" : "gap:protectedSurface",
+        "id" : "protectedSurface-022",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:protectedSurface",
+        "expected" : "gap:protectedSurface",
+        "id" : "protectedSurface-023",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:protectedSurface",
+        "expected" : "gap:protectedSurface",
+        "id" : "protectedSurface-024",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unresolvedWindow",
+        "expected" : "gap:unresolvedWindow",
+        "id" : "unresolvedWindow-000",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unresolvedWindow",
+        "expected" : "gap:unresolvedWindow",
+        "id" : "unresolvedWindow-001",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unresolvedWindow",
+        "expected" : "gap:unresolvedWindow",
+        "id" : "unresolvedWindow-002",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unresolvedWindow",
+        "expected" : "gap:unresolvedWindow",
+        "id" : "unresolvedWindow-003",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unresolvedWindow",
+        "expected" : "gap:unresolvedWindow",
+        "id" : "unresolvedWindow-004",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unresolvedWindow",
+        "expected" : "gap:unresolvedWindow",
+        "id" : "unresolvedWindow-005",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unresolvedWindow",
+        "expected" : "gap:unresolvedWindow",
+        "id" : "unresolvedWindow-006",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unresolvedWindow",
+        "expected" : "gap:unresolvedWindow",
+        "id" : "unresolvedWindow-007",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unresolvedWindow",
+        "expected" : "gap:unresolvedWindow",
+        "id" : "unresolvedWindow-008",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unresolvedWindow",
+        "expected" : "gap:unresolvedWindow",
+        "id" : "unresolvedWindow-009",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unresolvedWindow",
+        "expected" : "gap:unresolvedWindow",
+        "id" : "unresolvedWindow-010",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unresolvedWindow",
+        "expected" : "gap:unresolvedWindow",
+        "id" : "unresolvedWindow-011",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unresolvedWindow",
+        "expected" : "gap:unresolvedWindow",
+        "id" : "unresolvedWindow-012",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unresolvedWindow",
+        "expected" : "gap:unresolvedWindow",
+        "id" : "unresolvedWindow-013",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unresolvedWindow",
+        "expected" : "gap:unresolvedWindow",
+        "id" : "unresolvedWindow-014",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unresolvedWindow",
+        "expected" : "gap:unresolvedWindow",
+        "id" : "unresolvedWindow-015",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unresolvedWindow",
+        "expected" : "gap:unresolvedWindow",
+        "id" : "unresolvedWindow-016",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unresolvedWindow",
+        "expected" : "gap:unresolvedWindow",
+        "id" : "unresolvedWindow-017",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unresolvedWindow",
+        "expected" : "gap:unresolvedWindow",
+        "id" : "unresolvedWindow-018",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unresolvedWindow",
+        "expected" : "gap:unresolvedWindow",
+        "id" : "unresolvedWindow-019",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unresolvedWindow",
+        "expected" : "gap:unresolvedWindow",
+        "id" : "unresolvedWindow-020",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unresolvedWindow",
+        "expected" : "gap:unresolvedWindow",
+        "id" : "unresolvedWindow-021",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unresolvedWindow",
+        "expected" : "gap:unresolvedWindow",
+        "id" : "unresolvedWindow-022",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unresolvedWindow",
+        "expected" : "gap:unresolvedWindow",
+        "id" : "unresolvedWindow-023",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unresolvedWindow",
+        "expected" : "gap:unresolvedWindow",
+        "id" : "unresolvedWindow-024",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unsupportedDisplay",
+        "expected" : "gap:unsupportedDisplay",
+        "id" : "unsupportedDisplay-000",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unsupportedDisplay",
+        "expected" : "gap:unsupportedDisplay",
+        "id" : "unsupportedDisplay-001",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unsupportedDisplay",
+        "expected" : "gap:unsupportedDisplay",
+        "id" : "unsupportedDisplay-002",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unsupportedDisplay",
+        "expected" : "gap:unsupportedDisplay",
+        "id" : "unsupportedDisplay-003",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unsupportedDisplay",
+        "expected" : "gap:unsupportedDisplay",
+        "id" : "unsupportedDisplay-004",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unsupportedDisplay",
+        "expected" : "gap:unsupportedDisplay",
+        "id" : "unsupportedDisplay-005",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unsupportedDisplay",
+        "expected" : "gap:unsupportedDisplay",
+        "id" : "unsupportedDisplay-006",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unsupportedDisplay",
+        "expected" : "gap:unsupportedDisplay",
+        "id" : "unsupportedDisplay-007",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unsupportedDisplay",
+        "expected" : "gap:unsupportedDisplay",
+        "id" : "unsupportedDisplay-008",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unsupportedDisplay",
+        "expected" : "gap:unsupportedDisplay",
+        "id" : "unsupportedDisplay-009",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unsupportedDisplay",
+        "expected" : "gap:unsupportedDisplay",
+        "id" : "unsupportedDisplay-010",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unsupportedDisplay",
+        "expected" : "gap:unsupportedDisplay",
+        "id" : "unsupportedDisplay-011",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unsupportedDisplay",
+        "expected" : "gap:unsupportedDisplay",
+        "id" : "unsupportedDisplay-012",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unsupportedDisplay",
+        "expected" : "gap:unsupportedDisplay",
+        "id" : "unsupportedDisplay-013",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unsupportedDisplay",
+        "expected" : "gap:unsupportedDisplay",
+        "id" : "unsupportedDisplay-014",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unsupportedDisplay",
+        "expected" : "gap:unsupportedDisplay",
+        "id" : "unsupportedDisplay-015",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unsupportedDisplay",
+        "expected" : "gap:unsupportedDisplay",
+        "id" : "unsupportedDisplay-016",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unsupportedDisplay",
+        "expected" : "gap:unsupportedDisplay",
+        "id" : "unsupportedDisplay-017",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unsupportedDisplay",
+        "expected" : "gap:unsupportedDisplay",
+        "id" : "unsupportedDisplay-018",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unsupportedDisplay",
+        "expected" : "gap:unsupportedDisplay",
+        "id" : "unsupportedDisplay-019",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unsupportedDisplay",
+        "expected" : "gap:unsupportedDisplay",
+        "id" : "unsupportedDisplay-020",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unsupportedDisplay",
+        "expected" : "gap:unsupportedDisplay",
+        "id" : "unsupportedDisplay-021",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unsupportedDisplay",
+        "expected" : "gap:unsupportedDisplay",
+        "id" : "unsupportedDisplay-022",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unsupportedDisplay",
+        "expected" : "gap:unsupportedDisplay",
+        "id" : "unsupportedDisplay-023",
+        "pixelPayloadCount" : 0
+      },
+      {
+        "actual" : "gap:unsupportedDisplay",
+        "expected" : "gap:unsupportedDisplay",
+        "id" : "unsupportedDisplay-024",
+        "pixelPayloadCount" : 0
+      }
+    ],
+    "seed" : 1279938620,
+    "transitionCount" : 500,
+    "zeroPixelGapCount" : 150
+  },
+  "foregroundWindowOnly" : true,
+  "publicAPIsOnly" : true,
+  "realProbe" : {
+    "accessibilityTrusted" : true,
+    "axIdentityConfirmed" : true,
+    "axIdentitySource" : "focusedWindow",
+    "axRole" : "AXWindow",
+    "axSubrole" : "AXStandardWindow",
+    "axTitle" : "Local Memory",
+    "axWindowProcessID" : 10982,
+    "bundleIdentifier" : "com.justinhou.deepshelves.localmemory",
+    "focusedAndTopLevelGeometryAgree" : true,
+    "foregroundProcessID" : 10982,
+    "monitorTransitionKind" : "initial",
+    "monitorTransitionSequence" : 0,
+    "pixelPayloadCount" : 0,
+    "refreshStatus" : "available",
+    "resolution" : "approved:37364",
+    "resolvedMainDisplay" : true,
+    "resolvedWindowID" : 37364,
+    "resolvedWindowProcessID" : 10982,
+    "screenRecordingPermission" : "granted"
+  },
+  "schemaVersion" : 1
+}

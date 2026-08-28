@@ -322,17 +322,43 @@ public struct PointRect: Equatable, Sendable {
     }
 }
 
+public enum AXWindowIdentitySource: String, Codable, Equatable, Sendable {
+    case focusedWindow
+    case topLevelWindow
+    case focusedAndTopLevel
+}
+
 public struct FocusedWindowDescriptor: Equatable, Sendable {
     public let processID: Int32
     public let bounds: PointRect
     public let title: String?
     public let isMinimized: Bool
+    public let role: String
+    public let subrole: String?
+    public let topLevelBounds: PointRect?
+    public let hasConfirmedAXIdentity: Bool
+    public let identitySource: AXWindowIdentitySource
 
-    public init(processID: Int32, bounds: PointRect, title: String?, isMinimized: Bool) {
+    public init(
+        processID: Int32,
+        bounds: PointRect,
+        title: String?,
+        isMinimized: Bool,
+        role: String = "AXWindow",
+        subrole: String? = nil,
+        topLevelBounds: PointRect? = nil,
+        hasConfirmedAXIdentity: Bool = true,
+        identitySource: AXWindowIdentitySource = .focusedAndTopLevel
+    ) {
         self.processID = processID
         self.bounds = bounds
         self.title = title
         self.isMinimized = isMinimized
+        self.role = role
+        self.subrole = subrole
+        self.topLevelBounds = topLevelBounds ?? bounds
+        self.hasConfirmedAXIdentity = hasConfirmedAXIdentity
+        self.identitySource = identitySource
     }
 }
 
@@ -380,6 +406,16 @@ public enum WindowResolution: Equatable, Sendable {
 
 public enum WindowResolver: Sendable {
     public static func resolve(
+        focused: FocusedWindowDescriptor?,
+        candidates: [ShareableWindowDescriptor]
+    ) -> WindowResolution {
+        guard let focused else {
+            return .gap(.noWindow)
+        }
+        return resolve(focused: focused, candidates: candidates)
+    }
+
+    public static func resolve(
         focused: FocusedWindowDescriptor,
         candidates: [ShareableWindowDescriptor]
     ) -> WindowResolution {
@@ -388,6 +424,13 @@ public enum WindowResolver: Sendable {
         }
         guard !focused.isMinimized else {
             return .gap(.minimizedWindow)
+        }
+        guard focused.role == "AXWindow",
+              focused.hasConfirmedAXIdentity,
+              let topLevelBounds = focused.topLevelBounds,
+              geometryMatches(topLevelBounds, focused.bounds)
+        else {
+            return .gap(.unresolvedWindow)
         }
 
         let ownedGeometryMatches = candidates.filter {
@@ -444,6 +487,208 @@ public enum WindowResolver: Sendable {
         (title ?? "")
             .split(whereSeparator: \ .isWhitespace)
             .joined(separator: " ")
-            .lowercased()
+            .lowercased(with: Locale(identifier: "en_US_POSIX"))
+    }
+}
+
+public struct LM020WindowTransition: Equatable, Sendable {
+    public let id: String
+    public let focused: FocusedWindowDescriptor?
+    public let candidates: [ShareableWindowDescriptor]
+    public let expectedResolution: WindowResolution
+    public let expectedWindowID: UInt32?
+    public let pixelPayload: Data?
+
+    public init(
+        id: String,
+        focused: FocusedWindowDescriptor?,
+        candidates: [ShareableWindowDescriptor],
+        expectedResolution: WindowResolution,
+        expectedWindowID: UInt32?
+    ) {
+        self.id = id
+        self.focused = focused
+        self.candidates = candidates
+        self.expectedResolution = expectedResolution
+        self.expectedWindowID = expectedWindowID
+        pixelPayload = nil
+    }
+}
+
+public enum LM020WindowTransitionFixture: Sendable {
+    public static func make(seed: UInt64) -> [LM020WindowTransition] {
+        var transitions: [LM020WindowTransition] = []
+        transitions.reserveCapacity(500)
+
+        for index in 0 ..< 350 {
+            let processID = Int32(10_000 + index)
+            let x = Double(40 + ((index * 37 + Int(seed % 29)) % 620))
+            let y = Double(30 + ((index * 19 + Int(seed % 23)) % 360))
+            let width = Double(640 + (index % 9) * 31)
+            let height = Double(420 + (index % 7) * 27)
+            let focusedBounds = PointRect(x: x, y: y, width: width, height: height)
+            let focused = FocusedWindowDescriptor(
+                processID: processID,
+                bounds: focusedBounds,
+                title: "Transition \(index)",
+                isMinimized: false,
+                subrole: "AXStandardWindow"
+            )
+            let expected = ShareableWindowDescriptor(
+                windowID: UInt32(20_000 + index),
+                processID: processID,
+                bounds: PointRect(
+                    x: x + Double(index % 3),
+                    y: y + Double(index % 2),
+                    width: width - Double(index % 3),
+                    height: height - Double(index % 2)
+                ),
+                title: index.isMultiple(of: 2) ? " transition   \(index) " : "Transition \(index)",
+                isOnScreen: true,
+                isNormalContent: true,
+                intersectsMainDisplay: true
+            )
+            var candidates = [
+                ShareableWindowDescriptor(
+                    windowID: UInt32(40_000 + index),
+                    processID: processID + 1,
+                    bounds: focusedBounds,
+                    title: focused.title,
+                    isOnScreen: true,
+                    isNormalContent: true,
+                    intersectsMainDisplay: true
+                ),
+                expected,
+            ]
+            if index.isMultiple(of: 5) {
+                candidates.append(
+                    ShareableWindowDescriptor(
+                        windowID: UInt32(50_000 + index),
+                        processID: processID,
+                        bounds: focusedBounds,
+                        title: "Different title",
+                        isOnScreen: true,
+                        isNormalContent: true,
+                        intersectsMainDisplay: true
+                    )
+                )
+            }
+            transitions.append(
+                LM020WindowTransition(
+                    id: String(format: "approved-%03d", index),
+                    focused: focused,
+                    candidates: candidates,
+                    expectedResolution: .approved(expected),
+                    expectedWindowID: expected.windowID
+                )
+            )
+        }
+
+        appendGapTransitions(&transitions, reason: .ambiguousWindow, count: 25, seed: seed)
+        appendGapTransitions(&transitions, reason: .minimizedWindow, count: 25, seed: seed)
+        appendGapTransitions(&transitions, reason: .noWindow, count: 25, seed: seed)
+        appendGapTransitions(&transitions, reason: .protectedSurface, count: 25, seed: seed)
+        appendGapTransitions(&transitions, reason: .unresolvedWindow, count: 25, seed: seed)
+        appendGapTransitions(&transitions, reason: .unsupportedDisplay, count: 25, seed: seed)
+        return transitions
+    }
+
+    private static func appendGapTransitions(
+        _ transitions: inout [LM020WindowTransition],
+        reason: CaptureGapReason,
+        count: Int,
+        seed: UInt64
+    ) {
+        for index in 0 ..< count {
+            let processID = Int32(30_000 + transitions.count + Int(seed % 11))
+            let bounds = PointRect(
+                x: Double(80 + index),
+                y: Double(60 + index),
+                width: 800,
+                height: 540
+            )
+            var focused: FocusedWindowDescriptor? = FocusedWindowDescriptor(
+                processID: processID,
+                bounds: bounds,
+                title: "Gap \(reason.rawValue) \(index)",
+                isMinimized: reason == .minimizedWindow,
+                subrole: "AXStandardWindow"
+            )
+            let base = ShareableWindowDescriptor(
+                windowID: UInt32(60_000 + transitions.count),
+                processID: processID,
+                bounds: bounds,
+                title: focused?.title,
+                isOnScreen: true,
+                isNormalContent: true,
+                intersectsMainDisplay: true
+            )
+            let candidates: [ShareableWindowDescriptor]
+            switch reason {
+            case .ambiguousWindow:
+                candidates = [base, base.withWindowID(base.windowID + 1)]
+            case .minimizedWindow:
+                candidates = [base]
+            case .noWindow:
+                focused = nil
+                candidates = []
+            case .protectedSurface:
+                candidates = [base.withEligibility(isNormalContent: false)]
+            case .unresolvedWindow:
+                candidates = [base.withProcessID(processID + 1)]
+            case .unsupportedDisplay:
+                candidates = [base.withEligibility(intersectsMainDisplay: false)]
+            }
+            transitions.append(
+                LM020WindowTransition(
+                    id: String(format: "%@-%03d", reason.rawValue, index),
+                    focused: focused,
+                    candidates: candidates,
+                    expectedResolution: .gap(reason),
+                    expectedWindowID: nil
+                )
+            )
+        }
+    }
+}
+
+private extension ShareableWindowDescriptor {
+    func withWindowID(_ windowID: UInt32) -> Self {
+        Self(
+            windowID: windowID,
+            processID: processID,
+            bounds: bounds,
+            title: title,
+            isOnScreen: isOnScreen,
+            isNormalContent: isNormalContent,
+            intersectsMainDisplay: intersectsMainDisplay
+        )
+    }
+
+    func withProcessID(_ processID: Int32) -> Self {
+        Self(
+            windowID: windowID,
+            processID: processID,
+            bounds: bounds,
+            title: title,
+            isOnScreen: isOnScreen,
+            isNormalContent: isNormalContent,
+            intersectsMainDisplay: intersectsMainDisplay
+        )
+    }
+
+    func withEligibility(
+        isNormalContent: Bool? = nil,
+        intersectsMainDisplay: Bool? = nil
+    ) -> Self {
+        Self(
+            windowID: windowID,
+            processID: processID,
+            bounds: bounds,
+            title: title,
+            isOnScreen: isOnScreen,
+            isNormalContent: isNormalContent ?? self.isNormalContent,
+            intersectsMainDisplay: intersectsMainDisplay ?? self.intersectsMainDisplay
+        )
     }
 }

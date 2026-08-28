@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "seed": 1279938620,
+  "transitionCount": 500,
+  "approvedCount": 350,
+  "gapCounts": {
+    "ambiguousWindow": 25,
+    "minimizedWindow": 25,
+    "noWindow": 25,
+    "protectedSurface": 25,
+    "unresolvedWindow": 25,
+    "unsupportedDisplay": 25
+  },
+  "pixelPayloadCountForEveryGap": 0
+}

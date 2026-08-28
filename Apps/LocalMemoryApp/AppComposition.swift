@@ -156,6 +156,7 @@ struct AppLaunchConfiguration {
                     || argument.hasPrefix("--lm015-")
                     || argument.hasPrefix("--lm016-")
                     || argument.hasPrefix("--lm019-")
+                    || argument.hasPrefix("--lm020-")
                     || argument.hasPrefix("--capture-")
                     || argument.hasPrefix("--context-")
                     || argument == "--s3-s4-spike"
@@ -174,6 +175,7 @@ struct AppLaunchConfiguration {
             || arguments.contains("--capture-spike")
             || arguments.contains("--context-spike")
             || arguments.contains("--lm019-export-lifecycle")
+            || arguments.contains("--lm020-export-resolver")
             || arguments.contains("--lm008-s6-spike")
 
         if let index = arguments.firstIndex(of: "--lm009-state-file"),
