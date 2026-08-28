@@ -189,6 +189,17 @@ Records deletion ID, requested interval/frame IDs, reason, request time, complet
 
 Contains job ID, parent frame/chunk ID, `kind`, priority, state, attempt count, next-attempt time, producer version, last error code, and lease expiry. States are `queued`, `leased`, `succeeded`, `retryableFailure`, `permanentFailure`, and `cancelled`. Leases make work recoverable after process death. Maximum automatic attempts are three.
 
+The durable scheduler uses a 120-second lease. Acquisition atomically selects eligible
+work by priority descending and job ID ascending, increments the attempt count, and writes
+the expiry before execution. Completion, retry, cancellation, and permanent failure must
+match job ID, attempt, producer version, and exact lease expiry; a stale worker cannot
+publish. Startup and measured-backlog recovery turn abandoned leases into immediately
+eligible retryable work unless the third attempt has already expired, in which case the
+job becomes permanently failed. Producer-version invalidation requeues non-cancelled work
+once with attempts reset to zero. Backlog projections are atomic counts of ready, leased,
+future retry, terminal failure, success, cancellation, and per-kind state; deferred work
+is never hidden or counted as running.
+
 ## Durable schema
 
 Schema version 1 establishes these tables:

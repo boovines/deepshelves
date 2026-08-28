@@ -597,12 +597,23 @@
       "resumeProbe": null
     },
     "LM-034": {
-      "status": "pending",
-      "startedAt": null,
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": null,
+      "status": "passed",
+      "startedAt": "2026-08-28T20:26:40Z",
+      "completedAt": "2026-08-28T20:38:49Z",
+      "gitRevision": "refs/tags/checkpoints/LM-034",
+      "evidence": [
+        "Results/LM-034/report.json",
+        "Results/LM-034/red.txt",
+        "Results/LM-034/focused-tests.txt",
+        "Results/LM-034/static-audit.txt",
+        "Results/LM-034/contracts.txt",
+        "Results/LM-034/privacy.txt",
+        "Results/LM-034/release-build.txt",
+        "Results/LM-034/dependencies.txt",
+        "Results/LM-034/swift-format.txt",
+        "Results/LM-034/story-gate.txt"
+      ],
+      "notes": "From base revision 1b03d60, ArchiveEnrichmentJobStore and EnrichmentScheduler now provide atomic 120-second leases ordered by priority then stable ID, stale-worker rejection, restart/expiry recovery, bounded three-attempt retry/permanent failure, idempotent producer-version invalidation, and atomic per-kind backlog projections. Capture transitions preempt enrichment; active, battery, Low Power Mode, and thermal conditions defer lower priority without consuming attempts. The menu exposes exact pending/failure counts accessibly. Twenty-six focused Release tests plus contracts, privacy, dependency, strict formatting, and universal Release gates pass under the encoder-process tripwire with zero app or media-runtime execution.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null

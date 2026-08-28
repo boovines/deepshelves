@@ -292,11 +292,24 @@ public final class ArchiveAtomicCoordinator: @unchecked Sendable {
             throw ArchiveAtomicCoordinatorError.frameLocatorMismatch
         }
         let frameIDs = Set(frames.map(\.id))
+        let supportedJobKinds: Set<String> = [
+            "accessibilityText", "accessibility-text",
+            "visionOCR", "vision-ocr",
+            "thumbnail",
+            "visualVector", "visual-vector",
+            "transcription",
+            "mediaRewrite", "media-rewrite",
+            "vectorCompaction", "vector-compaction",
+        ]
         guard Set(jobs.map(\.id)).count == jobs.count,
             jobs.allSatisfy({
-                frameIDs.contains($0.frameID) && !$0.kind.isEmpty
-                    && $0.priority >= 0
-                    && !$0.producerVersion.isEmpty
+                frameIDs.contains($0.frameID)
+                    && supportedJobKinds.contains($0.kind)
+                    && (0...1_000).contains($0.priority)
+                    && $0.producerVersion.range(
+                        of: "^[A-Za-z0-9][A-Za-z0-9._+-]{0,127}$",
+                        options: .regularExpression
+                    ) != nil
             })
         else {
             throw ArchiveAtomicCoordinatorError.invalidJob

@@ -1,0 +1,516 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project LocalMemory.xcodeproj -scheme LocalMemory -configuration Debug -derivedDataPath .build/DerivedData -disableAutomaticPackageResolution CODE_SIGNING_ALLOWED=NO "-only-testing:LocalMemoryUnitTests/EnrichmentSchedulerTests" test
+
+Build settings from command line:
+    CODE_SIGNING_ALLOWED = NO
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  MemorySearch: /Users/justinhou/Development/deepshelves/Packages/MemorySearch
+  MemoryDesignSystem: /Users/justinhou/Development/deepshelves/Packages/MemoryDesignSystem
+  MemoryStore: /Users/justinhou/Development/deepshelves/Packages/MemoryStore
+  MemorySoftwareHEIC: /Users/justinhou/Development/deepshelves/Packages/MemorySoftwareHEIC
+  MemoryAgentAccess: /Users/justinhou/Development/deepshelves/Packages/MemoryAgentAccess
+  MemoryEnrichment: /Users/justinhou/Development/deepshelves/Packages/MemoryEnrichment
+  MemoryTestSupport: /Users/justinhou/Development/deepshelves/Packages/MemoryTestSupport
+  GRDB: /Users/justinhou/Development/deepshelves/.build/Dependencies/GRDB.swift-a285e4ca87ec6b3584c97b0ec25fc61fec02de60 @ local
+  MemoryCapture: /Users/justinhou/Development/deepshelves/Packages/MemoryCapture
+  SQLCipher: /Users/justinhou/Development/deepshelves/.build/Dependencies/SQLCipher.swift @ local
+  MemoryContracts: /Users/justinhou/Development/deepshelves/Packages/MemoryContracts
+
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:macOS, arch:arm64, id:00006030-000658C614D0001C, name:My Mac }
+{ platform:macOS, arch:x86_64, id:00006030-000658C614D0001C, name:My Mac }
+{ platform:macOS, name:Any Mac }
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (30 targets)
+    Target 'LocalMemoryUnitTests' in project 'LocalMemory'
+        ➜ Explicit dependency on target 'MemoryCapture' in project 'MemoryCapture'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+        ➜ Explicit dependency on target 'MemoryEnrichment' in project 'MemoryEnrichment'
+        ➜ Explicit dependency on target 'MemorySearch' in project 'MemorySearch'
+        ➜ Explicit dependency on target 'MemoryDesignSystem' in project 'MemoryDesignSystem'
+        ➜ Explicit dependency on target 'MemorySoftwareHEIC' in project 'MemorySoftwareHEIC'
+        ➜ Explicit dependency on target 'MemoryStore' in project 'MemoryStore'
+        ➜ Explicit dependency on target 'MemoryTestSupport' in project 'MemoryTestSupport'
+    Target 'LocalMemoryPrivacyTests' in project 'LocalMemory'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+        ➜ Explicit dependency on target 'MemoryTestSupport' in project 'MemoryTestSupport'
+    Target 'LocalMemoryPerformanceTests' in project 'LocalMemory'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+        ➜ Explicit dependency on target 'MemoryTestSupport' in project 'MemoryTestSupport'
+    Target 'LocalMemoryMCP' in project 'LocalMemory'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+    Target 'LocalMemoryIntegrationTests' in project 'LocalMemory'
+        ➜ Explicit dependency on target 'MemoryCapture' in project 'MemoryCapture'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+        ➜ Explicit dependency on target 'MemoryEnrichment' in project 'MemoryEnrichment'
+        ➜ Explicit dependency on target 'MemoryStore' in project 'MemoryStore'
+        ➜ Explicit dependency on target 'MemoryTestSupport' in project 'MemoryTestSupport'
+    Target 'MemoryTestSupport' in project 'MemoryTestSupport'
+        ➜ Explicit dependency on target 'MemoryTestSupport' in project 'MemoryTestSupport'
+    Target 'MemoryTestSupport' in project 'MemoryTestSupport' (no dependencies)
+    Target 'LocalMemoryCLI' in project 'LocalMemory'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+    Target 'LocalMemoryApp' in project 'LocalMemory'
+        ➜ Explicit dependency on target 'MemoryCapture' in project 'MemoryCapture'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+        ➜ Explicit dependency on target 'MemoryDesignSystem' in project 'MemoryDesignSystem'
+        ➜ Explicit dependency on target 'MemoryEnrichment' in project 'MemoryEnrichment'
+        ➜ Explicit dependency on target 'MemorySearch' in project 'MemorySearch'
+        ➜ Explicit dependency on target 'MemoryStore' in project 'MemoryStore'
+    Target 'MemorySearch' in project 'MemorySearch'
+        ➜ Explicit dependency on target 'MemorySearch' in project 'MemorySearch'
+    Target 'MemorySearch' in project 'MemorySearch' (no dependencies)
+    Target 'MemoryEnrichment' in project 'MemoryEnrichment'
+        ➜ Explicit dependency on target 'MemoryEnrichment' in project 'MemoryEnrichment'
+        ➜ Explicit dependency on target 'MemoryEnrichment_MemoryEnrichment' in project 'MemoryEnrichment'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+        ➜ Explicit dependency on target 'MemorySoftwareHEIC' in project 'MemorySoftwareHEIC'
+        ➜ Explicit dependency on target 'MemoryStore' in project 'MemoryStore'
+    Target 'MemoryEnrichment' in project 'MemoryEnrichment'
+        ➜ Explicit dependency on target 'MemoryEnrichment_MemoryEnrichment' in project 'MemoryEnrichment'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+        ➜ Explicit dependency on target 'MemorySoftwareHEIC' in project 'MemorySoftwareHEIC'
+        ➜ Explicit dependency on target 'MemoryStore' in project 'MemoryStore'
+    Target 'MemoryStore' in project 'MemoryStore'
+        ➜ Explicit dependency on target 'MemoryStore' in project 'MemoryStore'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+        ➜ Explicit dependency on target 'GRDB' in project 'GRDB'
+    Target 'MemoryStore' in project 'MemoryStore'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+        ➜ Explicit dependency on target 'GRDB' in project 'GRDB'
+    Target 'GRDB' in project 'GRDB'
+        ➜ Explicit dependency on target 'GRDB' in project 'GRDB'
+        ➜ Explicit dependency on target 'GRDB_GRDB' in project 'GRDB'
+        ➜ Explicit dependency on target 'GRDBSQLCipher' in project 'GRDB'
+        ➜ Explicit dependency on target 'SQLCipher' in project 'SQLCipher'
+    Target 'GRDB' in project 'GRDB'
+        ➜ Explicit dependency on target 'GRDB_GRDB' in project 'GRDB'
+        ➜ Explicit dependency on target 'GRDBSQLCipher' in project 'GRDB'
+        ➜ Explicit dependency on target 'SQLCipher' in project 'SQLCipher'
+    Target 'GRDBSQLCipher' in project 'GRDB'
+        ➜ Explicit dependency on target 'SQLCipher' in project 'SQLCipher'
+    Target 'SQLCipher' in project 'SQLCipher' (no dependencies)
+    Target 'GRDB_GRDB' in project 'GRDB' (no dependencies)
+    Target 'MemoryEnrichment_MemoryEnrichment' in project 'MemoryEnrichment' (no dependencies)
+    Target 'MemoryDesignSystem' in project 'MemoryDesignSystem'
+        ➜ Explicit dependency on target 'MemoryDesignSystem' in project 'MemoryDesignSystem'
+    Target 'MemoryDesignSystem' in project 'MemoryDesignSystem' (no dependencies)
+    Target 'MemoryCapture' in project 'MemoryCapture'
+        ➜ Explicit dependency on target 'MemoryCapture' in project 'MemoryCapture'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+        ➜ Explicit dependency on target 'MemorySoftwareHEIC' in project 'MemorySoftwareHEIC'
+    Target 'MemoryCapture' in project 'MemoryCapture'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+        ➜ Explicit dependency on target 'MemorySoftwareHEIC' in project 'MemorySoftwareHEIC'
+    Target 'MemorySoftwareHEIC' in project 'MemorySoftwareHEIC'
+        ➜ Explicit dependency on target 'MemorySoftwareHEIC' in project 'MemorySoftwareHEIC'
+        ➜ Explicit dependency on target 'MemorySoftwareHEIC_MemorySoftwareHEIC' in project 'MemorySoftwareHEIC'
+    Target 'MemorySoftwareHEIC' in project 'MemorySoftwareHEIC'
+        ➜ Explicit dependency on target 'MemorySoftwareHEIC_MemorySoftwareHEIC' in project 'MemorySoftwareHEIC'
+    Target 'MemorySoftwareHEIC_MemorySoftwareHEIC' in project 'MemorySoftwareHEIC' (no dependencies)
+    Target 'MemoryContracts' in project 'MemoryContracts'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+    Target 'MemoryContracts' in project 'MemoryContracts' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+ReadFileContents /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/share/docc/features.json
+
+Build description signature: 1c2481b445113ae577e99a4eb7cab84b
+Build description path: /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/XCBuildData/1c2481b445113ae577e99a4eb7cab84b.xcbuilddata
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk /Users/justinhou/Development/deepshelves/.build/DerivedData/SDKStatCaches.noindex/macosx26.5-25F70-e082c4a02f00227109f4ed75e425c832.sdkstatcache
+    cd /Users/justinhou/Development/deepshelves/LocalMemory.xcodeproj
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -o /Users/justinhou/Development/deepshelves/.build/DerivedData/SDKStatCaches.noindex/macosx26.5-25F70-e082c4a02f00227109f4ed75e425c832.sdkstatcache
+
+ProcessInfoPlistFile /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/MemorySoftwareHEIC_MemorySoftwareHEIC.bundle/Contents/Info.plist /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/MemorySoftwareHEIC.build/Debug/MemorySoftwareHEIC_MemorySoftwareHEIC.build/empty-MemorySoftwareHEIC_MemorySoftwareHEIC.plist (in target 'MemorySoftwareHEIC_MemorySoftwareHEIC' from project 'MemorySoftwareHEIC')
+    cd /Users/justinhou/Development/deepshelves/Packages/MemorySoftwareHEIC
+    builtin-infoPlistUtility /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/MemorySoftwareHEIC.build/Debug/MemorySoftwareHEIC_MemorySoftwareHEIC.build/empty-MemorySoftwareHEIC_MemorySoftwareHEIC.plist -producttype com.apple.product-type.bundle -expandbuildsettings -platform macosx -o /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/MemorySoftwareHEIC_MemorySoftwareHEIC.bundle/Contents/Info.plist
+
+WriteAuxiliaryFile /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryUnitTests.build/Objects-normal/arm64/LocalMemoryUnitTests.LinkFileList (in target 'LocalMemoryUnitTests' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    write-file /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryUnitTests.build/Objects-normal/arm64/LocalMemoryUnitTests.LinkFileList
+
+WriteAuxiliaryFile /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryUnitTests.build/Objects-normal/arm64/LocalMemoryUnitTests.SwiftFileList (in target 'LocalMemoryUnitTests' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    write-file /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryUnitTests.build/Objects-normal/arm64/LocalMemoryUnitTests.SwiftFileList
+
+WriteAuxiliaryFile /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryUnitTests.build/Objects-normal/arm64/LocalMemoryUnitTests.SwiftConstValuesFileList (in target 'LocalMemoryUnitTests' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    write-file /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryUnitTests.build/Objects-normal/arm64/LocalMemoryUnitTests.SwiftConstValuesFileList
+
+WriteAuxiliaryFile /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryUnitTests.build/Objects-normal/arm64/LocalMemoryUnitTests-OutputFileMap.json (in target 'LocalMemoryUnitTests' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    write-file /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryUnitTests.build/Objects-normal/arm64/LocalMemoryUnitTests-OutputFileMap.json
+
+ProcessInfoPlistFile /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/MemoryEnrichment_MemoryEnrichment.bundle/Contents/Info.plist /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/MemoryEnrichment.build/Debug/MemoryEnrichment_MemoryEnrichment.build/empty-MemoryEnrichment_MemoryEnrichment.plist (in target 'MemoryEnrichment_MemoryEnrichment' from project 'MemoryEnrichment')
+    cd /Users/justinhou/Development/deepshelves/Packages/MemoryEnrichment
+    builtin-infoPlistUtility /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/MemoryEnrichment.build/Debug/MemoryEnrichment_MemoryEnrichment.build/empty-MemoryEnrichment_MemoryEnrichment.plist -producttype com.apple.product-type.bundle -expandbuildsettings -platform macosx -o /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/MemoryEnrichment_MemoryEnrichment.bundle/Contents/Info.plist
+
+CopySwiftLibs /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/LocalMemoryPrivacyTests.xctest (in target 'LocalMemoryPrivacyTests' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/LocalMemoryPrivacyTests.xctest/Contents/MacOS/LocalMemoryPrivacyTests --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/LocalMemoryPrivacyTests.xctest/Contents/Frameworks --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/LocalMemoryPrivacyTests.xctest/Contents/PlugIns --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/LocalMemoryPrivacyTests.xctest/Contents/Library/SystemExtensions --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/LocalMemoryPrivacyTests.xctest/Contents/Extensions --platform macosx --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/LocalMemoryPrivacyTests.xctest/Contents/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryPrivacyTests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os --back-deploy-swift-span
+Ignoring --strip-bitcode because --sign was not passed
+
+CopySwiftLibs /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/LocalMemoryPerformanceTests.xctest (in target 'LocalMemoryPerformanceTests' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/LocalMemoryPerformanceTests.xctest/Contents/MacOS/LocalMemoryPerformanceTests --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/LocalMemoryPerformanceTests.xctest/Contents/Frameworks --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/LocalMemoryPerformanceTests.xctest/Contents/PlugIns --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/LocalMemoryPerformanceTests.xctest/Contents/Library/SystemExtensions --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/LocalMemoryPerformanceTests.xctest/Contents/Extensions --platform macosx --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/LocalMemoryPerformanceTests.xctest/Contents/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryPerformanceTests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os --back-deploy-swift-span
+Ignoring --strip-bitcode because --sign was not passed
+
+ProcessInfoPlistFile /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/GRDB_GRDB.bundle/Contents/Info.plist /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/GRDB.build/Debug/GRDB_GRDB.build/empty-GRDB_GRDB.plist (in target 'GRDB_GRDB' from project 'GRDB')
+    cd /Users/justinhou/Development/deepshelves/.build/Dependencies/GRDB.swift-a285e4ca87ec6b3584c97b0ec25fc61fec02de60
+    builtin-infoPlistUtility /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/GRDB.build/Debug/GRDB_GRDB.build/empty-GRDB_GRDB.plist -producttype com.apple.product-type.bundle -expandbuildsettings -platform macosx -o /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/GRDB_GRDB.bundle/Contents/Info.plist
+
+Copy /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/Local_Memory.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryApp.build/Objects-normal/arm64/Local_Memory.swiftsourceinfo (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryApp.build/Objects-normal/arm64/Local_Memory.swiftsourceinfo /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/Local_Memory.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo
+
+CopySwiftLibs /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/LocalMemoryIntegrationTests.xctest (in target 'LocalMemoryIntegrationTests' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/LocalMemoryIntegrationTests.xctest/Contents/MacOS/LocalMemoryIntegrationTests --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/LocalMemoryIntegrationTests.xctest/Contents/Frameworks --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/LocalMemoryIntegrationTests.xctest/Contents/PlugIns --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/LocalMemoryIntegrationTests.xctest/Contents/Library/SystemExtensions --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/LocalMemoryIntegrationTests.xctest/Contents/Extensions --platform macosx --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/LocalMemoryIntegrationTests.xctest/Contents/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryIntegrationTests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os --back-deploy-swift-span
+Ignoring --strip-bitcode because --sign was not passed
+
+SwiftDriver LocalMemoryUnitTests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'LocalMemoryUnitTests' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name LocalMemoryUnitTests -Onone @/Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryUnitTests.build/Objects-normal/arm64/LocalMemoryUnitTests.SwiftFileList -DDEBUG -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -target arm64-apple-macos15.0 -g -module-cache-path /Users/justinhou/Development/deepshelves/.build/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -profile-coverage-mapping -profile-generate -enable-testing -warnings-as-errors -index-store-path /Users/justinhou/Development/deepshelves/.build/DerivedData/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 6 -I /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib -F /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug -F /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks -c -j12 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/justinhou/Development/deepshelves/.build/DerivedData/SDKStatCaches.noindex/macosx26.5-25F70-e082c4a02f00227109f4ed75e425c832.sdkstatcache -output-file-map /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryUnitTests.build/Objects-normal/arm64/LocalMemoryUnitTests-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/justinhou/Development/deepshelves/.build/DerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/justinhou/Development/deepshelves/.build/DerivedData/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryUnitTests.build/Objects-normal/arm64/LocalMemoryUnitTests.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/justinhou/Development/deepshelves/.build/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryUnitTests.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryUnitTests.build/Objects-normal/arm64/LocalMemoryUnitTests_const_extract_protocols.json -Xcc -iquote -Xcc /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryUnitTests.build/LocalMemoryUnitTests-generated-files.hmap -Xcc -I/Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryUnitTests.build/LocalMemoryUnitTests-own-target-headers.hmap -Xcc -I/Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryUnitTests.build/LocalMemoryUnitTests-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemory-a2f6a35635c1f574034e85928886420d-VFS/all-product-headers.yaml -Xcc -iquote -Xcc /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryUnitTests.build/LocalMemoryUnitTests-project-headers.hmap -Xcc -I/Users/justinhou/Development/deepshelves/.build/Dependencies/GRDB.swift-a285e4ca87ec6b3584c97b0ec25fc61fec02de60/Sources/GRDBSQLCipher/include -Xcc -I/Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/include -Xcc -I/Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryUnitTests.build/DerivedSources-normal/arm64 -Xcc -I/Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryUnitTests.build/DerivedSources/arm64 -Xcc -I/Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryUnitTests.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryUnitTests.build/Objects-normal/arm64/LocalMemoryUnitTests-Swift.h -working-directory /Users/justinhou/Development/deepshelves -experimental-emit-module-separately -disable-cmo
+
+Copy /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/Local_Memory.swiftmodule/arm64-apple-macos.swiftdoc /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryApp.build/Objects-normal/arm64/Local_Memory.swiftdoc (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryApp.build/Objects-normal/arm64/Local_Memory.swiftdoc /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/Local_Memory.swiftmodule/arm64-apple-macos.swiftdoc
+
+Copy /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/Local_Memory.swiftmodule/arm64-apple-macos.swiftmodule /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryApp.build/Objects-normal/arm64/Local_Memory.swiftmodule (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryApp.build/Objects-normal/arm64/Local_Memory.swiftmodule /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/Local_Memory.swiftmodule/arm64-apple-macos.swiftmodule
+
+Copy /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/Local_Memory.swiftmodule/arm64-apple-macos.abi.json /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryApp.build/Objects-normal/arm64/Local_Memory.abi.json (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryApp.build/Objects-normal/arm64/Local_Memory.abi.json /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/Local_Memory.swiftmodule/arm64-apple-macos.abi.json
+
+ProcessInfoPlistFile /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/Local\ Memory.app/Contents/Info.plist /Users/justinhou/Development/deepshelves/Apps/LocalMemoryApp/Info.plist (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-infoPlistUtility /Users/justinhou/Development/deepshelves/Apps/LocalMemoryApp/Info.plist -producttype com.apple.product-type.application -genpkginfo /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/Local\ Memory.app/Contents/PkgInfo -expandbuildsettings -platform macosx -scanforprivacyfile /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/Local\ Memory.app/Contents/Frameworks/SQLCipher.framework -scanforprivacyfile /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/Local\ Memory.app/Contents/Resources/GRDB_GRDB.bundle -scanforprivacyfile /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/Local\ Memory.app/Contents/Resources/MemoryEnrichment_MemoryEnrichment.bundle -scanforprivacyfile /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/Local\ Memory.app/Contents/Resources/MemorySoftwareHEIC_MemorySoftwareHEIC.bundle -o /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/Local\ Memory.app/Contents/Info.plist
+
+CopySwiftLibs /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/Local\ Memory.app (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/Local\ Memory.app/Contents/MacOS/Local\ Memory.debug.dylib --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/Local\ Memory.app/Contents/Frameworks --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/Local\ Memory.app/Contents/PlugIns --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/Local\ Memory.app/Contents/Library/SystemExtensions --scan-folder /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/Local\ Memory.app/Contents/Extensions --platform macosx --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/Local\ Memory.app/Contents/Frameworks --strip-bitcode --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryApp.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os --back-deploy-swift-span
+Ignoring --strip-bitcode because --sign was not passed
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ LocalMemoryUnitTests (in target 'LocalMemoryUnitTests' from project 'LocalMemory')
+
+EmitSwiftModule normal arm64 (in target 'LocalMemoryUnitTests' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+
+
+SwiftCompile normal arm64 Compiling\ EnrichmentSchedulerTests.swift /Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift (in target 'LocalMemoryUnitTests' from project 'LocalMemory')
+Failed frontend command:
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-frontend -frontend -c /Users/justinhou/Development/deepshelves/Tests/Unit/AXOCRSpanMergeTests.swift /Users/justinhou/Development/deepshelves/Tests/Unit/AccessibilitySnapshotTests.swift /Users/justinhou/Development/deepshelves/Tests/Unit/AccessibilityTextSpanTests.swift /Users/justinhou/Development/deepshelves/Tests/Unit/ActivityMonitorTests.swift /Users/justinhou/Development/deepshelves/Tests/Unit/AppLifecycleTests.swift /Users/justinhou/Development/deepshelves/Tests/Unit/ArchiveDatabaseTests.swift /Users/justinhou/Development/deepshelves/Tests/Unit/ArchiveEncryptionTests.swift /Users/justinhou/Development/deepshelves/Tests/Unit/ArchiveFileStoreTests.swift /Users/justinhou/Development/deepshelves/Tests/Unit/ArchivePathProviderTests.swift /Users/justinhou/Development/deepshelves/Tests/Unit/BaselineDefaultsTests.swift /Users/justinhou/Development/deepshelves/Tests/Unit/BootstrapContractTests.swift /Users/justinhou/Development/deepshelves/Tests/Unit/BrowserContextAdapterTests.swift /Users/justinhou/Development/deepshelves/Tests/Unit/BrowserPrivacyProtectionTests.swift /Users/justinhou/Development/deepshelves/Tests/Unit/CaptureSoakModelTests.swift /Users/justinhou/Development/deepshelves/Tests/Unit/CaptureSpikeCoreTests.swift /Users/justinhou/Development/deepshelves/Tests/Unit/ContextSpikeCoreTests.swift /Users/justinhou/Development/deepshelves/Tests/Unit/ContractFixtureCompatibilityTests.swift /Users/justinhou/Development/deepshelves/Tests/Unit/DependencyManifestTests.swift /Users/justinhou/Development/deepshelves/Tests/Unit/DesignTokenTests.swift -primary-file /Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift /Users/justinhou/Development/deepshelves/Tests/Unit/ForegroundWindowResolverTests.swift /Users/justinhou/Development/deepshelves/Tests/Unit/GlobalSearchPanelStateTests.swift /Users/justinhou/Development/deepshelves/Tests/Unit/LM059StorageSecurityGateTests.swift /Users/justinhou/Development/deepshelves/Tests/Unit/LaunchAtLoginTests.swift /Users/justinhou/Development/deepshelves/Tests/Unit/MainNavigationStateTests.swift /Users/justinhou/Development/deepshelves/Tests/Unit/MemoryContractsV1Tests.swift /Users/justinhou/Development/deepshelves/Tests/Unit/OnboardingStateTests.swift /Users/justinhou/Development/deepshelves/Tests/Unit/PrivacyPolicySettingsTests.swift /Users/justinhou/Development/deepshelves/Tests/Unit/PrivacyPolicyTests.swift /Users/justinhou/Development/deepshelves/Tests/Unit/S5CrashRecoveryTests.swift /Users/justinhou/Development/deepshelves/Tests/Unit/S6SpikeCoreTests.swift /Users/justinhou/Development/deepshelves/Tests/Unit/S7OfflineClosureTests.swift /Users/justinhou/Development/deepshelves/Tests/Unit/ScreenCaptureRuntimeTests.swift /Users/justinhou/Development/deepshelves/Tests/Unit/SharedComponentTests.swift /Users/justinhou/Development/deepshelves/Tests/Unit/ShellUXStateTests.swift /Users/justinhou/Development/deepshelves/Tests/Unit/SnapshotRendererTests.swift /Users/justinhou/Development/deepshelves/Tests/Unit/SoftwareHEICCodecTests.swift /Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift /Users/justinhou/Development/deepshelves/Tests/Unit/VectorSpikeCoreTests.swift /Users/justinhou/Development/deepshelves/Tests/Unit/VisionOCRPipelineTests.swift /Users/justinhou/Development/deepshelves/Tests/Unit/WindowCaptureEpochTests.swift -emit-dependencies-path /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryUnitTests.build/Objects-normal/arm64/EnrichmentSchedulerTests.d -emit-const-values-path /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryUnitTests.build/Objects-normal/arm64/EnrichmentSchedulerTests.swiftconstvalues -emit-reference-dependencies-path /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryUnitTests.build/Objects-normal/arm64/EnrichmentSchedulerTests.swiftdeps -serialize-diagnostics-path /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryUnitTests.build/Objects-normal/arm64/EnrichmentSchedulerTests.dia -target arm64-apple-macos15.0 -disable-cross-import-overlay-search -swift-module-cross-import Darwin /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/Darwin.swiftcrossimport/xlocale.swiftoverlay -swift-module-cross-import Testing /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks/Testing.framework/Modules/Testing.swiftcrossimport/AppKit.swiftoverlay -swift-module-cross-import Testing /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks/Testing.framework/Modules/Testing.swiftcrossimport/CoreGraphics.swiftoverlay -swift-module-cross-import Testing /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks/Testing.framework/Modules/Testing.swiftcrossimport/CoreImage.swiftoverlay -swift-module-cross-import Testing /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks/Testing.framework/Modules/Testing.swiftcrossimport/Foundation.swiftoverlay -load-resolved-plugin /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/swift/host/plugins/libFoundationMacros.dylib\#/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/bin/swift-plugin-server\#FoundationMacros -load-resolved-plugin /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/swift/host/plugins/libObservationMacros.dylib\#/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/bin/swift-plugin-server\#ObservationMacros -load-resolved-plugin /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/swift/host/plugins/libPreviewsMacros.dylib\#/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/bin/swift-plugin-server\#PreviewsMacros -load-resolved-plugin /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/swift/host/plugins/libSwiftMacros.dylib\#/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/bin/swift-plugin-server\#SwiftMacros -load-resolved-plugin /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/swift/host/plugins/libSwiftUIMacros.dylib\#/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/bin/swift-plugin-server\#SwiftUIMacros -load-resolved-plugin /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing/libTestingMacros.dylib\#\#TestingMacros -disable-implicit-swift-modules -Xcc -fno-implicit-modules -Xcc -fno-implicit-module-maps -explicit-swift-module-map-file /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryUnitTests.build/Objects-normal/arm64/LocalMemoryUnitTests-dependencies-1.json -debug-module-path /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryUnitTests.build/Objects-normal/arm64/LocalMemoryUnitTests.swiftmodule -Xllvm -aarch64-use-tbi -enable-objc-interop -stack-check -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -I /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib -F /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug -F /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks -no-color-diagnostics -Xcc -fno-color-diagnostics -enable-testing -g -debug-info-format\=dwarf -dwarf-version\=5 -module-cache-path /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -profile-generate -profile-coverage-mapping -warnings-as-errors -warnings-as-errors -swift-version 6 -Onone -D DEBUG -serialize-debugging-options -const-gather-protocols-file /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryUnitTests.build/Objects-normal/arm64/LocalMemoryUnitTests_const_extract_protocols.json -enable-experimental-feature DebugDescriptionMacro -empty-abi-descriptor -validate-clang-modules-once -clang-build-session-file /Users/justinhou/Development/deepshelves/.build/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -working-directory -Xcc /Users/justinhou/Development/deepshelves -enable-anonymous-context-mangled-names -file-compilation-dir /Users/justinhou/Development/deepshelves -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -Xcc -ivfsstatcache -Xcc /Users/justinhou/Development/deepshelves/.build/DerivedData/SDKStatCaches.noindex/macosx26.5-25F70-e082c4a02f00227109f4ed75e425c832.sdkstatcache -Xcc -I/Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryUnitTests.build/swift-overrides.hmap -Xcc -iquote -Xcc /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryUnitTests.build/LocalMemoryUnitTests-generated-files.hmap -Xcc -I/Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryUnitTests.build/LocalMemoryUnitTests-own-target-headers.hmap -Xcc -I/Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryUnitTests.build/LocalMemoryUnitTests-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemory-a2f6a35635c1f574034e85928886420d-VFS/all-product-headers.yaml -Xcc -iquote -Xcc /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryUnitTests.build/LocalMemoryUnitTests-project-headers.hmap -Xcc -I/Users/justinhou/Development/deepshelves/.build/Dependencies/GRDB.swift-a285e4ca87ec6b3584c97b0ec25fc61fec02de60/Sources/GRDBSQLCipher/include -Xcc -I/Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Products/Debug/include -Xcc -I/Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryUnitTests.build/DerivedSources-normal/arm64 -Xcc -I/Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryUnitTests.build/DerivedSources/arm64 -Xcc -I/Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryUnitTests.build/DerivedSources -Xcc -DDEBUG\=1 -no-auto-bridging-header-chaining -module-name LocalMemoryUnitTests -frontend-parseable-output -disable-clang-spi -clang-target arm64-apple-macos26.5 -target-sdk-version 26.5 -target-sdk-name macosx26.5 -in-process-plugin-server-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/libSwiftInProcPluginServer.dylib -o /Users/justinhou/Development/deepshelves/.build/DerivedData/Build/Intermediates.noindex/LocalMemory.build/Debug/LocalMemoryUnitTests.build/Objects-normal/arm64/EnrichmentSchedulerTests.o -index-unit-output-path /LocalMemory.build/Debug/LocalMemoryUnitTests.build/Objects-normal/arm64/EnrichmentSchedulerTests.o -index-store-path /Users/justinhou/Development/deepshelves/.build/DerivedData/Index.noindex/DataStore -index-system-modules
+
+SwiftCompile normal arm64 /Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift (in target 'LocalMemoryUnitTests' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:12:25: error: cannot find 'ArchiveEnrichmentJobStore' in scope
+        let store = try ArchiveEnrichmentJobStore(
+                        ^~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:22:13: error: cannot find 'EnrichmentJobSeed' in scope
+            EnrichmentJobSeed(
+            ^~~~~~~~~~~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:26:27: error: cannot find 'EnrichmentJobPriority' in scope
+                priority: EnrichmentJobPriority.heartbeat,
+                          ^~~~~~~~~~~~~~~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:25:24: error: cannot infer contextual base in reference to member 'thumbnail'
+                kind: .thumbnail,
+                      ~^~~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:31:13: error: cannot find 'EnrichmentJobSeed' in scope
+            EnrichmentJobSeed(
+            ^~~~~~~~~~~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:35:27: error: cannot find 'EnrichmentJobPriority' in scope
+                priority: EnrichmentJobPriority.captureTransition,
+                          ^~~~~~~~~~~~~~~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:34:24: error: cannot infer contextual base in reference to member 'thumbnail'
+                kind: .thumbnail,
+                      ~^~~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:39:25: error: cannot find 'EnrichmentScheduler' in scope
+        let scheduler = EnrichmentScheduler(
+                        ^~~~~~~~~~~~~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:41:33: error: reference to member 'thumbnail' cannot be resolved without a contextual type
+            producerVersions: [.thumbnail: "thumbnail-v1"]
+                                ^
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:45:26: error: cannot infer contextual base in reference to member 'idleOnExternalPower'
+            conditions: .idleOnExternalPower,
+                        ~^~~~~~~~~~~~~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:59:40: error: cannot infer contextual base in reference to member 'thumbnail'
+        XCTAssertEqual(backlog.byKind[.thumbnail]?.queued, 1)
+                                      ~^~~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:64:25: error: cannot find 'ArchiveEnrichmentJobStore' in scope
+        let store = try ArchiveEnrichmentJobStore(
+                        ^~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:69:13: error: cannot find 'EnrichmentJobSeed' in scope
+            EnrichmentJobSeed(
+            ^~~~~~~~~~~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:73:27: error: cannot find 'EnrichmentJobPriority' in scope
+                priority: EnrichmentJobPriority.heartbeat,
+                          ^~~~~~~~~~~~~~~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:72:24: error: cannot infer contextual base in reference to member 'visionOCR'
+                kind: .visionOCR,
+                      ~^~~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:77:25: error: cannot find 'EnrichmentScheduler' in scope
+        let scheduler = EnrichmentScheduler(
+                        ^~~~~~~~~~~~~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:79:33: error: reference to member 'visionOCR' cannot be resolved without a contextual type
+            producerVersions: [.visionOCR: "ocr-v1"]
+                                ^
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:84:29: error: cannot find 'EnrichmentRuntimeConditions' in scope
+                conditions: EnrichmentRuntimeConditions(
+                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:86:35: error: cannot infer contextual base in reference to member 'external'
+                    powerSource: .external,
+                                 ~^~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:87:35: error: 'nil' requires a contextual type
+                    batteryLevel: nil,
+                                  ^
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:89:36: error: cannot infer contextual base in reference to member 'nominal'
+                    thermalState: .nominal,
+                                  ~^~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:95:14: error: type 'Equatable' has no member 'deferred'
+            .deferred(.captureTransitionPending)
+            ~^~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:95:24: error: cannot infer contextual base in reference to member 'captureTransitionPending'
+            .deferred(.captureTransitionPending)
+                      ~^~~~~~~~~~~~~~~~~~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:99:29: error: cannot find 'EnrichmentRuntimeConditions' in scope
+                conditions: EnrichmentRuntimeConditions(
+                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:101:35: error: cannot infer contextual base in reference to member 'external'
+                    powerSource: .external,
+                                 ~^~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:102:35: error: 'nil' requires a contextual type
+                    batteryLevel: nil,
+                                  ^
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:104:36: error: cannot infer contextual base in reference to member 'critical'
+                    thermalState: .critical,
+                                  ~^~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:110:14: error: type 'Equatable' has no member 'deferred'
+            .deferred(.thermalPressure)
+            ~^~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:110:24: error: cannot infer contextual base in reference to member 'thermalPressure'
+            .deferred(.thermalPressure)
+                      ~^~~~~~~~~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:114:29: error: cannot find 'EnrichmentRuntimeConditions' in scope
+                conditions: EnrichmentRuntimeConditions(
+                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:116:35: error: cannot infer contextual base in reference to member 'battery'
+                    powerSource: .battery,
+                                 ~^~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:119:36: error: cannot infer contextual base in reference to member 'fair'
+                    thermalState: .fair,
+                                  ~^~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:125:14: error: type 'Equatable' has no member 'deferred'
+            .deferred(.noEligibleWork)
+            ~^~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:125:24: error: cannot infer contextual base in reference to member 'noEligibleWork'
+            .deferred(.noEligibleWork)
+                      ~^~~~~~~~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:134:25: error: cannot find 'ArchiveEnrichmentJobStore' in scope
+        let store = try ArchiveEnrichmentJobStore(
+                        ^~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:139:13: error: cannot find 'EnrichmentJobSeed' in scope
+            EnrichmentJobSeed(
+            ^~~~~~~~~~~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:143:27: error: cannot find 'EnrichmentJobPriority' in scope
+                priority: EnrichmentJobPriority.fastOCR,
+                          ^~~~~~~~~~~~~~~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:142:24: error: cannot infer contextual base in reference to member 'visionOCR'
+                kind: .visionOCR,
+                      ~^~~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:147:25: error: cannot find 'EnrichmentScheduler' in scope
+        let scheduler = EnrichmentScheduler(
+                        ^~~~~~~~~~~~~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:149:33: error: reference to member 'visionOCR' cannot be resolved without a contextual type
+            producerVersions: [.visionOCR: "ocr-v1"]
+                                ^
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:154:30: error: cannot infer contextual base in reference to member 'idleOnExternalPower'
+                conditions: .idleOnExternalPower,
+                            ~^~~~~~~~~~~~~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:173:26: error: generic parameter 'T' could not be inferred
+        let record = try XCTUnwrap(try store.job(jobID))
+                         ^
+XCTest.XCTUnwrap:1:13: note: in call to function 'XCTUnwrap(_:_:file:line:)'
+public func XCTUnwrap<T>(_ expression: @autoclosure () throws -> T?, _ message: @autoclosure () -> String = "", file: StaticString = #filePath, line: UInt = #line) throws -> T
+            ^
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:174:39: error: type 'Equatable' has no member 'permanentFailure'
+        XCTAssertEqual(record.state, .permanentFailure)
+                                     ~^~~~~~~~~~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:176:46: error: cannot find 'EnrichmentScheduler' in scope
+        XCTAssertEqual(record.lastErrorCode, EnrichmentScheduler.processingErrorCode)
+                                             ^~~~~~~~~~~~~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:184:25: error: cannot find 'ArchiveEnrichmentJobStore' in scope
+        let store = try ArchiveEnrichmentJobStore(
+                        ^~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:189:13: error: cannot find 'EnrichmentJobSeed' in scope
+            EnrichmentJobSeed(
+            ^~~~~~~~~~~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:193:27: error: cannot find 'EnrichmentJobPriority' in scope
+                priority: EnrichmentJobPriority.thumbnail,
+                          ^~~~~~~~~~~~~~~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:192:24: error: cannot infer contextual base in reference to member 'thumbnail'
+                kind: .thumbnail,
+                      ~^~~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:197:21: error: cannot find 'EnrichmentScheduler' in scope
+        let first = EnrichmentScheduler(
+                    ^~~~~~~~~~~~~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:199:33: error: reference to member 'thumbnail' cannot be resolved without a contextual type
+            producerVersions: [.thumbnail: "thumbnail-v1"]
+                                ^
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:202:26: error: cannot infer contextual base in reference to member 'idleOnExternalPower'
+            conditions: .idleOnExternalPower,
+                        ~^~~~~~~~~~~~~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:209:27: error: cannot find 'EnrichmentScheduler' in scope
+        let replacement = EnrichmentScheduler(
+                          ^~~~~~~~~~~~~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:211:33: error: reference to member 'thumbnail' cannot be resolved without a contextual type
+            producerVersions: [.thumbnail: "thumbnail-v2"]
+                                ^
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:220:26: error: cannot infer contextual base in reference to member 'idleOnExternalPower'
+            conditions: .idleOnExternalPower,
+                        ~^~~~~~~~~~~~~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:238:20: error: cannot find type 'ArchiveEnrichmentJobStore' in scope
+        var store: ArchiveEnrichmentJobStore? = try ArchiveEnrichmentJobStore(
+                   ^~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:238:53: error: cannot find 'ArchiveEnrichmentJobStore' in scope
+        var store: ArchiveEnrichmentJobStore? = try ArchiveEnrichmentJobStore(
+                                                    ^~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:242:13: error: cannot find 'EnrichmentJobSeed' in scope
+            EnrichmentJobSeed(
+            ^~~~~~~~~~~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:246:27: error: cannot find 'EnrichmentJobPriority' in scope
+                priority: EnrichmentJobPriority.thumbnail,
+                          ^~~~~~~~~~~~~~~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:245:24: error: cannot infer contextual base in reference to member 'thumbnail'
+                kind: .thumbnail,
+                      ~^~~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:253:32: error: cannot find 'EnrichmentScheduler' in scope
+                leaseDuration: EnrichmentScheduler.leaseDuration,
+                               ^~~~~~~~~~~~~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:255:37: error: reference to member 'thumbnail' cannot be resolved without a contextual type
+                producerVersions: [.thumbnail: "thumbnail-v1"]
+                                    ^
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:267:34: error: cannot find 'ArchiveEnrichmentJobStore' in scope
+        let recoveredStore = try ArchiveEnrichmentJobStore(database: reopened)
+                                 ^~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:271:32: error: cannot find 'EnrichmentScheduler' in scope
+                leaseDuration: EnrichmentScheduler.leaseDuration,
+                               ^~~~~~~~~~~~~~~~~~~
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:268:29: error: generic parameter 'T' could not be inferred
+        let recovered = try XCTUnwrap(
+                            ^
+XCTest.XCTUnwrap:1:13: note: in call to function 'XCTUnwrap(_:_:file:line:)'
+public func XCTUnwrap<T>(_ expression: @autoclosure () throws -> T?, _ message: @autoclosure () -> String = "", file: StaticString = #filePath, line: UInt = #line) throws -> T
+            ^
+/Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift:273:37: error: reference to member 'thumbnail' cannot be resolved without a contextual type
+                producerVersions: [.thumbnail: "thumbnail-v1"]
+                                    ^
+
+
+Test session results, code coverage, and logs:
+	/Users/justinhou/Development/deepshelves/.build/DerivedData/Logs/Test/Test-LocalMemory-2026.08.28_22-29-35-+0200.xcresult
+
+Testing failed:
+	Cannot find 'ArchiveEnrichmentJobStore' in scope
+	Cannot find 'EnrichmentJobSeed' in scope
+	Cannot find 'EnrichmentJobPriority' in scope
+	Cannot infer contextual base in reference to member 'thumbnail'
+	Cannot find 'EnrichmentJobSeed' in scope
+	Cannot find 'EnrichmentJobPriority' in scope
+	Cannot infer contextual base in reference to member 'thumbnail'
+	Cannot find 'EnrichmentScheduler' in scope
+	Reference to member 'thumbnail' cannot be resolved without a contextual type
+	Cannot infer contextual base in reference to member 'idleOnExternalPower'
+	Cannot infer contextual base in reference to member 'thumbnail'
+	Cannot find 'ArchiveEnrichmentJobStore' in scope
+	Cannot find 'EnrichmentJobSeed' in scope
+	Cannot find 'EnrichmentJobPriority' in scope
+	Cannot infer contextual base in reference to member 'visionOCR'
+	Cannot find 'EnrichmentScheduler' in scope
+	Reference to member 'visionOCR' cannot be resolved without a contextual type
+	Cannot find 'EnrichmentRuntimeConditions' in scope
+	Cannot infer contextual base in reference to member 'external'
+	'nil' requires a contextual type
+	Cannot infer contextual base in reference to member 'nominal'
+	Type 'Equatable' has no member 'deferred'
+	Cannot infer contextual base in reference to member 'captureTransitionPending'
+	Cannot find 'EnrichmentRuntimeConditions' in scope
+	Cannot infer contextual base in reference to member 'external'
+	'nil' requires a contextual type
+	Cannot infer contextual base in reference to member 'critical'
+	Type 'Equatable' has no member 'deferred'
+	Cannot infer contextual base in reference to member 'thermalPressure'
+	Cannot find 'EnrichmentRuntimeConditions' in scope
+	Cannot infer contextual base in reference to member 'battery'
+	Cannot infer contextual base in reference to member 'fair'
+	Type 'Equatable' has no member 'deferred'
+	Cannot infer contextual base in reference to member 'noEligibleWork'
+	Cannot find 'ArchiveEnrichmentJobStore' in scope
+	Cannot find 'EnrichmentJobSeed' in scope
+	Cannot find 'EnrichmentJobPriority' in scope
+	Cannot infer contextual base in reference to member 'visionOCR'
+	Cannot find 'EnrichmentScheduler' in scope
+	Reference to member 'visionOCR' cannot be resolved without a contextual type
+	Cannot infer contextual base in reference to member 'idleOnExternalPower'
+	Generic parameter 'T' could not be inferred
+	Type 'Equatable' has no member 'permanentFailure'
+	Cannot find 'EnrichmentScheduler' in scope
+	Cannot find 'ArchiveEnrichmentJobStore' in scope
+	Cannot find 'EnrichmentJobSeed' in scope
+	Cannot find 'EnrichmentJobPriority' in scope
+	Cannot infer contextual base in reference to member 'thumbnail'
+	Cannot find 'EnrichmentScheduler' in scope
+	Reference to member 'thumbnail' cannot be resolved without a contextual type
+	Cannot infer contextual base in reference to member 'idleOnExternalPower'
+	Cannot find 'EnrichmentScheduler' in scope
+	Reference to member 'thumbnail' cannot be resolved without a contextual type
+	Cannot infer contextual base in reference to member 'idleOnExternalPower'
+	Cannot find type 'ArchiveEnrichmentJobStore' in scope
+	Cannot find 'ArchiveEnrichmentJobStore' in scope
+	Cannot find 'EnrichmentJobSeed' in scope
+	Cannot find 'EnrichmentJobPriority' in scope
+	Cannot infer contextual base in reference to member 'thumbnail'
+	Cannot find 'EnrichmentScheduler' in scope
+	Reference to member 'thumbnail' cannot be resolved without a contextual type
+	Cannot find 'ArchiveEnrichmentJobStore' in scope
+	Cannot find 'EnrichmentScheduler' in scope
+	Generic parameter 'T' could not be inferred
+	Reference to member 'thumbnail' cannot be resolved without a contextual type
+	Testing cancelled because the build failed.
+
+** TEST FAILED **
+
+
+The following build commands failed:
+	SwiftCompile normal arm64 Compiling\ EnrichmentSchedulerTests.swift /Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift (in target 'LocalMemoryUnitTests' from project 'LocalMemory')
+	SwiftCompile normal arm64 /Users/justinhou/Development/deepshelves/Tests/Unit/EnrichmentSchedulerTests.swift (in target 'LocalMemoryUnitTests' from project 'LocalMemory')
+	Testing project LocalMemory with scheme LocalMemory
+(3 failures)

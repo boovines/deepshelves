@@ -3,6 +3,7 @@ import Foundation
 import MemoryCapture
 import MemoryContracts
 import MemoryDesignSystem
+import MemoryEnrichment
 import MemoryStore
 import SwiftUI
 
@@ -10,6 +11,12 @@ import SwiftUI
 final class AppLifecycleViewModel: ObservableObject {
     @Published private(set) var snapshot: AppLifecycleSnapshot
     @Published private(set) var captureSnapshot: CaptureLifecycleSnapshot?
+    @Published private(set) var enrichmentBacklog = EnrichmentBacklogPresentation(
+        pendingCount: 0,
+        failedCount: 0,
+        statusText: "Indexing up to date",
+        accessibilityValue: "0 pending, 0 active, 0 retrying, 0 failed"
+    )
 
     private let lifecycle: LocalMemoryAppLifecycle
     private let captureCoordinator: CaptureLifecycleCoordinator
@@ -136,6 +143,10 @@ final class AppLifecycleViewModel: ObservableObject {
         Task {
             _ = try? await lifecycle.transition(to: captureSnapshot.runtimeStatus)
         }
+    }
+
+    func applyEnrichmentBacklog(_ backlog: EnrichmentBacklogSnapshot) {
+        enrichmentBacklog = backlog.presentation
     }
 
     func reconcileCapture(_ inputs: CaptureLifecycleInputs) {
@@ -494,6 +505,16 @@ struct MenuBarStatusPanel: View {
                         Text("Foreground window only")
                             .font(.caption2)
                             .foregroundStyle(.secondary)
+                    }
+                    if model.enrichmentBacklog.pendingCount > 0
+                        || model.enrichmentBacklog.failedCount > 0
+                    {
+                        Text(model.enrichmentBacklog.statusText)
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+                            .accessibilityLabel("Enrichment backlog")
+                            .accessibilityValue(model.enrichmentBacklog.accessibilityValue)
+                            .accessibilityIdentifier("menu.enrichmentBacklog")
                     }
                 }
                 Spacer(minLength: 8)

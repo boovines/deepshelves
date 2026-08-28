@@ -128,6 +128,31 @@ Package audio model assets in the audio-enabled build or install them through an
 
 Every job is idempotent and keyed by capture ID plus algorithm version.
 
+### Durable scheduler policy
+
+`EnrichmentScheduler` acquires one 120-second SQLite lease at a time through the
+`ArchiveEnrichmentJobStore`. Eligible work is ordered by numeric priority descending and
+stable job ID ascending, so capture-transition work always precedes heartbeat work. A
+lease durably increments the attempt before any derived-data operation begins. Process
+restart requeues leased rows without losing that attempt; an expired same-process lease
+is likewise recovered, and its former worker can no longer publish through the stale
+lease. Failures retry with bounded exponential delay and become `permanentFailure` after
+the third attempt. Error codes are bounded and content-free.
+
+The scheduler synchronizes the current producer version for every enabled job kind before
+leasing. A version mismatch resets non-cancelled work to a clean queued state exactly
+once, including previously succeeded or permanently failed jobs; cancelled deletion or
+policy work is never resurrected. The corresponding producer must publish a new
+versioned artifact before search promotion rather than overwriting old evidence in place.
+
+Capture transitions always preempt enrichment. During normal user activity, only medium
+or higher work runs; heartbeat, accurate-OCR, and maintenance work require idle time.
+Serious thermal pressure, Low Power Mode, or battery at or below 20% permits only fast-OCR
+or higher priority, while critical thermal pressure pauses all enrichment. Deferral does
+not consume an attempt or lease. The UI reads one atomic backlog snapshot containing
+ready, leased, scheduled-retry, succeeded, permanent-failure, cancelled, and per-kind
+counts; its visible status is derived only from that snapshot.
+
 ## Quality evaluation
 
 Create a 500-frame private fixture covering:

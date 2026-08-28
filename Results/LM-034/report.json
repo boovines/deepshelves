@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-034",
+  "status": "passed",
+  "leaseDurationSeconds": 120,
+  "maximumAutomaticAttempts": 3,
+  "priorityOrder": "priority_descending_then_job_id_ascending",
+  "captureTransitionPreemptsEnrichment": true,
+  "producerVersionInvalidation": "idempotent_non_cancelled_requeue",
+  "staleLeasePublicationRejected": true,
+  "restartLeaseRecovery": true,
+  "throttles": {
+    "idleRequiredBelowPriority": 500,
+    "constrainedMinimumPriority": 700,
+    "lowBatteryThreshold": 0.20,
+    "criticalThermalPausesAll": true
+  },
+  "atomicBacklogProjection": true,
+  "visibleBacklogProjection": true,
+  "contentFreeErrorCodes": true,
+  "focusedTests": 26,
+  "hardwareEncoderTestsExecuted": 0,
+  "applicationLaunchesExecuted": 0
+}

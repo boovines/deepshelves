@@ -1,0 +1,8 @@
+durable_priority_and_stale_lease_guard=passed
+three_attempt_policy=passed
+producer_version_invalidation=passed
+restart_requeue=passed
+capture_idle_power_thermal_throttles=passed
+atomic_backlog_and_visible_projection=passed
+hardware_encoder_tests_executed=0
+application_launches_executed=0
