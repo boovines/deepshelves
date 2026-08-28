@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-033",
+  "status": "blocked",
+  "safeImplementationPassed": true,
+  "maximumThumbnailLongEdge": 480,
+  "orientationCases": 8,
+  "outputColorSpace": "sRGB",
+  "sourceHashVerification": true,
+  "thumbnailHashVerification": true,
+  "atomicPublication": true,
+  "ownerOnlyFileMode": "0600",
+  "missingFileRebuild": true,
+  "verifiedDeletion": true,
+  "productionRealHEICCodecValidation": "blocked_quarantined",
+  "appleImageIOEncodeDecodeCalls": 0,
+  "hardwareEncoderTestsExecuted": 0,
+  "applicationLaunchesExecuted": 0
+}

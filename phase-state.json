@@ -572,13 +572,25 @@
       "resumeProbe": null
     },
     "LM-033": {
-      "status": "pending",
-      "startedAt": null,
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": null,
-      "blockedReason": null,
+      "status": "blocked",
+      "startedAt": "2026-08-28T19:18:23Z",
+      "completedAt": "2026-08-28T19:28:03Z",
+      "gitRevision": "refs/tags/checkpoints/LM-033-blocked",
+      "evidence": [
+        "Results/LM-033/report.json",
+        "Results/LM-033/blocker.md",
+        "Results/LM-033/red.txt",
+        "Results/LM-033/focused-tests.txt",
+        "Results/LM-033/static-audit.txt",
+        "Results/LM-033/contracts.txt",
+        "Results/LM-033/privacy.txt",
+        "Results/LM-033/release-build.txt",
+        "Results/LM-033/dependencies.txt",
+        "Results/LM-033/swift-format.txt",
+        "Results/LM-033/story-gate.txt"
+      ],
+      "notes": "All safe implementation work passes. ThumbnailRasterizer applies all eight orientations, converts Display-P3/linear-sRGB pixels to tagged sRGB, aspect-fits without upscaling to a 480-pixel long edge, and remains pure in-memory. ThumbnailGenerator verifies the exact source-frame hash before injected decode, requires an injected encoder, hashes output, publishes through ArchiveFileStore atomically at mode 0600, produces a ready thumbnail artifact, reuses verified files, rebuilds missing files, and verifies hashes before deletion. Fourteen focused Release tests plus contracts, privacy, dependencies, formatting, and compile-only Release pass under the encoder tripwire with zero app or media-runtime execution.",
+      "blockedReason": "Production validation against real HEIC source and thumbnail bytes requires decode and encode fidelity testing. Apple ImageIO encode/decode is quarantined because a metadata-only sips probe spawned VTEncoderXPCService, and earlier hardware HEVC tests caused two repeatable kernel panics. The remaining real-HEIC aspect/orientation/color gate cannot run safely on this Mac until an isolated validation host or an approved codec boundary proves it cannot initialize VideoToolbox.",
       "requestedHumanGate": null,
       "resumeProbe": null
     },

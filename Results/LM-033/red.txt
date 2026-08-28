@@ -1,0 +1,105 @@
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:165:46: error: cannot find type 'ThumbnailHEICDecoding' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:166:16: error: cannot find type 'ThumbnailSourceImage' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:168:17: error: cannot find type 'ThumbnailSourceImage' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:169:41: error: cannot find type 'ThumbnailSourceImage' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:176:27: error: cannot find type 'ThumbnailRaster' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:175:41: error: cannot find type 'ThumbnailHEICEncoding' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:184:18: error: cannot find type 'ThumbnailGenerationRequest' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:210:61: error: cannot find type 'ThumbnailRaster' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:10:26: error: cannot find 'ThumbnailSourceImage' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:12:27: error: cannot infer contextual base in reference to member 'up'
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:14:29: error: cannot find 'ThumbnailRasterizer' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:17:47: error: type 'Equatable' has no member 'sRGB'
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:19:25: error: cannot find 'ThumbnailSourceImage' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:21:27: error: cannot infer contextual base in reference to member 'up'
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:23:28: error: cannot find 'ThumbnailRasterizer' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:23:71: error: 'Equatable' cannot be constructed because it has no accessible initializers
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:27:26: error: cannot find 'ThumbnailRaster' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:31:26: error: cannot infer contextual base in reference to member 'sRGB'
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:33:24: error: cannot find type 'ThumbnailOrientation' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:33:79: error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:44:28: error: cannot find 'ThumbnailOrientation' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:45:30: error: cannot find 'ThumbnailRasterizer' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:46:17: error: cannot find 'ThumbnailSourceImage' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:54:26: error: cannot find 'ThumbnailRaster' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:58:26: error: cannot infer contextual base in reference to member 'displayP3'
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:60:26: error: cannot find 'ThumbnailRasterizer' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:61:13: error: cannot find 'ThumbnailSourceImage' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:61:64: error: cannot infer contextual base in reference to member 'up'
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:63:44: error: type 'Equatable' has no member 'sRGB'
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:74:24: error: cannot find 'ThumbnailSourceImage' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:75:77: error: cannot infer contextual base in reference to member 'right'
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:77:25: error: cannot find 'ThumbnailGenerator' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:89:36: error: 'nil' requires a contextual type
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:92:48: error: type 'Equatable' has no member 'generated'
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:93:46: error: 'Equatable' cannot be constructed because it has no accessible initializers
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:95:50: error: type 'Equatable' has no member 'thumbnail'
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:101:37: error: cannot infer contextual base in reference to member 'posixPermissions'
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:110:45: error: type 'Equatable' has no member 'reused'
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:119:46: error: type 'Equatable' has no member 'rebuiltMissing'
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:129:23: error: cannot find 'ThumbnailGenerationRequest' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:135:25: error: cannot find 'ThumbnailGenerator' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:137:22: error: cannot find 'QuarantinedThumbnailHEICDecoder' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:138:22: error: cannot find 'QuarantinedThumbnailHEICEncoder' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:143:38: error: cannot find type 'ThumbnailPipelineError' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:142:83: error: 'nil' requires a contextual type
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:148:17: error: cannot find 'QuarantinedThumbnailHEICDecoder' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:149:42: error: cannot find type 'ThumbnailPipelineError' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:152:17: error: cannot find 'QuarantinedThumbnailHEICEncoder' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:154:42: error: cannot find type 'ThumbnailPipelineError' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:197:23: error: cannot find 'ThumbnailGenerationRequest' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:211:9: error: cannot find 'ThumbnailRaster' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:215:22: error: cannot infer contextual base in reference to member 'sRGB'
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:165:46: error: cannot find type 'ThumbnailHEICDecoding' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:166:16: error: cannot find type 'ThumbnailSourceImage' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:168:17: error: cannot find type 'ThumbnailSourceImage' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:169:41: error: cannot find type 'ThumbnailSourceImage' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:176:27: error: cannot find type 'ThumbnailRaster' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:175:41: error: cannot find type 'ThumbnailHEICEncoding' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:184:18: error: cannot find type 'ThumbnailGenerationRequest' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:210:61: error: cannot find type 'ThumbnailRaster' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:10:26: error: cannot find 'ThumbnailSourceImage' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:12:27: error: cannot infer contextual base in reference to member 'up'
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:14:29: error: cannot find 'ThumbnailRasterizer' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:17:47: error: type 'Equatable' has no member 'sRGB'
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:19:25: error: cannot find 'ThumbnailSourceImage' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:21:27: error: cannot infer contextual base in reference to member 'up'
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:23:28: error: cannot find 'ThumbnailRasterizer' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:23:71: error: 'Equatable' cannot be constructed because it has no accessible initializers
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:27:26: error: cannot find 'ThumbnailRaster' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:31:26: error: cannot infer contextual base in reference to member 'sRGB'
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:33:24: error: cannot find type 'ThumbnailOrientation' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:33:79: error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:44:28: error: cannot find 'ThumbnailOrientation' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:45:30: error: cannot find 'ThumbnailRasterizer' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:46:17: error: cannot find 'ThumbnailSourceImage' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:54:26: error: cannot find 'ThumbnailRaster' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:58:26: error: cannot infer contextual base in reference to member 'displayP3'
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:60:26: error: cannot find 'ThumbnailRasterizer' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:61:13: error: cannot find 'ThumbnailSourceImage' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:61:64: error: cannot infer contextual base in reference to member 'up'
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:63:44: error: type 'Equatable' has no member 'sRGB'
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:74:24: error: cannot find 'ThumbnailSourceImage' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:75:77: error: cannot infer contextual base in reference to member 'right'
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:77:25: error: cannot find 'ThumbnailGenerator' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:89:36: error: 'nil' requires a contextual type
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:92:48: error: type 'Equatable' has no member 'generated'
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:93:46: error: 'Equatable' cannot be constructed because it has no accessible initializers
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:95:50: error: type 'Equatable' has no member 'thumbnail'
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:101:37: error: cannot infer contextual base in reference to member 'posixPermissions'
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:110:45: error: type 'Equatable' has no member 'reused'
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:119:46: error: type 'Equatable' has no member 'rebuiltMissing'
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:129:23: error: cannot find 'ThumbnailGenerationRequest' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:135:25: error: cannot find 'ThumbnailGenerator' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:137:22: error: cannot find 'QuarantinedThumbnailHEICDecoder' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:138:22: error: cannot find 'QuarantinedThumbnailHEICEncoder' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:143:38: error: cannot find type 'ThumbnailPipelineError' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:142:83: error: 'nil' requires a contextual type
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:148:17: error: cannot find 'QuarantinedThumbnailHEICDecoder' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:149:42: error: cannot find type 'ThumbnailPipelineError' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:152:17: error: cannot find 'QuarantinedThumbnailHEICEncoder' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:154:42: error: cannot find type 'ThumbnailPipelineError' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:197:23: error: cannot find 'ThumbnailGenerationRequest' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:211:9: error: cannot find 'ThumbnailRaster' in scope
+/Users/justinhou/Development/deepshelves/Tests/Unit/ThumbnailPipelineTests.swift:215:22: error: cannot infer contextual base in reference to member 'sRGB'
+** TEST FAILED **
