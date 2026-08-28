@@ -1,0 +1,7 @@
+LM-029 TDD red, 2026-08-28T18:25:40Z
+
+Command: xcodebuild Release, AccessibilitySnapshotTests only, encoder-process tripwire active.
+Expected failure: AccessibilitySnapshotTarget, AccessibilityObservedWindow,
+AccessibilitySnapshotNode, AccessibilitySnapshotLimits, and
+BoundedAccessibilitySnapshotProjector were not defined.
+Result: exit 65 / TEST FAILED. No VTEncoderXPCService appeared.

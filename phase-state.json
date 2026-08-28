@@ -483,12 +483,23 @@
       "resumeProbe": null
     },
     "LM-029": {
-      "status": "pending",
-      "startedAt": null,
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": null,
+      "status": "passed",
+      "startedAt": "2026-08-28T18:25:40Z",
+      "completedAt": "2026-08-28T18:39:04Z",
+      "gitRevision": "refs/tags/checkpoints/LM-029",
+      "evidence": [
+        "Results/LM-029/report.json",
+        "Results/LM-029/red.txt",
+        "Results/LM-029/focused-tests.txt",
+        "Results/LM-029/static-audit.txt",
+        "Results/LM-029/contracts.txt",
+        "Results/LM-029/privacy.txt",
+        "Results/LM-029/release-build.txt",
+        "Results/LM-029/dependencies.txt",
+        "Results/LM-029/swift-format.txt",
+        "Results/LM-029/story-gate.txt"
+      ],
+      "notes": "Capture-owned Accessibility snapshots require the accepted epoch/window/PID/bounds/title identity, cap traversal at 256 nodes, depth 12, 512 characters per field, and a 45 ms deadline, and project only an explicit supported-role allowlist. Target mismatch and timeout return zero content; secure values are never read into the projection. The immutable projection and raw-node protocol are deliberately non-Codable, AX objects are autorelease-scoped off the capture callback, and production child enumeration is range-bounded before allocation. Sixteen safe focused tests pass; the canonical 250-frame corpus has 100% useful coverage and 0.001084 ms p95. The system AX implementation was compile-only and no app, media, ImageIO, or encoder runtime executed.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null

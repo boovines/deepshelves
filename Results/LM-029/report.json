@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-029",
+  "status": "passed",
+  "fixtureCount": 250,
+  "usefulCount": 250,
+  "coverage": 1.0,
+  "minimumCoverage": 0.80,
+  "p95Milliseconds": 0.001084,
+  "maximumP95Milliseconds": 50,
+  "maximumNodes": 256,
+  "maximumDepth": 12,
+  "maximumStringLength": 512,
+  "timeBudgetMilliseconds": 45,
+  "targetIdentity": [
+    "captureEpochID",
+    "windowID",
+    "processID",
+    "bounds",
+    "title"
+  ],
+  "rawTreesPersisted": false,
+  "systemAXRuntimeTestsExecuted": 0,
+  "hardwareEncoderTestsExecuted": 0,
+  "appleImageIORuntimeTestsExecuted": 0,
+  "applicationLaunchesExecuted": 0
+}

@@ -1,0 +1,10 @@
+exact_foreground_pid_bounds_title=passed
+bounded_nodes_depth_strings_time=passed
+supported_role_allowlist=passed
+secure_value_collection=zero
+raw_ax_tree_persistability=none
+raw_ax_release_scope=autoreleasepool
+capture_callback_blocking=none
+hardware_encoder_tests_executed=0
+apple_imageio_runtime_tests_executed=0
+app_launch_tests_executed=0
