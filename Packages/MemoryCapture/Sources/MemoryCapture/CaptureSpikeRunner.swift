@@ -286,7 +286,6 @@ public final class CaptureSpikeRunner: NSObject, SCStreamOutput, SCStreamDelegat
         transitionStartedNanoseconds: UInt64,
         countsAsTransition: Bool
     ) throws -> WindowCaptureEpoch {
-        let mediaWriter = try HEVCMediaWriter(outputURL: outputURL, dimensions: target.dimensions)
         let appliedAt = DispatchTime.now().uptimeNanoseconds
         let epoch = WindowCaptureEpoch(
             id: UUID(),
@@ -297,6 +296,15 @@ public final class CaptureSpikeRunner: NSObject, SCStreamOutput, SCStreamDelegat
             policyDecisionID: UUID(),
             encodedSize: target.dimensions,
             filterAppliedNanoseconds: appliedAt
+        )
+        let mediaWriter = try HEVCMediaWriter(
+            outputURL: outputURL,
+            scope: MediaChunkScope(
+                epochID: epoch.id,
+                targetWindowID: epoch.targetWindowID,
+                dimensions: epoch.encodedSize,
+                startedNanoseconds: appliedAt
+            )
         )
         let latencyMilliseconds = Double(appliedAt - transitionStartedNanoseconds) / 1_000_000
         stateLock.withLock {
@@ -348,7 +356,12 @@ public final class CaptureSpikeRunner: NSObject, SCStreamOutput, SCStreamDelegat
         try await priorWriter.finish()
         let nextWriter = try HEVCMediaWriter(
             outputURL: outputURL,
-            dimensions: continuingEpoch.encodedSize
+            scope: MediaChunkScope(
+                epochID: continuingEpoch.id,
+                targetWindowID: continuingEpoch.targetWindowID,
+                dimensions: continuingEpoch.encodedSize,
+                startedNanoseconds: DispatchTime.now().uptimeNanoseconds
+            )
         )
         stateLock.withLock {
             writer = nextWriter
@@ -475,7 +488,12 @@ public final class CaptureSpikeRunner: NSObject, SCStreamOutput, SCStreamDelegat
             ) {
             case let .accepted(index, _):
                 do {
-                    if try writer.append(sampleBuffer) {
+                    if try writer.append(
+                        sampleBuffer,
+                        frameID: UUID(),
+                        captureEpochID: epoch.id,
+                        targetWindowID: epoch.targetWindowID
+                    ) != nil {
                         framesAccepted += 1
                         if index {
                             framesIndexed += 1

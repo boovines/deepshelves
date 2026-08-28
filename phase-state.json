@@ -387,15 +387,23 @@
       "resumeProbe": null
     },
     "LM-025": {
-      "status": "active",
+      "status": "blocked",
       "startedAt": "2026-08-28T12:14:05Z",
       "completedAt": null,
       "gitRevision": null,
-      "evidence": [],
-      "notes": "Base checkpoint refs/tags/checkpoints/LM-024. Implement downscale and at-most-30-second, single-epoch, fixed-dimension variable-frame-rate hardware HEVC MediaWriter, frame locators, hash, and finalization.",
-      "blockedReason": null,
+      "evidence": [
+        "Results/LM-025/report.json",
+        "Results/LM-025/panic-analysis.json",
+        "Results/LM-025/quarantine.md",
+        "Results/LM-025/safe-tests.txt",
+        "Results/LM-025/swift-build.txt",
+        "Results/LM-025/source-audit.txt",
+        "Results/LM-025/process-safety.txt"
+      ],
+      "notes": "Safe implementation is resumable from refs/tags/checkpoints/LM-024: extracted pure scoped VFR/downscale/finalization core and atomic media publisher, restored direct CMSampleBuffer append for same-size production frames, isolated pixel transfer to required downscale, and quarantined hardware tests before writer construction. Five pure scenarios, static audits, format/whitespace checks, and the compile-only package build pass. The first three S1 tuning fallbacks still initialize the prohibited hardware HEVC path; the HEIC fallback requires an ADR.",
+      "blockedReason": "Two focused hardware-required HEVC runs caused repeatable dart-ave AppleT8110DART kernel panics at 2026-08-28 14:43 and 14:49 local time. Under the active safety constraint, real hardware encode, playable VFR duration/PTS/frame-count validation, random decode, forced-termination playability, and runtime hardware-acceleration confirmation cannot run. Evidence and attempted safe fixes are in Results/LM-025/quarantine.md. Required decision: explicitly reauthorize validation after an OS/firmware change or on an isolated expendable Mac, or authorize an ADR for the documented HEIC-keyframe fallback.",
       "requestedHumanGate": null,
-      "resumeProbe": null
+      "resumeProbe": "First verify pgrep -x xcodebuild and pgrep -x xctest are empty. Do not remove the integration-test quarantine or construct HEVCMediaWriter until explicit written reauthorization identifies a safe validation host/state; otherwise begin the HEIC ADR decision without executing hardware HEVC."
     },
     "LM-026": {
       "status": "pending",

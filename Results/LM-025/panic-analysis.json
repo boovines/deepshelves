@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "storyID": "LM-025",
+  "status": "hardware_encoder_quarantined",
+  "observedAt": "2026-08-28T13:15:31Z",
+  "host": {
+    "osBuild": "25F71",
+    "kernel": "Darwin 25.5.0",
+    "panicLayer": "dart-ave / AppleT8110DART"
+  },
+  "panics": [
+    {
+      "occurredLocal": "2026-08-28T14:43:09+02:00",
+      "diagnosticPath": "/Library/Logs/DiagnosticReports/Retired/panic-full-2026-08-28-144309.0002.panic",
+      "sha256": "4751034b1bec5afc4423f3f2e271710462b83d202df1af2b0b896b6157202678",
+      "panicSignature": "dart-ave DART(CPUDART) PTE invalid exception on write at AppleT8110DART.cpp:2248",
+      "testGeometry": "640x360 source to 320x180 destination",
+      "videoToolboxProcessesPresent": [
+        "VTEncoderXPCService"
+      ]
+    },
+    {
+      "occurredLocal": "2026-08-28T14:49:21+02:00",
+      "diagnosticPath": "/Library/Logs/DiagnosticReports/Retired/panic-full-2026-08-28-144921.0002.panic",
+      "sha256": "c7f4ed7c1ac2500ca0f1e918ac487a20c749fe8f396f3d229ca968f5e3b3c3a0",
+      "panicSignature": "dart-ave DART(CPUDART) PTE invalid exception on write at AppleT8110DART.cpp:2248",
+      "testGeometry": "320x180 source to 320x180 destination",
+      "videoToolboxProcessesPresent": [
+        "VTEncoderXPCService",
+        "VTDecoderXPCService"
+      ]
+    }
+  ],
+  "staticDiscriminator": {
+    "downscaleRequiredForFailure": false,
+    "commonChangedPath": "The interrupted LM-025 draft routed both scaled and same-size frames through AVAssetWriterInputPixelBufferAdaptor; the earlier S1 implementation appended CMSampleBuffer directly.",
+    "recoveryRefactor": "The production writer now preserves direct AVAssetWriterInput.append(CMSampleBuffer) for same-size frames and uses a separately constructed CMSampleBuffer only after a required downscale. No post-refactor hardware path was executed."
+  },
+  "safetyAction": "No reproduction was attempted after the second panic. All HEVCMediaWriter/AVAssetWriter/VideoToolbox runtime tests are skipped before construction and remain quarantined pending explicit reauthorization."
+}

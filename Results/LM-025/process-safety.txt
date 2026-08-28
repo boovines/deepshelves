@@ -1,0 +1,9 @@
+checked_at=2026-08-28T13:16:17Z
+xcodebuild=absent
+xctest=absent
+integration_test_host=absent
+video_toolbox_xpc_snapshot:
+ 2907     1 Ss     0.0 23:33 /System/Library/Frameworks/VideoToolbox.framework/Versions/A/XPCServices/VTEncoderXPCService.xpc/Contents/MacOS/VTEncoderXPCService
+ 4447     1 Ss     0.0 18:26 /System/Library/Frameworks/VideoToolbox.framework/Versions/A/XPCServices/VTDecoderXPCService.xpc/Contents/MacOS/VTDecoderXPCService
+ 5766     1 Ss     3.5 14:23 /System/Library/Frameworks/VideoToolbox.framework/Versions/A/XPCServices/VTDecoderXPCService.xpc/Contents/MacOS/VTDecoderXPCService
+ 8635     1 Ss    10.3 07:34 /System/Library/Frameworks/VideoToolbox.framework/Versions/A/XPCServices/VTEncoderXPCService.xpc/Contents/MacOS/VTEncoderXPCService

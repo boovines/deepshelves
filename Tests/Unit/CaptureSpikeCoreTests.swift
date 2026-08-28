@@ -1,3 +1,5 @@
+import CryptoKit
+import Foundation
 import MemoryCapture
 import XCTest
 
@@ -216,6 +218,226 @@ final class CaptureSpikeCoreTests: XCTestCase {
             scope.evaluate(frame.with(deliveredNanoseconds: 30_000_001_001)),
             .closeBeforeAppend(.durationReached)
         )
+    }
+
+    func testMediaWriterCorePlansScopedVariableFrameRateLocatorsAndDownscale() throws {
+        let chunkID = UUID(uuidString: "11111111-2222-3333-4444-555555555555")!
+        let epochID = UUID(uuidString: "AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE")!
+        let scope = MediaChunkScope(
+            epochID: epochID,
+            targetWindowID: 8,
+            dimensions: PixelSize(width: 1_920, height: 1_080),
+            startedNanoseconds: 1_000
+        )
+        var core = try MediaWriterCore(chunkID: chunkID, scope: scope)
+        let frameIDs = [
+            UUID(uuidString: "10000000-0000-0000-0000-000000000001")!,
+            UUID(uuidString: "10000000-0000-0000-0000-000000000002")!,
+            UUID(uuidString: "10000000-0000-0000-0000-000000000003")!,
+        ]
+
+        for (frameID, presentationTime) in zip(frameIDs, [10_000, 10_400, 11_750]) {
+            let plan = try core.planAppend(
+                frameID: frameID,
+                captureEpochID: epochID,
+                targetWindowID: 8,
+                sourceDimensions: PixelSize(width: 3_840, height: 2_160),
+                sourcePresentationTimeMilliseconds: Int64(presentationTime)
+            )
+            XCTAssertEqual(plan.downscale.destinationDimensions, scope.dimensions)
+            XCTAssertTrue(plan.downscale.requiresScaling)
+            try core.recordAccepted(plan)
+        }
+
+        XCTAssertEqual(core.locators.map(\.frameID), frameIDs)
+        XCTAssertEqual(core.locators.map(\.presentationTimeMilliseconds), [0, 400, 1_750])
+        XCTAssertEqual(core.durationMilliseconds, 1_750)
+        XCTAssertEqual(core.frameCount, 3)
+    }
+
+    func testMediaWriterCoreRejectsCrossScopeInvalidGeometryAndUnsafeTiming() throws {
+        let epochID = UUID(uuidString: "AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE")!
+        let scope = MediaChunkScope(
+            epochID: epochID,
+            targetWindowID: 8,
+            dimensions: PixelSize(width: 1_920, height: 1_080),
+            startedNanoseconds: 1_000
+        )
+        var core = try MediaWriterCore(chunkID: UUID(), scope: scope)
+        let first = try core.planAppend(
+            frameID: UUID(),
+            captureEpochID: epochID,
+            targetWindowID: 8,
+            sourceDimensions: scope.dimensions,
+            sourcePresentationTimeMilliseconds: 5_000
+        )
+        try core.recordAccepted(first)
+
+        XCTAssertThrowsError(
+            try core.planAppend(
+                frameID: UUID(),
+                captureEpochID: UUID(),
+                targetWindowID: 8,
+                sourceDimensions: scope.dimensions,
+                sourcePresentationTimeMilliseconds: 6_000
+            )
+        ) { XCTAssertEqual($0 as? MediaWriterCoreError, .scopeMismatch) }
+        XCTAssertThrowsError(
+            try core.planAppend(
+                frameID: UUID(),
+                captureEpochID: epochID,
+                targetWindowID: 8,
+                sourceDimensions: PixelSize(width: 1_920, height: 1_200),
+                sourcePresentationTimeMilliseconds: 6_000
+            )
+        ) { XCTAssertEqual($0 as? MediaWriterCoreError, .aspectRatioMismatch) }
+        XCTAssertThrowsError(
+            try core.planAppend(
+                frameID: UUID(),
+                captureEpochID: epochID,
+                targetWindowID: 8,
+                sourceDimensions: scope.dimensions,
+                sourcePresentationTimeMilliseconds: 5_000
+            )
+        ) { XCTAssertEqual($0 as? MediaWriterCoreError, .nonIncreasingPresentationTime) }
+        XCTAssertThrowsError(
+            try core.planAppend(
+                frameID: UUID(),
+                captureEpochID: epochID,
+                targetWindowID: 8,
+                sourceDimensions: scope.dimensions,
+                sourcePresentationTimeMilliseconds: 35_001
+            )
+        ) { XCTAssertEqual($0 as? MediaWriterCoreError, .maximumDurationExceeded) }
+    }
+
+    func testMediaWriterCoreCommitsLocatorsOnlyAfterMockBackendAcceptance() throws {
+        let epochID = UUID()
+        let scope = MediaChunkScope(
+            epochID: epochID,
+            targetWindowID: 8,
+            dimensions: PixelSize(width: 1_920, height: 1_080),
+            startedNanoseconds: 0
+        )
+        var core = try MediaWriterCore(chunkID: UUID(), scope: scope)
+        let frameID = UUID()
+        let rejectedByMockBackend = try core.planAppend(
+            frameID: frameID,
+            captureEpochID: epochID,
+            targetWindowID: 8,
+            sourceDimensions: scope.dimensions,
+            sourcePresentationTimeMilliseconds: 10_000
+        )
+        XCTAssertEqual(core.frameCount, 0)
+
+        let acceptedByMockBackend = try core.planAppend(
+            frameID: frameID,
+            captureEpochID: epochID,
+            targetWindowID: 8,
+            sourceDimensions: scope.dimensions,
+            sourcePresentationTimeMilliseconds: 10_000
+        )
+        XCTAssertEqual(acceptedByMockBackend, rejectedByMockBackend)
+        try core.recordAccepted(acceptedByMockBackend)
+        XCTAssertEqual(core.frameCount, 1)
+        XCTAssertEqual(core.locators.map(\.frameID), [frameID])
+    }
+
+    func testMediaChunkPublisherAtomicallyPublishesOwnerOnlyHashedFile() throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(
+            "deepshelves-lm025-publisher-\(UUID().uuidString.lowercased())",
+            isDirectory: true
+        )
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: false)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let outputURL = root.appendingPathComponent("chunk.mov")
+        let partialURL = MediaChunkPublisher.partialURL(for: outputURL)
+        let contents = Data("mock-encoded-chunk".utf8)
+        try contents.write(to: partialURL, options: .withoutOverwriting)
+
+        let integrity = try MediaChunkPublisher.publish(
+            partialURL: partialURL,
+            outputURL: outputURL
+        )
+        var core = try MediaWriterCore(
+            chunkID: UUID(),
+            scope: MediaChunkScope(
+                epochID: UUID(),
+                targetWindowID: 9,
+                dimensions: PixelSize(width: 1_920, height: 1_080),
+                startedNanoseconds: 0
+            )
+        )
+        let plan = try core.planAppend(
+            frameID: UUID(),
+            captureEpochID: core.scope.epochID,
+            targetWindowID: core.scope.targetWindowID,
+            sourceDimensions: core.scope.dimensions,
+            sourcePresentationTimeMilliseconds: 1_000
+        )
+        try core.recordAccepted(plan)
+        let finalization = try core.finalization(
+            outputURL: outputURL,
+            codecFourCC: "hvc1",
+            hardwareAccelerationRequired: true,
+            integrity: integrity
+        )
+
+        XCTAssertFalse(FileManager.default.fileExists(atPath: partialURL.path))
+        XCTAssertEqual(try Data(contentsOf: outputURL), contents)
+        XCTAssertEqual(integrity.byteCount, Int64(contents.count))
+        XCTAssertEqual(integrity.sha256, Data(SHA256.hash(data: contents)))
+        XCTAssertEqual(finalization.frameCount, 1)
+        XCTAssertEqual(finalization.locators, core.locators)
+        XCTAssertEqual(finalization.byteCount, integrity.byteCount)
+        XCTAssertEqual(finalization.sha256, integrity.sha256)
+        let attributes = try FileManager.default.attributesOfItem(atPath: outputURL.path)
+        XCTAssertEqual(attributes[.posixPermissions] as? Int, 0o600)
+    }
+
+    func testMediaChunkPublisherFaultBoundariesNeverExposePartialAsFinal() throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(
+            "deepshelves-lm025-faults-\(UUID().uuidString.lowercased())",
+            isDirectory: true
+        )
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: false)
+        defer { try? FileManager.default.removeItem(at: root) }
+
+        let beforeOutput = root.appendingPathComponent("before.mov")
+        let beforePartial = MediaChunkPublisher.partialURL(for: beforeOutput)
+        try Data("before".utf8).write(to: beforePartial, options: .withoutOverwriting)
+        XCTAssertThrowsError(
+            try MediaChunkPublisher.publish(
+                partialURL: beforePartial,
+                outputURL: beforeOutput,
+                fault: .beforeRename
+            )
+        ) {
+            XCTAssertEqual(
+                $0 as? MediaChunkPublisherError,
+                .injectedFault(.beforeRename)
+            )
+        }
+        XCTAssertTrue(FileManager.default.fileExists(atPath: beforePartial.path))
+        XCTAssertFalse(FileManager.default.fileExists(atPath: beforeOutput.path))
+
+        let afterOutput = root.appendingPathComponent("after.mov")
+        let afterPartial = MediaChunkPublisher.partialURL(for: afterOutput)
+        try Data("after".utf8).write(to: afterPartial, options: .withoutOverwriting)
+        XCTAssertThrowsError(
+            try MediaChunkPublisher.publish(
+                partialURL: afterPartial,
+                outputURL: afterOutput,
+                fault: .afterRenameBeforeDirectorySync
+            )
+        ) {
+            XCTAssertEqual(
+                $0 as? MediaChunkPublisherError,
+                .injectedFault(.afterRenameBeforeDirectorySync)
+            )
+        }
+        XCTAssertFalse(FileManager.default.fileExists(atPath: afterPartial.path))
+        XCTAssertTrue(FileManager.default.fileExists(atPath: afterOutput.path))
     }
 
     func testCapabilityStatusRequiresScreenRecordingAndAccessibility() throws {

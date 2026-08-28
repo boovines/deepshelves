@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "storyID": "LM-025",
+  "status": "blocked",
+  "safeVerification": {
+    "staleXcodeTestProcessGuard": "passed",
+    "pureSourceEncoderFrameworkScan": "passed",
+    "pureHarnessScenarios": 5,
+    "packageCompileOnlyBuild": "passed",
+    "swiftFormatForChangedProductionAndSafeHarnessSources": "passed",
+    "whitespaceValidation": "passed"
+  },
+  "implementedAndSafelyVerified": [
+    "single chunk, epoch, target-window, and fixed-dimension scope enforcement",
+    "aspect-preserving downscale plan with no upscaling",
+    "strictly increasing variable-frame-rate presentation times capped at 30 seconds",
+    "stable frame locators committed only after mock backend acceptance",
+    "frame count and duration finalization metadata",
+    "owner-only atomic partial-file publication with byte count and SHA-256",
+    "before-rename and after-rename-before-directory-sync fault boundaries",
+    "compile-only production integration retaining required hardware acceleration"
+  ],
+  "productionStaticRecovery": [
+    "removed AVAssetWriterInputPixelBufferAdaptor from the production writer",
+    "restored direct CMSampleBuffer append for same-size frames",
+    "isolated pixel transfer to the downscale-only path",
+    "added an unconditional pre-construction quarantine to hardware integration tests"
+  ],
+  "quarantinedUnverifiedGates": [
+    "a real hardware-required HEVC encode through the post-refactor production writer",
+    "playable output with exact VFR duration, PTS, and frame count",
+    "random decode at every persisted frame locator",
+    "forced-termination playability at every second of a write",
+    "runtime confirmation that the selected encoder is hardware accelerated"
+  ],
+  "evidence": [
+    "Results/LM-025/safe-tests.txt",
+    "Results/LM-025/swift-build.txt",
+    "Results/LM-025/source-audit.txt",
+    "Results/LM-025/process-safety.txt",
+    "Results/LM-025/panic-analysis.json",
+    "Results/LM-025/quarantine.md"
+  ]
+}
