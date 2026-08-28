@@ -1,0 +1,26 @@
+LM-016 ACCESSIBILITY AUDIT: PASSED
+
+Automated VoiceOver projection smoke
+- English: Search, Timeline, Activity, Settings destinations exposed.
+- Pseudo-localization: all destinations and standard states exposed at >=140% source length.
+- Result card: time, application, approved host, evidence type, and result position announced.
+- Timeline: markers and permission-loss gap exposed as an accessibility list.
+- Activity: date, hour, recorded minutes, and gap minutes exposed as an accessibility table.
+
+Keyboard and focus
+- Passed: Option-Space, Command-F, Command-1/2/3/comma, Command-brackets.
+- Passed: Space, Return, Command-Return, Option-arrows, Command-Delete, Escape.
+- Search remains editable with spaces; transient sheets dismiss and restore the selected-row path.
+- Forget Moment defaults to Cancel and requires visible confirmation.
+
+Visual accessibility invariants
+- Minimum pointer target: 24 x 24 points.
+- Minimum body text: 11 points; semantic system fonts preserve supported text scaling.
+- Icon-only Settings, inspector-toggle, and inspector-dismiss controls have labels and tooltips.
+- Empty, delayed-loading, and recoverable-error states passed accessibility-tree smoke.
+
+Localization
+- Foundation locale formatting verified for English/French clocks, named relative days, and week starts.
+- English and +40% pseudo-localized UI projections passed without losing destination identifiers.
+
+Evidence: Results/LM-016/ui-tests.txt; ShellAccessibilityUITests (5 tests, 0 failures).

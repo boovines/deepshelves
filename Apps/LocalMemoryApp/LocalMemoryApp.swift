@@ -14,6 +14,7 @@ struct LocalMemoryApp: App {
     @StateObject private var navigationModel: MainNavigationViewModel
     @StateObject private var onboardingModel: OnboardingViewModel
     @StateObject private var searchPanelCoordinator: GlobalSearchPanelCoordinator
+    private let shellKeyboardMonitor: ShellKeyboardCommandMonitor
 
     private let launchConfiguration: AppLaunchConfiguration
     private let capabilityProbeOutput: String?
@@ -33,6 +34,7 @@ struct LocalMemoryApp: App {
         let arguments = ProcessInfo.processInfo.arguments
         let configuration = AppLaunchConfiguration(arguments: arguments)
         launchConfiguration = configuration
+        shellKeyboardMonitor = ShellKeyboardCommandMonitor()
         _lifecycleModel = StateObject(
             wrappedValue: AppLifecycleViewModel(
                 stateURL: configuration.stateURL,
@@ -159,7 +161,9 @@ struct LocalMemoryApp: App {
                         lifecycleModel: lifecycleModel,
                         navigationModel: navigationModel,
                         forcedWindowSize: launchConfiguration.forcedMainWindowSize,
-                        opensSettingsAtLaunch: launchConfiguration.opensSettingsAtLaunch
+                        opensSettingsAtLaunch: launchConfiguration.opensSettingsAtLaunch,
+                        contentState: launchConfiguration.shellContentState,
+                        localizationMode: launchConfiguration.shellLocalizationMode
                     )
                 } else {
                     CaptureSpikeTargetView(animated: captureSpikeCrashActiveMode)
@@ -209,14 +213,10 @@ struct LocalMemoryApp: App {
         .restorationBehavior(.automatic)
         .windowResizability(.contentMinSize)
         .commands {
-            CommandMenu("Navigate") {
-                Button("Search") { navigationModel.select(section: .search) }
-                    .keyboardShortcut("1", modifiers: .command)
-                Button("Timeline") { navigationModel.select(section: .timeline) }
-                    .keyboardShortcut("2", modifiers: .command)
-                Button("Activity") { navigationModel.select(section: .activity) }
-                    .keyboardShortcut("3", modifiers: .command)
-            }
+            LocalMemoryCommands(
+                navigationModel: navigationModel,
+                searchPanelCoordinator: searchPanelCoordinator
+            )
         }
 
         Settings {

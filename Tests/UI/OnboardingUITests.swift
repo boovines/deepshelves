@@ -2,6 +2,18 @@ import XCTest
 
 @MainActor
 final class OnboardingUITests: XCTestCase {
+    func testReturnKeepsOnboardingDefaultActionOutsideTheMainShell() {
+        let application = launchOnboarding(
+            stateURL: temporaryStateURL(),
+            screenRecording: "granted",
+            accessibility: "granted"
+        )
+
+        XCTAssertTrue(element("onboarding.welcome", in: application).waitForExistence(timeout: 5))
+        application.typeKey(.return, modifierFlags: [])
+        XCTAssertTrue(element("onboarding.permissions", in: application).waitForExistence(timeout: 3))
+    }
+
     func testDeniedPathResumesWithoutRepeatingPermissionAction() {
         let stateURL = temporaryStateURL()
         var application = launchOnboarding(

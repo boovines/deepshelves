@@ -119,6 +119,8 @@ struct AppLaunchConfiguration {
     let simulatesShortcutCollision: Bool
     let measuresWarmSearchPanelAtLaunch: Bool
     let opensSettingsWithoutMainAtLaunch: Bool
+    let shellContentState: ShellContentState
+    let shellLocalizationMode: ShellLocalizationMode
 
     init(arguments: [String]) {
         runsLM009EvidenceSequence = arguments.contains("--lm009-evidence-sequence")
@@ -130,6 +132,21 @@ struct AppLaunchConfiguration {
         simulatesShortcutCollision = arguments.contains("--lm015-shortcut-collision")
         measuresWarmSearchPanelAtLaunch = arguments.contains("--lm015-measure-warm")
         opensSettingsWithoutMainAtLaunch = simulatesShortcutCollision
+        if let index = arguments.firstIndex(of: "--lm016-content-state"),
+           arguments.indices.contains(index + 1)
+        {
+            switch arguments[index + 1] {
+            case "empty": shellContentState = .empty
+            case "loading": shellContentState = .loading(elapsedMilliseconds: 301)
+            case "error": shellContentState = .failure
+            default: shellContentState = .ready
+            }
+        } else {
+            shellContentState = .ready
+        }
+        shellLocalizationMode = arguments.contains("--lm016-pseudo-localization")
+            ? .pseudo
+            : .english
         let forcesOnboarding = arguments.contains("--lm014-onboarding")
         let suppressesOnboarding = arguments.contains("--lm014-skip-onboarding")
             || arguments.contains { argument in
@@ -137,6 +154,7 @@ struct AppLaunchConfiguration {
                     || argument.hasPrefix("--lm009-")
                     || argument.hasPrefix("--lm010-")
                     || argument.hasPrefix("--lm015-")
+                    || argument.hasPrefix("--lm016-")
                     || argument.hasPrefix("--capture-")
                     || argument.hasPrefix("--context-")
                     || argument == "--s3-s4-spike"

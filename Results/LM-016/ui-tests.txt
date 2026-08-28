@@ -1,0 +1,1153 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project LocalMemory.xcodeproj -scheme LocalMemory-UI -configuration Release -derivedDataPath .build/LM010DerivedData -disableAutomaticPackageResolution "-only-testing:LocalMemoryUITests/AppCompositionUITests" "-only-testing:LocalMemoryUITests/BootstrapUITests" "-only-testing:LocalMemoryUITests/MainShellUITests" "-only-testing:LocalMemoryUITests/OnboardingUITests" "-only-testing:LocalMemoryUITests/GlobalSearchPanelUITests" "-only-testing:LocalMemoryUITests/ShellAccessibilityUITests" test
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  MemoryEnrichment: /Users/justinhou/Development/deepshelves/Packages/MemoryEnrichment
+  MemoryStore: /Users/justinhou/Development/deepshelves/Packages/MemoryStore
+  GRDB: /Users/justinhou/Development/deepshelves/.build/Dependencies/GRDB.swift-a285e4ca87ec6b3584c97b0ec25fc61fec02de60 @ local
+  MemoryAgentAccess: /Users/justinhou/Development/deepshelves/Packages/MemoryAgentAccess
+  MemoryTestSupport: /Users/justinhou/Development/deepshelves/Packages/MemoryTestSupport
+  MemoryCapture: /Users/justinhou/Development/deepshelves/Packages/MemoryCapture
+  SQLCipher: /Users/justinhou/Development/deepshelves/.build/Dependencies/SQLCipher.swift @ local
+  MemoryDesignSystem: /Users/justinhou/Development/deepshelves/Packages/MemoryDesignSystem
+  MemoryContracts: /Users/justinhou/Development/deepshelves/Packages/MemoryContracts
+  MemorySearch: /Users/justinhou/Development/deepshelves/Packages/MemorySearch
+
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:macOS, arch:arm64, id:00006030-000658C614D0001C, name:My Mac }
+{ platform:macOS, arch:x86_64, id:00006030-000658C614D0001C, name:My Mac }
+{ platform:macOS, name:Any Mac }
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (18 targets)
+    Target 'LocalMemoryUITests' in project 'LocalMemory'
+        ➜ Explicit dependency on target 'LocalMemoryApp' in project 'LocalMemory'
+    Target 'LocalMemoryApp' in project 'LocalMemory'
+        ➜ Explicit dependency on target 'MemoryCapture' in project 'MemoryCapture'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+        ➜ Explicit dependency on target 'MemoryDesignSystem' in project 'MemoryDesignSystem'
+        ➜ Explicit dependency on target 'MemoryEnrichment' in project 'MemoryEnrichment'
+        ➜ Explicit dependency on target 'MemoryStore' in project 'MemoryStore'
+    Target 'MemoryStore' in project 'MemoryStore'
+        ➜ Explicit dependency on target 'MemoryStore' in project 'MemoryStore'
+        ➜ Explicit dependency on target 'GRDB' in project 'GRDB'
+    Target 'MemoryStore' in project 'MemoryStore'
+        ➜ Explicit dependency on target 'GRDB' in project 'GRDB'
+    Target 'GRDB' in project 'GRDB'
+        ➜ Explicit dependency on target 'GRDB' in project 'GRDB'
+        ➜ Explicit dependency on target 'GRDB_GRDB' in project 'GRDB'
+        ➜ Explicit dependency on target 'GRDBSQLCipher' in project 'GRDB'
+        ➜ Explicit dependency on target 'SQLCipher' in project 'SQLCipher'
+    Target 'GRDB' in project 'GRDB'
+        ➜ Explicit dependency on target 'GRDB_GRDB' in project 'GRDB'
+        ➜ Explicit dependency on target 'GRDBSQLCipher' in project 'GRDB'
+        ➜ Explicit dependency on target 'SQLCipher' in project 'SQLCipher'
+    Target 'GRDBSQLCipher' in project 'GRDB'
+        ➜ Explicit dependency on target 'SQLCipher' in project 'SQLCipher'
+    Target 'SQLCipher' in project 'SQLCipher' (no dependencies)
+    Target 'GRDB_GRDB' in project 'GRDB' (no dependencies)
+    Target 'MemoryEnrichment' in project 'MemoryEnrichment'
+        ➜ Explicit dependency on target 'MemoryEnrichment' in project 'MemoryEnrichment'
+        ➜ Explicit dependency on target 'MemoryEnrichment_MemoryEnrichment' in project 'MemoryEnrichment'
+    Target 'MemoryEnrichment' in project 'MemoryEnrichment'
+        ➜ Explicit dependency on target 'MemoryEnrichment_MemoryEnrichment' in project 'MemoryEnrichment'
+    Target 'MemoryEnrichment_MemoryEnrichment' in project 'MemoryEnrichment' (no dependencies)
+    Target 'MemoryDesignSystem' in project 'MemoryDesignSystem'
+        ➜ Explicit dependency on target 'MemoryDesignSystem' in project 'MemoryDesignSystem'
+    Target 'MemoryDesignSystem' in project 'MemoryDesignSystem' (no dependencies)
+    Target 'MemoryContracts' in project 'MemoryContracts'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+    Target 'MemoryContracts' in project 'MemoryContracts' (no dependencies)
+    Target 'MemoryCapture' in project 'MemoryCapture'
+        ➜ Explicit dependency on target 'MemoryCapture' in project 'MemoryCapture'
+    Target 'MemoryCapture' in project 'MemoryCapture' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/SDKStatCaches.noindex/macosx26.5-25F70-e082c4a02f00227109f4ed75e425c832.sdkstatcache
+    cd /Users/justinhou/Development/deepshelves/LocalMemory.xcodeproj
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -o /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/SDKStatCaches.noindex/macosx26.5-25F70-e082c4a02f00227109f4ed75e425c832.sdkstatcache
+
+SwiftDriver LocalMemoryApp normal x86_64 com.apple.xcode.tools.swift.compiler (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name Local_Memory -O -whole-module-optimization @/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/Local\ Memory.SwiftFileList -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -target x86_64-apple-macos15.0 -g -module-cache-path /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -warnings-as-errors -swift-version 6 -I /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release -F /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release -c -num-threads 12 -Xcc -ivfsstatcache -Xcc /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/SDKStatCaches.noindex/macosx26.5-25F70-e082c4a02f00227109f4ed75e425c832.sdkstatcache -output-file-map /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/LocalMemoryApp-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/Local_Memory.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/LocalMemoryApp_const_extract_protocols.json -Xcc -iquote -Xcc /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Local\ Memory-generated-files.hmap -Xcc -I/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Local\ Memory-own-target-headers.hmap -Xcc -I/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Local\ Memory-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemory-a2f6a35635c1f574034e85928886420d-VFS/all-product-headers.yaml -Xcc -iquote -Xcc /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Local\ Memory-project-headers.hmap -Xcc -I/Users/justinhou/Development/deepshelves/.build/Dependencies/GRDB.swift-a285e4ca87ec6b3584c97b0ec25fc61fec02de60/Sources/GRDBSQLCipher/include -Xcc -I/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/include -Xcc -I/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/DerivedSources-normal/x86_64 -Xcc -I/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/DerivedSources/x86_64 -Xcc -I/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/DerivedSources -emit-objc-header -emit-objc-header-path /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/Local_Memory-Swift.h -working-directory /Users/justinhou/Development/deepshelves -no-emit-module-separately-wmo
+
+SwiftDriver LocalMemoryApp normal arm64 com.apple.xcode.tools.swift.compiler (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name Local_Memory -O -whole-module-optimization @/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/Local\ Memory.SwiftFileList -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -target arm64-apple-macos15.0 -g -module-cache-path /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -warnings-as-errors -swift-version 6 -I /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release -F /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release -c -num-threads 12 -Xcc -ivfsstatcache -Xcc /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/SDKStatCaches.noindex/macosx26.5-25F70-e082c4a02f00227109f4ed75e425c832.sdkstatcache -output-file-map /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/LocalMemoryApp-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/Local_Memory.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/LocalMemoryApp_const_extract_protocols.json -Xcc -iquote -Xcc /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Local\ Memory-generated-files.hmap -Xcc -I/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Local\ Memory-own-target-headers.hmap -Xcc -I/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Local\ Memory-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemory-a2f6a35635c1f574034e85928886420d-VFS/all-product-headers.yaml -Xcc -iquote -Xcc /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Local\ Memory-project-headers.hmap -Xcc -I/Users/justinhou/Development/deepshelves/.build/Dependencies/GRDB.swift-a285e4ca87ec6b3584c97b0ec25fc61fec02de60/Sources/GRDBSQLCipher/include -Xcc -I/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/include -Xcc -I/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/DerivedSources-normal/arm64 -Xcc -I/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/DerivedSources/arm64 -Xcc -I/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/DerivedSources -emit-objc-header -emit-objc-header-path /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/Local_Memory-Swift.h -working-directory /Users/justinhou/Development/deepshelves -no-emit-module-separately-wmo
+
+SwiftCompile normal x86_64 Compiling\ AppComposition.swift,\ CaptureSpikeHarness.swift,\ ContextSpikeHarness.swift,\ GlobalSearchPanel.swift,\ LM008ChildModes.swift,\ LocalMemoryApp.swift,\ MainNavigation.swift,\ Onboarding.swift,\ S6SpikeHarness.swift,\ S7OfflineSpikeRunner.swift,\ ShellCommands.swift /Users/justinhou/Development/deepshelves/Apps/LocalMemoryApp/AppComposition.swift /Users/justinhou/Development/deepshelves/Apps/LocalMemoryApp/CaptureSpikeHarness.swift /Users/justinhou/Development/deepshelves/Apps/LocalMemoryApp/ContextSpikeHarness.swift /Users/justinhou/Development/deepshelves/Apps/LocalMemoryApp/GlobalSearchPanel.swift /Users/justinhou/Development/deepshelves/Apps/LocalMemoryApp/LM008ChildModes.swift /Users/justinhou/Development/deepshelves/Apps/LocalMemoryApp/LocalMemoryApp.swift /Users/justinhou/Development/deepshelves/Apps/LocalMemoryApp/MainNavigation.swift /Users/justinhou/Development/deepshelves/Apps/LocalMemoryApp/Onboarding.swift /Users/justinhou/Development/deepshelves/Apps/LocalMemoryApp/S6SpikeHarness.swift /Users/justinhou/Development/deepshelves/Apps/LocalMemoryApp/S7OfflineSpikeRunner.swift /Users/justinhou/Development/deepshelves/Apps/LocalMemoryApp/ShellCommands.swift /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/SwiftUI.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/OSLog.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/Symbols.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/UniformTypeIdentifiers.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/Accelerate.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/Observation.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/CoreData.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/CoreFoundation.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/DataDetection.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/CoreMIDI.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/Swift.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/AppKit.swiftmodule/x86_64-apple-macos.swiftmodule /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/MemoryStore.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/Metal.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/Combine.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/VideoToolbox.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/_DarwinFoundation1.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/CoreAudio.swiftmodule/x86_64-apple-macos.swiftmodule /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/MemoryEnrichment.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/_StringProcessing.swiftmodule/x86_64-apple-macos.swiftmodule /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/MemoryContracts.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/AVFAudio.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/ObjectiveC.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/ScreenCaptureKit.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/CoreVideo.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/QuartzCore.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/System.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/CoreML.swiftmodule/x86_64-apple-macos.swiftmodule /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/MemoryDesignSystem.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/Darwin.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/_DarwinFoundation2.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/LocalAuthentication.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/Foundation.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/CoreTransferable.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/AudioToolbox.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/CoreImage.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/Accessibility.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/Spatial.swiftmodule/x86_64-apple-macos.swiftmodule /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/GRDB.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/Dispatch.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/_Concurrency.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/Vision.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/CoreGraphics.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/_Builtin_float.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/Synchronization.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/CoreMedia.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/DeveloperToolsSupport.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/simd.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/CoreText.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/CryptoKit.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/os.swiftmodule/x86_64-apple-macos.swiftmodule /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/MemoryCapture.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/SwiftUICore.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/IOKit.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/AVFoundation.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/_DarwinFoundation3.swiftmodule/x86_64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/XPC.swiftmodule/x86_64-apple-macos.swiftmodule /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/CoreFoundation-R1Q3T8PJUKMZ0Y8ZPET1AOJI.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/ScreenCaptureKit-1ZA3FTHU5S6OMO5SREYONE64Z.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/_SwiftConcurrencyShims-6R1TCMTWXLRLSLN5C044RONJ7.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/Symbols-BBDJ2H685516UQ9K02BG4YRY5.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/_Builtin_stdbool-4QMF47YQYE7YEKI0Z60QKN7T8.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/CoreVideo-9AT19SKUEP4OCYY4S1JTHWHMN.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/_DarwinFoundation1-ANT40H0HOPO4TESXAL28JBVD8.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/DiskArbitration-2FRAL9P2ENJ88NIIHRZ63LTZD.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/ptrcheck-50XY069BFJTJFLFX2TUSHM1E6.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/SwiftShims-33S6GHAPJBU8HNEDIO7JR4W12.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/launch-9KAG3L82V2PL98H2WKE0F24AS.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules/SQLCipher-8QSW024TYE5FIHU1Z2CJM4HDB.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/LocalAuthentication-3PVZ3U7F1VXSTCXE8QJ5V0K9K.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/SwiftUICore-3DD5UI99IB4OFD1C4W9WUV347.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/CoreAudioTypes-EGUFYPU8DF61N2RG5XPUV85BL.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/DeveloperToolsSupport-3YC8WKPDTE9RWKM4XVEOHG75Y.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/CUPS-9QNLCFMI4ZPX8PP6A1P114GVU.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/_Builtin_inttypes-8X57MS32S2H8YJAX9UROUQ8R6.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/QuartzCore-F0WVR09H75MW9TNFD9BWQFHM3.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/_Builtin_limits-7VBZO243R6JFDK8AEK8P7ZH6S.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/AVFoundation-526LAX48W7AQI9Z10QXB62ZM7.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/CoreMedia-D282TSMC7J9C2GNVHHXSZPNE7.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/CoreMIDI-5XNQJACNYROQFJWC3G70LZOYJ.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/_Builtin_tgmath-4T9528ERJIXTNAZV5FV159DFU.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/_Builtin_stdatomic-3U1BX7IM742HHGZO3HYBKWSHC.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/Carbon-5ONOKVTBOBA88EW744XKENHQX.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/Dispatch-4E45NQQ2G7LWNPBCO8K1O20JS.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/AudioToolbox-50VUG84QKH1HB2WEDWJH2HISE.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/_AvailabilityInternal-AA20P74KUSRTZ48ZXTTOWSPJK.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/CoreML-7IUNNNB9TA7K35V6H7JXT5Q1S.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/sys_types-8TVUM7WK9CU8JNWHBB9CQHP0R.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/libDER-D76MBDE5EUWFABUD4Y2D5QH2U.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/IOKit-2801VHD8NX891N0C0VZBDFS3Q.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/Darwin-6CS6AZS16NW4PNX0VA4BILVFZ.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/Security-KPIWK4KZ16VTB4223A8A9O54.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/ColorSync-CB27BZKQQ28R0CABWPECGV6TA.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/MachO-AVTJHHPWCF01TVH3I8SHLR4ER.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/os-2GOHF5NI8M30W5TRSDER0XRE7.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/_Builtin_stdarg-6T1HERAVS41Z024QVTKPIWZP6.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/AVFAudio-2NT7J0NBMLMY256E1BSX4WDHF.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/OpenGL-C640VBVCKRTOOZZZA5KDVMPIO.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/UniformTypeIdentifiers-8KOT47AVT18CN00YJRZ7JFUS3.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/XPC-EF4O75LFYWFCFNUYNLJOEBWKZ.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/string_h-F0HYIPH88DIWDAYZEF30N0O3P.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/DataDetection-91B7LE3K5FA1VCUR1IRY4IDCM.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/CoreGraphics-BQX1W56M7S8J38JNEO9KUI9F5.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/Spatial-2YT51DXVVCNX7L22SOC5PNYZP.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/_Builtin_stddef-2CTB7DDU69F0IYZQ0ZURNKS6Z.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/MediaToolbox-4HQSL4H2PZJJVMNQ0PTU2D0AR.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/Accelerate-5FCNLK3T8WUD3T2L8TQNBU9HO.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/_Builtin_float-DZMF7ZIR6TPNJDTB1KDX2DIC6.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/simd-3EK0BL6YSP2CAUWOR11K48RAA.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/Accessibility-7G6N7RRUZ7QWIJVRPO0S1F7CX.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/OSLog-C4F3D6TAYZZGQRRTFA0K56O3E.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/_DarwinFoundation2-B9T5KW0IR7YGO45FEILQ6O59J.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/_DarwinFoundation3-EMQ2GR6R8G4BMESS9CLJE71HY.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/libkern-ACMJZY1QGMHE5SFVET1UX2A79.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/VideoToolbox-BWLVARKEG450YM2PNAMV1EVW1.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/ImageIO-AKT3E80T02CUVMX9UI9MGF7GO.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/CoreAudio-5OASKCANCHA505G2I8U3KGISM.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/ObjectiveC-9AQSFJI0CELSB0B446DLV4VN.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/Metal-DG67B9MYVFVN523HMPVNZ5I81.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/CoreData-8WLALV4JD970P7CQMU5PSW4KT.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/AppKit-3FODD1OZHA91XZCUSKKUBANUR.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/Vision-5WD79PHVPGLLAZ1UU3ZREQY2Q.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/Foundation-WYUMNNQTNCYXC6O9XWTA62NA.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/CoreServices-82ASQ4GJV4RYRBE0703AMQLBA.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules/GRDBSQLCipher-CARSIHC484OK6887AOZ5MGMDF.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/SwiftUI-5JVO2FNLPKG7UQHK5AVHZC38L.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/CoreImage-EAU1B2PZEMPN5YS9QP9XUQZNN.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/IOSurface-7OILCJXUSV0F73W2I99SEYV6N.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/_Builtin_intrinsics-8902OEW65X6KIV23V6WFF1Z48.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/CFNetwork-D7K9P84WQ7UKJF757DWAGG2VL.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/ApplicationServices-5V096LP70BZUQW6G73N06V7K0.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/CoreTransferable-EPD9JHP1C2MIRJGIFHVCR6LSJ.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/os_object-F3QVKU4KV4L1LQICS34649USD.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/_Builtin_stdint-6SF253TB65ZZNJJRMM4U0HGZW.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/ptrauth-CEN1CWUYFHAP880QO95K8V7Y3.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/CoreText-9CALH59T2ZFEIBO2SHGEZ4I47.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/os_workgroup-6C7RCAM04K1JNACQ3TCQOVN6.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/Local_Memory-dependencies-1.json (in target 'LocalMemoryApp' from project 'LocalMemory')
+
+CompileSwift normal x86_64 (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    
+
+SwiftCompile normal arm64 Compiling\ AppComposition.swift,\ CaptureSpikeHarness.swift,\ ContextSpikeHarness.swift,\ GlobalSearchPanel.swift,\ LM008ChildModes.swift,\ LocalMemoryApp.swift,\ MainNavigation.swift,\ Onboarding.swift,\ S6SpikeHarness.swift,\ S7OfflineSpikeRunner.swift,\ ShellCommands.swift /Users/justinhou/Development/deepshelves/Apps/LocalMemoryApp/AppComposition.swift /Users/justinhou/Development/deepshelves/Apps/LocalMemoryApp/CaptureSpikeHarness.swift /Users/justinhou/Development/deepshelves/Apps/LocalMemoryApp/ContextSpikeHarness.swift /Users/justinhou/Development/deepshelves/Apps/LocalMemoryApp/GlobalSearchPanel.swift /Users/justinhou/Development/deepshelves/Apps/LocalMemoryApp/LM008ChildModes.swift /Users/justinhou/Development/deepshelves/Apps/LocalMemoryApp/LocalMemoryApp.swift /Users/justinhou/Development/deepshelves/Apps/LocalMemoryApp/MainNavigation.swift /Users/justinhou/Development/deepshelves/Apps/LocalMemoryApp/Onboarding.swift /Users/justinhou/Development/deepshelves/Apps/LocalMemoryApp/S6SpikeHarness.swift /Users/justinhou/Development/deepshelves/Apps/LocalMemoryApp/S7OfflineSpikeRunner.swift /Users/justinhou/Development/deepshelves/Apps/LocalMemoryApp/ShellCommands.swift /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/MemoryContracts.swiftmodule/arm64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/_Builtin_float.swiftmodule/arm64e-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/IOKit.swiftmodule/arm64e-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/UniformTypeIdentifiers.swiftmodule/arm64e-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/AppKit.swiftmodule/arm64e-apple-macos.swiftmodule /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/MemoryStore.swiftmodule/arm64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/CryptoKit.swiftmodule/arm64e-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/Spatial.swiftmodule/arm64e-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/Darwin.swiftmodule/arm64e-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/Symbols.swiftmodule/arm64e-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/CoreData.swiftmodule/arm64e-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/CoreMIDI.swiftmodule/arm64e-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/AVFAudio.swiftmodule/arm64e-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/CoreTransferable.swiftmodule/arm64e-apple-macos.swiftmodule /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/MemoryCapture.swiftmodule/arm64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/Dispatch.swiftmodule/arm64e-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/Vision.swiftmodule/arm64e-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/DataDetection.swiftmodule/arm64e-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/CoreImage.swiftmodule/arm64e-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/os.swiftmodule/arm64e-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/Metal.swiftmodule/arm64e-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/VideoToolbox.swiftmodule/arm64e-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/Combine.swiftmodule/arm64e-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/simd.swiftmodule/arm64e-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/SwiftUICore.swiftmodule/arm64e-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/AudioToolbox.swiftmodule/arm64e-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/CoreGraphics.swiftmodule/arm64e-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/_DarwinFoundation2.swiftmodule/arm64e-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/OSLog.swiftmodule/arm64e-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/Swift.swiftmodule/arm64e-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/LocalAuthentication.swiftmodule/arm64e-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/Synchronization.swiftmodule/arm64e-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/_DarwinFoundation3.swiftmodule/arm64e-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/ScreenCaptureKit.swiftmodule/arm64e-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/ObjectiveC.swiftmodule/arm64e-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/CoreVideo.swiftmodule/arm64e-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/Observation.swiftmodule/arm64e-apple-macos.swiftmodule /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/MemoryDesignSystem.swiftmodule/arm64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/QuartzCore.swiftmodule/arm64e-apple-macos.swiftmodule /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/GRDB.swiftmodule/arm64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/Accelerate.swiftmodule/arm64e-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/CoreML.swiftmodule/arm64e-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/Accessibility.swiftmodule/arm64e-apple-macos.swiftmodule /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/MemoryEnrichment.swiftmodule/arm64-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/CoreMedia.swiftmodule/arm64e-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/Foundation.swiftmodule/arm64e-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/_DarwinFoundation1.swiftmodule/arm64e-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/System.swiftmodule/arm64e-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/SwiftUI.swiftmodule/arm64e-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/_Concurrency.swiftmodule/arm64e-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/_StringProcessing.swiftmodule/arm64e-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/XPC.swiftmodule/arm64e-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/CoreText.swiftmodule/arm64e-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/CoreFoundation.swiftmodule/arm64e-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/DeveloperToolsSupport.swiftmodule/arm64e-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/CoreAudio.swiftmodule/arm64e-apple-macos.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx/prebuilt-modules/26.5/AVFoundation.swiftmodule/arm64e-apple-macos.swiftmodule /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/_Builtin_tgmath-7EN275I6BFG6P047QXK57U76I.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/libkern-DQNB0BL697P488KJHA61YQYU.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/DiskArbitration-61HMOYTWGJ5AQBVV4EFRTJY5Q.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/_Builtin_stdint-4M5PUILU4L5HXTP382HYZ32SC.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/ptrcheck-8JQWIPMJPDSUASCRAV5SKAEPD.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/_Builtin_stdarg-C28JPQW9W4WBURZ11ETNN7YTY.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/AVFAudio-DL7C3LO57LNIPLPZ3PYDQHD40.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/Security-503038PGLMBQ1YB585OLE4BHS.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/ApplicationServices-1U57XAIMI3XQ1ZBAL0P89AVLC.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/_DarwinFoundation1-67ULT2B459TCW9LX1SFVU9E4C.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/ImageIO-3FNC48VFBWOMOQKAZYGZT86IW.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/CoreData-EPOKH6R82N1QDKTFHOP302DTN.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/_DarwinFoundation2-1WY0QBW5YCQDO3KIYEXU03I0U.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/_Builtin_float-83H6ULKBXRU1I14LA8JVSFA96.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules/SQLCipher-EIJH614MD8AD8NIDIGC25HAPO.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/DeveloperToolsSupport-7LJ91T5II3WGVJGWHFR623XWU.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/VideoToolbox-8JIY1LQLTCH3ENOGXYZKKKN2L.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/Foundation-CGOBNBUTUCYC22RPVMH5B1ALX.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/DataDetection-3PO0OPUUH2V58D29AKOTUBKWT.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/IOSurface-LLCGBYOAFD4QG28UX8G3EE50.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/_AvailabilityInternal-G69RH5Y3T4CYVJPI1WOIHGC1.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/CoreGraphics-EA5KS8SLRLZGV6G2IPL8VBHN1.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/AudioToolbox-C3OE9V69UOOJH1S4849CV39V1.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/CoreFoundation-F0QFHY2T6FT2Q7LR2LUHYS6QK.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/Spatial-ALL4ISUGO7P2G2N305BY2WKU3.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/SwiftUI-AY31XYJSZRLZ3W249JOR4MGAJ.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/CoreMedia-1Q6H91EYKXU3UFXVXE0DHHYW9.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/_Builtin_stdbool-ESCT9C7ALCEGRQA0RH3BJLZI0.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/Dispatch-5GHCWDLJMYXEGBZG1OGS61PN9.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/_Builtin_intrinsics-2EWRZCYCB8J2M6I4C52TN3LB5.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/MachO-WYQXPE8IBDSYDA84DD1PL0V4.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/CoreVideo-A9O3TKOP1IZFDLK1O3DLL9SOJ.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/os-E2M0LGN1U3ZO31MW53D6ZM4JE.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/ptrauth-2IZ9LUPO7DLSO315GHD657EFS.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/_Builtin_inttypes-AXWXQJBN8HF2GKFRE5RKHHK6S.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/MediaToolbox-CHAY852Z6L11UAAMTEU1M64A6.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/Accessibility-BCAFK72A8M04TVQAIT0YRBVQM.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/_Builtin_stdatomic-138JP47GNRN8NYLNO77Z7S4TS.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/_SwiftConcurrencyShims-D4YP785YAVL9HN7XNHT5RLONG.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/CUPS-E4TDRVEDGRZ6ZAM4FM7V0XODR.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/ScreenCaptureKit-EL57S4OT7IXK7TPRRVS4DF98U.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/LocalAuthentication-1HE1EYZTT5N5CUE84AQ7A92DV.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/OpenGL-7B2ORQCH8V5G4AGPQB2G7HCX3.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/CoreAudio-4DDE17L2UYE0IDKCW7UTGBQ29.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/UniformTypeIdentifiers-1K8QXW9NNDHG05ELAVFXOM2RZ.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/ColorSync-7HQG3NS27W1FPE7UWTE61M21S.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/CoreTransferable-DFTENZQ8L4QUWTBMOTOYO2780.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/string_h-BLK6OTW9XA3V9UESW6AH48WCZ.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/_DarwinFoundation3-9GJ4Z87LE9RXEJWO1XH7L5LG3.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/Symbols-5L8G1T8JO20PBAR4YPRTNZ294.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/Carbon-8BIG75RRHGXDLH7SX1YZ2E46W.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/IOKit-70QM94RUL1B1OTFJCE21QPNJY.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/CoreText-EVUJKI046714K5Q2CRKX5VF4H.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/XPC-81Y5L1ZKTVCWI510PQ3WJOMH8.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/QuartzCore-2VZCLAT9HUC2849G0CQAEWXT8.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules/GRDBSQLCipher-81LP9PGRCI6R5WOXHRPR1UOSR.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/AppKit-1NU4PD3JBY9NI9ZVQHHRATRBS.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/sys_types-CNA1YL7R929TDI02JFR66AQD5.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/Metal-1HYMVVR078A3ZSBESRAQWZE30.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/Vision-7346CXRFQE3PD8M0225K3D7R0.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/os_object-DNYZGTW8LE3M1OU75L3TWVY2F.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/_Builtin_stddef-34Q5D5RRRSPUOK21WAA8Y4EGT.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/CoreImage-B4LFLOFQ4B3V0N3IU4FK42NG4.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/CoreML-9FEXTP712XRJULUZ5WMPWYRP1.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/Darwin-87QFSLB39AOC5NLO0W2H6IDZM.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/CoreMIDI-B0ZB7Q0J7WW5M27NXZHSE1M8P.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/CoreServices-ETGYDDHERO1X2EVLHF6T3HVM5.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/_Builtin_limits-24X46ANWVMY5AUDEGTEB2KRQB.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/SwiftUICore-E3XANKHZ49POTUHRWLSY83ZCE.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/OSLog-9RWLA3EZNW988FLFQ5QCDPRJZ.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/Accelerate-DA5H290YE3MJD214CVXDNVW4N.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/simd-38DUHQ6YMHV4OUZE9R6VOS9WO.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/os_workgroup-5D7PCNDTOTP97JCJI98V3FBLZ.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/SwiftShims-EG6MJ6XSH32FWC21GWWAR7RR5.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/CoreAudioTypes-4H1C6FW5IM1ZJXUX2ZFJPD2ZL.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/CFNetwork-3IOHBIALEOYY0TWKHUISYURFD.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/libDER-4SAQ9RKY79WDZDNHV5IK5LRRM.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/AVFoundation-6OHMFCK82SU3R4RADCCX9RX4H.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/ObjectiveC-1VZMH9VGSLU5KNBCSA7LAPOBG.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/launch-B2DR9WSXG6KCKCVHU33HP6MGZ.pcm /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/Local_Memory-dependencies-2.json (in target 'LocalMemoryApp' from project 'LocalMemory')
+CompileSwift normal arm64 (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    
+
+SwiftDriver\ Compilation LocalMemoryApp normal arm64 com.apple.xcode.tools.swift.compiler (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-Swift-Compilation -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name Local_Memory -O -whole-module-optimization @/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/Local\ Memory.SwiftFileList -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -target arm64-apple-macos15.0 -g -module-cache-path /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -warnings-as-errors -swift-version 6 -I /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release -F /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release -c -num-threads 12 -Xcc -ivfsstatcache -Xcc /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/SDKStatCaches.noindex/macosx26.5-25F70-e082c4a02f00227109f4ed75e425c832.sdkstatcache -output-file-map /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/LocalMemoryApp-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/Local_Memory.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/LocalMemoryApp_const_extract_protocols.json -Xcc -iquote -Xcc /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Local\ Memory-generated-files.hmap -Xcc -I/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Local\ Memory-own-target-headers.hmap -Xcc -I/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Local\ Memory-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemory-a2f6a35635c1f574034e85928886420d-VFS/all-product-headers.yaml -Xcc -iquote -Xcc /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Local\ Memory-project-headers.hmap -Xcc -I/Users/justinhou/Development/deepshelves/.build/Dependencies/GRDB.swift-a285e4ca87ec6b3584c97b0ec25fc61fec02de60/Sources/GRDBSQLCipher/include -Xcc -I/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/include -Xcc -I/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/DerivedSources-normal/arm64 -Xcc -I/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/DerivedSources/arm64 -Xcc -I/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/DerivedSources -emit-objc-header -emit-objc-header-path /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/Local_Memory-Swift.h -working-directory /Users/justinhou/Development/deepshelves -no-emit-module-separately-wmo
+
+SwiftDriver\ Compilation LocalMemoryApp normal x86_64 com.apple.xcode.tools.swift.compiler (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-Swift-Compilation -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name Local_Memory -O -whole-module-optimization @/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/Local\ Memory.SwiftFileList -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -target x86_64-apple-macos15.0 -g -module-cache-path /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -warnings-as-errors -swift-version 6 -I /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release -F /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release -c -num-threads 12 -Xcc -ivfsstatcache -Xcc /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/SDKStatCaches.noindex/macosx26.5-25F70-e082c4a02f00227109f4ed75e425c832.sdkstatcache -output-file-map /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/LocalMemoryApp-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/Local_Memory.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/LocalMemoryApp_const_extract_protocols.json -Xcc -iquote -Xcc /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Local\ Memory-generated-files.hmap -Xcc -I/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Local\ Memory-own-target-headers.hmap -Xcc -I/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Local\ Memory-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemory-a2f6a35635c1f574034e85928886420d-VFS/all-product-headers.yaml -Xcc -iquote -Xcc /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Local\ Memory-project-headers.hmap -Xcc -I/Users/justinhou/Development/deepshelves/.build/Dependencies/GRDB.swift-a285e4ca87ec6b3584c97b0ec25fc61fec02de60/Sources/GRDBSQLCipher/include -Xcc -I/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/include -Xcc -I/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/DerivedSources-normal/x86_64 -Xcc -I/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/DerivedSources/x86_64 -Xcc -I/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/DerivedSources -emit-objc-header -emit-objc-header-path /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/Local_Memory-Swift.h -working-directory /Users/justinhou/Development/deepshelves -no-emit-module-separately-wmo
+
+SwiftDriverJobDiscovery normal x86_64 Compiling AppComposition.swift, CaptureSpikeHarness.swift, ContextSpikeHarness.swift, GlobalSearchPanel.swift, LM008ChildModes.swift, LocalMemoryApp.swift, MainNavigation.swift, Onboarding.swift, S6SpikeHarness.swift, S7OfflineSpikeRunner.swift, ShellCommands.swift (in target 'LocalMemoryApp' from project 'LocalMemory')
+
+SwiftDriver\ Compilation\ Requirements LocalMemoryApp normal x86_64 com.apple.xcode.tools.swift.compiler (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name Local_Memory -O -whole-module-optimization @/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/Local\ Memory.SwiftFileList -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -target x86_64-apple-macos15.0 -g -module-cache-path /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -warnings-as-errors -swift-version 6 -I /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release -F /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release -c -num-threads 12 -Xcc -ivfsstatcache -Xcc /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/SDKStatCaches.noindex/macosx26.5-25F70-e082c4a02f00227109f4ed75e425c832.sdkstatcache -output-file-map /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/LocalMemoryApp-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/Local_Memory.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/LocalMemoryApp_const_extract_protocols.json -Xcc -iquote -Xcc /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Local\ Memory-generated-files.hmap -Xcc -I/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Local\ Memory-own-target-headers.hmap -Xcc -I/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Local\ Memory-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemory-a2f6a35635c1f574034e85928886420d-VFS/all-product-headers.yaml -Xcc -iquote -Xcc /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Local\ Memory-project-headers.hmap -Xcc -I/Users/justinhou/Development/deepshelves/.build/Dependencies/GRDB.swift-a285e4ca87ec6b3584c97b0ec25fc61fec02de60/Sources/GRDBSQLCipher/include -Xcc -I/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/include -Xcc -I/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/DerivedSources-normal/x86_64 -Xcc -I/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/DerivedSources/x86_64 -Xcc -I/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/DerivedSources -emit-objc-header -emit-objc-header-path /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/Local_Memory-Swift.h -working-directory /Users/justinhou/Development/deepshelves -no-emit-module-separately-wmo
+
+SwiftDriverJobDiscovery normal arm64 Compiling AppComposition.swift, CaptureSpikeHarness.swift, ContextSpikeHarness.swift, GlobalSearchPanel.swift, LM008ChildModes.swift, LocalMemoryApp.swift, MainNavigation.swift, Onboarding.swift, S6SpikeHarness.swift, S7OfflineSpikeRunner.swift, ShellCommands.swift (in target 'LocalMemoryApp' from project 'LocalMemory')
+
+SwiftDriver\ Compilation\ Requirements LocalMemoryApp normal arm64 com.apple.xcode.tools.swift.compiler (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name Local_Memory -O -whole-module-optimization @/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/Local\ Memory.SwiftFileList -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -target arm64-apple-macos15.0 -g -module-cache-path /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -warnings-as-errors -swift-version 6 -I /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release -F /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release -c -num-threads 12 -Xcc -ivfsstatcache -Xcc /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/SDKStatCaches.noindex/macosx26.5-25F70-e082c4a02f00227109f4ed75e425c832.sdkstatcache -output-file-map /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/LocalMemoryApp-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/Local_Memory.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/LocalMemoryApp_const_extract_protocols.json -Xcc -iquote -Xcc /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Local\ Memory-generated-files.hmap -Xcc -I/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Local\ Memory-own-target-headers.hmap -Xcc -I/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Local\ Memory-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemory-a2f6a35635c1f574034e85928886420d-VFS/all-product-headers.yaml -Xcc -iquote -Xcc /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Local\ Memory-project-headers.hmap -Xcc -I/Users/justinhou/Development/deepshelves/.build/Dependencies/GRDB.swift-a285e4ca87ec6b3584c97b0ec25fc61fec02de60/Sources/GRDBSQLCipher/include -Xcc -I/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/include -Xcc -I/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/DerivedSources-normal/arm64 -Xcc -I/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/DerivedSources/arm64 -Xcc -I/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/DerivedSources -emit-objc-header -emit-objc-header-path /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/Local_Memory-Swift.h -working-directory /Users/justinhou/Development/deepshelves -no-emit-module-separately-wmo
+
+Copy /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/Local_Memory.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/Local_Memory.swiftsourceinfo (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/Local_Memory.swiftsourceinfo /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/Local_Memory.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo
+
+Ld /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/Binary/Local\ Memory normal x86_64 (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target x86_64-apple-macos15.0 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -Os -L/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/EagerLinkingTBDs/Release -L/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release -F/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/EagerLinkingTBDs/Release -F/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release -filelist /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/Local\ Memory.LinkFileList -Xlinker -rpath -Xlinker /usr/lib/swift -Xlinker -rpath -Xlinker @executable_path/../Frameworks -Xlinker -object_path_lto -Xlinker /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/Local\ Memory_lto.o -Xlinker -dependency_info -Xlinker /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/Local\ Memory_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/Local_Memory.swiftmodule @/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/Local_Memory-linker-args.resp -Wl,-no_warn_duplicate_libraries -Wl,-no_warn_duplicate_libraries -Wl,-no_warn_duplicate_libraries -Wl,-no_warn_duplicate_libraries -Wl,-no_warn_duplicate_libraries -Wl,-no_warn_duplicate_libraries -Wl,-no_warn_duplicate_libraries -framework SQLCipher -framework SQLCipher -Xlinker -no_adhoc_codesign -o /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/Binary/Local\ Memory -Xlinker -add_ast_path -Xlinker /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/MemoryCapture.build/Release/MemoryCapture.build/Objects-normal/x86_64/MemoryCapture.swiftmodule @/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/MemoryCapture.build/Release/MemoryCapture.build/Objects-normal/x86_64/MemoryCapture-linker-args.resp -Xlinker -add_ast_path -Xlinker /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/MemoryContracts.build/Release/MemoryContracts.build/Objects-normal/x86_64/MemoryContracts.swiftmodule @/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/MemoryContracts.build/Release/MemoryContracts.build/Objects-normal/x86_64/MemoryContracts-linker-args.resp -Xlinker -add_ast_path -Xlinker /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/MemoryDesignSystem.build/Release/MemoryDesignSystem.build/Objects-normal/x86_64/MemoryDesignSystem.swiftmodule @/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/MemoryDesignSystem.build/Release/MemoryDesignSystem.build/Objects-normal/x86_64/MemoryDesignSystem-linker-args.resp -Xlinker -add_ast_path -Xlinker /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/MemoryEnrichment.build/Release/MemoryEnrichment.build/Objects-normal/x86_64/MemoryEnrichment.swiftmodule @/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/MemoryEnrichment.build/Release/MemoryEnrichment.build/Objects-normal/x86_64/MemoryEnrichment-linker-args.resp -Xlinker -add_ast_path -Xlinker /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/MemoryStore.build/Release/MemoryStore.build/Objects-normal/x86_64/MemoryStore.swiftmodule @/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/MemoryStore.build/Release/MemoryStore.build/Objects-normal/x86_64/MemoryStore-linker-args.resp -Xlinker -add_ast_path -Xlinker /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/GRDB.build/Release/GRDB.build/Objects-normal/x86_64/GRDB.swiftmodule @/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/GRDB.build/Release/GRDB.build/Objects-normal/x86_64/GRDB-linker-args.resp
+
+Ld /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/Binary/Local\ Memory normal arm64 (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-macos15.0 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -Os -L/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/EagerLinkingTBDs/Release -L/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release -F/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/EagerLinkingTBDs/Release -F/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/PackageFrameworks -F/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release -filelist /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/Local\ Memory.LinkFileList -Xlinker -rpath -Xlinker /usr/lib/swift -Xlinker -rpath -Xlinker @executable_path/../Frameworks -Xlinker -object_path_lto -Xlinker /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/Local\ Memory_lto.o -Xlinker -dependency_info -Xlinker /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/Local\ Memory_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/Local_Memory.swiftmodule @/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/Local_Memory-linker-args.resp -Wl,-no_warn_duplicate_libraries -Wl,-no_warn_duplicate_libraries -Wl,-no_warn_duplicate_libraries -Wl,-no_warn_duplicate_libraries -Wl,-no_warn_duplicate_libraries -Wl,-no_warn_duplicate_libraries -Wl,-no_warn_duplicate_libraries -framework SQLCipher -framework SQLCipher -Xlinker -no_adhoc_codesign -o /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/Binary/Local\ Memory -Xlinker -add_ast_path -Xlinker /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/MemoryCapture.build/Release/MemoryCapture.build/Objects-normal/arm64/MemoryCapture.swiftmodule @/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/MemoryCapture.build/Release/MemoryCapture.build/Objects-normal/arm64/MemoryCapture-linker-args.resp -Xlinker -add_ast_path -Xlinker /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/MemoryContracts.build/Release/MemoryContracts.build/Objects-normal/arm64/MemoryContracts.swiftmodule @/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/MemoryContracts.build/Release/MemoryContracts.build/Objects-normal/arm64/MemoryContracts-linker-args.resp -Xlinker -add_ast_path -Xlinker /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/MemoryDesignSystem.build/Release/MemoryDesignSystem.build/Objects-normal/arm64/MemoryDesignSystem.swiftmodule @/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/MemoryDesignSystem.build/Release/MemoryDesignSystem.build/Objects-normal/arm64/MemoryDesignSystem-linker-args.resp -Xlinker -add_ast_path -Xlinker /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/MemoryEnrichment.build/Release/MemoryEnrichment.build/Objects-normal/arm64/MemoryEnrichment.swiftmodule @/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/MemoryEnrichment.build/Release/MemoryEnrichment.build/Objects-normal/arm64/MemoryEnrichment-linker-args.resp -Xlinker -add_ast_path -Xlinker /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/MemoryStore.build/Release/MemoryStore.build/Objects-normal/arm64/MemoryStore.swiftmodule @/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/MemoryStore.build/Release/MemoryStore.build/Objects-normal/arm64/MemoryStore-linker-args.resp -Xlinker -add_ast_path -Xlinker /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/GRDB.build/Release/GRDB.build/Objects-normal/arm64/GRDB.swiftmodule @/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/GRDB.build/Release/GRDB.build/Objects-normal/arm64/GRDB-linker-args.resp
+
+Copy /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/Local_Memory.swiftmodule/x86_64-apple-macos.abi.json /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/Local_Memory.abi.json (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/Local_Memory.abi.json /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/Local_Memory.swiftmodule/x86_64-apple-macos.abi.json
+
+Copy /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/Local_Memory.swiftmodule/x86_64-apple-macos.swiftmodule /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/Local_Memory.swiftmodule (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/Local_Memory.swiftmodule /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/Local_Memory.swiftmodule/x86_64-apple-macos.swiftmodule
+
+Copy /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/Local_Memory.swiftmodule/arm64-apple-macos.abi.json /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/Local_Memory.abi.json (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/Local_Memory.abi.json /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/Local_Memory.swiftmodule/arm64-apple-macos.abi.json
+
+Copy /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/Local_Memory.swiftmodule/Project/x86_64-apple-macos.swiftsourceinfo /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/Local_Memory.swiftsourceinfo (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/Local_Memory.swiftsourceinfo /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/Local_Memory.swiftmodule/Project/x86_64-apple-macos.swiftsourceinfo
+
+Copy /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/Local_Memory.swiftmodule/arm64-apple-macos.swiftmodule /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/Local_Memory.swiftmodule (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/Local_Memory.swiftmodule /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/Local_Memory.swiftmodule/arm64-apple-macos.swiftmodule
+
+CreateUniversalBinary /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/Local\ Memory.app/Contents/MacOS/Local\ Memory normal arm64\ x86_64 (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo -create /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/Binary/Local\ Memory /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/Binary/Local\ Memory -output /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/Local\ Memory.app/Contents/MacOS/Local\ Memory
+
+GenerateDSYMFile /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/Local\ Memory.app.dSYM /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/Local\ Memory.app/Contents/MacOS/Local\ Memory (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/dsymutil /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/Local\ Memory.app/Contents/MacOS/Local\ Memory -o /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/Local\ Memory.app.dSYM
+
+CopySwiftLibs /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/Local\ Memory.app (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-swiftStdLibTool --copy --verbose --sign 5F2CF76A05528002A43A04B748E50F81D795A4E9 --scan-executable /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/Local\ Memory.app/Contents/MacOS/Local\ Memory --scan-folder /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/Local\ Memory.app/Contents/Frameworks --scan-folder /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/Local\ Memory.app/Contents/PlugIns --scan-folder /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/Local\ Memory.app/Contents/Library/SystemExtensions --scan-folder /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/Local\ Memory.app/Contents/Extensions --platform macosx --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/Local\ Memory.app/Contents/Frameworks --strip-bitcode --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os --back-deploy-swift-span
+
+ExtractAppIntentsMetadata (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name Local_Memory --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk --xcode-version 17F42 --platform-family macOS --deployment-target 15.0 --bundle-identifier com.justinhou.deepshelves.localmemory --output /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/Local\ Memory.app/Contents/Resources --target-triple arm64-apple-macos15.0 --target-triple x86_64-apple-macos15.0 --binary-file /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/Local\ Memory.app/Contents/MacOS/Local\ Memory --dependency-file /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/Local\ Memory_dependency_info.dat --dependency-file /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/Local\ Memory_dependency_info.dat --stringsdata-file /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --stringsdata-file /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/Local\ Memory.SwiftFileList --source-file-list /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/Local\ Memory.SwiftFileList --metadata-file-list /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Local\ Memory.DependencyMetadataFileList --static-metadata-file-list /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Local\ Memory.DependencyStaticMetadataFileList --swift-const-vals-list /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/Local\ Memory.SwiftConstValuesFileList --swift-const-vals-list /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/Local\ Memory.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
+2026-08-28 12:19:17.677 appintentsmetadataprocessor[99784:24305291] Starting appintentsmetadataprocessor export
+2026-08-28 12:19:17.681 appintentsmetadataprocessor[99784:24305291] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+
+CodeSign /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/Local\ Memory.app (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    
+    Signing Identity:     "Apple Development: justin_hou25@icloud.com (K8SNDR5HV9)"
+    Provisioning Profile: "Mac Team Provisioning Profile: com.justinhou.deepshelves.localmemory"
+                          (df1a559d-5ee8-4e23-a735-ac82b10e7562)
+    
+    /usr/bin/codesign --force --sign 5F2CF76A05528002A43A04B748E50F81D795A4E9 -o runtime --entitlements /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Local\ Memory.app.xcent --timestamp\=none --generate-entitlement-der /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/Local\ Memory.app
+
+Validate /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/Local\ Memory.app (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-validationUtility /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/Local\ Memory.app -no-validate-extension -infoplist-subpath Contents/Info.plist
+
+RegisterWithLaunchServices /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/Local\ Memory.app (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    /System/Library/Frameworks/CoreServices.framework/Versions/Current/Frameworks/LaunchServices.framework/Versions/Current/Support/lsregister -f -R -trusted /Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Build/Products/Release/Local\ Memory.app
+
+2026-08-28 12:19:20.428924+0200 LocalMemoryUITests-Runner[99789:24305368] [Default] Running tests...
+Test Suite 'Selected tests' started at 2026-08-28 12:19:20.460.
+Test Suite 'LocalMemoryUITests.xctest' started at 2026-08-28 12:19:20.461.
+Test Suite 'AppCompositionUITests' started at 2026-08-28 12:19:20.461.
+Test Case '-[LocalMemoryUITests.AppCompositionUITests testDefaultLaunchKeepsMainWindowClosed]' started.
+    t =     0.00s Start Test at 2026-08-28 12:19:20.461
+    t =     0.14s Set Up
+    t =     0.15s Open com.justinhou.deepshelves.localmemory
+    t =     0.15s     Launch com.justinhou.deepshelves.localmemory
+2026-08-28 12:19:20.655 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-08-28 12:19:20.655 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     0.85s         Wait for accessibility to load
+    t =     1.03s         Setting up automation session
+    t =     1.04s         Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     1.07s Wait for com.justinhou.deepshelves.localmemory to become Running Background
+    t =     6.07s Get number of matches for: Descendants matching type Window
+    t =     6.28s Tear Down
+Test Case '-[LocalMemoryUITests.AppCompositionUITests testDefaultLaunchKeepsMainWindowClosed]' passed (6.601 seconds).
+Test Case '-[LocalMemoryUITests.AppCompositionUITests testMenuPreviewTracksEveryFakeRuntimeState]' started.
+    t =     0.00s Start Test at 2026-08-28 12:19:27.063
+    t =     0.11s Set Up
+    t =     0.11s Open com.justinhou.deepshelves.localmemory
+    t =     0.11s     Launch com.justinhou.deepshelves.localmemory
+    t =     0.11s         Terminate com.justinhou.deepshelves.localmemory:99791
+2026-08-28 12:19:28.258 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-08-28 12:19:28.258 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.45s         Wait for accessibility to load
+    t =     1.58s         Setting up automation session
+    t =     1.59s         Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     1.62s Waiting 5.0s for "menu.status" StaticText to exist
+    t =     2.66s     Checking `Expect predicate `existsNoRetry == 1` for object "menu.status" StaticText`
+    t =     2.66s         Checking existence of `"menu.status" StaticText`
+    t =     2.82s Waiting 2.0s for "Recording" StaticText to exist
+    t =     3.86s     Checking `Expect predicate `existsNoRetry == 1` for object "Recording" StaticText`
+    t =     3.86s         Checking existence of `"Recording" StaticText`
+    t =     3.94s Checking existence of `"Pause Recording" Button`
+    t =     3.99s Checking existence of `"Foreground window only" StaticText`
+    t =     4.04s Terminate com.justinhou.deepshelves.localmemory:99800
+    t =     5.12s Open com.justinhou.deepshelves.localmemory
+    t =     5.12s     Launch com.justinhou.deepshelves.localmemory
+2026-08-28 12:19:32.184 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-08-28 12:19:32.184 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     5.35s         Wait for accessibility to load
+    t =     5.46s         Setting up automation session
+    t =     5.47s         Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     5.47s Waiting 5.0s for "menu.status" StaticText to exist
+    t =     6.50s     Checking `Expect predicate `existsNoRetry == 1` for object "menu.status" StaticText`
+    t =     6.51s         Checking existence of `"menu.status" StaticText`
+    t =     6.66s Waiting 2.0s for "Paused" StaticText to exist
+    t =     7.69s     Checking `Expect predicate `existsNoRetry == 1` for object "Paused" StaticText`
+    t =     7.69s         Checking existence of `"Paused" StaticText`
+    t =     7.76s Checking existence of `"Resume Recording" Button`
+    t =     7.81s Checking existence of `"Foreground window only" StaticText`
+    t =     7.85s Terminate com.justinhou.deepshelves.localmemory:99805
+    t =     8.91s Open com.justinhou.deepshelves.localmemory
+    t =     8.91s     Launch com.justinhou.deepshelves.localmemory
+2026-08-28 12:19:35.978 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-08-28 12:19:35.978 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     9.14s         Wait for accessibility to load
+    t =     9.26s         Setting up automation session
+    t =     9.27s         Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     9.40s Waiting 5.0s for "menu.status" StaticText to exist
+    t =    10.44s     Checking `Expect predicate `existsNoRetry == 1` for object "menu.status" StaticText`
+    t =    10.45s         Checking existence of `"menu.status" StaticText`
+    t =    10.60s Waiting 2.0s for "Recording unavailable" StaticText to exist
+    t =    11.63s     Checking `Expect predicate `existsNoRetry == 1` for object "Recording unavailable" StaticText`
+    t =    11.63s         Checking existence of `"Recording unavailable" StaticText`
+    t =    11.69s Checking existence of `"Review Permissions…" Button`
+    t =    11.74s Checking existence of `"Foreground window only" StaticText`
+    t =    11.79s Terminate com.justinhou.deepshelves.localmemory:99810
+    t =    12.86s Open com.justinhou.deepshelves.localmemory
+    t =    12.86s     Launch com.justinhou.deepshelves.localmemory
+2026-08-28 12:19:39.921 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-08-28 12:19:39.921 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =    13.09s         Wait for accessibility to load
+    t =    13.19s         Setting up automation session
+    t =    13.20s         Wait for com.justinhou.deepshelves.localmemory to idle
+    t =    13.32s Waiting 5.0s for "menu.status" StaticText to exist
+    t =    14.36s     Checking `Expect predicate `existsNoRetry == 1` for object "menu.status" StaticText`
+    t =    14.37s         Checking existence of `"menu.status" StaticText`
+    t =    14.52s Waiting 2.0s for "Recording unavailable" StaticText to exist
+    t =    15.55s     Checking `Expect predicate `existsNoRetry == 1` for object "Recording unavailable" StaticText`
+    t =    15.56s         Checking existence of `"Recording unavailable" StaticText`
+    t =    15.61s Checking existence of `"Manage Storage…" Button`
+    t =    15.66s Checking existence of `"Foreground window only" StaticText`
+    t =    15.71s Terminate com.justinhou.deepshelves.localmemory:99819
+    t =    16.78s Open com.justinhou.deepshelves.localmemory
+    t =    16.78s     Launch com.justinhou.deepshelves.localmemory
+2026-08-28 12:19:43.848 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-08-28 12:19:43.848 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =    17.01s         Wait for accessibility to load
+    t =    17.14s         Setting up automation session
+    t =    17.15s         Wait for com.justinhou.deepshelves.localmemory to idle
+    t =    17.17s Waiting 5.0s for "menu.status" StaticText to exist
+    t =    18.21s     Checking `Expect predicate `existsNoRetry == 1` for object "menu.status" StaticText`
+    t =    18.21s         Checking existence of `"menu.status" StaticText`
+    t =    18.36s Waiting 2.0s for "Indexing" StaticText to exist
+    t =    19.40s     Checking `Expect predicate `existsNoRetry == 1` for object "Indexing" StaticText`
+    t =    19.40s         Checking existence of `"Indexing" StaticText`
+    t =    19.46s Checking existence of `"Pause Recording" Button`
+    t =    19.51s Checking existence of `"Foreground window only" StaticText`
+    t =    19.55s Terminate com.justinhou.deepshelves.localmemory:99826
+    t =    20.62s Tear Down
+Test Case '-[LocalMemoryUITests.AppCompositionUITests testMenuPreviewTracksEveryFakeRuntimeState]' passed (20.958 seconds).
+Test Case '-[LocalMemoryUITests.AppCompositionUITests testPausedStatePersistsAcrossRelaunch]' started.
+    t =     0.00s Start Test at 2026-08-28 12:19:48.022
+    t =     0.14s Set Up
+    t =     0.14s Open com.justinhou.deepshelves.localmemory
+    t =     0.14s     Launch com.justinhou.deepshelves.localmemory
+2026-08-28 12:19:48.161 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-08-28 12:19:48.161 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     0.37s         Wait for accessibility to load
+    t =     0.50s         Setting up automation session
+    t =     0.51s         Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     0.53s Waiting 5.0s for "menu.primaryAction" Button to exist
+    t =     1.57s     Checking `Expect predicate `existsNoRetry == 1` for object "menu.primaryAction" Button`
+    t =     1.57s         Checking existence of `"menu.primaryAction" Button`
+    t =     1.73s Find the "menu.primaryAction" Button
+    t =     1.77s Click "menu.primaryAction" Button
+    t =     1.77s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     1.77s     Find the "menu.primaryAction" Button
+    t =     1.81s     Check for interrupting elements affecting "menu.primaryAction" Button
+    t =     1.84s     Synthesize event
+    t =     2.21s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     2.22s Waiting 5.0s for "Paused" StaticText to exist
+    t =     3.24s     Checking `Expect predicate `existsNoRetry == 1` for object "Paused" StaticText`
+    t =     3.24s         Checking existence of `"Paused" StaticText`
+    t =     3.33s Terminate com.justinhou.deepshelves.localmemory:99839
+    t =     4.40s Open com.justinhou.deepshelves.localmemory
+    t =     4.40s     Launch com.justinhou.deepshelves.localmemory
+2026-08-28 12:19:52.424 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-08-28 12:19:52.424 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     4.64s         Wait for accessibility to load
+    t =     4.75s         Setting up automation session
+    t =     4.76s         Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     4.79s Waiting 5.0s for "menu.status" StaticText to exist
+    t =     5.85s     Checking `Expect predicate `existsNoRetry == 1` for object "menu.status" StaticText`
+    t =     5.85s         Checking existence of `"menu.status" StaticText`
+    t =     6.01s Waiting 5.0s for "Paused" StaticText to exist
+    t =     7.05s     Checking `Expect predicate `existsNoRetry == 1` for object "Paused" StaticText`
+    t =     7.05s         Checking existence of `"Paused" StaticText`
+    t =     7.11s Find the "menu.primaryAction" Button
+    t =     7.16s Tear Down
+Test Case '-[LocalMemoryUITests.AppCompositionUITests testPausedStatePersistsAcrossRelaunch]' passed (7.476 seconds).
+Test Suite 'AppCompositionUITests' passed at 2026-08-28 12:19:55.498.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 35.035 (35.038) seconds
+Test Suite 'BootstrapUITests' started at 2026-08-28 12:19:55.499.
+Test Case '-[LocalMemoryUITests.BootstrapUITests testBootstrapWindowAppears]' started.
+    t =     0.00s Start Test at 2026-08-28 12:19:55.500
+    t =     0.12s Set Up
+    t =     0.12s Open com.justinhou.deepshelves.localmemory
+    t =     0.12s     Launch com.justinhou.deepshelves.localmemory
+    t =     0.12s         Terminate com.justinhou.deepshelves.localmemory:99845
+2026-08-28 12:19:56.688 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-08-28 12:19:56.688 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.42s         Wait for accessibility to load
+    t =     1.54s         Setting up automation session
+    t =     1.55s         Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     1.57s Waiting 5.0s for "Local Memory" StaticText to exist
+    t =     2.65s     Checking `Expect predicate `existsNoRetry == 1` for object "Local Memory" StaticText`
+    t =     2.65s         Checking existence of `"Local Memory" StaticText`
+    t =     2.86s Tear Down
+Test Case '-[LocalMemoryUITests.BootstrapUITests testBootstrapWindowAppears]' passed (3.114 seconds).
+Test Suite 'BootstrapUITests' passed at 2026-08-28 12:19:58.614.
+	 Executed 1 test, with 0 failures (0 unexpected) in 3.114 (3.115) seconds
+Test Suite 'GlobalSearchPanelUITests' started at 2026-08-28 12:19:58.615.
+Test Case '-[LocalMemoryUITests.GlobalSearchPanelUITests testDefaultOptionSpaceShortcutPresentsPanel]' started.
+    t =     0.00s Start Test at 2026-08-28 12:19:58.616
+    t =     0.12s Set Up
+    t =     0.12s Open com.justinhou.deepshelves.localmemory
+    t =     0.12s     Launch com.justinhou.deepshelves.localmemory
+    t =     0.12s         Terminate com.justinhou.deepshelves.localmemory:99851
+2026-08-28 12:19:59.836 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-08-28 12:19:59.836 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.45s         Wait for accessibility to load
+    t =     1.55s         Setting up automation session
+    t =     1.56s         Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     1.58s Waiting 5.0s for "main.root" Any to exist
+    t =     2.58s     Checking `Expect predicate `existsNoRetry == 1` for object "main.root" Any`
+    t =     2.58s         Checking existence of `"main.root" Any`
+    t =     2.77s Type ' ' key (XCUIKeyboardKeySpace) with modifiers '⌥' (0x08)
+    t =     2.77s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     2.77s     Find the Target Application 'com.justinhou.deepshelves.localmemory'
+    t =     2.81s     Check for interrupting elements affecting "Local Memory" Application
+    t =     2.81s     Synthesize event
+    t =     2.97s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     2.98s Waiting 3.0s for "search.content" Any to exist
+    t =     4.01s     Checking `Expect predicate `existsNoRetry == 1` for object "search.content" Any`
+    t =     4.01s         Checking existence of `"search.content" Any`
+    t =     4.34s Checking existence of `"search.query" TextField`
+    t =     4.42s Tear Down
+Test Case '-[LocalMemoryUITests.GlobalSearchPanelUITests testDefaultOptionSpaceShortcutPresentsPanel]' passed (4.707 seconds).
+Test Case '-[LocalMemoryUITests.GlobalSearchPanelUITests testPanelSelectionPersistsIntoSharedMainNavigationState]' started.
+    t =     0.00s Start Test at 2026-08-28 12:20:03.323
+    t =     0.13s Set Up
+    t =     0.13s Open com.justinhou.deepshelves.localmemory
+    t =     0.13s     Launch com.justinhou.deepshelves.localmemory
+    t =     0.13s         Terminate com.justinhou.deepshelves.localmemory:99857
+2026-08-28 12:20:04.520 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-08-28 12:20:04.520 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.43s         Wait for accessibility to load
+    t =     1.55s         Setting up automation session
+    t =     1.56s         Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     2.13s Waiting 5.0s for "search.result.00000000-0000-4000-8000-000000000102" Button to exist
+    t =     3.17s     Checking `Expect predicate `existsNoRetry == 1` for object "search.result.00000000-0000-4000-8000-000000000102" Button`
+    t =     3.17s         Checking existence of `"search.result.00000000-0000-4000-8000-000000000102" Button`
+    t =     3.36s Click "search.result.00000000-0000-4000-8000-000000000102" Button
+    t =     3.36s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     3.36s     Find the "search.result.00000000-0000-4000-8000-000000000102" Button
+    t =     3.42s     Check for interrupting elements affecting "search.result.00000000-0000-4000-8000-000000000102" Button
+    t =     3.46s     Synthesize event
+    t =     3.92s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     4.93s Terminate com.justinhou.deepshelves.localmemory:99865
+    t =     6.01s Open com.justinhou.deepshelves.localmemory
+    t =     6.01s     Launch com.justinhou.deepshelves.localmemory
+2026-08-28 12:20:09.331 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-08-28 12:20:09.331 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     6.24s         Wait for accessibility to load
+    t =     6.36s         Setting up automation session
+    t =     6.36s         Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     6.39s Waiting 5.0s for "Afternoon research" StaticText to exist
+    t =     7.47s     Checking `Expect predicate `existsNoRetry == 1` for object "Afternoon research" StaticText`
+    t =     7.47s         Checking existence of `"Afternoon research" StaticText`
+    t =     7.70s Waiting 3.0s for "inspector.title" StaticText to exist
+    t =     8.73s     Checking `Expect predicate `existsNoRetry == 1` for object "inspector.title" StaticText`
+    t =     8.73s         Checking existence of `"inspector.title" StaticText`
+    t =     8.82s Tear Down
+Test Case '-[LocalMemoryUITests.GlobalSearchPanelUITests testPanelSelectionPersistsIntoSharedMainNavigationState]' passed (9.158 seconds).
+Test Case '-[LocalMemoryUITests.GlobalSearchPanelUITests testPanelUsesFrozenGeometryFocusEscapeAndAppearanceBudgets]' started.
+    t =     0.00s Start Test at 2026-08-28 12:20:12.482
+    t =     0.12s Set Up
+    t =     0.12s Open com.justinhou.deepshelves.localmemory
+    t =     0.12s     Launch com.justinhou.deepshelves.localmemory
+    t =     0.12s         Terminate com.justinhou.deepshelves.localmemory:99871
+2026-08-28 12:20:13.671 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-08-28 12:20:13.671 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.42s         Wait for accessibility to load
+    t =     1.53s         Setting up automation session
+    t =     1.54s         Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     1.55s Waiting 5.0s for "search.content" Any to exist
+    t =     2.56s     Checking `Expect predicate `existsNoRetry == 1` for object "search.content" Any`
+    t =     2.57s         Checking existence of `"search.content" Any`
+    t =     2.80s Find the "search.content" Any
+    t =     2.87s Find the "search.content" Group
+    t =     2.96s Waiting 3.0s for "search.query" TextField to exist
+    t =     4.00s     Checking `Expect predicate `existsNoRetry == 1` for object "search.query" TextField`
+    t =     4.00s         Checking existence of `"search.query" TextField`
+    t =     4.08s Type 'Safari' into "search.query" TextField
+    t =     4.08s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     4.09s     Find the "search.query" TextField
+    t =     4.17s     Check for interrupting elements affecting "search.query" TextField
+    t =     4.20s     Synthesize event
+    t =     4.39s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     4.40s Find the "search.query" TextField
+    t =     4.47s Waiting 2.0s for "search.result.00000000-0000-4000-8000-000000000102" Button to exist
+    t =     5.51s     Checking `Expect predicate `existsNoRetry == 1` for object "search.result.00000000-0000-4000-8000-000000000102" Button`
+    t =     5.51s         Checking existence of `"search.result.00000000-0000-4000-8000-000000000102" Button`
+    t =     5.59s Waiting 2.0s for "search.presentationTiming" StaticText to exist
+    t =     6.62s     Checking `Expect predicate `existsNoRetry == 1` for object "search.presentationTiming" StaticText`
+    t =     6.62s         Checking existence of `"search.presentationTiming" StaticText`
+    t =     6.69s Find the "search.presentationTiming" StaticText
+    t =     6.77s Find the "search.presentationTiming" StaticText
+LM015_S6_TIMING cold_ms=72 warm_ms=14
+    t =     6.83s Type '⎋' key (XCUIKeyboardKeyEscape) with no modifiers
+    t =     6.83s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     6.84s     Find the "search.query" TextField
+    t =     6.90s     Check for interrupting elements affecting "search.query" TextField
+    t =     6.93s     Synthesize event
+    t =     6.98s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     8.01s Checking `Expect predicate `exists == 0` for object "search.content" Group`
+    t =     8.01s     Checking existence of `"search.content" Group`
+    t =     8.09s Tear Down
+Test Case '-[LocalMemoryUITests.GlobalSearchPanelUITests testPanelUsesFrozenGeometryFocusEscapeAndAppearanceBudgets]' passed (8.417 seconds).
+Test Case '-[LocalMemoryUITests.GlobalSearchPanelUITests testShortcutCollisionOffersOneRecoverableSettingsAction]' started.
+    t =     0.00s Start Test at 2026-08-28 12:20:20.899
+    t =     0.12s Set Up
+    t =     0.12s Open com.justinhou.deepshelves.localmemory
+    t =     0.12s     Launch com.justinhou.deepshelves.localmemory
+    t =     0.12s         Terminate com.justinhou.deepshelves.localmemory:99877
+2026-08-28 12:20:22.082 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-08-28 12:20:22.082 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.41s         Wait for accessibility to load
+    t =     1.53s         Setting up automation session
+    t =     1.54s         Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     1.74s Waiting 5.0s for "Shortcut unavailable" StaticText to exist
+    t =     2.77s     Checking `Expect predicate `existsNoRetry == 1` for object "Shortcut unavailable" StaticText`
+    t =     2.77s         Checking existence of `"Shortcut unavailable" StaticText`
+    t =     2.95s Checking existence of `"LM-SHORTCUT-409" StaticText`
+    t =     2.99s Checking existence of `"settings.shortcutRecovery" Button`
+    t =     3.04s Click "settings.shortcutRecovery" Button
+    t =     3.04s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     3.04s     Find the "settings.shortcutRecovery" Button
+    t =     3.09s     Check for interrupting elements affecting "settings.shortcutRecovery" Button
+    t =     3.11s     Synthesize event
+    t =     3.46s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     3.47s Waiting 3.0s for "Active" StaticText to exist
+    t =     4.51s     Checking `Expect predicate `existsNoRetry == 1` for object "Active" StaticText`
+    t =     4.51s         Checking existence of `"Active" StaticText`
+    t =     4.58s Checking existence of `"settings.shortcutRecovery" Button`
+    t =     4.63s Tear Down
+Test Case '-[LocalMemoryUITests.GlobalSearchPanelUITests testShortcutCollisionOffersOneRecoverableSettingsAction]' passed (4.884 seconds).
+Test Suite 'GlobalSearchPanelUITests' passed at 2026-08-28 12:20:25.783.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 27.165 (27.168) seconds
+Test Suite 'MainShellUITests' started at 2026-08-28 12:20:25.784.
+Test Case '-[LocalMemoryUITests.MainShellUITests testMinimumWindowHidesInspectorAndKeepsNavigationUsable]' started.
+    t =     0.00s Start Test at 2026-08-28 12:20:25.785
+    t =     0.12s Set Up
+    t =     0.12s Open com.justinhou.deepshelves.localmemory
+    t =     0.12s     Launch com.justinhou.deepshelves.localmemory
+    t =     0.12s         Terminate com.justinhou.deepshelves.localmemory:99888
+2026-08-28 12:20:26.981 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-08-28 12:20:26.981 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.42s         Wait for accessibility to load
+    t =     1.53s         Setting up automation session
+    t =     1.54s         Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     1.57s Waiting 5.0s for Window (First Match) to exist
+    t =     2.61s     Checking `Expect predicate `existsNoRetry == 1` for object Window (First Match)`
+    t =     2.61s         Checking existence of `Window (First Match)`
+    t =     2.62s Find the Window (First Match)
+    t =     2.63s Find the "main" Window
+    t =     2.65s Find the "main" Window
+    t =     2.66s Checking existence of `"sidebar.search" Any`
+    t =     2.84s Checking existence of `"main.inspector" Other`
+    t =     2.89s Click "sidebar.timeline" Any
+    t =     2.89s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     2.89s     Find the "sidebar.timeline" Any
+    t =     2.99s     Check for interrupting elements affecting "sidebar.timeline" StaticText
+    t =     3.02s     Synthesize event
+    t =     3.45s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     3.47s Waiting 2.0s for "Timeline" StaticText to exist
+    t =     4.51s     Checking `Expect predicate `existsNoRetry == 1` for object "Timeline" StaticText`
+    t =     4.51s         Checking existence of `"Timeline" StaticText`
+    t =     4.59s Checking existence of `"moment.afternoon-research" Button`
+    t =     4.65s Tear Down
+Test Case '-[LocalMemoryUITests.MainShellUITests testMinimumWindowHidesInspectorAndKeepsNavigationUsable]' passed (4.934 seconds).
+Test Case '-[LocalMemoryUITests.MainShellUITests testRestoresSectionAndSelectionAcrossRelaunch]' started.
+    t =     0.00s Start Test at 2026-08-28 12:20:30.719
+    t =     0.12s Set Up
+    t =     0.12s Open com.justinhou.deepshelves.localmemory
+    t =     0.12s     Launch com.justinhou.deepshelves.localmemory
+    t =     0.12s         Terminate com.justinhou.deepshelves.localmemory:99894
+2026-08-28 12:20:31.882 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-08-28 12:20:31.882 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.39s         Wait for accessibility to load
+    t =     1.49s         Setting up automation session
+    t =     1.50s         Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     2.00s Waiting 5.0s for "sidebar.timeline" Any to exist
+    t =     3.01s     Checking `Expect predicate `existsNoRetry == 1` for object "sidebar.timeline" Any`
+    t =     3.01s         Checking existence of `"sidebar.timeline" Any`
+    t =     3.18s Click "sidebar.timeline" Any
+    t =     3.18s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     3.18s     Find the "sidebar.timeline" Any
+    t =     3.23s     Check for interrupting elements affecting "sidebar.timeline" StaticText
+    t =     3.26s     Synthesize event
+    t =     3.72s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     3.73s Waiting 2.0s for "Timeline" StaticText to exist
+    t =     4.76s     Checking `Expect predicate `existsNoRetry == 1` for object "Timeline" StaticText`
+    t =     4.76s         Checking existence of `"Timeline" StaticText`
+    t =     4.85s Waiting 2.0s for "moment.afternoon-research" Button to exist
+    t =     5.87s     Checking `Expect predicate `existsNoRetry == 1` for object "moment.afternoon-research" Button`
+    t =     5.87s         Checking existence of `"moment.afternoon-research" Button`
+    t =     5.95s Click "moment.afternoon-research" Button
+    t =     5.95s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     5.95s     Find the "moment.afternoon-research" Button
+    t =     6.02s     Check for interrupting elements affecting "moment.afternoon-research" Button
+    t =     6.07s     Synthesize event
+    t =     6.54s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     6.56s Waiting 2.0s for "inspector.title" StaticText to exist
+    t =     7.58s     Checking `Expect predicate `existsNoRetry == 1` for object "inspector.title" StaticText`
+    t =     7.58s         Checking existence of `"inspector.title" StaticText`
+    t =     7.67s Checking existence of `"Afternoon research" StaticText`
+    t =     8.74s Terminate com.justinhou.deepshelves.localmemory:99902
+    t =     9.80s Open com.justinhou.deepshelves.localmemory
+    t =     9.81s     Launch com.justinhou.deepshelves.localmemory
+2026-08-28 12:20:40.527 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-08-28 12:20:40.527 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =    10.04s         Wait for accessibility to load
+    t =    10.14s         Setting up automation session
+    t =    10.15s         Wait for com.justinhou.deepshelves.localmemory to idle
+    t =    10.18s Waiting 5.0s for "Timeline" StaticText to exist
+    t =    11.21s     Checking `Expect predicate `existsNoRetry == 1` for object "Timeline" StaticText`
+    t =    11.21s         Checking existence of `"Timeline" StaticText`
+    t =    11.43s Waiting 2.0s for "inspector.title" StaticText to exist
+    t =    12.44s     Checking `Expect predicate `existsNoRetry == 1` for object "inspector.title" StaticText`
+    t =    12.44s         Checking existence of `"inspector.title" StaticText`
+    t =    12.52s Checking existence of `"Afternoon research" StaticText`
+    t =    12.59s Tear Down
+Test Case '-[LocalMemoryUITests.MainShellUITests testRestoresSectionAndSelectionAcrossRelaunch]' passed (12.907 seconds).
+Test Case '-[LocalMemoryUITests.MainShellUITests testSettingsSceneUsesNativeSpecifiedGeometry]' started.
+    t =     0.00s Start Test at 2026-08-28 12:20:43.627
+    t =     0.11s Set Up
+    t =     0.11s Open com.justinhou.deepshelves.localmemory
+    t =     0.11s     Launch com.justinhou.deepshelves.localmemory
+    t =     0.11s         Terminate com.justinhou.deepshelves.localmemory:99911
+2026-08-28 12:20:44.788 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-08-28 12:20:44.788 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.39s         Wait for accessibility to load
+    t =     1.51s         Setting up automation session
+    t =     1.51s         Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     1.54s Waiting 5.0s for "main.openSettings" Button to exist
+    t =     2.62s     Checking `Expect predicate `existsNoRetry == 1` for object "main.openSettings" Button`
+    t =     2.62s         Checking existence of `"main.openSettings" Button`
+    t =     2.80s Click "main.openSettings" Button
+    t =     2.80s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     2.80s     Find the "main.openSettings" Button
+    t =     2.86s     Check for interrupting elements affecting "main.openSettings" Button
+    t =     2.88s     Synthesize event
+    t =     3.35s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     3.36s Waiting 5.0s for "Capture" StaticText to exist
+    t =     4.43s     Checking `Expect predicate `existsNoRetry == 1` for object "Capture" StaticText`
+    t =     4.43s         Checking existence of `"Capture" StaticText`
+    t =     4.55s Get all elements bound by index for: Descendants matching type Window
+    t =     4.59s Find the Window (Element at index 1)
+    t =     4.65s Find the Window (Element at index 0)
+    t =     4.71s Find the "com_apple_SwiftUI_Settings_window" Window
+    t =     4.77s Find the "com_apple_SwiftUI_Settings_window" Window
+    t =     4.84s Find the "com_apple_SwiftUI_Settings_window" Window
+    t =     4.90s Tear Down
+Test Case '-[LocalMemoryUITests.MainShellUITests testSettingsSceneUsesNativeSpecifiedGeometry]' passed (5.210 seconds).
+Test Suite 'MainShellUITests' passed at 2026-08-28 12:20:48.836.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 23.050 (23.052) seconds
+Test Suite 'OnboardingUITests' started at 2026-08-28 12:20:48.837.
+Test Case '-[LocalMemoryUITests.OnboardingUITests testDeniedPathResumesWithoutRepeatingPermissionAction]' started.
+    t =     0.00s Start Test at 2026-08-28 12:20:48.837
+    t =     0.12s Set Up
+    t =     0.12s Open com.justinhou.deepshelves.localmemory
+    t =     0.12s     Launch com.justinhou.deepshelves.localmemory
+    t =     0.12s         Terminate com.justinhou.deepshelves.localmemory:99918
+2026-08-28 12:20:49.986 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-08-28 12:20:49.986 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.37s         Wait for accessibility to load
+    t =     1.50s         Setting up automation session
+    t =     1.51s         Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     1.72s Waiting 5.0s for "onboarding.welcome" Any to exist
+    t =     2.74s     Checking `Expect predicate `existsNoRetry == 1` for object "onboarding.welcome" Any`
+    t =     2.74s         Checking existence of `"onboarding.welcome" Any`
+    t =     2.90s Click "onboarding.continue" Button
+    t =     2.91s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     2.91s     Find the "onboarding.continue" Button
+    t =     2.95s     Check for interrupting elements affecting "onboarding.continue" Button
+    t =     2.97s     Synthesize event
+    t =     3.32s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     3.36s Waiting 3.0s for "onboarding.permission.screenRecording" Any to exist
+    t =     4.38s     Checking `Expect predicate `existsNoRetry == 1` for object "onboarding.permission.screenRecording" Any`
+    t =     4.38s         Checking existence of `"onboarding.permission.screenRecording" Any`
+    t =     4.48s Checking existence of `"Permission required" StaticText`
+    t =     4.53s Find the "onboarding.permission.screenRecording" Any
+    t =     4.60s Click "Open System Settings" Button
+    t =     4.60s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     4.61s     Find the "Open System Settings" Button
+    t =     4.65s     Check for interrupting elements affecting "Open System Settings" Button
+    t =     4.67s     Synthesize event
+    t =     5.02s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     5.03s Terminate com.justinhou.deepshelves.localmemory:99926
+    t =     6.08s Open com.justinhou.deepshelves.localmemory
+    t =     6.08s     Launch com.justinhou.deepshelves.localmemory
+2026-08-28 12:20:54.922 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-08-28 12:20:54.922 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     6.32s         Wait for accessibility to load
+    t =     6.44s         Setting up automation session
+    t =     6.45s         Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     6.66s Waiting 5.0s for "onboarding.permissions" Any to exist
+    t =     7.71s     Checking `Expect predicate `existsNoRetry == 1` for object "onboarding.permissions" Any`
+    t =     7.71s         Checking existence of `"onboarding.permissions" Any`
+    t =     7.88s Waiting 3.0s for "onboarding.permission.screenRecording" Any to exist
+    t =     8.90s     Checking `Expect predicate `existsNoRetry == 1` for object "onboarding.permission.screenRecording" Any`
+    t =     8.91s         Checking existence of `"onboarding.permission.screenRecording" Any`
+    t =     8.99s Find the "onboarding.permission.screenRecording" Any
+    t =     9.06s Tear Down
+Test Case '-[LocalMemoryUITests.OnboardingUITests testDeniedPathResumesWithoutRepeatingPermissionAction]' passed (9.403 seconds).
+Test Case '-[LocalMemoryUITests.OnboardingUITests testGrantedPathShowsPrivacyPreviewAndCompletesOnboarding]' started.
+    t =     0.00s Start Test at 2026-08-28 12:20:58.241
+    t =     0.11s Set Up
+    t =     0.11s Open com.justinhou.deepshelves.localmemory
+    t =     0.11s     Launch com.justinhou.deepshelves.localmemory
+    t =     0.11s         Terminate com.justinhou.deepshelves.localmemory:99934
+2026-08-28 12:20:59.405 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-08-28 12:20:59.405 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.40s         Wait for accessibility to load
+    t =     1.52s         Setting up automation session
+    t =     1.53s         Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     1.75s Waiting 5.0s for "onboarding.welcome" Any to exist
+    t =     2.77s     Checking `Expect predicate `existsNoRetry == 1` for object "onboarding.welcome" Any`
+    t =     2.77s         Checking existence of `"onboarding.welcome" Any`
+    t =     2.94s Click "onboarding.continue" Button
+    t =     2.94s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     2.94s     Find the "onboarding.continue" Button
+    t =     2.98s     Check for interrupting elements affecting "onboarding.continue" Button
+    t =     3.00s     Synthesize event
+    t =     3.33s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     3.36s Waiting 3.0s for "Granted" StaticText to exist
+    t =     4.39s     Checking `Expect predicate `existsNoRetry == 1` for object "Granted" StaticText`
+    t =     4.40s         Checking existence of `"Granted" StaticText`
+    t =     4.48s Get number of matches for: Elements matching predicate '"Microphone" IN identifiers'
+    t =     4.52s Click "onboarding.continue" Button
+    t =     4.52s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     4.53s     Find the "onboarding.continue" Button
+    t =     4.58s     Check for interrupting elements affecting "onboarding.continue" Button
+    t =     4.61s     Synthesize event
+    t =     4.92s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     4.96s Waiting 3.0s for "onboarding.privacy" Any to exist
+    t =     5.99s     Checking `Expect predicate `existsNoRetry == 1` for object "onboarding.privacy" Any`
+    t =     5.99s         Checking existence of `"onboarding.privacy" Any`
+    t =     6.10s Checking existence of `"Local Memory records only your active window. Background windows, notifications, the Dock, and the desktop are not stored." StaticText`
+    t =     6.14s Checking existence of `"onboarding.preview" Any`
+    t =     6.21s Checking existence of `"onboarding.preview.active" Any`
+    t =     6.27s Checking existence of `"onboarding.preview.background" Any`
+    t =     6.34s Checking existence of `"onboarding.preview.saved" Any`
+    t =     6.40s Click "onboarding.continue" Button
+    t =     6.40s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     6.40s     Find the "onboarding.continue" Button
+    t =     6.45s     Check for interrupting elements affecting "onboarding.continue" Button
+    t =     6.46s     Synthesize event
+    t =     6.79s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     6.81s Waiting 3.0s for "onboarding.ready" Any to exist
+    t =     7.84s     Checking `Expect predicate `existsNoRetry == 1` for object "onboarding.ready" Any`
+    t =     7.84s         Checking existence of `"onboarding.ready" Any`
+    t =     7.94s Checking existence of `"30 days" StaticText`
+    t =     7.99s Checking existence of `"20 GB" StaticText`
+    t =     8.04s Click "onboarding.finish" Button
+    t =     8.04s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     8.04s     Find the "onboarding.finish" Button
+    t =     8.09s     Check for interrupting elements affecting "onboarding.finish" Button
+    t =     8.11s     Synthesize event
+    t =     8.46s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     8.75s Waiting 5.0s for "main.root" Any to exist
+    t =     9.78s     Checking `Expect predicate `existsNoRetry == 1` for object "main.root" Any`
+    t =     9.78s         Checking existence of `"main.root" Any`
+    t =     9.88s Checking existence of `"onboarding.root" Any`
+    t =     9.94s Tear Down
+Test Case '-[LocalMemoryUITests.OnboardingUITests testGrantedPathShowsPrivacyPreviewAndCompletesOnboarding]' passed (10.279 seconds).
+Test Case '-[LocalMemoryUITests.OnboardingUITests testReturnKeepsOnboardingDefaultActionOutsideTheMainShell]' started.
+    t =     0.00s Start Test at 2026-08-28 12:21:08.521
+    t =     0.12s Set Up
+    t =     0.12s Open com.justinhou.deepshelves.localmemory
+    t =     0.12s     Launch com.justinhou.deepshelves.localmemory
+    t =     0.12s         Terminate com.justinhou.deepshelves.localmemory:99941
+2026-08-28 12:21:09.712 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-08-28 12:21:09.712 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.43s         Wait for accessibility to load
+    t =     1.58s         Setting up automation session
+    t =     1.59s         Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     1.81s Waiting 5.0s for "onboarding.welcome" Any to exist
+    t =     2.84s     Checking `Expect predicate `existsNoRetry == 1` for object "onboarding.welcome" Any`
+    t =     2.84s         Checking existence of `"onboarding.welcome" Any`
+    t =     3.00s Type '↩' key (XCUIKeyboardKeyReturn) with no modifiers
+    t =     3.00s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     3.01s     Find the Target Application 'com.justinhou.deepshelves.localmemory'
+    t =     3.05s     Check for interrupting elements affecting "Local Memory" Application
+    t =     3.05s     Synthesize event
+    t =     3.08s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     3.09s Waiting 3.0s for "onboarding.permissions" Any to exist
+    t =     4.11s     Checking `Expect predicate `existsNoRetry == 1` for object "onboarding.permissions" Any`
+    t =     4.11s         Checking existence of `"onboarding.permissions" Any`
+    t =     4.20s Tear Down
+Test Case '-[LocalMemoryUITests.OnboardingUITests testReturnKeepsOnboardingDefaultActionOutsideTheMainShell]' passed (4.501 seconds).
+Test Case '-[LocalMemoryUITests.OnboardingUITests testRevokedPathIsExplicitAndStillNavigable]' started.
+    t =     0.00s Start Test at 2026-08-28 12:21:13.023
+    t =     0.12s Set Up
+    t =     0.12s Open com.justinhou.deepshelves.localmemory
+    t =     0.12s     Launch com.justinhou.deepshelves.localmemory
+    t =     0.12s         Terminate com.justinhou.deepshelves.localmemory:99958
+2026-08-28 12:21:14.187 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-08-28 12:21:14.187 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.39s         Wait for accessibility to load
+    t =     1.51s         Setting up automation session
+    t =     1.52s         Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     1.74s Waiting 5.0s for "onboarding.welcome" Any to exist
+    t =     2.80s     Checking `Expect predicate `existsNoRetry == 1` for object "onboarding.welcome" Any`
+    t =     2.80s         Checking existence of `"onboarding.welcome" Any`
+    t =     2.96s Click "onboarding.continue" Button
+    t =     2.96s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     2.96s     Find the "onboarding.continue" Button
+    t =     3.00s     Check for interrupting elements affecting "onboarding.continue" Button
+    t =     3.01s     Synthesize event
+    t =     3.37s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     3.42s Waiting 3.0s for "Permission revoked" StaticText to exist
+    t =     4.43s     Checking `Expect predicate `existsNoRetry == 1` for object "Permission revoked" StaticText`
+    t =     4.43s         Checking existence of `"Permission revoked" StaticText`
+    t =     4.51s Checking existence of `"Open System Settings" Button`
+    t =     4.56s Click "onboarding.continue" Button
+    t =     4.56s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     4.56s     Find the "onboarding.continue" Button
+    t =     4.62s     Check for interrupting elements affecting "onboarding.continue" Button
+    t =     4.63s     Synthesize event
+    t =     5.00s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     5.02s Waiting 3.0s for "onboarding.privacy" Any to exist
+    t =     6.04s     Checking `Expect predicate `existsNoRetry == 1` for object "onboarding.privacy" Any`
+    t =     6.04s         Checking existence of `"onboarding.privacy" Any`
+    t =     6.13s Click "onboarding.back" Button
+    t =     6.13s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     6.13s     Find the "onboarding.back" Button
+    t =     6.19s     Check for interrupting elements affecting "onboarding.back" Button
+    t =     6.20s     Synthesize event
+    t =     6.56s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     6.57s Waiting 3.0s for "onboarding.permissions" Any to exist
+    t =     7.60s     Checking `Expect predicate `existsNoRetry == 1` for object "onboarding.permissions" Any`
+    t =     7.60s         Checking existence of `"onboarding.permissions" Any`
+    t =     7.70s Tear Down
+Test Case '-[LocalMemoryUITests.OnboardingUITests testRevokedPathIsExplicitAndStillNavigable]' passed (8.033 seconds).
+Test Suite 'OnboardingUITests' passed at 2026-08-28 12:21:21.055.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 32.216 (32.219) seconds
+Test Suite 'ShellAccessibilityUITests' started at 2026-08-28 12:21:21.056.
+Test Case '-[LocalMemoryUITests.ShellAccessibilityUITests testCommandMenusExposeTheCompleteKeyboardVocabulary]' started.
+    t =     0.00s Start Test at 2026-08-28 12:21:21.057
+    t =     0.12s Set Up
+    t =     0.12s Open com.justinhou.deepshelves.localmemory
+    t =     0.12s     Launch com.justinhou.deepshelves.localmemory
+    t =     0.12s         Terminate com.justinhou.deepshelves.localmemory:99964
+2026-08-28 12:21:22.230 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-08-28 12:21:22.230 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.41s         Wait for accessibility to load
+    t =     1.54s         Setting up automation session
+    t =     1.55s         Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     1.57s Waiting 5.0s for "sidebar.search" Any to exist
+    t =     2.62s     Checking `Expect predicate `existsNoRetry == 1` for object "sidebar.search" Any`
+    t =     2.62s         Checking existence of `"sidebar.search" Any`
+    t =     2.81s Click "Navigate" MenuBarItem
+    t =     2.81s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     2.81s     Find the "Navigate" MenuBarItem
+    t =     2.86s     Check for interrupting elements affecting "Navigate" MenuBarItem
+    t =     2.86s     Synthesize event
+    t =     3.24s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     3.24s Checking existence of `"Search" MenuItem`
+    t =     3.31s Checking existence of `"Timeline" MenuItem`
+    t =     3.36s Checking existence of `"Activity" MenuItem`
+    t =     3.42s Checking existence of `"Back" MenuItem`
+    t =     3.47s Checking existence of `"Forward" MenuItem`
+    t =     3.53s Checking existence of `"Global Search Panel — Option-Space" MenuItem`
+    t =     3.59s Type '⎋' key (XCUIKeyboardKeyEscape) with no modifiers
+    t =     3.59s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     3.59s     Find the Target Application 'com.justinhou.deepshelves.localmemory'
+    t =     3.64s     Check for interrupting elements affecting "Local Memory" Application
+    t =     3.65s     Synthesize event
+    t =     3.67s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     3.67s Click "Moment" MenuBarItem
+    t =     3.68s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     3.68s     Find the "Moment" MenuBarItem
+    t =     3.74s     Check for interrupting elements affecting "Moment" MenuBarItem
+    t =     3.74s     Synthesize event
+    t =     4.11s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     4.12s Checking existence of `"Quick Look" MenuItem`
+    t =     4.20s Checking existence of `"Open Detail" MenuItem`
+    t =     4.26s Checking existence of `"Revisit Source" MenuItem`
+    t =     4.31s Checking existence of `"Previous Application Transition" MenuItem`
+    t =     4.37s Checking existence of `"Next Application Transition" MenuItem`
+    t =     4.43s Checking existence of `"Forget Selected Moment…" MenuItem`
+    t =     4.49s Checking existence of `"Close Transient UI" MenuItem`
+    t =     4.54s Tear Down
+Test Case '-[LocalMemoryUITests.ShellAccessibilityUITests testCommandMenusExposeTheCompleteKeyboardVocabulary]' passed (4.847 seconds).
+Test Case '-[LocalMemoryUITests.ShellAccessibilityUITests testEnglishAndPseudoLocalizedVoiceOverProjections]' started.
+    t =     0.00s Start Test at 2026-08-28 12:21:25.905
+    t =     0.12s Set Up
+    t =     0.12s Open com.justinhou.deepshelves.localmemory
+    t =     0.12s     Launch com.justinhou.deepshelves.localmemory
+    t =     0.12s         Terminate com.justinhou.deepshelves.localmemory:99972
+2026-08-28 12:21:27.097 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-08-28 12:21:27.097 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.42s         Wait for accessibility to load
+    t =     1.54s         Setting up automation session
+    t =     1.55s         Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     1.56s Waiting 5.0s for "moment.morning-planning" Button to exist
+    t =     2.63s     Checking `Expect predicate `existsNoRetry == 1` for object "moment.morning-planning" Button`
+    t =     2.63s         Checking existence of `"moment.morning-planning" Button`
+    t =     2.81s Find the "moment.morning-planning" Button
+    t =     2.87s Find the "moment.morning-planning" Button
+    t =     2.94s Find the "moment.morning-planning" Button
+    t =     3.00s Click "sidebar.timeline" Any
+    t =     3.00s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     3.00s     Find the "sidebar.timeline" Any
+    t =     3.09s     Check for interrupting elements affecting "sidebar.timeline" StaticText
+    t =     3.11s     Synthesize event
+    t =     3.50s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     3.51s Waiting 2.0s for "Timeline accessibility list" Any to exist
+    t =     4.54s     Checking `Expect predicate `existsNoRetry == 1` for object "Timeline accessibility list" Any`
+    t =     4.54s         Checking existence of `"Timeline accessibility list" Any`
+    t =     4.65s Checking existence of `"Permission lost gap, 11:30 AM to 11:45 AM" StaticText`
+    t =     4.70s Click "sidebar.activity" Any
+    t =     4.70s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     4.70s     Find the "sidebar.activity" Any
+    t =     4.79s     Check for interrupting elements affecting "sidebar.activity" StaticText
+    t =     4.82s     Synthesize event
+    t =     5.20s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     5.21s Waiting 2.0s for "Today, 2 PM, 42 recorded minutes, 18 gap minutes" Any to exist
+    t =     6.23s     Checking `Expect predicate `existsNoRetry == 1` for object "Today, 2 PM, 42 recorded minutes, 18 gap minutes" Any`
+    t =     6.23s         Checking existence of `"Today, 2 PM, 42 recorded minutes, 18 gap minutes" Any`
+    t =     6.33s Terminate com.justinhou.deepshelves.localmemory:99980
+    t =     7.38s Open com.justinhou.deepshelves.localmemory
+    t =     7.38s     Launch com.justinhou.deepshelves.localmemory
+2026-08-28 12:21:33.283 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-08-28 12:21:33.283 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     7.61s         Wait for accessibility to load
+    t =     7.73s         Setting up automation session
+    t =     7.74s         Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     7.76s Waiting 5.0s for Button (First Match) to exist
+    t =     8.77s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =     8.77s         Checking existence of `Button (First Match)`
+    t =     8.95s Checking existence of `"sidebar.search" Any`
+    t =     9.01s Checking existence of `"sidebar.timeline" Any`
+    t =     9.06s Checking existence of `"sidebar.activity" Any`
+    t =     9.15s Checking existence of `"sidebar.settings" Any`
+    t =     9.23s Tear Down
+Test Case '-[LocalMemoryUITests.ShellAccessibilityUITests testEnglishAndPseudoLocalizedVoiceOverProjections]' passed (9.557 seconds).
+Test Case '-[LocalMemoryUITests.ShellAccessibilityUITests testMomentKeyboardActionsUseTransientSafetyAndRestoreFocus]' started.
+    t =     0.00s Start Test at 2026-08-28 12:21:35.462
+    t =     0.11s Set Up
+    t =     0.11s Open com.justinhou.deepshelves.localmemory
+    t =     0.11s     Launch com.justinhou.deepshelves.localmemory
+    t =     0.11s         Terminate com.justinhou.deepshelves.localmemory:99988
+2026-08-28 12:21:36.657 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-08-28 12:21:36.657 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.42s         Wait for accessibility to load
+    t =     1.53s         Setting up automation session
+    t =     1.53s         Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     2.05s Waiting 5.0s for "moment.morning-planning" Button to exist
+    t =     3.08s     Checking `Expect predicate `existsNoRetry == 1` for object "moment.morning-planning" Button`
+    t =     3.08s         Checking existence of `"moment.morning-planning" Button`
+    t =     3.25s Click "moment.morning-planning" Button
+    t =     3.25s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     3.25s     Find the "moment.morning-planning" Button
+    t =     3.30s     Check for interrupting elements affecting "moment.morning-planning" Button
+    t =     3.33s     Synthesize event
+    t =     3.79s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     3.80s Waiting 2.0s for "main.toggleInspector" Button to exist
+    t =     4.83s     Checking `Expect predicate `existsNoRetry == 1` for object "main.toggleInspector" Button`
+    t =     4.83s         Checking existence of `"main.toggleInspector" Button`
+    t =     4.93s Click "main.toggleInspector" Button
+    t =     4.93s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     4.93s     Find the "main.toggleInspector" Button
+    t =     5.10s     Check for interrupting elements affecting "main.toggleInspector" Button
+    t =     5.12s     Synthesize event
+    t =     5.54s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     5.55s Waiting 1.0s for "main.inspector" Any to exist
+    t =     6.55s     Checking `Expect predicate `existsNoRetry == 1` for object "main.inspector" Any`
+    t =     6.55s         Checking existence of `"main.inspector" Any`
+    t =     6.63s         Capturing element debug description
+    t =     6.63s     Checking existence of `"main.inspector" Any`
+    t =     6.69s Collecting debug information to assist test failure triage
+    t =     6.69s     Requesting snapshot of accessibility hierarchy for app with pid 99994
+    t =     6.78s Type '↩' key (XCUIKeyboardKeyReturn) with no modifiers
+    t =     6.78s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     6.78s     Find the Target Application 'com.justinhou.deepshelves.localmemory'
+    t =     6.82s     Check for interrupting elements affecting "Local Memory" Application
+    t =     6.82s     Synthesize event
+    t =     6.89s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     6.89s Waiting 2.0s for "inspector.title" Any to exist
+    t =     7.92s     Checking `Expect predicate `existsNoRetry == 1` for object "inspector.title" Any`
+    t =     7.92s         Checking existence of `"inspector.title" Any`
+    t =     8.03s Type ' ' key (XCUIKeyboardKeySpace) with no modifiers
+    t =     8.03s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     8.04s     Find the Target Application 'com.justinhou.deepshelves.localmemory'
+    t =     8.09s     Check for interrupting elements affecting "Local Memory" Application
+    t =     8.09s     Synthesize event
+    t =     8.45s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     8.45s Waiting 2.0s for "Synthetic local Quick Look preview" StaticText to exist
+    t =     9.48s     Checking `Expect predicate `existsNoRetry == 1` for object "Synthetic local Quick Look preview" StaticText`
+    t =     9.48s         Checking existence of `"Synthetic local Quick Look preview" StaticText`
+    t =     9.58s Type '⎋' key (XCUIKeyboardKeyEscape) with no modifiers
+    t =     9.58s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     9.58s     Find the Target Application 'com.justinhou.deepshelves.localmemory'
+    t =     9.64s     Check for interrupting elements affecting "Local Memory" Application
+    t =     9.64s     Synthesize event
+    t =     9.96s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     9.96s Waiting 1.0s for "Synthetic local Quick Look preview" StaticText to exist
+    t =    10.97s     Checking `Expect predicate `existsNoRetry == 1` for object "Synthetic local Quick Look preview" StaticText`
+    t =    10.97s         Checking existence of `"Synthetic local Quick Look preview" StaticText`
+    t =    11.05s         Capturing element debug description
+    t =    11.05s     Checking existence of `"Synthetic local Quick Look preview" StaticText`
+    t =    11.11s Collecting debug information to assist test failure triage
+    t =    11.11s     Requesting snapshot of accessibility hierarchy for app with pid 99994
+    t =    11.22s Type '→' key (XCUIKeyboardKeyRightArrow) with modifiers '⌥' (0x08)
+    t =    11.22s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =    11.22s     Find the Target Application 'com.justinhou.deepshelves.localmemory'
+    t =    11.27s     Check for interrupting elements affecting "Local Memory" Application
+    t =    11.27s     Synthesize event
+    t =    11.33s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =    11.33s Waiting 2.0s for "inspector.title" Any to exist
+    t =    12.36s     Checking `Expect predicate `existsNoRetry == 1` for object "inspector.title" Any`
+    t =    12.37s         Checking existence of `"inspector.title" Any`
+    t =    12.49s Find the "inspector.title" Any
+    t =    12.57s Find the "inspector.title" StaticText
+    t =    12.66s Type '↩' key (XCUIKeyboardKeyReturn) with modifiers '⌘' (0x10)
+    t =    12.66s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =    12.66s     Find the Target Application 'com.justinhou.deepshelves.localmemory'
+    t =    12.71s     Check for interrupting elements affecting "Local Memory" Application
+    t =    12.71s     Synthesize event
+    t =    12.74s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =    12.75s Waiting 2.0s for "Revisit is unavailable for this synthetic fixture." StaticText to exist
+    t =    13.76s     Checking `Expect predicate `existsNoRetry == 1` for object "Revisit is unavailable for this synthetic fixture." StaticText`
+    t =    13.77s         Checking existence of `"Revisit is unavailable for this synthetic fixture." StaticText`
+    t =    13.85s Type '⌫' key (XCUIKeyboardKeyDelete) with modifiers '⌘' (0x10)
+    t =    13.85s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =    13.85s     Find the Target Application 'com.justinhou.deepshelves.localmemory'
+    t =    13.91s     Check for interrupting elements affecting "Local Memory" Application
+    t =    13.91s     Synthesize event
+    t =    14.26s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =    14.26s Waiting 2.0s for "moment.forgetConfirmation" Any to exist
+    t =    15.28s     Checking `Expect predicate `existsNoRetry == 1` for object "moment.forgetConfirmation" Any`
+    t =    15.28s         Checking existence of `"moment.forgetConfirmation" Any`
+    t =    15.40s Checking existence of `"Cancel" Button`
+    t =    15.47s Type '⎋' key (XCUIKeyboardKeyEscape) with no modifiers
+    t =    15.47s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =    15.48s     Find the Target Application 'com.justinhou.deepshelves.localmemory'
+    t =    15.53s     Check for interrupting elements affecting "Local Memory" Application
+    t =    15.53s     Synthesize event
+    t =    15.84s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =    15.85s Waiting 1.0s for "moment.forgetConfirmation" Any to exist
+    t =    16.85s     Checking `Expect predicate `existsNoRetry == 1` for object "moment.forgetConfirmation" Any`
+    t =    16.85s         Checking existence of `"moment.forgetConfirmation" Any`
+    t =    16.95s         Capturing element debug description
+    t =    16.95s     Checking existence of `"moment.forgetConfirmation" Any`
+    t =    17.03s Collecting debug information to assist test failure triage
+    t =    17.03s     Requesting snapshot of accessibility hierarchy for app with pid 99994
+    t =    17.12s Type '←' key (XCUIKeyboardKeyLeftArrow) with modifiers '⌥' (0x08)
+    t =    17.12s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =    17.13s     Find the Target Application 'com.justinhou.deepshelves.localmemory'
+    t =    17.17s     Check for interrupting elements affecting "Local Memory" Application
+    t =    17.18s     Synthesize event
+    t =    17.24s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =    17.24s Find the "inspector.title" StaticText
+    t =    17.56s Find the "inspector.title" StaticText
+    t =    17.66s Tear Down
+Test Case '-[LocalMemoryUITests.ShellAccessibilityUITests testMomentKeyboardActionsUseTransientSafetyAndRestoreFocus]' passed (18.010 seconds).
+Test Case '-[LocalMemoryUITests.ShellAccessibilityUITests testPlanElevenSectionFocusSettingsAndHistoryShortcuts]' started.
+    t =     0.00s Start Test at 2026-08-28 12:21:53.473
+    t =     0.11s Set Up
+    t =     0.12s Open com.justinhou.deepshelves.localmemory
+    t =     0.12s     Launch com.justinhou.deepshelves.localmemory
+    t =     0.12s         Terminate com.justinhou.deepshelves.localmemory:99994
+2026-08-28 12:21:54.637 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-08-28 12:21:54.637 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.40s         Wait for accessibility to load
+    t =     1.52s         Setting up automation session
+    t =     1.52s         Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     2.06s Waiting 5.0s for "sidebar.search" Any to exist
+    t =     3.07s     Checking `Expect predicate `existsNoRetry == 1` for object "sidebar.search" Any`
+    t =     3.07s         Checking existence of `"sidebar.search" Any`
+    t =     3.27s Type '2' key with modifiers '⌘' (0x10)
+    t =     3.27s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     3.27s     Find the Target Application 'com.justinhou.deepshelves.localmemory'
+    t =     3.32s     Check for interrupting elements affecting "Local Memory" Application
+    t =     3.32s     Synthesize event
+    t =     3.42s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     3.42s Waiting 2.0s for "Timeline accessibility list" Any to exist
+    t =     4.46s     Checking `Expect predicate `existsNoRetry == 1` for object "Timeline accessibility list" Any`
+    t =     4.46s         Checking existence of `"Timeline accessibility list" Any`
+    t =     4.56s Type '3' key with modifiers '⌘' (0x10)
+    t =     4.56s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     4.56s     Find the Target Application 'com.justinhou.deepshelves.localmemory'
+    t =     4.61s     Check for interrupting elements affecting "Local Memory" Application
+    t =     4.61s     Synthesize event
+    t =     4.68s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     4.69s Waiting 2.0s for "Today, 2 PM, 42 recorded minutes, 18 gap minutes" Any to exist
+    t =     5.70s     Checking `Expect predicate `existsNoRetry == 1` for object "Today, 2 PM, 42 recorded minutes, 18 gap minutes" Any`
+    t =     5.70s         Checking existence of `"Today, 2 PM, 42 recorded minutes, 18 gap minutes" Any`
+    t =     5.90s Type '[' key with modifiers '⌘' (0x10)
+    t =     5.90s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     5.91s     Find the Target Application 'com.justinhou.deepshelves.localmemory'
+    t =     5.95s     Check for interrupting elements affecting "Local Memory" Application
+    t =     5.96s     Synthesize event
+    t =     6.03s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     6.03s Waiting 2.0s for "Timeline accessibility list" Any to exist
+    t =     7.05s     Checking `Expect predicate `existsNoRetry == 1` for object "Timeline accessibility list" Any`
+    t =     7.05s         Checking existence of `"Timeline accessibility list" Any`
+    t =     7.26s Type ']' key with modifiers '⌘' (0x10)
+    t =     7.26s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     7.26s     Find the Target Application 'com.justinhou.deepshelves.localmemory'
+    t =     7.30s     Check for interrupting elements affecting "Local Memory" Application
+    t =     7.31s     Synthesize event
+    t =     7.36s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     7.37s Waiting 2.0s for "Today, 2 PM, 42 recorded minutes, 18 gap minutes" Any to exist
+    t =     8.39s     Checking `Expect predicate `existsNoRetry == 1` for object "Today, 2 PM, 42 recorded minutes, 18 gap minutes" Any`
+    t =     8.39s         Checking existence of `"Today, 2 PM, 42 recorded minutes, 18 gap minutes" Any`
+    t =     8.60s Type '1' key with modifiers '⌘' (0x10)
+    t =     8.60s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     8.61s     Find the Target Application 'com.justinhou.deepshelves.localmemory'
+    t =     8.65s     Check for interrupting elements affecting "Local Memory" Application
+    t =     8.65s     Synthesize event
+    t =     8.73s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     8.74s Waiting 2.0s for "Search your local memory" Any to exist
+    t =     9.76s     Checking `Expect predicate `existsNoRetry == 1` for object "Search your local memory" Any`
+    t =     9.76s         Checking existence of `"Search your local memory" Any`
+    t =     9.86s Type 'f' key with modifiers '⌘' (0x10)
+    t =     9.86s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     9.86s     Find the Target Application 'com.justinhou.deepshelves.localmemory'
+    t =     9.90s     Check for interrupting elements affecting "Local Memory" Application
+    t =     9.90s     Synthesize event
+    t =     9.98s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =    10.00s Type 'lamp shade' into Target Application 'com.justinhou.deepshelves.localmemory'
+    t =    10.00s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =    10.00s     Find the Target Application 'com.justinhou.deepshelves.localmemory'
+    t =    10.07s     Check for interrupting elements affecting "Local Memory" Application
+    t =    10.07s     Synthesize event
+    t =    10.47s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =    10.47s Find the "Search your local memory" Any
+    t =    10.66s Type ',' key with modifiers '⌘' (0x10)
+    t =    10.66s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =    10.66s     Find the Target Application 'com.justinhou.deepshelves.localmemory'
+    t =    10.70s     Check for interrupting elements affecting "Local Memory" Application
+    t =    10.71s     Synthesize event
+    t =    10.94s     Wait for com.justinhou.deepshelves.localmemory to idle
+    t =    10.94s Waiting 5.0s for "settings.root" Any to exist
+    t =    11.95s     Checking `Expect predicate `existsNoRetry == 1` for object "settings.root" Any`
+    t =    11.95s         Checking existence of `"settings.root" Any`
+    t =    12.06s Tear Down
+Test Case '-[LocalMemoryUITests.ShellAccessibilityUITests testPlanElevenSectionFocusSettingsAndHistoryShortcuts]' passed (12.392 seconds).
+Test Case '-[LocalMemoryUITests.ShellAccessibilityUITests testStandardEmptyLoadingAndErrorStates]' started.
+    t =     0.00s Start Test at 2026-08-28 12:22:05.866
+    t =     0.11s Set Up
+    t =     0.11s Open com.justinhou.deepshelves.localmemory
+    t =     0.11s     Launch com.justinhou.deepshelves.localmemory
+    t =     0.11s         Terminate com.justinhou.deepshelves.localmemory:114
+2026-08-28 12:22:07.037 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-08-28 12:22:07.037 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.40s         Wait for accessibility to load
+    t =     1.51s         Setting up automation session
+    t =     1.52s         Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     1.54s Waiting 5.0s for "Your screen memory will appear here after recording begins." StaticText to exist
+    t =     2.57s     Checking `Expect predicate `existsNoRetry == 1` for object "Your screen memory will appear here after recording begins." StaticText`
+    t =     2.57s         Checking existence of `"Your screen memory will appear here after recording begins." StaticText`
+    t =     2.75s Checking existence of `"Check Capture Status" Button`
+    t =     2.79s Terminate com.justinhou.deepshelves.localmemory:128
+    t =     3.87s Open com.justinhou.deepshelves.localmemory
+    t =     3.87s     Launch com.justinhou.deepshelves.localmemory
+2026-08-28 12:22:09.739 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-08-28 12:22:09.739 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     4.10s         Wait for accessibility to load
+    t =     4.21s         Setting up automation session
+    t =     4.22s         Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     4.23s Waiting 5.0s for "Loading local memory…" Any to exist
+    t =     5.30s     Checking `Expect predicate `existsNoRetry == 1` for object "Loading local memory…" Any`
+    t =     5.30s         Checking existence of `"Loading local memory…" Any`
+    t =     5.48s Terminate com.justinhou.deepshelves.localmemory:136
+    t =     6.56s Open com.justinhou.deepshelves.localmemory
+    t =     6.56s     Launch com.justinhou.deepshelves.localmemory
+2026-08-28 12:22:12.424 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-08-28 12:22:12.424 xcodebuild[99743:24304814] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     6.78s         Wait for accessibility to load
+    t =     6.88s         Setting up automation session
+    t =     6.89s         Wait for com.justinhou.deepshelves.localmemory to idle
+    t =     7.31s Waiting 5.0s for "Diagnostic code: LM-SHELL-500" StaticText to exist
+    t =     8.34s     Checking `Expect predicate `existsNoRetry == 1` for object "Diagnostic code: LM-SHELL-500" StaticText`
+    t =     8.34s         Checking existence of `"Diagnostic code: LM-SHELL-500" StaticText`
+    t =     8.53s Checking existence of `"Try Again" Button`
+    t =     8.58s Tear Down
+Test Case '-[LocalMemoryUITests.ShellAccessibilityUITests testStandardEmptyLoadingAndErrorStates]' passed (8.910 seconds).
+Test Suite 'ShellAccessibilityUITests' passed at 2026-08-28 12:22:14.776.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 53.715 (53.720) seconds
+Test Suite 'LocalMemoryUITests.xctest' passed at 2026-08-28 12:22:14.777.
+	 Executed 20 tests, with 0 failures (0 unexpected) in 174.295 (174.316) seconds
+Test Suite 'Selected tests' passed at 2026-08-28 12:22:14.778.
+	 Executed 20 tests, with 0 failures (0 unexpected) in 174.295 (174.317) seconds
+2026-08-28 12:22:23.795 xcodebuild[99743:24304814] [MT] IDETestOperationsObserverDebug: 183.957 elapsed -- Testing started completed.
+2026-08-28 12:22:23.795 xcodebuild[99743:24304814] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-08-28 12:22:23.795 xcodebuild[99743:24304814] [MT] IDETestOperationsObserverDebug: 183.957 sec, +183.957 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/justinhou/Development/deepshelves/.build/LM010DerivedData/Logs/Test/Test-LocalMemory-UI-2026.08.28_12-19-05-+0200.xcresult
+
+** TEST SUCCEEDED **
+
+Testing started

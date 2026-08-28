@@ -1,0 +1,117 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-016",
+  "status": "passed",
+  "generatedAt": "2026-08-28T10:24:47Z",
+  "baseRevision": "bf91b1ca3b2e14b2486b62397efbe7bd4fbf326b",
+  "checkpoint": "refs/tags/checkpoints/LM-016",
+  "results": {
+    "shell": {
+      "sidebarDestinations": [
+        "Search",
+        "Timeline",
+        "Activity",
+        "Settings"
+      ],
+      "standardStates": [
+        "empty",
+        "delayedLoading",
+        "recoverableError"
+      ],
+      "keyboardCommands": 15,
+      "nativeCommandMenus": true,
+      "iconOnlyControlsWithTooltips": 3,
+      "transientFocusRestoration": true,
+      "destructiveConfirmationDefaultsToCancel": true
+    },
+    "accessibility": {
+      "englishVoiceOverProjection": "passed",
+      "pseudoLocalizedVoiceOverProjection": "passed",
+      "pseudoLocalizationMinimumExpansionPercent": 40,
+      "resultCardAnnouncesTimeAppHostEvidenceAndPosition": true,
+      "timelineAccessibilityList": true,
+      "activityAccessibilityTable": true,
+      "minimumPointerTargetPoints": 24,
+      "minimumBodyTextPoints": 11
+    },
+    "localization": {
+      "foundationLocaleFormatting": true,
+      "verifiedLocales": [
+        "en_US",
+        "fr_FR"
+      ],
+      "localeAwareClockRelativeDayAndWeekStart": true
+    }
+  },
+  "gates": {
+    "accessibilityAudit": {
+      "status": "passed",
+      "command": "./scripts/run-lm016-a11y-audit.sh",
+      "log": "Results/LM-016/a11y.txt",
+      "logSHA256": "979c27f4e649ce68a6993aa9a69d3377194bf79653450e3725230152a9bc5fe8"
+    },
+    "signedUIRegression": {
+      "status": "passed",
+      "command": "./scripts/run-lm016-ui-tests.sh",
+      "tests": 20,
+      "shellAccessibilityTests": 5,
+      "failures": 0,
+      "log": "Results/LM-016/ui-tests.txt",
+      "logSHA256": "0d137e04eee5e49a9910758cff0b7ef434f49e4624f972dbb98cd285817ffec4"
+    },
+    "fullTestSuite": {
+      "status": "passed",
+      "command": "./scripts/test.sh",
+      "xctestUnitTests": 101,
+      "swiftTestingUnitTests": 9,
+      "integrationTests": 7,
+      "privacyTests": 4,
+      "performanceTests": 1,
+      "failures": 0,
+      "log": "Results/LM-016/unit-tests.txt",
+      "logSHA256": "fd739ba05ab26cdd4a13c456728d29a324d55c5d055b58351a8694f22a1c5517"
+    },
+    "contractRegression": {
+      "status": "passed",
+      "command": "./scripts/check-contracts.sh",
+      "fixtures": 11,
+      "log": "Results/LM-016/contracts.txt",
+      "logSHA256": "7481dc4773c2971ce03d8d2775f58dacc7647c134f58fb245c50b7258f724539"
+    },
+    "privacySmoke": {
+      "status": "passed",
+      "command": "./scripts/privacy-smoke.sh",
+      "runtimeNetworkingOrTelemetry": 0,
+      "log": "Results/LM-016/privacy-smoke.txt",
+      "logSHA256": "9ea4b5449f9715c90a3a80909f275c987c95be1130414ae6e10f888fcbe4a8bc"
+    },
+    "releaseBuild": {
+      "status": "passed",
+      "command": "./scripts/build-release.sh",
+      "automaticPackageResolution": false,
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ],
+      "log": "Results/LM-016/release-build.txt",
+      "logSHA256": "3c9b841c3f5181205697d5f6455f68382a066891de7d78e15db9c8f03405abd7"
+    },
+    "signedPosture": {
+      "status": "passed",
+      "command": "./scripts/signing-posture.sh",
+      "log": "Results/LM-016/signing-posture.txt",
+      "logSHA256": "db9ccbd0fbbba8c2b10418d27c6c5eac9a62810ad4c8b8fba6c4b945b4c54a94"
+    },
+    "releaseBinaryAudit": {
+      "status": "passed",
+      "command": "./scripts/check-dependencies.sh --binaries",
+      "forbiddenLinkedOrEmbeddedMarkers": 0,
+      "log": "Results/LM-016/dependency-audit.txt",
+      "logSHA256": "ee19ec2fac69814d57606f8260d4120b82de9aecffb3286ca3159489700b0b32"
+    },
+    "diffWhitespace": {
+      "status": "passed",
+      "command": "git diff --check"
+    }
+  }
+}

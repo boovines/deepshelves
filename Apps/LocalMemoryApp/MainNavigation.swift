@@ -31,6 +31,7 @@ final class MainNavigationViewModel: ObservableObject {
     private var startupTask: Task<MainNavigationSnapshot?, Error>?
     private var persistenceTask: Task<Void, Never>?
     private var pendingSection: MainNavigationSection?
+    private var history = MainNavigationHistory(initial: .default)
 
     init(stateURL: URL) {
         store = FileMainNavigationStateStore(fileURL: stateURL)
@@ -66,6 +67,7 @@ final class MainNavigationViewModel: ObservableObject {
 
         guard !isRestored else { return }
         snapshot = restoredSnapshot
+        history = MainNavigationHistory(initial: restoredSnapshot)
         isRestored = true
 
         if let pendingSection {
@@ -82,31 +84,49 @@ final class MainNavigationViewModel: ObservableObject {
             return
         }
         guard snapshot.section != section else { return }
-        snapshot = MainNavigationSnapshot(
+        apply(MainNavigationSnapshot(
             section: section,
             selectedMomentID: snapshot.selectedMomentID,
             inspectorRequested: snapshot.inspectorRequested
-        )
-        enqueuePersistence()
+        ))
     }
 
     func select(momentID: UUID) {
         guard isRestored, snapshot.selectedMomentID != momentID else { return }
-        snapshot = MainNavigationSnapshot(
+        apply(MainNavigationSnapshot(
             section: snapshot.section,
             selectedMomentID: momentID,
             inspectorRequested: snapshot.inspectorRequested
-        )
-        enqueuePersistence()
+        ))
     }
 
     func setInspectorRequested(_ requested: Bool) {
         guard isRestored, snapshot.inspectorRequested != requested else { return }
-        snapshot = MainNavigationSnapshot(
+        apply(MainNavigationSnapshot(
             section: snapshot.section,
             selectedMomentID: snapshot.selectedMomentID,
             inspectorRequested: requested
-        )
+        ))
+    }
+
+    var canGoBack: Bool { history.canGoBack }
+    var canGoForward: Bool { history.canGoForward }
+
+    func goBack() {
+        guard isRestored, let previous = history.goBack() else { return }
+        snapshot = previous
+        enqueuePersistence()
+    }
+
+    func goForward() {
+        guard isRestored, let next = history.goForward() else { return }
+        snapshot = next
+        enqueuePersistence()
+    }
+
+    private func apply(_ newSnapshot: MainNavigationSnapshot) {
+        snapshot = newSnapshot
+        history.record(newSnapshot)
         enqueuePersistence()
     }
 
@@ -128,6 +148,8 @@ private struct ShellMoment: Identifiable, Equatable {
     let application: String
     let time: String
     let context: String
+    let host: String
+    let evidenceType: String
     let systemImage: String
 }
 
@@ -138,8 +160,14 @@ private enum ShellMomentFixtures {
             accessibilitySlug: "morning-planning",
             title: "Morning planning",
             application: "Calendar",
-            time: "9:12 AM",
+            time: ShellLocaleFormatting.time(
+                hour: 9,
+                minute: 12,
+                locale: Locale(identifier: "en_US")
+            ),
             context: "Local fixture · Planning window",
+            host: "calendar.example.test",
+            evidenceType: "Accessibility text",
             systemImage: "calendar"
         ),
         ShellMoment(
@@ -147,8 +175,14 @@ private enum ShellMomentFixtures {
             accessibilitySlug: "afternoon-research",
             title: "Afternoon research",
             application: "Safari",
-            time: "2:14 PM",
+            time: ShellLocaleFormatting.time(
+                hour: 14,
+                minute: 14,
+                locale: Locale(identifier: "en_US")
+            ),
             context: "example.test · Research notes",
+            host: "example.test",
+            evidenceType: "Visual match",
             systemImage: "safari"
         ),
         ShellMoment(
@@ -156,14 +190,28 @@ private enum ShellMomentFixtures {
             accessibilitySlug: "evening-notes",
             title: "Evening notes",
             application: "Notes",
-            time: "5:42 PM",
+            time: ShellLocaleFormatting.time(
+                hour: 17,
+                minute: 42,
+                locale: Locale(identifier: "en_US")
+            ),
             context: "Local fixture · Daily notes",
+            host: "notes.example.test",
+            evidenceType: "Accessibility text",
             systemImage: "note.text"
         ),
     ]
 
     static func moment(id: UUID?) -> ShellMoment? {
         moments.first { $0.id == id }
+    }
+
+    static func adjacent(to id: UUID?, offset: Int) -> ShellMoment? {
+        guard let id, let index = moments.firstIndex(where: { $0.id == id }) else {
+            return offset >= 0 ? moments.first : moments.last
+        }
+        let target = min(max(index + offset, 0), moments.count - 1)
+        return moments[target]
     }
 }
 
@@ -172,13 +220,18 @@ struct MainShellView: View {
     @ObservedObject var navigationModel: MainNavigationViewModel
     let forcedWindowSize: MainWindowLaunchSize?
     let opensSettingsAtLaunch: Bool
+    let contentState: ShellContentState
+    let localizationMode: ShellLocalizationMode
 
     @Environment(\.openSettings) private var openSettings
 
     var body: some View {
         GeometryReader { geometry in
             NavigationSplitView {
-                MainSidebar(navigationModel: navigationModel)
+                MainSidebar(
+                    navigationModel: navigationModel,
+                    localizationMode: localizationMode
+                )
                     .navigationSplitViewColumnWidth(
                         min: CGFloat(MainWindowDefaults.sidebarWidthRange.lowerBound),
                         ideal: CGFloat(MainWindowDefaults.sidebarIdealWidth),
@@ -187,6 +240,8 @@ struct MainShellView: View {
             } detail: {
                 MainSectionView(
                     navigationModel: navigationModel,
+                    contentState: contentState,
+                    localizationMode: localizationMode,
                     availableWidth: geometry.size.width
                         - CGFloat(MainWindowDefaults.sidebarIdealWidth)
                 )
@@ -202,6 +257,10 @@ struct MainShellView: View {
                 SettingsLink {
                     Label("Settings", systemImage: "gearshape")
                 }
+                .frame(
+                    minWidth: CGFloat(ShellAccessibilityCatalog.minimumPointerTargetPoints),
+                    minHeight: CGFloat(ShellAccessibilityCatalog.minimumPointerTargetPoints)
+                )
                 .help("Open Local Memory Settings")
                 .accessibilityIdentifier("main.openSettings")
             }
@@ -214,6 +273,7 @@ struct MainShellView: View {
         }
         .onAppear { lifecycleModel.setMainWindowVisible(true) }
         .onDisappear { lifecycleModel.setMainWindowVisible(false) }
+        .focusedSceneValue(\.shellCommandsActive, true)
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("main.root")
     }
@@ -221,12 +281,16 @@ struct MainShellView: View {
 
 private struct MainSidebar: View {
     @ObservedObject var navigationModel: MainNavigationViewModel
+    let localizationMode: ShellLocalizationMode
 
     var body: some View {
         List(selection: selection) {
             Section("Memory") {
                 ForEach(MainNavigationSection.allCases, id: \.self) { section in
-                    Label(section.title, systemImage: section.systemImage)
+                    Label(
+                        localizationMode.localized(section.title),
+                        systemImage: section.systemImage
+                    )
                     .tag(section)
                     .accessibilityIdentifier("sidebar.\(section.rawValue)")
                 }
@@ -253,7 +317,12 @@ private struct MainSidebar: View {
 
 private struct MainSectionView: View {
     @ObservedObject var navigationModel: MainNavigationViewModel
+    let contentState: ShellContentState
+    let localizationMode: ShellLocalizationMode
     let availableWidth: CGFloat
+    @State private var showsQuickLook = false
+    @State private var showsForgetConfirmation = false
+    @State private var revisitNotice: String?
 
     private var selectedMoment: ShellMoment? {
         ShellMomentFixtures.moment(id: navigationModel.snapshot.selectedMomentID)
@@ -276,7 +345,9 @@ private struct MainSectionView: View {
                         subtitle: "Find a moment you previously saw",
                         symbol: "magnifyingglass",
                         selectedMoment: selectedMoment,
-                        navigationModel: navigationModel
+                        navigationModel: navigationModel,
+                        contentState: contentState,
+                        localizationMode: localizationMode
                     )
                 case .timeline:
                     MomentSectionCanvas(
@@ -284,12 +355,14 @@ private struct MainSectionView: View {
                         subtitle: "Today · Synthetic local fixture",
                         symbol: "clock.arrow.circlepath",
                         selectedMoment: selectedMoment,
-                        navigationModel: navigationModel
+                        navigationModel: navigationModel,
+                        contentState: .ready,
+                        localizationMode: localizationMode
                     )
                 case .activity:
-                    ActivityShellView()
+                    ActivityShellView(localizationMode: localizationMode)
                 case .settings:
-                    EmbeddedSettingsShellView()
+                    EmbeddedSettingsShellView(localizationMode: localizationMode)
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -308,6 +381,89 @@ private struct MainSectionView: View {
                 )
             }
         }
+        .overlay(alignment: .bottom) {
+            if let revisitNotice {
+                Text(revisitNotice)
+                    .font(.callout)
+                    .padding(12)
+                    .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 10))
+                    .accessibilityIdentifier("moment.revisitStatus")
+                    .padding()
+            }
+        }
+        .sheet(isPresented: $showsQuickLook, onDismiss: restoreSelectedMomentFocus) {
+            VStack(spacing: 16) {
+                Image(systemName: "rectangle.inset.filled.and.person.filled")
+                    .font(.system(size: 48))
+                    .accessibilityHidden(true)
+                Text(selectedMoment?.title ?? "Moment")
+                    .font(.title2)
+                Text("Synthetic local Quick Look preview")
+                    .foregroundStyle(.secondary)
+                Button("Close") { showsQuickLook = false }
+                    .keyboardShortcut(.cancelAction)
+            }
+            .padding(32)
+            .frame(minWidth: 420, minHeight: 280)
+            .accessibilityIdentifier("moment.quickLook")
+        }
+        .sheet(isPresented: $showsForgetConfirmation, onDismiss: restoreSelectedMomentFocus) {
+            DestructiveConfirmationSheet(
+                model: DestructiveConfirmationModel(
+                    title: "Forget this moment?",
+                    removalScope: "The selected moment will be hidden immediately.",
+                    consequence: "Its short video chunk will be rewritten when deletion is implemented.",
+                    confirmLabel: "Forget Moment"
+                ),
+                onCancel: { showsForgetConfirmation = false },
+                onConfirm: { showsForgetConfirmation = false }
+            )
+            .padding()
+            .frame(minWidth: 480, minHeight: 280)
+            .accessibilityIdentifier("moment.forgetConfirmation")
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .shellQuickLook)) { _ in
+            showsQuickLook = selectedMoment != nil
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .shellOpenDetail)) { _ in
+            if selectedMoment != nil { navigationModel.setInspectorRequested(true) }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .shellRevisit)) { _ in
+            guard selectedMoment != nil else { return }
+            revisitNotice = "Revisit is unavailable for this synthetic fixture."
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .shellPreviousTransition)) { _ in
+            if let moment = ShellMomentFixtures.adjacent(
+                to: navigationModel.snapshot.selectedMomentID,
+                offset: -1
+            ) {
+                navigationModel.select(momentID: moment.id)
+            }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .shellNextTransition)) { _ in
+            if let moment = ShellMomentFixtures.adjacent(
+                to: navigationModel.snapshot.selectedMomentID,
+                offset: 1
+            ) {
+                navigationModel.select(momentID: moment.id)
+            }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .shellForgetMoment)) { _ in
+            showsForgetConfirmation = selectedMoment != nil
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .shellEscape)) { _ in
+            if showsQuickLook {
+                showsQuickLook = false
+            } else if showsForgetConfirmation {
+                showsForgetConfirmation = false
+            } else if revisitNotice != nil {
+                revisitNotice = nil
+            } else if selectedMoment != nil, navigationModel.snapshot.inspectorRequested {
+                navigationModel.setInspectorRequested(false)
+            } else {
+                navigationModel.goBack()
+            }
+        }
         .toolbar {
             if selectedMoment != nil {
                 ToolbarItem {
@@ -318,12 +474,20 @@ private struct MainSectionView: View {
                     } label: {
                         Label("Toggle Inspector", systemImage: "sidebar.trailing")
                     }
+                    .frame(
+                        minWidth: CGFloat(ShellAccessibilityCatalog.minimumPointerTargetPoints),
+                        minHeight: CGFloat(ShellAccessibilityCatalog.minimumPointerTargetPoints)
+                    )
                     .help("Show or hide moment details")
                     .accessibilityIdentifier("main.toggleInspector")
                 }
             }
         }
         .accessibilityIdentifier("main.section")
+    }
+
+    private func restoreSelectedMomentFocus() {
+        NotificationCenter.default.post(name: .shellRestoreSelectedMomentFocus, object: nil)
     }
 }
 
@@ -333,11 +497,16 @@ private struct MomentSectionCanvas: View {
     let symbol: String
     let selectedMoment: ShellMoment?
     @ObservedObject var navigationModel: MainNavigationViewModel
+    let contentState: ShellContentState
+    let localizationMode: ShellLocalizationMode
+    @State private var query = ""
+    @FocusState private var searchIsFocused: Bool
+    @FocusState private var focusedMomentID: UUID?
 
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                Label(title, systemImage: symbol)
+                Label(localizationMode.localized(title), systemImage: symbol)
                     .font(.title2)
                     .accessibilityIdentifier("main.sectionTitle")
                 Spacer()
@@ -347,67 +516,149 @@ private struct MomentSectionCanvas: View {
             }
 
             if title == "Search" {
-                TextField("Search your local memory", text: .constant(""))
+                TextField("Search your local memory", text: $query)
                     .textFieldStyle(.roundedBorder)
-                    .disabled(true)
-                    .accessibilityHint("Search is connected in a later implementation phase")
+                    .focused($searchIsFocused)
+                    .accessibilityLabel("Search your local memory")
+                    .accessibilityIdentifier("main.searchField")
+                    .accessibilityHint("Searches only the local archive")
             }
 
-            List(ShellMomentFixtures.moments) { moment in
-                Button {
-                    navigationModel.select(momentID: moment.id)
-                } label: {
-                    HStack {
-                        Image(systemName: moment.systemImage)
-                            .frame(width: CGFloat(MainWindowDefaults.momentSymbolWidth))
-                            .accessibilityHidden(true)
-                        VStack(alignment: .leading) {
-                            Text(moment.title)
+            if title == "Timeline" {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Timeline accessibility list")
+                        .font(.headline)
+                    Text("9:12 AM, Calendar moment")
+                    Text("Permission lost gap, 11:30 AM to 11:45 AM")
+                    Text("2:14 PM, Safari moment")
+                }
+                .accessibilityElement(children: .contain)
+                .accessibilityLabel("Timeline accessibility list")
+                .accessibilityIdentifier("timeline.accessibilityList")
+            }
+
+            if contentState == .ready {
+                List(Array(ShellMomentFixtures.moments.enumerated()), id: \.element.id) { index, moment in
+                    Button {
+                        searchIsFocused = false
+                        focusedMomentID = moment.id
+                        navigationModel.select(momentID: moment.id)
+                    } label: {
+                        HStack {
+                            Image(systemName: moment.systemImage)
+                                .frame(width: CGFloat(MainWindowDefaults.momentSymbolWidth))
+                                .accessibilityHidden(true)
+                            VStack(alignment: .leading) {
+                                Text(moment.title)
+                                    .font(.headline)
+                                Text("\(moment.application) · \(moment.time)")
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                            }
+                            Spacer()
+                            if selectedMoment?.id == moment.id {
+                                Image(systemName: "checkmark")
+                                    .accessibilityLabel("Selected")
+                            }
+                        }
+                        .contentShape(Rectangle())
+                    }
+                    .buttonStyle(.plain)
+                    .focused($focusedMomentID, equals: moment.id)
+                    .accessibilityLabel(
+                        "\(moment.time), \(moment.application), \(moment.host), "
+                            + "\(moment.evidenceType), \(index + 1) of "
+                            + "\(ShellMomentFixtures.moments.count)"
+                    )
+                    .accessibilityHint("Open moment detail")
+                    .accessibilityIdentifier("moment.\(moment.accessibilitySlug)")
+                }
+                GroupBox {
+                    if let selectedMoment {
+                        VStack {
+                            Image(systemName: "rectangle.inset.filled.and.person.filled")
+                                .font(.system(size: CGFloat(MainWindowDefaults.previewSymbolSize)))
+                                .foregroundStyle(.secondary)
+                                .accessibilityHidden(true)
+                            Text(selectedMoment.title)
                                 .font(.headline)
-                            Text("\(moment.application) · \(moment.time)")
-                                .font(.caption)
+                            Text("Synthetic screenshot placeholder")
                                 .foregroundStyle(.secondary)
                         }
-                        Spacer()
-                        if selectedMoment?.id == moment.id {
-                            Image(systemName: "checkmark")
-                                .accessibilityLabel("Selected")
-                        }
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    } else {
+                        ContentUnavailableView(
+                            "Choose a moment",
+                            systemImage: "rectangle.stack.badge.clock",
+                            description: Text("Select a synthetic fixture to inspect its local provenance.")
+                        )
                     }
-                    .contentShape(Rectangle())
                 }
-                .buttonStyle(.plain)
-                .accessibilityIdentifier("moment.\(moment.accessibilitySlug)")
-            }
-
-            GroupBox {
-                if let selectedMoment {
-                    VStack {
-                        Image(systemName: "rectangle.inset.filled.and.person.filled")
-                            .font(.system(size: CGFloat(MainWindowDefaults.previewSymbolSize)))
-                            .foregroundStyle(.secondary)
-                            .accessibilityHidden(true)
-                        Text(selectedMoment.title)
-                            .font(.headline)
-                        Text("Synthetic screenshot placeholder")
-                            .foregroundStyle(.secondary)
-                    }
+                .frame(
+                    maxWidth: .infinity,
+                    minHeight: CGFloat(MainWindowDefaults.previewMinimumHeight),
+                    maxHeight: .infinity
+                )
+            } else {
+                standardState
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                } else {
-                    ContentUnavailableView(
-                        "Choose a moment",
-                        systemImage: "rectangle.stack.badge.clock",
-                        description: Text("Select a synthetic fixture to inspect its local provenance.")
-                    )
-                }
             }
-            .frame(
-                maxWidth: .infinity,
-                minHeight: CGFloat(MainWindowDefaults.previewMinimumHeight),
-                maxHeight: .infinity
-            )
         }
         .padding()
+        .onReceive(NotificationCenter.default.publisher(for: .shellFocusSearch)) { _ in
+            if title == "Search" {
+                searchIsFocused = true
+            } else {
+                navigationModel.select(section: .search)
+                Task { @MainActor in
+                    await Task.yield()
+                    NotificationCenter.default.post(name: .shellFocusSearch, object: nil)
+                }
+            }
+        }
+        .onReceive(
+            NotificationCenter.default.publisher(for: .shellRestoreSelectedMomentFocus)
+        ) { _ in
+            let selectedID = selectedMoment?.id
+            focusedMomentID = nil
+            Task { @MainActor in
+                await Task.yield()
+                focusedMomentID = selectedID
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var standardState: some View {
+        switch contentState {
+        case .ready:
+            EmptyView()
+        case .empty:
+            EmptyStateView(
+                systemImage: "rectangle.stack.badge.clock",
+                title: localizationMode.localized("No moments yet"),
+                message: localizationMode.localized(
+                    "Your screen memory will appear here after recording begins."
+                ),
+                actionTitle: localizationMode.localized("Check Capture Status")
+            ) {
+                navigationModel.select(section: .settings)
+            }
+        case let .loading(elapsedMilliseconds):
+            ProgressStatusView(
+                model: ProgressStatusModel(
+                    label: localizationMode.localized("Loading local memory…"),
+                    elapsedSeconds: Double(elapsedMilliseconds) / 1_000
+                )
+            )
+            .accessibilityIdentifier("shell.loading")
+        case .failure:
+            InlineErrorView(
+                message: localizationMode.localized("Local memory could not be loaded"),
+                diagnosticCode: "LM-SHELL-500",
+                retryTitle: localizationMode.localized("Try Again")
+            )
+        }
     }
 }
 
@@ -425,8 +676,13 @@ private struct MomentInspectorView: View {
                     Image(systemName: "xmark")
                 }
                 .buttonStyle(.borderless)
+                .frame(
+                    minWidth: CGFloat(ShellAccessibilityCatalog.minimumPointerTargetPoints),
+                    minHeight: CGFloat(ShellAccessibilityCatalog.minimumPointerTargetPoints)
+                )
                 .help("Hide inspector")
                 .accessibilityLabel("Hide inspector")
+                .accessibilityIdentifier("inspector.dismiss")
             }
 
             LabeledContent("Title") {
@@ -454,15 +710,34 @@ private struct MomentInspectorView: View {
 }
 
 private struct ActivityShellView: View {
+    let localizationMode: ShellLocalizationMode
+
     var body: some View {
         VStack(alignment: .leading) {
-            Label("Activity", systemImage: "chart.xyaxis.line")
+            Label(localizationMode.localized("Activity"), systemImage: "chart.xyaxis.line")
                 .font(.title2)
                 .accessibilityIdentifier("main.sectionTitle")
             Text("Activity estimates")
                 .font(.headline)
             Text("Recorded, idle, paused, and missing time will be shown here without scores or rankings.")
                 .foregroundStyle(.secondary)
+            GroupBox("Activity accessibility table") {
+                Grid(alignment: .leading, horizontalSpacing: 16, verticalSpacing: 8) {
+                    GridRow {
+                        Text("Date and hour").font(.headline)
+                        Text("Recorded").font(.headline)
+                        Text("Gap").font(.headline)
+                    }
+                    GridRow {
+                        Text("Today, 2 PM")
+                        Text("42 minutes")
+                        Text("18 minutes")
+                    }
+                }
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel("Today, 2 PM, 42 recorded minutes, 18 gap minutes")
+            }
+            .accessibilityIdentifier("activity.accessibilityTable")
             Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
@@ -471,9 +746,11 @@ private struct ActivityShellView: View {
 }
 
 private struct EmbeddedSettingsShellView: View {
+    let localizationMode: ShellLocalizationMode
+
     var body: some View {
         Form {
-            Text("Settings")
+            Text(localizationMode.localized("Settings"))
                 .font(.title2)
                 .accessibilityIdentifier("main.sectionTitle")
             Section("Capture") {
