@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "intervalStart": "2026-10-14T00:00:00.000Z",
+  "durationSeconds": 86400,
+  "frames": [
+    {
+      "suffix": 443,
+      "offsetSeconds": 43200,
+      "bundleIdentifier": "com.apple.Notes",
+      "applicationName": "Notes",
+      "windowTitle": "Midday notes",
+      "host": null,
+      "isTransition": true,
+      "hasTranscriptMarker": false
+    },
+    {
+      "suffix": 441,
+      "offsetSeconds": 300,
+      "bundleIdentifier": "com.apple.Calendar",
+      "applicationName": "Calendar",
+      "windowTitle": "Morning plan",
+      "host": null,
+      "isTransition": true,
+      "hasTranscriptMarker": false
+    },
+    {
+      "suffix": 444,
+      "offsetSeconds": 82800,
+      "bundleIdentifier": "com.apple.Safari",
+      "applicationName": "Safari",
+      "windowTitle": "Evening research",
+      "host": "evening.example.test",
+      "isTransition": true,
+      "hasTranscriptMarker": false
+    },
+    {
+      "suffix": 442,
+      "offsetSeconds": 3600,
+      "bundleIdentifier": "com.apple.Safari",
+      "applicationName": "Safari",
+      "windowTitle": "Morning research",
+      "host": "morning.example.test",
+      "isTransition": true,
+      "hasTranscriptMarker": true
+    }
+  ],
+  "gaps": [
+    {
+      "offsetSeconds": 50400,
+      "durationSeconds": 1800,
+      "reason": "processStopped",
+      "approvedBundleID": null
+    },
+    {
+      "offsetSeconds": 7200,
+      "durationSeconds": 1200,
+      "reason": "sleep",
+      "approvedBundleID": "com.apple.Safari"
+    },
+    {
+      "offsetSeconds": 28800,
+      "durationSeconds": 600,
+      "reason": "excluded",
+      "approvedBundleID": null
+    }
+  ],
+  "expectedOrderedFrameSuffixes": [441, 442, 443, 444],
+  "expectedGapReasons": ["sleep", "excluded", "processStopped"],
+  "expectedGapDurationsSeconds": [1200, 600, 1800],
+  "expectedTransitionBundles": [
+    ["com.apple.finder", "com.apple.Calendar"],
+    ["com.apple.Calendar", "com.apple.Safari"],
+    ["com.apple.Safari", "com.apple.Notes"],
+    ["com.apple.Notes", "com.apple.Safari"]
+  ]
+}

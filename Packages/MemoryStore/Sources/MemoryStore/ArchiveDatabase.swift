@@ -587,7 +587,8 @@ public final class ArchiveDatabase: @unchecked Sendable {
         appName: String = "Fixture App",
         windowTitle: String = "Fixture Window",
         host: String? = nil,
-        path: String? = nil
+        path: String? = nil,
+        isTransition: Bool = false
     ) throws -> UUID {
         let frameID =
             explicitFrameID ?? UUID(
@@ -623,7 +624,7 @@ public final class ArchiveDatabase: @unchecked Sendable {
                     ) VALUES (?, ?, 500000000,
                               'search-epoch', 42, ?, 500, ?, ?, ?,
                               0, 0, 1, 1, ?, ?, ?, ?,
-                              'visualChange', 0, 'pending', 'ready', 1, '')
+                              'visualChange', ?, 'pending', 'ready', 1, '')
                     """,
                 arguments: [
                     frameID.uuidString.lowercased(),
@@ -636,6 +637,7 @@ public final class ArchiveDatabase: @unchecked Sendable {
                     host == nil ? nil : "https",
                     host,
                     path,
+                    isTransition ? 1 : 0,
                 ]
             )
         }

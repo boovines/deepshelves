@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "activeStory": "LM-044",
+  "activeStory": "LM-049",
   "stories": {
     "LM-001": {
       "status": "passed",
@@ -775,12 +775,23 @@
       "resumeProbe": null
     },
     "LM-044": {
-      "status": "active",
+      "status": "passed",
       "startedAt": "2026-08-28T21:51:00Z",
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": "Activated as the next dependency-safe story because LM-027 and LM-037 are passed. Implement the interval-owned TimelineSlice query and typed gaps using source-isolated tests; keep application, Apple ImageIO, hardware HEVC, AVAssetWriter, and VideoToolbox runtime quarantined.",
+      "completedAt": "2026-08-28T22:01:26Z",
+      "gitRevision": "refs/tags/checkpoints/LM-044",
+      "evidence": [
+        "Results/LM-044/report.json",
+        "Results/LM-044/focused-tests.txt",
+        "Results/LM-044/static-audit.txt",
+        "Results/LM-044/contracts.txt",
+        "Results/LM-044/privacy.txt",
+        "Results/LM-044/release-build.txt",
+        "Results/LM-044/dependencies.txt",
+        "Results/LM-044/swift-format.txt",
+        "Results/LM-044/story-gate.txt",
+        "Fixtures/LM044/timeline-24-hour.json"
+      ],
+      "notes": "ArchiveTimelineQuery returns one canonical TimelineSlice per calendar-day or fixed zoom page. Half-open ready-only frame selection, approved lookback transitions, typed cross-page gap clipping, transcript markers, and stable frame/gap ordering pass the frozen 24-hour fixture. Spring/fall local days preserve exact 23/25-hour elapsed durations; sleep, excluded, and processStopped gaps remain explicit. Six focused Release tests plus contracts, privacy, formatting, dependencies, and universal compile passed under the encoder tripwire with zero app or media runtime.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null
@@ -830,12 +841,12 @@
       "resumeProbe": null
     },
     "LM-049": {
-      "status": "pending",
-      "startedAt": null,
+      "status": "active",
+      "startedAt": "2026-08-28T22:01:26Z",
       "completedAt": null,
       "gitRevision": null,
       "evidence": [],
-      "notes": null,
+      "notes": "Activated as the next dependency-safe story because LM-007 and LM-034 are passed. Integrate the pinned MobileCLIP-S0 image/text encoder closure, tokenizer/preprocessing, integrity verification, offline parity, and typed unavailable state without application, Apple ImageIO, or hardware-video runtime.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null

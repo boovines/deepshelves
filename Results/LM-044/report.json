@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-044",
+  "status": "passed",
+  "fixtureSHA256": "ebdabc6f41d55df2a796b56814f16d78555af015904e1b34883c6ffdccb57d2a",
+  "fixtureDurationSeconds": 86400,
+  "orderedFrameCount": 4,
+  "typedGapCount": 3,
+  "applicationTransitionCount": 4,
+  "transcriptMarkerCount": 1,
+  "gapReasons": ["sleep", "excluded", "processStopped"],
+  "gapDurationsSeconds": [1200, 600, 1800],
+  "springDSTDayHours": 23,
+  "fallDSTDayHours": 25,
+  "zoomLevels": ["calendarDay", "sixHours", "oneHour", "fifteenMinutes"],
+  "focusedReleaseTests": 6,
+  "suppressedProjectionCount": 0,
+  "applicationLaunchesExecuted": 0,
+  "appleImageIORuntimeExecuted": false,
+  "hardwareEncoderTestsExecuted": 0,
+  "videoToolboxInvocations": 0,
+  "encoderTripwire": "passed"
+}

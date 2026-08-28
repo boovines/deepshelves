@@ -1,0 +1,10 @@
+frozen_fixture_sha256=ebdabc6f41d55df2a796b56814f16d78555af015904e1b34883c6ffdccb57d2a
+half_open_frame_pagination=passed
+calendar_dst_day_pagination=passed
+fixed_zoom_pagination=passed
+typed_gap_clipping=passed
+approved_transition_lookback=passed
+ready_only_projection=passed
+hardware_encoder_tests_executed=0
+apple_imageio_runtime_executed=0
+application_launches_executed=0
