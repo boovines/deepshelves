@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "storyID": "LM-057",
+  "status": "passed",
+  "generatedAt": "2026-08-28T16:13:22Z",
+  "baseRevision": "3b033f7",
+  "checkpoint": "refs/tags/checkpoints/LM-057",
+  "results": {
+    "browserPolicy": {
+      "supportedBrowserCount": 5,
+      "matrixCaseCount": 200,
+      "privateContextCaseCount": 40,
+      "urlUnavailableCaseCount": 40,
+      "permissionRevokedCaseCount": 40,
+      "browserVersionChangedCaseCount": 40,
+      "blockedCaseCount": 160,
+      "contentLeakCount": 0
+    },
+    "permissionHealth": {
+      "screenRecordingStates": ["granted", "denied", "revoked"],
+      "accessibilityStates": ["granted", "denied", "revoked"],
+      "systemPromptsRequested": 0,
+      "permissionLossFailsClosed": true,
+      "userVisibleReasons": true
+    },
+    "privateBrowserHandling": {
+      "excludeIsContentFree": true,
+      "allowWithoutSiteRules": true,
+      "allowWithSiteRulesFailsClosed": true,
+      "settingsPersistAndReloadImmediately": true
+    },
+    "videoSafety": {
+      "hardwareEncoderTestsExecuted": 0,
+      "appLaunchTestsExecuted": 0,
+      "uiRuntime": "quarantined",
+      "releaseGateMode": "compile-only",
+      "encoderTripwirePassed": true
+    }
+  },
+  "gates": {
+    "browserProtectionFixture": {
+      "status": "passed",
+      "fixture": "Fixtures/LM057/browser-protection-matrix.json",
+      "sha256": "27c7025f6cb2b15f9d0647bf14e7934f039b847a69cc343a4c259ccbfd45a5d6",
+      "fixtureCheck": "Results/LM-057/fixture-check.txt",
+      "fixtureCheckSha256": "06a94c2c9ef3b70435fa89250b3e3d58f090fbd11346fa5e553bfa52ae65d070"
+    },
+    "focusedTests": {
+      "status": "passed",
+      "testCount": 26,
+      "log": "Results/LM-057/browser-privacy-tests.txt",
+      "sha256": "dbed9c18f33b517b0defbaed049bfbc7d937602a272908a79f7a47691007bbad"
+    },
+    "uiStaticAudit": {
+      "status": "passed",
+      "log": "Results/LM-057/ui-static-audit.txt",
+      "sha256": "6e636f145f3ace06552d496c66c803c0516cd57a08d3fbc68ad1af63ff7bb222"
+    },
+    "contracts": {
+      "status": "passed",
+      "log": "Results/LM-057/contracts.txt",
+      "sha256": "bd0f55ffe64113710544e254d35a3011410436550a6c1d70084b881b3ed40dcf"
+    },
+    "privacySmoke": {
+      "status": "passed",
+      "log": "Results/LM-057/privacy.txt",
+      "sha256": "9ea4b5449f9715c90a3a80909f275c987c95be1130414ae6e10f888fcbe4a8bc"
+    },
+    "releaseCompileOnly": {
+      "status": "passed",
+      "log": "Results/LM-057/release-build.txt",
+      "sha256": "41722c0373e99d3d927182ee6b3d181e0f34e60d89a9b04056dda29e213cefdd"
+    },
+    "format": {
+      "status": "passed",
+      "log": "Results/LM-057/swift-format.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "storyGate": {
+      "status": "passed",
+      "log": "Results/LM-057/story-gate.txt",
+      "sha256": "d9f55d6d16985e1afe70fc6560dbf6b19c9e407b3e214bcaf0ca0f616e976dad"
+    }
+  }
+}

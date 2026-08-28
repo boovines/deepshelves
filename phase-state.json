@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "activeStory": "LM-057",
+  "activeStory": "LM-059",
   "stories": {
     "LM-001": {
       "status": "passed",
@@ -760,12 +760,17 @@
       "resumeProbe": null
     },
     "LM-057": {
-      "status": "active",
+      "status": "passed",
       "startedAt": "2026-08-28T16:03:03Z",
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": "Next dependency-ready story after LM-056. Browser/private policy and permission-health behavior can be implemented and verified with deterministic fixtures and source-isolated unit tests that cannot invoke hardware video encoding.",
+      "completedAt": "2026-08-28T16:13:22Z",
+      "gitRevision": "refs/tags/checkpoints/LM-057",
+      "evidence": [
+        "Results/LM-057/report.json",
+        "Results/LM-057/browser-privacy-tests.txt",
+        "Results/LM-057/story-gate.txt",
+        "Fixtures/LM057/browser-protection-matrix.json"
+      ],
+      "notes": "Five-browser public/private policy, nonprompting Screen Recording and Accessibility health, protected-context fail-closed reasons, browser-version transition gaps, durable private handling, and a 200-case frozen zero-leakage matrix pass 26 focused tests. UI runtime remains quarantined; static accessibility, contracts, privacy, and compile-only Release gates passed under the encoder tripwire with zero hardware encoder tests.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null
@@ -782,12 +787,12 @@
       "resumeProbe": null
     },
     "LM-059": {
-      "status": "pending",
-      "startedAt": null,
+      "status": "active",
+      "startedAt": "2026-08-28T16:13:22Z",
       "completedAt": null,
       "gitRevision": null,
       "evidence": [],
-      "notes": null,
+      "notes": "Next dependency-ready story after LM-057. SQLCipher, Keychain, encrypted temporary-state, and destructive reset work is independent of the quarantined media encoder and can be verified without launching the app or invoking VideoToolbox.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null

@@ -197,6 +197,13 @@ public actor PrivacyPolicySettingsController {
     }
 
     @discardableResult
+    public func replacePrivateBrowserHandling(
+        _ handling: PrivateBrowserHandling
+    ) async throws -> PrivacyPolicyUpdateReceipt {
+        try await commit(configuration.replacingPrivateBrowserHandling(handling))
+    }
+
+    @discardableResult
     public func moveRule(
         id: String,
         to destinationIndex: Int

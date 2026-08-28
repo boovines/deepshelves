@@ -254,6 +254,10 @@ public enum BrowserContextUnavailableReason: String, Codable, CaseIterable, Equa
     case privateStateUnavailable
     case urlUnavailable
     case unsupportedURL
+    case screenRecordingPermissionUnavailable
+    case accessibilityPermissionUnavailable
+    case browserVersionUnavailable
+    case browserVersionChanged
 }
 
 public enum BrowserContextResolution: Equatable, Sendable {
@@ -274,7 +278,7 @@ public struct BrowserAddressFieldAdapter: Sendable {
             return .unavailable(.unsupportedBrowser)
         }
         guard observation.target.processID == observation.observedProcessID,
-              geometryMatches(observation.target.bounds, observation.observedWindowBounds)
+            geometryMatches(observation.target.bounds, observation.observedWindowBounds)
         else {
             return .unavailable(.targetWindowMismatch)
         }
@@ -299,7 +303,8 @@ public struct BrowserAddressFieldAdapter: Sendable {
         guard candidates.count == 1, let candidate = candidates.first else {
             return .unavailable(.ambiguousAddressField)
         }
-        guard let normalized = normalize(candidate.value, family: adapter.browser.contractFamily) else {
+        guard let normalized = normalize(candidate.value, family: adapter.browser.contractFamily)
+        else {
             return .unavailable(.unsupportedURL)
         }
         return .approved(
@@ -316,27 +321,27 @@ public struct BrowserAddressFieldAdapter: Sendable {
         family: MemoryContracts.BrowserFamily
     ) -> (context: MemoryContracts.BrowserContext, serializedURL: String)? {
         guard let components = URLComponents(string: rawValue),
-              let rawScheme = components.scheme,
-              let rawHost = components.host
+            let rawScheme = components.scheme,
+            let rawHost = components.host
         else {
             return nil
         }
         let scheme = rawScheme.lowercased(with: Locale(identifier: "en_US_POSIX"))
         let host = rawHost.lowercased(with: Locale(identifier: "en_US_POSIX"))
         guard scheme == "https" || scheme == "http",
-              !host.isEmpty,
-              host.unicodeScalars.allSatisfy(\.isASCII),
-              isPermittedPort(components.port, scheme: scheme)
+            !host.isEmpty,
+            host.unicodeScalars.allSatisfy(\.isASCII),
+            isPermittedPort(components.port, scheme: scheme)
         else {
             return nil
         }
         let path = normalizedPath(components.percentEncodedPath)
         guard let origin = try? BrowserOrigin(scheme: scheme, host: host, path: path),
-              let context = try? MemoryContracts.BrowserContext(
-                  family: family,
-                  origin: origin,
-                  isPrivateContext: false
-              )
+            let context = try? MemoryContracts.BrowserContext(
+                family: family,
+                origin: origin,
+                isPrivateContext: false
+            )
         else {
             return nil
         }
@@ -354,12 +359,12 @@ public struct BrowserAddressFieldAdapter: Sendable {
         }
         let lowercased = encodedPath.lowercased(with: Locale(identifier: "en_US_POSIX"))
         guard encodedPath.hasPrefix("/"),
-              !encodedPath.contains("?"),
-              !encodedPath.contains("#"),
-              !encodedPath.contains("@"),
-              !encodedPath.contains("\\"),
-              !lowercased.contains("/%2e"),
-              !encodedPath.split(separator: "/").contains("..")
+            !encodedPath.contains("?"),
+            !encodedPath.contains("#"),
+            !encodedPath.contains("@"),
+            !encodedPath.contains("\\"),
+            !lowercased.contains("/%2e"),
+            !encodedPath.split(separator: "/").contains("..")
         else {
             return nil
         }
@@ -367,7 +372,8 @@ public struct BrowserAddressFieldAdapter: Sendable {
     }
 
     private func geometryMatches(_ lhs: PointRect, _ rhs: PointRect) -> Bool {
-        let edgeDeltasMatch = abs(lhs.x - rhs.x) <= 4
+        let edgeDeltasMatch =
+            abs(lhs.x - rhs.x) <= 4
             && abs(lhs.y - rhs.y) <= 4
             && abs((lhs.x + lhs.width) - (rhs.x + rhs.width)) <= 4
             && abs((lhs.y + lhs.height) - (rhs.y + rhs.height)) <= 4
@@ -387,11 +393,12 @@ public struct SystemBrowserContextInspector: Sendable {
         self.registry = registry
     }
 
-    public func inspect(_ foreground: ForegroundCaptureResolution) async -> BrowserContextResolution {
+    public func inspect(_ foreground: ForegroundCaptureResolution) async -> BrowserContextResolution
+    {
         guard let target = foreground.target,
-              case let .available(application, focusedWindow) = foreground.snapshot,
-              target.processID == application.processID,
-              focusedWindow.processID == application.processID
+            case .available(let application, let focusedWindow) = foreground.snapshot,
+            target.processID == application.processID,
+            focusedWindow.processID == application.processID
         else {
             return .unavailable(.targetWindowMismatch)
         }
@@ -430,7 +437,8 @@ public enum LM021BrowserContextFixture: Sendable {
         let registry = BrowserAdapterRegistry.production
         let rotation = Int(seed % UInt64(SupportedBrowser.allCases.count))
         func adapter(_ index: Int) -> BrowserAdapterDefinition {
-            let browser = SupportedBrowser.allCases[(index + rotation) % SupportedBrowser.allCases.count]
+            let browser = SupportedBrowser.allCases[
+                (index + rotation) % SupportedBrowser.allCases.count]
             return registry.adapters.first { $0.browser == browser }!
         }
         func observation(
@@ -456,9 +464,10 @@ public enum LM021BrowserContextFixture: Sendable {
         }
 
         var fixtures: [LM021BrowserFixtureCase] = []
-        for index in 0 ..< 480 {
+        for index in 0..<480 {
             let host = "fixture-\(index).example.test"
-            let rawURL = "https" + "://user:credential-sentinel@\(host)/safe/path"
+            let rawURL =
+                "https" + "://user:credential-sentinel@\(host)/safe/path"
                 + "?token=query-sentinel#fragment-sentinel"
             let value = observation(index: index, rawURL: rawURL)
             let family = adapter(index).browser.contractFamily
@@ -483,7 +492,7 @@ public enum LM021BrowserContextFixture: Sendable {
                 )
             )
         }
-        for offset in 0 ..< 30 {
+        for offset in 0..<30 {
             let index = 480 + offset
             let value = observation(
                 index: index,
@@ -504,7 +513,7 @@ public enum LM021BrowserContextFixture: Sendable {
                 )
             )
         }
-        for offset in 0 ..< 30 {
+        for offset in 0..<30 {
             let index = 510 + offset
             var value = observation(index: index, rawURL: "https" + "://mismatch.example.test/")
             value.observedProcessID += 1
@@ -517,7 +526,7 @@ public enum LM021BrowserContextFixture: Sendable {
                 )
             )
         }
-        for offset in 0 ..< 15 {
+        for offset in 0..<15 {
             let index = 540 + offset
             var value = observation(index: index, rawURL: "https" + "://ambiguous.example.test/")
             value.addressCandidates.append(value.addressCandidates[0])
@@ -530,7 +539,7 @@ public enum LM021BrowserContextFixture: Sendable {
                 )
             )
         }
-        for offset in 0 ..< 15 {
+        for offset in 0..<15 {
             let index = 555 + offset
             let value = observation(
                 index: index,
@@ -546,7 +555,7 @@ public enum LM021BrowserContextFixture: Sendable {
                 )
             )
         }
-        for offset in 0 ..< 15 {
+        for offset in 0..<15 {
             let index = 570 + offset
             let value = observation(index: index, rawURL: "file:///private/sentinel")
             fixtures.append(
@@ -558,7 +567,7 @@ public enum LM021BrowserContextFixture: Sendable {
                 )
             )
         }
-        for offset in 0 ..< 15 {
+        for offset in 0..<15 {
             let index = 585 + offset
             var value = observation(index: index, rawURL: "https" + "://missing.example.test/")
             value.addressCandidates = []
@@ -582,14 +591,15 @@ private func readBrowserObservation(
 ) -> BrowserContextObservation? {
     let applicationElement = AXUIElementCreateApplication(target.processID)
     AXUIElementSetMessagingTimeout(applicationElement, 0.05)
-    guard let window: AXUIElement = browserAXAttribute(applicationElement, kAXFocusedWindowAttribute)
+    guard
+        let window: AXUIElement = browserAXAttribute(applicationElement, kAXFocusedWindowAttribute)
     else {
         return nil
     }
     var processID: pid_t = 0
     guard AXUIElementGetPid(window, &processID) == .success,
-          processID == target.processID,
-          let bounds = browserAXBounds(window)
+        processID == target.processID,
+        let bounds = browserAXBounds(window)
     else {
         return nil
     }
@@ -617,7 +627,8 @@ private func readBrowserObservation(
             browserAXStringAttribute(element, kAXHelpAttribute),
             browserAXStringAttribute(element, kAXTitleAttribute),
         ].compactMap { $0 }.joined(separator: " ")
-        let value = browserAXStringAttribute(element, kAXURLAttribute)
+        let value =
+            browserAXStringAttribute(element, kAXURLAttribute)
             ?? browserAXStringAttribute(element, kAXValueAttribute)
         if let value {
             let candidate = BrowserAddressCandidate(
@@ -631,9 +642,11 @@ private func readBrowserObservation(
             }
         }
         if depth < 12,
-           let children: [AXUIElement] = browserAXAttribute(element, kAXChildrenAttribute)
+            let children: [AXUIElement] = browserAXAttribute(element, kAXChildrenAttribute)
         {
-            children.reversed().forEach { stack.append(($0, depth + 1)) }
+            for child in children.reversed() {
+                stack.append((child, depth + 1))
+            }
         }
     }
     return BrowserContextObservation(
@@ -662,7 +675,7 @@ private func classifyPrivateState(
 private func browserAXStringAttribute(_ element: AXUIElement, _ attribute: String) -> String? {
     var value: CFTypeRef?
     guard AXUIElementCopyAttributeValue(element, attribute as CFString, &value) == .success,
-          let value
+        let value
     else {
         return nil
     }
@@ -677,16 +690,16 @@ private func browserAXStringAttribute(_ element: AXUIElement, _ attribute: Strin
 
 private func browserAXBounds(_ element: AXUIElement) -> PointRect? {
     guard let positionValue: AXValue = browserAXAttribute(element, kAXPositionAttribute),
-          let sizeValue: AXValue = browserAXAttribute(element, kAXSizeAttribute)
+        let sizeValue: AXValue = browserAXAttribute(element, kAXSizeAttribute)
     else {
         return nil
     }
     var position = CGPoint.zero
     var size = CGSize.zero
     guard AXValueGetValue(positionValue, .cgPoint, &position),
-          AXValueGetValue(sizeValue, .cgSize, &size),
-          size.width > 0,
-          size.height > 0
+        AXValueGetValue(sizeValue, .cgSize, &size),
+        size.width > 0,
+        size.height > 0
     else {
         return nil
     }

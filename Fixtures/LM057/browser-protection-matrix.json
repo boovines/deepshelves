@@ -1,0 +1,1606 @@
+{
+  "cases" : [
+    {
+      "browser" : "safari",
+      "expectedAllowed" : true,
+      "id" : "safari-healthy-00",
+      "initialVersion" : "126.0.0",
+      "scenario" : "healthy"
+    },
+    {
+      "browser" : "safari",
+      "expectedAllowed" : true,
+      "id" : "safari-healthy-01",
+      "initialVersion" : "126.0.1",
+      "scenario" : "healthy"
+    },
+    {
+      "browser" : "safari",
+      "expectedAllowed" : true,
+      "id" : "safari-healthy-02",
+      "initialVersion" : "126.0.2",
+      "scenario" : "healthy"
+    },
+    {
+      "browser" : "safari",
+      "expectedAllowed" : true,
+      "id" : "safari-healthy-03",
+      "initialVersion" : "126.0.3",
+      "scenario" : "healthy"
+    },
+    {
+      "browser" : "safari",
+      "expectedAllowed" : true,
+      "id" : "safari-healthy-04",
+      "initialVersion" : "126.0.4",
+      "scenario" : "healthy"
+    },
+    {
+      "browser" : "safari",
+      "expectedAllowed" : true,
+      "id" : "safari-healthy-05",
+      "initialVersion" : "126.0.5",
+      "scenario" : "healthy"
+    },
+    {
+      "browser" : "safari",
+      "expectedAllowed" : true,
+      "id" : "safari-healthy-06",
+      "initialVersion" : "126.0.6",
+      "scenario" : "healthy"
+    },
+    {
+      "browser" : "safari",
+      "expectedAllowed" : true,
+      "id" : "safari-healthy-07",
+      "initialVersion" : "126.0.7",
+      "scenario" : "healthy"
+    },
+    {
+      "browser" : "safari",
+      "expectedAllowed" : false,
+      "expectedIssue" : "privateContextExcluded",
+      "id" : "safari-private-00",
+      "initialVersion" : "126.0.0",
+      "scenario" : "private"
+    },
+    {
+      "browser" : "safari",
+      "expectedAllowed" : false,
+      "expectedIssue" : "privateContextExcluded",
+      "id" : "safari-private-01",
+      "initialVersion" : "126.0.1",
+      "scenario" : "private"
+    },
+    {
+      "browser" : "safari",
+      "expectedAllowed" : false,
+      "expectedIssue" : "privateContextExcluded",
+      "id" : "safari-private-02",
+      "initialVersion" : "126.0.2",
+      "scenario" : "private"
+    },
+    {
+      "browser" : "safari",
+      "expectedAllowed" : false,
+      "expectedIssue" : "privateContextExcluded",
+      "id" : "safari-private-03",
+      "initialVersion" : "126.0.3",
+      "scenario" : "private"
+    },
+    {
+      "browser" : "safari",
+      "expectedAllowed" : false,
+      "expectedIssue" : "privateContextExcluded",
+      "id" : "safari-private-04",
+      "initialVersion" : "126.0.4",
+      "scenario" : "private"
+    },
+    {
+      "browser" : "safari",
+      "expectedAllowed" : false,
+      "expectedIssue" : "privateContextExcluded",
+      "id" : "safari-private-05",
+      "initialVersion" : "126.0.5",
+      "scenario" : "private"
+    },
+    {
+      "browser" : "safari",
+      "expectedAllowed" : false,
+      "expectedIssue" : "privateContextExcluded",
+      "id" : "safari-private-06",
+      "initialVersion" : "126.0.6",
+      "scenario" : "private"
+    },
+    {
+      "browser" : "safari",
+      "expectedAllowed" : false,
+      "expectedIssue" : "privateContextExcluded",
+      "id" : "safari-private-07",
+      "initialVersion" : "126.0.7",
+      "scenario" : "private"
+    },
+    {
+      "browser" : "safari",
+      "expectedAllowed" : false,
+      "expectedIssue" : "protectedURLContextUnavailable",
+      "id" : "safari-urlUnavailable-00",
+      "initialVersion" : "126.0.0",
+      "scenario" : "urlUnavailable"
+    },
+    {
+      "browser" : "safari",
+      "expectedAllowed" : false,
+      "expectedIssue" : "protectedURLContextUnavailable",
+      "id" : "safari-urlUnavailable-01",
+      "initialVersion" : "126.0.1",
+      "scenario" : "urlUnavailable"
+    },
+    {
+      "browser" : "safari",
+      "expectedAllowed" : false,
+      "expectedIssue" : "protectedURLContextUnavailable",
+      "id" : "safari-urlUnavailable-02",
+      "initialVersion" : "126.0.2",
+      "scenario" : "urlUnavailable"
+    },
+    {
+      "browser" : "safari",
+      "expectedAllowed" : false,
+      "expectedIssue" : "protectedURLContextUnavailable",
+      "id" : "safari-urlUnavailable-03",
+      "initialVersion" : "126.0.3",
+      "scenario" : "urlUnavailable"
+    },
+    {
+      "browser" : "safari",
+      "expectedAllowed" : false,
+      "expectedIssue" : "protectedURLContextUnavailable",
+      "id" : "safari-urlUnavailable-04",
+      "initialVersion" : "126.0.4",
+      "scenario" : "urlUnavailable"
+    },
+    {
+      "browser" : "safari",
+      "expectedAllowed" : false,
+      "expectedIssue" : "protectedURLContextUnavailable",
+      "id" : "safari-urlUnavailable-05",
+      "initialVersion" : "126.0.5",
+      "scenario" : "urlUnavailable"
+    },
+    {
+      "browser" : "safari",
+      "expectedAllowed" : false,
+      "expectedIssue" : "protectedURLContextUnavailable",
+      "id" : "safari-urlUnavailable-06",
+      "initialVersion" : "126.0.6",
+      "scenario" : "urlUnavailable"
+    },
+    {
+      "browser" : "safari",
+      "expectedAllowed" : false,
+      "expectedIssue" : "protectedURLContextUnavailable",
+      "id" : "safari-urlUnavailable-07",
+      "initialVersion" : "126.0.7",
+      "scenario" : "urlUnavailable"
+    },
+    {
+      "browser" : "safari",
+      "expectedAllowed" : false,
+      "expectedIssue" : "accessibilityPermissionRevoked",
+      "id" : "safari-permissionRevoked-00",
+      "initialVersion" : "126.0.0",
+      "scenario" : "permissionRevoked"
+    },
+    {
+      "browser" : "safari",
+      "expectedAllowed" : false,
+      "expectedIssue" : "accessibilityPermissionRevoked",
+      "id" : "safari-permissionRevoked-01",
+      "initialVersion" : "126.0.1",
+      "scenario" : "permissionRevoked"
+    },
+    {
+      "browser" : "safari",
+      "expectedAllowed" : false,
+      "expectedIssue" : "accessibilityPermissionRevoked",
+      "id" : "safari-permissionRevoked-02",
+      "initialVersion" : "126.0.2",
+      "scenario" : "permissionRevoked"
+    },
+    {
+      "browser" : "safari",
+      "expectedAllowed" : false,
+      "expectedIssue" : "accessibilityPermissionRevoked",
+      "id" : "safari-permissionRevoked-03",
+      "initialVersion" : "126.0.3",
+      "scenario" : "permissionRevoked"
+    },
+    {
+      "browser" : "safari",
+      "expectedAllowed" : false,
+      "expectedIssue" : "accessibilityPermissionRevoked",
+      "id" : "safari-permissionRevoked-04",
+      "initialVersion" : "126.0.4",
+      "scenario" : "permissionRevoked"
+    },
+    {
+      "browser" : "safari",
+      "expectedAllowed" : false,
+      "expectedIssue" : "accessibilityPermissionRevoked",
+      "id" : "safari-permissionRevoked-05",
+      "initialVersion" : "126.0.5",
+      "scenario" : "permissionRevoked"
+    },
+    {
+      "browser" : "safari",
+      "expectedAllowed" : false,
+      "expectedIssue" : "accessibilityPermissionRevoked",
+      "id" : "safari-permissionRevoked-06",
+      "initialVersion" : "126.0.6",
+      "scenario" : "permissionRevoked"
+    },
+    {
+      "browser" : "safari",
+      "expectedAllowed" : false,
+      "expectedIssue" : "accessibilityPermissionRevoked",
+      "id" : "safari-permissionRevoked-07",
+      "initialVersion" : "126.0.7",
+      "scenario" : "permissionRevoked"
+    },
+    {
+      "browser" : "safari",
+      "expectedAllowed" : false,
+      "expectedIssue" : "browserVersionChanged",
+      "id" : "safari-versionChanged-00",
+      "initialVersion" : "126.0.0",
+      "nextVersion" : "127.0.0",
+      "scenario" : "versionChanged"
+    },
+    {
+      "browser" : "safari",
+      "expectedAllowed" : false,
+      "expectedIssue" : "browserVersionChanged",
+      "id" : "safari-versionChanged-01",
+      "initialVersion" : "126.0.1",
+      "nextVersion" : "127.0.1",
+      "scenario" : "versionChanged"
+    },
+    {
+      "browser" : "safari",
+      "expectedAllowed" : false,
+      "expectedIssue" : "browserVersionChanged",
+      "id" : "safari-versionChanged-02",
+      "initialVersion" : "126.0.2",
+      "nextVersion" : "127.0.2",
+      "scenario" : "versionChanged"
+    },
+    {
+      "browser" : "safari",
+      "expectedAllowed" : false,
+      "expectedIssue" : "browserVersionChanged",
+      "id" : "safari-versionChanged-03",
+      "initialVersion" : "126.0.3",
+      "nextVersion" : "127.0.3",
+      "scenario" : "versionChanged"
+    },
+    {
+      "browser" : "safari",
+      "expectedAllowed" : false,
+      "expectedIssue" : "browserVersionChanged",
+      "id" : "safari-versionChanged-04",
+      "initialVersion" : "126.0.4",
+      "nextVersion" : "127.0.4",
+      "scenario" : "versionChanged"
+    },
+    {
+      "browser" : "safari",
+      "expectedAllowed" : false,
+      "expectedIssue" : "browserVersionChanged",
+      "id" : "safari-versionChanged-05",
+      "initialVersion" : "126.0.5",
+      "nextVersion" : "127.0.5",
+      "scenario" : "versionChanged"
+    },
+    {
+      "browser" : "safari",
+      "expectedAllowed" : false,
+      "expectedIssue" : "browserVersionChanged",
+      "id" : "safari-versionChanged-06",
+      "initialVersion" : "126.0.6",
+      "nextVersion" : "127.0.6",
+      "scenario" : "versionChanged"
+    },
+    {
+      "browser" : "safari",
+      "expectedAllowed" : false,
+      "expectedIssue" : "browserVersionChanged",
+      "id" : "safari-versionChanged-07",
+      "initialVersion" : "126.0.7",
+      "nextVersion" : "127.0.7",
+      "scenario" : "versionChanged"
+    },
+    {
+      "browser" : "chrome",
+      "expectedAllowed" : true,
+      "id" : "chrome-healthy-00",
+      "initialVersion" : "126.0.0",
+      "scenario" : "healthy"
+    },
+    {
+      "browser" : "chrome",
+      "expectedAllowed" : true,
+      "id" : "chrome-healthy-01",
+      "initialVersion" : "126.0.1",
+      "scenario" : "healthy"
+    },
+    {
+      "browser" : "chrome",
+      "expectedAllowed" : true,
+      "id" : "chrome-healthy-02",
+      "initialVersion" : "126.0.2",
+      "scenario" : "healthy"
+    },
+    {
+      "browser" : "chrome",
+      "expectedAllowed" : true,
+      "id" : "chrome-healthy-03",
+      "initialVersion" : "126.0.3",
+      "scenario" : "healthy"
+    },
+    {
+      "browser" : "chrome",
+      "expectedAllowed" : true,
+      "id" : "chrome-healthy-04",
+      "initialVersion" : "126.0.4",
+      "scenario" : "healthy"
+    },
+    {
+      "browser" : "chrome",
+      "expectedAllowed" : true,
+      "id" : "chrome-healthy-05",
+      "initialVersion" : "126.0.5",
+      "scenario" : "healthy"
+    },
+    {
+      "browser" : "chrome",
+      "expectedAllowed" : true,
+      "id" : "chrome-healthy-06",
+      "initialVersion" : "126.0.6",
+      "scenario" : "healthy"
+    },
+    {
+      "browser" : "chrome",
+      "expectedAllowed" : true,
+      "id" : "chrome-healthy-07",
+      "initialVersion" : "126.0.7",
+      "scenario" : "healthy"
+    },
+    {
+      "browser" : "chrome",
+      "expectedAllowed" : false,
+      "expectedIssue" : "privateContextExcluded",
+      "id" : "chrome-private-00",
+      "initialVersion" : "126.0.0",
+      "scenario" : "private"
+    },
+    {
+      "browser" : "chrome",
+      "expectedAllowed" : false,
+      "expectedIssue" : "privateContextExcluded",
+      "id" : "chrome-private-01",
+      "initialVersion" : "126.0.1",
+      "scenario" : "private"
+    },
+    {
+      "browser" : "chrome",
+      "expectedAllowed" : false,
+      "expectedIssue" : "privateContextExcluded",
+      "id" : "chrome-private-02",
+      "initialVersion" : "126.0.2",
+      "scenario" : "private"
+    },
+    {
+      "browser" : "chrome",
+      "expectedAllowed" : false,
+      "expectedIssue" : "privateContextExcluded",
+      "id" : "chrome-private-03",
+      "initialVersion" : "126.0.3",
+      "scenario" : "private"
+    },
+    {
+      "browser" : "chrome",
+      "expectedAllowed" : false,
+      "expectedIssue" : "privateContextExcluded",
+      "id" : "chrome-private-04",
+      "initialVersion" : "126.0.4",
+      "scenario" : "private"
+    },
+    {
+      "browser" : "chrome",
+      "expectedAllowed" : false,
+      "expectedIssue" : "privateContextExcluded",
+      "id" : "chrome-private-05",
+      "initialVersion" : "126.0.5",
+      "scenario" : "private"
+    },
+    {
+      "browser" : "chrome",
+      "expectedAllowed" : false,
+      "expectedIssue" : "privateContextExcluded",
+      "id" : "chrome-private-06",
+      "initialVersion" : "126.0.6",
+      "scenario" : "private"
+    },
+    {
+      "browser" : "chrome",
+      "expectedAllowed" : false,
+      "expectedIssue" : "privateContextExcluded",
+      "id" : "chrome-private-07",
+      "initialVersion" : "126.0.7",
+      "scenario" : "private"
+    },
+    {
+      "browser" : "chrome",
+      "expectedAllowed" : false,
+      "expectedIssue" : "protectedURLContextUnavailable",
+      "id" : "chrome-urlUnavailable-00",
+      "initialVersion" : "126.0.0",
+      "scenario" : "urlUnavailable"
+    },
+    {
+      "browser" : "chrome",
+      "expectedAllowed" : false,
+      "expectedIssue" : "protectedURLContextUnavailable",
+      "id" : "chrome-urlUnavailable-01",
+      "initialVersion" : "126.0.1",
+      "scenario" : "urlUnavailable"
+    },
+    {
+      "browser" : "chrome",
+      "expectedAllowed" : false,
+      "expectedIssue" : "protectedURLContextUnavailable",
+      "id" : "chrome-urlUnavailable-02",
+      "initialVersion" : "126.0.2",
+      "scenario" : "urlUnavailable"
+    },
+    {
+      "browser" : "chrome",
+      "expectedAllowed" : false,
+      "expectedIssue" : "protectedURLContextUnavailable",
+      "id" : "chrome-urlUnavailable-03",
+      "initialVersion" : "126.0.3",
+      "scenario" : "urlUnavailable"
+    },
+    {
+      "browser" : "chrome",
+      "expectedAllowed" : false,
+      "expectedIssue" : "protectedURLContextUnavailable",
+      "id" : "chrome-urlUnavailable-04",
+      "initialVersion" : "126.0.4",
+      "scenario" : "urlUnavailable"
+    },
+    {
+      "browser" : "chrome",
+      "expectedAllowed" : false,
+      "expectedIssue" : "protectedURLContextUnavailable",
+      "id" : "chrome-urlUnavailable-05",
+      "initialVersion" : "126.0.5",
+      "scenario" : "urlUnavailable"
+    },
+    {
+      "browser" : "chrome",
+      "expectedAllowed" : false,
+      "expectedIssue" : "protectedURLContextUnavailable",
+      "id" : "chrome-urlUnavailable-06",
+      "initialVersion" : "126.0.6",
+      "scenario" : "urlUnavailable"
+    },
+    {
+      "browser" : "chrome",
+      "expectedAllowed" : false,
+      "expectedIssue" : "protectedURLContextUnavailable",
+      "id" : "chrome-urlUnavailable-07",
+      "initialVersion" : "126.0.7",
+      "scenario" : "urlUnavailable"
+    },
+    {
+      "browser" : "chrome",
+      "expectedAllowed" : false,
+      "expectedIssue" : "accessibilityPermissionRevoked",
+      "id" : "chrome-permissionRevoked-00",
+      "initialVersion" : "126.0.0",
+      "scenario" : "permissionRevoked"
+    },
+    {
+      "browser" : "chrome",
+      "expectedAllowed" : false,
+      "expectedIssue" : "accessibilityPermissionRevoked",
+      "id" : "chrome-permissionRevoked-01",
+      "initialVersion" : "126.0.1",
+      "scenario" : "permissionRevoked"
+    },
+    {
+      "browser" : "chrome",
+      "expectedAllowed" : false,
+      "expectedIssue" : "accessibilityPermissionRevoked",
+      "id" : "chrome-permissionRevoked-02",
+      "initialVersion" : "126.0.2",
+      "scenario" : "permissionRevoked"
+    },
+    {
+      "browser" : "chrome",
+      "expectedAllowed" : false,
+      "expectedIssue" : "accessibilityPermissionRevoked",
+      "id" : "chrome-permissionRevoked-03",
+      "initialVersion" : "126.0.3",
+      "scenario" : "permissionRevoked"
+    },
+    {
+      "browser" : "chrome",
+      "expectedAllowed" : false,
+      "expectedIssue" : "accessibilityPermissionRevoked",
+      "id" : "chrome-permissionRevoked-04",
+      "initialVersion" : "126.0.4",
+      "scenario" : "permissionRevoked"
+    },
+    {
+      "browser" : "chrome",
+      "expectedAllowed" : false,
+      "expectedIssue" : "accessibilityPermissionRevoked",
+      "id" : "chrome-permissionRevoked-05",
+      "initialVersion" : "126.0.5",
+      "scenario" : "permissionRevoked"
+    },
+    {
+      "browser" : "chrome",
+      "expectedAllowed" : false,
+      "expectedIssue" : "accessibilityPermissionRevoked",
+      "id" : "chrome-permissionRevoked-06",
+      "initialVersion" : "126.0.6",
+      "scenario" : "permissionRevoked"
+    },
+    {
+      "browser" : "chrome",
+      "expectedAllowed" : false,
+      "expectedIssue" : "accessibilityPermissionRevoked",
+      "id" : "chrome-permissionRevoked-07",
+      "initialVersion" : "126.0.7",
+      "scenario" : "permissionRevoked"
+    },
+    {
+      "browser" : "chrome",
+      "expectedAllowed" : false,
+      "expectedIssue" : "browserVersionChanged",
+      "id" : "chrome-versionChanged-00",
+      "initialVersion" : "126.0.0",
+      "nextVersion" : "127.0.0",
+      "scenario" : "versionChanged"
+    },
+    {
+      "browser" : "chrome",
+      "expectedAllowed" : false,
+      "expectedIssue" : "browserVersionChanged",
+      "id" : "chrome-versionChanged-01",
+      "initialVersion" : "126.0.1",
+      "nextVersion" : "127.0.1",
+      "scenario" : "versionChanged"
+    },
+    {
+      "browser" : "chrome",
+      "expectedAllowed" : false,
+      "expectedIssue" : "browserVersionChanged",
+      "id" : "chrome-versionChanged-02",
+      "initialVersion" : "126.0.2",
+      "nextVersion" : "127.0.2",
+      "scenario" : "versionChanged"
+    },
+    {
+      "browser" : "chrome",
+      "expectedAllowed" : false,
+      "expectedIssue" : "browserVersionChanged",
+      "id" : "chrome-versionChanged-03",
+      "initialVersion" : "126.0.3",
+      "nextVersion" : "127.0.3",
+      "scenario" : "versionChanged"
+    },
+    {
+      "browser" : "chrome",
+      "expectedAllowed" : false,
+      "expectedIssue" : "browserVersionChanged",
+      "id" : "chrome-versionChanged-04",
+      "initialVersion" : "126.0.4",
+      "nextVersion" : "127.0.4",
+      "scenario" : "versionChanged"
+    },
+    {
+      "browser" : "chrome",
+      "expectedAllowed" : false,
+      "expectedIssue" : "browserVersionChanged",
+      "id" : "chrome-versionChanged-05",
+      "initialVersion" : "126.0.5",
+      "nextVersion" : "127.0.5",
+      "scenario" : "versionChanged"
+    },
+    {
+      "browser" : "chrome",
+      "expectedAllowed" : false,
+      "expectedIssue" : "browserVersionChanged",
+      "id" : "chrome-versionChanged-06",
+      "initialVersion" : "126.0.6",
+      "nextVersion" : "127.0.6",
+      "scenario" : "versionChanged"
+    },
+    {
+      "browser" : "chrome",
+      "expectedAllowed" : false,
+      "expectedIssue" : "browserVersionChanged",
+      "id" : "chrome-versionChanged-07",
+      "initialVersion" : "126.0.7",
+      "nextVersion" : "127.0.7",
+      "scenario" : "versionChanged"
+    },
+    {
+      "browser" : "arcDia",
+      "expectedAllowed" : true,
+      "id" : "arcDia-healthy-00",
+      "initialVersion" : "126.0.0",
+      "scenario" : "healthy"
+    },
+    {
+      "browser" : "arcDia",
+      "expectedAllowed" : true,
+      "id" : "arcDia-healthy-01",
+      "initialVersion" : "126.0.1",
+      "scenario" : "healthy"
+    },
+    {
+      "browser" : "arcDia",
+      "expectedAllowed" : true,
+      "id" : "arcDia-healthy-02",
+      "initialVersion" : "126.0.2",
+      "scenario" : "healthy"
+    },
+    {
+      "browser" : "arcDia",
+      "expectedAllowed" : true,
+      "id" : "arcDia-healthy-03",
+      "initialVersion" : "126.0.3",
+      "scenario" : "healthy"
+    },
+    {
+      "browser" : "arcDia",
+      "expectedAllowed" : true,
+      "id" : "arcDia-healthy-04",
+      "initialVersion" : "126.0.4",
+      "scenario" : "healthy"
+    },
+    {
+      "browser" : "arcDia",
+      "expectedAllowed" : true,
+      "id" : "arcDia-healthy-05",
+      "initialVersion" : "126.0.5",
+      "scenario" : "healthy"
+    },
+    {
+      "browser" : "arcDia",
+      "expectedAllowed" : true,
+      "id" : "arcDia-healthy-06",
+      "initialVersion" : "126.0.6",
+      "scenario" : "healthy"
+    },
+    {
+      "browser" : "arcDia",
+      "expectedAllowed" : true,
+      "id" : "arcDia-healthy-07",
+      "initialVersion" : "126.0.7",
+      "scenario" : "healthy"
+    },
+    {
+      "browser" : "arcDia",
+      "expectedAllowed" : false,
+      "expectedIssue" : "privateContextExcluded",
+      "id" : "arcDia-private-00",
+      "initialVersion" : "126.0.0",
+      "scenario" : "private"
+    },
+    {
+      "browser" : "arcDia",
+      "expectedAllowed" : false,
+      "expectedIssue" : "privateContextExcluded",
+      "id" : "arcDia-private-01",
+      "initialVersion" : "126.0.1",
+      "scenario" : "private"
+    },
+    {
+      "browser" : "arcDia",
+      "expectedAllowed" : false,
+      "expectedIssue" : "privateContextExcluded",
+      "id" : "arcDia-private-02",
+      "initialVersion" : "126.0.2",
+      "scenario" : "private"
+    },
+    {
+      "browser" : "arcDia",
+      "expectedAllowed" : false,
+      "expectedIssue" : "privateContextExcluded",
+      "id" : "arcDia-private-03",
+      "initialVersion" : "126.0.3",
+      "scenario" : "private"
+    },
+    {
+      "browser" : "arcDia",
+      "expectedAllowed" : false,
+      "expectedIssue" : "privateContextExcluded",
+      "id" : "arcDia-private-04",
+      "initialVersion" : "126.0.4",
+      "scenario" : "private"
+    },
+    {
+      "browser" : "arcDia",
+      "expectedAllowed" : false,
+      "expectedIssue" : "privateContextExcluded",
+      "id" : "arcDia-private-05",
+      "initialVersion" : "126.0.5",
+      "scenario" : "private"
+    },
+    {
+      "browser" : "arcDia",
+      "expectedAllowed" : false,
+      "expectedIssue" : "privateContextExcluded",
+      "id" : "arcDia-private-06",
+      "initialVersion" : "126.0.6",
+      "scenario" : "private"
+    },
+    {
+      "browser" : "arcDia",
+      "expectedAllowed" : false,
+      "expectedIssue" : "privateContextExcluded",
+      "id" : "arcDia-private-07",
+      "initialVersion" : "126.0.7",
+      "scenario" : "private"
+    },
+    {
+      "browser" : "arcDia",
+      "expectedAllowed" : false,
+      "expectedIssue" : "protectedURLContextUnavailable",
+      "id" : "arcDia-urlUnavailable-00",
+      "initialVersion" : "126.0.0",
+      "scenario" : "urlUnavailable"
+    },
+    {
+      "browser" : "arcDia",
+      "expectedAllowed" : false,
+      "expectedIssue" : "protectedURLContextUnavailable",
+      "id" : "arcDia-urlUnavailable-01",
+      "initialVersion" : "126.0.1",
+      "scenario" : "urlUnavailable"
+    },
+    {
+      "browser" : "arcDia",
+      "expectedAllowed" : false,
+      "expectedIssue" : "protectedURLContextUnavailable",
+      "id" : "arcDia-urlUnavailable-02",
+      "initialVersion" : "126.0.2",
+      "scenario" : "urlUnavailable"
+    },
+    {
+      "browser" : "arcDia",
+      "expectedAllowed" : false,
+      "expectedIssue" : "protectedURLContextUnavailable",
+      "id" : "arcDia-urlUnavailable-03",
+      "initialVersion" : "126.0.3",
+      "scenario" : "urlUnavailable"
+    },
+    {
+      "browser" : "arcDia",
+      "expectedAllowed" : false,
+      "expectedIssue" : "protectedURLContextUnavailable",
+      "id" : "arcDia-urlUnavailable-04",
+      "initialVersion" : "126.0.4",
+      "scenario" : "urlUnavailable"
+    },
+    {
+      "browser" : "arcDia",
+      "expectedAllowed" : false,
+      "expectedIssue" : "protectedURLContextUnavailable",
+      "id" : "arcDia-urlUnavailable-05",
+      "initialVersion" : "126.0.5",
+      "scenario" : "urlUnavailable"
+    },
+    {
+      "browser" : "arcDia",
+      "expectedAllowed" : false,
+      "expectedIssue" : "protectedURLContextUnavailable",
+      "id" : "arcDia-urlUnavailable-06",
+      "initialVersion" : "126.0.6",
+      "scenario" : "urlUnavailable"
+    },
+    {
+      "browser" : "arcDia",
+      "expectedAllowed" : false,
+      "expectedIssue" : "protectedURLContextUnavailable",
+      "id" : "arcDia-urlUnavailable-07",
+      "initialVersion" : "126.0.7",
+      "scenario" : "urlUnavailable"
+    },
+    {
+      "browser" : "arcDia",
+      "expectedAllowed" : false,
+      "expectedIssue" : "accessibilityPermissionRevoked",
+      "id" : "arcDia-permissionRevoked-00",
+      "initialVersion" : "126.0.0",
+      "scenario" : "permissionRevoked"
+    },
+    {
+      "browser" : "arcDia",
+      "expectedAllowed" : false,
+      "expectedIssue" : "accessibilityPermissionRevoked",
+      "id" : "arcDia-permissionRevoked-01",
+      "initialVersion" : "126.0.1",
+      "scenario" : "permissionRevoked"
+    },
+    {
+      "browser" : "arcDia",
+      "expectedAllowed" : false,
+      "expectedIssue" : "accessibilityPermissionRevoked",
+      "id" : "arcDia-permissionRevoked-02",
+      "initialVersion" : "126.0.2",
+      "scenario" : "permissionRevoked"
+    },
+    {
+      "browser" : "arcDia",
+      "expectedAllowed" : false,
+      "expectedIssue" : "accessibilityPermissionRevoked",
+      "id" : "arcDia-permissionRevoked-03",
+      "initialVersion" : "126.0.3",
+      "scenario" : "permissionRevoked"
+    },
+    {
+      "browser" : "arcDia",
+      "expectedAllowed" : false,
+      "expectedIssue" : "accessibilityPermissionRevoked",
+      "id" : "arcDia-permissionRevoked-04",
+      "initialVersion" : "126.0.4",
+      "scenario" : "permissionRevoked"
+    },
+    {
+      "browser" : "arcDia",
+      "expectedAllowed" : false,
+      "expectedIssue" : "accessibilityPermissionRevoked",
+      "id" : "arcDia-permissionRevoked-05",
+      "initialVersion" : "126.0.5",
+      "scenario" : "permissionRevoked"
+    },
+    {
+      "browser" : "arcDia",
+      "expectedAllowed" : false,
+      "expectedIssue" : "accessibilityPermissionRevoked",
+      "id" : "arcDia-permissionRevoked-06",
+      "initialVersion" : "126.0.6",
+      "scenario" : "permissionRevoked"
+    },
+    {
+      "browser" : "arcDia",
+      "expectedAllowed" : false,
+      "expectedIssue" : "accessibilityPermissionRevoked",
+      "id" : "arcDia-permissionRevoked-07",
+      "initialVersion" : "126.0.7",
+      "scenario" : "permissionRevoked"
+    },
+    {
+      "browser" : "arcDia",
+      "expectedAllowed" : false,
+      "expectedIssue" : "browserVersionChanged",
+      "id" : "arcDia-versionChanged-00",
+      "initialVersion" : "126.0.0",
+      "nextVersion" : "127.0.0",
+      "scenario" : "versionChanged"
+    },
+    {
+      "browser" : "arcDia",
+      "expectedAllowed" : false,
+      "expectedIssue" : "browserVersionChanged",
+      "id" : "arcDia-versionChanged-01",
+      "initialVersion" : "126.0.1",
+      "nextVersion" : "127.0.1",
+      "scenario" : "versionChanged"
+    },
+    {
+      "browser" : "arcDia",
+      "expectedAllowed" : false,
+      "expectedIssue" : "browserVersionChanged",
+      "id" : "arcDia-versionChanged-02",
+      "initialVersion" : "126.0.2",
+      "nextVersion" : "127.0.2",
+      "scenario" : "versionChanged"
+    },
+    {
+      "browser" : "arcDia",
+      "expectedAllowed" : false,
+      "expectedIssue" : "browserVersionChanged",
+      "id" : "arcDia-versionChanged-03",
+      "initialVersion" : "126.0.3",
+      "nextVersion" : "127.0.3",
+      "scenario" : "versionChanged"
+    },
+    {
+      "browser" : "arcDia",
+      "expectedAllowed" : false,
+      "expectedIssue" : "browserVersionChanged",
+      "id" : "arcDia-versionChanged-04",
+      "initialVersion" : "126.0.4",
+      "nextVersion" : "127.0.4",
+      "scenario" : "versionChanged"
+    },
+    {
+      "browser" : "arcDia",
+      "expectedAllowed" : false,
+      "expectedIssue" : "browserVersionChanged",
+      "id" : "arcDia-versionChanged-05",
+      "initialVersion" : "126.0.5",
+      "nextVersion" : "127.0.5",
+      "scenario" : "versionChanged"
+    },
+    {
+      "browser" : "arcDia",
+      "expectedAllowed" : false,
+      "expectedIssue" : "browserVersionChanged",
+      "id" : "arcDia-versionChanged-06",
+      "initialVersion" : "126.0.6",
+      "nextVersion" : "127.0.6",
+      "scenario" : "versionChanged"
+    },
+    {
+      "browser" : "arcDia",
+      "expectedAllowed" : false,
+      "expectedIssue" : "browserVersionChanged",
+      "id" : "arcDia-versionChanged-07",
+      "initialVersion" : "126.0.7",
+      "nextVersion" : "127.0.7",
+      "scenario" : "versionChanged"
+    },
+    {
+      "browser" : "edge",
+      "expectedAllowed" : true,
+      "id" : "edge-healthy-00",
+      "initialVersion" : "126.0.0",
+      "scenario" : "healthy"
+    },
+    {
+      "browser" : "edge",
+      "expectedAllowed" : true,
+      "id" : "edge-healthy-01",
+      "initialVersion" : "126.0.1",
+      "scenario" : "healthy"
+    },
+    {
+      "browser" : "edge",
+      "expectedAllowed" : true,
+      "id" : "edge-healthy-02",
+      "initialVersion" : "126.0.2",
+      "scenario" : "healthy"
+    },
+    {
+      "browser" : "edge",
+      "expectedAllowed" : true,
+      "id" : "edge-healthy-03",
+      "initialVersion" : "126.0.3",
+      "scenario" : "healthy"
+    },
+    {
+      "browser" : "edge",
+      "expectedAllowed" : true,
+      "id" : "edge-healthy-04",
+      "initialVersion" : "126.0.4",
+      "scenario" : "healthy"
+    },
+    {
+      "browser" : "edge",
+      "expectedAllowed" : true,
+      "id" : "edge-healthy-05",
+      "initialVersion" : "126.0.5",
+      "scenario" : "healthy"
+    },
+    {
+      "browser" : "edge",
+      "expectedAllowed" : true,
+      "id" : "edge-healthy-06",
+      "initialVersion" : "126.0.6",
+      "scenario" : "healthy"
+    },
+    {
+      "browser" : "edge",
+      "expectedAllowed" : true,
+      "id" : "edge-healthy-07",
+      "initialVersion" : "126.0.7",
+      "scenario" : "healthy"
+    },
+    {
+      "browser" : "edge",
+      "expectedAllowed" : false,
+      "expectedIssue" : "privateContextExcluded",
+      "id" : "edge-private-00",
+      "initialVersion" : "126.0.0",
+      "scenario" : "private"
+    },
+    {
+      "browser" : "edge",
+      "expectedAllowed" : false,
+      "expectedIssue" : "privateContextExcluded",
+      "id" : "edge-private-01",
+      "initialVersion" : "126.0.1",
+      "scenario" : "private"
+    },
+    {
+      "browser" : "edge",
+      "expectedAllowed" : false,
+      "expectedIssue" : "privateContextExcluded",
+      "id" : "edge-private-02",
+      "initialVersion" : "126.0.2",
+      "scenario" : "private"
+    },
+    {
+      "browser" : "edge",
+      "expectedAllowed" : false,
+      "expectedIssue" : "privateContextExcluded",
+      "id" : "edge-private-03",
+      "initialVersion" : "126.0.3",
+      "scenario" : "private"
+    },
+    {
+      "browser" : "edge",
+      "expectedAllowed" : false,
+      "expectedIssue" : "privateContextExcluded",
+      "id" : "edge-private-04",
+      "initialVersion" : "126.0.4",
+      "scenario" : "private"
+    },
+    {
+      "browser" : "edge",
+      "expectedAllowed" : false,
+      "expectedIssue" : "privateContextExcluded",
+      "id" : "edge-private-05",
+      "initialVersion" : "126.0.5",
+      "scenario" : "private"
+    },
+    {
+      "browser" : "edge",
+      "expectedAllowed" : false,
+      "expectedIssue" : "privateContextExcluded",
+      "id" : "edge-private-06",
+      "initialVersion" : "126.0.6",
+      "scenario" : "private"
+    },
+    {
+      "browser" : "edge",
+      "expectedAllowed" : false,
+      "expectedIssue" : "privateContextExcluded",
+      "id" : "edge-private-07",
+      "initialVersion" : "126.0.7",
+      "scenario" : "private"
+    },
+    {
+      "browser" : "edge",
+      "expectedAllowed" : false,
+      "expectedIssue" : "protectedURLContextUnavailable",
+      "id" : "edge-urlUnavailable-00",
+      "initialVersion" : "126.0.0",
+      "scenario" : "urlUnavailable"
+    },
+    {
+      "browser" : "edge",
+      "expectedAllowed" : false,
+      "expectedIssue" : "protectedURLContextUnavailable",
+      "id" : "edge-urlUnavailable-01",
+      "initialVersion" : "126.0.1",
+      "scenario" : "urlUnavailable"
+    },
+    {
+      "browser" : "edge",
+      "expectedAllowed" : false,
+      "expectedIssue" : "protectedURLContextUnavailable",
+      "id" : "edge-urlUnavailable-02",
+      "initialVersion" : "126.0.2",
+      "scenario" : "urlUnavailable"
+    },
+    {
+      "browser" : "edge",
+      "expectedAllowed" : false,
+      "expectedIssue" : "protectedURLContextUnavailable",
+      "id" : "edge-urlUnavailable-03",
+      "initialVersion" : "126.0.3",
+      "scenario" : "urlUnavailable"
+    },
+    {
+      "browser" : "edge",
+      "expectedAllowed" : false,
+      "expectedIssue" : "protectedURLContextUnavailable",
+      "id" : "edge-urlUnavailable-04",
+      "initialVersion" : "126.0.4",
+      "scenario" : "urlUnavailable"
+    },
+    {
+      "browser" : "edge",
+      "expectedAllowed" : false,
+      "expectedIssue" : "protectedURLContextUnavailable",
+      "id" : "edge-urlUnavailable-05",
+      "initialVersion" : "126.0.5",
+      "scenario" : "urlUnavailable"
+    },
+    {
+      "browser" : "edge",
+      "expectedAllowed" : false,
+      "expectedIssue" : "protectedURLContextUnavailable",
+      "id" : "edge-urlUnavailable-06",
+      "initialVersion" : "126.0.6",
+      "scenario" : "urlUnavailable"
+    },
+    {
+      "browser" : "edge",
+      "expectedAllowed" : false,
+      "expectedIssue" : "protectedURLContextUnavailable",
+      "id" : "edge-urlUnavailable-07",
+      "initialVersion" : "126.0.7",
+      "scenario" : "urlUnavailable"
+    },
+    {
+      "browser" : "edge",
+      "expectedAllowed" : false,
+      "expectedIssue" : "accessibilityPermissionRevoked",
+      "id" : "edge-permissionRevoked-00",
+      "initialVersion" : "126.0.0",
+      "scenario" : "permissionRevoked"
+    },
+    {
+      "browser" : "edge",
+      "expectedAllowed" : false,
+      "expectedIssue" : "accessibilityPermissionRevoked",
+      "id" : "edge-permissionRevoked-01",
+      "initialVersion" : "126.0.1",
+      "scenario" : "permissionRevoked"
+    },
+    {
+      "browser" : "edge",
+      "expectedAllowed" : false,
+      "expectedIssue" : "accessibilityPermissionRevoked",
+      "id" : "edge-permissionRevoked-02",
+      "initialVersion" : "126.0.2",
+      "scenario" : "permissionRevoked"
+    },
+    {
+      "browser" : "edge",
+      "expectedAllowed" : false,
+      "expectedIssue" : "accessibilityPermissionRevoked",
+      "id" : "edge-permissionRevoked-03",
+      "initialVersion" : "126.0.3",
+      "scenario" : "permissionRevoked"
+    },
+    {
+      "browser" : "edge",
+      "expectedAllowed" : false,
+      "expectedIssue" : "accessibilityPermissionRevoked",
+      "id" : "edge-permissionRevoked-04",
+      "initialVersion" : "126.0.4",
+      "scenario" : "permissionRevoked"
+    },
+    {
+      "browser" : "edge",
+      "expectedAllowed" : false,
+      "expectedIssue" : "accessibilityPermissionRevoked",
+      "id" : "edge-permissionRevoked-05",
+      "initialVersion" : "126.0.5",
+      "scenario" : "permissionRevoked"
+    },
+    {
+      "browser" : "edge",
+      "expectedAllowed" : false,
+      "expectedIssue" : "accessibilityPermissionRevoked",
+      "id" : "edge-permissionRevoked-06",
+      "initialVersion" : "126.0.6",
+      "scenario" : "permissionRevoked"
+    },
+    {
+      "browser" : "edge",
+      "expectedAllowed" : false,
+      "expectedIssue" : "accessibilityPermissionRevoked",
+      "id" : "edge-permissionRevoked-07",
+      "initialVersion" : "126.0.7",
+      "scenario" : "permissionRevoked"
+    },
+    {
+      "browser" : "edge",
+      "expectedAllowed" : false,
+      "expectedIssue" : "browserVersionChanged",
+      "id" : "edge-versionChanged-00",
+      "initialVersion" : "126.0.0",
+      "nextVersion" : "127.0.0",
+      "scenario" : "versionChanged"
+    },
+    {
+      "browser" : "edge",
+      "expectedAllowed" : false,
+      "expectedIssue" : "browserVersionChanged",
+      "id" : "edge-versionChanged-01",
+      "initialVersion" : "126.0.1",
+      "nextVersion" : "127.0.1",
+      "scenario" : "versionChanged"
+    },
+    {
+      "browser" : "edge",
+      "expectedAllowed" : false,
+      "expectedIssue" : "browserVersionChanged",
+      "id" : "edge-versionChanged-02",
+      "initialVersion" : "126.0.2",
+      "nextVersion" : "127.0.2",
+      "scenario" : "versionChanged"
+    },
+    {
+      "browser" : "edge",
+      "expectedAllowed" : false,
+      "expectedIssue" : "browserVersionChanged",
+      "id" : "edge-versionChanged-03",
+      "initialVersion" : "126.0.3",
+      "nextVersion" : "127.0.3",
+      "scenario" : "versionChanged"
+    },
+    {
+      "browser" : "edge",
+      "expectedAllowed" : false,
+      "expectedIssue" : "browserVersionChanged",
+      "id" : "edge-versionChanged-04",
+      "initialVersion" : "126.0.4",
+      "nextVersion" : "127.0.4",
+      "scenario" : "versionChanged"
+    },
+    {
+      "browser" : "edge",
+      "expectedAllowed" : false,
+      "expectedIssue" : "browserVersionChanged",
+      "id" : "edge-versionChanged-05",
+      "initialVersion" : "126.0.5",
+      "nextVersion" : "127.0.5",
+      "scenario" : "versionChanged"
+    },
+    {
+      "browser" : "edge",
+      "expectedAllowed" : false,
+      "expectedIssue" : "browserVersionChanged",
+      "id" : "edge-versionChanged-06",
+      "initialVersion" : "126.0.6",
+      "nextVersion" : "127.0.6",
+      "scenario" : "versionChanged"
+    },
+    {
+      "browser" : "edge",
+      "expectedAllowed" : false,
+      "expectedIssue" : "browserVersionChanged",
+      "id" : "edge-versionChanged-07",
+      "initialVersion" : "126.0.7",
+      "nextVersion" : "127.0.7",
+      "scenario" : "versionChanged"
+    },
+    {
+      "browser" : "firefox",
+      "expectedAllowed" : true,
+      "id" : "firefox-healthy-00",
+      "initialVersion" : "126.0.0",
+      "scenario" : "healthy"
+    },
+    {
+      "browser" : "firefox",
+      "expectedAllowed" : true,
+      "id" : "firefox-healthy-01",
+      "initialVersion" : "126.0.1",
+      "scenario" : "healthy"
+    },
+    {
+      "browser" : "firefox",
+      "expectedAllowed" : true,
+      "id" : "firefox-healthy-02",
+      "initialVersion" : "126.0.2",
+      "scenario" : "healthy"
+    },
+    {
+      "browser" : "firefox",
+      "expectedAllowed" : true,
+      "id" : "firefox-healthy-03",
+      "initialVersion" : "126.0.3",
+      "scenario" : "healthy"
+    },
+    {
+      "browser" : "firefox",
+      "expectedAllowed" : true,
+      "id" : "firefox-healthy-04",
+      "initialVersion" : "126.0.4",
+      "scenario" : "healthy"
+    },
+    {
+      "browser" : "firefox",
+      "expectedAllowed" : true,
+      "id" : "firefox-healthy-05",
+      "initialVersion" : "126.0.5",
+      "scenario" : "healthy"
+    },
+    {
+      "browser" : "firefox",
+      "expectedAllowed" : true,
+      "id" : "firefox-healthy-06",
+      "initialVersion" : "126.0.6",
+      "scenario" : "healthy"
+    },
+    {
+      "browser" : "firefox",
+      "expectedAllowed" : true,
+      "id" : "firefox-healthy-07",
+      "initialVersion" : "126.0.7",
+      "scenario" : "healthy"
+    },
+    {
+      "browser" : "firefox",
+      "expectedAllowed" : false,
+      "expectedIssue" : "privateContextExcluded",
+      "id" : "firefox-private-00",
+      "initialVersion" : "126.0.0",
+      "scenario" : "private"
+    },
+    {
+      "browser" : "firefox",
+      "expectedAllowed" : false,
+      "expectedIssue" : "privateContextExcluded",
+      "id" : "firefox-private-01",
+      "initialVersion" : "126.0.1",
+      "scenario" : "private"
+    },
+    {
+      "browser" : "firefox",
+      "expectedAllowed" : false,
+      "expectedIssue" : "privateContextExcluded",
+      "id" : "firefox-private-02",
+      "initialVersion" : "126.0.2",
+      "scenario" : "private"
+    },
+    {
+      "browser" : "firefox",
+      "expectedAllowed" : false,
+      "expectedIssue" : "privateContextExcluded",
+      "id" : "firefox-private-03",
+      "initialVersion" : "126.0.3",
+      "scenario" : "private"
+    },
+    {
+      "browser" : "firefox",
+      "expectedAllowed" : false,
+      "expectedIssue" : "privateContextExcluded",
+      "id" : "firefox-private-04",
+      "initialVersion" : "126.0.4",
+      "scenario" : "private"
+    },
+    {
+      "browser" : "firefox",
+      "expectedAllowed" : false,
+      "expectedIssue" : "privateContextExcluded",
+      "id" : "firefox-private-05",
+      "initialVersion" : "126.0.5",
+      "scenario" : "private"
+    },
+    {
+      "browser" : "firefox",
+      "expectedAllowed" : false,
+      "expectedIssue" : "privateContextExcluded",
+      "id" : "firefox-private-06",
+      "initialVersion" : "126.0.6",
+      "scenario" : "private"
+    },
+    {
+      "browser" : "firefox",
+      "expectedAllowed" : false,
+      "expectedIssue" : "privateContextExcluded",
+      "id" : "firefox-private-07",
+      "initialVersion" : "126.0.7",
+      "scenario" : "private"
+    },
+    {
+      "browser" : "firefox",
+      "expectedAllowed" : false,
+      "expectedIssue" : "protectedURLContextUnavailable",
+      "id" : "firefox-urlUnavailable-00",
+      "initialVersion" : "126.0.0",
+      "scenario" : "urlUnavailable"
+    },
+    {
+      "browser" : "firefox",
+      "expectedAllowed" : false,
+      "expectedIssue" : "protectedURLContextUnavailable",
+      "id" : "firefox-urlUnavailable-01",
+      "initialVersion" : "126.0.1",
+      "scenario" : "urlUnavailable"
+    },
+    {
+      "browser" : "firefox",
+      "expectedAllowed" : false,
+      "expectedIssue" : "protectedURLContextUnavailable",
+      "id" : "firefox-urlUnavailable-02",
+      "initialVersion" : "126.0.2",
+      "scenario" : "urlUnavailable"
+    },
+    {
+      "browser" : "firefox",
+      "expectedAllowed" : false,
+      "expectedIssue" : "protectedURLContextUnavailable",
+      "id" : "firefox-urlUnavailable-03",
+      "initialVersion" : "126.0.3",
+      "scenario" : "urlUnavailable"
+    },
+    {
+      "browser" : "firefox",
+      "expectedAllowed" : false,
+      "expectedIssue" : "protectedURLContextUnavailable",
+      "id" : "firefox-urlUnavailable-04",
+      "initialVersion" : "126.0.4",
+      "scenario" : "urlUnavailable"
+    },
+    {
+      "browser" : "firefox",
+      "expectedAllowed" : false,
+      "expectedIssue" : "protectedURLContextUnavailable",
+      "id" : "firefox-urlUnavailable-05",
+      "initialVersion" : "126.0.5",
+      "scenario" : "urlUnavailable"
+    },
+    {
+      "browser" : "firefox",
+      "expectedAllowed" : false,
+      "expectedIssue" : "protectedURLContextUnavailable",
+      "id" : "firefox-urlUnavailable-06",
+      "initialVersion" : "126.0.6",
+      "scenario" : "urlUnavailable"
+    },
+    {
+      "browser" : "firefox",
+      "expectedAllowed" : false,
+      "expectedIssue" : "protectedURLContextUnavailable",
+      "id" : "firefox-urlUnavailable-07",
+      "initialVersion" : "126.0.7",
+      "scenario" : "urlUnavailable"
+    },
+    {
+      "browser" : "firefox",
+      "expectedAllowed" : false,
+      "expectedIssue" : "accessibilityPermissionRevoked",
+      "id" : "firefox-permissionRevoked-00",
+      "initialVersion" : "126.0.0",
+      "scenario" : "permissionRevoked"
+    },
+    {
+      "browser" : "firefox",
+      "expectedAllowed" : false,
+      "expectedIssue" : "accessibilityPermissionRevoked",
+      "id" : "firefox-permissionRevoked-01",
+      "initialVersion" : "126.0.1",
+      "scenario" : "permissionRevoked"
+    },
+    {
+      "browser" : "firefox",
+      "expectedAllowed" : false,
+      "expectedIssue" : "accessibilityPermissionRevoked",
+      "id" : "firefox-permissionRevoked-02",
+      "initialVersion" : "126.0.2",
+      "scenario" : "permissionRevoked"
+    },
+    {
+      "browser" : "firefox",
+      "expectedAllowed" : false,
+      "expectedIssue" : "accessibilityPermissionRevoked",
+      "id" : "firefox-permissionRevoked-03",
+      "initialVersion" : "126.0.3",
+      "scenario" : "permissionRevoked"
+    },
+    {
+      "browser" : "firefox",
+      "expectedAllowed" : false,
+      "expectedIssue" : "accessibilityPermissionRevoked",
+      "id" : "firefox-permissionRevoked-04",
+      "initialVersion" : "126.0.4",
+      "scenario" : "permissionRevoked"
+    },
+    {
+      "browser" : "firefox",
+      "expectedAllowed" : false,
+      "expectedIssue" : "accessibilityPermissionRevoked",
+      "id" : "firefox-permissionRevoked-05",
+      "initialVersion" : "126.0.5",
+      "scenario" : "permissionRevoked"
+    },
+    {
+      "browser" : "firefox",
+      "expectedAllowed" : false,
+      "expectedIssue" : "accessibilityPermissionRevoked",
+      "id" : "firefox-permissionRevoked-06",
+      "initialVersion" : "126.0.6",
+      "scenario" : "permissionRevoked"
+    },
+    {
+      "browser" : "firefox",
+      "expectedAllowed" : false,
+      "expectedIssue" : "accessibilityPermissionRevoked",
+      "id" : "firefox-permissionRevoked-07",
+      "initialVersion" : "126.0.7",
+      "scenario" : "permissionRevoked"
+    },
+    {
+      "browser" : "firefox",
+      "expectedAllowed" : false,
+      "expectedIssue" : "browserVersionChanged",
+      "id" : "firefox-versionChanged-00",
+      "initialVersion" : "126.0.0",
+      "nextVersion" : "127.0.0",
+      "scenario" : "versionChanged"
+    },
+    {
+      "browser" : "firefox",
+      "expectedAllowed" : false,
+      "expectedIssue" : "browserVersionChanged",
+      "id" : "firefox-versionChanged-01",
+      "initialVersion" : "126.0.1",
+      "nextVersion" : "127.0.1",
+      "scenario" : "versionChanged"
+    },
+    {
+      "browser" : "firefox",
+      "expectedAllowed" : false,
+      "expectedIssue" : "browserVersionChanged",
+      "id" : "firefox-versionChanged-02",
+      "initialVersion" : "126.0.2",
+      "nextVersion" : "127.0.2",
+      "scenario" : "versionChanged"
+    },
+    {
+      "browser" : "firefox",
+      "expectedAllowed" : false,
+      "expectedIssue" : "browserVersionChanged",
+      "id" : "firefox-versionChanged-03",
+      "initialVersion" : "126.0.3",
+      "nextVersion" : "127.0.3",
+      "scenario" : "versionChanged"
+    },
+    {
+      "browser" : "firefox",
+      "expectedAllowed" : false,
+      "expectedIssue" : "browserVersionChanged",
+      "id" : "firefox-versionChanged-04",
+      "initialVersion" : "126.0.4",
+      "nextVersion" : "127.0.4",
+      "scenario" : "versionChanged"
+    },
+    {
+      "browser" : "firefox",
+      "expectedAllowed" : false,
+      "expectedIssue" : "browserVersionChanged",
+      "id" : "firefox-versionChanged-05",
+      "initialVersion" : "126.0.5",
+      "nextVersion" : "127.0.5",
+      "scenario" : "versionChanged"
+    },
+    {
+      "browser" : "firefox",
+      "expectedAllowed" : false,
+      "expectedIssue" : "browserVersionChanged",
+      "id" : "firefox-versionChanged-06",
+      "initialVersion" : "126.0.6",
+      "nextVersion" : "127.0.6",
+      "scenario" : "versionChanged"
+    },
+    {
+      "browser" : "firefox",
+      "expectedAllowed" : false,
+      "expectedIssue" : "browserVersionChanged",
+      "id" : "firefox-versionChanged-07",
+      "initialVersion" : "126.0.7",
+      "nextVersion" : "127.0.7",
+      "scenario" : "versionChanged"
+    }
+  ],
+  "schemaVersion" : 1,
+  "seed" : 327712519479
+}

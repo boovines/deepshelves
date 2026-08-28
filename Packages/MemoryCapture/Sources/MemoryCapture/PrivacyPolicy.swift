@@ -6,7 +6,7 @@ public enum PrivacyRuleAction: String, Codable, Equatable, Sendable {
     case deny
 }
 
-public enum PrivateBrowserHandling: String, Codable, Equatable, Sendable {
+public enum PrivateBrowserHandling: String, Codable, Equatable, Hashable, Sendable {
     case allow
     case exclude
 }

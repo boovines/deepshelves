@@ -1,0 +1,16 @@
+lm057_media_symbol_scan=passed
+permission_prompt_source_scan=passed
+fixture_reproducibility=passed
+supported_browser_matrix=passed
+private_context_matrix=passed
+permission_revoke_matrix=passed
+browser_version_change_matrix=passed
+protected_url_unavailable_reasons=visible
+content_leak_count=0
+ui_static_accessibility_audit=passed
+ui_runtime_hardware_quarantine=honored
+contracts=passed
+privacy_smoke=passed
+release_compile_only=passed
+hardware_encoder_tests_executed=0
+whitespace=passed

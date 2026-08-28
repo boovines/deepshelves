@@ -16,8 +16,10 @@ final class PrivacySettingsViewModel: ObservableObject {
     @Published private(set) var snapshot: PrivacyPolicySettingsSnapshot?
     @Published private(set) var preview: PrivacyPolicyPreview?
     @Published private(set) var statusMessage: String?
+    @Published private(set) var permissionHealth: CapturePermissionHealthSnapshot?
 
     private let controller: PrivacyPolicySettingsController
+    private let permissionHealthMonitor: CapturePermissionHealthMonitor
     private var startupTask: Task<PrivacyPolicySettingsSnapshot, Error>?
 
     init(stateURL: URL) {
@@ -30,6 +32,7 @@ final class PrivacySettingsViewModel: ObservableObject {
             policy: policy,
             store: FilePrivacyPolicySettingsStore(fileURL: stateURL)
         )
+        permissionHealthMonitor = CapturePermissionHealthMonitor()
     }
 
     func load() async {
@@ -45,6 +48,7 @@ final class PrivacySettingsViewModel: ObservableObject {
         }
         do {
             snapshot = try await task.value
+            permissionHealth = await permissionHealthMonitor.refresh()
             loadState = .ready
         } catch {
             loadState = .failure("LM-PRIVACY-LOAD")
@@ -79,6 +83,18 @@ final class PrivacySettingsViewModel: ObservableObject {
     func removeRule(id: String) {
         performUpdate {
             try await self.controller.removeRule(id: id)
+        }
+    }
+
+    func setPrivateBrowserHandling(_ handling: PrivateBrowserHandling) {
+        performUpdate {
+            try await self.controller.replacePrivateBrowserHandling(handling)
+        }
+    }
+
+    func refreshPermissionHealth() {
+        Task {
+            permissionHealth = await permissionHealthMonitor.refresh()
         }
     }
 
@@ -194,6 +210,53 @@ struct PrivacySettingsPane: View {
                 Text("Fixed system and Local Memory exclusions always take precedence.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
+            }
+
+            Section("Browser and permission health") {
+                Picker(
+                    "Private browser windows",
+                    selection: Binding(
+                        get: {
+                            model.snapshot?.configuration.privateBrowserHandling ?? .exclude
+                        },
+                        set: { model.setPrivateBrowserHandling($0) }
+                    )
+                ) {
+                    Text("Exclude").tag(PrivateBrowserHandling.exclude)
+                    Text("Allow only without site rules").tag(PrivateBrowserHandling.allow)
+                }
+                .accessibilityIdentifier("privacy.privateBrowserHandling")
+
+                LabeledContent(
+                    "Screen Recording",
+                    value: permissionLabel(model.permissionHealth?.screenRecording)
+                )
+                LabeledContent(
+                    "Accessibility",
+                    value: permissionLabel(model.permissionHealth?.accessibility)
+                )
+                Button("Refresh Permission Health") {
+                    model.refreshPermissionHealth()
+                }
+                .accessibilityIdentifier("privacy.refreshPermissionHealth")
+
+                if let reason = model.permissionHealth?.recordingUserVisibleReason
+                    ?? model.permissionHealth?.protectedBrowserUserVisibleReason
+                {
+                    Label(reason, systemImage: "exclamationmark.shield")
+                        .foregroundStyle(.orange)
+                        .accessibilityIdentifier("privacy.browserProtectionReason")
+                } else {
+                    Label("Protected browser context is available", systemImage: "checkmark.shield")
+                        .foregroundStyle(.secondary)
+                        .accessibilityIdentifier("privacy.browserProtectionHealthy")
+                }
+
+                Text(
+                    "Browser capture pauses whenever a protected URL, private-window state, adapter version, or required permission cannot be verified."
+                )
+                .font(.caption)
+                .foregroundStyle(.secondary)
             }
 
             Section("Application exclusions") {
@@ -331,5 +394,14 @@ struct PrivacySettingsPane: View {
             precedence: index + 1,
             actionLabel: rule.action == .deny ? "Blocked" : "Allowed"
         )
+    }
+
+    private func permissionLabel(_ state: CapturePermissionHealthState?) -> String {
+        switch state {
+        case .granted: "Granted"
+        case .denied: "Required"
+        case .revoked: "Revoked"
+        case nil: "Checking"
+        }
     }
 }

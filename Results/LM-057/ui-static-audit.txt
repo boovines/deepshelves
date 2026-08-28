@@ -1,0 +1,4 @@
+private_browser_policy_control=passed
+permission_health_refresh_control=passed
+protected_context_reason_projection=passed
+ui_runtime=quarantined

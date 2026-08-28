@@ -1,0 +1,5 @@
+fixture_sha256=27c7025f6cb2b15f9d0647bf14e7934f039b847a69cc343a4c259ccbfd45a5d6
+browser_private_permission_version_cases=200
+supported_browser_count=5
+blocked_case_count=160
+expected_content_leak_count=0
