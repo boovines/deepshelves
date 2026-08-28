@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "activeStory": "LM-011",
+  "activeStory": "LM-012",
   "stories": {
     "LM-001": {
       "status": "passed",
@@ -165,23 +165,27 @@
       "resumeProbe": null
     },
     "LM-011": {
-      "status": "active",
+      "status": "passed",
       "startedAt": "2026-08-28T04:08:41Z",
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": "Base checkpoint refs/tags/checkpoints/LM-010. Implement the complete semantic color, type, spacing, radius, hairline, control-height, and motion token catalog, including Reduce Motion and Increased Contrast behavior, with canonical Results/LM-011/tokens.json evidence.",
+      "completedAt": "2026-08-28T04:16:30Z",
+      "gitRevision": "refs/tags/checkpoints/LM-011",
+      "evidence": [
+        "Results/LM-011/tokens.json",
+        "Results/LM-011/report.json",
+        "Results/LM-011/unit-tests.txt"
+      ],
+      "notes": "The complete semantic color, spacing, radius, control-height, hairline, native type, and motion catalog matches plan 11. Dynamic Aqua/Dark Aqua resolution, Reduce Motion opacity substitution, Increased Contrast selection/hairline strengthening, byte-pinned token evidence, and the complete release/privacy gate suite pass.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null
     },
     "LM-012": {
-      "status": "pending",
-      "startedAt": null,
+      "status": "active",
+      "startedAt": "2026-08-28T04:16:30Z",
       "completedAt": null,
       "gitRevision": null,
       "evidence": [],
-      "notes": null,
+      "notes": "Base checkpoint refs/tags/checkpoints/LM-011. Implement MemorySearchField, filter tokens, capture status badge, result card, evidence snippet, permission row, empty/error/progress views, and destructive confirmation sheet with a complete state, long-localization, and keyboard-focus preview/snapshot matrix.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null
