@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-052",
+  "status": "passed",
+  "scanner": {
+    "fileAccess": "read-only mmap with exact fstat size and DSVEC002 header validation",
+    "defaultChunkCandidateCount": 4096,
+    "maximumChunkCandidateCount": 65536,
+    "conversion": "Accelerate vImage Float16 to Float32",
+    "scoring": "Accelerate vDSP exact cosine dot product corrected by stored Float16 norm",
+    "contiguousOffsets": "coalesced into one copy per run",
+    "sparseOffsets": "packed into bounded candidate chunks",
+    "stableOrder": [
+      "score descending",
+      "capturedAt descending",
+      "lowercase UUID ascending"
+    ],
+    "maximumTopK": 100,
+    "cancellationChecks": [
+      "before file open and mapping",
+      "before every bounded scoring chunk",
+      "before result projection"
+    ]
+  },
+  "prefilter": {
+    "performedBeforeScoring": true,
+    "readyStates": [
+      "vector_offsets",
+      "visualVector artifact",
+      "frame visual evidence",
+      "parent media chunk"
+    ],
+    "hardFilters": [
+      "half-open capture interval",
+      "bundle identifier set",
+      "site host set"
+    ],
+    "suppressedFramesExcluded": true
+  },
+  "integrity": {
+    "exactFileSize": true,
+    "headerSHA256": true,
+    "modelHash": true,
+    "generationUUID": true,
+    "alignedInBoundsOffsets": true,
+    "finiteNearUnitNorm": true,
+    "winnerSHA256BeforeProjection": true,
+    "truncatedOrChangedFileFailsBeforeResults": true,
+    "malformedSnapshotFailsBeforeMappedCopy": true
+  },
+  "productionScale": {
+    "evidence": "Results/LM-052/scale-metrics.json",
+    "samplesPerScale": 20,
+    "scales": [
+      {
+        "vectorCount": 100000,
+        "p95Milliseconds": 52.139375,
+        "p99Milliseconds": 53.866958
+      },
+      {
+        "vectorCount": 500000,
+        "p95Milliseconds": 232.037916,
+        "p99Milliseconds": 233.206125
+      },
+      {
+        "vectorCount": 1000000,
+        "p95Milliseconds": 444.379833,
+        "p99Milliseconds": 445.969041
+      }
+    ],
+    "incrementalResidentMegabytes": 91.328125
+  },
+  "canonicalS4": {
+    "evidence": "Results/LM-007/report.json",
+    "diverseCorpusVectorCount": 1000000,
+    "unfilteredP95Milliseconds": 618.042708,
+    "unfilteredP99Milliseconds": 637.554625,
+    "filteredCandidateCount": 100000,
+    "filteredP95Milliseconds": 64.117458,
+    "incrementalResidentMegabytes": 2.875,
+    "maximumScalarScoreError": 0.000013709068298339844,
+    "stableOrderingMatched": true,
+    "truncatedFileDetectedBeforeResults": true
+  },
+  "verification": {
+    "focusedReleaseUnitTests": 16,
+    "productionScaleTests": 1,
+    "contracts": "passed",
+    "privacySmoke": "passed",
+    "releaseCompileOnly": "passed",
+    "dependencyAudit": "passed",
+    "strictFormatting": "passed"
+  },
+  "safety": {
+    "applicationLaunchesExecuted": 0,
+    "appleImageIORuntimeExecuted": false,
+    "hardwareEncoderTestsExecuted": 0,
+    "videoToolboxInvocations": 0,
+    "encoderTripwire": "passed"
+  }
+}

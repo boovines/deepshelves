@@ -128,6 +128,72 @@ public struct ArchiveVectorCompactionReport: Equatable, Sendable {
     public let compactedByteCount: Int64
 }
 
+public struct ArchiveVectorScanFilter: Equatable, Sendable {
+    public let capturedAt: Range<Date>?
+    public let bundleIdentifiers: Set<String>
+    public let hosts: Set<String>
+
+    public init(
+        capturedAt: Range<Date>? = nil,
+        bundleIdentifiers: Set<String> = [],
+        hosts: Set<String> = []
+    ) {
+        self.capturedAt = capturedAt
+        self.bundleIdentifiers = bundleIdentifiers
+        self.hosts = hosts
+    }
+}
+
+public struct ArchiveVectorScanCandidate: Equatable, Sendable {
+    public let frameID: UUID
+    public let capturedAt: Date
+    public let byteOffset: Int64
+    public let norm: Double
+    public let contentHash: Data
+
+    public init(
+        frameID: UUID,
+        capturedAt: Date,
+        byteOffset: Int64,
+        norm: Double,
+        contentHash: Data
+    ) {
+        self.frameID = frameID
+        self.capturedAt = capturedAt
+        self.byteOffset = byteOffset
+        self.norm = norm
+        self.contentHash = contentHash
+    }
+}
+
+public struct ArchiveVectorScanSnapshot: Equatable, Sendable {
+    public let fileURL: URL
+    public let fileByteCount: Int64
+    public let generation: UUID
+    public let modelHash: Data
+    public let dimension: Int
+    public let vectorByteCount: Int
+    public let candidates: [ArchiveVectorScanCandidate]
+
+    public init(
+        fileURL: URL,
+        fileByteCount: Int64,
+        generation: UUID,
+        modelHash: Data,
+        dimension: Int,
+        vectorByteCount: Int,
+        candidates: [ArchiveVectorScanCandidate]
+    ) {
+        self.fileURL = fileURL
+        self.fileByteCount = fileByteCount
+        self.generation = generation
+        self.modelHash = modelHash
+        self.dimension = dimension
+        self.vectorByteCount = vectorByteCount
+        self.candidates = candidates
+    }
+}
+
 public final class ArchiveVectorStore: @unchecked Sendable {
     public static let headerByteCount = 192
     public static let magic = "DSVEC002"
@@ -475,6 +541,47 @@ public final class ArchiveVectorStore: @unchecked Sendable {
         }
     }
 
+    public func scanSnapshot(
+        model: ArchiveVectorModelIdentity,
+        filter: ArchiveVectorScanFilter = ArchiveVectorScanFilter()
+    ) throws -> ArchiveVectorScanSnapshot {
+        try lock.withLock {
+            _ = try recoverCompactionIfNeeded(model: model)
+            let generation = try ensureFile(model: model)
+            let url = fileStore.url(for: try model.relativePath)
+            let descriptor = try openLocked(url, flags: O_RDONLY)
+            defer { closeLocked(descriptor) }
+            try validateHeader(
+                descriptor: descriptor,
+                model: model,
+                expectedGeneration: generation
+            )
+            let fileByteCount = try fileSize(descriptor)
+            let candidates = try scanCandidates(model: model, filter: filter)
+            var offsets = Set<Int64>()
+            for candidate in candidates {
+                guard candidate.byteOffset >= Int64(Self.headerByteCount),
+                    (candidate.byteOffset - Int64(Self.headerByteCount))
+                        % Int64(model.vectorByteCount) == 0,
+                    candidate.byteOffset + Int64(model.vectorByteCount) <= fileByteCount,
+                    candidate.norm.isFinite, abs(candidate.norm - 1) <= 0.005,
+                    offsets.insert(candidate.byteOffset).inserted
+                else {
+                    throw ArchiveVectorStoreError.invalidOffset
+                }
+            }
+            return ArchiveVectorScanSnapshot(
+                fileURL: url,
+                fileByteCount: fileByteCount,
+                generation: generation,
+                modelHash: model.modelHash,
+                dimension: model.dimension,
+                vectorByteCount: model.vectorByteCount,
+                candidates: candidates
+            )
+        }
+    }
+
     private func validate(_ request: ArchiveVectorAppendRequest) throws {
         var norm = 0.0
         for value in request.values { norm += Double(value) * Double(value) }
@@ -487,6 +594,76 @@ public final class ArchiveVectorStore: @unchecked Sendable {
             request.values.allSatisfy(\.isFinite), abs(sqrt(norm) - 1) <= 0.000_01
         else {
             throw ArchiveVectorStoreError.invalidRequest
+        }
+    }
+
+    private func scanCandidates(
+        model: ArchiveVectorModelIdentity,
+        filter: ArchiveVectorScanFilter
+    ) throws -> [ArchiveVectorScanCandidate] {
+        try database.atomicRead { database in
+            var predicates = [
+                "offsets.model_hash = ?",
+                "offsets.state = 'ready'",
+                "vectors.state = 'ready'",
+                "frames.visual_state = 'ready'",
+                "media_chunks.state = 'ready'",
+            ]
+            var arguments: [DatabaseValueConvertible?] = [model.modelHashHex]
+            if let interval = filter.capturedAt {
+                predicates.append("frames.captured_at >= ? AND frames.captured_at < ?")
+                arguments.append(Self.encode(interval.lowerBound))
+                arguments.append(Self.encode(interval.upperBound))
+            }
+            if !filter.bundleIdentifiers.isEmpty {
+                predicates.append(
+                    "frames.bundle_id IN (\(filter.bundleIdentifiers.map { _ in "?" }.joined(separator: ",")))"
+                )
+                arguments.append(contentsOf: filter.bundleIdentifiers.sorted())
+            }
+            if !filter.hosts.isEmpty {
+                predicates.append(
+                    "frames.url_host IN (\(filter.hosts.map { _ in "?" }.joined(separator: ",")))"
+                )
+                arguments.append(contentsOf: filter.hosts.sorted())
+            }
+            let rows = try Row.fetchAll(
+                database,
+                sql: """
+                    SELECT frames.id, frames.captured_at, offsets.byte_offset,
+                           offsets.norm, vectors.content_hash
+                    FROM vector_offsets offsets
+                    JOIN frames ON frames.id = offsets.frame_id
+                    JOIN media_chunks ON media_chunks.id = frames.chunk_id
+                    JOIN artifacts vectors ON vectors.frame_id = offsets.frame_id
+                      AND vectors.kind = 'visualVector'
+                      AND vectors.model_hash = offsets.model_hash
+                    WHERE \(predicates.joined(separator: " AND "))
+                    ORDER BY offsets.byte_offset, frames.id
+                    """,
+                arguments: StatementArguments(arguments)
+            )
+            return try rows.map { row in
+                let encodedFrame: String = row["id"]
+                let encodedDate: String = row["captured_at"]
+                let contentHash: String = row["content_hash"]
+                guard let frameID = UUID(uuidString: encodedFrame),
+                    let capturedAt = try? Date.ISO8601FormatStyle(
+                        includingFractionalSeconds: true,
+                        timeZone: .gmt
+                    ).parse(encodedDate),
+                    let hash = Data(lowercaseHex: contentHash), hash.count == 32
+                else {
+                    throw ArchiveVectorStoreError.invalidOffset
+                }
+                return ArchiveVectorScanCandidate(
+                    frameID: frameID,
+                    capturedAt: capturedAt,
+                    byteOffset: row["byte_offset"],
+                    norm: row["norm"],
+                    contentHash: hash
+                )
+            }
         }
     }
 

@@ -221,6 +221,47 @@ final class ArchiveVectorStoreTests: XCTestCase {
             )
         }
     }
+
+    func testScanSnapshotAppliesTimeApplicationSiteAndSuppressionBeforeScoring() throws {
+        let fixture = try VectorArchiveFixture()
+        defer { fixture.remove() }
+        let first = try fixture.makeReadyFrame()
+        let second = try fixture.makeReadyFrame(values: fixture.alternateVector)
+        let third = try fixture.makeReadyFrame(values: fixture.thirdVector)
+        try fixture.updateSearchMetadata(
+            first.frameID, capturedAt: Date(timeIntervalSince1970: 100),
+            bundleID: "com.example.a", host: "a.example")
+        try fixture.updateSearchMetadata(
+            second.frameID, capturedAt: Date(timeIntervalSince1970: 200),
+            bundleID: "com.example.b", host: "b.example")
+        try fixture.updateSearchMetadata(
+            third.frameID, capturedAt: Date(timeIntervalSince1970: 300),
+            bundleID: "com.example.a", host: "b.example")
+
+        let snapshot = try fixture.store.scanSnapshot(
+            model: fixture.model,
+            filter: ArchiveVectorScanFilter(
+                capturedAt: Date(timeIntervalSince1970: 150)..<Date(timeIntervalSince1970: 350),
+                bundleIdentifiers: ["com.example.a"],
+                hosts: ["b.example"]
+            )
+        )
+        XCTAssertEqual(snapshot.candidates.map(\.frameID), [third.frameID])
+
+        try fixture.suppress(third.frameID)
+        XCTAssertTrue(
+            try fixture.store.scanSnapshot(
+                model: fixture.model,
+                filter: ArchiveVectorScanFilter(
+                    capturedAt: Date(
+                        timeIntervalSince1970: 150)..<Date(
+                            timeIntervalSince1970: 350),
+                    bundleIdentifiers: ["com.example.a"],
+                    hosts: ["b.example"]
+                )
+            ).candidates.isEmpty
+        )
+    }
 }
 
 private struct VectorArchiveWork {
@@ -394,6 +435,32 @@ private final class VectorArchiveFixture {
             sourceHash: work.sourceHash,
             values: values
         )
+    }
+
+    func updateSearchMetadata(
+        _ frameID: UUID,
+        capturedAt: Date,
+        bundleID: String,
+        host: String
+    ) throws {
+        let encodedDate = capturedAt.formatted(
+            Date.ISO8601FormatStyle(includingFractionalSeconds: true, timeZone: .gmt)
+        )
+        try database.atomicWrite { database in
+            try database.execute(
+                sql: "UPDATE frames SET captured_at = ?, bundle_id = ?, url_host = ? WHERE id = ?",
+                arguments: [encodedDate, bundleID, host, frameID.uuidString.lowercased()]
+            )
+        }
+    }
+
+    func suppress(_ frameID: UUID) throws {
+        try database.atomicWrite { database in
+            try database.execute(
+                sql: "UPDATE frames SET visual_state = 'suppressed' WHERE id = ?",
+                arguments: [frameID.uuidString.lowercased()]
+            )
+        }
     }
 
     func frameVisualState(_ frameID: UUID) throws -> String? {

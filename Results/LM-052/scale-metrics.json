@@ -1,0 +1,1 @@
+{"incrementalResidentMegabytes":91.328125,"scales":[{"p95Milliseconds":52.139375000000001,"p99Milliseconds":53.866957999999997,"vectorCount":100000},{"p95Milliseconds":232.037916,"p99Milliseconds":233.20612499999999,"vectorCount":500000},{"p95Milliseconds":444.37983300000002,"p99Milliseconds":445.969041,"vectorCount":1000000}]}

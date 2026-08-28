@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "activeStory": "LM-052",
+  "activeStory": "LM-053",
   "stories": {
     "LM-001": {
       "status": "passed",
@@ -887,23 +887,29 @@
       "resumeProbe": null
     },
     "LM-052": {
-      "status": "active",
+      "status": "passed",
       "startedAt": "2026-08-28T22:52:56Z",
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": "Activated after LM-051 passed. Implement the production memory-mapped, chunked, cancellation-aware Accelerate exact cosine scan over prefiltered ready offsets with stable top-k using only safe non-hardware tests.",
+      "completedAt": "2026-08-28T23:11:09Z",
+      "gitRevision": "refs/tags/checkpoints/LM-052",
+      "evidence": [
+        "Results/LM-052/report.json",
+        "Results/LM-052/unit-tests.txt",
+        "Results/LM-052/scale-tests.txt",
+        "Results/LM-052/scale-metrics.json",
+        "Results/LM-052/story-gate.txt"
+      ],
+      "notes": "The production scanner validates DSVEC002 size/header/model/generation, maps read-only, packs sparse prefiltered offsets in bounded chunks, coalesces contiguous runs, performs exact Accelerate cosine scoring, checks cancellation at every boundary, verifies projected winner hashes, and applies stable bounded top-k. SQLite time/app/site and ready/suppression filters execute before scoring. Sixteen focused tests plus the explicit 100k/500k/1M scale gate passed at 52.139/232.038/444.380 ms p95, 445.969 ms 1M p99, and 91.328 MB incremental RSS. Canonical scalar parity, contracts, privacy, dependency, formatting, and compile-only Release gates passed under the encoder tripwire.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null
     },
     "LM-053": {
-      "status": "pending",
-      "startedAt": null,
+      "status": "active",
+      "startedAt": "2026-08-28T23:11:09Z",
       "completedAt": null,
       "gitRevision": null,
       "evidence": [],
-      "notes": null,
+      "notes": "Activated after LM-049 and LM-052 passed. Add visual-only text-query embedding and candidate retrieval to the shared SearchEngine with visual evidence labels, pre-projection filters and AccessPolicy, and safe fake/model-text coverage only.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null

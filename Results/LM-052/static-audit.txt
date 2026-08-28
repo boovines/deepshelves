@@ -1,0 +1,10 @@
+scanner=read-only mmap+bounded Float16-to-Float32 chunks+Accelerate
+default_chunk_candidates=4096
+scale_chunk_candidates=16384
+prefilter=SQLite ready media/frame/vector offsets before scoring
+stable_order=score-desc,capturedAt-desc,uuid-asc
+cancellation=before mapping,each chunk,before projection
+integrity=file-size+header+generation+offset+winner-sha256
+application_launches_executed=0
+hardware_encoder_tests_executed=0
+apple_imageio_runtime_executed=0

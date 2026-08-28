@@ -1,0 +1,11 @@
+sqlite_prefilter_before_scoring=passed
+scalar_parity_and_stable_top_k=passed
+cancellation_checks=passed
+header_file_size_offset_checksum_fail_closed=passed
+scale_100k_500k_1m=passed
+canonical_s4=passed
+contracts=passed
+privacy_smoke=passed
+release_compile_only=passed
+dependency_audit=passed
+encoder_process_tripwire=passed

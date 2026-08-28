@@ -1,0 +1,12 @@
+Test Suite 'Selected tests' started at 2026-08-29 01:09:13.368.
+Test Suite 'LocalMemoryUnitTests.xctest' started at 2026-08-29 01:09:13.368.
+Test Suite 'ExactVisualVectorSearchTests' started at 2026-08-29 01:09:13.368.
+Test Case '-[LocalMemoryUnitTests.ExactVisualVectorSearchTests testScaleBenchmarkAt100k500kAnd1M]' started.
+Test Case '-[LocalMemoryUnitTests.ExactVisualVectorSearchTests testScaleBenchmarkAt100k500kAnd1M]' passed (17.392 seconds).
+Test Suite 'ExactVisualVectorSearchTests' passed at 2026-08-29 01:09:30.761.
+	 Executed 1 test, with 0 failures (0 unexpected) in 17.392 (17.392) seconds
+Test Suite 'LocalMemoryUnitTests.xctest' passed at 2026-08-29 01:09:30.761.
+	 Executed 1 test, with 0 failures (0 unexpected) in 17.392 (17.392) seconds
+Test Suite 'Selected tests' passed at 2026-08-29 01:09:30.761.
+	 Executed 1 test, with 0 failures (0 unexpected) in 17.392 (17.393) seconds
+LM052_SCALE_METRICS {"incrementalResidentMegabytes":91.328125,"scales":[{"p95Milliseconds":52.139375000000001,"p99Milliseconds":53.866957999999997,"vectorCount":100000},{"p95Milliseconds":232.037916,"p99Milliseconds":233.20612499999999,"vectorCount":500000},{"p95Milliseconds":444.37983300000002,"p99Milliseconds":445.969041,"vectorCount":1000000}]}
