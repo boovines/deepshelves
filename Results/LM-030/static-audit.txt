@@ -1,0 +1,9 @@
+normalization_goldens=passed
+secure_value_sentinel_persistence=0
+identifier_signature_sentinel_persistence=0
+duplicate_overlap_threshold=0.5
+bounds_clipped_to_accepted_window=passed
+provenance_source=accessibility
+hardware_encoder_tests_executed=0
+apple_imageio_runtime_tests_executed=0
+app_launch_tests_executed=0

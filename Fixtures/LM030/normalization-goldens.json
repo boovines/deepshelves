@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {"id": "ascii-space", "raw": "  Quarterly   plan  ", "expected": "Quarterly plan"},
+    {"id": "tabs-lines", "raw": "Inbox\n\tToday", "expected": "Inbox Today"},
+    {"id": "unicode-nfc", "raw": "Cafe\u0301", "expected": "Café"},
+    {"id": "nonbreaking", "raw": "Project\u00a0Archive", "expected": "Project Archive"},
+    {"id": "em-space", "raw": "Local\u2003Memory", "expected": "Local Memory"},
+    {"id": "crlf", "raw": "First\r\nSecond", "expected": "First Second"},
+    {"id": "french", "raw": "  Réunion\tprojet ", "expected": "Réunion projet"},
+    {"id": "german", "raw": "Überblick\nöffnen", "expected": "Überblick öffnen"},
+    {"id": "spanish", "raw": "Revisión   final", "expected": "Revisión final"},
+    {"id": "cjk", "raw": "検索\n結果", "expected": "検索 結果"},
+    {"id": "emoji", "raw": "Status   🎯", "expected": "Status 🎯"},
+    {"id": "mixed", "raw": "\tAlpha\u00a0 Beta\r\nGamma  ", "expected": "Alpha Beta Gamma"}
+  ]
+}

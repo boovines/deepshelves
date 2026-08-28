@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-030",
+  "status": "passed",
+  "normalizationGoldenCount": 12,
+  "normalizationGoldenSHA256": "762885f7f16ae09b5dd9a4b655934434b2f42b0da1da7336cc24b3c04052422d",
+  "textSource": "accessibility",
+  "confidence": null,
+  "languageCode": null,
+  "secureValuesPersisted": 0,
+  "duplicateIntersectionOverUnionThreshold": 0.5,
+  "boundsSpace": "accepted foreground window normalized upper-left origin",
+  "rawProjectionPersisted": false,
+  "systemAXRuntimeTestsExecuted": 0,
+  "hardwareEncoderTestsExecuted": 0,
+  "appleImageIORuntimeTestsExecuted": 0,
+  "applicationLaunchesExecuted": 0
+}

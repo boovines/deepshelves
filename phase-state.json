@@ -505,12 +505,24 @@
       "resumeProbe": null
     },
     "LM-030": {
-      "status": "pending",
-      "startedAt": null,
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": null,
+      "status": "passed",
+      "startedAt": "2026-08-28T18:40:09Z",
+      "completedAt": "2026-08-28T18:46:59Z",
+      "gitRevision": "refs/tags/checkpoints/LM-030",
+      "evidence": [
+        "Fixtures/LM030/normalization-goldens.json",
+        "Results/LM-030/report.json",
+        "Results/LM-030/red.txt",
+        "Results/LM-030/focused-tests.txt",
+        "Results/LM-030/static-audit.txt",
+        "Results/LM-030/contracts.txt",
+        "Results/LM-030/privacy.txt",
+        "Results/LM-030/release-build.txt",
+        "Results/LM-030/dependencies.txt",
+        "Results/LM-030/swift-format.txt",
+        "Results/LM-030/story-gate.txt"
+      ],
+      "notes": "AccessibilityTextSpanEmitter sorts transient projections by hierarchy path/signature, canonicalizes strings through the locked TextSpan contract, drops empty fields, independently suppresses secure values, ignores identifiers/signatures as searchable content, clips bounds to the accepted foreground window, and records accessibility provenance with no confidence. Same canonical text collapses only when bounds overlap at IoU >=0.5 or both bounds are absent. Twelve byte-pinned multilingual normalization goldens and secure/duplicate/bounds fixtures pass within 25 safe focused Release tests. Contracts, privacy, dependencies, formatting, and compile-only Release pass with zero app, system AX, ImageIO, or encoder runtime.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null

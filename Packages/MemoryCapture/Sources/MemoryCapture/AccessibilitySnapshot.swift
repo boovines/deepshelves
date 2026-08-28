@@ -87,6 +87,34 @@ public struct ProjectedAccessibilityElement: Equatable, Sendable {
     public let isFocused: Bool?
     public let hierarchyPath: [Int]
     public let signature: String
+
+    public init(
+        role: String,
+        subrole: String?,
+        title: String?,
+        value: String?,
+        nodeDescription: String?,
+        help: String?,
+        identifier: String?,
+        bounds: PointRect?,
+        isEnabled: Bool?,
+        isFocused: Bool?,
+        hierarchyPath: [Int],
+        signature: String
+    ) {
+        self.role = role
+        self.subrole = subrole
+        self.title = title
+        self.value = value
+        self.nodeDescription = nodeDescription
+        self.help = help
+        self.identifier = identifier
+        self.bounds = bounds
+        self.isEnabled = isEnabled
+        self.isFocused = isFocused
+        self.hierarchyPath = hierarchyPath
+        self.signature = signature
+    }
 }
 
 public enum AccessibilitySnapshotStatus: String, Equatable, Sendable {

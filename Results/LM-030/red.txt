@@ -1,0 +1,6 @@
+LM-030 TDD red, 2026-08-28T18:40:09Z
+
+Command: xcodebuild Release, AccessibilityTextSpanTests only, encoder-process tripwire active.
+Expected failure: AccessibilityTextSpanEmitter was not defined and the transient
+ProjectedAccessibilityElement had no public fixture initializer.
+Result: exit 65 / TEST FAILED. No VTEncoderXPCService appeared.
