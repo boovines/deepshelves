@@ -107,6 +107,7 @@ struct AppLaunchConfiguration {
     let stateURL: URL
     let navigationStateURL: URL
     let onboardingStateURL: URL
+    let searchPanelStateURL: URL
     let initialStatus: LocalMemoryRuntimeStatus
     let forcedMainWindowSize: MainWindowLaunchSize?
     let preferredColorScheme: ColorScheme?
@@ -114,18 +115,28 @@ struct AppLaunchConfiguration {
     let opensOnboardingAtLaunch: Bool
     let onboardingPermissionOverrides: [OnboardingPermissionKind: OnboardingPermissionStatus]
     let suppressOnboardingSystemSettings: Bool
+    let opensSearchPanelAtLaunch: Bool
+    let simulatesShortcutCollision: Bool
+    let measuresWarmSearchPanelAtLaunch: Bool
+    let opensSettingsWithoutMainAtLaunch: Bool
 
     init(arguments: [String]) {
         runsLM009EvidenceSequence = arguments.contains("--lm009-evidence-sequence")
         showsMenuPreview = arguments.contains("--lm009-menu-preview")
             || runsLM009EvidenceSequence
         opensSettingsAtLaunch = arguments.contains("--lm010-open-settings")
+            || arguments.contains("--lm015-shortcut-collision")
+        opensSearchPanelAtLaunch = arguments.contains("--lm015-search-panel")
+        simulatesShortcutCollision = arguments.contains("--lm015-shortcut-collision")
+        measuresWarmSearchPanelAtLaunch = arguments.contains("--lm015-measure-warm")
+        opensSettingsWithoutMainAtLaunch = simulatesShortcutCollision
         let forcesOnboarding = arguments.contains("--lm014-onboarding")
         let suppressesOnboarding = arguments.contains("--lm014-skip-onboarding")
             || arguments.contains { argument in
                 argument.hasPrefix("--lm008-")
                     || argument.hasPrefix("--lm009-")
                     || argument.hasPrefix("--lm010-")
+                    || argument.hasPrefix("--lm015-")
                     || argument.hasPrefix("--capture-")
                     || argument.hasPrefix("--context-")
                     || argument == "--s3-s4-spike"
@@ -137,7 +148,8 @@ struct AppLaunchConfiguration {
         opensMainWindow = showsMenuPreview
             || arguments.contains("--lm009-open-main")
             || arguments.contains("--lm010-shell")
-            || opensSettingsAtLaunch
+            || (opensSettingsAtLaunch && !opensSettingsWithoutMainAtLaunch)
+            || opensSearchPanelAtLaunch
             || arguments.contains("--request-capture-permissions")
             || arguments.contains("--capture-capability-probe")
             || arguments.contains("--capture-spike")
@@ -166,6 +178,14 @@ struct AppLaunchConfiguration {
             onboardingStateURL = URL(fileURLWithPath: arguments[index + 1])
         } else {
             onboardingStateURL = Self.defaultStateURL(fileName: "onboarding-state.json")
+        }
+
+        if let index = arguments.firstIndex(of: "--lm015-search-panel-state-file"),
+           arguments.indices.contains(index + 1)
+        {
+            searchPanelStateURL = URL(fileURLWithPath: arguments[index + 1])
+        } else {
+            searchPanelStateURL = Self.defaultStateURL(fileName: "search-panel-state.json")
         }
 
         var permissionOverrides: [OnboardingPermissionKind: OnboardingPermissionStatus] = [:]
@@ -238,8 +258,13 @@ struct MenuBarStatusLabel: View {
     @ObservedObject var onboardingModel: OnboardingViewModel
     let opensMainWindowAtLaunch: Bool
     let opensOnboardingAtLaunch: Bool
+    let opensSearchPanelAtLaunch: Bool
+    let measuresWarmSearchPanelAtLaunch: Bool
+    let opensSettingsWithoutMainAtLaunch: Bool
+    @ObservedObject var searchPanelCoordinator: GlobalSearchPanelCoordinator
 
     @Environment(\.openWindow) private var openWindow
+    @Environment(\.openSettings) private var openSettings
     @State private var hasHandledLaunch = false
 
     var body: some View {
@@ -253,6 +278,19 @@ struct MenuBarStatusLabel: View {
                 if opensOnboardingAtLaunch, !onboardingModel.snapshot.isComplete {
                     openWindow(id: "onboarding")
                     NSApplication.shared.activate(ignoringOtherApps: true)
+                } else if opensSearchPanelAtLaunch {
+                    await searchPanelCoordinator.start()
+                    openWindow(id: "main")
+                    await Task.yield()
+                    searchPanelCoordinator.present()
+                    if measuresWarmSearchPanelAtLaunch {
+                        await Task.yield()
+                        searchPanelCoordinator.present()
+                    }
+                } else if opensSettingsWithoutMainAtLaunch {
+                    await searchPanelCoordinator.start()
+                    openSettings()
+                    NSApplication.shared.activate(ignoringOtherApps: true)
                 } else if opensMainWindowAtLaunch {
                     openWindow(id: "main")
                     NSApplication.shared.activate(ignoringOtherApps: true)
@@ -264,6 +302,7 @@ struct MenuBarStatusLabel: View {
 struct AppMenuBarContent: View {
     @ObservedObject var model: AppLifecycleViewModel
     @ObservedObject var navigationModel: MainNavigationViewModel
+    @ObservedObject var searchPanelCoordinator: GlobalSearchPanelCoordinator
     @Environment(\.openWindow) private var openWindow
     @Environment(\.openSettings) private var openSettings
 
@@ -271,6 +310,9 @@ struct AppMenuBarContent: View {
         MenuBarStatusPanel(
             model: model,
             openMainWindow: {
+                searchPanelCoordinator.present()
+            },
+            openApplication: {
                 navigationModel.select(section: .search)
                 openWindow(id: "main")
             },
@@ -287,6 +329,7 @@ struct AppMenuBarContent: View {
 struct MenuBarStatusPanel: View {
     @ObservedObject var model: AppLifecycleViewModel
     let openMainWindow: () -> Void
+    let openApplication: () -> Void
     let openTimeline: () -> Void
     let openSettings: () -> Void
     let quit: () -> Void
@@ -336,7 +379,7 @@ struct MenuBarStatusPanel: View {
             Button("Forget Last 15 Minutes…") {}
                 .disabled(true)
                 .accessibilityIdentifier("menu.forgetRecent")
-            Button("Open Local Memory", action: openMainWindow)
+            Button("Open Local Memory", action: openApplication)
                 .accessibilityIdentifier("menu.openMain")
             Button("Settings…", action: openSettings)
                 .keyboardShortcut(",")
@@ -408,6 +451,7 @@ struct LM009MenuPreviewView: View {
             MenuBarStatusPanel(
                 model: model,
                 openMainWindow: {},
+                openApplication: {},
                 openTimeline: {},
                 openSettings: {},
                 quit: {}

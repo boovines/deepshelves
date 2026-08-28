@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-015",
+  "status": "passed",
+  "generatedAt": "2026-08-28T09:43:02Z",
+  "baseRevision": "ba6686b311af95cd0635eae5eee6f72919eb5705",
+  "checkpoint": "refs/tags/checkpoints/LM-015",
+  "results": {
+    "shortcut": {
+      "default": "Option-Space",
+      "configurableOptions": [
+        "Option-Space",
+        "Command-Shift-K"
+      ],
+      "registration": "Carbon RegisterEventHotKey",
+      "realGlobalInvocationVerified": true,
+      "collisionDiagnostic": "LM-SHORTCUT-409",
+      "collisionRecoverable": true,
+      "ownerOnlyPersistence": {
+        "directoryMode": "0700",
+        "fileMode": "0600"
+      }
+    },
+    "panel": {
+      "implementation": "AppKit NSPanel with SwiftUI content",
+      "width": 760,
+      "height": 620,
+      "minimumWidth": 640,
+      "minimumHeight": 480,
+      "nonActivatingStyle": true,
+      "becomesKeyWhenInvoked": true,
+      "focusesSearchOnOpen": true,
+      "remembersDisplay": true,
+      "escapeClosesTransientUI": true,
+      "escapePreservesNavigation": true,
+      "sharesMainNavigationState": true
+    },
+    "s6Appearance": {
+      "coldMilliseconds": 54,
+      "coldBudgetMilliseconds": 400,
+      "warmMilliseconds": 8,
+      "warmBudgetMilliseconds": 150
+    }
+  },
+  "gates": {
+    "signedUIRegression": {
+      "status": "passed",
+      "command": "./scripts/run-lm015-ui-tests.sh",
+      "tests": 4,
+      "failures": 0,
+      "log": "Results/LM-015/ui-tests.txt",
+      "logSHA256": "c11c28ea7c0ed9b3db8d30dc548c2740f304dd2f530df869d5c591394eea6a15"
+    },
+    "fullTestSuite": {
+      "status": "passed",
+      "command": "./scripts/test.sh",
+      "xctestUnitTests": 93,
+      "swiftTestingUnitTests": 9,
+      "integrationTests": 7,
+      "privacyTests": 4,
+      "performanceTests": 1,
+      "failures": 0,
+      "log": "Results/LM-015/unit-tests.txt",
+      "logSHA256": "2fb2dfd810bcb6340744463d924e2780f68684bf4c2101ef995033a06f0ae3fa"
+    },
+    "contractRegression": {
+      "status": "passed",
+      "command": "./scripts/check-contracts.sh",
+      "fixtures": 11,
+      "log": "Results/LM-015/contracts.txt",
+      "logSHA256": "a37a81ca2e748fcf37dedb19296565c655c9463987695d45671c51e58ef9e81f"
+    },
+    "privacySmoke": {
+      "status": "passed",
+      "command": "./scripts/privacy-smoke.sh",
+      "runtimeNetworkingOrTelemetry": 0,
+      "log": "Results/LM-015/privacy-smoke.txt",
+      "logSHA256": "9ea4b5449f9715c90a3a80909f275c987c95be1130414ae6e10f888fcbe4a8bc"
+    },
+    "releaseBuild": {
+      "status": "passed",
+      "command": "./scripts/build-release.sh",
+      "automaticPackageResolution": false,
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ],
+      "log": "Results/LM-015/release-build.txt",
+      "logSHA256": "a5306c391d9518aa9af20a84ae0cf4d8d5161e2f92f249801dfa3c5b624b515e"
+    },
+    "signedPosture": {
+      "status": "passed",
+      "command": "./scripts/signing-posture.sh",
+      "log": "Results/LM-015/signing-posture.txt",
+      "logSHA256": "e6d716c4076601c148327d96f95ce1253ae0187bd8a582b1ef2b2978923c751d"
+    },
+    "releaseBinaryAudit": {
+      "status": "passed",
+      "command": "./scripts/check-dependencies.sh --binaries",
+      "forbiddenLinkedOrEmbeddedMarkers": 0,
+      "log": "Results/LM-015/dependency-audit.txt",
+      "logSHA256": "ee19ec2fac69814d57606f8260d4120b82de9aecffb3286ca3159489700b0b32"
+    },
+    "diffWhitespace": {
+      "status": "passed",
+      "command": "git diff --check"
+    }
+  }
+}

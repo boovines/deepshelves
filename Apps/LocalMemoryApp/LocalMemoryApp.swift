@@ -13,6 +13,7 @@ struct LocalMemoryApp: App {
     @StateObject private var lifecycleModel: AppLifecycleViewModel
     @StateObject private var navigationModel: MainNavigationViewModel
     @StateObject private var onboardingModel: OnboardingViewModel
+    @StateObject private var searchPanelCoordinator: GlobalSearchPanelCoordinator
 
     private let launchConfiguration: AppLaunchConfiguration
     private let capabilityProbeOutput: String?
@@ -38,8 +39,14 @@ struct LocalMemoryApp: App {
                 initialStatus: configuration.initialStatus
             )
         )
-        _navigationModel = StateObject(
-            wrappedValue: MainNavigationViewModel(stateURL: configuration.navigationStateURL)
+        let navigationModel = MainNavigationViewModel(stateURL: configuration.navigationStateURL)
+        _navigationModel = StateObject(wrappedValue: navigationModel)
+        _searchPanelCoordinator = StateObject(
+            wrappedValue: GlobalSearchPanelCoordinator(
+                navigationModel: navigationModel,
+                stateURL: configuration.searchPanelStateURL,
+                simulatesShortcutCollision: configuration.simulatesShortcutCollision
+            )
         )
         _onboardingModel = StateObject(
             wrappedValue: OnboardingViewModel(
@@ -213,7 +220,7 @@ struct LocalMemoryApp: App {
         }
 
         Settings {
-            LocalMemorySettingsView()
+            LocalMemorySettingsView(searchPanelCoordinator: searchPanelCoordinator)
                 .preferredColorScheme(launchConfiguration.preferredColorScheme)
         }
         .defaultSize(
@@ -237,14 +244,19 @@ struct LocalMemoryApp: App {
         MenuBarExtra {
             AppMenuBarContent(
                 model: lifecycleModel,
-                navigationModel: navigationModel
+                navigationModel: navigationModel,
+                searchPanelCoordinator: searchPanelCoordinator
             )
         } label: {
             MenuBarStatusLabel(
                 model: lifecycleModel,
                 onboardingModel: onboardingModel,
                 opensMainWindowAtLaunch: launchConfiguration.opensMainWindow,
-                opensOnboardingAtLaunch: launchConfiguration.opensOnboardingAtLaunch
+                opensOnboardingAtLaunch: launchConfiguration.opensOnboardingAtLaunch,
+                opensSearchPanelAtLaunch: launchConfiguration.opensSearchPanelAtLaunch,
+                measuresWarmSearchPanelAtLaunch: launchConfiguration.measuresWarmSearchPanelAtLaunch,
+                opensSettingsWithoutMainAtLaunch: launchConfiguration.opensSettingsWithoutMainAtLaunch,
+                searchPanelCoordinator: searchPanelCoordinator
             )
         }
         .menuBarExtraStyle(.window)

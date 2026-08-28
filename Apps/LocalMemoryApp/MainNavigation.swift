@@ -490,17 +490,11 @@ private struct EmbeddedSettingsShellView: View {
 }
 
 struct LocalMemorySettingsView: View {
+    @ObservedObject var searchPanelCoordinator: GlobalSearchPanelCoordinator
+
     var body: some View {
         TabView {
-            SettingsPane(
-                title: "Capture",
-                systemImage: "record.circle",
-                rows: [
-                    ("Status", "Fake runtime until capture integration"),
-                    ("Privacy mode", "Foreground window only"),
-                    ("Launch at login", "Connected in a later phase"),
-                ]
-            )
+            CaptureSettingsPane(searchPanelCoordinator: searchPanelCoordinator)
             .tabItem { Label("Capture", systemImage: "record.circle") }
 
             SettingsPane(
@@ -564,6 +558,55 @@ struct LocalMemorySettingsView: View {
         )
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("settings.root")
+    }
+}
+
+private struct CaptureSettingsPane: View {
+    @ObservedObject var searchPanelCoordinator: GlobalSearchPanelCoordinator
+
+    var body: some View {
+        Form {
+            Label("Capture", systemImage: "record.circle")
+                .font(.title2)
+                .accessibilityIdentifier("settings.title")
+            Section {
+                LabeledContent("Status", value: "Fake runtime until capture integration")
+                LabeledContent("Privacy mode", value: "Foreground window only")
+                LabeledContent("Launch at login", value: "Connected in a later phase")
+            }
+            Section("Global search shortcut") {
+                Picker(
+                    "Shortcut",
+                    selection: Binding(
+                        get: { searchPanelCoordinator.shortcut },
+                        set: { searchPanelCoordinator.setShortcut($0) }
+                    )
+                ) {
+                    Text(GlobalSearchShortcut.default.displayName)
+                        .tag(GlobalSearchShortcut.default)
+                    Text("Command–Shift–K")
+                        .tag(GlobalSearchShortcut(key: .k, modifiers: [.command, .shift]))
+                }
+                    .accessibilityIdentifier("settings.shortcut")
+                LabeledContent(
+                    "Registration",
+                    value: searchPanelCoordinator.registrationState.statusLabel
+                )
+                .accessibilityIdentifier("settings.shortcutStatus")
+                if let diagnosticCode = searchPanelCoordinator.registrationState.diagnosticCode {
+                    LabeledContent("Diagnostic", value: diagnosticCode)
+                        .accessibilityIdentifier("settings.shortcutDiagnostic")
+                }
+                if let actionTitle = searchPanelCoordinator.registrationState.recoveryActionTitle {
+                    Button(actionTitle) {
+                        searchPanelCoordinator.chooseRecoveryShortcut()
+                    }
+                    .accessibilityIdentifier("settings.shortcutRecovery")
+                }
+            }
+        }
+        .formStyle(.grouped)
+        .task { await searchPanelCoordinator.start() }
     }
 }
 

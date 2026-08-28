@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "activeStory": "LM-015",
+  "activeStory": "LM-016",
   "stories": {
     "LM-001": {
       "status": "passed",
@@ -228,23 +228,27 @@
       "resumeProbe": null
     },
     "LM-015": {
-      "status": "active",
+      "status": "passed",
       "startedAt": "2026-08-28T08:07:11Z",
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": "Base checkpoint refs/tags/checkpoints/LM-014. Implement configurable global shortcut and 760x620 AppKit-backed search panel with focus, display memory, escape behavior, shared navigation state, and recoverable collision handling.",
+      "completedAt": "2026-08-28T09:43:02Z",
+      "gitRevision": "refs/tags/checkpoints/LM-015",
+      "evidence": [
+        "Results/LM-015/report.json",
+        "Results/LM-015/unit-tests.txt",
+        "Results/LM-015/ui-tests.txt"
+      ],
+      "notes": "Configurable Carbon global shortcut and AppKit-backed 760x620 search panel pass. Signed UI evidence verifies real Option-Space invocation, focus, remembered display placement, Escape, shared navigation, owner-only persistence, recoverable LM-SHORTCUT-409 collision handling, and S6 cold/warm presentation at 54/8 ms.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null
     },
     "LM-016": {
-      "status": "pending",
-      "startedAt": null,
+      "status": "active",
+      "startedAt": "2026-08-28T09:43:02Z",
       "completedAt": null,
       "gitRevision": null,
       "evidence": [],
-      "notes": null,
+      "notes": "Base checkpoint refs/tags/checkpoints/LM-015. Implement the LM-016 capture permission and lifecycle slice exactly as scoped by the canonical in-repository plan.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null
