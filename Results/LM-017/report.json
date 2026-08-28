@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-017",
+  "status": "passed",
+  "generatedAt": "2026-08-28T10:37:16Z",
+  "baseRevision": "c8eced7f1a3c5d7a500b21bb039fd88f16e1d588",
+  "checkpoint": "refs/tags/checkpoints/LM-017",
+  "results": {
+    "archive": {
+      "applicationBootstrapRetainedForProcessLifetime": true,
+      "databaseRelativePath": "database/archive.sqlite3",
+      "databaseFileMode": "0600",
+      "journalMode": "WAL",
+      "foreignKeys": true,
+      "temporaryStore": "FILE",
+      "temporaryFilesBesideDatabase": true,
+      "maximumReaders": 5,
+      "busyTimeoutMilliseconds": 5000
+    },
+    "schema": {
+      "version": 1,
+      "migrationIdentifier": "v1_archive_schema",
+      "plan10LogicalTables": 13,
+      "explicitIndexes": 12,
+      "fts5ShadowTables": 4,
+      "externalContentTable": "frames",
+      "externalContentApprovedTextProjection": "frames.approved_text",
+      "implicitFTSTriggers": 0,
+      "frameDependentCascadeVerified": true
+    },
+    "migration": {
+      "freshInstall": "passed",
+      "versionZeroForwardRead": "passed",
+      "interruptedRollback": "passed",
+      "resumeExactlyOnce": "passed",
+      "deterministicInMemoryStore": "passed",
+      "invalidEncryptionKeyLengthFailsClosed": true
+    }
+  },
+  "gates": {
+    "schemaMigration": {
+      "status": "passed",
+      "command": "./scripts/run-lm017-schema-tests.sh",
+      "tests": 7,
+      "failures": 0,
+      "schema": "Results/LM-017/schema.sql",
+      "schemaSHA256": "427e3214727550eb04c04c58aa17dfabd4be144dc96fc86328222933a81f0951",
+      "log": "Results/LM-017/schema-tests.txt",
+      "logSHA256": "91390713068affe6de2eb29774a15fc73551038d7cd482dd19557059d35e63b6"
+    },
+    "fullTestSuite": {
+      "status": "passed",
+      "command": "./scripts/test.sh",
+      "xctestUnitTests": 108,
+      "swiftTestingUnitTests": 9,
+      "integrationTests": 7,
+      "privacyTests": 4,
+      "performanceTests": 1,
+      "failures": 0,
+      "log": "Results/LM-017/unit-tests.txt",
+      "logSHA256": "b499b6b8058c3796c8e85fa795bd5504da6a20fdf443a067bdea99a902c96f8d"
+    },
+    "contractRegression": {
+      "status": "passed",
+      "command": "./scripts/check-contracts.sh",
+      "fixtures": 11,
+      "log": "Results/LM-017/contracts.txt",
+      "logSHA256": "486b844ebc1353ad223ed3ddea638baf97dcb689856cb099757055fd159fbc61"
+    },
+    "privacySmoke": {
+      "status": "passed",
+      "command": "./scripts/privacy-smoke.sh",
+      "runtimeNetworkingOrTelemetry": 0,
+      "log": "Results/LM-017/privacy-smoke.txt",
+      "logSHA256": "9ea4b5449f9715c90a3a80909f275c987c95be1130414ae6e10f888fcbe4a8bc"
+    },
+    "releaseBuild": {
+      "status": "passed",
+      "command": "./scripts/build-release.sh",
+      "automaticPackageResolution": false,
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ],
+      "log": "Results/LM-017/release-build.txt",
+      "logSHA256": "596f4047e53509a7fb21ad5c2ed4993c2dcc0b22c2b9a616e063e59199f8de36"
+    },
+    "signedPosture": {
+      "status": "passed",
+      "command": "./scripts/signing-posture.sh",
+      "log": "Results/LM-017/signing-posture.txt",
+      "logSHA256": "6590b243682727a035d1c5c123b0ee169b9728e3be1419ba8baa0aceb65e8653"
+    },
+    "releaseBinaryAudit": {
+      "status": "passed",
+      "command": "./scripts/check-dependencies.sh --binaries",
+      "forbiddenLinkedOrEmbeddedMarkers": 0,
+      "log": "Results/LM-017/dependency-audit.txt",
+      "logSHA256": "ee19ec2fac69814d57606f8260d4120b82de9aecffb3286ca3159489700b0b32"
+    },
+    "diffWhitespace": {
+      "status": "passed",
+      "command": "git diff --check"
+    }
+  }
+}

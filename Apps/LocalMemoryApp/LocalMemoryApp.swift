@@ -15,6 +15,7 @@ struct LocalMemoryApp: App {
     @StateObject private var onboardingModel: OnboardingViewModel
     @StateObject private var searchPanelCoordinator: GlobalSearchPanelCoordinator
     private let shellKeyboardMonitor: ShellKeyboardCommandMonitor
+    private let archiveDatabase: ArchiveDatabase
 
     private let launchConfiguration: AppLaunchConfiguration
     private let capabilityProbeOutput: String?
@@ -32,9 +33,11 @@ struct LocalMemoryApp: App {
 
     init() {
         let arguments = ProcessInfo.processInfo.arguments
+        Self.exportLM017SchemaAndExitIfRequested(arguments: arguments)
         let configuration = AppLaunchConfiguration(arguments: arguments)
         launchConfiguration = configuration
         shellKeyboardMonitor = ShellKeyboardCommandMonitor()
+        archiveDatabase = Self.bootstrapArchive()
         _lifecycleModel = StateObject(
             wrappedValue: AppLifecycleViewModel(
                 stateURL: configuration.stateURL,
@@ -135,6 +138,41 @@ struct LocalMemoryApp: App {
             Self.launchS7Spike(s7SpikeArguments)
         }
         LM008ChildModes.launchIfRequested(arguments: arguments)
+    }
+
+    private static func bootstrapArchive() -> ArchiveDatabase {
+        do {
+            return try ArchiveDatabase()
+        } catch {
+            preconditionFailure("Local Memory archive bootstrap failed: \(error)")
+        }
+    }
+
+    private static func exportLM017SchemaAndExitIfRequested(arguments: [String]) {
+        guard let exportIndex = arguments.firstIndex(of: "--lm017-export-schema"),
+              arguments.indices.contains(exportIndex + 1)
+        else {
+            return
+        }
+        do {
+            let archive = try ArchiveDatabase.deterministicTestStore()
+            let evidence = """
+                -- LM-017: SQLite schema exported from a freshly migrated deterministic store.
+                -- Migration: v1_archive_schema; schema_version=1; foreign_keys=ON.
+
+                \(try archive.schemaSQL())
+                """
+            try Data(evidence.utf8).write(
+                to: URL(fileURLWithPath: arguments[exportIndex + 1]),
+                options: .atomic
+            )
+            Darwin.exit(EXIT_SUCCESS)
+        } catch {
+            FileHandle.standardError.write(
+                Data("LM-017 schema export failed: \(error)\n".utf8)
+            )
+            Darwin.exit(EXIT_FAILURE)
+        }
     }
 
     var body: some Scene {

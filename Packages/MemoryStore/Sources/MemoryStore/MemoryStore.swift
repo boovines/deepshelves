@@ -11,6 +11,10 @@ public struct ArchivePaths: Equatable, Sendable {
     public let quarantine: URL
     public let logs: URL
 
+    public var databaseFile: URL {
+        database.appendingPathComponent("archive.sqlite3", isDirectory: false)
+    }
+
     public var directories: [URL] {
         [root, database, media, thumbnails, vectors, models, exports, quarantine, logs]
     }

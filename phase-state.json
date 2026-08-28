@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "activeStory": "LM-017",
+  "activeStory": "LM-018",
   "stories": {
     "LM-001": {
       "status": "passed",
@@ -259,23 +259,28 @@
       "resumeProbe": null
     },
     "LM-017": {
-      "status": "active",
+      "status": "passed",
       "startedAt": "2026-08-28T10:24:47Z",
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": "Base checkpoint refs/tags/checkpoints/LM-016. Implement MemoryStore archive bootstrap, the complete plan-10 V1 GRDB schema, foreign keys, WAL, migrations, and deterministic test store.",
+      "completedAt": "2026-08-28T10:37:16Z",
+      "gitRevision": "refs/tags/checkpoints/LM-017",
+      "evidence": [
+        "Results/LM-017/report.json",
+        "Results/LM-017/schema.sql",
+        "Results/LM-017/schema-tests.txt",
+        "Results/LM-017/unit-tests.txt"
+      ],
+      "notes": "MemoryStore now bootstraps and retains the plan-10 V1 GRDB archive with 13 logical tables, explicit external-content FTS5 maintenance, cascade foreign keys, WAL, database-local temporary files, owner-only database permissions, append-only transactional migration, and deterministic test storage. Fresh, V0 forward-read, forced-interruption rollback/resume, exact-column, cascade, and key-validation tests pass with the complete release/privacy suite.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null
     },
     "LM-018": {
-      "status": "pending",
-      "startedAt": null,
+      "status": "active",
+      "startedAt": "2026-08-28T10:37:16Z",
       "completedAt": null,
       "gitRevision": null,
       "evidence": [],
-      "notes": null,
+      "notes": "Base checkpoint refs/tags/checkpoints/LM-017. Implement owner-only archive file creation, validated relative paths, sibling partial/atomic writing, startup orphan recovery, quarantine, and integrity hashes with injected rename/commit-boundary fault fixtures.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null
