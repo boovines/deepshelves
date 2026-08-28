@@ -40,6 +40,7 @@ enum ArchiveSchemaV1 {
             )
             try afterV1Schema?()
         }
+        ArchiveSchemaV2.register(in: &migrator)
         return migrator
     }
 

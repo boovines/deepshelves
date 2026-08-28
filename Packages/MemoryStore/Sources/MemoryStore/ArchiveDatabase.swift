@@ -44,6 +44,16 @@ struct ArchiveCascadeResult: Equatable, Sendable {
     let foreignKeyViolations: Int
 }
 
+struct ArchiveV2CoordinatorSnapshot: Equatable, Sendable {
+    let chunkState: String?
+    let frameCount: Int
+    let queuedJobCount: Int
+    let distinctEpochCount: Int
+    let distinctTargetCount: Int
+    let distinctPolicyGenerationCount: Int
+    let mediaPaths: [String]
+}
+
 public final class ArchiveDatabase: @unchecked Sendable {
     public static let v1LogicalTableNames = ArchiveSchemaV1.logicalTableNames
 
@@ -465,7 +475,7 @@ public final class ArchiveDatabase: @unchecked Sendable {
         }
     }
 
-    func v1ColumnNamesForTesting() throws -> [String: [String]] {
+    func currentColumnNamesForTesting() throws -> [String: [String]] {
         try writer.read { database in
             var result: [String: [String]] = [:]
             for table in Self.v1LogicalTableNames.sorted() {
@@ -543,6 +553,146 @@ public final class ArchiveDatabase: @unchecked Sendable {
                 database,
                 sql: "SELECT state FROM processing_jobs WHERE id = ?",
                 arguments: [id]
+            )
+        }
+    }
+
+    func atomicWrite<T>(_ updates: (Database) throws -> T) throws -> T {
+        try writer.write(updates)
+    }
+
+    func frameColumnNamesForTesting() throws -> Set<String> {
+        try writer.read { database in
+            Set(try database.columns(in: "frames").map(\.name))
+        }
+    }
+
+    func insertLegacyV1FrameForTesting() throws {
+        try writer.write { database in
+            try database.execute(
+                sql: """
+                    INSERT INTO media_chunks(
+                        id, capture_epoch_id, target_window_id, relative_path,
+                        started_at, ended_at, codec, width, height, frame_count,
+                        byte_count, sha256, state
+                    ) VALUES ('legacy-v1-chunk', 'legacy-v1-epoch', 1,
+                              'media/2026/08/28/legacy-v1.mov',
+                              '2026-08-28T00:00:00.000Z', '2026-08-28T00:00:01.000Z',
+                              'hevcMain', 320, 180, 1, 1, ?, 'ready')
+                    """,
+                arguments: [String(repeating: "0", count: 64)]
+            )
+            try database.execute(
+                sql: """
+                    INSERT INTO frames(
+                        id, captured_at, monotonic_ns, capture_epoch_id,
+                        target_window_id, chunk_id, pts_ms, capture_reason,
+                        is_transition, text_state, visual_state, schema_version
+                    ) VALUES ('legacy-v1-frame', '2026-08-28T00:00:00.000Z', 0,
+                              'legacy-v1-epoch', 1, 'legacy-v1-chunk', 0,
+                              'transition', 1, 'pending', 'pending', 1)
+                    """
+            )
+        }
+    }
+
+    func insertInvalidV2FrameForTesting() throws {
+        try writer.write { database in
+            try database.execute(
+                sql: """
+                    INSERT INTO media_chunks(
+                        id, capture_epoch_id, target_window_id, relative_path,
+                        started_at, ended_at, codec, width, height, frame_count,
+                        byte_count, sha256, state
+                    ) VALUES ('invalid-v2-chunk', 'invalid-v2-epoch', 2,
+                              'media/2026/08/28/invalid-v2/manifest.json',
+                              '2026-08-28T00:00:00.000Z', '2026-08-28T00:00:01.000Z',
+                              'heicKeyframes', 320, 180, 1, 1, ?, 'ready')
+                    """,
+                arguments: [String(repeating: "0", count: 64)]
+            )
+            try database.execute(
+                sql: """
+                    INSERT INTO frames(
+                        id, captured_at, monotonic_ns, capture_epoch_id,
+                        target_window_id, chunk_id, pts_ms, capture_reason,
+                        is_transition, text_state, visual_state, schema_version,
+                        policy_generation
+                    ) VALUES ('invalid-v2-frame', '2026-08-28T00:00:00.000Z', 0,
+                              'invalid-v2-epoch', 2, 'invalid-v2-chunk', 0,
+                              'transition', 1, 'pending', 'pending', 2, 1)
+                    """
+            )
+        }
+    }
+
+    func v2ReadyFrameCountForTesting() throws -> Int {
+        try writer.read { database in
+            try Int.fetchOne(
+                database,
+                sql: """
+                    SELECT COUNT(*)
+                    FROM frames
+                    JOIN media_chunks ON media_chunks.id = frames.chunk_id
+                    WHERE frames.schema_version >= 2
+                      AND media_chunks.state = 'ready'
+                    """
+            ) ?? 0
+        }
+    }
+
+    func v2JobIDsForTesting() throws -> [String] {
+        try writer.read { database in
+            try String.fetchAll(
+                database,
+                sql: "SELECT id FROM processing_jobs ORDER BY id"
+            )
+        }
+    }
+
+    func v2CoordinatorSnapshotForTesting(chunkID: UUID) throws -> ArchiveV2CoordinatorSnapshot {
+        try writer.read { database in
+            let encodedChunkID = chunkID.uuidString.lowercased()
+            return ArchiveV2CoordinatorSnapshot(
+                chunkState: try String.fetchOne(
+                    database,
+                    sql: "SELECT state FROM media_chunks WHERE id = ?",
+                    arguments: [encodedChunkID]
+                ),
+                frameCount: try Int.fetchOne(
+                    database,
+                    sql: "SELECT COUNT(*) FROM frames WHERE chunk_id = ?",
+                    arguments: [encodedChunkID]
+                ) ?? 0,
+                queuedJobCount: try Int.fetchOne(
+                    database,
+                    sql: """
+                        SELECT COUNT(*) FROM processing_jobs
+                        WHERE state = 'queued'
+                          AND parent_id IN (SELECT id FROM frames WHERE chunk_id = ?)
+                        """,
+                    arguments: [encodedChunkID]
+                ) ?? 0,
+                distinctEpochCount: try Int.fetchOne(
+                    database,
+                    sql: "SELECT COUNT(DISTINCT capture_epoch_id) FROM frames WHERE chunk_id = ?",
+                    arguments: [encodedChunkID]
+                ) ?? 0,
+                distinctTargetCount: try Int.fetchOne(
+                    database,
+                    sql: "SELECT COUNT(DISTINCT target_window_id) FROM frames WHERE chunk_id = ?",
+                    arguments: [encodedChunkID]
+                ) ?? 0,
+                distinctPolicyGenerationCount: try Int.fetchOne(
+                    database,
+                    sql: "SELECT COUNT(DISTINCT policy_generation) FROM frames WHERE chunk_id = ?",
+                    arguments: [encodedChunkID]
+                ) ?? 0,
+                mediaPaths: try String.fetchAll(
+                    database,
+                    sql: "SELECT media_path FROM frames WHERE chunk_id = ? ORDER BY pts_ms, id",
+                    arguments: [encodedChunkID]
+                )
             )
         }
     }

@@ -1,9 +1,11 @@
+import CryptoKit
+import MemoryContracts
 import XCTest
 
 @testable import MemoryStore
 
 final class ArchiveDatabaseTests: XCTestCase {
-    func testFreshBootstrapCreatesCompleteV1SchemaAndProductionPragmas() throws {
+    func testFreshBootstrapCreatesCompleteV2SchemaAndProductionPragmas() throws {
         let fixture = try TemporaryArchiveFixture(name: "fresh")
         defer { fixture.remove() }
 
@@ -14,8 +16,11 @@ final class ArchiveDatabaseTests: XCTestCase {
 
         XCTAssertEqual(archive.paths?.databaseFile.lastPathComponent, "archive.sqlite3")
         XCTAssertEqual(Set(try archive.logicalTableNames()), ArchiveDatabase.v1LogicalTableNames)
-        XCTAssertEqual(try archive.appliedMigrationIdentifiers(), ["v1_archive_schema"])
-        XCTAssertEqual(try archive.archiveMetaValue(forKey: "schema_version"), "1")
+        XCTAssertEqual(
+            try archive.appliedMigrationIdentifiers(),
+            ["v1_archive_schema", "v2_heic_frame_locators"]
+        )
+        XCTAssertEqual(try archive.archiveMetaValue(forKey: "schema_version"), "2")
 
         let configuration = try archive.configurationSnapshot()
         XCTAssertEqual(configuration.journalMode, "WAL")
@@ -35,7 +40,8 @@ final class ArchiveDatabaseTests: XCTestCase {
         XCTAssertTrue(schema.contains("CREATE VIRTUAL TABLE frame_fts USING fts5"))
         XCTAssertTrue(schema.contains("content='frames'"))
         XCTAssertTrue(schema.contains("ON DELETE CASCADE"))
-        XCTAssertFalse(schema.localizedCaseInsensitiveContains("CREATE TRIGGER"))
+        XCTAssertTrue(schema.contains("CREATE TRIGGER frames_v2_locator_insert"))
+        XCTAssertTrue(schema.contains("CREATE TRIGGER frames_v2_locator_update"))
     }
 
     func testVersionZeroArchiveMigratesForwardWithoutLosingReadableData() throws {
@@ -59,7 +65,10 @@ final class ArchiveDatabaseTests: XCTestCase {
             try archive.versionZeroMarkerForTesting(),
             "version-zero-readable"
         )
-        XCTAssertEqual(try archive.appliedMigrationIdentifiers(), ["v1_archive_schema"])
+        XCTAssertEqual(
+            try archive.appliedMigrationIdentifiers(),
+            ["v1_archive_schema", "v2_heic_frame_locators"]
+        )
         XCTAssertEqual(Set(try archive.logicalTableNames()), ArchiveDatabase.v1LogicalTableNames)
     }
 
@@ -90,14 +99,20 @@ final class ArchiveDatabaseTests: XCTestCase {
             applicationSupportDirectory: fixture.applicationSupport,
             encryptionKey: fixture.encryptionKey
         )
-        XCTAssertEqual(try archive.appliedMigrationIdentifiers(), ["v1_archive_schema"])
+        XCTAssertEqual(
+            try archive.appliedMigrationIdentifiers(),
+            ["v1_archive_schema", "v2_heic_frame_locators"]
+        )
         XCTAssertEqual(Set(try archive.logicalTableNames()), ArchiveDatabase.v1LogicalTableNames)
 
         let reopened = try ArchiveDatabase(
             applicationSupportDirectory: fixture.applicationSupport,
             encryptionKey: fixture.encryptionKey
         )
-        XCTAssertEqual(try reopened.appliedMigrationIdentifiers(), ["v1_archive_schema"])
+        XCTAssertEqual(
+            try reopened.appliedMigrationIdentifiers(),
+            ["v1_archive_schema", "v2_heic_frame_locators"]
+        )
     }
 
     func testFrameDependentRowsCascadeAndForeignKeysRemainClean() throws {
@@ -122,8 +137,8 @@ final class ArchiveDatabaseTests: XCTestCase {
         XCTAssertNil(first.paths)
         XCTAssertNil(second.paths)
         XCTAssertEqual(try first.schemaSQL(), try second.schemaSQL())
-        XCTAssertEqual(try first.archiveMetaValue(forKey: "schema_version"), "1")
-        XCTAssertEqual(try second.archiveMetaValue(forKey: "schema_version"), "1")
+        XCTAssertEqual(try first.archiveMetaValue(forKey: "schema_version"), "2")
+        XCTAssertEqual(try second.archiveMetaValue(forKey: "schema_version"), "2")
         XCTAssertTrue(try first.configurationSnapshot().foreignKeysEnabled)
     }
 
@@ -141,9 +156,9 @@ final class ArchiveDatabaseTests: XCTestCase {
         }
     }
 
-    func testV1ColumnsMatchPlan10Contract() throws {
+    func testCurrentColumnsMatchPlan10ContractAndRetainV1Fields() throws {
         let archive = try ArchiveDatabase.deterministicTestStore()
-        let actual = try archive.v1ColumnNamesForTesting()
+        let actual = try archive.currentColumnNamesForTesting()
         let expected: [String: Set<String>] = [
             "archive_meta": ["key", "value"],
             "media_chunks": [
@@ -158,6 +173,7 @@ final class ArchiveDatabaseTests: XCTestCase {
                 "window_w", "window_h", "browser_family", "url_scheme",
                 "url_host", "url_path", "capture_reason", "is_transition",
                 "text_state", "visual_state", "schema_version", "approved_text",
+                "media_path", "media_sha256", "media_byte_count", "policy_generation",
             ],
             "text_spans": [
                 "id", "frame_id", "source", "text", "x", "y", "w", "h",
@@ -201,6 +217,472 @@ final class ArchiveDatabaseTests: XCTestCase {
         }
     }
 
+    func testV2MigrationIsAppendOnlyAndRequiresExactCanonicalFrameLocators() throws {
+        let archive = try ArchiveDatabase.deterministicTestStore()
+
+        XCTAssertEqual(
+            try archive.appliedMigrationIdentifiers(),
+            ["v1_archive_schema", "v2_heic_frame_locators"]
+        )
+        XCTAssertEqual(try archive.archiveMetaValue(forKey: "schema_version"), "2")
+        XCTAssertEqual(try archive.archiveMetaValue(forKey: "contract_version"), "2")
+        let columns = try archive.frameColumnNamesForTesting()
+        XCTAssertTrue(columns.contains("media_path"))
+        XCTAssertTrue(columns.contains("media_sha256"))
+        XCTAssertTrue(columns.contains("media_byte_count"))
+        XCTAssertTrue(columns.contains("policy_generation"))
+        XCTAssertNoThrow(try archive.insertLegacyV1FrameForTesting())
+        XCTAssertThrowsError(try archive.insertInvalidV2FrameForTesting())
+    }
+
+    func testAtomicCoordinatorCommitsVerifiedHEICFramesAndRetryableJobsTogether() throws {
+        let fixture = try TemporaryArchiveFixture(name: "v2-atomic")
+        defer { fixture.remove() }
+        let archive = try ArchiveDatabase(
+            applicationSupportDirectory: fixture.applicationSupport,
+            encryptionKey: fixture.encryptionKey
+        )
+        let identity = ArchiveCaptureIdentity(
+            captureEpochID: UUID(),
+            targetWindowID: 42,
+            policyGeneration: 7
+        )
+        let published = try makePublishedHEICFixture(
+            archive: archive,
+            identity: identity,
+            payloads: [Data("first-approved".utf8), Data("second-approved".utf8)]
+        )
+        let coordinator = try ArchiveAtomicCoordinator(database: archive)
+
+        let result = try coordinator.commit(
+            manifestRelativePath: published.manifestPath,
+            authorization: ArchiveCaptureAuthorization(identity: identity, isAllowed: true),
+            frames: published.frames,
+            jobs: published.frames.map {
+                ArchiveRetryableJob(
+                    id: UUID(),
+                    frameID: $0.id,
+                    kind: "vision-ocr",
+                    priority: 10,
+                    producerVersion: "fixture-v1"
+                )
+            },
+            currentIdentity: { identity }
+        )
+
+        XCTAssertEqual(result.chunkID, published.manifest.chunkID)
+        XCTAssertEqual(result.committedFrameCount, 2)
+        XCTAssertEqual(result.queuedJobCount, 2)
+        let snapshot = try archive.v2CoordinatorSnapshotForTesting(chunkID: result.chunkID)
+        XCTAssertEqual(snapshot.chunkState, "ready")
+        XCTAssertEqual(snapshot.frameCount, 2)
+        XCTAssertEqual(snapshot.queuedJobCount, 2)
+        XCTAssertEqual(snapshot.distinctEpochCount, 1)
+        XCTAssertEqual(snapshot.distinctTargetCount, 1)
+        XCTAssertEqual(snapshot.distinctPolicyGenerationCount, 1)
+        XCTAssertEqual(Set(snapshot.mediaPaths), Set(published.frames.map(\.mediaPath)))
+    }
+
+    func testFocusOrPolicyRacePersistsNoRowsAndPublishedDirectoryReconcilesDeterministically()
+        throws
+    {
+        let fixture = try TemporaryArchiveFixture(name: "v2-race")
+        defer { fixture.remove() }
+        let archive = try ArchiveDatabase(
+            applicationSupportDirectory: fixture.applicationSupport,
+            encryptionKey: fixture.encryptionKey
+        )
+        let identity = ArchiveCaptureIdentity(
+            captureEpochID: UUID(),
+            targetWindowID: 42,
+            policyGeneration: 9
+        )
+        let published = try makePublishedHEICFixture(
+            archive: archive,
+            identity: identity,
+            payloads: [Data("must-never-be-searchable".utf8)]
+        )
+        let coordinator = try ArchiveAtomicCoordinator(database: archive)
+        let drifted = ArchiveCaptureIdentity(
+            captureEpochID: UUID(),
+            targetWindowID: 99,
+            policyGeneration: 10
+        )
+
+        XCTAssertThrowsError(
+            try coordinator.commit(
+                manifestRelativePath: published.manifestPath,
+                authorization: ArchiveCaptureAuthorization(identity: identity, isAllowed: true),
+                frames: published.frames,
+                jobs: [],
+                currentIdentity: { drifted }
+            )
+        ) { error in
+            XCTAssertEqual(error as? ArchiveAtomicCoordinatorError, .staleCaptureIdentity)
+        }
+        XCTAssertEqual(try archive.v2ReadyFrameCountForTesting(), 0)
+
+        let reopened = try ArchiveDatabase(
+            applicationSupportDirectory: fixture.applicationSupport,
+            encryptionKey: fixture.encryptionKey
+        )
+        XCTAssertEqual(reopened.startupRecoveryReport.quarantinedOrphanFiles, 1)
+        XCTAssertEqual(try reopened.v2ReadyFrameCountForTesting(), 0)
+        XCTAssertFalse(
+            FileManager.default.fileExists(
+                atPath: try XCTUnwrap(archive.paths).root
+                    .appending(path: published.manifestPath.rawValue).deletingLastPathComponent()
+                    .path
+            )
+        )
+    }
+
+    func testInjectedTransactionCrashRollsBackAllRowsAndStartupQuarantinesOrphan() throws {
+        let fixture = try TemporaryArchiveFixture(name: "v2-rollback")
+        defer { fixture.remove() }
+        let archive = try ArchiveDatabase(
+            applicationSupportDirectory: fixture.applicationSupport,
+            encryptionKey: fixture.encryptionKey
+        )
+        let identity = ArchiveCaptureIdentity(
+            captureEpochID: UUID(),
+            targetWindowID: 42,
+            policyGeneration: 3
+        )
+        let published = try makePublishedHEICFixture(
+            archive: archive,
+            identity: identity,
+            payloads: [Data("rollback-frame".utf8)]
+        )
+        let coordinator = try ArchiveAtomicCoordinator(database: archive)
+
+        XCTAssertThrowsError(
+            try coordinator.commit(
+                manifestRelativePath: published.manifestPath,
+                authorization: ArchiveCaptureAuthorization(identity: identity, isAllowed: true),
+                frames: published.frames,
+                jobs: [
+                    ArchiveRetryableJob(
+                        id: UUID(),
+                        frameID: published.frames[0].id,
+                        kind: "thumbnail",
+                        priority: 4,
+                        producerVersion: "fixture-v1"
+                    )
+                ],
+                fault: .duringTransaction,
+                currentIdentity: { identity }
+            )
+        ) { error in
+            XCTAssertEqual(
+                error as? ArchiveAtomicCoordinatorError,
+                .injectedCrash(.duringTransaction)
+            )
+        }
+        XCTAssertEqual(try archive.v2ReadyFrameCountForTesting(), 0)
+
+        let reopened = try ArchiveDatabase(
+            applicationSupportDirectory: fixture.applicationSupport,
+            encryptionKey: fixture.encryptionKey
+        )
+        XCTAssertEqual(reopened.startupRecoveryReport.quarantinedOrphanFiles, 1)
+        XCTAssertEqual(try reopened.v2ReadyFrameCountForTesting(), 0)
+    }
+
+    func testAfterCommitCrashReopensAsOneCompleteReadyState() throws {
+        let fixture = try TemporaryArchiveFixture(name: "v2-after-commit")
+        defer { fixture.remove() }
+        let archive = try ArchiveDatabase(
+            applicationSupportDirectory: fixture.applicationSupport,
+            encryptionKey: fixture.encryptionKey
+        )
+        let identity = ArchiveCaptureIdentity(
+            captureEpochID: UUID(),
+            targetWindowID: 73,
+            policyGeneration: 5
+        )
+        let published = try makePublishedHEICFixture(
+            archive: archive,
+            identity: identity,
+            payloads: [Data("committed-before-crash".utf8)]
+        )
+        let coordinator = try ArchiveAtomicCoordinator(database: archive)
+
+        XCTAssertThrowsError(
+            try coordinator.commit(
+                manifestRelativePath: published.manifestPath,
+                authorization: ArchiveCaptureAuthorization(identity: identity, isAllowed: true),
+                frames: published.frames,
+                jobs: [
+                    ArchiveRetryableJob(
+                        id: UUID(),
+                        frameID: published.frames[0].id,
+                        kind: "thumbnail",
+                        priority: 4,
+                        producerVersion: "fixture-v1"
+                    )
+                ],
+                fault: .afterCommit,
+                currentIdentity: { identity }
+            )
+        ) { error in
+            XCTAssertEqual(
+                error as? ArchiveAtomicCoordinatorError,
+                .injectedCrash(.afterCommit)
+            )
+        }
+
+        let reopened = try ArchiveDatabase(
+            applicationSupportDirectory: fixture.applicationSupport,
+            encryptionKey: fixture.encryptionKey
+        )
+        XCTAssertEqual(reopened.startupRecoveryReport.quarantinedOrphanFiles, 0)
+        XCTAssertEqual(reopened.startupRecoveryReport.quarantinedCorruptFiles, 0)
+        XCTAssertEqual(try reopened.v2ReadyFrameCountForTesting(), 1)
+        let snapshot = try reopened.v2CoordinatorSnapshotForTesting(
+            chunkID: published.manifest.chunkID)
+        XCTAssertEqual(snapshot.chunkState, "ready")
+        XCTAssertEqual(snapshot.queuedJobCount, 1)
+    }
+
+    func testDeniedAuthorizationAndAfterVerificationCrashExposeNoRows() throws {
+        let fixture = try TemporaryArchiveFixture(name: "v2-before-transaction")
+        defer { fixture.remove() }
+        let archive = try ArchiveDatabase(
+            applicationSupportDirectory: fixture.applicationSupport,
+            encryptionKey: fixture.encryptionKey
+        )
+        let identity = ArchiveCaptureIdentity(
+            captureEpochID: UUID(),
+            targetWindowID: 75,
+            policyGeneration: 12
+        )
+        let published = try makePublishedHEICFixture(
+            archive: archive,
+            identity: identity,
+            payloads: [Data("pre-transaction".utf8)]
+        )
+        let coordinator = try ArchiveAtomicCoordinator(database: archive)
+
+        XCTAssertThrowsError(
+            try coordinator.commit(
+                manifestRelativePath: published.manifestPath,
+                authorization: ArchiveCaptureAuthorization(identity: identity, isAllowed: false),
+                frames: published.frames,
+                jobs: [],
+                currentIdentity: { identity }
+            )
+        ) { error in
+            XCTAssertEqual(error as? ArchiveAtomicCoordinatorError, .deniedAuthorization)
+        }
+        XCTAssertThrowsError(
+            try coordinator.commit(
+                manifestRelativePath: published.manifestPath,
+                authorization: ArchiveCaptureAuthorization(identity: identity, isAllowed: true),
+                frames: published.frames,
+                jobs: [],
+                fault: .afterVerification,
+                currentIdentity: { identity }
+            )
+        ) { error in
+            XCTAssertEqual(
+                error as? ArchiveAtomicCoordinatorError,
+                .injectedCrash(.afterVerification)
+            )
+        }
+        XCTAssertEqual(try archive.v2ReadyFrameCountForTesting(), 0)
+
+        let reopened = try ArchiveDatabase(
+            applicationSupportDirectory: fixture.applicationSupport,
+            encryptionKey: fixture.encryptionKey
+        )
+        XCTAssertEqual(reopened.startupRecoveryReport.quarantinedOrphanFiles, 1)
+        XCTAssertEqual(try reopened.v2ReadyFrameCountForTesting(), 0)
+    }
+
+    func testStagingDirectoryCanNeverBecomeAFrameRowAndStartupRemovesIt() throws {
+        let fixture = try TemporaryArchiveFixture(name: "v2-staging")
+        defer { fixture.remove() }
+        let archive = try ArchiveDatabase(
+            applicationSupportDirectory: fixture.applicationSupport,
+            encryptionKey: fixture.encryptionKey
+        )
+        let identity = ArchiveCaptureIdentity(
+            captureEpochID: UUID(),
+            targetWindowID: 74,
+            policyGeneration: 6
+        )
+        let published = try makePublishedHEICFixture(
+            archive: archive,
+            identity: identity,
+            payloads: [Data("staging-only".utf8)]
+        )
+        let finalDirectory = try XCTUnwrap(archive.paths).root
+            .appending(path: published.manifestPath.rawValue)
+            .deletingLastPathComponent()
+        let stagingDirectory = finalDirectory.deletingLastPathComponent().appending(
+            path: ".\(finalDirectory.lastPathComponent).partial",
+            directoryHint: .isDirectory
+        )
+        try FileManager.default.moveItem(at: finalDirectory, to: stagingDirectory)
+        let stagingPath = try ArchiveRelativePath(
+            "media/2026/08/28/.\(finalDirectory.lastPathComponent).partial/manifest.json"
+        )
+        let coordinator = try ArchiveAtomicCoordinator(database: archive)
+
+        XCTAssertThrowsError(
+            try coordinator.commit(
+                manifestRelativePath: stagingPath,
+                authorization: ArchiveCaptureAuthorization(identity: identity, isAllowed: true),
+                frames: published.frames,
+                jobs: [],
+                currentIdentity: { identity }
+            )
+        ) { error in
+            XCTAssertEqual(error as? ArchiveHEICVerificationError, .invalidManifestPath)
+        }
+        XCTAssertEqual(try archive.v2ReadyFrameCountForTesting(), 0)
+
+        let reopened = try ArchiveDatabase(
+            applicationSupportDirectory: fixture.applicationSupport,
+            encryptionKey: fixture.encryptionKey
+        )
+        XCTAssertEqual(reopened.startupRecoveryReport.removedPartialFiles, 1)
+        XCTAssertEqual(reopened.startupRecoveryReport.quarantinedOrphanFiles, 0)
+        XCTAssertFalse(FileManager.default.fileExists(atPath: stagingDirectory.path))
+    }
+
+    func testStartupQuarantinesManifestOrFrameMismatchAndSuppressesEveryDependentRow() throws {
+        let fixture = try TemporaryArchiveFixture(name: "v2-corrupt")
+        defer { fixture.remove() }
+        let archive = try ArchiveDatabase(
+            applicationSupportDirectory: fixture.applicationSupport,
+            encryptionKey: fixture.encryptionKey
+        )
+        let identity = ArchiveCaptureIdentity(
+            captureEpochID: UUID(),
+            targetWindowID: 42,
+            policyGeneration: 11
+        )
+        let published = try makePublishedHEICFixture(
+            archive: archive,
+            identity: identity,
+            payloads: [Data("integrity-frame".utf8)]
+        )
+        let coordinator = try ArchiveAtomicCoordinator(database: archive)
+        _ = try coordinator.commit(
+            manifestRelativePath: published.manifestPath,
+            authorization: ArchiveCaptureAuthorization(identity: identity, isAllowed: true),
+            frames: published.frames,
+            jobs: [
+                ArchiveRetryableJob(
+                    id: UUID(),
+                    frameID: published.frames[0].id,
+                    kind: "vision-ocr",
+                    priority: 8,
+                    producerVersion: "fixture-v1"
+                )
+            ],
+            currentIdentity: { identity }
+        )
+        let frameURL = try XCTUnwrap(archive.paths).root.appending(
+            path: published.frames[0].mediaPath,
+            directoryHint: .notDirectory
+        )
+        try Data("tampered".utf8).write(to: frameURL)
+
+        let reopened = try ArchiveDatabase(
+            applicationSupportDirectory: fixture.applicationSupport,
+            encryptionKey: fixture.encryptionKey
+        )
+        XCTAssertEqual(reopened.startupRecoveryReport.quarantinedCorruptFiles, 1)
+        XCTAssertEqual(reopened.startupRecoveryReport.suppressedSearchableFrames, 0)
+        XCTAssertEqual(try reopened.v2ReadyFrameCountForTesting(), 0)
+        XCTAssertEqual(
+            try reopened.processingJobStateForTesting(
+                id: try XCTUnwrap(try archive.v2JobIDsForTesting().first)
+            ),
+            "cancelled"
+        )
+    }
+
+}
+
+private struct PublishedHEICFixture {
+    let manifestPath: ArchiveRelativePath
+    let manifest: HEICKeyframeManifest
+    let frames: [ArchiveFrameProjection]
+}
+
+private func makePublishedHEICFixture(
+    archive: ArchiveDatabase,
+    identity: ArchiveCaptureIdentity,
+    payloads: [Data]
+) throws -> PublishedHEICFixture {
+    let paths = try XCTUnwrap(archive.paths)
+    let chunkID = UUID()
+    let relativeDirectory = "media/2026/08/28/\(chunkID.uuidString.lowercased())"
+    let directory = paths.root.appending(path: relativeDirectory, directoryHint: .isDirectory)
+    let framesDirectory = directory.appending(path: "frames", directoryHint: .isDirectory)
+    try FileManager.default.createDirectory(
+        at: framesDirectory,
+        withIntermediateDirectories: true,
+        attributes: [.posixPermissions: 0o700]
+    )
+    var entries: [HEICKeyframeEntry] = []
+    var projections: [ArchiveFrameProjection] = []
+    for (offset, payload) in payloads.enumerated() {
+        let frameID = UUID()
+        let relativePath = "frames/\(frameID.uuidString.lowercased()).heic"
+        let frameURL = directory.appending(path: relativePath, directoryHint: .notDirectory)
+        try payload.write(to: frameURL, options: .withoutOverwriting)
+        try FileManager.default.setAttributes(
+            [.posixPermissions: 0o600],
+            ofItemAtPath: frameURL.path
+        )
+        let entry = try HEICKeyframeEntry(
+            frameID: frameID,
+            presentationTimeMS: Int64(offset * 500),
+            relativePath: relativePath,
+            byteCount: Int64(payload.count),
+            sha256: Data(SHA256.hash(data: payload))
+        )
+        entries.append(entry)
+        projections.append(
+            ArchiveFrameProjection(
+                id: frameID,
+                capturedAt: Date(timeIntervalSince1970: 1_777_000_000 + Double(offset)),
+                monotonicNanoseconds: UInt64(offset + 1) * 500_000_000,
+                presentationTimeMilliseconds: entry.presentationTimeMS,
+                captureReason: offset == 0 ? "transition" : "visualChange",
+                isTransition: offset == 0,
+                bundleIdentifier: "com.example.approved",
+                applicationName: "Approved",
+                windowTitle: "Approved Window",
+                mediaPath: "\(relativeDirectory)/\(relativePath)"
+            )
+        )
+    }
+    let manifest = try HEICKeyframeManifest(
+        chunkID: chunkID,
+        captureEpochID: identity.captureEpochID,
+        targetWindowID: identity.targetWindowID,
+        width: 1280,
+        height: 720,
+        frames: entries
+    )
+    let manifestData = try ContractJSON.encode(manifest)
+    let manifestURL = directory.appending(path: "manifest.json", directoryHint: .notDirectory)
+    try manifestData.write(to: manifestURL, options: .withoutOverwriting)
+    try FileManager.default.setAttributes(
+        [.posixPermissions: 0o600],
+        ofItemAtPath: manifestURL.path
+    )
+    return PublishedHEICFixture(
+        manifestPath: try ArchiveRelativePath("\(relativeDirectory)/manifest.json"),
+        manifest: manifest,
+        frames: projections
+    )
 }
 
 private struct TemporaryArchiveFixture {

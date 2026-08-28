@@ -1,0 +1,10 @@
+append_only_v2_locator_migration=passed
+exact_frame_locator_triggers=passed
+final_identity_recheck_inside_transaction=passed
+manifest_and_asset_reverification_inside_transaction=passed
+chunk_frame_job_atomicity=passed
+staging_rows=0
+orphan_directory_reconciliation=passed
+corrupt_media_search_exposure=0
+hardware_encoder_tests_executed=0
+app_launch_tests_executed=0

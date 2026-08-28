@@ -50,6 +50,8 @@ V1 logical tables are fixed by plan 10:
 
 Do not store source images, thumbnails, or vector matrices as SQLite blobs. The database holds metadata, logical presentation timestamps, exact source paths, offsets, and relative paths; the filesystem holds media and the rebuildable flat vector file.
 
+Schema V2 is an append-only extension of V1. It adds the exact source HEIC path, per-frame digest and byte count, and final policy generation to frame rows. A database trigger rejects incomplete V2 locators. The atomic coordinator verifies the already-published manifest directory, repeats epoch/target/policy identity immediately inside the transaction, and commits the ready chunk, ordered frame rows, and retryable jobs as one state. Startup removes staging directories, deterministically quarantines unreferenced published directories, and suppresses every dependent row/job when a referenced manifest or asset is missing, corrupt, or identity-mismatched.
+
 ## Canonical versus derived data
 
 Canonical:

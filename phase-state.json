@@ -414,12 +414,21 @@
       "resumeProbe": null
     },
     "LM-026": {
-      "status": "pending",
-      "startedAt": null,
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": null,
+      "status": "passed",
+      "startedAt": "2026-08-28T17:08:00Z",
+      "completedAt": "2026-08-28T17:21:46Z",
+      "gitRevision": "refs/tags/checkpoints/LM-026",
+      "evidence": [
+        "Results/LM-026/report.json",
+        "Results/LM-026/state-machine.json",
+        "Results/LM-026/focused-tests.txt",
+        "Results/LM-026/static-audit.txt",
+        "Results/LM-026/contracts.txt",
+        "Results/LM-026/privacy.txt",
+        "Results/LM-026/release-build.txt",
+        "Results/LM-026/story-gate.txt"
+      ],
+      "notes": "Append-only schema V2, exact-locator triggers, a doubly verified identity-scoped coordinator transaction, and deterministic startup reconciliation pass. Denied/stale/pretransaction/midtransaction cases expose zero rows; after-commit reopens complete; corrupt referenced assets suppress frames and cancel jobs. Twenty-four focused Release tests plus contracts, privacy, format, and universal Release compile pass under the encoder tripwire. Zero hardware encoder tests or app launches ran.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null

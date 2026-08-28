@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "storyID": "LM-026",
+  "contractVersion": 2,
+  "migration": {
+    "identifier": "v2_heic_frame_locators",
+    "appendOnly": true,
+    "legacyV1RowsReadable": true,
+    "requiredV2Fields": [
+      "media_path",
+      "media_sha256",
+      "media_byte_count",
+      "policy_generation"
+    ]
+  },
+  "states": [
+    {
+      "name": "staging-directory",
+      "databaseRows": 0,
+      "recovery": "remove staging directory",
+      "passed": true
+    },
+    {
+      "name": "published-unreferenced-directory",
+      "databaseRows": 0,
+      "recovery": "quarantine complete orphan directory deterministically",
+      "passed": true
+    },
+    {
+      "name": "authorization-denied",
+      "databaseRows": 0,
+      "recovery": "no transaction begins",
+      "passed": true
+    },
+    {
+      "name": "epoch-target-or-policy-drift",
+      "databaseRows": 0,
+      "recovery": "stale identity rejected before and inside transaction",
+      "passed": true
+    },
+    {
+      "name": "crash-after-verification",
+      "databaseRows": 0,
+      "recovery": "published directory quarantined as orphan",
+      "passed": true
+    },
+    {
+      "name": "crash-during-transaction",
+      "databaseRows": 0,
+      "recovery": "chunk, frames, and jobs roll back together; orphan quarantined",
+      "passed": true
+    },
+    {
+      "name": "crash-after-commit",
+      "databaseRows": 3,
+      "recovery": "ready chunk, exact frame row, and queued job reopen together",
+      "passed": true
+    },
+    {
+      "name": "referenced-corrupt-frame",
+      "searchableRows": 0,
+      "recovery": "directory quarantined, chunk suppressed, dependent jobs cancelled",
+      "passed": true
+    },
+    {
+      "name": "valid-reopen",
+      "searchableMediaRows": 1,
+      "recovery": "manifest, inventory, identities, locators, counts, and hashes reverified",
+      "passed": true
+    }
+  ],
+  "invariants": {
+    "rowsPointingToStaging": 0,
+    "rowsPointingToMissingMedia": 0,
+    "rowsPointingToCorruptMediaAfterRecovery": 0,
+    "rowsWithMismatchedEpochTargetOrPolicy": 0,
+    "partiallyCommittedChunkFrameJobStates": 0,
+    "unreferencedDirectoriesLeftInMediaAfterRecovery": 0
+  },
+  "verification": {
+    "focusedReleaseTests": 24,
+    "testFailures": 0,
+    "hardwareEncoderTestsExecuted": 0,
+    "appLaunchTestsExecuted": 0,
+    "encoderProcessTripwire": "passed"
+  }
+}

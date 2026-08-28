@@ -260,6 +260,12 @@ This file is append-only. Each story records measurements, failures, and durable
 - The complete hidden directory publishes through synchronized per-file no-replace renames, a manifest written last, full inventory verification, one no-replace directory rename, and parent-directory synchronization. Retained-only deletion republishes unchanged allowed frames and proves the removed sentinel and identity are absent before retiring the old directory.
 - Safe boundary-fake, fault-injection, subprocess-termination, V1/V2 contract, privacy, compile-only Release, format, and source-audit gates pass under a live encoder-process tripwire. Production ImageIO HEIC is compile-only in this story. No AVAssetWriter, VideoToolbox, or hardware HEVC encoder path ran, and the two `dart-ave` panic artifacts remain permanently quarantined on this Mac. Evidence: `Results/LM-025/report.json` and `Results/LM-025/architecture-evaluation.json`.
 
+## 2026-08-28 — LM-026 passed
+
+- The append-only `v2_heic_frame_locators` migration preserves legacy V1 rows and adds exact source path, per-frame digest/byte count, and final policy generation. Insert/update triggers reject incomplete, traversal-like, staging, or identity-inconsistent V2 locators.
+- `ArchiveAtomicCoordinator` validates the complete canonical manifest/assets twice, repeats epoch/target/policy identity inside the GRDB write transaction, and commits the ready chunk, ordered frame rows, and retryable jobs as one state. Denial, identity drift, after-verification failure, and mid-transaction failure expose zero rows; an after-commit failure reopens as the complete state.
+- Startup removes staging directories, deterministically quarantines published orphan directories, and revalidates manifest identity, inventory, chunk/frame hashes, exact locators, and policy generation. Corrupt media becomes nonsearchable and dependent jobs are cancelled. Twenty-four focused Release tests, V1/V2 contracts, privacy smoke, strict format, and universal Release compile pass under the encoder tripwire; zero app launches or hardware encoder tests ran. Evidence: `Results/LM-026/report.json` and `Results/LM-026/state-machine.json`.
+
 ## 2026-08-28 — LM-036 passed
 
 - `SearchQueryParser` implements a deterministic, Foundation-only, quote-aware grammar for explicit application and site filters, ISO and locale dates, half-open `before:`/`after:` bounds, and localized today, yesterday, and last-week phrases. Unknown applications, invalid sites, malformed operators, and ambiguous time language remain in the lexical query.

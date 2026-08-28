@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "storyID": "LM-026",
+  "status": "passed",
+  "implementation": [
+    "append-only V2 migration retains V1 rows while adding exact HEIC frame locator, digest, byte count, and policy generation",
+    "insert and update triggers reject incomplete, noncanonical, traversal-like, or staging V2 locators",
+    "coordinator verifies canonical manifest inventory, per-frame hashes, chunk identity, epoch, target, frame order, and exact paths",
+    "final current identity check and second media verification occur inside the same GRDB write transaction",
+    "ready chunk, frame rows, and retryable jobs commit or roll back as one state",
+    "startup removes staging directories, quarantines published orphans, verifies referenced directories, suppresses corrupt rows, and cancels dependent jobs"
+  ],
+  "acceptance": {
+    "stateMachine": "Results/LM-026/state-machine.json",
+    "focusedReleaseTests": 24,
+    "failures": 0,
+    "legacyV1Readable": true,
+    "canonicalV2Required": true,
+    "stagingRows": 0,
+    "corruptSearchExposure": 0,
+    "staleIdentityRows": 0,
+    "partialTransactionStates": 0,
+    "orphanReconciliation": "passed",
+    "privacySmoke": "passed",
+    "contractFixtures": "passed",
+    "universalReleaseCompile": "passed",
+    "hardwareEncoderTestsExecuted": 0,
+    "appLaunchTestsExecuted": 0
+  },
+  "evidence": [
+    "Results/LM-026/state-machine.json",
+    "Results/LM-026/coordinator-red.txt",
+    "Results/LM-026/coordinator-green.txt",
+    "Results/LM-026/focused-tests.txt",
+    "Results/LM-026/static-audit.txt",
+    "Results/LM-026/contracts.txt",
+    "Results/LM-026/privacy.txt",
+    "Results/LM-026/release-build.txt",
+    "Results/LM-026/swift-format.txt",
+    "Results/LM-026/story-gate.txt"
+  ]
+}

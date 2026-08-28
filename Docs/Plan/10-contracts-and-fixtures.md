@@ -182,11 +182,11 @@ Contains job ID, parent frame/chunk ID, `kind`, priority, state, attempt count, 
 
 ## Durable schema
 
-Schema version 1 contains these tables:
+Schema version 1 establishes these tables:
 
 - `archive_meta(key PRIMARY KEY, value)`
 - `media_chunks(id PRIMARY KEY, capture_epoch_id, target_window_id, relative_path UNIQUE, started_at, ended_at, codec, width, height, frame_count, byte_count, sha256, state)`
-- `frames(id PRIMARY KEY, captured_at, monotonic_ns, capture_epoch_id, target_window_id, chunk_id, pts_ms, media_path, media_sha256, media_byte_count, thumbnail_path, bundle_id, app_name, window_title, window_x, window_y, window_w, window_h, browser_family, url_scheme, url_host, url_path, capture_reason, is_transition, text_state, visual_state, schema_version)`
+- `frames(id PRIMARY KEY, captured_at, monotonic_ns, capture_epoch_id, target_window_id, chunk_id, pts_ms, thumbnail_path, bundle_id, app_name, window_title, window_x, window_y, window_w, window_h, browser_family, url_scheme, url_host, url_path, capture_reason, is_transition, text_state, visual_state, schema_version)`
 - `text_spans(id PRIMARY KEY, frame_id, source, text, x, y, w, h, confidence, language_code, sensitivity)`
 - `frame_fts` as FTS5 external-content index over approved merged text, title, app name, host, and path
 - `artifacts(id PRIMARY KEY, frame_id, kind, producer_name, producer_version, model_hash, locator_kind, locator_value, content_hash, state)`
@@ -199,6 +199,8 @@ Schema version 1 contains these tables:
 - `audit_events(id PRIMARY KEY, occurred_at, actor, action, policy_id, result_count, query_hash)`
 
 Foreign keys are enabled. Frame-dependent rows cascade. FTS maintenance uses explicit transactions rather than implicit triggers so tests can observe each step. SQLCipher uses a Keychain-held 256-bit random key. WAL and temporary SQLite files must remain beside the encrypted database.
+
+The append-only schema V2 migration adds nullable `media_path`, `media_sha256`, `media_byte_count`, and `policy_generation` columns so legacy V1 rows remain readable. Insert/update triggers require every `schema_version >= 2` frame to carry its exact `media/.../frames/<frame-id>.heic` locator, 64-character lowercase digest, positive byte count, and positive final policy generation. Only `ArchiveAtomicCoordinator` creates canonical V2 rows: it verifies the complete manifest/assets, repeats capture epoch/target/policy identity inside the same database transaction, and commits the ready chunk, exact frame rows, and queued retryable jobs together.
 
 ## Filesystem contract
 
