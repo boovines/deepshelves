@@ -1,0 +1,11 @@
+focused_release_tests=passed
+eight_hour_synthetic_office_model=passed
+seventy_two_hour_accelerated_model=passed
+software_decode_p95=passed
+projected_thirty_day_storage=passed
+foreground_privacy_and_fault_suite=passed
+contracts=passed
+privacy_smoke=passed
+release_compile_only=passed
+encoder_process_tripwire=passed
+actual_eight_hour_production_soak=blocked

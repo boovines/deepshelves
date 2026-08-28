@@ -1,0 +1,94 @@
+{
+  "story": "LM-028",
+  "status": "blocked",
+  "safeSuite": "passed",
+  "officeModel": {
+    "backpressureDropCount": 176,
+    "candidateCount": 57600,
+    "corruptPublishedArtifactCount": 0,
+    "excludedFrameRejectionCount": 36,
+    "orphanPublishedArtifactCount": 0,
+    "persistedFrameCount": 3108,
+    "prohibitedSentinelPersistedCount": 0,
+    "projectedThirtyDayBytes": 18413687880,
+    "queueFinalCount": 0,
+    "queuePeakCount": 4,
+    "recoveryCount": 10,
+    "simulatedDurationSeconds": 28800,
+    "staleFrameRejectionCount": 95
+  },
+  "acceleratedModel": {
+    "backpressureDropCount": 5348,
+    "candidateCount": 518400,
+    "corruptPublishedArtifactCount": 0,
+    "excludedFrameRejectionCount": 617,
+    "orphanPublishedArtifactCount": 0,
+    "persistedFrameCount": 33325,
+    "prohibitedSentinelPersistedCount": 0,
+    "projectedThirtyDayBytes": 21937514251,
+    "queueFinalCount": 0,
+    "queuePeakCount": 4,
+    "recoveryCount": 392,
+    "simulatedDurationSeconds": 259200,
+    "staleFrameRejectionCount": 2879
+  },
+  "softwareDecode": {
+    "corpus": [
+      {
+        "byteCount": 718114,
+        "decodedPixelMD5": "00ff3cfd6cc95da25b40348163dc0129",
+        "height": 854,
+        "iterations": 30,
+        "name": "libheif-example.heic",
+        "p50Milliseconds": 82.935,
+        "p95Milliseconds": 85.664,
+        "p99Milliseconds": 95.127,
+        "pixelFormat": "yuv420p",
+        "sha256": "7f8b363e4936c0666a25f64f3a92fda10bd8e5453be4592530b65a55dd98f3f2",
+        "width": 1280
+      },
+      {
+        "byteCount": 8284,
+        "decodedPixelMD5": "f26048d07a594cc9a0b0ebe814135136",
+        "height": 512,
+        "iterations": 30,
+        "name": "libheif-ui-alpha.heic",
+        "p50Milliseconds": 54.129,
+        "p95Milliseconds": 57.309,
+        "p99Milliseconds": 57.395,
+        "pixelFormat": "yuvj420p",
+        "sha256": "dac399d3bf1019baaf5f88eef8b277087d0643e735db947c42355237bb9d0221",
+        "width": 512
+      },
+      {
+        "byteCount": 7080,
+        "decodedPixelMD5": "244558ff36cddee1ae2d20b02fe9295d",
+        "height": 462,
+        "iterations": 30,
+        "name": "libheif-ui-rainbow.heic",
+        "p50Milliseconds": 53.333,
+        "p95Milliseconds": 57.413,
+        "p99Milliseconds": 61.216,
+        "pixelFormat": "yuvj420p",
+        "sha256": "4b2ce727f093944975f143ba2b39c4c64511b766d94552f8d51a755916e7f983",
+        "width": 452
+      }
+    ],
+    "decoder": "FFmpeg software hevc (-hwaccel none, one thread)",
+    "encoderInvocations": 0,
+    "ffmpegVersion": "ffmpeg version 8.0 Copyright (c) 2000-2025 the FFmpeg developers",
+    "maximumResidentBytes": 32473088,
+    "schemaVersion": 1,
+    "videoToolboxInvocations": 0,
+    "weightedCorpus": {
+      "highEntropyWeight": 0.1,
+      "projectedMeanBytesAt1920x1080": 197487,
+      "uiWeight": 0.9
+    }
+  },
+  "actualWallClockOfficeSoakExecuted": false,
+  "productionImageIOExecuted": false,
+  "appRuntimeExecuted": false,
+  "hardwareEncoderTestsExecuted": 0,
+  "remainingGate": "A real eight-hour production HEIC capture/decode/resource soak requires a codec runtime proven not to initialize VTEncoderXPCService on this Mac."
+}

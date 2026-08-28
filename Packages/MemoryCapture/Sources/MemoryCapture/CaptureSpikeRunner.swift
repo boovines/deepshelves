@@ -69,6 +69,7 @@ public final class CaptureSpikeRunner: NSObject, SCStreamOutput, SCStreamDelegat
     private let sampleQueue = DispatchQueue(
         label: "com.justinhou.deepshelves.capture-spike.samples")
     private let shareableContentProvider = BoundedShareableContentProvider()
+    private let frameEncoder: any HEICFrameEncoding
 
     private var epoch: WindowCaptureEpoch?
     private var writer: HEICKeyframeWriter?
@@ -94,6 +95,11 @@ public final class CaptureSpikeRunner: NSObject, SCStreamOutput, SCStreamDelegat
     private var lifecycleSuspended = false
     private var sleepTransitions = 0
     private var wakeTransitions = 0
+
+    public init(frameEncoder: any HEICFrameEncoding = QuarantinedHEICFrameEncoder()) {
+        self.frameEncoder = frameEncoder
+        super.init()
+    }
 
     public func run(outputURL: URL, duration: Duration) async throws -> CaptureSpikeReport {
         let capabilityStatus = CaptureCapabilities.current()
@@ -312,7 +318,8 @@ public final class CaptureSpikeRunner: NSObject, SCStreamOutput, SCStreamDelegat
                 targetWindowID: epoch.targetWindowID,
                 dimensions: epoch.encodedSize,
                 startedNanoseconds: appliedAt
-            )
+            ),
+            encoder: frameEncoder
         )
         let latencyMilliseconds = Double(appliedAt - transitionStartedNanoseconds) / 1_000_000
         stateLock.withLock {
@@ -369,7 +376,8 @@ public final class CaptureSpikeRunner: NSObject, SCStreamOutput, SCStreamDelegat
                 targetWindowID: continuingEpoch.targetWindowID,
                 dimensions: continuingEpoch.encodedSize,
                 startedNanoseconds: DispatchTime.now().uptimeNanoseconds
-            )
+            ),
+            encoder: frameEncoder
         )
         stateLock.withLock {
             writer = nextWriter

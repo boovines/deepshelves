@@ -4,14 +4,19 @@ import PackageDescription
 let package = Package(
     name: "MemoryCapture",
     platforms: [.macOS(.v15)],
-    products: [.library(name: "MemoryCapture", targets: ["MemoryCapture"])],
-    dependencies: [
-        .package(path: "../MemoryContracts"),
+    products: [
+        .library(name: "MemoryCapture", targets: ["MemoryCapture"]),
+        .executable(name: "LM028SoakHarness", targets: ["LM028SoakHarness"]),
     ],
+    dependencies: [.package(path: "../MemoryContracts")],
     targets: [
         .target(
             name: "MemoryCapture",
             dependencies: ["MemoryContracts"]
+        ),
+        .executableTarget(
+            name: "LM028SoakHarness",
+            dependencies: ["MemoryCapture"]
         ),
     ]
 )

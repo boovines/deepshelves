@@ -19,6 +19,18 @@ public enum HEICFrameEncoderError: Error, Equatable, Sendable {
     case destinationCreationFailed
     case finalizationFailed
     case emptyPayload
+    case runtimeQuarantined
+}
+
+public struct QuarantinedHEICFrameEncoder: HEICFrameEncoding {
+    public init() {}
+
+    public func encode(
+        _ source: CVPixelBuffer,
+        destinationDimensions: PixelSize
+    ) throws -> Data {
+        throw HEICFrameEncoderError.runtimeQuarantined
+    }
 }
 
 public final class ImageIOHEICFrameEncoder: HEICFrameEncoding, @unchecked Sendable {
@@ -117,7 +129,7 @@ public final class HEICKeyframeWriter: @unchecked Sendable {
         outputDirectoryURL: URL,
         chunkID: UUID = UUID(),
         scope: MediaChunkScope,
-        encoder: any HEICFrameEncoding = ImageIOHEICFrameEncoder()
+        encoder: any HEICFrameEncoding
     ) throws {
         guard scope.dimensions.width >= 2, scope.dimensions.height >= 2,
             scope.dimensions.width.isMultiple(of: 2),

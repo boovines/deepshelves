@@ -1,0 +1,11 @@
+foreground_window_filter_only=passed
+privacy_denial_projection=passed
+stale_epoch_rejection=passed
+bounded_queue_capacity=4
+fake_encoder_boundary_only=passed
+production_encoder_requires_explicit_injection=passed
+legacy_capture_and_decode_harnesses_fail_closed=passed
+actual_app_launches=0
+hardware_encoder_tests_executed=0
+apple_imageio_runtime_tests_executed=0
+software_heic_decode_only=passed

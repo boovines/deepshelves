@@ -1,9 +1,9 @@
 # ADR 0001: Foreground-window capture media defaults
 
-- Status: Accepted, amended by LM-025
+- Status: Accepted representation; runtime codec blocked by LM-028 safety quarantine
 - Original date: 2026-08-27
 - Amendment date: 2026-08-28
-- Stories: LM-005, LM-025
+- Stories: LM-005, LM-025, LM-028
 - Spike: S1
 
 ## Context
@@ -15,6 +15,14 @@ The canonical S1 measurements and environment declaration live under `Benchmarks
 During LM-025, two focused runs that initialized the hardware HEVC/VideoToolbox encoder caused repeatable `dart-ave AppleT8110DART` kernel panics at 14:43 and 14:49 local time on 2026-08-28. The panic reports, exact commands, and safe static diagnosis are retained in `Results/LM-025/`. No further hardware encoder validation is permitted on this Mac.
 
 The documented S1 fallback sequence allows independently encoded HEIC keyframes when random decode or crash integrity cannot be safely established, but requires an ADR because the storage layout and media locator contract change. The owner authorized that fallback on 2026-08-28.
+
+During LM-028, a metadata-only `sips` probe of a pinned HEIC fixture unexpectedly started
+`VTEncoderXPCService`. The LM-028 tripwire detected the service and it was terminated
+immediately; no Xcode process was active and no further Apple ImageIO runtime probe was
+attempted. This does not invalidate the independent-keyframe representation, manifest, or
+publication design, but it means Apple ImageIO encode and decode are both runtime-
+quarantined on this Mac until a codec boundary can prove that the service is never
+initialized.
 
 ## Decision
 
@@ -33,6 +41,7 @@ Retain the proven foreground-window resolver, revocable epoch, privacy preflight
 | Capture-to-media queue capacity | 4 |
 | Canonical media codec | independently encoded HEIC still image per accepted frame |
 | HEIC quality | 0.82 unless a later measured ADR changes it |
+| Runtime codec on this Mac | fail closed; Apple ImageIO encode/decode quarantined |
 | Logical writer rollover | 29 seconds |
 | Contractual maximum chunk duration | 30 seconds |
 | Shareable-content refresh timeout | 2 seconds |
@@ -70,12 +79,17 @@ The writer stages the complete directory as a hidden sibling, writes every frame
 - Every pixel-bearing chunk remains fixed to one target window, capture epoch, and encoded dimension.
 - Focus, policy, epoch, window identity, and dimensions are checked again immediately before encode.
 - Ambiguous, excluded, minimized, protected, missing, or refresh-timeout states persist no pixels.
-- Exact-frame random access no longer initializes a video decoder or seeks within a GOP.
+- Exact-frame random access requires no GOP seek, but the runtime decoder must still pass
+  the no-VideoToolbox tripwire before it can ship on this Mac.
 - Crash recovery reasons about complete directories and canonical manifests instead of playable partial movies.
 - Moment/range deletion copies only retained independent frames into a replacement chunk; it never re-encodes adjacent retained evidence.
 - Storage overhead is expected to exceed inter-frame HEVC for changing content. The existing 30-day/20-GB retention and hard-budget controls remain mandatory, and LM-028 plus LM-082 must measure the revised corpus before release.
 - The app must not claim application-level media encryption. HEIC assets retain the FileVault plus owner-only-permission boundary.
 - The former `HEVCMediaWriter`, AVAssetWriter, and VideoToolbox encoder path is removed from the shipping capture target. The two panic artifacts remain historical evidence and must never be reproduced on this Mac.
+- `HEICKeyframeWriter` has no implicit production encoder. Every caller must inject an
+  encoder explicitly, and legacy capture/decode harnesses default to a fail-closed
+  quarantine boundary. This prevents an app or test launch from silently reaching Apple
+  ImageIO while LM-028 is blocked.
 - The V1 HEVC JSON reader remains for previously generated synthetic/spike evidence. New canonical archives use contract version 2 with `heicKeyframes` / `heicKeyframeDirectory` and exact frame asset paths.
 
 ## Alternatives considered
@@ -89,7 +103,16 @@ The writer stages the complete directory as a hidden sibling, writes every frame
 
 LM-025 verification is restricted to source inspection, compile-only builds, deterministic boundary fakes, canonical-manifest fixtures, and filesystem fault injection that cannot initialize AVAssetWriter, VideoToolbox, or a hardware HEVC encoder. The gate proves scope rejection, fixed-dimension/downscale planning, ≤30-second ordering, exact-frame lookup, per-frame and manifest integrity, owner-only permissions, before/after-rename recovery, retained-only replacement, full retention removal, and forensic sentinel absence. Production ImageIO HEIC encoding is compiled but is not executed on this Mac as part of the gate.
 
-LM-028 remeasures storage, CPU, memory, decode latency, and office-soak behavior using the HEIC layout on a validation environment that does not exercise the quarantined video encoder. LM-082 repeats the long-soak, offline privacy, integrity, retention, and deletion gates against HEIC source assets.
+LM-028 safely exercises 62 focused Release unit tests plus five fake-media integration
+tests, an eight-hour synthetic office workload, and a 72-hour accelerated workload. A
+pinned three-file libheif corpus decoded through FFmpeg's explicitly selected software
+HEVC decoder (`-hwaccel none`, one thread) measures a worst p95 of 85.664 ms and 32.5 MB
+peak child RSS. The weighted 1920×1080 corpus is 197,487 bytes per accepted frame; the
+office model projects 18.414 GB over 30 eight-hour days, with a queue peak of four and zero
+persisted prohibited sentinel. These results validate the layout and safe software decode
+boundary, but they do not satisfy the real eight-hour production capture/resource gate.
+LM-028 remains technically blocked on that exact gate. LM-082 repeats the long-soak,
+offline privacy, integrity, retention, and deletion gates against HEIC source assets.
 
 ## Revisit triggers
 

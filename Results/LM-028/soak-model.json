@@ -1,0 +1,33 @@
+{
+  "accelerated" : {
+    "backpressureDropCount" : 5348,
+    "candidateCount" : 518400,
+    "corruptPublishedArtifactCount" : 0,
+    "excludedFrameRejectionCount" : 617,
+    "orphanPublishedArtifactCount" : 0,
+    "persistedFrameCount" : 33325,
+    "prohibitedSentinelPersistedCount" : 0,
+    "projectedThirtyDayBytes" : 21937514251,
+    "queueFinalCount" : 0,
+    "queuePeakCount" : 4,
+    "recoveryCount" : 392,
+    "simulatedDurationSeconds" : 259200,
+    "staleFrameRejectionCount" : 2879
+  },
+  "office" : {
+    "backpressureDropCount" : 176,
+    "candidateCount" : 57600,
+    "corruptPublishedArtifactCount" : 0,
+    "excludedFrameRejectionCount" : 36,
+    "orphanPublishedArtifactCount" : 0,
+    "persistedFrameCount" : 3108,
+    "prohibitedSentinelPersistedCount" : 0,
+    "projectedThirtyDayBytes" : 18413687880,
+    "queueFinalCount" : 0,
+    "queuePeakCount" : 4,
+    "recoveryCount" : 10,
+    "simulatedDurationSeconds" : 28800,
+    "staleFrameRejectionCount" : 95
+  },
+  "schemaVersion" : 1
+}

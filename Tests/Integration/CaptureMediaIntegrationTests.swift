@@ -6,6 +6,46 @@ import MemoryContracts
 import XCTest
 
 final class CaptureMediaIntegrationTests: XCTestCase {
+    func testQuarantinedProductionBoundaryFailsBeforeWritingFrameBytes() throws {
+        let fixture = try MediaWriterFixture(name: "heic-quarantined")
+        defer { fixture.remove() }
+        let epochID = UUID()
+        let writer = try HEICKeyframeWriter(
+            outputDirectoryURL: fixture.outputURL,
+            scope: MediaChunkScope(
+                epochID: epochID,
+                targetWindowID: 42,
+                dimensions: MemoryCapture.PixelSize(width: 320, height: 180),
+                startedNanoseconds: 0
+            ),
+            encoder: QuarantinedHEICFrameEncoder()
+        )
+
+        XCTAssertThrowsError(
+            try writer.append(
+                makePixelBuffer(width: 320, height: 180),
+                frameID: UUID(),
+                captureEpochID: epochID,
+                targetWindowID: 42,
+                sourcePresentationTimeMilliseconds: 1_000
+            )
+        ) { error in
+            XCTAssertEqual(error as? HEICFrameEncoderError, .runtimeQuarantined)
+        }
+        writer.cancel()
+        XCTAssertFalse(FileManager.default.fileExists(atPath: fixture.outputURL.path))
+        XCTAssertFalse(FileManager.default.fileExists(atPath: writer.stagingDirectoryURL.path))
+    }
+
+    func testLegacyDecodeBenchmarkFailsClosedWithoutInvokingImageIO() async {
+        do {
+            _ = try await CaptureDecodeBenchmark.run(mediaPaths: ["must-not-open.heic"])
+            XCTFail("Expected the legacy runtime decoder to remain quarantined")
+        } catch {
+            XCTAssertEqual(error as? HEICFrameEncoderError, .runtimeQuarantined)
+        }
+    }
+
     func testHEICWriterPublishesExactScopedFrameAssetsWithoutVideoEncoding() throws {
         let fixture = try MediaWriterFixture(name: "heic-scoped")
         defer { fixture.remove() }

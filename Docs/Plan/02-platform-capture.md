@@ -221,9 +221,13 @@ Gate: 500 focus transitions across fixture apps resolve the correct `SCWindow`; 
 
 Gate: rapid focus/URL/window/resize changes never persist a buffer from a prior epoch and begin the approved new target within one second p95.
 
-### C3 Hardware media
+### C3 Independent HEIC media
 
-Gate: eight-hour foreground-window fixture encodes with hardware acceleration, playable fixed-dimension chunks, bounded storage, and random extraction below target.
+Gate: an eight-hour foreground-window workload produces independently decodable,
+fixed-dimension HEIC assets in integrity-verified logical chunks, with bounded storage and
+exact-frame extraction below target. Hardware HEVC/VideoToolbox encoding is not part of
+the shipping or validation path; ADR 0001 records the permanent quarantine on the target
+Mac.
 
 ### C4 Pixel-contamination privacy
 
