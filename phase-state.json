@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "activeStory": "LM-055",
+  "activeStory": null,
   "stories": {
     "LM-001": {
       "status": "passed",
@@ -937,12 +937,21 @@
       "resumeProbe": null
     },
     "LM-055": {
-      "status": "active",
+      "status": "passed",
       "startedAt": "2026-08-28T23:49:32Z",
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": "Activated after LM-054 passed. Tune hybrid retrieval on frozen labels and run the full million-frame latency, reindex, and recovery gate with all media runtimes quarantined.",
+      "completedAt": "2026-08-29T00:05:01Z",
+      "gitRevision": "refs/tags/checkpoints/LM-055",
+      "evidence": [
+        "Results/LM-055/report.json",
+        "Results/LM-055/retrieval.json",
+        "Results/LM-055/retrieval-tests.txt",
+        "Results/LM-055/focused-tests.txt",
+        "Results/LM-055/recovery-tests.txt",
+        "Results/LM-055/scale-tests.txt",
+        "Results/LM-055/scale-metrics.json",
+        "Results/LM-055/story-gate.txt"
+      ],
+      "notes": "The unchanged 500-frame/100-query frozen corpus reached visual hybrid Recall@10 1.0 and hybrid Recall@10/nDCG@10 1.0, improving over lexical-only 0.75/0.75 and visual-only 0.35/0.35 with zero duplicate or forbidden results. The production exact Accelerate scanner plus concurrent production RRF fusion ran 20 samples at one million vectors at 505.539 ms p95, 519.254 ms p99, and 50.781 MB incremental RSS, so no approximate-index ADR is required. Truncation/checksum rebuild, vector compaction crash recovery, and search-index parity rebuild passed, as did contracts, privacy, formatting, dependency, and compile-only Release gates under the encoder tripwire. No further pending story has all declared dependencies passed: LM-028 remains blocked on its real eight-hour app/media soak and LM-039 remains blocked on required XCUITest runtime; both runtime classes are quarantined on this Mac.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null

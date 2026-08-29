@@ -1,0 +1,11 @@
+frozen_labels_unchanged=passed
+visual_recall_at_10=passed
+hybrid_ndcg_and_recall_non_regression=passed
+million_frame_hybrid_p95=passed
+reindex_and_recovery=passed
+exact_index_scale_decision=passed_no_adr
+contracts=passed
+privacy_smoke=passed
+release_compile_only=passed
+dependency_audit=passed
+encoder_process_tripwire=passed

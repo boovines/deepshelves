@@ -1,0 +1,12 @@
+Test Suite 'Selected tests' started at 2026-08-29 02:03:03.315.
+Test Suite 'LocalMemoryUnitTests.xctest' started at 2026-08-29 02:03:03.316.
+Test Suite 'ExactVisualVectorSearchTests' started at 2026-08-29 02:03:03.316.
+Test Case '-[LocalMemoryUnitTests.ExactVisualVectorSearchTests testLM055MillionFrameHybridLatencyAndMemory]' started.
+Test Case '-[LocalMemoryUnitTests.ExactVisualVectorSearchTests testLM055MillionFrameHybridLatencyAndMemory]' passed (12.454 seconds).
+Test Suite 'ExactVisualVectorSearchTests' passed at 2026-08-29 02:03:15.770.
+	 Executed 1 test, with 0 failures (0 unexpected) in 12.454 (12.454) seconds
+Test Suite 'LocalMemoryUnitTests.xctest' passed at 2026-08-29 02:03:15.770.
+	 Executed 1 test, with 0 failures (0 unexpected) in 12.454 (12.454) seconds
+Test Suite 'Selected tests' passed at 2026-08-29 02:03:15.770.
+	 Executed 1 test, with 0 failures (0 unexpected) in 12.454 (12.455) seconds
+LM055_SCALE_METRICS {"incrementalResidentMegabytes":50.78125,"p95Milliseconds":505.53895799999998,"p99Milliseconds":519.25416700000005,"resultCount":100,"sampleCount":20,"vectorCount":1000000}

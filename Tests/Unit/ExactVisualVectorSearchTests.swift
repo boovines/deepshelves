@@ -2,6 +2,7 @@ import Accelerate
 import CryptoKit
 import Darwin
 import Foundation
+import MemoryContracts
 import MemoryStore
 import XCTest
 
@@ -190,6 +191,77 @@ final class ExactVisualVectorSearchTests: XCTestCase {
         XCTAssertLessThan(incrementalResidentMegabytes, 500)
     }
 
+    func testLM055MillionFrameHybridLatencyAndMemory() async throws {
+        guard ProcessInfo.processInfo.environment["LM055_SCALE_TESTS"] == "1" else {
+            throw XCTSkip("Run only from the LM-055 scale gate")
+        }
+        let fixture = try ScaleVectorSearchFixture(vectorCount: 1_000_000)
+        defer { fixture.remove() }
+        let snapshot = fixture.snapshot(vectorCount: 1_000_000)
+        let visual = LM055MillionVisualEngine(snapshot: snapshot)
+        let lexical = LM055MillionLexicalEngine()
+        let now = Date(timeIntervalSince1970: 1_000_001)
+        let interval = DateInterval(
+            start: Date(timeIntervalSince1970: -1),
+            end: now
+        )
+        let policy = try AccessPolicy(
+            id: UUID(uuidString: "55000000-0000-0000-0000-000000000001")!,
+            name: "LM-055 million-frame benchmark",
+            allowedInterval: interval,
+            allowedBundleIDs: ["com.example.scale"],
+            allowedHosts: [],
+            maxResults: 100,
+            expiresAt: now.addingTimeInterval(3_600),
+            createdByUser: true
+        )
+        let request = try SearchRequest(
+            query: "million frame fixture",
+            interval: nil,
+            bundleIDs: [],
+            hosts: [],
+            mode: .hybrid,
+            pageSize: 100,
+            cursor: nil,
+            accessPolicy: policy
+        )
+        let engine = try HybridSearchEngine(
+            lexical: lexical,
+            visual: visual,
+            cursorSigningKey: Data(repeating: 0x55, count: 32),
+            now: { now }
+        )
+        let baselineResidentBytes = residentBytes()
+        _ = try await engine.search(request)
+        var durations: [Double] = []
+        for _ in 0..<20 {
+            let started = ContinuousClock.now
+            let page = try await engine.search(request)
+            durations.append(started.duration(to: .now).milliseconds)
+            XCTAssertEqual(page.results.count, 100)
+            XCTAssertNil(page.nextCursor)
+        }
+        let p95 = percentile(durations, 0.95)
+        let p99 = percentile(durations, 0.99)
+        let incrementalResidentMegabytes =
+            Double(max(0, residentBytes() - baselineResidentBytes)) / 1_048_576
+        let encoded = try JSONSerialization.data(
+            withJSONObject: [
+                "vectorCount": 1_000_000,
+                "sampleCount": durations.count,
+                "p95Milliseconds": p95,
+                "p99Milliseconds": p99,
+                "incrementalResidentMegabytes": incrementalResidentMegabytes,
+                "resultCount": 100,
+            ],
+            options: [.sortedKeys]
+        )
+        print("LM055_SCALE_METRICS \(String(decoding: encoded, as: UTF8.self))")
+        XCTAssertLessThan(p95, 750)
+        XCTAssertLessThan(p99, 1_000)
+        XCTAssertLessThan(incrementalResidentMegabytes, 500)
+    }
+
     private func unit(_ index: Int) -> [Float] {
         var values = [Float](repeating: 0, count: 512)
         values[index] = 1
@@ -220,6 +292,95 @@ final class ExactVisualVectorSearchTests: XCTestCase {
             }
         }
         return status == KERN_SUCCESS ? Int64(information.resident_size) : 0
+    }
+}
+
+private struct LM055MillionVisualEngine: SearchEngine {
+    let snapshot: ArchiveVectorScanSnapshot
+
+    func search(_ request: SearchRequest) async throws -> SearchPage {
+        XCTAssertEqual(request.mode, .visualOnly)
+        try await Task.sleep(for: .milliseconds(8))
+        let matches = try await ExactVisualVectorSearcher(chunkCandidateCount: 16_384).search(
+            query: [1] + [Float](repeating: 0, count: 511),
+            snapshot: snapshot,
+            limit: 100
+        )
+        let results = try matches.enumerated().map { offset, match in
+            try LM055ScaleResult.make(
+                frameID: match.frameID,
+                capturedAt: match.capturedAt,
+                textRank: nil,
+                visualRank: offset + 1,
+                source: .visual
+            )
+        }
+        return try SearchPage(results: results, nextCursor: nil)
+    }
+}
+
+private struct LM055MillionLexicalEngine: SearchEngine {
+    func search(_ request: SearchRequest) async throws -> SearchPage {
+        XCTAssertEqual(request.mode, .textOnly)
+        try await Task.sleep(for: .milliseconds(4))
+        let results = try (0..<100).map { offset in
+            let value = UInt64(999_999 - offset)
+            return try LM055ScaleResult.make(
+                frameID: LM055ScaleResult.frameID(value),
+                capturedAt: Date(timeIntervalSince1970: Double(value)),
+                textRank: offset + 1,
+                visualRank: nil,
+                source: .accessibility
+            )
+        }
+        return try SearchPage(results: results, nextCursor: nil)
+    }
+}
+
+private enum LM055ScaleResult {
+    static func frameID(_ value: UInt64) -> UUID {
+        UUID(
+            uuid: (
+                0, 0, 0, 0, 0, 0, 0, 0,
+                UInt8(truncatingIfNeeded: value >> 56), UInt8(truncatingIfNeeded: value >> 48),
+                UInt8(truncatingIfNeeded: value >> 40), UInt8(truncatingIfNeeded: value >> 32),
+                UInt8(truncatingIfNeeded: value >> 24), UInt8(truncatingIfNeeded: value >> 16),
+                UInt8(truncatingIfNeeded: value >> 8), UInt8(truncatingIfNeeded: value)
+            )
+        )
+    }
+
+    static func make(
+        frameID: UUID,
+        capturedAt: Date,
+        textRank: Int?,
+        visualRank: Int?,
+        source: SearchEvidenceSource
+    ) throws -> SearchResult {
+        try SearchResult(
+            frameID: frameID,
+            capturedAt: capturedAt,
+            foreground: ForegroundContext(
+                bundleID: "com.example.scale",
+                applicationName: "Scale Fixture",
+                processID: nil,
+                windowTitle: "Scale result",
+                windowBounds: NormalizedRect(x: 0, y: 0, width: 1, height: 1)
+            ),
+            browser: nil,
+            thumbnailLocator: nil,
+            mediaLocator: .opaqueResourceID("lm055-\(frameID.uuidString.lowercased())"),
+            evidence: [
+                SearchEvidence(
+                    source: source,
+                    matchedText: source == .visual ? nil : "million frame fixture",
+                    score: 1
+                )
+            ],
+            textRank: textRank,
+            visualRank: visualRank,
+            fusedScore: 1
+        )
     }
 }
 

@@ -1,0 +1,242 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project /Users/justinhou/Development/deepshelves/LocalMemory.xcodeproj -scheme LocalMemory -configuration Release -derivedDataPath /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055 -disableAutomaticPackageResolution CODE_SIGNING_ALLOWED=NO ENABLE_TESTABILITY=YES "-only-testing:LocalMemoryUnitTests/ArchiveVectorStoreTests/testTruncationAndChecksumCorruptionNeverReturnResultsAndRebuild" "-only-testing:LocalMemoryUnitTests/ArchiveVectorStoreTests/testCompactionDropsStaleVectorsAndRecoversBothCrashBoundaries" "-only-testing:LocalMemoryUnitTests/ArchiveSearchIndexStoreTests/testRebuildRepairsMissingAndStaleRowsToExactReadyFrameParity" test
+
+Build settings from command line:
+    CODE_SIGNING_ALLOWED = NO
+    ENABLE_TESTABILITY = YES
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  MemoryEnrichment: /Users/justinhou/Development/deepshelves/Packages/MemoryEnrichment
+  GRDB: /Users/justinhou/Development/deepshelves/.build/Dependencies/GRDB.swift-a285e4ca87ec6b3584c97b0ec25fc61fec02de60 @ local
+  SQLCipher: /Users/justinhou/Development/deepshelves/.build/Dependencies/SQLCipher.swift @ local
+  MemorySearch: /Users/justinhou/Development/deepshelves/Packages/MemorySearch
+  MemoryCapture: /Users/justinhou/Development/deepshelves/Packages/MemoryCapture
+  MemoryDesignSystem: /Users/justinhou/Development/deepshelves/Packages/MemoryDesignSystem
+  MemorySoftwareHEIC: /Users/justinhou/Development/deepshelves/Packages/MemorySoftwareHEIC
+  MemoryContracts: /Users/justinhou/Development/deepshelves/Packages/MemoryContracts
+  MemoryStore: /Users/justinhou/Development/deepshelves/Packages/MemoryStore
+  MemoryAgentAccess: /Users/justinhou/Development/deepshelves/Packages/MemoryAgentAccess
+  MemoryTestSupport: /Users/justinhou/Development/deepshelves/Packages/MemoryTestSupport
+
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:macOS, arch:arm64, id:00006030-000658C614D0001C, name:My Mac }
+{ platform:macOS, arch:x86_64, id:00006030-000658C614D0001C, name:My Mac }
+{ platform:macOS, name:Any Mac }
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (30 targets)
+    Target 'LocalMemoryUnitTests' in project 'LocalMemory'
+        ➜ Explicit dependency on target 'MemoryCapture' in project 'MemoryCapture'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+        ➜ Explicit dependency on target 'MemoryEnrichment' in project 'MemoryEnrichment'
+        ➜ Explicit dependency on target 'MemorySearch' in project 'MemorySearch'
+        ➜ Explicit dependency on target 'MemoryDesignSystem' in project 'MemoryDesignSystem'
+        ➜ Explicit dependency on target 'MemorySoftwareHEIC' in project 'MemorySoftwareHEIC'
+        ➜ Explicit dependency on target 'MemoryStore' in project 'MemoryStore'
+        ➜ Explicit dependency on target 'MemoryTestSupport' in project 'MemoryTestSupport'
+    Target 'LocalMemoryPrivacyTests' in project 'LocalMemory'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+        ➜ Explicit dependency on target 'MemoryTestSupport' in project 'MemoryTestSupport'
+    Target 'LocalMemoryPerformanceTests' in project 'LocalMemory'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+        ➜ Explicit dependency on target 'MemoryTestSupport' in project 'MemoryTestSupport'
+    Target 'LocalMemoryMCP' in project 'LocalMemory'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+    Target 'LocalMemoryIntegrationTests' in project 'LocalMemory'
+        ➜ Explicit dependency on target 'MemoryCapture' in project 'MemoryCapture'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+        ➜ Explicit dependency on target 'MemoryEnrichment' in project 'MemoryEnrichment'
+        ➜ Explicit dependency on target 'MemoryStore' in project 'MemoryStore'
+        ➜ Explicit dependency on target 'MemoryTestSupport' in project 'MemoryTestSupport'
+    Target 'MemoryTestSupport' in project 'MemoryTestSupport'
+        ➜ Explicit dependency on target 'MemoryTestSupport' in project 'MemoryTestSupport'
+    Target 'MemoryTestSupport' in project 'MemoryTestSupport' (no dependencies)
+    Target 'LocalMemoryCLI' in project 'LocalMemory'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+    Target 'LocalMemoryApp' in project 'LocalMemory'
+        ➜ Explicit dependency on target 'MemoryCapture' in project 'MemoryCapture'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+        ➜ Explicit dependency on target 'MemoryDesignSystem' in project 'MemoryDesignSystem'
+        ➜ Explicit dependency on target 'MemoryEnrichment' in project 'MemoryEnrichment'
+        ➜ Explicit dependency on target 'MemorySearch' in project 'MemorySearch'
+        ➜ Explicit dependency on target 'MemoryStore' in project 'MemoryStore'
+    Target 'MemorySearch' in project 'MemorySearch'
+        ➜ Explicit dependency on target 'MemorySearch' in project 'MemorySearch'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+        ➜ Explicit dependency on target 'MemoryStore' in project 'MemoryStore'
+    Target 'MemorySearch' in project 'MemorySearch'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+        ➜ Explicit dependency on target 'MemoryStore' in project 'MemoryStore'
+    Target 'MemoryEnrichment' in project 'MemoryEnrichment'
+        ➜ Explicit dependency on target 'MemoryEnrichment' in project 'MemoryEnrichment'
+        ➜ Explicit dependency on target 'MemoryEnrichment_MemoryEnrichment' in project 'MemoryEnrichment'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+        ➜ Explicit dependency on target 'MemorySoftwareHEIC' in project 'MemorySoftwareHEIC'
+        ➜ Explicit dependency on target 'MemoryStore' in project 'MemoryStore'
+    Target 'MemoryEnrichment' in project 'MemoryEnrichment'
+        ➜ Explicit dependency on target 'MemoryEnrichment_MemoryEnrichment' in project 'MemoryEnrichment'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+        ➜ Explicit dependency on target 'MemorySoftwareHEIC' in project 'MemorySoftwareHEIC'
+        ➜ Explicit dependency on target 'MemoryStore' in project 'MemoryStore'
+    Target 'MemoryStore' in project 'MemoryStore'
+        ➜ Explicit dependency on target 'MemoryStore' in project 'MemoryStore'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+        ➜ Explicit dependency on target 'GRDB' in project 'GRDB'
+    Target 'MemoryStore' in project 'MemoryStore'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+        ➜ Explicit dependency on target 'GRDB' in project 'GRDB'
+    Target 'GRDB' in project 'GRDB'
+        ➜ Explicit dependency on target 'GRDB' in project 'GRDB'
+        ➜ Explicit dependency on target 'GRDB_GRDB' in project 'GRDB'
+        ➜ Explicit dependency on target 'GRDBSQLCipher' in project 'GRDB'
+        ➜ Explicit dependency on target 'SQLCipher' in project 'SQLCipher'
+    Target 'GRDB' in project 'GRDB'
+        ➜ Explicit dependency on target 'GRDB_GRDB' in project 'GRDB'
+        ➜ Explicit dependency on target 'GRDBSQLCipher' in project 'GRDB'
+        ➜ Explicit dependency on target 'SQLCipher' in project 'SQLCipher'
+    Target 'GRDBSQLCipher' in project 'GRDB'
+        ➜ Explicit dependency on target 'SQLCipher' in project 'SQLCipher'
+    Target 'SQLCipher' in project 'SQLCipher' (no dependencies)
+    Target 'GRDB_GRDB' in project 'GRDB' (no dependencies)
+    Target 'MemoryEnrichment_MemoryEnrichment' in project 'MemoryEnrichment' (no dependencies)
+    Target 'MemoryDesignSystem' in project 'MemoryDesignSystem'
+        ➜ Explicit dependency on target 'MemoryDesignSystem' in project 'MemoryDesignSystem'
+    Target 'MemoryDesignSystem' in project 'MemoryDesignSystem' (no dependencies)
+    Target 'MemoryCapture' in project 'MemoryCapture'
+        ➜ Explicit dependency on target 'MemoryCapture' in project 'MemoryCapture'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+        ➜ Explicit dependency on target 'MemorySoftwareHEIC' in project 'MemorySoftwareHEIC'
+    Target 'MemoryCapture' in project 'MemoryCapture'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+        ➜ Explicit dependency on target 'MemorySoftwareHEIC' in project 'MemorySoftwareHEIC'
+    Target 'MemorySoftwareHEIC' in project 'MemorySoftwareHEIC'
+        ➜ Explicit dependency on target 'MemorySoftwareHEIC' in project 'MemorySoftwareHEIC'
+        ➜ Explicit dependency on target 'MemorySoftwareHEIC_MemorySoftwareHEIC' in project 'MemorySoftwareHEIC'
+    Target 'MemorySoftwareHEIC' in project 'MemorySoftwareHEIC'
+        ➜ Explicit dependency on target 'MemorySoftwareHEIC_MemorySoftwareHEIC' in project 'MemorySoftwareHEIC'
+    Target 'MemorySoftwareHEIC_MemorySoftwareHEIC' in project 'MemorySoftwareHEIC' (no dependencies)
+    Target 'MemoryContracts' in project 'MemoryContracts'
+        ➜ Explicit dependency on target 'MemoryContracts' in project 'MemoryContracts'
+    Target 'MemoryContracts' in project 'MemoryContracts' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/SDKStatCaches.noindex/macosx26.5-25F70-e082c4a02f00227109f4ed75e425c832.sdkstatcache
+    cd /Users/justinhou/Development/deepshelves/LocalMemory.xcodeproj
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -o /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/SDKStatCaches.noindex/macosx26.5-25F70-e082c4a02f00227109f4ed75e425c832.sdkstatcache
+
+Copy /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Products/Release/Local_Memory.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/Local_Memory.swiftsourceinfo (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/Local_Memory.swiftsourceinfo /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Products/Release/Local_Memory.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo
+
+Copy /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Products/Release/Local_Memory.swiftmodule/x86_64-apple-macos.swiftmodule /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/Local_Memory.swiftmodule (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/Local_Memory.swiftmodule /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Products/Release/Local_Memory.swiftmodule/x86_64-apple-macos.swiftmodule
+
+Copy /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Products/Release/Local_Memory.swiftmodule/x86_64-apple-macos.swiftdoc /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/Local_Memory.swiftdoc (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/Local_Memory.swiftdoc /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Products/Release/Local_Memory.swiftmodule/x86_64-apple-macos.swiftdoc
+
+Copy /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Products/Release/Local_Memory.swiftmodule/x86_64-apple-macos.abi.json /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/Local_Memory.abi.json (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/Local_Memory.abi.json /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Products/Release/Local_Memory.swiftmodule/x86_64-apple-macos.abi.json
+
+Copy /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Products/Release/Local_Memory.swiftmodule/arm64-apple-macos.swiftmodule /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/Local_Memory.swiftmodule (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/Local_Memory.swiftmodule /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Products/Release/Local_Memory.swiftmodule/arm64-apple-macos.swiftmodule
+
+Copy /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Products/Release/Local_Memory.swiftmodule/arm64-apple-macos.abi.json /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/Local_Memory.abi.json (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/Local_Memory.abi.json /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Products/Release/Local_Memory.swiftmodule/arm64-apple-macos.abi.json
+
+Copy /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Products/Release/Local_Memory.swiftmodule/Project/x86_64-apple-macos.swiftsourceinfo /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/Local_Memory.swiftsourceinfo (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/x86_64/Local_Memory.swiftsourceinfo /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Products/Release/Local_Memory.swiftmodule/Project/x86_64-apple-macos.swiftsourceinfo
+
+Copy /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Products/Release/Local_Memory.swiftmodule/arm64-apple-macos.swiftdoc /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/Local_Memory.swiftdoc (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryApp.build/Objects-normal/arm64/Local_Memory.swiftdoc /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Products/Release/Local_Memory.swiftmodule/arm64-apple-macos.swiftdoc
+
+GenerateDSYMFile /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Products/Release/Local\ Memory.app.dSYM /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Products/Release/Local\ Memory.app/Contents/MacOS/Local\ Memory (in target 'LocalMemoryApp' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/dsymutil /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Products/Release/Local\ Memory.app/Contents/MacOS/Local\ Memory -o /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Products/Release/Local\ Memory.app.dSYM
+
+Copy /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Products/Release/local_memory.swiftmodule/arm64-apple-macos.swiftmodule /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryCLI.build/Objects-normal/arm64/local_memory.swiftmodule (in target 'LocalMemoryCLI' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryCLI.build/Objects-normal/arm64/local_memory.swiftmodule /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Products/Release/local_memory.swiftmodule/arm64-apple-macos.swiftmodule
+
+Copy /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Products/Release/local_memory.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryCLI.build/Objects-normal/arm64/local_memory.swiftsourceinfo (in target 'LocalMemoryCLI' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryCLI.build/Objects-normal/arm64/local_memory.swiftsourceinfo /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Products/Release/local_memory.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo
+
+Copy /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Products/Release/local_memory.swiftmodule/x86_64-apple-macos.swiftmodule /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryCLI.build/Objects-normal/x86_64/local_memory.swiftmodule (in target 'LocalMemoryCLI' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryCLI.build/Objects-normal/x86_64/local_memory.swiftmodule /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Products/Release/local_memory.swiftmodule/x86_64-apple-macos.swiftmodule
+
+Copy /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Products/Release/local_memory.swiftmodule/arm64-apple-macos.swiftdoc /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryCLI.build/Objects-normal/arm64/local_memory.swiftdoc (in target 'LocalMemoryCLI' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryCLI.build/Objects-normal/arm64/local_memory.swiftdoc /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Products/Release/local_memory.swiftmodule/arm64-apple-macos.swiftdoc
+
+Copy /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Products/Release/local_memory.swiftmodule/arm64-apple-macos.abi.json /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryCLI.build/Objects-normal/arm64/local_memory.abi.json (in target 'LocalMemoryCLI' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryCLI.build/Objects-normal/arm64/local_memory.abi.json /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Products/Release/local_memory.swiftmodule/arm64-apple-macos.abi.json
+
+Copy /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Products/Release/local_memory.swiftmodule/Project/x86_64-apple-macos.swiftsourceinfo /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryCLI.build/Objects-normal/x86_64/local_memory.swiftsourceinfo (in target 'LocalMemoryCLI' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryCLI.build/Objects-normal/x86_64/local_memory.swiftsourceinfo /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Products/Release/local_memory.swiftmodule/Project/x86_64-apple-macos.swiftsourceinfo
+
+Copy /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Products/Release/local_memory.swiftmodule/x86_64-apple-macos.swiftdoc /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryCLI.build/Objects-normal/x86_64/local_memory.swiftdoc (in target 'LocalMemoryCLI' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryCLI.build/Objects-normal/x86_64/local_memory.swiftdoc /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Products/Release/local_memory.swiftmodule/x86_64-apple-macos.swiftdoc
+
+Copy /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Products/Release/local_memory.swiftmodule/x86_64-apple-macos.abi.json /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryCLI.build/Objects-normal/x86_64/local_memory.abi.json (in target 'LocalMemoryCLI' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Intermediates.noindex/LocalMemory.build/Release/LocalMemoryCLI.build/Objects-normal/x86_64/local_memory.abi.json /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Products/Release/local_memory.swiftmodule/x86_64-apple-macos.abi.json
+
+GenerateDSYMFile /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Products/Release/local-memory.dSYM /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Products/Release/local-memory (in target 'LocalMemoryCLI' from project 'LocalMemory')
+    cd /Users/justinhou/Development/deepshelves
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/dsymutil /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Products/Release/local-memory -o /Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Build/Products/Release/local-memory.dSYM
+
+Test Suite 'Selected tests' started at 2026-08-29 02:03:01.564.
+Test Suite 'LocalMemoryUnitTests.xctest' started at 2026-08-29 02:03:01.564.
+Test Suite 'ArchiveSearchIndexStoreTests' started at 2026-08-29 02:03:01.564.
+Test Case '-[LocalMemoryUnitTests.ArchiveSearchIndexStoreTests testRebuildRepairsMissingAndStaleRowsToExactReadyFrameParity]' started.
+Test Case '-[LocalMemoryUnitTests.ArchiveSearchIndexStoreTests testRebuildRepairsMissingAndStaleRowsToExactReadyFrameParity]' passed (0.015 seconds).
+Test Suite 'ArchiveSearchIndexStoreTests' passed at 2026-08-29 02:03:01.579.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.015 (0.015) seconds
+Test Suite 'ArchiveVectorStoreTests' started at 2026-08-29 02:03:01.580.
+Test Case '-[LocalMemoryUnitTests.ArchiveVectorStoreTests testCompactionDropsStaleVectorsAndRecoversBothCrashBoundaries]' started.
+Test Case '-[LocalMemoryUnitTests.ArchiveVectorStoreTests testCompactionDropsStaleVectorsAndRecoversBothCrashBoundaries]' passed (0.225 seconds).
+Test Case '-[LocalMemoryUnitTests.ArchiveVectorStoreTests testTruncationAndChecksumCorruptionNeverReturnResultsAndRebuild]' started.
+Test Case '-[LocalMemoryUnitTests.ArchiveVectorStoreTests testTruncationAndChecksumCorruptionNeverReturnResultsAndRebuild]' passed (0.418 seconds).
+Test Suite 'ArchiveVectorStoreTests' passed at 2026-08-29 02:03:02.222.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.642 (0.643) seconds
+Test Suite 'LocalMemoryUnitTests.xctest' passed at 2026-08-29 02:03:02.223.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.657 (0.659) seconds
+Test Suite 'Selected tests' passed at 2026-08-29 02:03:02.223.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.657 (0.659) seconds
+2026-08-29 02:03:02.485 xcodebuild[36195:2658842] [MT] IDETestOperationsObserverDebug: 1.257 elapsed -- Testing started completed.
+2026-08-29 02:03:02.485 xcodebuild[36195:2658842] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-08-29 02:03:02.485 xcodebuild[36195:2658842] [MT] IDETestOperationsObserverDebug: 1.257 sec, +1.257 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/justinhou/Development/deepshelves/.build/DerivedDataLM055/Logs/Test/Test-LocalMemory-2026.08.29_02-02-59-+0200.xcresult
+
+** TEST SUCCEEDED **
+
+Testing started

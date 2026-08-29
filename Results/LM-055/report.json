@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-055",
+  "status": "passed",
+  "retrieval": {
+    "duplicateResultRate": 0,
+    "fixtureSHA256": "640abc4d73f66c9555cb54df277b0963eeae02cd80651f7174d6bba238e02912",
+    "forbiddenResultCount": 0,
+    "frameCount": 500,
+    "frozenLexicalSubsetNDCGAt10": 1,
+    "frozenLexicalSubsetRecallAt10": 1,
+    "hybrid": {
+      "meanReciprocalRank": 1,
+      "ndcgAt10": 1,
+      "recallAt1": 0.8400000000000003,
+      "recallAt10": 1,
+      "recallAt5": 1
+    },
+    "labelsEditedAfterFreeze": false,
+    "lexicalOnly": {
+      "meanReciprocalRank": 0.75,
+      "ndcgAt10": 0.75,
+      "recallAt1": 0.5900000000000002,
+      "recallAt10": 0.75,
+      "recallAt5": 0.75
+    },
+    "queryCount": 100,
+    "schemaVersion": 1,
+    "story": "LM-055",
+    "visualHybridRecallAt10": 1,
+    "visualOnly": {
+      "meanReciprocalRank": 0.35,
+      "ndcgAt10": 0.35,
+      "recallAt1": 0.35,
+      "recallAt10": 0.35,
+      "recallAt5": 0.35
+    },
+    "visualQueryCount": 25,
+    "status": "passed",
+    "canonicalRealModel": {
+      "evidence": "Results/LM-007/report.json",
+      "visualRecallAt10": 1.0,
+      "exactMillionVectorP95Milliseconds": 618.042708,
+      "exactMillionVectorP99Milliseconds": 637.554625
+    },
+    "millionFrameHybrid": {
+      "incrementalResidentMegabytes": 50.78125,
+      "p95Milliseconds": 505.53895799999998,
+      "p99Milliseconds": 519.25416700000005,
+      "resultCount": 100,
+      "sampleCount": 20,
+      "vectorCount": 1000000,
+      "evidence": "Results/LM-055/scale-tests.txt"
+    },
+    "reindexRecovery": {
+      "evidence": "Results/LM-055/recovery-tests.txt",
+      "truncationAndChecksumFailClosed": true,
+      "vectorCompactionCrashRecovery": true,
+      "searchIndexParityRebuild": true
+    },
+    "approximateIndexDecision": "not_required_exact_scan_passed_fixed_thresholds"
+  },
+  "verification": {
+    "frozenRetrievalTests": 1,
+    "focusedSafeTests": 20,
+    "recoveryTests": 3,
+    "millionFrameSamples": 20,
+    "contracts": "passed",
+    "privacySmoke": "passed",
+    "releaseCompileOnly": "passed",
+    "dependencyAudit": "passed",
+    "strictFormatting": "passed"
+  },
+  "safety": {
+    "applicationLaunchesExecuted": 0,
+    "appleImageIORuntimeExecuted": false,
+    "hardwareEncoderTestsExecuted": 0,
+    "videoToolboxInvocations": 0,
+    "encoderTripwire": "passed"
+  }
+}
