@@ -614,12 +614,50 @@ enum AppSearchComposition {
             engine: AppSharedSearchEngine(service: engine),
             debounceDuration: .milliseconds(150),
             initialPage: page,
+            thumbnailRepository: makeFixtureThumbnailRepository(),
+            momentDetailRepository: makeFixtureMomentDetailRepository(),
             momentTimelineLoader: makeFixtureTimelineLoader(),
             momentRevisitProvider: MomentRevisitProvider { _ in
                 throw MomentRevisitError.unavailable
             },
             diagnosticsEnabled: diagnosticsEnabled,
             pageRequestBuilder: fixtureRequest
+        )
+    }
+
+    private static func makeFixtureThumbnailRepository() -> SearchThumbnailRepository {
+        SearchThumbnailRepository(
+            capacityBytes: 16 * 1_024 * 1_024,
+            loader: SearchThumbnailLoader { result in
+                let raster = FixtureMemoryRaster.make(
+                    width: 480,
+                    height: 270,
+                    bundleID: result.foreground.bundleID
+                )
+                return try SearchThumbnailRaster(
+                    width: raster.width,
+                    height: raster.height,
+                    rgba8: raster.rgba8
+                )
+            }
+        )
+    }
+
+    private static func makeFixtureMomentDetailRepository() -> MomentDetailRepository {
+        MomentDetailRepository(
+            capacityBytes: 32 * 1_024 * 1_024,
+            loader: MomentDetailLoader { result in
+                let raster = FixtureMemoryRaster.make(
+                    width: 960,
+                    height: 540,
+                    bundleID: result.foreground.bundleID
+                )
+                return try MomentDetailRaster(
+                    width: raster.width,
+                    height: raster.height,
+                    rgba8: raster.rgba8
+                )
+            }
         )
     }
 
@@ -778,13 +816,68 @@ enum AppSearchComposition {
                 origin: BrowserOrigin(scheme: "https", host: host, path: nil),
                 isPrivateContext: false
             ),
-            thumbnailLocator: nil,
-            mediaLocator: .opaqueResourceID("lm039-\(id)"),
+            thumbnailLocator: .opaqueResourceID("lm039-thumbnail-\(id)"),
+            mediaLocator: .archiveRelativePath("Media/fixture-\(id).heic"),
             evidence: [SearchEvidence(source: .title, matchedText: title, score: score)],
             textRank: Int(9 - score),
             visualRank: nil,
             fusedScore: score
         )
+    }
+}
+
+private enum FixtureMemoryRaster {
+    struct Raster {
+        let width: Int
+        let height: Int
+        let rgba8: [UInt8]
+    }
+
+    nonisolated static func make(width: Int, height: Int, bundleID: String) -> Raster {
+        var pixels = [UInt8](repeating: 0, count: width * height * 4)
+        let accent: (UInt8, UInt8, UInt8) =
+            switch bundleID {
+            case "com.apple.Calendar": (245, 92, 92)
+            case "com.apple.Notes": (242, 190, 56)
+            default: (66, 145, 238)
+            }
+
+        func paint(_ x: Int, _ y: Int, _ w: Int, _ h: Int, _ color: (UInt8, UInt8, UInt8)) {
+            let minX = max(0, x)
+            let minY = max(0, y)
+            let maxX = min(width, x + w)
+            let maxY = min(height, y + h)
+            guard minX < maxX, minY < maxY else { return }
+            for row in minY..<maxY {
+                for column in minX..<maxX {
+                    let index = (row * width + column) * 4
+                    pixels[index] = color.0
+                    pixels[index + 1] = color.1
+                    pixels[index + 2] = color.2
+                    pixels[index + 3] = 255
+                }
+            }
+        }
+
+        paint(0, 0, width, height, (244, 246, 249))
+        paint(0, 0, width, max(24, height / 11), (33, 37, 45))
+        paint(0, max(24, height / 11), width / 5, height, (229, 233, 240))
+        paint(width / 5, max(24, height / 11), width, max(28, height / 9), (255, 255, 255))
+        paint(width / 5 + width / 24, height / 4, width * 7 / 10, height / 8, (255, 255, 255))
+        paint(width / 5 + width / 24, height * 5 / 12, width * 3 / 10, height / 3, (255, 255, 255))
+        paint(width * 11 / 20, height * 5 / 12, width * 7 / 20, height / 3, (255, 255, 255))
+        paint(width / 5 + width / 24, height / 4, max(8, width / 80), height / 8, accent)
+        paint(width / 24, height / 5, width / 9, max(8, height / 30), accent)
+        for row in 0..<4 {
+            paint(
+                width / 5 + width / 18,
+                height / 4 + height / 30 + row * height / 45,
+                width * (5 - row) / 18,
+                max(3, height / 120),
+                row == 0 ? (87, 94, 108) : (190, 195, 204)
+            )
+        }
+        return Raster(width: width, height: height, rgba8: pixels)
     }
 }
 
@@ -837,7 +930,7 @@ struct SharedSearchComposer: View {
 
 struct SharedSearchFilterControls: View {
     @ObservedObject var filterModel: SearchFilterSessionModel
-    @State private var filtersExpanded = false
+    @State private var filtersExpanded = true
 
     private var suggestions: [SearchAutocompleteSuggestion] {
         filterModel.autocompleteSuggestions(for: filterModel.queryText)
@@ -990,6 +1083,15 @@ struct SharedSearchFilterControls: View {
                 .accessibilityElement(children: .contain)
                 .accessibilityIdentifier("search.examples")
             }
+        }
+        .padding(MemorySpacing.section)
+        .background(
+            MemoryColorToken.surfaceControl.color,
+            in: RoundedRectangle(cornerRadius: MemoryRadius.groupedCard, style: .continuous)
+        )
+        .overlay {
+            RoundedRectangle(cornerRadius: MemoryRadius.groupedCard, style: .continuous)
+                .stroke(MemoryColorToken.borderDefault.color.opacity(0.65), lineWidth: 0.5)
         }
     }
 

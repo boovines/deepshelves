@@ -1,4 +1,5 @@
 import Foundation
+import MemoryContracts
 import MemoryDesignSystem
 import MemoryStore
 import SwiftUI
@@ -19,11 +20,17 @@ final class ActivityViewModel: ObservableObject {
 
     private let store: ArchiveForegroundActivityStore?
     private let calendar: Calendar
+    private let usesFixtureData: Bool
     private var generation = 0
 
-    init(database: ArchiveDatabase?, calendar: Calendar = .autoupdatingCurrent) {
+    init(
+        database: ArchiveDatabase?,
+        calendar: Calendar = .autoupdatingCurrent,
+        usesFixtureData: Bool = false
+    ) {
         store = database.map(ArchiveForegroundActivityStore.init(database:))
         self.calendar = calendar
+        self.usesFixtureData = usesFixtureData
     }
 
     func reload() {
@@ -37,11 +44,13 @@ final class ActivityViewModel: ObservableObject {
         }
         let store = store
         let calendar = calendar
+        let fixtureRecords =
+            usesFixtureData ? Self.fixtureRecords(in: interval, calendar: calendar) : nil
         isLoading = true
         Task {
             do {
                 let projected = try await Task.detached {
-                    let records = try store?.intervals(in: interval) ?? []
+                    let records = try fixtureRecords ?? store?.intervals(in: interval) ?? []
                     return try (
                         heatmap: ActivityHeatmapProjector.project(
                             records: records,
@@ -67,6 +76,73 @@ final class ActivityViewModel: ObservableObject {
                 isLoading = false
             }
         }
+    }
+
+    nonisolated private static func fixtureRecords(
+        in interval: DateInterval,
+        calendar: Calendar
+    ) -> [DurableForegroundActivityInterval]? {
+        let browser = ApprovedForegroundActivityIdentity(
+            bundleID: "com.apple.Safari",
+            applicationName: "Safari"
+        )
+        let notes = ApprovedForegroundActivityIdentity(
+            bundleID: "com.apple.Notes",
+            applicationName: "Notes"
+        )
+        let calendarApp = ApprovedForegroundActivityIdentity(
+            bundleID: "com.apple.Calendar",
+            applicationName: "Calendar"
+        )
+        var observations = [
+            ForegroundActivityObservation(
+                occurredAt: interval.start,
+                activity: .idle,
+                identity: nil,
+                gapReason: .idle
+            )
+        ]
+        var day = calendar.startOfDay(for: interval.start)
+        while day < interval.end {
+            let schedule:
+                [(
+                    Int, Int, ActivityState, ApprovedForegroundActivityIdentity?,
+                    RecordingGapReason?
+                )] = [
+                    (8, 20, .active, browser, nil),
+                    (9, 35, .idle, browser, .idle),
+                    (10, 5, .active, notes, nil),
+                    (11, 45, .idle, notes, .idle),
+                    (13, 10, .active, calendarApp, nil),
+                    (14, 25, .active, browser, nil),
+                    (16, 40, .idle, browser, .idle),
+                ]
+            for (hour, minute, state, identity, reason) in schedule {
+                guard
+                    let occurredAt = calendar.date(
+                        bySettingHour: hour,
+                        minute: minute,
+                        second: 0,
+                        of: day
+                    ), interval.contains(occurredAt)
+                else { continue }
+                observations.append(
+                    ForegroundActivityObservation(
+                        occurredAt: occurredAt,
+                        activity: state,
+                        identity: identity,
+                        gapReason: reason
+                    )
+                )
+            }
+            guard let next = calendar.date(byAdding: .day, value: 1, to: day) else { break }
+            day = next
+        }
+        observations.sort { $0.occurredAt < $1.occurredAt }
+        return try? ForegroundActivityDeriver.derive(
+            observations: observations,
+            through: interval.end
+        )
     }
 
     var selectedInterval: DateInterval? {
@@ -105,7 +181,9 @@ struct ActivityShellView: View {
                     summaryPanel(summary)
                 }
                 heatmap(projection)
-                accessibilityTable(projection)
+                    .accessibilityRepresentation {
+                        accessibilityRows(projection)
+                    }
             } else {
                 ContentUnavailableView(
                     "No activity yet",
@@ -229,24 +307,14 @@ struct ActivityShellView: View {
         .accessibilityIdentifier("activity.heatmap")
     }
 
-    private func accessibilityTable(_ projection: ActivityHeatmapProjection) -> some View {
-        GroupBox("Activity accessibility table") {
-            ScrollView {
-                LazyVStack(alignment: .leading, spacing: 4) {
-                    ForEach(projection.days.flatMap(\.tableRows)) { row in
-                        HStack {
-                            Text(row.dayLabel).frame(width: 110, alignment: .leading)
-                            Text(row.hourLabel).frame(width: 90, alignment: .leading)
-                            Text("\(Int(row.recordedDuration / 60)) min recorded")
-                            Text("\(Int(row.unrecordedDuration / 60)) min unrecorded")
-                        }
-                        .font(.caption.monospacedDigit())
-                        .accessibilityElement(children: .ignore)
-                        .accessibilityLabel(row.accessibilityLabel)
-                    }
-                }
+    private func accessibilityRows(_ projection: ActivityHeatmapProjection) -> some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text("Activity accessibility table")
+            ForEach(projection.days) { day in
+                let label = day.tableRows.map(\.accessibilityLabel).joined(separator: "; ")
+                Text(label)
+                    .accessibilityLabel(label)
             }
-            .frame(maxHeight: 150)
         }
         .accessibilityIdentifier("activity.accessibilityTable")
     }

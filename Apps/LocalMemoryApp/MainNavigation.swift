@@ -575,15 +575,17 @@ private struct MomentSectionCanvas: View {
     @FocusState private var focusedMomentID: UUID?
 
     var body: some View {
-        VStack(alignment: .leading) {
-            HStack {
-                Label(localizationMode.localized(title), systemImage: symbol)
-                    .font(.title2)
-                    .accessibilityIdentifier("main.sectionTitle")
-                Spacer()
-                Text(subtitle)
-                    .font(.callout)
-                    .foregroundStyle(.secondary)
+        VStack(alignment: .leading, spacing: MemorySpacing.section) {
+            if title != "Search" {
+                HStack {
+                    Label(localizationMode.localized(title), systemImage: symbol)
+                        .font(.title2)
+                        .accessibilityIdentifier("main.sectionTitle")
+                    Spacer()
+                    Text(subtitle)
+                        .font(.callout)
+                        .foregroundStyle(.secondary)
+                }
             }
 
             if title == "Search" {
@@ -690,7 +692,8 @@ private struct MomentSectionCanvas: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
-        .padding()
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .padding(MemorySpacing.xLarge)
         .onReceive(NotificationCenter.default.publisher(for: .shellFocusSearch)) { _ in
             if title == "Search" {
                 focusedMomentID = nil
@@ -840,11 +843,6 @@ struct LocalMemorySettingsView: View {
     var body: some View {
         HStack(spacing: 0) {
             VStack(alignment: .leading, spacing: MemorySpacing.large) {
-                Text("Local Memory")
-                    .font(.title2.weight(.semibold))
-                    .padding(.horizontal, MemorySpacing.xLarge)
-                    .padding(.top, MemorySpacing.xLarge)
-
                 VStack(spacing: MemorySpacing.xSmall) {
                     ForEach(LocalMemorySettingsSection.allCases, id: \.self) { section in
                         Button {
@@ -874,6 +872,7 @@ struct LocalMemorySettingsView: View {
                     }
                 }
                 .padding(.horizontal, MemorySpacing.large)
+                .padding(.top, MemorySpacing.xLarge)
                 Spacer()
             }
             .frame(width: 260)
@@ -883,17 +882,19 @@ struct LocalMemorySettingsView: View {
 
             VStack(alignment: .leading, spacing: 0) {
                 VStack(alignment: .leading, spacing: MemorySpacing.xSmall) {
+                    Text("Settings")
+                        .font(.title2.weight(.semibold))
                     Text(selection.title)
-                        .font(.largeTitle.weight(.semibold))
-                    Text(selection.subtitle)
                         .font(.callout)
                         .foregroundStyle(.secondary)
                 }
                 .padding(.horizontal, MemorySpacing.sectionLarge)
-                .padding(.top, MemorySpacing.sectionLarge)
-                .padding(.bottom, MemorySpacing.large)
+                .padding(.top, MemorySpacing.large)
+                .padding(.bottom, MemorySpacing.medium)
                 .accessibilityElement(children: .combine)
                 .accessibilityIdentifier("settings.title")
+
+                Divider()
 
                 settingsContent
             }
@@ -950,7 +951,7 @@ private struct GeneralSettingsPane: View {
     @ObservedObject var searchPanelCoordinator: GlobalSearchPanelCoordinator
 
     var body: some View {
-        VStack(alignment: .leading, spacing: MemorySpacing.sectionLarge) {
+        VStack(alignment: .leading, spacing: MemorySpacing.section) {
             SettingsGroupedCard {
                 VStack(spacing: MemorySpacing.large) {
                     HStack {
@@ -1031,80 +1032,129 @@ private struct ArchiveSecuritySettingsPane: View {
     @ObservedObject var diagnosticsModel: LocalDiagnosticsViewModel
 
     var body: some View {
-        Form {
-            Section("Current usage") {
-                LabeledContent("Archive", value: archiveUsage)
-                    .accessibilityIdentifier("storage.currentUsage")
-                Button("Refresh Usage") { diagnosticsModel.refresh() }
-                    .disabled(diagnosticsModel.isLoading)
-                    .accessibilityIdentifier("storage.refreshUsage")
-                if diagnosticsModel.isLoading {
-                    ProgressView("Measuring local storage…")
+        ScrollView {
+            VStack(alignment: .leading, spacing: MemorySpacing.section) {
+                SettingsGroupedCard {
+                    HStack(alignment: .firstTextBaseline, spacing: MemorySpacing.medium) {
+                        Text(archiveUsage)
+                            .font(.largeTitle.weight(.semibold))
+                            .monospacedDigit()
+                            .accessibilityIdentifier("storage.currentUsage")
+                        Text("stored locally")
+                            .font(.title3)
+                            .foregroundStyle(.secondary)
+                        Spacer()
+                        if diagnosticsModel.isLoading {
+                            ProgressView()
+                                .controlSize(.small)
+                                .accessibilityLabel("Measuring local storage")
+                        } else {
+                            Button("Refresh", systemImage: "arrow.clockwise") {
+                                diagnosticsModel.refresh()
+                            }
+                            .labelStyle(.iconOnly)
+                            .buttonStyle(.borderless)
+                            .help("Refresh archive usage")
+                            .accessibilityIdentifier("storage.refreshUsage")
+                        }
+                    }
                 }
-            }
-            Section("Archive") {
-                LabeledContent("Default retention", value: "30 days")
-                LabeledContent("Default cap", value: "20 GB")
-                LabeledContent("Location", value: "Stored locally")
-                LabeledContent("Database text", value: encryptionStatus)
-                    .accessibilityIdentifier("storage.encryptionStatus")
-                Text(
-                    "Searchable text, settings, and audit rows are SQLCipher-encrypted. Visual media relies on owner-only permissions and FileVault when enabled."
-                )
-                .font(.caption)
-                .foregroundStyle(.secondary)
-            }
-            Section("Lifecycle policy") {
-                LabeledContent("Retention", value: "30 days")
-                LabeledContent("Storage cap", value: "20 GB")
-                Text(
-                    "The oldest ready visual chunks are deleted first. Active staging is protected, and low disk space stops capture before cleanup."
-                )
-                .font(.caption)
-                .foregroundStyle(.secondary)
-            }
 
-            if model.state == .unrecoverableKey {
-                Section("Archive key unavailable") {
-                    Label(
-                        "The existing encrypted database cannot be opened because its Keychain key is missing or no longer unlocks it. Local Memory will not replace the key or overwrite the archive automatically.",
-                        systemImage: "key.slash"
-                    )
-                    .foregroundStyle(.orange)
-                    .accessibilityIdentifier("storage.unrecoverableKey")
-                    Text(
-                        "Reset permanently deletes the database, media, thumbnails, vectors, exports, and local logs. This cannot be undone."
-                    )
-                    Text("Type \(ArchiveResetCoordinator.requiredConfirmation) to continue.")
+                SettingsGroupedCard {
+                    VStack(alignment: .leading, spacing: MemorySpacing.large) {
+                        SettingsRowHeader(
+                            systemImage: "externaldrive",
+                            title: "Storage policy",
+                            detail: "Validated limits keep the local archive bounded."
+                        )
+                        Divider()
+                        storageValueRow("Retention", value: "30 days")
+                        Divider()
+                        storageValueRow("Storage cap", value: "20 GB")
+                        Divider()
+                        storageValueRow("Cleanup", value: "Oldest ready moments first")
+                        Text(
+                            "Active staging is protected, and low disk space stops capture before cleanup."
+                        )
                         .font(.caption)
                         .foregroundStyle(.secondary)
-                    TextField(
-                        ArchiveResetCoordinator.requiredConfirmation,
-                        text: $model.typedResetConfirmation
-                    )
-                    .textFieldStyle(.roundedBorder)
-                    .accessibilityIdentifier("storage.resetConfirmation")
-                    Button("Delete Archive and Create a New Key", role: .destructive) {
-                        model.resetUnrecoverableArchive()
                     }
-                    .disabled(!model.canReset)
-                    .accessibilityIdentifier("storage.resetArchive")
                 }
-            } else if case .unavailable(let errorCode) = model.state {
-                Section("Archive unavailable") {
-                    Label(
-                        "The local archive could not be opened",
-                        systemImage: "exclamationmark.triangle"
-                    )
-                    Text("No history is being stored. Error code: \(errorCode).")
+
+                SettingsGroupedCard {
+                    VStack(alignment: .leading, spacing: MemorySpacing.large) {
+                        SettingsRowHeader(
+                            systemImage: "lock.shield",
+                            title: "Archive protection",
+                            detail:
+                                "Local protections are reported without overstating visual-media encryption."
+                        )
+                        Divider()
+                        storageValueRow("Searchable database", value: encryptionStatus)
+                            .accessibilityIdentifier("storage.encryptionStatus")
+                        Text(
+                            "Searchable text, settings, and audit rows are SQLCipher-encrypted. Visual media relies on owner-only permissions and FileVault when enabled."
+                        )
+                        .font(.caption)
                         .foregroundStyle(.secondary)
+                    }
+                }
+
+                if model.state == .unrecoverableKey {
+                    SettingsGroupedCard {
+                        VStack(alignment: .leading, spacing: MemorySpacing.medium) {
+                            Label(
+                                "The existing encrypted database cannot be opened because its Keychain key is missing or no longer unlocks it. Local Memory will not replace the key or overwrite the archive automatically.",
+                                systemImage: "key.slash"
+                            )
+                            .foregroundStyle(.orange)
+                            .accessibilityIdentifier("storage.unrecoverableKey")
+                            Text(
+                                "Reset permanently deletes the database, media, thumbnails, vectors, exports, and local logs. This cannot be undone."
+                            )
+                            Text(
+                                "Type \(ArchiveResetCoordinator.requiredConfirmation) to continue."
+                            )
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                            TextField(
+                                ArchiveResetCoordinator.requiredConfirmation,
+                                text: $model.typedResetConfirmation
+                            )
+                            .textFieldStyle(.roundedBorder)
+                            .accessibilityIdentifier("storage.resetConfirmation")
+                            Button("Delete Archive and Create a New Key", role: .destructive) {
+                                model.resetUnrecoverableArchive()
+                            }
+                            .disabled(!model.canReset)
+                            .accessibilityIdentifier("storage.resetArchive")
+                        }
+                    }
+                } else if case .unavailable(let errorCode) = model.state {
+                    SettingsGroupedCard {
+                        SettingsRowHeader(
+                            systemImage: "exclamationmark.triangle",
+                            title: "Archive unavailable",
+                            detail: "No history is being stored. Error code: \(errorCode)."
+                        )
+                    }
                 }
             }
+            .padding(.horizontal, MemorySpacing.sectionLarge)
+            .padding(.bottom, MemorySpacing.sectionLarge)
         }
-        .formStyle(.grouped)
-        .scrollContentBackground(.hidden)
         .background(MemoryColorToken.surfaceWindow.color)
         .task { diagnosticsModel.refresh() }
+    }
+
+    private func storageValueRow(_ title: String, value: String) -> some View {
+        HStack {
+            Text(title).font(.headline)
+            Spacer()
+            Text(value)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.trailing)
+        }
     }
 
     private var archiveUsage: String {

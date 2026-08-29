@@ -67,7 +67,10 @@ struct LocalMemoryApp: App {
             wrappedValue: AgentAccessSettingsViewModel(database: archiveSecurityModel.database)
         )
         _activityModel = StateObject(
-            wrappedValue: ActivityViewModel(database: archiveSecurityModel.database)
+            wrappedValue: ActivityViewModel(
+                database: archiveSecurityModel.database,
+                usesFixtureData: configuration.isFixtureOnly
+            )
         )
         let diagnosticsModel = LocalDiagnosticsViewModel(database: archiveSecurityModel.database)
         _diagnosticsModel = StateObject(wrappedValue: diagnosticsModel)

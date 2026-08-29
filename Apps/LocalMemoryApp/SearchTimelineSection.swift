@@ -39,9 +39,7 @@ struct SearchTimelineSectionView: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            header
-            controls
+        VStack(alignment: .leading, spacing: 0) {
             content
             if let revisitStatus {
                 Text(revisitStatus)
@@ -50,7 +48,7 @@ struct SearchTimelineSectionView: View {
                     .accessibilityIdentifier("timeline.revisitStatus")
             }
         }
-        .padding()
+        .padding(MemorySpacing.medium)
         .task(id: navigationModel.isRestored) {
             guard navigationModel.isRestored else { return }
             if let interval = navigationModel.takeTimelineDrillThroughInterval() {

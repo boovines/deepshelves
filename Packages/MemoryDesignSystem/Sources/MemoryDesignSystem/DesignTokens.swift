@@ -95,9 +95,24 @@ public struct MemoryColorToken: Codable, Equatable, Hashable, Sendable {
 
     public var nsColor: NSColor {
         switch self {
-        case .surfaceWindow: .windowBackgroundColor
-        case .surfaceSidebar: .underPageBackgroundColor
-        case .surfaceControl: .controlBackgroundColor
+        case .surfaceWindow:
+            Self.adaptiveSurface(
+                name: "MemorySurfaceWindow",
+                light: NSColor(calibratedWhite: 0.985, alpha: 1),
+                dark: NSColor(calibratedWhite: 0.075, alpha: 1)
+            )
+        case .surfaceSidebar:
+            Self.adaptiveSurface(
+                name: "MemorySurfaceSidebar",
+                light: NSColor(calibratedRed: 0.965, green: 0.967, blue: 0.972, alpha: 1),
+                dark: NSColor(calibratedWhite: 0.105, alpha: 1)
+            )
+        case .surfaceControl:
+            Self.adaptiveSurface(
+                name: "MemorySurfaceControl",
+                light: .white,
+                dark: NSColor(calibratedWhite: 0.135, alpha: 1)
+            )
         case .surfaceSelected: .selectedContentBackgroundColor
         case .textPrimary: .labelColor
         case .textSecondary: .secondaryLabelColor
@@ -108,6 +123,16 @@ public struct MemoryColorToken: Codable, Equatable, Hashable, Sendable {
         case .statusPaused: .systemOrange
         case .statusSuccess: .systemGreen
         default: .labelColor
+        }
+    }
+
+    private static func adaptiveSurface(
+        name: String,
+        light: NSColor,
+        dark: NSColor
+    ) -> NSColor {
+        NSColor(name: NSColor.Name(name)) { appearance in
+            appearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua ? dark : light
         }
     }
 

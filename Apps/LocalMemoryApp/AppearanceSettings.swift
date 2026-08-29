@@ -138,7 +138,7 @@ struct SettingsGroupedCard<Content: View>: View {
 
     var body: some View {
         content
-            .padding(MemorySpacing.xLarge)
+            .padding(MemorySpacing.section)
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(
                 MemoryColorToken.surfaceControl.color,
@@ -160,7 +160,7 @@ struct SettingsRowHeader: View {
         HStack(alignment: .top, spacing: MemorySpacing.medium) {
             Image(systemName: systemImage)
                 .font(.title3)
-                .foregroundStyle(MemoryColorToken.accent.color)
+                .foregroundStyle(MemoryColorToken.textSecondary.color)
                 .frame(width: 36, height: 36)
                 .background(
                     MemoryColorToken.surfaceSidebar.color,
