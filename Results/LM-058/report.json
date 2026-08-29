@@ -1,0 +1,57 @@
+{
+  "story": "LM-058",
+  "status": "passed",
+  "proofClass": "focused-unit-static-native-compile",
+  "runtimeSubstitute": false,
+  "implementation": {
+    "maximumAgeSeconds": 2592000,
+    "defaultMaximumArchiveBytes": 20000000000,
+    "defaultMinimumAvailableCapacityBytes": 1000000000,
+    "eligibleMediaState": "ready",
+    "ordering": ["started_at", "id"],
+    "byteAccounting": "media_chunks.byte_count from the verified manifest plus independent frame assets",
+    "stagingEligible": false,
+    "deletionFlow": [
+      "write rewriting tombstone and remove FTS visibility",
+      "suppress frame and merged-text projections",
+      "move the complete chunk directory beneath owner-only quarantine",
+      "delete jobs and the media chunk with foreign-key cascades",
+      "remove thumbnails and quarantined source bytes",
+      "store a 32-byte verification proof and content-free audit"
+    ]
+  },
+  "focusedTests": {
+    "command": "swift test --filter ArchiveRetentionWorkerTests",
+    "tests": 5,
+    "failures": 0,
+    "elapsedSeconds": 1.099,
+    "cases": [
+      "exact 30-day half-open expiration boundary and derivative cascade",
+      "20-GB-style cap deletes oldest ready chunks and protects staging",
+      "low-disk cleanup continues until injected capacity recovers",
+      "low-disk with staging-only media stops capture without deleting active work",
+      "missing ready media fails closed with no raw FTS visibility"
+    ]
+  },
+  "verification": {
+    "strictChangedFileFormatting": "passed",
+    "targetedPrivacySafetyStaticCheck": "passed",
+    "nativeArm64ReleaseCompile": "passed",
+    "encoderServiceTripwire": "clean",
+    "applicationRuntimeExecuted": false,
+    "screenCaptureKitRuntimeExecuted": false,
+    "imageIORuntimeExecuted": false,
+    "videoToolboxRuntimeExecuted": false,
+    "mediaDecodeOrEncodeExecuted": false
+  },
+  "sourceSHA256": {
+    "ArchiveRetentionWorker.swift": "1178fc5e970df51098f105121626c24080677d58372cc4cee1f8031da4cdf697",
+    "ArchiveSearchIndexStore.swift": "1441cb4270fb344064d35c90e18da42e88b0a2e77d3fbc22d1280a5271655abf",
+    "ArchiveRetentionWorkerTests.swift": "2a307cb3be33b4d157ecfa2755f725ca6d40f0539bc1b5b2af2ec562359294e2"
+  },
+  "diagnosticHistory": [
+    "The initial red build established the missing retention API.",
+    "The first green attempt exposed FTS query token syntax in the fixture; the fixture was corrected without changing production behavior.",
+    "The missing-media case then exposed retained raw FTS visibility; production deletion was moved to the initial fail-closed tombstone transaction and the final focused suite passed."
+  ]
+}

@@ -1135,12 +1135,15 @@
       "resumeProbe": null
     },
     "LM-058": {
-      "status": "pending",
-      "startedAt": null,
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": null,
+      "status": "passed",
+      "startedAt": "2026-08-29T02:33:00Z",
+      "completedAt": "2026-08-29T02:40:57Z",
+      "gitRevision": "refs/tags/checkpoints/LM-058",
+      "evidence": [
+        "Results/LM-058/report.json",
+        "Decisions/0007-faster-personal-alpha-verification.md"
+      ],
+      "notes": "The exact 30-day/20-GB worker counts verified manifest-plus-frame bytes, selects only ready chunks in oldest started_at/id order, protects staging, deletes until capacity recovers, and exposes a capture-stop projection if low disk persists. Five encrypted synthetic-file/fake-clock tests prove exact age boundary, cap order, low-disk progress, full derived row/thumbnail/FTS cascade, verified tombstone/audit, and missing-media fail-closed behavior. Strict changed-file formatting, targeted static safety, and a cached native arm64 Release compile passed under a clean 50 ms encoder-service tripwire; no application or media runtime executed.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null

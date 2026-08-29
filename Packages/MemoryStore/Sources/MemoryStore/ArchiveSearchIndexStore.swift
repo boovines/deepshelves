@@ -221,6 +221,14 @@ public final class ArchiveSearchIndexStore: @unchecked Sendable {
         }
     }
 
+    static func deleteFTSRows(frameIDs: [String], database: Database) throws {
+        for frameID in frameIDs {
+            if let record = try recordRow(frameID: frameID, database: database) {
+                try deleteFTSRow(record, database: database)
+            }
+        }
+    }
+
     @discardableResult
     public func rebuild() throws -> ArchiveSearchIndexIntegrity {
         try archive.atomicWrite { database in
