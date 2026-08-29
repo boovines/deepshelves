@@ -1,0 +1,64 @@
+{
+  "story": "LM-060",
+  "status": "blocked",
+  "implementationReadiness": "ready",
+  "deferredValidationGate": "H9",
+  "proofClass": "unit-static-compile",
+  "runtimeSubstitute": false,
+  "implementation": {
+    "retainedFrameHandling": "byte-for-byte copy of already encoded independent frame assets; no decode or re-encode",
+    "durableStates": ["rewriting", "committed", "verified"],
+    "crashBoundaries": [
+      "after durable plan",
+      "after replacement publication",
+      "during database transaction",
+      "after database commit",
+      "after vector compaction",
+      "after old-directory disposal"
+    ],
+    "explicitFTSDeletion": "initial deletion-request transaction",
+    "derivedCleanup": [
+      "text spans",
+      "merged text",
+      "FTS and frame_fts_docsize",
+      "thumbnail rows and files",
+      "vector offsets and physical vector compaction",
+      "processing jobs",
+      "old source directories"
+    ],
+    "startupRecovery": "one bounded pending-journal recovery pass during deletion composition"
+  },
+  "focusedTests": {
+    "command": "swift test --filter ArchiveDeletion",
+    "tests": 8,
+    "failures": 0,
+    "elapsedSeconds": 2.523,
+    "rewriteCases": 4,
+    "crashScenariosWithinCases": 6,
+    "syntheticFrameBytesOnly": true
+  },
+  "verification": {
+    "strictChangedFileFormatting": "passed",
+    "targetedPrivacySafetyStaticCheck": "passed",
+    "memoryEnrichmentNativeArm64ReleaseCompile": "passed",
+    "localMemoryAppNativeArm64ReleaseCompileOnly": "passed",
+    "encoderServiceTripwire": "clean",
+    "applicationRuntimeExecuted": false,
+    "screenCaptureKitRuntimeExecuted": false,
+    "imageIORuntimeExecuted": false,
+    "videoToolboxRuntimeExecuted": false,
+    "mediaDecodeOrEncodeExecuted": false
+  },
+  "sourceSHA256": {
+    "ArchiveDeletionRewriteWorker.swift": "7a287cac5d889cbec8b42a35fd7d79d1ad1f1029f3116c17489cfb2bb40ebcb5",
+    "ArchiveDeletionRequestStore.swift": "ac943e6733460495081558ce875c6c59d7293a5ed2a232e7a0f244496c6e69bb",
+    "ArchiveDeletionRewriteWorkerTests.swift": "fb1bc31dd65a086ca057da1c180d31f4975a96982aceb8453030475076ed2e20",
+    "ArchiveDeletionVectorCompactor.swift": "9410fc943d0300d6b345686fbbb9b80d721afd36fb0cd99b2b846cda75b00c8a",
+    "SearchPresentation.swift": "e6a7c1391a4bb32090892287f2253eef330b9f6b5ed5345364b6f75c750ccc3d"
+  },
+  "deferredRuntimeEvidence": [
+    "decode every retained source asset through the pinned production software HEIC decoder",
+    "run live Moment and Range deletion from the application and observe progress/recovery",
+    "prove helper/search/timeline disappearance and replacement detail rendering after relaunch"
+  ]
+}

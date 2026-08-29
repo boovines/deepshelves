@@ -17,7 +17,8 @@
         "LM-045",
         "LM-046",
         "LM-047",
-        "LM-048"
+        "LM-048",
+        "LM-060"
       ],
       "evidence": []
     }
@@ -1165,13 +1166,21 @@
       "resumeProbe": null
     },
     "LM-060": {
-      "status": "pending",
-      "startedAt": null,
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": null,
-      "blockedReason": null,
+      "status": "blocked",
+      "implementationReadiness": "ready",
+      "deferredValidationGate": "H9",
+      "startedAt": "2026-08-29T02:42:00Z",
+      "completedAt": "2026-08-29T02:54:33Z",
+      "gitRevision": "refs/tags/checkpoints/LM-060-blocked",
+      "evidence": [
+        "Results/LM-060/report.json",
+        "Results/LM-060/runtime-deferred.md",
+        "Results/LM-051/report.json",
+        "Decisions/0006-isolated-runtime-validation.md",
+        "Decisions/0007-faster-personal-alpha-verification.md"
+      ],
+      "notes": "Retained independent assets are copied byte-for-byte, hash/inventory verified, republished under a canonical rebased manifest, and transactionally swapped before old-directory disposal. The initial request now crosses the LM-035 explicit FTS deletion boundary immediately. Derived rows/files, FTS docsize, thumbnails, jobs, and vector offsets cascade; production composition invokes the LM-051 physical vector compactor. Four rewrite tests plus four request tests pass, including Moment, Range, corrupt-source fail-closed behavior, and recovery from six durable crash boundaries. Strict formatting, static safety, MemoryEnrichment arm64 Release compile, and LocalMemoryApp arm64 Release compile-only verification passed under a clean encoder tripwire.",
+      "blockedReason": "The acceptance criterion requires retained assets to remain decodable through the pinned production software HEIC path and the real application Moment/Range/relaunch journey. Media decode and application runtime are prohibited on this laptop. H9 owns those unchanged checks; arbitrary-byte integrity tests and compile evidence are not represented as runtime proof.",
       "requestedHumanGate": null,
       "resumeProbe": null
     },

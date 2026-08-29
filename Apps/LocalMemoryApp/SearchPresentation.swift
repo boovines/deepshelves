@@ -414,7 +414,19 @@ enum AppSearchComposition {
     private static func makeMomentForgetProvider(
         database: ArchiveDatabase
     ) -> MomentForgetProvider {
-        MomentForgetProvider { target in
+        let worker = try? ArchiveDeletionRewriteWorker(
+            database: database,
+            vectorCompactor: ArchiveDeletionVectorCompactionComposition.make(database: database)
+        )
+        if let worker {
+            Task.detached(priority: .utility) {
+                _ = try? worker.recoverPending()
+            }
+        }
+        return MomentForgetProvider { target in
+            guard let worker else {
+                throw AppSearchCompositionError.archiveUnavailable
+            }
             let archiveTarget: ArchiveDeletionTarget
             switch target {
             case .moment(let frameID):
@@ -432,13 +444,28 @@ enum AppSearchComposition {
                     auditEventID: UUID()
                 )
             )
+            do {
+                _ = try await Task.detached(priority: .utility) {
+                    try worker.process(tombstoneID: operation.tombstone.id)
+                }.value
+            } catch {
+                return ForgetOperation(
+                    id: operation.tombstone.id,
+                    affectedFrameIDs: operation.tombstone.requestedFrameIDs,
+                    state: .failed,
+                    completedRewriteCount: 0,
+                    totalRewriteCount: operation.totalRewriteCount,
+                    failureCode: "rewrite_pending_recovery"
+                )
+            }
+            let current = try store.operation(id: operation.tombstone.id) ?? operation
             return ForgetOperation(
-                id: operation.tombstone.id,
-                affectedFrameIDs: operation.tombstone.requestedFrameIDs,
-                state: forgetState(operation.state),
-                completedRewriteCount: operation.completedRewriteCount,
-                totalRewriteCount: operation.totalRewriteCount,
-                failureCode: operation.failureCode
+                id: current.tombstone.id,
+                affectedFrameIDs: current.tombstone.requestedFrameIDs,
+                state: forgetState(current.state),
+                completedRewriteCount: current.completedRewriteCount,
+                totalRewriteCount: current.totalRewriteCount,
+                failureCode: current.failureCode
             )
         }
     }

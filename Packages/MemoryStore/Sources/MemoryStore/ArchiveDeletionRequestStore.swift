@@ -141,6 +141,10 @@ public final class ArchiveDeletionRequestStore: @unchecked Sendable {
             )
             let placeholders = Self.placeholders(frameIDs.count)
             let identifiers = frameIDs.map(\.encoded)
+            try ArchiveSearchIndexStore.deleteFTSRows(
+                frameIDs: identifiers,
+                database: database
+            )
             try database.execute(
                 sql: """
                     UPDATE frames
