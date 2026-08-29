@@ -116,16 +116,20 @@ public struct MemoryComposer: View {
 
     public var body: some View {
         MemoryTokenReader { environment in
-            VStack(alignment: .leading, spacing: MemorySpacing.large) {
+            HStack(spacing: MemorySpacing.medium) {
                 Picker("Composer route", selection: $route) {
                     ForEach(MemoryComposerRoute.allCases, id: \.self) { route in
                         Label(route.title, systemImage: route.systemImage)
                             .tag(route)
                     }
                 }
-                .pickerStyle(.segmented)
+                .pickerStyle(.menu)
                 .labelsHidden()
+                .fixedSize()
                 .accessibilityIdentifier("memoryComposer.route")
+
+                Divider()
+                    .frame(height: 36)
 
                 switch route {
                 case .searchMemory:
@@ -154,10 +158,10 @@ public struct MemoryComposer: View {
                         .accessibilityLabel("Search Memory")
                         .accessibilityIdentifier("memoryComposer.search")
                     }
-                    .frame(minHeight: 48)
+                    .frame(minHeight: 52)
 
                 case .askAgent:
-                    HStack(alignment: .top, spacing: MemorySpacing.medium) {
+                    HStack(alignment: .center, spacing: MemorySpacing.medium) {
                         Image(systemName: model.agent.systemImage)
                             .font(.title2)
                             .foregroundStyle(MemoryColorToken.accent.color)
@@ -169,7 +173,7 @@ public struct MemoryComposer: View {
                             Text(model.agent.message)
                                 .font(MemoryTypeToken.callout.font)
                                 .foregroundStyle(MemoryColorToken.textSecondary.color)
-                                .fixedSize(horizontal: false, vertical: true)
+                                .lineLimit(2)
                         }
                         Spacer(minLength: MemorySpacing.large)
                         if let actionTitle = model.agent.actionTitle {
@@ -180,7 +184,8 @@ public struct MemoryComposer: View {
                     .accessibilityElement(children: .contain)
                 }
             }
-            .padding(MemorySpacing.xLarge)
+            .padding(.horizontal, MemorySpacing.section)
+            .padding(.vertical, MemorySpacing.large)
             .background(
                 MemoryColorToken.surfaceControl.color,
                 in: RoundedRectangle(cornerRadius: MemoryRadius.groupedCard)
