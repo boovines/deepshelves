@@ -48,6 +48,10 @@ final class MomentTimelineModelTests: XCTestCase {
         )
 
         XCTAssertEqual(projection.moments.map(\.normalizedPosition), [1.0 / 6.0, 5.0 / 6.0])
+        XCTAssertEqual(projection.applicationSegments.count, 1)
+        XCTAssertEqual(projection.applicationSegments[0].applicationName, "Safari")
+        XCTAssertEqual(projection.applicationSegments[0].normalizedStart, 0)
+        XCTAssertEqual(projection.applicationSegments[0].normalizedEnd, 1)
         XCTAssertEqual(projection.gaps.map(\.pattern), [.privacy, .userControl])
         XCTAssertEqual(projection.gaps.map(\.normalizedStart), [1.0 / 3.0, 2.0 / 3.0])
         XCTAssertEqual(projection.gaps.map(\.normalizedEnd), [0.5, 0.75])
@@ -63,6 +67,52 @@ final class MomentTimelineModelTests: XCTestCase {
             projection.accessibilityItems.compactMap(\.frameID),
             [first.frameID, second.frameID]
         )
+    }
+
+    func testApplicationSegmentsMergeConsecutiveAppsAndZoomControlsHaveRealBounds() throws {
+        let interval = DateInterval(
+            start: Date(timeIntervalSince1970: 1_800_005_000),
+            duration: 100
+        )
+        let safari1 = try result(suffix: 21, capturedAt: interval.start.addingTimeInterval(10))
+        let safari2 = try result(suffix: 22, capturedAt: interval.start.addingTimeInterval(40))
+        let notes = try SearchResult(
+            frameID: UUID(uuidString: "45000000-0000-4000-8000-000000000023")!,
+            capturedAt: interval.start.addingTimeInterval(90),
+            foreground: ForegroundContext(
+                bundleID: "com.apple.Notes",
+                applicationName: "Notes",
+                processID: nil,
+                windowTitle: "Note",
+                windowBounds: NormalizedRect(x: 0, y: 0, width: 1, height: 1)
+            ),
+            browser: nil,
+            thumbnailLocator: .archiveRelativePath("thumbnails/notes.heic"),
+            mediaLocator: .archiveRelativePath("media/notes.heic"),
+            evidence: [SearchEvidence(source: .application, matchedText: "Notes", score: 0)],
+            textRank: nil,
+            visualRank: nil,
+            fusedScore: 0
+        )
+        let projection = try MomentTimelineProjection(
+            source: try sourcePage(interval: interval, results: [safari1, safari2, notes])
+        )
+
+        XCTAssertEqual(projection.applicationSegments.map(\.applicationName), ["Safari", "Notes"])
+        XCTAssertEqual(projection.applicationSegments[0].normalizedStart, 0)
+        XCTAssertEqual(projection.applicationSegments[0].normalizedEnd, 0.65)
+        XCTAssertEqual(projection.applicationSegments[1].normalizedStart, 0.65)
+        XCTAssertEqual(projection.applicationSegments[1].normalizedEnd, 1)
+        XCTAssertNil(MomentTimelineZoomLevel.calendarDay.adjacent(towardDetail: false))
+        XCTAssertEqual(
+            MomentTimelineZoomLevel.calendarDay.adjacent(towardDetail: true),
+            .sixHours
+        )
+        XCTAssertEqual(
+            MomentTimelineZoomLevel.oneHour.adjacent(towardDetail: true),
+            .fifteenMinutes
+        )
+        XCTAssertNil(MomentTimelineZoomLevel.fifteenMinutes.adjacent(towardDetail: true))
     }
 
     func testPointerAndKeyboardSelectionUseStableNearestMomentAndStopAtBoundaries() throws {

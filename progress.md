@@ -746,3 +746,15 @@ This file is append-only. Each story records measurements, failures, and durable
 - Seven focused detail tests, strict formatting, targeted quarantine inspection, and cached
   arm64 compile pass. No application, decoder, ImageIO, XCUITest, capture, VideoToolbox,
   AVAssetWriter, or hardware-media runtime ran; all installed/media behavior remains H9.
+
+## 2026-08-29 — LM-045 spatial application timeline rail
+
+- The persistent bottom rail now merges consecutive foreground-application intervals, gives
+  them restrained deterministic colors, places recognizable SF-symbol fallbacks on moments,
+  overlays typed patterned gaps, and makes the playhead visually explicit.
+- Zoom minus/plus controls are real: they traverse Day, 6 hours, 1 hour, and 15 minutes,
+  disable at their bounds, and reload around the exact settled frame. The transparent Slider
+  remains the pointer/keyboard interaction layer rather than a decorative duplicate.
+- Seven focused timeline tests pass for interval geometry, gap privacy, nearest selection,
+  immediate preview, stale completion rejection, dwell promotion, source revalidation, and
+  zoom. Formatting, quarantine scan, and cached arm64 compile pass; no prohibited runtime ran.

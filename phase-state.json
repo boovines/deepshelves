@@ -927,10 +927,10 @@
       "resumeProbe": null
     },
     "LM-045": {
-      "status": "pending",
-      "startedAt": null,
-      "completedAt": null,
-      "gitRevision": null,
+      "status": "blocked",
+      "startedAt": "2026-08-29T11:21:00Z",
+      "completedAt": "2026-08-29T11:21:39Z",
+      "gitRevision": "refs/tags/checkpoints/LM-045-visual-redesign-blocked",
       "previousImplementationCheckpoint": "refs/tags/checkpoints/LM-045-blocked",
       "evidence": [
         "Results/LM-045/report.json",
@@ -943,10 +943,14 @@
         "Results/LM-045/swift-format.txt",
         "Results/LM-045/privacy.txt",
         "Results/LM-045/dependencies.txt",
-        "Decisions/0006-isolated-runtime-validation.md"
+        "Results/LM-045/redesign-report.json",
+        "Results/LM-045/redesign-rail-snapshot.json",
+        "Results/LM-045/redesign-verification.txt",
+        "Decisions/0006-isolated-runtime-validation.md",
+        "Decisions/0008-visual-memory-first-interface.md"
       ],
-      "notes": "ADR 0008 reopens visual readiness for the persistent app-interval rail, symbols, playhead, and real zoom controls. Historical selection/dwell/gap behavior remains valid; real drag, latency, VoiceOver, resize, and appearance remain H9-only.",
-      "blockedReason": null,
+      "notes": "The persistent rail now projects and merges application intervals, assigns restrained deterministic colors, renders recognizable SF-symbol fallbacks, layers typed patterned gaps, and exposes a visible playhead over the existing draggable scrubber. Zoom-out/in controls traverse the four real reload levels with disabled bounds; immediate thumbnail and dwell-promoted exact-frame behavior remain unchanged.",
+      "blockedReason": "Real pointer drag, preview latency, stale-pixel behavior, resize, appearance, keyboard, and VoiceOver remain installed-runtime H9 criteria. Safe geometry/selection/zoom tests, semantic snapshots, static audit, and arm64 compilation pass without decoder or media execution.",
       "requestedHumanGate": null,
       "resumeProbe": null
     },

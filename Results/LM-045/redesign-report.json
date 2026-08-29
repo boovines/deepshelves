@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-045",
+  "checkpoint": "spatial-application-timeline-rail",
+  "status": "blocked",
+  "implementationReadiness": "ready",
+  "deferredValidationGate": "H9",
+  "rail": {
+    "persistent": true,
+    "applicationColoredIntervals": true,
+    "consecutiveIntervalsMerged": true,
+    "fallbackApplicationSymbols": true,
+    "typedPatternedGaps": true,
+    "visiblePlayhead": true,
+    "draggableScrubber": true,
+    "immediateThumbnailPreview": true,
+    "dwellPromotesExactFrame": true,
+    "zoomLevels": [
+      "day",
+      "6 hours",
+      "1 hour",
+      "15 minutes"
+    ],
+    "accessibilityListProjection": true
+  },
+  "verification": {
+    "focusedMomentTimelineTests": 7,
+    "applicationSegmentGeometry": "passed",
+    "zoomBoundsAndReload": "passed",
+    "stalePreviewRejection": "passed",
+    "gapPrivacy": "passed",
+    "strictFormatting": "passed",
+    "nativeArm64Compile": "passed",
+    "targetedProhibitedRuntimeSourceAudit": "passed",
+    "applicationRuntimeExecuted": false,
+    "thumbnailDecodeRuntimeExecuted": false,
+    "xcuiRuntimeExecuted": false,
+    "hardwareMediaRuntimeExecuted": false
+  },
+  "remainingGate": "Validate real pointer drag, preview latency, stale-pixel behavior, resize, appearance, keyboard, and VoiceOver on the isolated H9 Mac."
+}

@@ -25,7 +25,7 @@ struct SearchMomentTimelineRail: View {
             }
         }
         .frame(maxWidth: .infinity)
-        .frame(height: 96)
+        .frame(height: 116)
         .background(MemoryColorToken.surfaceControl.color.opacity(0.45))
         .accessibilityIdentifier("timeline.rail")
     }
@@ -37,16 +37,33 @@ struct SearchMomentTimelineRail: View {
                     .font(.caption.monospacedDigit())
                     .lineLimit(1)
                 Spacer()
-                Picker("Timeline zoom", selection: zoomBinding) {
-                    Text("Day").tag(MomentTimelineZoomLevel.calendarDay)
-                    Text("6 hours").tag(MomentTimelineZoomLevel.sixHours)
-                    Text("1 hour").tag(MomentTimelineZoomLevel.oneHour)
-                    Text("15 minutes").tag(MomentTimelineZoomLevel.fifteenMinutes)
+                HStack(spacing: 2) {
+                    Button {
+                        adjustZoom(towardDetail: false)
+                    } label: {
+                        Label("Zoom out timeline", systemImage: "minus.magnifyingglass")
+                            .labelStyle(.iconOnly)
+                    }
+                    .disabled(model.zoom.adjacent(towardDetail: false) == nil)
+                    .accessibilityIdentifier("timeline.zoomOut")
+
+                    Text(zoomLabel(model.zoom))
+                        .font(.caption.monospacedDigit())
+                        .frame(minWidth: 64)
+
+                    Button {
+                        adjustZoom(towardDetail: true)
+                    } label: {
+                        Label("Zoom in timeline", systemImage: "plus.magnifyingglass")
+                            .labelStyle(.iconOnly)
+                    }
+                    .disabled(model.zoom.adjacent(towardDetail: true) == nil)
+                    .accessibilityIdentifier("timeline.zoomIn")
                 }
-                .labelsHidden()
-                .pickerStyle(.menu)
+                .buttonStyle(.borderless)
                 .controlSize(.small)
-                .accessibilityIdentifier("timeline.zoom")
+                .accessibilityElement(children: .contain)
+                .accessibilityLabel("Timeline zoom, \(zoomLabel(model.zoom))")
 
                 Button("Timeline accessibility list", systemImage: "list.bullet") {
                     showsAccessibilityList.toggle()
@@ -64,13 +81,28 @@ struct SearchMomentTimelineRail: View {
                 ZStack(alignment: .leading) {
                     Capsule()
                         .fill(MemoryColorToken.borderDefault.color.opacity(0.22))
-                        .frame(height: 18)
+                        .frame(height: 22)
+
+                    ForEach(Array(projection.applicationSegments.enumerated()), id: \.offset) {
+                        _, segment in
+                        Capsule()
+                            .fill(applicationColor(segment.bundleID))
+                            .frame(
+                                width: max(
+                                    3,
+                                    (segment.normalizedEnd - segment.normalizedStart) * width
+                                ),
+                                height: 22
+                            )
+                            .offset(x: segment.normalizedStart * width)
+                            .accessibilityHidden(true)
+                    }
 
                     ForEach(Array(projection.gaps.enumerated()), id: \.offset) { _, gap in
                         MomentTimelineGapPatternView(pattern: gap.pattern)
                             .frame(
                                 width: max(2, (gap.normalizedEnd - gap.normalizedStart) * width),
-                                height: 18
+                                height: 22
                             )
                             .offset(x: gap.normalizedStart * width)
                             .accessibilityHidden(true)
@@ -80,22 +112,27 @@ struct SearchMomentTimelineRail: View {
                         _, transition in
                         Rectangle()
                             .fill(MemoryColorToken.textSecondary.color)
-                            .frame(width: 1, height: 24)
+                            .frame(width: 1, height: 30)
                             .offset(x: transition.normalizedPosition * width)
                             .accessibilityHidden(true)
                     }
 
                     ForEach(projection.moments, id: \.result.frameID) { moment in
-                        Circle()
-                            .fill(
-                                moment.result.frameID == model.scrubbedResult?.frameID
-                                    ? MemoryColorToken.accent.color
-                                    : MemoryColorToken.textSecondary.color.opacity(0.7)
-                            )
-                            .frame(width: 8, height: 8)
-                            .offset(x: moment.normalizedPosition * max(0, width - 8))
+                        Image(systemName: applicationSymbol(moment.result.foreground.bundleID))
+                            .font(.system(size: 9, weight: .semibold))
+                            .foregroundStyle(.white)
+                            .frame(width: 18, height: 18)
+                            .background(.black.opacity(0.26), in: Circle())
+                            .offset(x: moment.normalizedPosition * max(0, width - 18))
                             .accessibilityHidden(true)
                     }
+
+                    Capsule()
+                        .fill(MemoryColorToken.accent.color)
+                        .frame(width: 3, height: 34)
+                        .shadow(color: .black.opacity(0.2), radius: 2)
+                        .offset(x: model.normalizedPosition * max(0, width - 3))
+                        .accessibilityHidden(true)
 
                     Slider(value: scrubBinding, in: 0...1)
                         .tint(.clear)
@@ -117,7 +154,7 @@ struct SearchMomentTimelineRail: View {
                         .allowsHitTesting(false)
                 }
             }
-            .frame(height: 42)
+            .frame(height: 48)
             .focusable()
             .onMoveCommand { direction in
                 switch direction {
@@ -192,11 +229,35 @@ struct SearchMomentTimelineRail: View {
         .accessibilityIdentifier("timeline.accessibilityList")
     }
 
-    private var zoomBinding: Binding<MomentTimelineZoomLevel> {
-        Binding(
-            get: { model.zoom },
-            set: { zoom in Task { await model.setZoom(zoom) } }
-        )
+    private func adjustZoom(towardDetail: Bool) {
+        guard let zoom = model.zoom.adjacent(towardDetail: towardDetail) else { return }
+        Task { await model.setZoom(zoom) }
+    }
+
+    private func zoomLabel(_ zoom: MomentTimelineZoomLevel) -> String {
+        switch zoom {
+        case .calendarDay: "Day"
+        case .sixHours: "6 hours"
+        case .oneHour: "1 hour"
+        case .fifteenMinutes: "15 min"
+        }
+    }
+
+    private func applicationColor(_ bundleID: String) -> Color {
+        let colors: [Color] = [.blue, .green, .orange, .purple, .pink, .teal]
+        let value = bundleID.utf8.reduce(0) { ($0 &* 31) &+ Int($1) }
+        let index = Int(UInt(bitPattern: value) % UInt(colors.count))
+        return colors[index].opacity(0.72)
+    }
+
+    private func applicationSymbol(_ bundleID: String) -> String {
+        switch bundleID {
+        case "com.apple.Safari": "safari"
+        case "com.apple.Notes": "note.text"
+        case "com.apple.finder": "folder"
+        case "com.apple.Calendar": "calendar"
+        default: "app"
+        }
     }
 
     private var scrubBinding: Binding<Double> {

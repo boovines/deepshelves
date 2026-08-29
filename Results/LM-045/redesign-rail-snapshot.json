@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "surface": "timeline-rail",
+  "height": 116,
+  "trackHeight": 22,
+  "fixture": {
+    "applicationSegments": [
+      {
+        "application": "Safari",
+        "start": 0.0,
+        "end": 0.65
+      },
+      {
+        "application": "Notes",
+        "start": 0.65,
+        "end": 1.0
+      }
+    ],
+    "playhead": 0.65,
+    "gapPatterns": [
+      "userControl",
+      "inactivity",
+      "privacy",
+      "unavailable"
+    ]
+  },
+  "selectionSequence": [
+    "scrub-nearest-moment",
+    "publish-low-resolution-preview",
+    "reject-stale-preview",
+    "promote-exact-frame-after-120ms-dwell"
+  ]
+}

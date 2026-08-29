@@ -12,6 +12,13 @@ public enum MomentTimelineZoomLevel: String, CaseIterable, Codable, Equatable, S
     case sixHours
     case oneHour
     case fifteenMinutes
+
+    public func adjacent(towardDetail: Bool) -> MomentTimelineZoomLevel? {
+        guard let index = Self.allCases.firstIndex(of: self) else { return nil }
+        let target = towardDetail ? index + 1 : index - 1
+        guard Self.allCases.indices.contains(target) else { return nil }
+        return Self.allCases[target]
+    }
 }
 
 public struct MomentTimelinePageRequest: Equatable, Sendable {
@@ -110,6 +117,28 @@ public struct MomentTimelineMoment: Equatable, Sendable {
     }
 }
 
+public struct MomentTimelineApplicationSegment: Equatable, Sendable {
+    public let bundleID: String
+    public let applicationName: String
+    public let normalizedStart: Double
+    public let normalizedEnd: Double
+    public let accessibilityLabel: String
+
+    public init(
+        bundleID: String,
+        applicationName: String,
+        normalizedStart: Double,
+        normalizedEnd: Double,
+        accessibilityLabel: String
+    ) {
+        self.bundleID = bundleID
+        self.applicationName = applicationName
+        self.normalizedStart = normalizedStart
+        self.normalizedEnd = normalizedEnd
+        self.accessibilityLabel = accessibilityLabel
+    }
+}
+
 public struct MomentTimelineGapSegment: Equatable, Sendable {
     public let reason: RecordingGapReason
     public let approvedBundleID: String?
@@ -188,6 +217,7 @@ public struct MomentTimelineAccessibilityItem: Identifiable, Equatable, Sendable
 public struct MomentTimelineProjection: Equatable, Sendable {
     public let interval: DateInterval
     public let moments: [MomentTimelineMoment]
+    public let applicationSegments: [MomentTimelineApplicationSegment]
     public let gaps: [MomentTimelineGapSegment]
     public let transitions: [MomentTimelineTransitionMarker]
     public let accessibilityItems: [MomentTimelineAccessibilityItem]
@@ -228,6 +258,7 @@ public struct MomentTimelineProjection: Equatable, Sendable {
             )
         }
         moments = projectedMoments
+        applicationSegments = Self.applicationSegments(projectedMoments)
         gaps = source.slice.gaps.map { gap in
             MomentTimelineGapSegment(
                 reason: gap.reason,
@@ -340,6 +371,49 @@ public struct MomentTimelineProjection: Equatable, Sendable {
         return (momentItems + gapItems + transitionItems).sorted {
             if $0.occurredAt != $1.occurredAt { return $0.occurredAt < $1.occurredAt }
             return $0.id < $1.id
+        }
+    }
+
+    private static func applicationSegments(
+        _ moments: [MomentTimelineMoment]
+    ) -> [MomentTimelineApplicationSegment] {
+        guard !moments.isEmpty else { return [] }
+        var raw: [MomentTimelineApplicationSegment] = []
+        for index in moments.indices {
+            let moment = moments[index]
+            let start =
+                index == moments.startIndex
+                ? 0
+                : (moments[index - 1].normalizedPosition + moment.normalizedPosition) / 2
+            let end =
+                index == moments.index(before: moments.endIndex)
+                ? 1
+                : (moment.normalizedPosition + moments[index + 1].normalizedPosition) / 2
+            let name = moment.result.foreground.applicationName
+            raw.append(
+                MomentTimelineApplicationSegment(
+                    bundleID: moment.result.foreground.bundleID,
+                    applicationName: name,
+                    normalizedStart: start,
+                    normalizedEnd: end,
+                    accessibilityLabel: "\(name) interval"
+                )
+            )
+        }
+        return raw.reduce(into: []) { merged, segment in
+            guard let last = merged.last,
+                last.bundleID == segment.bundleID
+            else {
+                merged.append(segment)
+                return
+            }
+            merged[merged.count - 1] = MomentTimelineApplicationSegment(
+                bundleID: last.bundleID,
+                applicationName: last.applicationName,
+                normalizedStart: last.normalizedStart,
+                normalizedEnd: segment.normalizedEnd,
+                accessibilityLabel: last.accessibilityLabel
+            )
         }
     }
 

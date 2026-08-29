@@ -1,0 +1,13 @@
+LM-045 spatial timeline rail verification
+
+- MemorySearch/MomentTimelineModelTests: 7 passed
+- app interval merge/geometry, typed gap privacy, stable nearest selection,
+  immediate preview, stale completion rejection, dwell promotion, four zoom
+  reloads, and cached-source revalidation pass
+- changed-file strict formatting and native arm64 app compile: PASS
+- targeted prohibited-runtime source scan: zero matches
+- no application, thumbnail decoder, XCUITest, capture, ImageIO, VideoToolbox,
+  AVAssetWriter, or hardware-media runtime executed
+
+Real drag, latency, stale-pixel, resize, appearance, keyboard, and VoiceOver
+evidence remains H9-only.
