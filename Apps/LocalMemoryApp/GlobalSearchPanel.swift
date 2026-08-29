@@ -98,6 +98,7 @@ final class GlobalSearchPanelCoordinator: NSObject, ObservableObject, NSWindowDe
     @Published private(set) var warmPresentationMilliseconds: Int?
 
     private let navigationModel: MainNavigationViewModel
+    private let lifecycleModel: AppLifecycleViewModel
     private let searchModel: SearchSessionModel
     private let searchFilterModel: SearchFilterSessionModel
     private let store: FileGlobalSearchPanelStateStore
@@ -108,12 +109,14 @@ final class GlobalSearchPanelCoordinator: NSObject, ObservableObject, NSWindowDe
 
     init(
         navigationModel: MainNavigationViewModel,
+        lifecycleModel: AppLifecycleViewModel,
         searchModel: SearchSessionModel,
         searchFilterModel: SearchFilterSessionModel,
         stateURL: URL,
         simulatesShortcutCollision: Bool
     ) {
         self.navigationModel = navigationModel
+        self.lifecycleModel = lifecycleModel
         self.searchModel = searchModel
         self.searchFilterModel = searchFilterModel
         store = FileGlobalSearchPanelStateStore(fileURL: stateURL)
@@ -249,6 +252,7 @@ final class GlobalSearchPanelCoordinator: NSObject, ObservableObject, NSWindowDe
         panel.contentView = NSHostingView(
             rootView: GlobalSearchPanelView(
                 navigationModel: navigationModel,
+                lifecycleModel: lifecycleModel,
                 searchModel: searchModel,
                 searchFilterModel: searchFilterModel,
                 coordinator: self
@@ -329,6 +333,7 @@ private final class GlobalSearchNSPanel: NSPanel {
 
 private struct GlobalSearchPanelView: View {
     @ObservedObject var navigationModel: MainNavigationViewModel
+    @ObservedObject var lifecycleModel: AppLifecycleViewModel
     @ObservedObject var searchModel: SearchSessionModel
     @ObservedObject var searchFilterModel: SearchFilterSessionModel
     @ObservedObject var coordinator: GlobalSearchPanelCoordinator
@@ -365,6 +370,8 @@ private struct GlobalSearchPanelView: View {
             SharedSearchResultsView(
                 searchModel: searchModel,
                 navigationModel: navigationModel,
+                filterModel: searchFilterModel,
+                indexingBacklog: lifecycleModel.enrichmentBacklog.pendingCount,
                 surface: .panel
             )
             .frame(maxWidth: .infinity, maxHeight: .infinity)

@@ -10,7 +10,8 @@
       "deferredStories": [
         "LM-028",
         "LM-039",
-        "LM-040"
+        "LM-040",
+        "LM-041"
       ],
       "evidence": []
     }
@@ -780,13 +781,26 @@
       "resumeProbe": null
     },
     "LM-041": {
-      "status": "pending",
-      "startedAt": null,
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": null,
-      "blockedReason": null,
+      "status": "blocked",
+      "implementationReadiness": "ready",
+      "deferredValidationGate": "H9",
+      "startedAt": "2026-08-29T00:53:30Z",
+      "completedAt": "2026-08-29T01:06:36Z",
+      "gitRevision": "refs/tags/checkpoints/LM-041-blocked",
+      "evidence": [
+        "Results/LM-041/report.json",
+        "Results/LM-041/runtime-deferred.md",
+        "Results/LM-041/grid-contract-snapshot.json",
+        "Results/LM-041/memory-search-tests-final.txt",
+        "Results/LM-041/compile-only-summary.txt",
+        "Results/LM-041/static-audit.txt",
+        "Results/LM-041/swift-format.txt",
+        "Results/LM-041/privacy.txt",
+        "Results/LM-041/dependencies.txt",
+        "Decisions/0006-isolated-runtime-validation.md"
+      ],
+      "notes": "The shared main/panel surface now uses an adaptive virtualized NSCollectionView, exact opaque-cursor paging, stable deduplicated append, root-owned actor-bounded exact-identity thumbnail caching, provenance-rich cards, explicit empty/indexing/error states, deterministic accessibility copy, and Return selection. Nineteen safe MemorySearch tests, a correctness-only 10,000-card model projection, strict formatting, static audit, snapshot, and universal compile pass under the encoder tripwire with no prohibited runtime.",
+      "blockedReason": "The acceptance contract requires production 10,000-card S6 performance plus actual selection, stale-thumbnail, keyboard, and VoiceOver runtime evidence. Application runtime is prohibited on this laptop. ADR 0006 assigns the unchanged runtime ledger to H9; unit/model/static/compile/snapshot evidence does not replace it, so LM-041 remains blocked.",
       "requestedHumanGate": null,
       "resumeProbe": null
     },

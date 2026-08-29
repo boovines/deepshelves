@@ -1,0 +1,12 @@
+LM-041 universal Release compile-only verification
+
+Command class: xcodebuild build (no test, no launch, code signing disabled)
+Workspace: LocalMemory.xcworkspace
+Scheme: LocalMemoryApp
+Configuration: Release
+Architectures compiled: arm64 and x86_64
+Result: BUILD SUCCEEDED
+Precheck: no xcodebuild, xctest, or VTEncoderXPCService process was running.
+Tripwire: 50 ms VTEncoderXPCService monitor remained clear for the entire build.
+Runtime evidence: none; compile-only verification did not launch the application.
+Raw local build log SHA-256: 893f9cf96b7b1f122fa686017221d8be32d085c97ac5a2d5b578b667b2413aad

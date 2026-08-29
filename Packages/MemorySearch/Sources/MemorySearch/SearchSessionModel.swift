@@ -53,6 +53,9 @@ public enum SearchSessionPhase: Equatable, Sendable {
 @MainActor
 public final class SearchSessionModel: ObservableObject {
     public typealias RequestBuilder = @Sendable (SearchSessionInput) throws -> SearchRequest
+    public typealias PageRequestBuilder =
+        @Sendable (SearchSessionInput, SearchCursor?) throws
+        -> SearchRequest
 
     @Published public private(set) var query: String
     @Published public private(set) var input: SearchSessionInput
@@ -61,9 +64,14 @@ public final class SearchSessionModel: ObservableObject {
     @Published public private(set) var nextCursor: SearchCursor?
     @Published public private(set) var settledQuery: String?
     @Published public private(set) var settlementCount = 0
+    @Published public private(set) var isLoadingNextPage = false
+    @Published public private(set) var paginationFailureDiagnosticCode: String?
+
+    public let thumbnailRepository: SearchThumbnailRepository?
 
     private let engine: any SearchEngine
     private let requestBuilder: RequestBuilder
+    private let pageRequestBuilder: PageRequestBuilder?
     private let debounceDuration: Duration
     private let initialPage: SearchPage?
     private var generation = 0
@@ -73,12 +81,35 @@ public final class SearchSessionModel: ObservableObject {
         engine: any SearchEngine,
         debounceDuration: Duration = .milliseconds(150),
         initialPage: SearchPage? = nil,
+        thumbnailRepository: SearchThumbnailRepository? = nil,
         requestBuilder: @escaping RequestBuilder
     ) {
         self.engine = engine
         self.debounceDuration = debounceDuration
         self.initialPage = initialPage
+        self.thumbnailRepository = thumbnailRepository
         self.requestBuilder = requestBuilder
+        pageRequestBuilder = nil
+        input = SearchSessionInput(query: "")
+        query = ""
+        results = initialPage?.results ?? []
+        nextCursor = initialPage?.nextCursor
+        phase = initialPage.map { .results(query: "", count: $0.results.count) } ?? .idle
+    }
+
+    public init(
+        engine: any SearchEngine,
+        debounceDuration: Duration = .milliseconds(150),
+        initialPage: SearchPage? = nil,
+        thumbnailRepository: SearchThumbnailRepository? = nil,
+        pageRequestBuilder: @escaping PageRequestBuilder
+    ) {
+        self.engine = engine
+        self.debounceDuration = debounceDuration
+        self.initialPage = initialPage
+        self.thumbnailRepository = thumbnailRepository
+        requestBuilder = { input in try pageRequestBuilder(input, nil) }
+        self.pageRequestBuilder = pageRequestBuilder
         input = SearchSessionInput(query: "")
         query = ""
         results = initialPage?.results ?? []
@@ -90,12 +121,14 @@ public final class SearchSessionModel: ObservableObject {
         engine: any SearchEngine,
         debounceDuration: Duration = .milliseconds(150),
         initialPage: SearchPage? = nil,
+        thumbnailRepository: SearchThumbnailRepository? = nil,
         requestBuilder: @escaping @Sendable (String) throws -> SearchRequest
     ) {
         self.init(
             engine: engine,
             debounceDuration: debounceDuration,
             initialPage: initialPage,
+            thumbnailRepository: thumbnailRepository,
             requestBuilder: { input in try requestBuilder(input.query) }
         )
     }
@@ -117,6 +150,8 @@ public final class SearchSessionModel: ObservableObject {
         query = value.query
         generation += 1
         searchTask?.cancel()
+        isLoadingNextPage = false
+        paginationFailureDiagnosticCode = nil
         let normalized = value.query.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !value.isEmpty else {
             results = initialPage?.results ?? []
@@ -164,6 +199,40 @@ public final class SearchSessionModel: ObservableObject {
 
     public func waitForCurrentSearch() async {
         await searchTask?.value
+    }
+
+    public func loadNextPage() async {
+        guard !isLoadingNextPage,
+            let cursor = nextCursor,
+            let pageRequestBuilder,
+            settledQuery != nil
+        else {
+            return
+        }
+        let pageGeneration = generation
+        let pageInput = input
+        isLoadingNextPage = true
+        paginationFailureDiagnosticCode = nil
+        defer {
+            if generation == pageGeneration {
+                isLoadingNextPage = false
+            }
+        }
+        do {
+            let request = try pageRequestBuilder(pageInput, cursor)
+            let page = try await engine.search(request)
+            try Task.checkCancellation()
+            guard generation == pageGeneration else { return }
+            var seen = Set(results.map(\.frameID))
+            results.append(contentsOf: page.results.filter { seen.insert($0.frameID).inserted })
+            nextCursor = page.nextCursor
+            phase = .results(query: settledQuery ?? pageInput.query, count: results.count)
+        } catch is CancellationError {
+            return
+        } catch {
+            guard generation == pageGeneration else { return }
+            paginationFailureDiagnosticCode = "LM-SEARCH-PAGE"
+        }
     }
 
     private func settle(page: SearchPage, query: String, generation: Int) {

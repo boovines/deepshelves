@@ -299,6 +299,7 @@ struct MainShellView: View {
                     navigationModel: navigationModel,
                     searchModel: searchModel,
                     searchFilterModel: searchFilterModel,
+                    indexingBacklog: lifecycleModel.enrichmentBacklog.pendingCount,
                     contentState: contentState,
                     localizationMode: localizationMode,
                     availableWidth: geometry.size.width
@@ -378,6 +379,7 @@ private struct MainSectionView: View {
     @ObservedObject var navigationModel: MainNavigationViewModel
     @ObservedObject var searchModel: SearchSessionModel
     @ObservedObject var searchFilterModel: SearchFilterSessionModel
+    let indexingBacklog: Int
     let contentState: ShellContentState
     let localizationMode: ShellLocalizationMode
     let availableWidth: CGFloat
@@ -409,6 +411,7 @@ private struct MainSectionView: View {
                         navigationModel: navigationModel,
                         searchModel: searchModel,
                         searchFilterModel: searchFilterModel,
+                        indexingBacklog: indexingBacklog,
                         contentState: contentState,
                         localizationMode: localizationMode
                     )
@@ -421,6 +424,7 @@ private struct MainSectionView: View {
                         navigationModel: navigationModel,
                         searchModel: searchModel,
                         searchFilterModel: searchFilterModel,
+                        indexingBacklog: indexingBacklog,
                         contentState: .ready,
                         localizationMode: localizationMode
                     )
@@ -565,6 +569,7 @@ private struct MomentSectionCanvas: View {
     @ObservedObject var navigationModel: MainNavigationViewModel
     @ObservedObject var searchModel: SearchSessionModel
     @ObservedObject var searchFilterModel: SearchFilterSessionModel
+    let indexingBacklog: Int
     let contentState: ShellContentState
     let localizationMode: ShellLocalizationMode
     @FocusState private var searchIsFocused: Bool
@@ -623,6 +628,8 @@ private struct MomentSectionCanvas: View {
                     SharedSearchResultsView(
                         searchModel: searchModel,
                         navigationModel: navigationModel,
+                        filterModel: searchFilterModel,
+                        indexingBacklog: indexingBacklog,
                         surface: .main
                     )
                 } else {

@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-041",
+  "proofClass": "deterministic-model-snapshot",
+  "columns": {
+    "below520": 1,
+    "from520Through719": 2,
+    "atLeast720": 3
+  },
+  "pageBehavior": {
+    "cursor": "opaque-and-forwarded-unchanged",
+    "ordering": "stable-append",
+    "duplicateFrameIDs": "discarded",
+    "lateGeneration": "discarded",
+    "pageFailure": "existing-results-preserved"
+  },
+  "cardProvenance": [
+    "capture-time",
+    "application-name",
+    "site-host-when-approved",
+    "evidence-source",
+    "matched-text-when-present",
+    "result-position"
+  ],
+  "explicitStates": [
+    "empty-archive",
+    "empty-query",
+    "loading",
+    "no-results-with-removable-filters",
+    "results",
+    "indexing-backlog",
+    "pagination-failure",
+    "search-failure"
+  ],
+  "thumbnailCache": {
+    "owner": "root-search-session",
+    "isolation": "actor",
+    "capacityBytes": 67108864,
+    "identity": "frame-id-plus-locator-kind-plus-locator-value",
+    "staleCompletion": "rejected-by-per-frame-generation"
+  },
+  "tenThousandCardModelCheck": {
+    "count": 10000,
+    "stableFirstAndLastIdentity": true,
+    "positions": "1-through-10000",
+    "runtimePerformanceClaim": false
+  }
+}

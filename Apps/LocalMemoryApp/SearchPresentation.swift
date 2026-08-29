@@ -1,3 +1,4 @@
+import CryptoKit
 import Foundation
 import MemoryContracts
 import MemoryDesignSystem
@@ -62,35 +63,40 @@ enum AppSearchComposition {
         }
         let engine = LocalSearchEngine(lexical: lexical, visual: visual, hybrid: hybrid)
         let policyID = UUID()
-        return SearchSessionModel(engine: engine) { (input: SearchSessionInput) in
-            let now = Date()
-            let interval = DateInterval(
-                start: now.addingTimeInterval(-30 * 24 * 60 * 60),
-                end: now
-            )
-            let scope = try database.localSearchScope()
-            let policy = try AccessPolicy(
-                id: policyID,
-                name: "Local Search UI session",
-                allowedInterval: interval,
-                allowedBundleIDs: scope.bundleIdentifiers,
-                allowedHosts: scope.hosts,
-                allowImageResources: true,
-                maxResults: 100,
-                expiresAt: now.addingTimeInterval(24 * 60 * 60),
-                createdByUser: true
-            )
-            return try SearchRequest(
-                query: input.query,
-                interval: input.interval,
-                bundleIDs: input.bundleIDs,
-                hosts: input.hosts,
-                mode: .hybrid,
-                pageSize: 50,
-                cursor: nil,
-                accessPolicy: policy
-            )
-        }
+        let thumbnailRepository = makeThumbnailRepository(database: database)
+        return SearchSessionModel(
+            engine: engine,
+            thumbnailRepository: thumbnailRepository,
+            pageRequestBuilder: { (input: SearchSessionInput, cursor: SearchCursor?) in
+                let now = Date()
+                let interval = DateInterval(
+                    start: now.addingTimeInterval(-30 * 24 * 60 * 60),
+                    end: now
+                )
+                let scope = try database.localSearchScope()
+                let policy = try AccessPolicy(
+                    id: policyID,
+                    name: "Local Search UI session",
+                    allowedInterval: interval,
+                    allowedBundleIDs: scope.bundleIdentifiers,
+                    allowedHosts: scope.hosts,
+                    allowImageResources: true,
+                    maxResults: 100,
+                    expiresAt: now.addingTimeInterval(24 * 60 * 60),
+                    createdByUser: true
+                )
+                return try SearchRequest(
+                    query: input.query,
+                    interval: input.interval,
+                    bundleIDs: input.bundleIDs,
+                    hosts: input.hosts,
+                    mode: .hybrid,
+                    pageSize: 50,
+                    cursor: cursor,
+                    accessPolicy: policy
+                )
+            }
+        )
     }
 
     static func makeFilterModel(
@@ -171,19 +177,63 @@ enum AppSearchComposition {
         }
     }
 
+    private static func makeThumbnailRepository(
+        database: ArchiveDatabase
+    ) -> SearchThumbnailRepository? {
+        guard let fileStore = database.fileStore,
+            let codec = try? SoftwareThumbnailHEICCodec()
+        else {
+            return nil
+        }
+        let metadata = ArchiveVisualEmbeddingStore(database: database)
+        let loader = SearchThumbnailLoader { result in
+            guard case .archiveRelativePath(let value)? = result.thumbnailLocator else {
+                throw SearchThumbnailError.unavailable
+            }
+            let requestedPath = try ArchiveRelativePath(value)
+            let record = try metadata.readyThumbnail(frameID: result.frameID)
+            guard record.thumbnailPath == requestedPath else {
+                throw SearchThumbnailError.unavailable
+            }
+            let fileURL = fileStore.url(for: requestedPath)
+            let values = try fileURL.resourceValues(forKeys: [
+                .isRegularFileKey,
+                .isSymbolicLinkKey,
+            ])
+            guard values.isRegularFile == true, values.isSymbolicLink != true else {
+                throw SearchThumbnailError.unavailable
+            }
+            let bytes = try Data(contentsOf: fileURL, options: .mappedIfSafe)
+            guard Data(SHA256.hash(data: bytes)) == record.thumbnailHash else {
+                throw SearchThumbnailError.unavailable
+            }
+            let decoded = try codec.decode(bytes)
+            return try SearchThumbnailRaster(
+                width: decoded.raster.width,
+                height: decoded.raster.height,
+                rgba8: decoded.raster.rgba8
+            )
+        }
+        return SearchThumbnailRepository(
+            capacityBytes: 64 * 1_024 * 1_024,
+            loader: loader
+        )
+    }
+
     private static func makeFixtureModel(mode: AppSearchFixtureMode) -> SearchSessionModel {
         let page = try! SearchPage(results: fixtureResults, nextCursor: nil)
         return SearchSessionModel(
             engine: AppSearchFixtureEngine(mode: mode, results: page.results),
             debounceDuration: .milliseconds(150),
             initialPage: page,
-            requestBuilder: fixtureRequest
+            pageRequestBuilder: fixtureRequest
         )
     }
 
-    nonisolated private static func fixtureRequest(_ input: SearchSessionInput) throws
-        -> SearchRequest
-    {
+    nonisolated private static func fixtureRequest(
+        _ input: SearchSessionInput,
+        _ cursor: SearchCursor?
+    ) throws -> SearchRequest {
         let now = Date(timeIntervalSince1970: 1_777_000_000)
         let interval = DateInterval(
             start: now.addingTimeInterval(-30 * 24 * 60 * 60),
@@ -210,7 +260,7 @@ enum AppSearchComposition {
             hosts: input.hosts,
             mode: .textOnly,
             pageSize: 20,
-            cursor: nil,
+            cursor: cursor,
             accessPolicy: policy
         )
     }
@@ -490,103 +540,5 @@ enum SearchResultSurface: Equatable {
         case "00000000-0000-4000-8000-000000000103": return "moment.evening-notes"
         default: return "main.search.result.\(identifier)"
         }
-    }
-}
-
-struct SharedSearchResultsView: View {
-    @ObservedObject var searchModel: SearchSessionModel
-    @ObservedObject var navigationModel: MainNavigationViewModel
-    let surface: SearchResultSurface
-    @FocusState private var focusedResultID: UUID?
-
-    var body: some View {
-        Group {
-            switch searchModel.phase {
-            case .idle:
-                ContentUnavailableView(
-                    "Search your local memory",
-                    systemImage: "magnifyingglass",
-                    description: Text("Enter text from the foreground window you remember.")
-                )
-            case .debouncing(let query), .loading(let query):
-                ProgressView("Searching for “\(query)” locally…")
-                    .accessibilityIdentifier("search.loading")
-            case .results:
-                List(Array(searchModel.results.enumerated()), id: \.element.frameID) {
-                    index, result in
-                    Button {
-                        focusedResultID = result.frameID
-                        navigationModel.select(section: .search)
-                        navigationModel.select(momentID: result.frameID)
-                    } label: {
-                        HStack(spacing: 12) {
-                            Image(systemName: "rectangle.and.text.magnifyingglass")
-                                .frame(width: 28)
-                                .accessibilityHidden(true)
-                            VStack(alignment: .leading, spacing: 3) {
-                                Text(
-                                    result.foreground.windowTitle
-                                        ?? result.foreground.applicationName
-                                )
-                                .font(.headline)
-                                Text(resultSubtitle(result))
-                                    .font(.caption)
-                                    .foregroundStyle(.secondary)
-                            }
-                            Spacer()
-                            if navigationModel.snapshot.selectedMomentID == result.frameID {
-                                Image(systemName: "checkmark.circle.fill")
-                                    .foregroundStyle(.tint)
-                                    .accessibilityLabel("Selected")
-                            }
-                        }
-                        .contentShape(Rectangle())
-                    }
-                    .buttonStyle(.plain)
-                    .focused($focusedResultID, equals: result.frameID)
-                    .accessibilityLabel(accessibilityLabel(result, index: index))
-                    .accessibilityHint("Open moment detail")
-                    .accessibilityIdentifier(surface.accessibilityIdentifier(for: result))
-                }
-                .listStyle(.inset)
-            case .empty(let query):
-                ContentUnavailableView.search(text: query)
-                    .accessibilityIdentifier("search.empty")
-            case .failure(_, let diagnosticCode):
-                VStack(spacing: 8) {
-                    ContentUnavailableView(
-                        "Search unavailable",
-                        systemImage: "exclamationmark.magnifyingglass",
-                        description: Text("Your archive was not changed.")
-                    )
-                    Text("Diagnostic code: \(diagnosticCode)")
-                        .font(.caption.monospaced())
-                        .foregroundStyle(.secondary)
-                        .accessibilityIdentifier("search.errorCode")
-                }
-                .accessibilityIdentifier("search.error")
-            }
-        }
-        .onReceive(
-            NotificationCenter.default.publisher(for: .shellRestoreSelectedMomentFocus)
-        ) { _ in
-            let selected = navigationModel.snapshot.selectedMomentID
-            focusedResultID = nil
-            Task { @MainActor in
-                await Task.yield()
-                focusedResultID = selected
-            }
-        }
-    }
-
-    private func resultSubtitle(_ result: SearchResult) -> String {
-        let time = result.capturedAt.formatted(date: .omitted, time: .shortened)
-        let host = result.browser.map { " · \($0.origin.host)" } ?? ""
-        return "\(result.foreground.applicationName) · \(time)\(host)"
-    }
-
-    private func accessibilityLabel(_ result: SearchResult, index: Int) -> String {
-        let source = result.evidence.first?.source.rawValue ?? "source evidence"
-        return "\(resultSubtitle(result)), \(source), \(index + 1) of \(searchModel.results.count)"
     }
 }

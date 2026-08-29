@@ -54,13 +54,12 @@ struct LocalMemoryApp: App {
                 || arguments.contains("--lm020-export-resolver")
         )
         _archiveSecurityModel = StateObject(wrappedValue: archiveSecurityModel)
-        _lifecycleModel = StateObject(
-            wrappedValue: AppLifecycleViewModel(
-                stateURL: configuration.stateURL,
-                initialStatus: configuration.initialStatus,
-                gapSink: archiveSecurityModel.database
-            )
+        let lifecycleModel = AppLifecycleViewModel(
+            stateURL: configuration.stateURL,
+            initialStatus: configuration.initialStatus,
+            gapSink: archiveSecurityModel.database
         )
+        _lifecycleModel = StateObject(wrappedValue: lifecycleModel)
         _launchAtLoginModel = StateObject(wrappedValue: LaunchAtLoginViewModel())
         let navigationModel = MainNavigationViewModel(stateURL: configuration.navigationStateURL)
         _navigationModel = StateObject(wrappedValue: navigationModel)
@@ -78,6 +77,7 @@ struct LocalMemoryApp: App {
         _searchPanelCoordinator = StateObject(
             wrappedValue: GlobalSearchPanelCoordinator(
                 navigationModel: navigationModel,
+                lifecycleModel: lifecycleModel,
                 searchModel: searchModel,
                 searchFilterModel: searchFilterModel,
                 stateURL: configuration.searchPanelStateURL,
