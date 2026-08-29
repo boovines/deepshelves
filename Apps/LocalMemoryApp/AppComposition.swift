@@ -21,19 +21,25 @@ final class AppLifecycleViewModel: ObservableObject {
     private let lifecycle: LocalMemoryAppLifecycle
     private let captureCoordinator: CaptureLifecycleCoordinator
     private let initialStatus: LocalMemoryRuntimeStatus
+    private let diagnosticLogger: ContentFreeDiagnosticLogger?
+    private let performanceSignposter: LocalPerformanceSignposter
     private var startupTask: Task<AppLifecycleSnapshot, Error>?
     private var latestCaptureInputs: CaptureLifecycleInputs?
 
     init(
         stateURL: URL,
         initialStatus: LocalMemoryRuntimeStatus,
-        gapSink: (any RecordingGapPersisting)? = nil
+        gapSink: (any RecordingGapPersisting)? = nil,
+        diagnosticLogger: ContentFreeDiagnosticLogger? = nil,
+        performanceSignposter: LocalPerformanceSignposter = LocalPerformanceSignposter()
     ) {
         lifecycle = LocalMemoryAppLifecycle(
             store: FileAppLifecycleStateStore(fileURL: stateURL)
         )
         captureCoordinator = CaptureLifecycleCoordinator(gapSink: gapSink)
         self.initialStatus = initialStatus
+        self.diagnosticLogger = diagnosticLogger
+        self.performanceSignposter = performanceSignposter
         snapshot = AppLifecycleSnapshot(
             status: initialStatus,
             launchCount: 0,
@@ -71,6 +77,7 @@ final class AppLifecycleViewModel: ObservableObject {
                 )
             }
             snapshot = launched
+            record(status: launched.status)
         } catch {
             snapshot = AppLifecycleSnapshot(
                 status: .permissionRequired,
@@ -78,6 +85,7 @@ final class AppLifecycleViewModel: ObservableObject {
                 mainWindowVisible: false,
                 recoveryReason: .invalidPersistedState
             )
+            record(status: .permissionRequired, errorCode: "LM-LIFECYCLE-START")
         }
     }
 
@@ -94,6 +102,7 @@ final class AppLifecycleViewModel: ObservableObject {
             do {
                 captureSnapshot = nil
                 snapshot = try await lifecycle.performPrimaryAction()
+                record(status: snapshot.status)
             } catch {
                 snapshot = AppLifecycleSnapshot(
                     status: .permissionRequired,
@@ -101,6 +110,7 @@ final class AppLifecycleViewModel: ObservableObject {
                     mainWindowVisible: snapshot.mainWindowVisible,
                     recoveryReason: .invalidPersistedState
                 )
+                record(status: .permissionRequired, errorCode: "LM-LIFECYCLE-ACTION")
             }
         }
     }
@@ -111,6 +121,7 @@ final class AppLifecycleViewModel: ObservableObject {
             do {
                 captureSnapshot = nil
                 snapshot = try await lifecycle.transition(to: status)
+                record(status: snapshot.status)
             } catch {
                 snapshot = AppLifecycleSnapshot(
                     status: .permissionRequired,
@@ -118,6 +129,7 @@ final class AppLifecycleViewModel: ObservableObject {
                     mainWindowVisible: snapshot.mainWindowVisible,
                     recoveryReason: .invalidPersistedState
                 )
+                record(status: .permissionRequired, errorCode: "LM-LIFECYCLE-TRANSITION")
             }
         }
     }
@@ -143,27 +155,76 @@ final class AppLifecycleViewModel: ObservableObject {
         Task {
             _ = try? await lifecycle.transition(to: captureSnapshot.runtimeStatus)
         }
+        record(
+            status: captureSnapshot.runtimeStatus,
+            metrics: [
+                .durationMilliseconds: Double(captureSnapshot.projectionLatencyNanoseconds)
+                    / 1_000_000
+            ]
+        )
     }
 
     func applyEnrichmentBacklog(_ backlog: EnrichmentBacklogSnapshot) {
         enrichmentBacklog = backlog.presentation
+        record(
+            status: snapshot.status,
+            event: .queueDepth,
+            metrics: [.pendingIndexJobs: Double(backlog.totalPending)]
+        )
     }
 
     func reconcileCapture(_ inputs: CaptureLifecycleInputs) {
         latestCaptureInputs = inputs
         let observedAt = Date()
         let observedAtNanoseconds = DispatchTime.now().uptimeNanoseconds
+        let captureCoordinator = captureCoordinator
+        let performanceSignposter = performanceSignposter
         Task {
             do {
-                let captureSnapshot = try await captureCoordinator.reconcile(
-                    inputs,
-                    observedAt: observedAt,
-                    observedAtNanoseconds: observedAtNanoseconds
-                )
+                let captureSnapshot = try await performanceSignposter.measure(
+                    .captureAdmission
+                ) {
+                    try await captureCoordinator.reconcile(
+                        inputs,
+                        observedAt: observedAt,
+                        observedAtNanoseconds: observedAtNanoseconds
+                    )
+                }
                 applyCaptureSnapshot(captureSnapshot)
             } catch {
                 transition(to: .stopped)
             }
+        }
+    }
+
+    private func record(
+        status: LocalMemoryRuntimeStatus,
+        event: LocalDiagnosticEvent = .stateTransition,
+        errorCode: String? = nil,
+        metrics: [LocalDiagnosticMetric: Double] = [:]
+    ) {
+        guard let diagnosticLogger,
+            let record = try? LocalDiagnosticRecord(
+                occurredAt: Date(),
+                event: event,
+                state: diagnosticState(status),
+                captureID: nil,
+                errorCode: errorCode,
+                metrics: metrics
+            )
+        else { return }
+        Task.detached {
+            try? diagnosticLogger.append(record)
+        }
+    }
+
+    private func diagnosticState(_ status: LocalMemoryRuntimeStatus) -> LocalDiagnosticState {
+        switch status {
+        case .recording, .indexing: .recording
+        case .paused, .sleeping: .paused
+        case .idle: .idle
+        case .targetUnavailable, .permissionRequired, .diskFull: .unavailable
+        case .stopped: .stopped
         }
     }
 }

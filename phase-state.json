@@ -3,7 +3,7 @@
   "activeStory": null,
   "validationGates": {
     "H9": {
-      "status": "pending",
+      "status": "blocked_human",
       "story": "LM-080",
       "trigger": "after LM-080 checkpoint and before LM-081",
       "hostPolicy": "physically-distinct-isolated-validation-mac",
@@ -30,7 +30,11 @@
         "LM-074",
         "LM-080"
       ],
-      "evidence": []
+      "evidence": [
+        "Docs/Operations/H9-isolated-runtime-validation.md",
+        "Results/H9/isolated-validation-ledger.template.json",
+        "HUMAN-ACTION.md"
+      ]
     }
   },
   "executionPolicy": {
@@ -1488,15 +1492,26 @@
       "resumeProbe": null
     },
     "LM-080": {
-      "status": "pending",
-      "startedAt": null,
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": null,
-      "blockedReason": null,
-      "requestedHumanGate": null,
-      "resumeProbe": null
+      "status": "blocked_human",
+      "implementationReadiness": "ready",
+      "deferredValidationGate": "H9",
+      "startedAt": "2026-08-29T08:34:00Z",
+      "completedAt": "2026-08-29T08:49:00Z",
+      "gitRevision": "refs/tags/checkpoints/LM-080-blocked-human",
+      "evidence": [
+        "Results/LM-080/report.json",
+        "Results/LM-080/safe-checks.md",
+        "Results/LM-080/diagnostic-privacy-snapshot.json",
+        "Results/LM-080/runtime-deferred.md",
+        "Results/Milestones/activity-hardening.json",
+        "Docs/Operations/H9-isolated-runtime-validation.md",
+        "Results/H9/isolated-validation-ledger.template.json",
+        "HUMAN-ACTION.md"
+      ],
+      "notes": "Typed content-free local logs, fixed rotation/permissions, revalidated export, local signposts, explicit nonpolling diagnostics dashboards, and safe milestone verification are code-complete. Five focused tests and 118 broad safe package tests pass, along with contract/privacy/dependency gates and a universal Release compile under a clear encoder tripwire. No application or prohibited runtime executed; the original live overhead/dashboard/export/accessibility criteria remain unexecuted as H9-020.",
+      "blockedReason": "H9 is now the mandatory boundary after all dependency-safe implementation through LM-080. The unchanged runtime ledger requires a physically distinct recoverable validation Mac; no safe evidence is represented as satisfying it.",
+      "requestedHumanGate": "H9",
+      "resumeProbe": "Verify a physically distinct host by one-way hardware identity; verify the private checkout resolves exactly to checkpoints/LM-080-blocked-human, the pinned Xcode/dependencies and only documented Screen Recording/Accessibility grants are present, and no xcodebuild, xctest, VTEncoderXPCService, product, watcher, or hardware-media process is running; then execute H9-001 through H9-020 in order under deny-all networking and the encoder-service tripwire."
     },
     "LM-081": {
       "status": "pending",

@@ -881,6 +881,7 @@ struct LocalMemorySettingsView: View {
     @ObservedObject var privacySettingsModel: PrivacySettingsViewModel
     @ObservedObject var archiveSecurityModel: ArchiveSecurityViewModel
     @ObservedObject var agentAccessSettingsModel: AgentAccessSettingsViewModel
+    @ObservedObject var diagnosticsModel: LocalDiagnosticsViewModel
     @State private var selection: LocalMemorySettingsSection
 
     init(
@@ -890,6 +891,7 @@ struct LocalMemorySettingsView: View {
         privacySettingsModel: PrivacySettingsViewModel,
         archiveSecurityModel: ArchiveSecurityViewModel,
         agentAccessSettingsModel: AgentAccessSettingsViewModel,
+        diagnosticsModel: LocalDiagnosticsViewModel,
         opensPrivacyAtLaunch: Bool
     ) {
         self.lifecycleModel = lifecycleModel
@@ -898,6 +900,7 @@ struct LocalMemorySettingsView: View {
         self.privacySettingsModel = privacySettingsModel
         self.archiveSecurityModel = archiveSecurityModel
         self.agentAccessSettingsModel = agentAccessSettingsModel
+        self.diagnosticsModel = diagnosticsModel
         _selection = State(initialValue: opensPrivacyAtLaunch ? .privacy : .capture)
     }
 
@@ -935,14 +938,9 @@ struct LocalMemorySettingsView: View {
                 .tabItem { Label("Agents", systemImage: "terminal") }
                 .tag(LocalMemorySettingsSection.agents)
 
-            SettingsPane(
-                title: "About & Diagnostics",
-                systemImage: "info.circle",
-                rows: [
-                    ("Product", "Local Memory"),
-                    ("Network", "Disabled during normal use"),
-                    ("Diagnostics", "Local only"),
-                ]
+            LocalDiagnosticsSettingsPane(
+                model: diagnosticsModel,
+                lifecycleModel: lifecycleModel
             )
             .tabItem { Label("About", systemImage: "info.circle") }
             .tag(LocalMemorySettingsSection.about)

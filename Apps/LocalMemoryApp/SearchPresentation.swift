@@ -25,7 +25,8 @@ enum AppSearchComposition {
     static func makeModel(
         database: ArchiveDatabase?,
         fixtureMode: AppSearchFixtureMode?,
-        diagnosticsEnabled: Bool
+        diagnosticsEnabled: Bool,
+        performanceSignposter: LocalPerformanceSignposter = LocalPerformanceSignposter()
     ) -> SearchSessionModel {
         if let fixtureMode {
             return makeFixtureModel(
@@ -80,7 +81,10 @@ enum AppSearchComposition {
         let momentRevisitProvider = makeMomentRevisitProvider(database: database)
         let momentForgetProvider = makeMomentForgetProvider(database: database)
         return SearchSessionModel(
-            engine: AppSharedSearchEngine(service: engine),
+            engine: SignpostedAppSearchEngine(
+                engine: AppSharedSearchEngine(service: engine),
+                signposter: performanceSignposter
+            ),
             thumbnailRepository: thumbnailRepository,
             momentDetailRepository: momentDetailRepository,
             momentExportProvider: momentExportProvider,
@@ -781,6 +785,17 @@ enum AppSearchComposition {
             visualRank: nil,
             fusedScore: score
         )
+    }
+}
+
+private struct SignpostedAppSearchEngine: SearchEngine {
+    let engine: any SearchEngine
+    let signposter: LocalPerformanceSignposter
+
+    func search(_ request: SearchRequest) async throws -> SearchPage {
+        try await signposter.measure(.search) {
+            try await engine.search(request)
+        }
     }
 }
 

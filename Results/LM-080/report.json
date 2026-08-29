@@ -1,0 +1,54 @@
+{
+  "story": "LM-080",
+  "revision": "refs/tags/checkpoints/LM-080-blocked-human",
+  "completedAt": "2026-08-29T08:49:00Z",
+  "status": "blocked_human",
+  "implementationReadiness": "ready",
+  "deferredValidationGate": "H9",
+  "proofClass": ["unit", "model", "static", "compile", "snapshot"],
+  "runtimeExecuted": false,
+  "implementation": {
+    "typedContentFreeRecords": true,
+    "boundedRotatingLogs": {
+      "maximumFiles": 3,
+      "maximumBytesPerFile": 1048576,
+      "maximumBytesPerRecord": 8192,
+      "directoryMode": "0700",
+      "fileMode": "0600"
+    },
+    "localDiagnosticExport": true,
+    "exportRevalidatesRecords": true,
+    "exportRejectsSymlinks": true,
+    "signpostIntervals": ["captureAdmission", "enrichment", "search", "diagnosticExport"],
+    "dashboards": ["energy", "residentMemory", "localStorage", "monthlyGrowth", "indexBacklog", "captureStatus"],
+    "automaticPolling": false,
+    "networkOrTelemetryCapability": false
+  },
+  "checks": {
+    "focusedDiagnosticsTests": 5,
+    "focusedDiagnosticsFailures": 0,
+    "fiveHundredModelLogWritesMilliseconds": 37,
+    "memoryStoreTests": 40,
+    "memorySearchTests": 43,
+    "memoryAgentAccessTests": 33,
+    "sharedQueryKitTests": 2,
+    "broadSafeFailures": 0,
+    "contractStaticGate": "passed",
+    "privacyStaticGate": "passed",
+    "dependencyStaticGate": "passed",
+    "dependencyBinaryGate": "passed",
+    "changedFileStrictFormat": "passed",
+    "diagnosticsStaticGate": "passed",
+    "nativeArm64Compile": "passed",
+    "universalReleaseCompile": "passed",
+    "architectures": ["arm64", "x86_64"],
+    "encoderTripwire": "clear"
+  },
+  "hashes": {
+    "universalReleaseBinary": "a4f2958c1c176e2453b28407fcce9d2e63b10afa4ea7002d24337d112695eb02",
+    "universalReleaseLog": "81f8b34800c420d6cfebedb13df00950bdc6e4b16934c7e72036ebb72b8adbab",
+    "dependencyBinaryGate": "ee19ec2fac69814d57606f8260d4120b82de9aecffb3286ca3159489700b0b32",
+    "diagnosticsStaticGate": "ea94b4a8e79e7f344a1eaedd32fe080573659d75c0d7e705d3976d7e3caf3ec3"
+  },
+  "remainingGate": "Run the original live overhead, signpost, diagnostics-dashboard, export, accessibility, and installed-product privacy checks as H9-020 on the physically distinct isolated validation Mac."
+}

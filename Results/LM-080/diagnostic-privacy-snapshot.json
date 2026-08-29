@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-080",
+  "proofClass": "snapshot",
+  "runtimeExecuted": false,
+  "fixture": "synthetic typed diagnostic records only",
+  "durableRecordFields": [
+    "occurredAt",
+    "event",
+    "state",
+    "captureID",
+    "errorCode",
+    "metrics"
+  ],
+  "forbiddenContentSentinels": [
+    "secret query",
+    "window title",
+    "synthetic remote URL",
+    "agent content"
+  ],
+  "sentinelsFoundInExport": 0,
+  "unknownInputFieldStrippedOnReencode": true,
+  "manifestDeclaresOmittedClasses": [
+    "pixels",
+    "extractedText",
+    "windowTitles",
+    "urls",
+    "searchQueries",
+    "agentResults",
+    "audio",
+    "transcripts"
+  ],
+  "networkCapability": false,
+  "telemetryCapability": false,
+  "ownerOnlyPermissionsVerified": true,
+  "result": "passed"
+}

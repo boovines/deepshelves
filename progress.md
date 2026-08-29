@@ -669,3 +669,10 @@ This file is append-only. Each story records measurements, failures, and durable
 - The deterministic 24-hour fixture reconciles exactly: Beta 3 hours + Alpha 2 hours + Unrecorded 19 hours = 24 hours. Missing database coverage and every typed gap remain unrecorded rather than being attributed to an application.
 - Day/week and date controls continue to use the injected local calendar. Application totals are scroll-bounded, each row has a complete accessibility label, and the explicit Unrecorded row remains visible.
 - Production explanatory copy has zero matches for the frozen evaluative lexicon. Five focused tests, strict formatting, targeted prohibited-media/copy scans, and cached arm64 compile pass under the encoder tripwire; installed layout and accessibility checks remain at H9.
+
+## 2026-08-29 — LM-080 content-free local diagnostics and H9 checkpoint
+
+- Local observability now uses a closed typed record vocabulary, bounded three-file rotation, owner-only permissions, symlink rejection, revalidated JSONL export, and fixed error/metric fields. Free-form captured content cannot enter the durable record initializer.
+- Capture admission, search, enrichment, and export have local `OSSignposter` intervals. The Diagnostics pane reads energy condition, resident memory, allocated archive/log sizes, index backlog, capture status, and an honest not-yet-measured monthly baseline only on open or explicit refresh; it has no timer or polling loop.
+- Five focused tests prove content rejection, rotation bounds and permissions, unknown-field sanitization, release-budget health projection, and 500 safe model writes in about 37 ms. The broad safe milestone matrix passes 40 Store, 43 Search, 33 Agent Access, and 2 Shared Query tests plus contracts, privacy, dependency, and universal Release compilation.
+- No application or prohibited runtime ran. The exact installed overhead/dashboard/export/accessibility proof remains H9-020, alongside all earlier deferred stories. The ordered H9 template has 20 items and fails closed on missing, reordered, revision/host-mismatched, failed, or hardware-media-contaminated evidence.

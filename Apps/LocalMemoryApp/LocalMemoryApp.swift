@@ -23,6 +23,7 @@ struct LocalMemoryApp: App {
     @StateObject private var archiveSecurityModel: ArchiveSecurityViewModel
     @StateObject private var agentAccessSettingsModel: AgentAccessSettingsViewModel
     @StateObject private var activityModel: ActivityViewModel
+    @StateObject private var diagnosticsModel: LocalDiagnosticsViewModel
     private let shellKeyboardMonitor: ShellKeyboardCommandMonitor
 
     private let launchConfiguration: AppLaunchConfiguration
@@ -63,6 +64,8 @@ struct LocalMemoryApp: App {
         _activityModel = StateObject(
             wrappedValue: ActivityViewModel(database: archiveSecurityModel.database)
         )
+        let diagnosticsModel = LocalDiagnosticsViewModel(database: archiveSecurityModel.database)
+        _diagnosticsModel = StateObject(wrappedValue: diagnosticsModel)
         SignedCLIEntrypoint.launchIfRequested(
             arguments: arguments,
             database: archiveSecurityModel.database
@@ -74,7 +77,9 @@ struct LocalMemoryApp: App {
         let lifecycleModel = AppLifecycleViewModel(
             stateURL: configuration.stateURL,
             initialStatus: configuration.initialStatus,
-            gapSink: archiveSecurityModel.database
+            gapSink: archiveSecurityModel.database,
+            diagnosticLogger: diagnosticsModel.logger,
+            performanceSignposter: diagnosticsModel.signposter
         )
         _lifecycleModel = StateObject(wrappedValue: lifecycleModel)
         _launchAtLoginModel = StateObject(wrappedValue: LaunchAtLoginViewModel())
@@ -83,7 +88,8 @@ struct LocalMemoryApp: App {
         let searchModel = AppSearchComposition.makeModel(
             database: archiveSecurityModel.database,
             fixtureMode: configuration.searchFixtureMode,
-            diagnosticsEnabled: configuration.searchDiagnosticsEnabled
+            diagnosticsEnabled: configuration.searchDiagnosticsEnabled,
+            performanceSignposter: diagnosticsModel.signposter
         )
         _searchModel = StateObject(wrappedValue: searchModel)
         let searchFilterModel = AppSearchComposition.makeFilterModel(
@@ -461,6 +467,7 @@ struct LocalMemoryApp: App {
                 privacySettingsModel: privacySettingsModel,
                 archiveSecurityModel: archiveSecurityModel,
                 agentAccessSettingsModel: agentAccessSettingsModel,
+                diagnosticsModel: diagnosticsModel,
                 opensPrivacyAtLaunch: launchConfiguration.opensPrivacySettingsAtLaunch
             )
             .preferredColorScheme(launchConfiguration.preferredColorScheme)

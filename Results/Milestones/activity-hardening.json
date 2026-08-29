@@ -1,0 +1,34 @@
+{
+  "milestone": "Activity and pre-runtime hardening",
+  "stories": ["LM-072", "LM-073", "LM-074", "LM-080"],
+  "checkpointedAt": "2026-08-29T08:49:00Z",
+  "revision": "refs/tags/checkpoints/LM-080-blocked-human",
+  "universalRelease": {
+    "architectures": ["arm64", "x86_64"],
+    "configuration": "Release",
+    "result": "passed",
+    "compileOnly": true,
+    "encoderTripwire": "clear",
+    "binarySHA256": "a4f2958c1c176e2453b28407fcce9d2e63b10afa4ea7002d24337d112695eb02"
+  },
+  "broadSafeGates": {
+    "memoryStorePackage": {"tests": 40, "failures": 0},
+    "memorySearchPackage": {"tests": 43, "failures": 0},
+    "memoryAgentAccessPackage": {"tests": 33, "failures": 0},
+    "sharedQueryKitPackage": {"tests": 2, "failures": 0},
+    "memoryContracts": "static byte-exact fixture generation passed; package has no test target",
+    "staticPrivacy": "passed",
+    "staticAndBinaryDependencyAudit": "passed",
+    "diagnosticsPrivacySnapshot": "passed"
+  },
+  "quarantine": {
+    "applicationRuntimeExecuted": false,
+    "screenCaptureKitExecuted": false,
+    "imageIOExecuted": false,
+    "videoToolboxExecuted": false,
+    "hardwareMediaExecuted": false,
+    "runtimeBenchmarksExecuted": false,
+    "reason": "Every live Activity/diagnostics/runtime item remains in the ordered H9 ledger; safe evidence is not represented as a substitute."
+  },
+  "nextGate": "H9"
+}
