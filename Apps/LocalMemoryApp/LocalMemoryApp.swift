@@ -58,7 +58,8 @@ struct LocalMemoryApp: App {
         )
         shellKeyboardMonitor = ShellKeyboardCommandMonitor()
         let archiveSecurityModel = ArchiveSecurityViewModel(
-            usesDeterministicStore: arguments.contains("--lm019-export-lifecycle")
+            usesDeterministicStore: configuration.isFixtureOnly
+                || arguments.contains("--lm019-export-lifecycle")
                 || arguments.contains("--lm020-export-resolver")
         )
         _archiveSecurityModel = StateObject(wrappedValue: archiveSecurityModel)

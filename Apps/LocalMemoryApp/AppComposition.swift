@@ -263,6 +263,7 @@ final class LaunchAtLoginViewModel: ObservableObject {
 }
 
 struct AppLaunchConfiguration {
+    let isFixtureOnly: Bool
     let opensMainWindow: Bool
     let showsMenuPreview: Bool
     let runsLM009EvidenceSequence: Bool
@@ -290,6 +291,14 @@ struct AppLaunchConfiguration {
     let searchDiagnosticsEnabled: Bool
 
     init(arguments: [String]) {
+        let fixturePolicy = MemoryFixtureLaunchPolicy(arguments: arguments)
+        isFixtureOnly = fixturePolicy != nil
+
+        func defaultStateURL(fileName: String) -> URL {
+            fixturePolicy?.stateURL(fileName: fileName)
+                ?? Self.defaultStateURL(fileName: fileName)
+        }
+
         searchDiagnosticsEnabled = arguments.contains("--search-diagnostics")
         runsLM009EvidenceSequence = arguments.contains("--lm009-evidence-sequence")
         showsMenuPreview =
@@ -326,16 +335,19 @@ struct AppLaunchConfiguration {
             arguments.indices.contains(index + 1)
         {
             searchFixtureMode = AppSearchFixtureMode(rawValue: arguments[index + 1])
-        } else if arguments.contains(where: {
-            $0.hasPrefix("--lm010-") || $0.hasPrefix("--lm015-")
-        }) {
+        } else if isFixtureOnly
+            || arguments.contains(where: {
+                $0.hasPrefix("--lm010-") || $0.hasPrefix("--lm015-")
+            })
+        {
             searchFixtureMode = .warm
         } else {
             searchFixtureMode = nil
         }
         let forcesOnboarding = arguments.contains("--lm014-onboarding")
         let suppressesOnboarding =
-            arguments.contains("--lm014-skip-onboarding")
+            isFixtureOnly
+            || arguments.contains("--lm014-skip-onboarding")
             || arguments.contains { argument in
                 argument.hasPrefix("--lm008-")
                     || argument.hasPrefix("--lm009-")
@@ -361,7 +373,8 @@ struct AppLaunchConfiguration {
             "--lm014-suppress-system-settings"
         )
         opensMainWindow =
-            showsMenuPreview
+            isFixtureOnly
+            || showsMenuPreview
             || arguments.contains("--lm009-open-main")
             || arguments.contains("--lm010-shell")
             || (opensSettingsAtLaunch && !opensSettingsWithoutMainAtLaunch)
@@ -379,7 +392,7 @@ struct AppLaunchConfiguration {
         {
             stateURL = URL(fileURLWithPath: arguments[index + 1])
         } else {
-            stateURL = Self.defaultStateURL(fileName: "runtime-state.json")
+            stateURL = defaultStateURL(fileName: "runtime-state.json")
         }
 
         if let index = arguments.firstIndex(of: "--lm010-navigation-state-file"),
@@ -387,7 +400,7 @@ struct AppLaunchConfiguration {
         {
             navigationStateURL = URL(fileURLWithPath: arguments[index + 1])
         } else {
-            navigationStateURL = Self.defaultStateURL(fileName: "navigation-state.json")
+            navigationStateURL = defaultStateURL(fileName: "navigation-state.json")
         }
 
         if let index = arguments.firstIndex(of: "--lm014-onboarding-state-file"),
@@ -395,7 +408,7 @@ struct AppLaunchConfiguration {
         {
             onboardingStateURL = URL(fileURLWithPath: arguments[index + 1])
         } else {
-            onboardingStateURL = Self.defaultStateURL(fileName: "onboarding-state.json")
+            onboardingStateURL = defaultStateURL(fileName: "onboarding-state.json")
         }
 
         if let index = arguments.firstIndex(of: "--lm015-search-panel-state-file"),
@@ -403,7 +416,7 @@ struct AppLaunchConfiguration {
         {
             searchPanelStateURL = URL(fileURLWithPath: arguments[index + 1])
         } else {
-            searchPanelStateURL = Self.defaultStateURL(fileName: "search-panel-state.json")
+            searchPanelStateURL = defaultStateURL(fileName: "search-panel-state.json")
         }
 
         if let index = arguments.firstIndex(of: "--lm056-policy-state-file"),
@@ -411,9 +424,9 @@ struct AppLaunchConfiguration {
         {
             privacyPolicyStateURL = URL(fileURLWithPath: arguments[index + 1])
         } else {
-            privacyPolicyStateURL = Self.defaultStateURL(fileName: "privacy-policy.json")
+            privacyPolicyStateURL = defaultStateURL(fileName: "privacy-policy.json")
         }
-        appearanceStateURL = Self.defaultStateURL(fileName: "appearance-state.json")
+        appearanceStateURL = defaultStateURL(fileName: "appearance-state.json")
 
         var permissionOverrides: [OnboardingPermissionKind: OnboardingPermissionStatus] = [:]
         if let index = arguments.firstIndex(of: "--lm014-screen-permission"),
