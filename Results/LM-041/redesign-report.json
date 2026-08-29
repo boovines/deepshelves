@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-041",
+  "checkpoint": "visual-memory-result-grid",
+  "status": "blocked",
+  "implementationReadiness": "ready",
+  "deferredValidationGate": "H9",
+  "implementedStates": [
+    "initial",
+    "loading",
+    "filtered-results",
+    "no-results",
+    "adding-visual-matches",
+    "error"
+  ],
+  "grid": {
+    "adaptiveColumns": [
+      1,
+      2,
+      3
+    ],
+    "visualFirstCards": true,
+    "stableSingleSelection": true,
+    "pagination": true,
+    "thumbnailIdentityValidation": true,
+    "quietPrimaryEvidence": true,
+    "diagnosticsOptInOnly": true
+  },
+  "verification": {
+    "focusedSearchResultGridTests": 7,
+    "tenThousandCardProjection": "passed",
+    "staleThumbnailRejection": "passed",
+    "strictFormatting": "passed",
+    "nativeArm64Compile": "passed",
+    "targetedProhibitedRuntimeSourceAudit": "passed",
+    "applicationRuntimeExecuted": false,
+    "xcuiRuntimeExecuted": false,
+    "hardwareMediaRuntimeExecuted": false
+  },
+  "remainingGate": "Validate real resize/reuse, pagination interaction, focus, announcements, thumbnail latency, and appearance on the isolated H9 Mac."
+}

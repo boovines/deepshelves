@@ -150,6 +150,8 @@ struct SharedSearchResultsView: View {
                 noResults(query: query, filters: activeFilterLabels, backlog: backlog)
             case .results(_, let backlog):
                 results(backlog: backlog)
+            case .addingVisualMatches(_, let backlog):
+                results(backlog: backlog, isAddingVisualMatches: true)
             case .failure(_, let diagnosticCode):
                 VStack(spacing: 8) {
                     ContentUnavailableView(
@@ -197,13 +199,20 @@ struct SharedSearchResultsView: View {
     }
 
     @ViewBuilder
-    private func results(backlog: Int) -> some View {
-        VStack(spacing: 8) {
-            if backlog > 0 {
-                Text("Still indexing \(backlog) moments")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-                    .accessibilityIdentifier("search.indexingBacklog")
+    private func results(backlog: Int, isAddingVisualMatches: Bool = false) -> some View {
+        VStack(spacing: 12) {
+            if isAddingVisualMatches {
+                HStack(spacing: 8) {
+                    ProgressView()
+                        .controlSize(.small)
+                    Text("Adding visual matches · \(backlog) moments remaining")
+                        .font(.callout.weight(.medium))
+                }
+                .foregroundStyle(.secondary)
+                .padding(.horizontal, 8)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .accessibilityElement(children: .combine)
+                .accessibilityIdentifier("search.indexingBacklog")
             }
             SearchResultCollectionView(
                 results: searchModel.results,
@@ -258,9 +267,9 @@ private struct SearchResultCollectionView: NSViewRepresentable {
 
     func makeNSView(context: Context) -> NSScrollView {
         let layout = NSCollectionViewFlowLayout()
-        layout.minimumInteritemSpacing = 12
-        layout.minimumLineSpacing = 12
-        layout.sectionInset = NSEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        layout.minimumInteritemSpacing = 16
+        layout.minimumLineSpacing = 20
+        layout.sectionInset = NSEdgeInsets(top: 8, left: 8, bottom: 20, right: 8)
 
         let collectionView = SearchResultNSCollectionView()
         collectionView.collectionViewLayout = layout
@@ -395,7 +404,7 @@ private struct SearchResultCollectionView: NSViewRepresentable {
             let spacing = layout.minimumInteritemSpacing * CGFloat(max(0, columns - 1))
             let inset = layout.sectionInset.left + layout.sectionInset.right
             let available = max(260, width - spacing - inset)
-            layout.itemSize = NSSize(width: floor(available / CGFloat(columns)), height: 245)
+            layout.itemSize = NSSize(width: floor(available / CGFloat(columns)), height: 252)
         }
 
         func announceResultChange(on collectionView: NSCollectionView) {
@@ -445,12 +454,18 @@ private final class SearchResultCollectionItem: NSCollectionViewItem {
     override func loadView() {
         let root = NSView()
         root.wantsLayer = true
-        root.layer?.cornerRadius = 8
-        root.layer?.borderWidth = 1
+        root.layer?.cornerRadius = 18
+        root.layer?.cornerCurve = .continuous
+        root.layer?.borderWidth = 0.5
+        root.layer?.shadowColor = NSColor.black.cgColor
+        root.layer?.shadowOpacity = 0.07
+        root.layer?.shadowRadius = 10
+        root.layer?.shadowOffset = NSSize(width: 0, height: -2)
 
         preview.imageScaling = .scaleProportionallyUpOrDown
         preview.wantsLayer = true
-        preview.layer?.cornerRadius = 5
+        preview.layer?.cornerRadius = 12
+        preview.layer?.cornerCurve = .continuous
         preview.layer?.masksToBounds = true
         titleLabel.font = .systemFont(ofSize: 13, weight: .semibold)
         titleLabel.maximumNumberOfLines = 1
@@ -460,7 +475,7 @@ private final class SearchResultCollectionItem: NSCollectionViewItem {
         metadataLabel.lineBreakMode = .byTruncatingTail
         evidenceLabel.font = .systemFont(ofSize: 11)
         evidenceLabel.textColor = .secondaryLabelColor
-        evidenceLabel.maximumNumberOfLines = 2
+        evidenceLabel.maximumNumberOfLines = 1
         evidenceLabel.lineBreakMode = .byTruncatingTail
         debugLabel.font = .monospacedSystemFont(ofSize: 9, weight: .regular)
         debugLabel.textColor = .tertiaryLabelColor
@@ -471,17 +486,17 @@ private final class SearchResultCollectionItem: NSCollectionViewItem {
         )
         stack.orientation = .vertical
         stack.alignment = .leading
-        stack.spacing = 6
+        stack.spacing = 7
         stack.translatesAutoresizingMaskIntoConstraints = false
         preview.translatesAutoresizingMaskIntoConstraints = false
         root.addSubview(stack)
         NSLayoutConstraint.activate([
-            stack.leadingAnchor.constraint(equalTo: root.leadingAnchor, constant: 10),
-            stack.trailingAnchor.constraint(equalTo: root.trailingAnchor, constant: -10),
-            stack.topAnchor.constraint(equalTo: root.topAnchor, constant: 10),
-            stack.bottomAnchor.constraint(lessThanOrEqualTo: root.bottomAnchor, constant: -10),
+            stack.leadingAnchor.constraint(equalTo: root.leadingAnchor, constant: 12),
+            stack.trailingAnchor.constraint(equalTo: root.trailingAnchor, constant: -12),
+            stack.topAnchor.constraint(equalTo: root.topAnchor, constant: 12),
+            stack.bottomAnchor.constraint(lessThanOrEqualTo: root.bottomAnchor, constant: -12),
             preview.widthAnchor.constraint(equalTo: stack.widthAnchor),
-            preview.heightAnchor.constraint(equalToConstant: 145),
+            preview.heightAnchor.constraint(equalToConstant: 156),
         ])
         view = root
     }
@@ -509,6 +524,8 @@ private final class SearchResultCollectionItem: NSCollectionViewItem {
             : NSColor.controlBackgroundColor).cgColor
         view.layer?.borderColor =
             (selected ? NSColor.controlAccentColor : NSColor.separatorColor).cgColor
+        view.layer?.borderWidth = selected ? 2 : 0.5
+        view.layer?.shadowOpacity = selected ? 0.12 : 0.07
         view.setAccessibilityRole(.button)
         view.setAccessibilityIdentifier(accessibilityIdentifier)
         view.setAccessibilityLabel(

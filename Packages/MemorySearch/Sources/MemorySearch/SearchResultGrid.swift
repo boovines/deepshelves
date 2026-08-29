@@ -113,6 +113,7 @@ public enum SearchResultGridContentState: Equatable, Sendable {
     case loading(query: String)
     case noResults(query: String, activeFilterLabels: [String], indexingBacklog: Int)
     case results(count: Int, indexingBacklog: Int)
+    case addingVisualMatches(count: Int, indexingBacklog: Int)
     case failure(query: String, diagnosticCode: String)
 }
 
@@ -171,6 +172,9 @@ public enum SearchResultGridProjection: Sendable {
         case .debouncing(let query), .loading(let query):
             return .loading(query: query)
         case .results(_, let count):
+            if backlog > 0 {
+                return .addingVisualMatches(count: count, indexingBacklog: backlog)
+            }
             return .results(count: count, indexingBacklog: backlog)
         case .empty(let query):
             return .noResults(

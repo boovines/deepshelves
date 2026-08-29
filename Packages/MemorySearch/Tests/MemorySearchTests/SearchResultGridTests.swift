@@ -125,6 +125,15 @@ final class SearchResultGridTests: XCTestCase {
             ),
             "40 more results loaded, 100 shown. Still indexing 12 moments. More results available."
         )
+        XCTAssertEqual(
+            SearchResultGridProjection.contentState(
+                phase: .results(query: "lamp", count: 4),
+                archiveHasSearchableContent: true,
+                activeFilterLabels: [],
+                indexingBacklog: 7
+            ),
+            .addingVisualMatches(count: 4, indexingBacklog: 7)
+        )
     }
 
     func testTenThousandCardProjectionIsDeterministicWithoutClaimingRuntimePerformance() throws {

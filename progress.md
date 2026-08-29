@@ -710,3 +710,16 @@ This file is append-only. Each story records measurements, failures, and durable
   runtime inspection, and a cached native arm64 compile pass. No application, XCUITest,
   ScreenCaptureKit, ImageIO, VideoToolbox, AVAssetWriter, or media runtime ran; installed
   interaction and accessibility evidence remains blocked at H9.
+
+## 2026-08-29 — LM-041 visual-memory result grid
+
+- The high-volume result collection remains the single adaptive implementation, but its
+  hierarchy is now screenshot first: larger previews, 18-point continuous cards, quieter
+  title/context/evidence, restrained elevation, and an explicit accent selection state.
+- Search state now distinguishes `addingVisualMatches` from settled results, so visual-index
+  progress is spatially visible without replacing already available matches. Initial, loading,
+  no-results, pagination-failure, and search-failure states remain explicit.
+- Seven focused package tests pass, including deterministic 10,000-card projection, stable
+  pagination, hidden-result suppression, and stale-thumbnail identity rejection. Strict
+  formatting, targeted quarantine inspection, and cached arm64 compile also pass with no app,
+  XCUITest, ImageIO, VideoToolbox, AVAssetWriter, or media runtime.

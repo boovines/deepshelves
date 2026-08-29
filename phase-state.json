@@ -823,10 +823,10 @@
       "resumeProbe": null
     },
     "LM-041": {
-      "status": "pending",
-      "startedAt": null,
-      "completedAt": null,
-      "gitRevision": null,
+      "status": "blocked",
+      "startedAt": "2026-08-29T11:15:00Z",
+      "completedAt": "2026-08-29T11:16:08Z",
+      "gitRevision": "refs/tags/checkpoints/LM-041-visual-redesign-blocked",
       "previousImplementationCheckpoint": "refs/tags/checkpoints/LM-041-blocked",
       "evidence": [
         "Results/LM-041/report.json",
@@ -838,10 +838,14 @@
         "Results/LM-041/swift-format.txt",
         "Results/LM-041/privacy.txt",
         "Results/LM-041/dependencies.txt",
-        "Decisions/0006-isolated-runtime-validation.md"
+        "Results/LM-041/redesign-report.json",
+        "Results/LM-041/redesign-grid-snapshot.json",
+        "Results/LM-041/redesign-verification.txt",
+        "Decisions/0006-isolated-runtime-validation.md",
+        "Decisions/0008-visual-memory-first-interface.md"
       ],
-      "notes": "ADR 0008 reopens visual readiness for the polished result grid and complete search-state presentation. Historical paging/cache/evidence remains valid; production performance and interaction remain H9-only.",
-      "blockedReason": null,
+      "notes": "The visual-first result surface retains the high-volume AppKit collection implementation but now uses spacious screenshot-led cards, continuous 18-point corners, quiet metadata/evidence, and explicit selection. The state model distinguishes adding visual matches from settled results while preserving initial, loading, no-result, and error states. Pagination, 10k projection, provisional hiding, and thumbnail identity safety remain intact.",
+      "blockedReason": "Real resize/reuse, pagination interaction, focus/announcement behavior, thumbnail latency, and appearance are installed-runtime H9 criteria. Safe model tests, semantic snapshots, static audit, and arm64 compilation pass but do not replace H9.",
       "requestedHumanGate": null,
       "resumeProbe": null
     },

@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "surface": "search-result-grid",
+  "sizes": {
+    "minimum": {
+      "availableWidth": 519,
+      "columns": 1
+    },
+    "compact": {
+      "availableWidth": 719,
+      "columns": 2
+    },
+    "default": {
+      "availableWidth": 900,
+      "columns": 3
+    }
+  },
+  "card": {
+    "cornerRadius": 18,
+    "previewHeight": 156,
+    "lineSpacing": 7,
+    "selection": "accent-stroke+surface-change+accessibility-selection",
+    "primaryOrder": [
+      "screenshot",
+      "title",
+      "time+application+host",
+      "one evidence line"
+    ]
+  },
+  "states": [
+    "emptyArchive",
+    "emptyQuery",
+    "loading",
+    "noResults",
+    "results",
+    "addingVisualMatches",
+    "failure"
+  ]
+}
