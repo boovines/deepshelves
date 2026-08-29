@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "surface": "search-and-agent-composer",
+  "search": {
+    "stateOwner": "SearchFilterSessionModel",
+    "routes": [
+      {
+        "id": "searchMemory",
+        "title": "Search Memory",
+        "systemImage": "magnifyingglass"
+      },
+      {
+        "id": "askAgent",
+        "title": "Ask Agent",
+        "systemImage": "sparkles"
+      }
+    ],
+    "filterGroups": {
+      "time": "compact-pills",
+      "website": "approved-visible-tokens",
+      "application": "icon-tiles-with-text-and-selection-state"
+    }
+  },
+  "agentStates": [
+    {
+      "state": "unavailable",
+      "action": "Manage Agent Access",
+      "productionEligible": true
+    },
+    {
+      "state": "ready",
+      "action": "Review and Ask",
+      "productionEligible": "only-after-real-target-detection"
+    },
+    {
+      "state": "permissionDenied",
+      "action": "Review Access",
+      "productionEligible": "only-after-policy-denial"
+    }
+  ],
+  "privacy": {
+    "sourceArchiveScope": "approved-ready-records-only",
+    "agentScope": "time+application+site+image+result+expiry",
+    "unrestrictedArchiveAccess": false
+  }
+}

@@ -43,7 +43,10 @@ public struct MemorySearchField: View {
                     }
                     .buttonStyle(.plain)
                     .foregroundStyle(MemoryColorToken.textSecondary.color)
-                    .frame(minWidth: MemoryControlHeight.compact, minHeight: MemoryControlHeight.compact)
+                    .frame(
+                        minWidth: MemoryControlHeight.compact,
+                        minHeight: MemoryControlHeight.compact
+                    )
                     .help("Clear search")
                     .accessibilityLabel("Clear search")
                 }
@@ -86,6 +89,155 @@ public struct MemorySearchField: View {
             return MemoryColorToken.accent.color
         }
         return MemoryColorToken.borderDefault.color
+    }
+}
+
+public struct MemoryComposer: View {
+    @Binding private var route: MemoryComposerRoute
+    @Binding private var query: String
+
+    private let model: MemoryComposerModel
+    private let onSearch: () -> Void
+    private let onAgentAction: () -> Void
+
+    public init(
+        route: Binding<MemoryComposerRoute>,
+        query: Binding<String>,
+        model: MemoryComposerModel,
+        onSearch: @escaping () -> Void,
+        onAgentAction: @escaping () -> Void
+    ) {
+        _route = route
+        _query = query
+        self.model = model
+        self.onSearch = onSearch
+        self.onAgentAction = onAgentAction
+    }
+
+    public var body: some View {
+        MemoryTokenReader { environment in
+            VStack(alignment: .leading, spacing: MemorySpacing.large) {
+                Picker("Composer route", selection: $route) {
+                    ForEach(MemoryComposerRoute.allCases, id: \.self) { route in
+                        Label(route.title, systemImage: route.systemImage)
+                            .tag(route)
+                    }
+                }
+                .pickerStyle(.segmented)
+                .labelsHidden()
+                .accessibilityIdentifier("memoryComposer.route")
+
+                switch route {
+                case .searchMemory:
+                    HStack(spacing: MemorySpacing.medium) {
+                        Image(systemName: "magnifyingglass")
+                            .font(.title2)
+                            .foregroundStyle(MemoryColorToken.accent.color)
+                            .accessibilityHidden(true)
+                        TextField(model.placeholder, text: $query)
+                            .textFieldStyle(.plain)
+                            .font(.title2)
+                            .onSubmit(onSearch)
+                            .accessibilityLabel("Search your local memory")
+                            .accessibilityHint(
+                                "Searches the local archive with the visible filters"
+                            )
+                            .accessibilityIdentifier("memoryComposer.query")
+                        Button(action: onSearch) {
+                            Label("Search", systemImage: "arrow.right.circle.fill")
+                                .labelStyle(.iconOnly)
+                                .font(.title2)
+                        }
+                        .buttonStyle(.plain)
+                        .disabled(query.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                        .help("Search Memory")
+                        .accessibilityLabel("Search Memory")
+                        .accessibilityIdentifier("memoryComposer.search")
+                    }
+                    .frame(minHeight: 48)
+
+                case .askAgent:
+                    HStack(alignment: .top, spacing: MemorySpacing.medium) {
+                        Image(systemName: model.agent.systemImage)
+                            .font(.title2)
+                            .foregroundStyle(MemoryColorToken.accent.color)
+                            .frame(width: 32)
+                            .accessibilityHidden(true)
+                        VStack(alignment: .leading, spacing: MemorySpacing.xSmall) {
+                            Text(model.agent.title)
+                                .font(MemoryTypeToken.headline.font)
+                            Text(model.agent.message)
+                                .font(MemoryTypeToken.callout.font)
+                                .foregroundStyle(MemoryColorToken.textSecondary.color)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+                        Spacer(minLength: MemorySpacing.large)
+                        if let actionTitle = model.agent.actionTitle {
+                            Button(actionTitle, action: onAgentAction)
+                                .accessibilityIdentifier("memoryComposer.agentAction")
+                        }
+                    }
+                    .accessibilityElement(children: .contain)
+                }
+            }
+            .padding(MemorySpacing.xLarge)
+            .background(
+                MemoryColorToken.surfaceControl.color,
+                in: RoundedRectangle(cornerRadius: MemoryRadius.groupedCard)
+            )
+            .overlay {
+                RoundedRectangle(cornerRadius: MemoryRadius.groupedCard)
+                    .stroke(
+                        MemoryColorToken.borderDefault.color,
+                        lineWidth: environment.hairlineWidth
+                    )
+            }
+            .accessibilityElement(children: .contain)
+            .accessibilityLabel(model.accessibilityLabel)
+        }
+    }
+}
+
+public struct ApplicationFilterTile: View {
+    public let model: ApplicationFilterTileModel
+    public let onActivate: () -> Void
+
+    public init(
+        model: ApplicationFilterTileModel,
+        onActivate: @escaping () -> Void
+    ) {
+        self.model = model
+        self.onActivate = onActivate
+    }
+
+    public var body: some View {
+        MemoryTokenReader { environment in
+            Button(action: onActivate) {
+                VStack(spacing: MemorySpacing.small) {
+                    Image(systemName: model.systemImage)
+                        .font(.title2)
+                        .frame(width: 44, height: 44)
+                        .background(
+                            model.isSelected
+                                ? MemoryColorToken.surfaceSelected.color(
+                                    contrast: environment.contrast
+                                )
+                                : MemoryColorToken.surfaceSidebar.color,
+                            in: RoundedRectangle(cornerRadius: MemoryRadius.card)
+                        )
+                    Text(model.name)
+                        .font(MemoryTypeToken.caption.font)
+                        .lineLimit(1)
+                }
+                .frame(width: 72)
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel(model.accessibilityLabel)
+            .accessibilityHint(
+                model.isSelected ? "Remove application filter" : "Add application filter"
+            )
+            .help(model.isSelected ? "Remove \(model.name)" : "Filter by \(model.name)")
+        }
     }
 }
 
@@ -229,9 +381,11 @@ public struct EvidenceSnippet: View {
                 .foregroundStyle(MemoryColorToken.textTertiary.color)
             Text(model.text)
                 .font(MemoryTypeToken.callout.font)
-                .foregroundStyle(state == .error
-                    ? MemoryColorToken.statusPaused.color
-                    : MemoryColorToken.textSecondary.color)
+                .foregroundStyle(
+                    state == .error
+                        ? MemoryColorToken.statusPaused.color
+                        : MemoryColorToken.textSecondary.color
+                )
                 .lineLimit(model.lineLimit)
         }
         .accessibilityElement(children: .combine)

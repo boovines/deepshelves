@@ -608,7 +608,6 @@ private struct MomentSectionCanvas: View {
     let indexingBacklog: Int
     let contentState: ShellContentState
     let localizationMode: ShellLocalizationMode
-    @FocusState private var searchIsFocused: Bool
     @FocusState private var focusedMomentID: UUID?
 
     var body: some View {
@@ -624,15 +623,13 @@ private struct MomentSectionCanvas: View {
             }
 
             if title == "Search" {
-                TextField("Search your local memory", text: queryBinding)
-                    .textFieldStyle(.roundedBorder)
-                    .focused($searchIsFocused)
-                    .onSubmit { searchFilterModel.commitQuery() }
-                    .accessibilityLabel("Search your local memory")
-                    .accessibilityIdentifier("main.searchField")
-                    .accessibilityHint("Searches only the local archive")
-
-                SharedSearchFilterControls(filterModel: searchFilterModel)
+                SharedSearchComposer(
+                    filterModel: searchFilterModel,
+                    agentPresentation: .unavailable,
+                    openAgentAccess: {
+                        navigationModel.select(section: .settings)
+                    }
+                )
             }
 
             if contentState == .ready {
@@ -660,7 +657,6 @@ private struct MomentSectionCanvas: View {
                     List(Array(ShellMomentFixtures.moments.enumerated()), id: \.element.id) {
                         index, moment in
                         Button {
-                            searchIsFocused = false
                             focusedMomentID = moment.id
                             navigationModel.select(momentID: moment.id)
                         } label: {
@@ -733,7 +729,7 @@ private struct MomentSectionCanvas: View {
         .padding()
         .onReceive(NotificationCenter.default.publisher(for: .shellFocusSearch)) { _ in
             if title == "Search" {
-                searchIsFocused = true
+                focusedMomentID = nil
             } else {
                 navigationModel.select(section: .search)
                 Task { @MainActor in
@@ -752,13 +748,6 @@ private struct MomentSectionCanvas: View {
                 focusedMomentID = selectedID
             }
         }
-    }
-
-    private var queryBinding: Binding<String> {
-        Binding(
-            get: { searchFilterModel.queryText },
-            set: { searchFilterModel.updateQueryText($0) }
-        )
     }
 
     @ViewBuilder

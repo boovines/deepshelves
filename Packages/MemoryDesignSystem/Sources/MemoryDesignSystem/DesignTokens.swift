@@ -128,7 +128,9 @@ public enum MemorySpacing {
     public static let small: CGFloat = 8
     public static let medium: CGFloat = 12
     public static let large: CGFloat = 16
+    public static let section: CGFloat = 20
     public static let xLarge: CGFloat = 24
+    public static let sectionLarge: CGFloat = 28
     public static let xxLarge: CGFloat = 32
     public static let all: [CGFloat] = [xSmall, small, medium, large, xLarge, xxLarge]
 }
@@ -137,6 +139,8 @@ public enum MemoryRadius {
     public static let control: CGFloat = 6
     public static let card: CGFloat = 10
     public static let floatingPanel: CGFloat = 14
+    public static let groupedCard: CGFloat = 20
+    public static let canvas: CGFloat = 22
 }
 
 public enum MemoryControlHeight {
@@ -185,14 +189,15 @@ public struct MemoryTypeToken: Codable, Equatable, Hashable, Sendable {
     ]
 
     public var font: Font {
-        let base: Font = switch nativeStyle {
-        case "caption": .caption
-        case "footnote": .footnote
-        case "callout": .callout
-        case "headline": .headline
-        case "title2": .title2
-        default: .body
-        }
+        let base: Font =
+            switch nativeStyle {
+            case "caption": .caption
+            case "footnote": .footnote
+            case "callout": .callout
+            case "headline": .headline
+            case "title2": .title2
+            default: .body
+            }
         return usesMonospacedDigits ? base.monospacedDigit() : base
     }
 }
@@ -294,20 +299,20 @@ private struct MemoryIncreasedContrastOverrideKey: EnvironmentKey {
     static let defaultValue: Bool? = nil
 }
 
-private extension EnvironmentValues {
-    var memoryReduceMotionOverride: Bool? {
+extension EnvironmentValues {
+    fileprivate var memoryReduceMotionOverride: Bool? {
         get { self[MemoryReduceMotionOverrideKey.self] }
         set { self[MemoryReduceMotionOverrideKey.self] = newValue }
     }
 
-    var memoryIncreasedContrastOverride: Bool? {
+    fileprivate var memoryIncreasedContrastOverride: Bool? {
         get { self[MemoryIncreasedContrastOverrideKey.self] }
         set { self[MemoryIncreasedContrastOverrideKey.self] = newValue }
     }
 }
 
-public extension View {
-    func memoryPreviewAccessibility(
+extension View {
+    public func memoryPreviewAccessibility(
         reduceMotion: Bool? = nil,
         increasedContrast: Bool? = nil
     ) -> some View {
@@ -386,24 +391,32 @@ public struct MemoryDesignTokenSnapshot: Codable, Equatable, Sendable {
         schemaVersion: 1,
         colors: MemoryColorToken.catalog,
         spacing: zip(
-            ["spacing.xSmall", "spacing.small", "spacing.medium", "spacing.large", "spacing.xLarge", "spacing.xxLarge"],
+            [
+                "spacing.xSmall", "spacing.small", "spacing.medium", "spacing.large",
+                "spacing.xLarge", "spacing.xxLarge",
+            ],
             MemorySpacing.all
         ).map { MemoryScalarToken(name: $0.0, points: Double($0.1)) },
         radii: [
             MemoryScalarToken(name: "radius.control", points: Double(MemoryRadius.control)),
             MemoryScalarToken(name: "radius.card", points: Double(MemoryRadius.card)),
-            MemoryScalarToken(name: "radius.floatingPanel", points: Double(MemoryRadius.floatingPanel)),
+            MemoryScalarToken(
+                name: "radius.floatingPanel", points: Double(MemoryRadius.floatingPanel)),
         ],
         controlHeights: [
-            MemoryScalarToken(name: "controlHeight.compact", points: Double(MemoryControlHeight.compact)),
-            MemoryScalarToken(name: "controlHeight.standard", points: Double(MemoryControlHeight.standard)),
-            MemoryScalarToken(name: "controlHeight.searchField", points: Double(MemoryControlHeight.searchField)),
+            MemoryScalarToken(
+                name: "controlHeight.compact", points: Double(MemoryControlHeight.compact)),
+            MemoryScalarToken(
+                name: "controlHeight.standard", points: Double(MemoryControlHeight.standard)),
+            MemoryScalarToken(
+                name: "controlHeight.searchField", points: Double(MemoryControlHeight.searchField)),
         ],
         typography: MemoryTypeToken.catalog,
         motion: MemoryMotionToken.allCases.map(MemoryMotionSnapshot.init),
         accessibility: MemoryAccessibilityTokenSnapshot(
             reduceMotion: "replace movement with opacity",
-            increasedContrast: "strengthen selected surfaces and hairlines while retaining semantic system colors",
+            increasedContrast:
+                "strengthen selected surfaces and hairlines while retaining semantic system colors",
             selectedSurfaceOpacityStandard: 0.16,
             selectedSurfaceOpacityIncreased: 0.28,
             hairlinePhysicalPixelsStandard: 1,

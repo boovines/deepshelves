@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-040",
+  "checkpoint": "visual-memory-first-search-composer",
+  "status": "blocked",
+  "implementationReadiness": "ready",
+  "deferredValidationGate": "H9",
+  "implemented": {
+    "singleSearchStateOwner": "SearchFilterSessionModel",
+    "composerRoutes": [
+      "searchMemory",
+      "askAgent"
+    ],
+    "filterGroups": [
+      "time",
+      "website",
+      "application"
+    ],
+    "applicationFilterPresentation": "accessible-icon-tiles",
+    "agentReadinessSource": "real-detection-required",
+    "productionAgentStateWithoutDetector": "unavailable",
+    "unrestrictedArchiveAccess": false
+  },
+  "verification": {
+    "strictChangedFileFormatting": "passed",
+    "focusedSharedComponentTests": "passed",
+    "searchSessionRegressionTests": "passed",
+    "nativeArm64Compile": "passed",
+    "targetedProhibitedRuntimeSourceAudit": "passed",
+    "applicationRuntimeExecuted": false,
+    "xcuiRuntimeExecuted": false,
+    "screenCaptureKitRuntimeExecuted": false,
+    "appleImageIORuntimeExecuted": false,
+    "videoToolboxRuntimeExecuted": false,
+    "avAssetWriterRuntimeExecuted": false
+  },
+  "knownWarnings": [
+    "ArchiveVectorStore.swift has two pre-existing unused-return compile warnings"
+  ],
+  "remainingGate": "Run installed keyboard, focus, VoiceOver, real client detection, and bounded agent-routing checks on the isolated H9 Mac."
+}

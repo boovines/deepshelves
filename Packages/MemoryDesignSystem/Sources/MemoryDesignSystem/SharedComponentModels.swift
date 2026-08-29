@@ -66,6 +66,127 @@ public struct MemorySearchFieldModel: Equatable, Sendable {
     }
 }
 
+public enum MemoryComposerRoute: String, CaseIterable, Codable, Sendable {
+    case searchMemory
+    case askAgent
+
+    public var title: String {
+        switch self {
+        case .searchMemory: "Search Memory"
+        case .askAgent: "Ask Agent"
+        }
+    }
+
+    public var systemImage: String {
+        switch self {
+        case .searchMemory: "magnifyingglass"
+        case .askAgent: "sparkles"
+        }
+    }
+}
+
+public enum MemoryAgentRouteAvailability: String, Codable, Sendable {
+    case unavailable
+    case ready
+    case permissionDenied
+}
+
+public struct MemoryAgentRoutePresentation: Equatable, Sendable {
+    public let state: MemoryAgentRouteAvailability
+    public let title: String
+    public let message: String
+    public let actionTitle: String?
+    public let systemImage: String
+
+    public init(
+        state: MemoryAgentRouteAvailability,
+        title: String,
+        message: String,
+        actionTitle: String?,
+        systemImage: String
+    ) {
+        self.state = state
+        self.title = title
+        self.message = message
+        self.actionTitle = actionTitle
+        self.systemImage = systemImage
+    }
+
+    public static let unavailable = MemoryAgentRoutePresentation(
+        state: .unavailable,
+        title: "No agent target is available",
+        message: "Connect a supported local client and approve a bounded access policy first.",
+        actionTitle: "Manage Agent Access",
+        systemImage: "terminal"
+    )
+
+    public static let permissionDenied = MemoryAgentRoutePresentation(
+        state: .permissionDenied,
+        title: "This request is outside the approved scope",
+        message:
+            "Review the time, application, site, image, result, and expiry limits before asking again.",
+        actionTitle: "Review Access",
+        systemImage: "lock.shield"
+    )
+
+    public static func ready(targetName: String) -> MemoryAgentRoutePresentation {
+        let normalizedTarget = targetName.trimmingCharacters(in: .whitespacesAndNewlines)
+        precondition(!normalizedTarget.isEmpty, "A ready agent route requires a detected target")
+        return MemoryAgentRoutePresentation(
+            state: .ready,
+            title: "Ask \(normalizedTarget) with bounded access",
+            message:
+                "Only the approved time, application, site, image, result, and expiry scope is shared.",
+            actionTitle: "Review and Ask",
+            systemImage: "lock.shield"
+        )
+    }
+}
+
+public struct MemoryComposerModel: Equatable, Sendable {
+    public let route: MemoryComposerRoute
+    public let query: String
+    public let placeholder: String
+    public let agent: MemoryAgentRoutePresentation
+
+    public init(
+        route: MemoryComposerRoute,
+        query: String,
+        placeholder: String = "Describe what you remember",
+        agent: MemoryAgentRoutePresentation = .unavailable
+    ) {
+        self.route = route
+        self.query = query
+        self.placeholder = placeholder
+        self.agent = agent
+    }
+
+    public var accessibilityLabel: String {
+        switch route {
+        case .searchMemory: "Search Memory composer"
+        case .askAgent: "Ask Agent composer, \(agent.title)"
+        }
+    }
+}
+
+public struct ApplicationFilterTileModel: Identifiable, Codable, Equatable, Hashable, Sendable {
+    public let id: String
+    public let name: String
+    public let systemImage: String
+    public let isSelected: Bool
+
+    public init(id: String, name: String, systemImage: String, isSelected: Bool) {
+        self.id = id
+        self.name = name
+        self.systemImage = systemImage
+        self.isSelected = isSelected
+    }
+
+    public var accessibilityLabel: String {
+        "\(name), \(isSelected ? "selected" : "not selected") application filter"
+    }
+}
+
 public struct FilterTokenModel: Identifiable, Codable, Equatable, Hashable, Sendable {
     public let id: String
     public let label: String
@@ -193,7 +314,8 @@ public struct MemoryResultCardModel: Identifiable, Codable, Equatable, Hashable,
 
     public var accessibilityLabel: String {
         let hostPart = host.map { ", \($0)" } ?? ""
-        return "\(timeText), \(appName)\(hostPart), \(evidence.kind.rawValue), result \(resultPosition) of \(resultCount)"
+        return
+            "\(timeText), \(appName)\(hostPart), \(evidence.kind.rawValue), result \(resultPosition) of \(resultCount)"
     }
 
     public static let fixture = MemoryResultCardModel(

@@ -797,10 +797,10 @@
       "resumeProbe": null
     },
     "LM-040": {
-      "status": "pending",
-      "startedAt": null,
-      "completedAt": null,
-      "gitRevision": null,
+      "status": "blocked",
+      "startedAt": "2026-08-29T11:09:41Z",
+      "completedAt": "2026-08-29T11:13:59Z",
+      "gitRevision": "refs/tags/checkpoints/LM-040-visual-redesign-blocked",
       "previousImplementationCheckpoint": "refs/tags/checkpoints/LM-040-blocked",
       "evidence": [
         "Results/LM-040/report.json",
@@ -811,10 +811,14 @@
         "Results/LM-040/compile-only-summary.txt",
         "Results/LM-040/static-audit.txt",
         "Results/LM-040/swift-format.txt",
-        "Decisions/0006-isolated-runtime-validation.md"
+        "Results/LM-040/redesign-report.json",
+        "Results/LM-040/composer-state-snapshot.json",
+        "Results/LM-040/redesign-verification.txt",
+        "Decisions/0006-isolated-runtime-validation.md",
+        "Decisions/0008-visual-memory-first-interface.md"
       ],
-      "notes": "ADR 0008 reopens visual readiness for a prominent Search Memory / Ask Agent composer and redesigned filters. The historical checkpoint and evidence remain valid for the underlying filter/search behavior; runtime keyboard, VoiceOver, detection, and routing remain H9-only.",
-      "blockedReason": null,
+      "notes": "The visual-memory-first redesign adds one prominent Search Memory / Ask Agent composer to both Search entry points while preserving SearchFilterSessionModel as the sole search/filter state owner. Time pills, approved-site tokens, and accessible application icon tiles operate on the existing hybrid SearchEngine path. Production truthfully remains unavailable until a supported client is actually detected, and the ready model requires an explicit detected target plus bounded policy review.",
+      "blockedReason": "Installed keyboard/focus, VoiceOver, real supported-client detection, and bounded agent-routing behavior are runtime-only H9 criteria. Safe implementation, focused unit/model tests, static audit, and arm64 compilation pass; none substitutes for H9.",
       "requestedHumanGate": null,
       "resumeProbe": null
     },

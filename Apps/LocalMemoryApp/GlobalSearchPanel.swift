@@ -337,21 +337,13 @@ private struct GlobalSearchPanelView: View {
     @ObservedObject var searchModel: SearchSessionModel
     @ObservedObject var searchFilterModel: SearchFilterSessionModel
     @ObservedObject var coordinator: GlobalSearchPanelCoordinator
-    @FocusState private var searchIsFocused: Bool
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            HStack(spacing: 12) {
-                Image(systemName: "magnifyingglass")
-                    .font(.title2)
-                    .foregroundStyle(.secondary)
-                    .accessibilityHidden(true)
-                TextField("Search your local memory", text: queryBinding)
-                    .textFieldStyle(.plain)
-                    .font(.title2)
-                    .focused($searchIsFocused)
-                    .onSubmit { searchFilterModel.commitQuery() }
-                    .accessibilityIdentifier("search.query")
+            HStack {
+                Text("Local Memory")
+                    .font(.headline)
+                Spacer()
                 Text(coordinator.shortcut.displayName)
                     .font(.caption.monospaced())
                     .foregroundStyle(.secondary)
@@ -362,8 +354,15 @@ private struct GlobalSearchPanelView: View {
             .padding(.horizontal, 20)
             .padding(.top, 20)
 
-            SharedSearchFilterControls(filterModel: searchFilterModel)
-                .padding(.horizontal, 20)
+            SharedSearchComposer(
+                filterModel: searchFilterModel,
+                agentPresentation: .unavailable,
+                openAgentAccess: {
+                    navigationModel.select(section: .settings)
+                    coordinator.close()
+                }
+            )
+            .padding(.horizontal, 20)
 
             Divider()
 
@@ -397,13 +396,6 @@ private struct GlobalSearchPanelView: View {
         .task {
             await navigationModel.start()
             await coordinator.start()
-            searchIsFocused = true
-        }
-        .onAppear {
-            Task { @MainActor in
-                await Task.yield()
-                searchIsFocused = true
-            }
         }
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("search.content")
@@ -415,10 +407,4 @@ private struct GlobalSearchPanelView: View {
         return "Cold \(cold) ms · Warm \(warm) ms"
     }
 
-    private var queryBinding: Binding<String> {
-        Binding(
-            get: { searchFilterModel.queryText },
-            set: { searchFilterModel.updateQueryText($0) }
-        )
-    }
 }

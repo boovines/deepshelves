@@ -693,3 +693,20 @@ This file is append-only. Each story records measurements, failures, and durable
 - Application, ScreenCaptureKit, Apple ImageIO, VideoToolbox, AVAssetWriter, XCUITest, and
   media runtime remain prohibited on this laptop. Offscreen synthetic snapshots must pass a
   source audit and are never represented as H9 runtime evidence.
+
+## 2026-08-29 — LM-040 visual-memory-first search and agent composer
+
+- Both main Search and the global panel now share one prominent Search Memory / Ask Agent
+  composer backed by the existing root-owned `SearchFilterSessionModel`; no parallel query or
+  result owner was introduced.
+- Time controls render as compact pills, approved site filters remain explicit removable
+  values, and application filters are accessible icon tiles with text and non-color selection
+  state. All controls mutate the existing hybrid-search request.
+- Agent presentation is deliberately unavailable in production until supported-client
+  detection is real. Deterministic unavailable, detected-ready, and policy-denied models make
+  the trust boundary testable; the ready path requires an explicit detected target and states
+  the bounded time/application/site/image/result/expiry scope.
+- Strict formatting, focused component and search-session unit tests, targeted prohibited-
+  runtime inspection, and a cached native arm64 compile pass. No application, XCUITest,
+  ScreenCaptureKit, ImageIO, VideoToolbox, AVAssetWriter, or media runtime ran; installed
+  interaction and accessibility evidence remains blocked at H9.

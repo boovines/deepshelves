@@ -799,15 +799,52 @@ private struct SignpostedAppSearchEngine: SearchEngine {
     }
 }
 
+struct SharedSearchComposer: View {
+    @ObservedObject var filterModel: SearchFilterSessionModel
+    let agentPresentation: MemoryAgentRoutePresentation
+    let openAgentAccess: () -> Void
+    @State private var route = MemoryComposerRoute.searchMemory
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: MemorySpacing.large) {
+            MemoryComposer(
+                route: $route,
+                query: queryBinding,
+                model: MemoryComposerModel(
+                    route: route,
+                    query: filterModel.queryText,
+                    agent: agentPresentation
+                ),
+                onSearch: { filterModel.commitQuery() },
+                onAgentAction: openAgentAccess
+            )
+
+            if route == .searchMemory {
+                SharedSearchFilterControls(filterModel: filterModel)
+            }
+        }
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("search.composer")
+    }
+
+    private var queryBinding: Binding<String> {
+        Binding(
+            get: { filterModel.queryText },
+            set: { filterModel.updateQueryText($0) }
+        )
+    }
+}
+
 struct SharedSearchFilterControls: View {
     @ObservedObject var filterModel: SearchFilterSessionModel
+    @State private var filtersExpanded = false
 
     private var suggestions: [SearchAutocompleteSuggestion] {
         filterModel.autocompleteSuggestions(for: filterModel.queryText)
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: MemorySpacing.medium) {
             if !filterModel.tokens.isEmpty {
                 FilterTokenBar(
                     tokens: filterModel.tokens.map { token in
@@ -822,70 +859,105 @@ struct SharedSearchFilterControls: View {
                 .accessibilityIdentifier("search.activeFilters")
             }
 
-            HStack(spacing: 8) {
-                Menu {
-                    if filterModel.catalog.applications.isEmpty {
-                        Text("No approved applications indexed")
-                    } else {
-                        ForEach(filterModel.catalog.applications, id: \.bundleID) { application in
-                            Button(application.displayName) {
-                                filterModel.applySuggestion(
-                                    SearchAutocompleteSuggestion(
-                                        kind: .application,
-                                        label: application.displayName,
-                                        canonicalValue: application.bundleID
-                                    )
-                                )
+            DisclosureGroup(isExpanded: $filtersExpanded) {
+                VStack(alignment: .leading, spacing: MemorySpacing.xLarge) {
+                    filterSection("Filter by time") {
+                        HStack(spacing: MemorySpacing.small) {
+                            compactTimeButton("Today", systemImage: "clock") {
+                                applyDay(offset: 0)
+                            }
+                            compactTimeButton("Yesterday", systemImage: "clock.arrow.circlepath") {
+                                applyDay(offset: -1)
+                            }
+                            compactTimeButton("Last week", systemImage: "calendar") {
+                                applyLastSevenDays()
+                            }
+                            if let timeToken = filterModel.tokens.first(where: {
+                                $0.kind == .time
+                            }) {
+                                Button("Clear date") {
+                                    filterModel.removeFilter(id: timeToken.id)
+                                }
+                                .controlSize(.small)
                             }
                         }
                     }
-                } label: {
-                    Label("Apps", systemImage: "app")
-                }
-                .accessibilityIdentifier("search.appPicker")
 
-                Menu {
-                    if filterModel.catalog.hosts.isEmpty {
-                        Text("No approved sites indexed")
-                    } else {
-                        ForEach(filterModel.catalog.hosts, id: \.self) { host in
-                            Button(host) {
-                                filterModel.applySuggestion(
-                                    SearchAutocompleteSuggestion(
-                                        kind: .site,
-                                        label: host,
-                                        canonicalValue: host
-                                    )
-                                )
+                    filterSection("Filter by website") {
+                        if filterModel.catalog.hosts.isEmpty {
+                            Text("No approved websites are indexed")
+                                .font(MemoryTypeToken.callout.font)
+                                .foregroundStyle(MemoryColorToken.textSecondary.color)
+                        } else {
+                            ScrollView(.horizontal) {
+                                HStack(spacing: MemorySpacing.small) {
+                                    ForEach(filterModel.catalog.hosts, id: \.self) { host in
+                                        Button {
+                                            toggleHost(host)
+                                        } label: {
+                                            Label(host, systemImage: "globe")
+                                        }
+                                        .controlSize(.small)
+                                        .buttonStyle(.bordered)
+                                        .tint(
+                                            filterModel.hosts.contains(host)
+                                                ? MemoryColorToken.accent.color : nil
+                                        )
+                                        .accessibilityLabel(
+                                            "\(host), \(filterModel.hosts.contains(host) ? "selected" : "not selected") website filter"
+                                        )
+                                    }
+                                }
                             }
+                            .scrollIndicators(.hidden)
                         }
                     }
-                } label: {
-                    Label("Sites", systemImage: "globe")
-                }
-                .accessibilityIdentifier("search.sitePicker")
 
-                Menu {
-                    Button("Today") { applyDay(offset: 0) }
-                    Button("Yesterday") { applyDay(offset: -1) }
-                    Button("Last 7 days") { applyLastSevenDays() }
-                    if let timeToken = filterModel.tokens.first(where: { $0.kind == .time }) {
-                        Divider()
-                        Button("Clear date filter") {
-                            filterModel.removeFilter(id: timeToken.id)
+                    filterSection("Filter by application") {
+                        if filterModel.catalog.applications.isEmpty {
+                            Text("No approved applications are indexed")
+                                .font(MemoryTypeToken.callout.font)
+                                .foregroundStyle(MemoryColorToken.textSecondary.color)
+                        } else {
+                            ScrollView(.horizontal) {
+                                HStack(spacing: MemorySpacing.large) {
+                                    ForEach(
+                                        filterModel.catalog.applications,
+                                        id: \.bundleID
+                                    ) { application in
+                                        ApplicationFilterTile(
+                                            model: ApplicationFilterTileModel(
+                                                id: application.bundleID,
+                                                name: application.displayName,
+                                                systemImage: appSymbol(
+                                                    bundleID: application.bundleID
+                                                ),
+                                                isSelected: filterModel.applicationBundleIDs
+                                                    .contains(application.bundleID)
+                                            )
+                                        ) {
+                                            toggleApplication(application)
+                                        }
+                                    }
+                                }
+                            }
+                            .scrollIndicators(.hidden)
                         }
                     }
-                } label: {
-                    Label("Date", systemImage: "calendar")
                 }
-                .accessibilityIdentifier("search.datePicker")
-
-                Spacer()
+                .padding(.top, MemorySpacing.large)
+            } label: {
+                Label(
+                    filterModel.tokens.isEmpty
+                        ? "Filters" : "Filters · \(filterModel.tokens.count) active",
+                    systemImage: "line.3.horizontal.decrease.circle"
+                )
+                .font(MemoryTypeToken.headline.font)
             }
-            .controlSize(.small)
+            .accessibilityIdentifier("search.filterPanel")
 
             if !suggestions.isEmpty {
-                HStack(spacing: 8) {
+                HStack(spacing: MemorySpacing.small) {
                     Text("Suggestions")
                         .font(.caption)
                         .foregroundStyle(.secondary)
@@ -902,7 +974,7 @@ struct SharedSearchFilterControls: View {
             }
 
             if filterModel.queryText.isEmpty, filterModel.tokens.isEmpty {
-                HStack(spacing: 8) {
+                HStack(spacing: MemorySpacing.small) {
                     Text("Try")
                         .font(.caption)
                         .foregroundStyle(.secondary)
@@ -918,6 +990,72 @@ struct SharedSearchFilterControls: View {
                 .accessibilityElement(children: .contain)
                 .accessibilityIdentifier("search.examples")
             }
+        }
+    }
+
+    private func filterSection<Content: View>(
+        _ title: String,
+        @ViewBuilder content: () -> Content
+    ) -> some View {
+        VStack(alignment: .leading, spacing: MemorySpacing.medium) {
+            Text(title.uppercased())
+                .font(MemoryTypeToken.caption.font.weight(.semibold))
+                .foregroundStyle(MemoryColorToken.textTertiary.color)
+                .tracking(0.8)
+            content()
+        }
+    }
+
+    private func compactTimeButton(
+        _ title: String,
+        systemImage: String,
+        action: @escaping () -> Void
+    ) -> some View {
+        Button(action: action) {
+            Label(title, systemImage: systemImage)
+        }
+        .buttonStyle(.bordered)
+        .controlSize(.small)
+    }
+
+    private func toggleApplication(_ application: SearchApplicationDescriptor) {
+        if filterModel.applicationBundleIDs.contains(application.bundleID),
+            let token = filterModel.tokens.first(where: {
+                $0.kind == .application && $0.canonicalValue == application.bundleID
+            })
+        {
+            filterModel.removeFilter(id: token.id)
+        } else {
+            filterModel.applySuggestion(
+                SearchAutocompleteSuggestion(
+                    kind: .application,
+                    label: application.displayName,
+                    canonicalValue: application.bundleID
+                )
+            )
+        }
+    }
+
+    private func toggleHost(_ host: String) {
+        if filterModel.hosts.contains(host),
+            let token = filterModel.tokens.first(where: {
+                $0.kind == .site && $0.canonicalValue == host
+            })
+        {
+            filterModel.removeFilter(id: token.id)
+        } else {
+            filterModel.applySuggestion(
+                SearchAutocompleteSuggestion(kind: .site, label: host, canonicalValue: host)
+            )
+        }
+    }
+
+    private func appSymbol(bundleID: String) -> String {
+        switch bundleID {
+        case "com.apple.Safari": "safari"
+        case "com.apple.Calendar": "calendar"
+        case "com.apple.Notes": "note.text"
+        default: "app"
         }
     }
 
