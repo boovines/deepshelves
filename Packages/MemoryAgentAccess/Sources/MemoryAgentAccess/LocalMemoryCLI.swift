@@ -248,38 +248,59 @@ public struct LocalMemoryCLIBackend: Sendable {
 public enum LocalMemoryCLIExecutor {
     public static func execute(
         arguments: [String],
-        backend: LocalMemoryCLIBackend
+        backend: LocalMemoryCLIBackend,
+        auditSink: AgentAccessAuditSink? = nil
     ) async -> LocalMemoryCLIResult {
+        var parsedCommand: CLICommand?
         do {
             let command = try parse(arguments)
+            parsedCommand = command
             try Task.checkCancellation()
             let output: Data
+            let resultCount: Int
             switch command {
             case .status:
                 output = try encode(type: "status", data: await backend.status())
+                resultCount = 0
             case .search(let input):
-                output = try encode(type: "search", data: await backend.search(input))
+                let projection = try await backend.search(input)
+                output = try encode(type: "search", data: projection)
+                resultCount = projection.results.count
             case .timeline(let input):
-                output = try encode(type: "timeline", data: await backend.timeline(input))
+                let projection = try await backend.timeline(input)
+                output = try encode(type: "timeline", data: projection)
+                resultCount = projection.frames.count
             case .moment(let input):
                 output = try encode(type: "moment", data: await backend.moment(input))
+                resultCount = 1
             case .imageResource(let input):
                 output = try encode(
                     type: "imageResource",
                     data: await backend.imageResource(input)
                 )
+                resultCount = 1
             }
             try Task.checkCancellation()
+            try await auditSink?.record(
+                command.auditRecord(outcome: .success, resultCount: resultCount))
             return LocalMemoryCLIResult(
                 exitCode: LocalMemoryCLIExitCode.success.rawValue,
                 standardOutput: output,
                 standardError: Data()
             )
         } catch is CancellationError {
+            try? await auditSink?.record(
+                parsedCommand?.auditRecord(outcome: .cancelled) ?? .statusFailure(.cancelled))
             return failure(.cancelled)
         } catch let error as LocalMemoryCLIError {
+            if let command = parsedCommand {
+                try? await auditSink?.record(command.auditRecord(outcome: auditOutcome(error)))
+            }
             return failure(error)
         } catch {
+            if let command = parsedCommand {
+                try? await auditSink?.record(command.auditRecord(outcome: .failure))
+            }
             return failure(.unavailable)
         }
     }
@@ -398,6 +419,14 @@ public enum LocalMemoryCLIExecutor {
             )
         )
     }
+
+    private static func auditOutcome(_ error: LocalMemoryCLIError) -> AgentAccessAuditOutcome {
+        switch error {
+        case .policyRequired, .policyDenied, .expired, .revoked, .notFound: .denied
+        case .cancelled: .cancelled
+        case .invalidArguments, .unavailable, .integrityFailure: .failure
+        }
+    }
 }
 
 private enum CLICommand: Sendable {
@@ -406,6 +435,70 @@ private enum CLICommand: Sendable {
     case timeline(CLITimelineInput)
     case moment(CLIMomentInput)
     case imageResource(CLIImageResourceInput)
+}
+
+extension CLICommand {
+    fileprivate func auditRecord(
+        outcome: AgentAccessAuditOutcome,
+        resultCount: Int = 0
+    ) -> AgentAccessAuditRecord {
+        switch self {
+        case .status:
+            AgentAccessAuditRecord(
+                operation: .status,
+                outcome: outcome,
+                policyID: nil,
+                resultCount: resultCount,
+                queryHash: nil
+            )
+        case .search(let input):
+            AgentAccessAuditRecord(
+                operation: .search,
+                outcome: outcome,
+                policyID: input.policyID,
+                resultCount: resultCount,
+                queryHash: AgentAccessAuditHasher.hash(input.query)
+            )
+        case .timeline(let input):
+            AgentAccessAuditRecord(
+                operation: .timeline,
+                outcome: outcome,
+                policyID: input.policyID,
+                resultCount: resultCount,
+                queryHash: AgentAccessAuditHasher.hash(
+                    "\(input.interval.start.timeIntervalSince1970):\(input.interval.end.timeIntervalSince1970)"
+                )
+            )
+        case .moment(let input):
+            AgentAccessAuditRecord(
+                operation: .moment,
+                outcome: outcome,
+                policyID: input.policyID,
+                resultCount: resultCount,
+                queryHash: AgentAccessAuditHasher.hash(input.frameID.uuidString.lowercased())
+            )
+        case .imageResource(let input):
+            AgentAccessAuditRecord(
+                operation: .imageResource,
+                outcome: outcome,
+                policyID: input.policyID,
+                resultCount: resultCount,
+                queryHash: AgentAccessAuditHasher.hash(input.resourceID)
+            )
+        }
+    }
+}
+
+extension AgentAccessAuditRecord {
+    fileprivate static func statusFailure(_ outcome: AgentAccessAuditOutcome) -> Self {
+        Self(
+            operation: .status,
+            outcome: outcome,
+            policyID: nil,
+            resultCount: 0,
+            queryHash: nil
+        )
+    }
 }
 
 private struct ParsedArguments {

@@ -1,6 +1,7 @@
 import AppKit
 import Darwin
 import Foundation
+import MemoryAgentAccess
 import MemoryCapture
 import MemoryContracts
 import MemoryDesignSystem
@@ -20,6 +21,7 @@ struct LocalMemoryApp: App {
     @StateObject private var searchFilterModel: SearchFilterSessionModel
     @StateObject private var privacySettingsModel: PrivacySettingsViewModel
     @StateObject private var archiveSecurityModel: ArchiveSecurityViewModel
+    @StateObject private var agentAccessSettingsModel: AgentAccessSettingsViewModel
     private let shellKeyboardMonitor: ShellKeyboardCommandMonitor
 
     private let launchConfiguration: AppLaunchConfiguration
@@ -54,6 +56,9 @@ struct LocalMemoryApp: App {
                 || arguments.contains("--lm020-export-resolver")
         )
         _archiveSecurityModel = StateObject(wrappedValue: archiveSecurityModel)
+        _agentAccessSettingsModel = StateObject(
+            wrappedValue: AgentAccessSettingsViewModel(database: archiveSecurityModel.database)
+        )
         SignedCLIEntrypoint.launchIfRequested(
             arguments: arguments,
             database: archiveSecurityModel.database
@@ -450,6 +455,7 @@ struct LocalMemoryApp: App {
                 searchPanelCoordinator: searchPanelCoordinator,
                 privacySettingsModel: privacySettingsModel,
                 archiveSecurityModel: archiveSecurityModel,
+                agentAccessSettingsModel: agentAccessSettingsModel,
                 opensPrivacyAtLaunch: launchConfiguration.opensPrivacySettingsAtLaunch
             )
             .preferredColorScheme(launchConfiguration.preferredColorScheme)

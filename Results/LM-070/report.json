@@ -1,0 +1,37 @@
+{
+  "story": "LM-070",
+  "revision": "refs/tags/checkpoints/LM-070-blocked",
+  "completedAt": "2026-08-29T08:10:13Z",
+  "proofClass": ["unit", "model", "static", "compile"],
+  "runtimeExecuted": false,
+  "checks": {
+    "policyReviewAndAuditTests": 6,
+    "encryptedAuditStoreTests": 2,
+    "agentAccessRegressionTests": 20,
+    "explicitScopeReviewRequired": true,
+    "sessionChoicesHours": [1, 8, 24],
+    "historyChoicesDays": [1, 7, 30],
+    "foreverOrUnrestrictedChoice": false,
+    "emptyAllowlistsMeanNoContent": true,
+    "imageAccessSeparateOptIn": true,
+    "policyReviewBoundToSHA256Token": true,
+    "helperTransport": "local-stdio",
+    "networkListenerConfigured": false,
+    "auditRawQueryAcceptedByPersistenceAPI": false,
+    "auditQueryFingerprint": "sha256-lowercase-hex",
+    "auditClearPreservesNonAgentAudit": true,
+    "changedFileStrictFormat": "passed",
+    "nativeArm64Compile": "passed",
+    "encoderProcessTripwire": "passed",
+    "settingsOrApplicationRuntimeExecuted": false
+  },
+  "sourceHashes": {
+    "settingsPane": "5c847b2c3c3d79ea264aaf05d991469c2d57a0c9a34a5a9278dd2344cf1bf336",
+    "policyReviewModel": "b54341f96cc693bc34c8ac64e83cafa07b6a35c6a762d2f56cc54528c371e9a3",
+    "typedAuditContract": "66e07956c230eca4a2c857058b4fd1bbb5305edc261217c3059133f93d0b76bd",
+    "auditRecord": "810dfc0ce7d94d537d84e8f7047eefe3a56135cfb25a3df3ff5a16fdcec7bca2",
+    "archiveDatabase": "df8086683d49a3b63236a5b655609c6d574dd6d19f92e2a64f30f1188d571541",
+    "compileLog": "bf1f98f2b9aa8df985fe3426cdaa07b598041d46c40d1bbb8334606325bd58b4"
+  },
+  "deferredValidation": "H9 must inspect and operate the installed signed Agent Access settings pane, create/review/revoke real policies, validate helper diagnostics/configuration with two clients, and confirm live CLI/MCP/image accesses and denials appear in the local content-free audit UI."
+}

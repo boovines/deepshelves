@@ -13,7 +13,11 @@ enum SignedCLIEntrypoint {
         Task.detached {
             let result = await LocalMemoryCLIExecutor.execute(
                 arguments: commandArguments,
-                backend: makeBackend(database: database)
+                backend: makeBackend(database: database),
+                auditSink: SignedAgentAuditComposition.makeSink(
+                    database: database,
+                    actor: .cli
+                )
             )
             if !result.standardOutput.isEmpty {
                 FileHandle.standardOutput.write(result.standardOutput)

@@ -1,0 +1,22 @@
+{
+  "createFlow": ["edit", "review-exact-scope", "approve"],
+  "historyChoices": ["last-24-hours", "last-7-days", "last-30-days"],
+  "sessionChoices": ["1-hour", "8-hours", "24-hours"],
+  "contentScope": {
+    "emptyAllowlists": "none",
+    "imagesDefault": false,
+    "maximumResultsRange": [1, 100]
+  },
+  "activePolicyActions": ["inspect", "revoke"],
+  "audit": {
+    "fields": ["actor", "operation.outcome", "policy-id", "result-count", "query-sha256"],
+    "rawQuery": false,
+    "capturedContent": false,
+    "clearAgentHistoryOnly": true
+  },
+  "helper": {
+    "transport": "stdio",
+    "arguments": ["--mcp"],
+    "listeningSocket": false
+  }
+}

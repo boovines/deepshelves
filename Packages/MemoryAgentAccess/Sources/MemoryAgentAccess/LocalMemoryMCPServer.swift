@@ -30,7 +30,8 @@ public enum LocalMemoryMCPServer {
     public static func process(
         message: Data,
         backend: LocalMemoryCLIBackend,
-        imageBackend: LocalMemoryMCPImageBackend? = nil
+        imageBackend: LocalMemoryMCPImageBackend? = nil,
+        auditSink: AgentAccessAuditSink? = nil
     ) async -> Data? {
         guard message.count <= maximumMessageBytes else {
             return encodeError(id: .null, error: .invalidRequest("message_too_large"))
@@ -63,10 +64,16 @@ public enum LocalMemoryMCPServer {
                 request,
                 id: id,
                 backend: backend,
-                imageBackend: imageBackend
+                imageBackend: imageBackend,
+                auditSink: auditSink
             )
         case ReadResource.name:
-            return await readResource(request, id: id, imageBackend: imageBackend)
+            return await readResource(
+                request,
+                id: id,
+                imageBackend: imageBackend,
+                auditSink: auditSink
+            )
         default:
             return encodeError(id: id, error: .methodNotFound("read_only_method_only"))
         }
@@ -76,7 +83,8 @@ public enum LocalMemoryMCPServer {
         input: FileHandle = .standardInput,
         output: FileHandle = .standardOutput,
         backend: LocalMemoryCLIBackend,
-        imageBackend: LocalMemoryMCPImageBackend? = nil
+        imageBackend: LocalMemoryMCPImageBackend? = nil,
+        auditSink: AgentAccessAuditSink? = nil
     ) async throws {
         try await StdioTransport.run(
             input: input,
@@ -87,7 +95,12 @@ public enum LocalMemoryMCPServer {
                 error: .invalidRequest("message_too_large")
             )
         ) { message in
-            await process(message: message, backend: backend, imageBackend: imageBackend)
+            await process(
+                message: message,
+                backend: backend,
+                imageBackend: imageBackend,
+                auditSink: auditSink
+            )
         }
     }
 
@@ -196,7 +209,8 @@ public enum LocalMemoryMCPServer {
         _ request: RPCRequest,
         id: Value,
         backend: LocalMemoryCLIBackend,
-        imageBackend: LocalMemoryMCPImageBackend?
+        imageBackend: LocalMemoryMCPImageBackend?,
+        auditSink: AgentAccessAuditSink?
     ) async -> Data? {
         let parameters: CallTool.Parameters
         do {
@@ -218,6 +232,15 @@ public enum LocalMemoryMCPServer {
                     throw LocalMemoryCLIError.invalidArguments
                 }
                 let issued = try await imageBackend.issue(frameID, policyID)
+                try await auditSink?.record(
+                    AgentAccessAuditRecord(
+                        operation: .imageIssue,
+                        outcome: .success,
+                        policyID: policyID,
+                        resultCount: 1,
+                        queryHash: AgentAccessAuditHasher.hash(frameID.uuidString.lowercased())
+                    )
+                )
                 let uri = "memory-image://\(issued.resourceID)"
                 return encodeResult(
                     id: id,
@@ -244,6 +267,18 @@ public enum LocalMemoryMCPServer {
                     )
                 )
             } catch {
+                let arguments = parameters.arguments ?? [:]
+                let frameID = arguments["id"]?.stringValue
+                let policyID = arguments["policy"]?.stringValue.flatMap(UUID.init(uuidString:))
+                try? await auditSink?.record(
+                    AgentAccessAuditRecord(
+                        operation: .imageIssue,
+                        outcome: auditOutcome(error),
+                        policyID: policyID,
+                        resultCount: 0,
+                        queryHash: frameID.map(AgentAccessAuditHasher.hash)
+                    )
+                )
                 return encodeError(id: id, error: resourceError(error))
             }
         }
@@ -260,7 +295,11 @@ public enum LocalMemoryMCPServer {
         if arguments.isEmpty {
             return encodeError(id: id, error: .methodNotFound("unknown_read_only_tool"))
         }
-        let result = await LocalMemoryCLIExecutor.execute(arguments: arguments, backend: backend)
+        let result = await LocalMemoryCLIExecutor.execute(
+            arguments: arguments,
+            backend: backend,
+            auditSink: auditSink
+        )
         let responseData =
             result.exitCode == LocalMemoryCLIExitCode.success.rawValue
             ? result.standardOutput : result.standardError
@@ -285,7 +324,8 @@ public enum LocalMemoryMCPServer {
     private static func readResource(
         _ request: RPCRequest,
         id: Value,
-        imageBackend: LocalMemoryMCPImageBackend?
+        imageBackend: LocalMemoryMCPImageBackend?,
+        auditSink: AgentAccessAuditSink?
     ) async -> Data? {
         guard let imageBackend else {
             return encodeError(id: id, error: .methodNotFound("image_resources_unavailable"))
@@ -301,6 +341,15 @@ public enum LocalMemoryMCPServer {
                 throw ImageResourceError.invalidResource
             }
             let image = try await imageBackend.read(resourceID)
+            try await auditSink?.record(
+                AgentAccessAuditRecord(
+                    operation: .imageRead,
+                    outcome: .success,
+                    policyID: nil,
+                    resultCount: 1,
+                    queryHash: AgentAccessAuditHasher.hash(resourceID)
+                )
+            )
             return encodeResult(
                 id: id,
                 result: ReadResource.Result(contents: [
@@ -312,7 +361,28 @@ public enum LocalMemoryMCPServer {
                 ])
             )
         } catch {
+            let resourceID = request.params?.objectValue?["uri"]?.stringValue.map {
+                String($0.dropFirst("memory-image://".count))
+            }
+            try? await auditSink?.record(
+                AgentAccessAuditRecord(
+                    operation: .imageRead,
+                    outcome: auditOutcome(error),
+                    policyID: nil,
+                    resultCount: 0,
+                    queryHash: resourceID.map(AgentAccessAuditHasher.hash)
+                )
+            )
             return encodeError(id: id, error: resourceError(error))
+        }
+    }
+
+    private static func auditOutcome(_ error: Error) -> AgentAccessAuditOutcome {
+        if error is CancellationError { return .cancelled }
+        switch error as? ImageResourceError {
+        case .expired, .policyDenied, .notFound: return .denied
+        case .invalidCapability, .invalidResource, .boundsExceeded, .integrityFailure, .none:
+            return .failure
         }
     }
 

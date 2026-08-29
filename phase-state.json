@@ -25,6 +25,7 @@
         "LM-067",
         "LM-068",
         "LM-069",
+        "LM-070",
         "LM-080"
       ],
       "evidence": []
@@ -1334,13 +1335,20 @@
       "resumeProbe": null
     },
     "LM-070": {
-      "status": "pending",
-      "startedAt": null,
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": null,
-      "blockedReason": null,
+      "status": "blocked",
+      "implementationReadiness": "ready",
+      "deferredValidationGate": "H9",
+      "startedAt": "2026-08-29T08:03:00Z",
+      "completedAt": "2026-08-29T08:10:13Z",
+      "gitRevision": "refs/tags/checkpoints/LM-070-blocked",
+      "evidence": [
+        "Results/LM-070/report.json",
+        "Results/LM-070/settings-model-snapshot.json",
+        "Results/LM-070/runtime-deferred.md",
+        "Decisions/0006-isolated-runtime-validation.md"
+      ],
+      "notes": "Agent Access settings are implementation-ready: edit-review-approve is enforced by a SHA-256-bound scope review, only 1/8/24-hour sessions and 1/7/30-day history windows exist, empty allowlists expose nothing, images require separate opt-in, active policies can be reviewed/revoked, signed-app stdio MCP configuration and executable diagnostics are shown, and typed encrypted audit persistence accepts only operation/outcome plus a query SHA-256—not raw query/content. Six policy/audit model tests, two store tests, twenty CLI/MCP/policy/image regressions, strict formatting, static checks, and arm64 compile pass.",
+      "blockedReason": "Installed Settings interaction, signed helper configuration with two clients, and live audit appearance/clear behavior remain unexecuted because application and UI runtime are prohibited on this laptop. ADR 0006 assigns them to H9.",
       "requestedHumanGate": null,
       "resumeProbe": null
     },

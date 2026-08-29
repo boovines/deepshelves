@@ -1,5 +1,6 @@
 import Foundation
 import GRDB
+import MemoryContracts
 
 public enum ArchiveDatabaseError: Error, Equatable, Sendable {
     case invalidKeyLength
@@ -7,6 +8,7 @@ public enum ArchiveDatabaseError: Error, Equatable, Sendable {
     case cipherIntegrityFailure
     case encryptedArchiveUnavailable
     case invalidPolicyDecisionAudit
+    case invalidAgentAccessAudit
     case invalidActivityGap
     case injectedMigrationInterruption
 }
@@ -347,6 +349,149 @@ public final class ArchiveDatabase: @unchecked Sendable {
                     matchedRuleID: row["matched_rule_id"]
                 )
             }
+        }
+    }
+
+    public func appendAgentAccessAudit(_ record: ArchiveAgentAccessAuditRecord) throws {
+        guard record.occurredAt.timeIntervalSince1970.isFinite,
+            record.resultCount >= 0,
+            Self.isSafeAgentAccessAction(record.action),
+            Self.isSafeQueryHash(record.queryHash)
+        else {
+            throw ArchiveDatabaseError.invalidAgentAccessAudit
+        }
+        let timestamp = record.occurredAt.formatted(
+            Date.ISO8601FormatStyle(includingFractionalSeconds: true, timeZone: .gmt)
+        )
+        try writer.write { database in
+            let policyID = record.policyID?.uuidString.lowercased()
+            let persistedPolicyID: String? =
+                if let policyID,
+                    try Bool.fetchOne(
+                        database,
+                        sql: "SELECT EXISTS(SELECT 1 FROM access_policies WHERE id = ?)",
+                        arguments: [policyID]
+                    ) == true
+                {
+                    policyID
+                } else {
+                    nil
+                }
+            try database.execute(
+                sql: """
+                    INSERT INTO audit_events(
+                        id, occurred_at, actor, action, policy_id, result_count, query_hash
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?)
+                    """,
+                arguments: [
+                    record.id.uuidString.lowercased(),
+                    timestamp,
+                    record.actor.rawValue,
+                    record.action,
+                    persistedPolicyID,
+                    record.resultCount,
+                    record.queryHash,
+                ]
+            )
+        }
+    }
+
+    public func registerAgentAccessPolicy(_ policy: AccessPolicy) throws {
+        try policy.validate()
+        let encoded = String(decoding: try ContractJSON.encode(policy), as: UTF8.self)
+        let expiresAt = policy.expiresAt.formatted(
+            Date.ISO8601FormatStyle(includingFractionalSeconds: true, timeZone: .gmt)
+        )
+        try writer.write { database in
+            try database.execute(
+                sql: """
+                    INSERT INTO access_policies(id, encoded_policy, expires_at, created_by_user)
+                    VALUES (?, ?, ?, ?)
+                    ON CONFLICT(id) DO UPDATE SET
+                        encoded_policy = excluded.encoded_policy,
+                        expires_at = excluded.expires_at,
+                        created_by_user = excluded.created_by_user
+                    """,
+                arguments: [
+                    policy.id.uuidString.lowercased(),
+                    encoded,
+                    expiresAt,
+                    policy.createdByUser ? 1 : 0,
+                ]
+            )
+        }
+    }
+
+    public func agentAccessAudit(limit: Int = 100) throws -> [ArchiveAgentAccessAuditRecord] {
+        guard (1...500).contains(limit) else {
+            throw ArchiveDatabaseError.invalidAgentAccessAudit
+        }
+        return try writer.read { database in
+            let rows = try Row.fetchAll(
+                database,
+                sql: """
+                    SELECT id, occurred_at, actor, action, policy_id, result_count, query_hash
+                    FROM audit_events
+                    WHERE actor IN (?, ?)
+                    ORDER BY occurred_at DESC, id DESC
+                    LIMIT ?
+                    """,
+                arguments: [
+                    ArchiveAgentAccessAuditActor.cli.rawValue,
+                    ArchiveAgentAccessAuditActor.mcp.rawValue,
+                    limit,
+                ]
+            )
+            let style = Date.ISO8601FormatStyle(
+                includingFractionalSeconds: true,
+                timeZone: .gmt
+            )
+            return try rows.map { row in
+                let encodedID: String = row["id"]
+                let encodedDate: String = row["occurred_at"]
+                let encodedActor: String = row["actor"]
+                let action: String = row["action"]
+                let policyValue: String? = row["policy_id"]
+                let queryHash: String? = row["query_hash"]
+                let policyID: UUID?
+                if let policyValue {
+                    guard let parsed = UUID(uuidString: policyValue) else {
+                        throw ArchiveDatabaseError.invalidAgentAccessAudit
+                    }
+                    policyID = parsed
+                } else {
+                    policyID = nil
+                }
+                guard let id = UUID(uuidString: encodedID),
+                    let occurredAt = try? style.parse(encodedDate),
+                    let actor = ArchiveAgentAccessAuditActor(rawValue: encodedActor),
+                    Self.isSafeAgentAccessAction(action),
+                    Self.isSafeQueryHash(queryHash)
+                else {
+                    throw ArchiveDatabaseError.invalidAgentAccessAudit
+                }
+                return ArchiveAgentAccessAuditRecord(
+                    id: id,
+                    occurredAt: occurredAt,
+                    actor: actor,
+                    action: action,
+                    policyID: policyID,
+                    resultCount: row["result_count"],
+                    queryHash: queryHash
+                )
+            }
+        }
+    }
+
+    public func clearAgentAccessAudit() throws {
+        try writer.write { database in
+            try database.execute(
+                sql: "DELETE FROM audit_events WHERE actor IN (?, ?)",
+                arguments: [
+                    ArchiveAgentAccessAuditActor.cli.rawValue,
+                    ArchiveAgentAccessAuditActor.mcp.rawValue,
+                ]
+            )
         }
     }
 
@@ -1068,6 +1213,25 @@ public final class ArchiveDatabase: @unchecked Sendable {
                 || scalar.properties.numericType != nil
                 || punctuation.contains(scalar)
         }
+    }
+
+    private static func isSafeAgentAccessAction(_ value: String) -> Bool {
+        let parts = value.split(separator: ".", omittingEmptySubsequences: false)
+        guard parts.count == 2 else { return false }
+        let operations: Set<Substring> = [
+            "status", "search", "timeline", "moment", "imageResource", "imageIssue",
+            "imageRead",
+        ]
+        let outcomes: Set<Substring> = ["success", "denied", "failure", "cancelled"]
+        return operations.contains(parts[0]) && outcomes.contains(parts[1])
+    }
+
+    private static func isSafeQueryHash(_ value: String?) -> Bool {
+        guard let value else { return true }
+        return value.count == 64
+            && value.unicodeScalars.allSatisfy {
+                (48...57).contains($0.value) || (97...102).contains($0.value)
+            }
     }
 
     private static func count(_ table: String, in database: Database) throws -> Int {

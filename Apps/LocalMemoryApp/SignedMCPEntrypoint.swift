@@ -12,6 +12,10 @@ enum SignedMCPEntrypoint {
                     backend: SignedCLIEntrypoint.makeBackend(database: database),
                     imageBackend: SignedImageResourceComposition.makeBackend(
                         database: database
+                    ),
+                    auditSink: SignedAgentAuditComposition.makeSink(
+                        database: database,
+                        actor: .mcp
                     )
                 )
                 Darwin.exit(EXIT_SUCCESS)

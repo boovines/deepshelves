@@ -1,5 +1,6 @@
 import AppKit
 import Foundation
+import MemoryAgentAccess
 import MemoryContracts
 import MemoryDesignSystem
 import MemorySearch
@@ -897,6 +898,7 @@ struct LocalMemorySettingsView: View {
     @ObservedObject var searchPanelCoordinator: GlobalSearchPanelCoordinator
     @ObservedObject var privacySettingsModel: PrivacySettingsViewModel
     @ObservedObject var archiveSecurityModel: ArchiveSecurityViewModel
+    @ObservedObject var agentAccessSettingsModel: AgentAccessSettingsViewModel
     @State private var selection: LocalMemorySettingsSection
 
     init(
@@ -905,6 +907,7 @@ struct LocalMemorySettingsView: View {
         searchPanelCoordinator: GlobalSearchPanelCoordinator,
         privacySettingsModel: PrivacySettingsViewModel,
         archiveSecurityModel: ArchiveSecurityViewModel,
+        agentAccessSettingsModel: AgentAccessSettingsViewModel,
         opensPrivacyAtLaunch: Bool
     ) {
         self.lifecycleModel = lifecycleModel
@@ -912,6 +915,7 @@ struct LocalMemorySettingsView: View {
         self.searchPanelCoordinator = searchPanelCoordinator
         self.privacySettingsModel = privacySettingsModel
         self.archiveSecurityModel = archiveSecurityModel
+        self.agentAccessSettingsModel = agentAccessSettingsModel
         _selection = State(initialValue: opensPrivacyAtLaunch ? .privacy : .capture)
     }
 
@@ -945,17 +949,9 @@ struct LocalMemorySettingsView: View {
             .tabItem { Label("Search", systemImage: "magnifyingglass") }
             .tag(LocalMemorySettingsSection.search)
 
-            SettingsPane(
-                title: "Agent Access",
-                systemImage: "terminal",
-                rows: [
-                    ("Approved policies", "None"),
-                    ("Unbounded access", "Not available"),
-                    ("Audit", "Local and content-free"),
-                ]
-            )
-            .tabItem { Label("Agents", systemImage: "terminal") }
-            .tag(LocalMemorySettingsSection.agents)
+            AgentAccessSettingsPane(model: agentAccessSettingsModel)
+                .tabItem { Label("Agents", systemImage: "terminal") }
+                .tag(LocalMemorySettingsSection.agents)
 
             SettingsPane(
                 title: "About & Diagnostics",
