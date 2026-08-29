@@ -39,6 +39,38 @@ public struct ForgetOperation: Equatable, Sendable {
     }
 }
 
+public struct ForgetProgressProjection: Equatable, Sendable {
+    public let title: String
+    public let detail: String
+    public let completedCount: Int
+    public let totalCount: Int
+    public let accessibilityLabel: String
+
+    public init(operation: ForgetOperation) {
+        completedCount = max(0, min(operation.completedRewriteCount, operation.totalRewriteCount))
+        totalCount = max(1, operation.totalRewriteCount)
+        switch operation.state {
+        case .queued:
+            title = "Hidden from memory"
+            detail = "Verified physical deletion is queued."
+        case .rewriting:
+            title = "Hidden from memory"
+            detail = "Rewriting affected local storage."
+        case .verifying:
+            title = "Hidden from memory"
+            detail = "Verifying physical deletion."
+        case .complete:
+            title = "Deletion verified"
+            detail = "Physical deletion is complete."
+        case .failed:
+            title = "Deletion needs attention"
+            detail = "The moments remain hidden while physical deletion is unresolved."
+        }
+        accessibilityLabel =
+            "\(title). \(detail) \(completedCount) of \(totalCount) rewrites complete."
+    }
+}
+
 public struct MomentForgetProvider: Sendable {
     private let operation: @Sendable (ForgetTarget) async throws -> ForgetOperation
 

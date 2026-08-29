@@ -983,20 +983,24 @@
       "resumeProbe": null
     },
     "LM-047": {
-      "status": "pending",
-      "startedAt": null,
-      "completedAt": null,
-      "gitRevision": null,
+      "status": "blocked",
+      "startedAt": "2026-08-29T11:27:00Z",
+      "completedAt": "2026-08-29T11:27:29Z",
+      "gitRevision": "refs/tags/checkpoints/LM-047-visual-redesign-blocked",
       "previousImplementationCheckpoint": "refs/tags/checkpoints/LM-047-blocked",
       "evidence": [
         "Results/LM-047/report.json",
         "Results/LM-047/forget-flow-snapshot.json",
         "Results/LM-047/runtime-deferred.md",
         "Decisions/0006-isolated-runtime-validation.md",
-        "Decisions/0007-faster-personal-alpha-verification.md"
+        "Decisions/0007-faster-personal-alpha-verification.md",
+        "Results/LM-047/redesign-report.json",
+        "Results/LM-047/redesign-forget-snapshot.json",
+        "Results/LM-047/redesign-verification.txt",
+        "Decisions/0008-visual-memory-first-interface.md"
       ],
-      "notes": "ADR 0008 reopens visual readiness to integrate Forget into secondary disclosure without changing provisional suppression or verified rewrite. Historical deletion evidence remains valid; the installed and physical runtime journey remains H9-only.",
-      "blockedReason": null,
+      "notes": "Forget Moment is a secondary canvas action and Forget Range lives in moment details. The existing Cancel-default confirmation, immediate suppression, verified physical rewrite, progress, and recovery model remains intact. A dedicated projection now distinguishes hidden/rewriting/verified/failure states and bounds the accessible progress announcement.",
+      "blockedReason": "Installed confirmation focus, Cancel-default interaction, immediate cross-surface disappearance, progress/recovery UI, and physical rewrite verification remain H9-only. Safe action/session tests, semantic snapshots, static audit, and arm64 compilation pass without media or deletion runtime.",
       "requestedHumanGate": null,
       "resumeProbe": null
     },

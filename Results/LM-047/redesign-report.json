@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-047",
+  "checkpoint": "secondary-forget-flow",
+  "status": "blocked",
+  "implementationReadiness": "ready",
+  "deferredValidationGate": "H9",
+  "behavior": {
+    "entryPoint": "secondary-moment-actions",
+    "momentAndRange": true,
+    "cancelDefault": true,
+    "immediateSuppression": true,
+    "physicalRewriteDistinct": true,
+    "failedRewriteRemainsHidden": true,
+    "boundedProgress": true,
+    "diagnosticFailure": true
+  },
+  "verification": {
+    "focusedForgetSessionTests": 4,
+    "cancelInvokesProvider": false,
+    "suppressionAndRecovery": "passed",
+    "progressAccessibilityProjection": "passed",
+    "strictFormatting": "passed",
+    "nativeArm64Compile": "passed-after-one-source-fix",
+    "compileRetryCount": 1,
+    "targetedProhibitedRuntimeSourceAudit": "passed",
+    "applicationRuntimeExecuted": false,
+    "xcuiRuntimeExecuted": false,
+    "hardwareMediaRuntimeExecuted": false
+  },
+  "remainingGate": "Validate installed confirmation focus, Cancel default, immediate cross-surface disappearance, progress, recovery, and physical rewrite on the isolated H9 Mac."
+}

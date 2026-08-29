@@ -771,3 +771,15 @@ This file is append-only. Each story records measurements, failures, and durable
 - Four navigation/restoration tests and six Timeline day/DST/action tests pass, along with
   strict formatting, obsolete-composition/quarantine scans, and native arm64 compilation.
   No app, NSWorkspace action, XCUITest, capture, ImageIO, VideoToolbox, or media runtime ran.
+
+## 2026-08-29 — LM-047 secondary Forget flow
+
+- Forget Moment remains in the canvas action menu and Forget Range remains in moment details,
+  keeping destructive controls available without dominating the screenshot. Cancel is still the
+  default confirmation path and invokes no provider.
+- A new progress projection clearly separates immediate hiding from queued, rewriting,
+  verifying, complete, and failed physical deletion. Counts are bounded for accessibility, and
+  a rewrite failure explicitly says that suppressed moments remain hidden.
+- Four focused tests, strict formatting, targeted quarantine inspection, and final arm64 compile
+  pass. The first compile caught one missing explicit return introduced with the projection; it
+  was corrected once. No app, rewrite, decoder, XCUITest, capture, or media runtime ran.

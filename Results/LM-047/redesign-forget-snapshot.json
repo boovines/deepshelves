@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "surface": "forget-flow",
+  "entry": {
+    "moment": "secondary-actions-menu",
+    "range": "moment-details-disclosure"
+  },
+  "states": [
+    {
+      "state": "confirming",
+      "defaultAction": "Cancel"
+    },
+    {
+      "state": "requesting",
+      "dismissDisabled": true
+    },
+    {
+      "state": "rewriting",
+      "title": "Hidden from memory",
+      "suppressedEverywhere": true
+    },
+    {
+      "state": "complete",
+      "title": "Deletion verified"
+    },
+    {
+      "state": "failed-after-suppression",
+      "title": "Deletion needs attention",
+      "remainsHidden": true
+    }
+  ],
+  "progressAccessibilityFixture": "Hidden from memory. Rewriting affected local storage. 2 of 5 rewrites complete."
+}

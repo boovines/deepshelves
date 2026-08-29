@@ -58,19 +58,24 @@ struct ForgetConfirmationFlow: View {
     }
 
     private func operationStatus(_ operation: ForgetOperation) -> some View {
-        VStack(spacing: 16) {
-            Label("Hidden from memory", systemImage: "eye.slash.fill")
-                .font(.title2)
+        let projection = ForgetProgressProjection(operation: operation)
+        return VStack(spacing: 16) {
+            Label(
+                projection.title,
+                systemImage: operation.state == .complete
+                    ? "checkmark.shield.fill" : "eye.slash.fill"
+            )
+            .font(.title2)
             Text(
                 "The selected moments no longer appear in search, timeline, or agent access."
             )
             .multilineTextAlignment(.center)
             ProgressView(
-                value: Double(operation.completedRewriteCount),
-                total: Double(max(1, operation.totalRewriteCount))
+                value: Double(projection.completedCount),
+                total: Double(projection.totalCount)
             )
             .accessibilityLabel("Physical deletion progress")
-            Text(operation.state.statusText)
+            Text(projection.detail)
                 .font(.callout)
                 .foregroundStyle(.secondary)
             Button("Done") {
@@ -79,6 +84,8 @@ struct ForgetConfirmationFlow: View {
             }
             .keyboardShortcut(.defaultAction)
         }
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel(projection.accessibilityLabel)
         .accessibilityIdentifier("forget.progress")
     }
 

@@ -1,0 +1,15 @@
+LM-047 secondary Forget flow verification
+
+- MemorySearch/ForgetSessionModelTests: 4 passed
+- Cancel remains the default and invokes no provider; exact affected frames hide
+  immediately; request failure is retryable before suppression; rewrite failure
+  after suppression remains hidden; progress projection is bounded and explicit
+- changed-file strict formatting and native arm64 app compile: PASS
+- first compile exposed one missing explicit return after adding a local projection;
+  the source was corrected once and the next compile passed
+- targeted prohibited-runtime source scan: zero matches
+- no application, physical rewrite, decoder, XCUITest, capture, ImageIO,
+  VideoToolbox, AVAssetWriter, or hardware-media runtime executed
+
+Installed confirmation/focus, cross-surface suppression, and physical deletion
+evidence remains H9-only.

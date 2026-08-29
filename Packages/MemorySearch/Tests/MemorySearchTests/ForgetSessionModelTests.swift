@@ -4,6 +4,28 @@ import XCTest
 
 @MainActor
 final class ForgetSessionModelTests: XCTestCase {
+    func testProgressProjectionAnnouncesHiddenAndPhysicalDeletionAsSeparateStates() {
+        let rewriting = ForgetProgressProjection(
+            operation: Self.operation(state: .rewriting, completed: 2, total: 5)
+        )
+        XCTAssertEqual(rewriting.title, "Hidden from memory")
+        XCTAssertEqual(rewriting.completedCount, 2)
+        XCTAssertTrue(rewriting.accessibilityLabel.contains("2 of 5"))
+
+        let failed = ForgetProgressProjection(
+            operation: Self.operation(state: .failed, completed: 9, total: 5)
+        )
+        XCTAssertEqual(failed.title, "Deletion needs attention")
+        XCTAssertEqual(failed.completedCount, 5)
+        XCTAssertTrue(failed.detail.contains("remain hidden"))
+
+        let complete = ForgetProgressProjection(
+            operation: Self.operation(state: .complete, completed: 5, total: 5)
+        )
+        XCTAssertEqual(complete.title, "Deletion verified")
+        XCTAssertTrue(complete.detail.contains("complete"))
+    }
+
     func testCancelIsTheDefaultSafePathAndNeverInvokesProvider() async {
         let calls = CallCounter()
         let operation = Self.operation(state: .queued)
