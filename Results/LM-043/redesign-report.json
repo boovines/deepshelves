@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-043",
+  "checkpoint": "dominant-moment-canvas",
+  "status": "blocked",
+  "implementationReadiness": "ready",
+  "deferredValidationGate": "H9",
+  "canvas": {
+    "dominantForegroundWindowFrame": true,
+    "compactChrome": true,
+    "flankingPreviousNext": true,
+    "lowerLeadingTimestampDisclosure": true,
+    "fitControl": true,
+    "zoomPan": true,
+    "persistentTimelineBelow": true,
+    "permanentInspectorRemoved": true,
+    "secondarySourceAndActions": true
+  },
+  "verification": {
+    "focusedMomentDetailTests": 7,
+    "latestSelectionOnly": "passed",
+    "integrityRevalidation": "passed",
+    "corruptRecovery": "passed",
+    "cacheEviction": "passed",
+    "spatialStepBoundaries": "passed",
+    "strictFormatting": "passed",
+    "nativeArm64Compile": "passed",
+    "targetedProhibitedRuntimeSourceAudit": "passed",
+    "applicationRuntimeExecuted": false,
+    "imageDecodeRuntimeExecuted": false,
+    "xcuiRuntimeExecuted": false,
+    "hardwareMediaRuntimeExecuted": false
+  },
+  "remainingGate": "Validate exact software-HEIC decode latency, zoom/pan, corruption recovery, export, appearance, and installed accessibility on the isolated H9 Mac."
+}

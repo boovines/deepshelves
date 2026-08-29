@@ -1,0 +1,12 @@
+LM-043 dominant canvas verification
+
+- MemorySearch/MomentDetailModelTests: 7 passed
+- latest-selection publication, cache eviction, integrity revalidation, corrupt
+  recovery, transform bounds, step boundaries, and chrome accessibility pass
+- changed-file strict formatting and native arm64 app compile: PASS
+- targeted prohibited-runtime source scan: zero matches
+- no application, software-HEIC decode, ImageIO, XCUITest, ScreenCaptureKit,
+  VideoToolbox, AVAssetWriter, or hardware-media runtime executed
+
+The deterministic JSON is a semantic/geometry snapshot only. Real codec,
+interaction, accessibility, export, and corruption evidence remains H9-only.

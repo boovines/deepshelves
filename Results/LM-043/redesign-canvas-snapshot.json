@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "surface": "moment-canvas",
+  "hierarchy": [
+    "compact-back+application+secondary-actions",
+    "dominant-foreground-window-screenshot",
+    "flanking-previous-next",
+    "lower-leading-date-time",
+    "lower-trailing-fit-control",
+    "persistent-timeline-rail"
+  ],
+  "secondaryDisclosure": [
+    "moment metadata",
+    "exact source evidence",
+    "diagnostics when enabled",
+    "export",
+    "forget moment",
+    "forget range"
+  ],
+  "states": [
+    "loading",
+    "ready",
+    "corrupt-or-unavailable",
+    "empty-source"
+  ],
+  "accessibilityFixture": "Safari, Aug 29 at 2:25 AM, previous moment available, next moment unavailable"
+}

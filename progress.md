@@ -734,3 +734,15 @@ This file is append-only. Each story records measurements, failures, and durable
 - Eight focused projection/grid tests, strict formatting, targeted quarantine inspection, and
   cached arm64 compile pass. Installed disclosure interaction, focus, VoiceOver ordering, and
   layout remain blocked at H9; no prohibited runtime ran.
+
+## 2026-08-29 — LM-043 dominant moment canvas
+
+- Moment detail is now a screenshot-dominant surface: compact chrome, flanking previous/next
+  controls, lower-leading date/time disclosure, lower-trailing fit, and the persistent timeline
+  directly beneath the canvas. The permanent inspector no longer competes with the memory.
+- Moment metadata, exact evidence, diagnostics, export, Forget Moment, and Forget Range remain
+  functional through explicit secondary disclosure. Exact-source validation, latest-selection
+  publication, bounded cache behavior, transforms, and typed corrupt recovery are unchanged.
+- Seven focused detail tests, strict formatting, targeted quarantine inspection, and cached
+  arm64 compile pass. No application, decoder, ImageIO, XCUITest, capture, VideoToolbox,
+  AVAssetWriter, or hardware-media runtime ran; all installed/media behavior remains H9.

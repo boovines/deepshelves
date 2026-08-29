@@ -208,6 +208,34 @@ public enum MomentDetailStepDirection: Equatable, Sendable {
     case next
 }
 
+public struct MomentCanvasChromeProjection: Equatable, Sendable {
+    public let applicationName: String
+    public let timestamp: String
+    public let canStepPrevious: Bool
+    public let canStepNext: Bool
+    public let isTransformed: Bool
+
+    public init(
+        applicationName: String,
+        timestamp: String,
+        canStepPrevious: Bool,
+        canStepNext: Bool,
+        isTransformed: Bool
+    ) {
+        self.applicationName = applicationName
+        self.timestamp = timestamp
+        self.canStepPrevious = canStepPrevious
+        self.canStepNext = canStepNext
+        self.isTransformed = isTransformed
+    }
+
+    public var accessibilityLabel: String {
+        "\(applicationName), \(timestamp), previous moment "
+            + "\(canStepPrevious ? "available" : "unavailable"), next moment "
+            + "\(canStepNext ? "available" : "unavailable")"
+    }
+}
+
 public enum MomentDetailSequence: Sendable {
     public static func adjacent(
         to frameID: UUID,

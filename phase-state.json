@@ -877,10 +877,10 @@
       "resumeProbe": null
     },
     "LM-043": {
-      "status": "pending",
-      "startedAt": null,
-      "completedAt": null,
-      "gitRevision": null,
+      "status": "blocked",
+      "startedAt": "2026-08-29T11:19:00Z",
+      "completedAt": "2026-08-29T11:19:27Z",
+      "gitRevision": "refs/tags/checkpoints/LM-043-visual-redesign-blocked",
       "previousImplementationCheckpoint": "refs/tags/checkpoints/LM-043-blocked",
       "evidence": [
         "Results/LM-043/report.json",
@@ -893,10 +893,14 @@
         "Results/LM-043/swift-format.txt",
         "Results/LM-043/privacy.txt",
         "Results/LM-043/dependencies.txt",
-        "Decisions/0006-isolated-runtime-validation.md"
+        "Results/LM-043/redesign-report.json",
+        "Results/LM-043/redesign-canvas-snapshot.json",
+        "Results/LM-043/redesign-verification.txt",
+        "Decisions/0006-isolated-runtime-validation.md",
+        "Decisions/0008-visual-memory-first-interface.md"
       ],
-      "notes": "ADR 0008 reopens visual readiness for the dominant canvas, compact chrome, spatial stepping, timestamp, and secondary actions. Historical decode/integrity/export behavior remains valid; real media and application behavior remain H9-only.",
-      "blockedReason": null,
+      "notes": "Moment detail now centers the exact foreground-window frame in a dominant rounded canvas. Previous/next controls flank the image, the lower-leading timestamp opens moment/source details, and fit sits lower-trailing. The permanent inspector is removed; metadata, validated evidence, diagnostics, export, and destructive actions use explicit secondary disclosure. The persistent timeline remains immediately below the canvas.",
+      "blockedReason": "Real software-HEIC decode latency, zoom/pan, corruption recovery, export, appearance, keyboard/VoiceOver, and installed interaction remain H9-only. Safe detail models, semantic snapshots, static audit, and arm64 compilation pass without executing media.",
       "requestedHumanGate": null,
       "resumeProbe": null
     },

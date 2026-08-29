@@ -21,6 +21,7 @@ struct SearchMomentDetailView: View {
     @State private var showsForgetConfirmation = false
     @State private var showsSourceDetails = false
     @State private var showsDiagnostics = false
+    @State private var showsInspector = false
     @State private var rangeStart: Date
     @State private var rangeEnd: Date
     @StateObject private var forgetModel: ForgetSessionModel
@@ -104,6 +105,11 @@ struct SearchMomentDetailView: View {
                 onDismiss: { showsForgetConfirmation = false }
             )
         }
+        .popover(isPresented: $showsInspector, arrowEdge: .top) {
+            inspector
+                .frame(width: 380, height: 520)
+                .padding(8)
+        }
         .onReceive(NotificationCenter.default.publisher(for: .shellForgetMoment)) { _ in
             beginForget(.moment(displayedResult.frameID))
         }
@@ -111,35 +117,46 @@ struct SearchMomentDetailView: View {
     }
 
     private var toolbar: some View {
-        HStack {
+        HStack(spacing: 10) {
             Button("Back", systemImage: "chevron.left") { navigationModel.goBack() }
                 .accessibilityIdentifier("detail.back")
-            Divider().frame(height: 18)
-            Button("Previous", systemImage: "arrow.left") { step(.previous) }
-                .disabled(adjacent(.previous) == nil)
-                .accessibilityIdentifier("detail.previous")
-            Button("Next", systemImage: "arrow.right") { step(.next) }
-                .disabled(adjacent(.next) == nil)
-                .accessibilityIdentifier("detail.next")
+                .buttonStyle(.borderless)
+            Text(displayedResult.foreground.applicationName)
+                .font(.headline)
+                .lineLimit(1)
             Spacer()
-            Button("Actual Size") { transform = .identity }
-                .disabled(transform == .identity)
-            Button("Export Moment…", systemImage: "square.and.arrow.up") {
-                exportMoment()
+            Button {
+                showsInspector.toggle()
+            } label: {
+                Label("Moment details", systemImage: "info.circle")
             }
-            .disabled(exportProvider == nil)
-            .accessibilityIdentifier("detail.export")
-            Button("Forget Moment…", systemImage: "trash", role: .destructive) {
-                beginForget(.moment(displayedResult.frameID))
+            .labelStyle(.iconOnly)
+            .buttonStyle(.borderless)
+            .help("Moment details and source")
+            .accessibilityIdentifier("detail.info")
+            Menu {
+                Button("Export Moment…", systemImage: "square.and.arrow.up") {
+                    exportMoment()
+                }
+                .disabled(exportProvider == nil)
+                Button("Forget Moment…", systemImage: "trash", role: .destructive) {
+                    beginForget(.moment(displayedResult.frameID))
+                }
+                .disabled(searchModel.momentForgetProvider == nil)
+            } label: {
+                Label("More moment actions", systemImage: "ellipsis.circle")
             }
-            .disabled(searchModel.momentForgetProvider == nil)
-            .accessibilityIdentifier("detail.forgetMoment")
+            .menuStyle(.borderlessButton)
+            .fixedSize()
+            .accessibilityIdentifier("detail.actions")
         }
+        .padding(.horizontal, 16)
+        .frame(minHeight: 44)
     }
 
     private func detail(_ frame: MomentDetailFrame) -> some View {
-        VStack(spacing: 0) {
-            HStack(spacing: 0) {
+        VStack(spacing: 12) {
+            ZStack {
                 GeometryReader { geometry in
                     let currentScale = min(
                         8,
@@ -160,14 +177,86 @@ struct SearchMomentDetailView: View {
                 }
                 .clipped()
                 .background(Color.black.opacity(0.92))
+                .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
 
-                Divider()
-                inspector
-                    .frame(width: 260)
+                HStack {
+                    canvasStepButton(.previous, systemImage: "chevron.left")
+                    Spacer()
+                    canvasStepButton(.next, systemImage: "chevron.right")
+                }
+                .padding(.horizontal, 16)
+
+                VStack {
+                    Spacer()
+                    HStack(alignment: .bottom) {
+                        Button {
+                            showsInspector = true
+                        } label: {
+                            Label(
+                                displayedResult.capturedAt.formatted(
+                                    date: .abbreviated, time: .shortened),
+                                systemImage: "calendar.badge.clock"
+                            )
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .controlSize(.large)
+                        .help("Show moment details")
+                        .accessibilityIdentifier("detail.timestamp")
+
+                        Spacer()
+
+                        Button {
+                            transform = .identity
+                        } label: {
+                            Label(
+                                "Fit screenshot", systemImage: "arrow.down.right.and.arrow.up.left"
+                            )
+                            .labelStyle(.iconOnly)
+                        }
+                        .buttonStyle(.bordered)
+                        .controlSize(.large)
+                        .disabled(transform == .identity)
+                        .help("Fit screenshot")
+                        .accessibilityIdentifier("detail.fit")
+                    }
+                    .padding(16)
+                }
             }
-            Divider()
+            .accessibilityElement(children: .contain)
+            .accessibilityLabel(canvasChrome.accessibilityLabel)
             SearchMomentTimelineRail(model: timelineModel)
         }
+        .padding(.horizontal, 12)
+        .padding(.bottom, 12)
+    }
+
+    private func canvasStepButton(
+        _ direction: MomentDetailStepDirection,
+        systemImage: String
+    ) -> some View {
+        Button {
+            step(direction)
+        } label: {
+            Image(systemName: systemImage)
+                .font(.title2.weight(.semibold))
+                .frame(width: 44, height: 52)
+        }
+        .buttonStyle(.borderedProminent)
+        .buttonBorderShape(.capsule)
+        .disabled(adjacent(direction) == nil)
+        .help(direction == .previous ? "Previous moment" : "Next moment")
+        .accessibilityLabel(direction == .previous ? "Previous moment" : "Next moment")
+        .accessibilityIdentifier(direction == .previous ? "detail.previous" : "detail.next")
+    }
+
+    private var canvasChrome: MomentCanvasChromeProjection {
+        MomentCanvasChromeProjection(
+            applicationName: displayedResult.foreground.applicationName,
+            timestamp: displayedResult.capturedAt.formatted(date: .abbreviated, time: .shortened),
+            canStepPrevious: adjacent(.previous) != nil,
+            canStepNext: adjacent(.next) != nil,
+            isTransformed: transform != .identity
+        )
     }
 
     private var inspector: some View {

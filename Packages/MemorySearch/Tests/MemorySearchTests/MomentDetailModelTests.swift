@@ -6,6 +6,23 @@ import XCTest
 
 @MainActor
 final class MomentDetailModelTests: XCTestCase {
+    func testCanvasChromeAnnouncesSpatialControlsWithoutColorOrPixels() {
+        let projection = MomentCanvasChromeProjection(
+            applicationName: "Safari",
+            timestamp: "Aug 29 at 2:25 AM",
+            canStepPrevious: true,
+            canStepNext: false,
+            isTransformed: true
+        )
+
+        XCTAssertEqual(projection.applicationName, "Safari")
+        XCTAssertTrue(projection.isTransformed)
+        XCTAssertEqual(
+            projection.accessibilityLabel,
+            "Safari, Aug 29 at 2:25 AM, previous moment available, next moment unavailable"
+        )
+    }
+
     func testRapidSelectionPublishesOnlyTheExactLatestFrame() async throws {
         let first = try result(suffix: 1)
         let second = try result(suffix: 2)
