@@ -17,6 +17,7 @@ struct SearchMomentDetailView: View {
     @GestureState private var transientMagnification = 1.0
     @GestureState private var transientDrag = CGSize.zero
     @State private var exportStatus: String?
+    @State private var exportPackageRoot: URL?
     @State private var showsForgetConfirmation = false
     @State private var rangeStart: Date
     @State private var rangeEnd: Date
@@ -186,7 +187,15 @@ struct SearchMomentDetailView: View {
                 }
             }
             if let exportStatus {
-                Section("Export") { Text(exportStatus) }
+                Section("Export") {
+                    Text(exportStatus)
+                    if let exportPackageRoot {
+                        Button("Show Export in Finder") {
+                            NSWorkspace.shared.activateFileViewerSelecting([exportPackageRoot])
+                        }
+                        .accessibilityIdentifier("detail.revealExport")
+                    }
+                }
             }
             Section("Forget range") {
                 DatePicker("From", selection: $rangeStart)
@@ -253,10 +262,17 @@ struct SearchMomentDetailView: View {
 
     private func exportMoment() {
         guard let exportProvider else { return }
-        exportStatus = "Preparing verified original…"
+        exportStatus = "Preparing verified evidence package…"
+        exportPackageRoot = nil
         Task {
             do {
                 let payload = try await exportProvider.payload(for: displayedResult)
+                if let packageRoot = payload.packageRoot {
+                    exportPackageRoot = packageRoot
+                    exportStatus =
+                        "Exported a self-describing package with verified original evidence."
+                    return
+                }
                 let panel = NSSavePanel()
                 panel.nameFieldStringValue = payload.suggestedFilename
                 panel.allowedContentTypes = [.heic]
@@ -267,6 +283,7 @@ struct SearchMomentDetailView: View {
                 try payload.heicData.write(to: destination, options: [.atomic])
                 exportStatus = "Exported verified original HEIC."
             } catch {
+                exportPackageRoot = nil
                 exportStatus = "Export failed; the archive was not changed."
             }
         }

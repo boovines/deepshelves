@@ -1199,12 +1199,16 @@
       "resumeProbe": null
     },
     "LM-062": {
-      "status": "pending",
-      "startedAt": null,
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": null,
+      "status": "passed",
+      "startedAt": "2026-08-29T03:03:00Z",
+      "completedAt": "2026-08-29T03:13:46Z",
+      "gitRevision": "refs/tags/checkpoints/LM-062",
+      "evidence": [
+        "Results/LM-062/report.json",
+        "Results/LM-062/recovery.md",
+        "Docs/Operations/archive-recovery.md"
+      ],
+      "notes": "Explicit selected-Moment export is self-describing and policy-bounded, verifies original source/manifest bytes without decode, writes JSONL plus timestamped evidence and checksums, revalidates under serialized database publication, and atomically publishes. Integrity, content-free quarantine review, and repair-by-quarantine fail closed and never invent data. Six coordinator and six Moment detail model tests, strict formatting/static safety, and Release app compile-only verification pass under a clean encoder tripwire. The native application/relaunch/key-loss/reset runtime journey remains unchanged in H9.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null

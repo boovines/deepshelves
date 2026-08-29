@@ -300,7 +300,9 @@ enum AppSearchComposition {
     private static func makeMomentExportProvider(
         database: ArchiveDatabase
     ) -> MomentExportProvider? {
-        guard let fileStore = database.fileStore else { return nil }
+        guard let fileStore = database.fileStore,
+            let maintenance = try? ArchiveMaintenanceCoordinator(database: database)
+        else { return nil }
         let sourceStore = ArchiveMomentSourceStore(database: database)
         return MomentExportProvider { result in
             let bytes = try verifiedMomentBytes(
@@ -308,10 +310,24 @@ enum AppSearchComposition {
                 fileStore: fileStore,
                 sourceStore: sourceStore
             )
+            let host = result.browser?.origin.host
+            let scope = try ArchiveExportScope(
+                selectedFrameIDs: [result.frameID],
+                allowedInterval: DateInterval(
+                    start: result.capturedAt,
+                    end: result.capturedAt.addingTimeInterval(0.001)
+                ),
+                allowedBundleIdentifiers: [result.foreground.bundleID],
+                allowedHosts: host.map { Set([$0]) } ?? [],
+                includeOriginalEvidence: true,
+                confirmedByUser: true
+            )
+            let receipt = try maintenance.export(scope: scope)
             return MomentExportPayload(
                 frameID: result.frameID,
                 suggestedFilename: "moment-\(result.frameID.uuidString.lowercased()).heic",
-                heicData: bytes
+                heicData: bytes,
+                packageRoot: receipt.root
             )
         }
     }

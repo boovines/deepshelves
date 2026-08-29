@@ -95,11 +95,18 @@ public struct MomentExportPayload: Equatable, Sendable {
     public let frameID: UUID
     public let suggestedFilename: String
     public let heicData: Data
+    public let packageRoot: URL?
 
-    public init(frameID: UUID, suggestedFilename: String, heicData: Data) {
+    public init(
+        frameID: UUID,
+        suggestedFilename: String,
+        heicData: Data,
+        packageRoot: URL? = nil
+    ) {
         self.frameID = frameID
         self.suggestedFilename = suggestedFilename
         self.heicData = heicData
+        self.packageRoot = packageRoot
     }
 }
 

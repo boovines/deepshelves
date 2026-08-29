@@ -1,0 +1,49 @@
+{
+  "story": "LM-062",
+  "status": "passed",
+  "proofClass": "unit-static-compile",
+  "runtimeSubstitute": false,
+  "implementation": {
+    "explicitExport": "User-confirmed exact frame selection, half-open time/app/site policy bounds, canonical source and manifest verification, metadata JSONL, timestamped original evidence, per-file hashes, hidden staging, serialized final-currentness check, and atomic directory publication",
+    "integrity": "SQLCipher, foreign keys, every ready HEIC chunk record, manifest identity/inventory, source sizes, and SHA-256; malformed ready records fail closed",
+    "quarantineReview": "Top-level content-free reason/size/tree-hash projection; no decode or rendering; symbolic links rejected",
+    "repair": "Bounded startup reconciler quarantines invalid/orphan sources, suppresses all search projections, cancels dependent work, and never invents replacement content",
+    "productFlow": "Selected Moment Export creates the canonical self-describing package and exposes an explicit Finder reveal action",
+    "runbook": "Docs/Operations/archive-recovery.md documents export, integrity, quarantine, repair, key loss, and rollback-safe complete reset"
+  },
+  "focusedTests": {
+    "archiveMaintenanceCoordinatorTests": 6,
+    "momentDetailModelTests": 6,
+    "failures": 0,
+    "archiveMaintenanceElapsedSeconds": 1.289,
+    "momentDetailElapsedSeconds": 0.037
+  },
+  "verification": {
+    "strictChangedFileFormatting": "passed",
+    "targetedPrivacySafetyStaticCheck": "passed",
+    "memoryStoreNativeArm64ReleaseCompile": "passed",
+    "localMemoryAppReleaseCompileOnly": "passed",
+    "encoderServiceTripwire": "clean",
+    "applicationRuntimeExecuted": false,
+    "screenCaptureKitRuntimeExecuted": false,
+    "imageIORuntimeExecuted": false,
+    "videoToolboxRuntimeExecuted": false,
+    "mediaDecodeOrEncodeExecuted": false,
+    "nsWorkspaceActionExecuted": false
+  },
+  "sourceSHA256": {
+    "ArchiveDatabase.swift": "d9a2fef9027c9dc7a83c5c0201e589f65c60de17c2cedb87d889a4806f5f642b",
+    "ArchiveMaintenanceCoordinator.swift": "9cb1db63b0b850872ee3fc120b1a7075470cde84f7c5a6400c78710b05ed1bb9",
+    "ArchiveMaintenanceCoordinatorTests.swift": "c4bf51bbc5ab1220636032eee8207fa85651cb8d3f46e12c1c2d6a44d3a29fe1",
+    "MomentDetailModel.swift": "932214cbc1ca1a7379794d3d36d3e96cfaed4b83167e0bec2540c45f6828c1ff",
+    "SearchPresentation.swift": "c740565c57a40714d32fc10f9c7442a7bc06e3575d61387299c35d7b496f3562",
+    "SearchMomentDetail.swift": "2bcd3d9f5668b0840557088f08e6f48597bf175bc85ad83f2544616a5d63a07c",
+    "archive-recovery.md": "052de953dc8773ff6d43ce6e4e11e1a5a63417e7c26f98986d360598ac1a1884"
+  },
+  "deferredRuntimeEvidenceOwnedByH9": [
+    "native application selected-Moment export and Finder reveal",
+    "real source-media presentation without decode on this host",
+    "repair and relaunch journey",
+    "Keychain key-loss and complete-reset journey"
+  ]
+}

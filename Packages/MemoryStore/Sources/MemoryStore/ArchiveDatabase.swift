@@ -766,6 +766,15 @@ public final class ArchiveDatabase: @unchecked Sendable {
         }
     }
 
+    public func repairArchive() throws -> ArchiveStartupRecoveryReport {
+        guard let paths else { throw ArchiveDatabaseError.encryptedArchiveUnavailable }
+        return try ArchiveStartupRecovery.recover(
+            paths: paths,
+            writer: writer,
+            fileManager: .default
+        )
+    }
+
     func frameColumnNamesForTesting() throws -> Set<String> {
         try writer.read { database in
             Set(try database.columns(in: "frames").map(\.name))
