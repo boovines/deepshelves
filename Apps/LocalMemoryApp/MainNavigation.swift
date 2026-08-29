@@ -639,7 +639,9 @@ private struct MomentSectionCanvas: View {
                             results: searchModel.results,
                             navigationModel: navigationModel,
                             repository: searchModel.momentDetailRepository,
-                            exportProvider: searchModel.momentExportProvider
+                            exportProvider: searchModel.momentExportProvider,
+                            timelineLoader: searchModel.momentTimelineLoader,
+                            thumbnailRepository: searchModel.thumbnailRepository
                         )
                     } else {
                         SharedSearchResultsView(

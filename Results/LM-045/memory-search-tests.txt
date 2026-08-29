@@ -1,0 +1,19 @@
+LM-045 MemorySearch safe unit/model verification
+
+Configuration: SwiftPM Release
+Result: 33 tests executed, 0 failures, 0 unexpected failures.
+Focused LM-045 cases: 6.
+
+Passed coverage:
+- exact rail geometry and source/result identity
+- privacy-safe gap-pattern mapping and transition positions
+- deterministic chronological accessibility projection
+- nearest pointer target and keyboard boundary stepping
+- immediate low-resolution target before dwell promotion
+- rapid-scrub stale thumbnail and full-frame rejection
+- all four zoom reloads around the exact settled frame
+- cached thumbnail current-source revalidation
+
+No application or media runtime was invoked. The 50 ms VTEncoderXPCService tripwire remained
+empty. Raw local log SHA-256:
+5a12c6ad74cb14647ce04a0082a0b83bb41b2faf136fb9e466e2d2fc28334409

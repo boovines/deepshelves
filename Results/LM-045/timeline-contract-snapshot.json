@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-045",
+  "proofClass": "deterministic-model-snapshot",
+  "rail": {
+    "heightPoints": 96,
+    "zoomLevels": ["calendarDay", "sixHours", "oneHour", "fifteenMinutes"],
+    "selection": "nearest-exact-moment-with-earlier-tie-break",
+    "keyboardBoundary": "stop",
+    "applicationTransitions": "stable-position-markers",
+    "accessibilityProjection": "chronological-moment-gap-transition-list"
+  },
+  "gapPatterns": {
+    "paused": "userControl",
+    "idleOrSleep": "inactivity",
+    "excludedFilterFailedOrProtected": "privacy",
+    "permissionOrTargetUnavailable": "unavailable",
+    "meaningDependsOnColor": false,
+    "privacyGapCarriesExcludedIdentity": false
+  },
+  "scrub": {
+    "thumbnailTargetPublishedImmediately": true,
+    "fullFrameDwellMilliseconds": 120,
+    "lateThumbnailCompletion": "discarded",
+    "lateDwellCompletion": "discarded",
+    "cachedThumbnailRevalidated": true
+  },
+  "sourceAdmission": {
+    "requiresReadySearchableNonSuppressedFrame": true,
+    "requiresExactFrameID": true,
+    "requiresCaptureTimeMatch": true,
+    "requiresForegroundContextMatch": true,
+    "requiresBrowserContextMatch": true,
+    "requiresThumbnailLocatorMatch": true,
+    "productionThumbnailRequiresRegularNonSymlinkFile": true,
+    "productionThumbnailRequiresSHA256": true
+  },
+  "runtimeClaim": false
+}

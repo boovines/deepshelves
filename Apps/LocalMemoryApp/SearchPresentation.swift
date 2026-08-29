@@ -71,11 +71,13 @@ enum AppSearchComposition {
         let thumbnailRepository = makeThumbnailRepository(database: database)
         let momentDetailRepository = makeMomentDetailRepository(database: database)
         let momentExportProvider = makeMomentExportProvider(database: database)
+        let momentTimelineLoader = makeMomentTimelineLoader(database: database)
         return SearchSessionModel(
             engine: engine,
             thumbnailRepository: thumbnailRepository,
             momentDetailRepository: momentDetailRepository,
             momentExportProvider: momentExportProvider,
+            momentTimelineLoader: momentTimelineLoader,
             diagnosticsEnabled: diagnosticsEnabled,
             pageRequestBuilder: { (input: SearchSessionInput, cursor: SearchCursor?) in
                 let now = Date()
@@ -196,27 +198,19 @@ enum AppSearchComposition {
             return nil
         }
         let metadata = ArchiveVisualEmbeddingStore(database: database)
+        let validator = SearchThumbnailValidator { result in
+            _ = try verifiedThumbnailBytes(
+                result: result,
+                fileStore: fileStore,
+                metadata: metadata
+            )
+        }
         let loader = SearchThumbnailLoader { result in
-            guard case .archiveRelativePath(let value)? = result.thumbnailLocator else {
-                throw SearchThumbnailError.unavailable
-            }
-            let requestedPath = try ArchiveRelativePath(value)
-            let record = try metadata.readyThumbnail(frameID: result.frameID)
-            guard record.thumbnailPath == requestedPath else {
-                throw SearchThumbnailError.unavailable
-            }
-            let fileURL = fileStore.url(for: requestedPath)
-            let values = try fileURL.resourceValues(forKeys: [
-                .isRegularFileKey,
-                .isSymbolicLinkKey,
-            ])
-            guard values.isRegularFile == true, values.isSymbolicLink != true else {
-                throw SearchThumbnailError.unavailable
-            }
-            let bytes = try Data(contentsOf: fileURL, options: .mappedIfSafe)
-            guard Data(SHA256.hash(data: bytes)) == record.thumbnailHash else {
-                throw SearchThumbnailError.unavailable
-            }
+            let bytes = try verifiedThumbnailBytes(
+                result: result,
+                fileStore: fileStore,
+                metadata: metadata
+            )
             let decoded = try codec.decode(bytes)
             return try SearchThumbnailRaster(
                 width: decoded.raster.width,
@@ -226,8 +220,37 @@ enum AppSearchComposition {
         }
         return SearchThumbnailRepository(
             capacityBytes: 64 * 1_024 * 1_024,
+            validator: validator,
             loader: loader
         )
+    }
+
+    nonisolated private static func verifiedThumbnailBytes(
+        result: SearchResult,
+        fileStore: ArchiveFileStore,
+        metadata: ArchiveVisualEmbeddingStore
+    ) throws -> Data {
+        guard case .archiveRelativePath(let value)? = result.thumbnailLocator else {
+            throw SearchThumbnailError.unavailable
+        }
+        let requestedPath = try ArchiveRelativePath(value)
+        let record = try metadata.readyThumbnail(frameID: result.frameID)
+        guard record.thumbnailPath == requestedPath else {
+            throw SearchThumbnailError.unavailable
+        }
+        let fileURL = fileStore.url(for: requestedPath)
+        let values = try fileURL.resourceValues(forKeys: [
+            .isRegularFileKey,
+            .isSymbolicLinkKey,
+        ])
+        guard values.isRegularFile == true, values.isSymbolicLink != true else {
+            throw SearchThumbnailError.unavailable
+        }
+        let bytes = try Data(contentsOf: fileURL, options: .mappedIfSafe)
+        guard Data(SHA256.hash(data: bytes)) == record.thumbnailHash else {
+            throw SearchThumbnailError.unavailable
+        }
+        return bytes
     }
 
     private static func makeMomentDetailRepository(
@@ -285,6 +308,66 @@ enum AppSearchComposition {
                 suggestedFilename: "moment-\(result.frameID.uuidString.lowercased()).heic",
                 heicData: bytes
             )
+        }
+    }
+
+    private static func makeMomentTimelineLoader(
+        database: ArchiveDatabase
+    ) -> MomentTimelinePageLoader {
+        let query = ArchiveTimelineQuery(database: database)
+        let sourceStore = ArchiveMomentSourceStore(database: database)
+        let calendarTimeZone = TimeZone.autoupdatingCurrent
+        return MomentTimelinePageLoader { request in
+            let horizon = 400.0 * 24 * 60 * 60
+            let page = try query.page(
+                TimelinePageRequest(
+                    interval: DateInterval(
+                        start: request.cursor.addingTimeInterval(-horizon),
+                        end: request.cursor.addingTimeInterval(horizon)
+                    ),
+                    cursor: request.cursor,
+                    zoom: archiveZoom(request.zoom),
+                    calendarTimeZone: calendarTimeZone
+                )
+            )
+            let results = try page.slice.frames.map { frame in
+                let source = try sourceStore.readySource(frameID: frame.frameID)
+                return try SearchResult(
+                    frameID: frame.frameID,
+                    capturedAt: frame.capturedAt,
+                    foreground: frame.foreground,
+                    browser: frame.browser,
+                    thumbnailLocator: frame.thumbnailLocator,
+                    mediaLocator: .archiveRelativePath(source.mediaPath.rawValue),
+                    evidence: [
+                        SearchEvidence(
+                            source: .application,
+                            matchedText: frame.foreground.applicationName,
+                            score: 0
+                        )
+                    ],
+                    textRank: nil,
+                    visualRank: nil,
+                    fusedScore: 0
+                )
+            }
+            return MomentTimelineSourcePage(
+                slice: page.slice,
+                results: results,
+                previousCursor: page.previousCursor?.start,
+                nextCursor: page.nextCursor?.start
+            )
+        }
+    }
+
+    nonisolated private static func archiveZoom(
+        _ zoom: MomentTimelineZoomLevel
+    ) -> TimelineZoomLevel {
+        switch zoom {
+        case .calendarDay: .calendarDay
+        case .sixHours: .sixHours
+        case .oneHour: .oneHour
+        case .fifteenMinutes: .fifteenMinutes
         }
     }
 
@@ -381,8 +464,65 @@ enum AppSearchComposition {
             engine: AppSearchFixtureEngine(mode: mode, results: page.results),
             debounceDuration: .milliseconds(150),
             initialPage: page,
+            momentTimelineLoader: makeFixtureTimelineLoader(),
             diagnosticsEnabled: diagnosticsEnabled,
             pageRequestBuilder: fixtureRequest
+        )
+    }
+
+    private static func makeFixtureTimelineLoader() -> MomentTimelinePageLoader {
+        let source = try? fixtureTimelineSourcePage(results: fixtureResults)
+        return MomentTimelinePageLoader { _ in
+            guard let source else { throw MomentTimelineError.unavailable }
+            return source
+        }
+    }
+
+    nonisolated private static func fixtureTimelineSourcePage(
+        results unsortedResults: [SearchResult]
+    ) throws -> MomentTimelineSourcePage {
+        let results = unsortedResults.sorted { $0.capturedAt < $1.capturedAt }
+        guard let first = results.first, let last = results.last else {
+            throw MomentTimelineError.unavailable
+        }
+        let interval = DateInterval(
+            start: first.capturedAt.addingTimeInterval(-60 * 60),
+            end: last.capturedAt.addingTimeInterval(60 * 60)
+        )
+        let frames = try results.map { result in
+            try TimelineFrameSummary(
+                frameID: result.frameID,
+                capturedAt: result.capturedAt,
+                foreground: result.foreground,
+                browser: result.browser,
+                thumbnailLocator: result.thumbnailLocator
+            )
+        }
+        let transitions = try zip(results, results.dropFirst()).map { previous, current in
+            try ApplicationTransition(
+                occurredAt: current.capturedAt,
+                fromBundleID: previous.foreground.bundleID,
+                toBundleID: current.foreground.bundleID
+            )
+        }
+        let gapStart = first.capturedAt.addingTimeInterval(30 * 60)
+        let gap = try RecordingGap(
+            startedAt: gapStart,
+            endedAt: gapStart.addingTimeInterval(10 * 60),
+            reason: .excluded,
+            approvedBundleID: nil
+        )
+        return MomentTimelineSourcePage(
+            slice: try TimelineSlice(
+                interval: interval,
+                frames: frames,
+                gaps: [gap],
+                applicationTransitions: transitions,
+                transcriptMarkers: []
+            ),
+            results: results,
+            previousCursor: nil,
+            nextCursor: nil
         )
     }
 

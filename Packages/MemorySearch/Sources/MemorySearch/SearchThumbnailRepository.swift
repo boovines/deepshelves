@@ -74,16 +74,34 @@ public struct SearchThumbnailLoader: Sendable {
     }
 }
 
+public struct SearchThumbnailValidator: Sendable {
+    private let operation: @Sendable (SearchResult) async throws -> Void
+
+    public init(operation: @escaping @Sendable (SearchResult) async throws -> Void) {
+        self.operation = operation
+    }
+
+    public func validate(_ result: SearchResult) async throws {
+        try await operation(result)
+    }
+}
+
 public actor SearchThumbnailRepository {
     private let capacityBytes: Int
+    private let validator: SearchThumbnailValidator?
     private let loader: SearchThumbnailLoader
     private var storage: [SearchThumbnailIdentity: SearchThumbnailRaster] = [:]
     private var recency: [SearchThumbnailIdentity] = []
     private var generations: [UUID: Int] = [:]
     private var storedBytes = 0
 
-    public init(capacityBytes: Int, loader: SearchThumbnailLoader) {
+    public init(
+        capacityBytes: Int,
+        validator: SearchThumbnailValidator? = nil,
+        loader: SearchThumbnailLoader
+    ) {
         self.capacityBytes = max(1, capacityBytes)
+        self.validator = validator
         self.loader = loader
     }
 
@@ -94,11 +112,21 @@ public actor SearchThumbnailRepository {
         let generation = (generations[result.frameID] ?? 0) + 1
         generations[result.frameID] = generation
         if let cached = storage[identity] {
+            do {
+                try await validator?.validate(result)
+            } catch {
+                remove(identity)
+                throw error
+            }
+            try Task.checkCancellation()
+            guard generations[result.frameID] == generation else { return nil }
             markRecent(identity)
             return SearchThumbnailResponse(identity: identity, raster: cached)
         }
 
         let raster = try await loader.load(result)
+        try await validator?.validate(result)
+        try Task.checkCancellation()
         guard generations[result.frameID] == generation else { return nil }
         insert(raster, identity: identity)
         return SearchThumbnailResponse(identity: identity, raster: raster)
@@ -141,5 +169,12 @@ public actor SearchThumbnailRepository {
     private func markRecent(_ identity: SearchThumbnailIdentity) {
         recency.removeAll { $0 == identity }
         recency.append(identity)
+    }
+
+    private func remove(_ identity: SearchThumbnailIdentity) {
+        if let removed = storage.removeValue(forKey: identity) {
+            storedBytes -= removed.byteCount
+        }
+        recency.removeAll { $0 == identity }
     }
 }

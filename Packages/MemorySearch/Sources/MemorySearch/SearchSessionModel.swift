@@ -70,6 +70,7 @@ public final class SearchSessionModel: ObservableObject {
     public let thumbnailRepository: SearchThumbnailRepository?
     public let momentDetailRepository: MomentDetailRepository?
     public let momentExportProvider: MomentExportProvider?
+    public let momentTimelineLoader: MomentTimelinePageLoader?
     public let diagnosticsEnabled: Bool
 
     private let engine: any SearchEngine
@@ -87,6 +88,7 @@ public final class SearchSessionModel: ObservableObject {
         thumbnailRepository: SearchThumbnailRepository? = nil,
         momentDetailRepository: MomentDetailRepository? = nil,
         momentExportProvider: MomentExportProvider? = nil,
+        momentTimelineLoader: MomentTimelinePageLoader? = nil,
         diagnosticsEnabled: Bool = false,
         requestBuilder: @escaping RequestBuilder
     ) {
@@ -96,6 +98,7 @@ public final class SearchSessionModel: ObservableObject {
         self.thumbnailRepository = thumbnailRepository
         self.momentDetailRepository = momentDetailRepository
         self.momentExportProvider = momentExportProvider
+        self.momentTimelineLoader = momentTimelineLoader
         self.diagnosticsEnabled = diagnosticsEnabled
         self.requestBuilder = requestBuilder
         pageRequestBuilder = nil
@@ -113,6 +116,7 @@ public final class SearchSessionModel: ObservableObject {
         thumbnailRepository: SearchThumbnailRepository? = nil,
         momentDetailRepository: MomentDetailRepository? = nil,
         momentExportProvider: MomentExportProvider? = nil,
+        momentTimelineLoader: MomentTimelinePageLoader? = nil,
         diagnosticsEnabled: Bool = false,
         pageRequestBuilder: @escaping PageRequestBuilder
     ) {
@@ -122,6 +126,7 @@ public final class SearchSessionModel: ObservableObject {
         self.thumbnailRepository = thumbnailRepository
         self.momentDetailRepository = momentDetailRepository
         self.momentExportProvider = momentExportProvider
+        self.momentTimelineLoader = momentTimelineLoader
         self.diagnosticsEnabled = diagnosticsEnabled
         requestBuilder = { input in try pageRequestBuilder(input, nil) }
         self.pageRequestBuilder = pageRequestBuilder
@@ -139,6 +144,7 @@ public final class SearchSessionModel: ObservableObject {
         thumbnailRepository: SearchThumbnailRepository? = nil,
         momentDetailRepository: MomentDetailRepository? = nil,
         momentExportProvider: MomentExportProvider? = nil,
+        momentTimelineLoader: MomentTimelinePageLoader? = nil,
         diagnosticsEnabled: Bool = false,
         requestBuilder: @escaping @Sendable (String) throws -> SearchRequest
     ) {
@@ -149,6 +155,7 @@ public final class SearchSessionModel: ObservableObject {
             thumbnailRepository: thumbnailRepository,
             momentDetailRepository: momentDetailRepository,
             momentExportProvider: momentExportProvider,
+            momentTimelineLoader: momentTimelineLoader,
             diagnosticsEnabled: diagnosticsEnabled,
             requestBuilder: { input in try requestBuilder(input.query) }
         )

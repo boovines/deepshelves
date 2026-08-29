@@ -4,6 +4,20 @@ import XCTest
 @testable import MemoryStore
 
 final class ArchiveMomentSourceStoreTests: XCTestCase {
+    func testTrustedTimelineLookupReturnsTheExactCurrentReadyLocator() throws {
+        let archive = try ArchiveDatabase.deterministicTestStore()
+        let frameID = UUID(uuidString: "43000000-0000-4000-8000-000000000002")!
+        let path = try seedReadySource(archive, frameID: frameID)
+
+        let record = try ArchiveMomentSourceStore(database: archive).readySource(frameID: frameID)
+
+        XCTAssertEqual(record.frameID, frameID)
+        XCTAssertEqual(record.mediaPath, path)
+        XCTAssertEqual(
+            record.captureEpochID.uuidString.lowercased(), "43000000-0000-4000-8000-000000000010")
+        XCTAssertEqual(record.targetWindowID, 42)
+    }
+
     func testReadySourceRequiresTheExactSearchResultLocatorAndCurrentReadyIdentity() throws {
         let archive = try ArchiveDatabase.deterministicTestStore()
         let frameID = UUID(uuidString: "43000000-0000-4000-8000-000000000001")!

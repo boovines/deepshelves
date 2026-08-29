@@ -1,0 +1,24 @@
+LM-045 static audit — 2026-08-29
+
+PASS: the rail is fixed at 96 points and exposes one-day, six-hour, one-hour, and 15-minute
+zoom levels through a native SwiftUI picker.
+PASS: the projection requires an exact one-to-one frame/result set and exact capture time,
+foreground context, browser context, and thumbnail locator before presenting any moment.
+PASS: paused, idle/sleep, privacy, and unavailable gaps use four distinct patterns plus accessible
+text. Privacy-class gaps cannot carry an approved bundle identifier under the frozen contract.
+PASS: pointer selection clamps to the rail, chooses the nearest exact moment with a stable earlier
+tie break, and keyboard stepping stops at both page boundaries.
+PASS: a scrub publishes the exact low-resolution target immediately, starts independent thumbnail
+and 120 ms dwell work, and uses cancellation plus generations to discard stale completions.
+PASS: production pages use ready-only ArchiveTimelineQuery frames and current exact source
+locators. The shared thumbnail cache verifies current ready/suppression metadata, locator, regular
+non-symlink file identity, and SHA-256 before every cache hit and after decode before insertion.
+PASS: the accessibility projection is deterministic and chronological across moments, gaps, and
+application transitions; each moment row selects the exact projected frame.
+PASS: 33 MemorySearch tests, three MemoryStore tests, strict formatting, privacy/dependency scans,
+and universal Release compile-only verification pass under the encoder-service tripwire.
+
+NOT EXECUTED: application launch, SwiftUI/AppKit interaction, XCUITest, real thumbnail decode,
+software HEIC helper, ScreenCaptureKit, Apple ImageIO, VideoToolbox, hardware-media runtime,
+scrub timing, rendered-pixel inspection, keyboard/VoiceOver runtime, theme/resize/localization
+runtime, or screenshot capture. Safe proof is not runtime evidence.

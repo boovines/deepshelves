@@ -1,0 +1,10 @@
+LM-045 MemoryStore safe database verification
+
+Configuration: SwiftPM Release
+Result: 3 tests executed, 0 failures, 0 unexpected failures.
+
+Passed coverage includes exact current ready locator retrieval, caller-supplied locator mismatch,
+nonready/suppressed source rejection, and approved searchable metadata projection. No S5 spike,
+application, AVFoundation operation, or media runtime was invoked. The 50 ms
+VTEncoderXPCService tripwire remained empty. Raw local log SHA-256:
+5676d3b5a5b9e7705bb47ae11b429175f6d8314c72b3eb7d0c99f05f8c0f02bd

@@ -13,7 +13,8 @@
         "LM-040",
         "LM-041",
         "LM-042",
-        "LM-043"
+        "LM-043",
+        "LM-045"
       ],
       "evidence": []
     }
@@ -878,13 +879,27 @@
       "resumeProbe": null
     },
     "LM-045": {
-      "status": "pending",
-      "startedAt": null,
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": null,
-      "blockedReason": null,
+      "status": "blocked",
+      "implementationReadiness": "ready",
+      "deferredValidationGate": "H9",
+      "startedAt": "2026-08-29T01:31:00Z",
+      "completedAt": "2026-08-29T01:52:37Z",
+      "gitRevision": "refs/tags/checkpoints/LM-045-blocked",
+      "evidence": [
+        "Results/LM-045/report.json",
+        "Results/LM-045/runtime-deferred.md",
+        "Results/LM-045/timeline-contract-snapshot.json",
+        "Results/LM-045/memory-search-tests.txt",
+        "Results/LM-045/memory-store-tests.txt",
+        "Results/LM-045/compile-only-summary.txt",
+        "Results/LM-045/static-audit.txt",
+        "Results/LM-045/swift-format.txt",
+        "Results/LM-045/privacy.txt",
+        "Results/LM-045/dependencies.txt",
+        "Decisions/0006-isolated-runtime-validation.md"
+      ],
+      "notes": "The detail surface now owns an exact 96-point timeline rail with four zoom levels, stable frame positions, typed patterned gaps, application-transition markers, chronological accessibility rows, immediate exact-target thumbnail requests, 120 ms dwell before full-frame promotion, and cancellation generations that reject stale thumbnail or detail completion. Production pages admit only current ready sources; the thumbnail cache revalidates exact ready metadata, regular-file identity, locator, and SHA-256 before every hit and after decode. Thirty-three MemorySearch tests, three MemoryStore tests, strict formatting, static/privacy/dependency audits, deterministic snapshot, and a universal Release compile-only build pass under the encoder tripwire with no prohibited runtime.",
+      "blockedReason": "The acceptance contract requires real S6 thumbnail p95 below 50 ms, full-frame settle p95 below 200 ms, rapid-scrub stale-pixel rejection, keyboard and VoiceOver interaction, window resize, light/dark and Increased Contrast review, 40%-expanded pseudo-localization, and screenshot baselines. Application and media runtime are prohibited on this laptop and ADR 0006 assigns those unchanged checks to H9. Unit/model/static/compile/snapshot evidence does not replace them, so LM-045 remains blocked.",
       "requestedHumanGate": null,
       "resumeProbe": null
     },

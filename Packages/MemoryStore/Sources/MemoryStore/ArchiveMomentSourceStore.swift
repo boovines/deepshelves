@@ -52,6 +52,14 @@ public final class ArchiveMomentSourceStore: @unchecked Sendable {
         frameID: UUID,
         expectedPath: ArchiveRelativePath
     ) throws -> ArchiveMomentSourceRecord {
+        let record = try readySource(frameID: frameID)
+        guard record.mediaPath == expectedPath else {
+            throw ArchiveMomentSourceError.locatorMismatch
+        }
+        return record
+    }
+
+    public func readySource(frameID: UUID) throws -> ArchiveMomentSourceRecord {
         let row = try database.atomicRead { database in
             try Row.fetchOne(
                 database,
@@ -78,11 +86,7 @@ public final class ArchiveMomentSourceStore: @unchecked Sendable {
             )
         }
         guard let row else { throw ArchiveMomentSourceError.sourceUnavailable }
-        let record = try Self.record(row)
-        guard record.mediaPath == expectedPath else {
-            throw ArchiveMomentSourceError.locatorMismatch
-        }
-        return record
+        return try Self.record(row)
     }
 
     private static func record(_ row: Row) throws -> ArchiveMomentSourceRecord {

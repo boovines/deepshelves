@@ -12,6 +12,7 @@ struct SearchMomentDetailView: View {
     let exportProvider: MomentExportProvider?
 
     @StateObject private var model: MomentDetailSessionModel
+    @StateObject private var timelineModel: MomentTimelineSessionModel
     @State private var transform = MomentCanvasTransform.identity
     @GestureState private var transientMagnification = 1.0
     @GestureState private var transientDrag = CGSize.zero
@@ -22,7 +23,9 @@ struct SearchMomentDetailView: View {
         results: [SearchResult],
         navigationModel: MainNavigationViewModel,
         repository: MomentDetailRepository?,
-        exportProvider: MomentExportProvider?
+        exportProvider: MomentExportProvider?,
+        timelineLoader: MomentTimelinePageLoader?,
+        thumbnailRepository: SearchThumbnailRepository?
     ) {
         self.result = result
         self.results = results
@@ -37,6 +40,17 @@ struct SearchMomentDetailView: View {
                 }
             )
         _model = StateObject(wrappedValue: MomentDetailSessionModel(repository: repository))
+        let timelineLoader =
+            timelineLoader
+            ?? MomentTimelinePageLoader { _ in
+                throw MomentTimelineError.unavailable
+            }
+        _timelineModel = StateObject(
+            wrappedValue: MomentTimelineSessionModel(
+                loader: timelineLoader,
+                thumbnailRepository: thumbnailRepository
+            )
+        )
     }
 
     var body: some View {
@@ -56,10 +70,16 @@ struct SearchMomentDetailView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .task(id: result.frameID) {
-            transform = .identity
-            await model.select(result)
+            await timelineModel.load(around: result)
         }
-        .onDisappear { Task { await model.clear() } }
+        .task(id: displayedResult.frameID) {
+            transform = .identity
+            await model.select(displayedResult)
+        }
+        .onDisappear {
+            timelineModel.clear()
+            Task { await model.clear() }
+        }
         .accessibilityIdentifier("detail.root")
     }
 
@@ -86,48 +106,52 @@ struct SearchMomentDetailView: View {
     }
 
     private func detail(_ frame: MomentDetailFrame) -> some View {
-        HStack(spacing: 0) {
-            GeometryReader { geometry in
-                let currentScale = min(
-                    8,
-                    max(1, transform.scale * transientMagnification)
-                )
-                MomentDetailCanvasImage(frame: frame)
-                    .scaleEffect(currentScale)
-                    .offset(
-                        x: transform.offsetX + transientDrag.width,
-                        y: transform.offsetY + transientDrag.height
+        VStack(spacing: 0) {
+            HStack(spacing: 0) {
+                GeometryReader { geometry in
+                    let currentScale = min(
+                        8,
+                        max(1, transform.scale * transientMagnification)
                     )
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .contentShape(Rectangle())
-                    .gesture(magnificationGesture)
-                    .simultaneousGesture(dragGesture(size: geometry.size))
-                    .accessibilityLabel("Exact captured foreground-window frame")
-                    .accessibilityIdentifier("detail.canvas")
-            }
-            .clipped()
-            .background(Color.black.opacity(0.92))
+                    MomentDetailCanvasImage(frame: frame)
+                        .scaleEffect(currentScale)
+                        .offset(
+                            x: transform.offsetX + transientDrag.width,
+                            y: transform.offsetY + transientDrag.height
+                        )
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .contentShape(Rectangle())
+                        .gesture(magnificationGesture)
+                        .simultaneousGesture(dragGesture(size: geometry.size))
+                        .accessibilityLabel("Exact captured foreground-window frame")
+                        .accessibilityIdentifier("detail.canvas")
+                }
+                .clipped()
+                .background(Color.black.opacity(0.92))
 
+                Divider()
+                inspector
+                    .frame(width: 260)
+            }
             Divider()
-            inspector
-                .frame(width: 260)
+            SearchMomentTimelineRail(model: timelineModel)
         }
     }
 
     private var inspector: some View {
         Form {
             Section("Moment") {
-                LabeledContent("Time", value: result.capturedAt.formatted())
-                LabeledContent("Application", value: result.foreground.applicationName)
-                if let title = result.foreground.windowTitle {
+                LabeledContent("Time", value: displayedResult.capturedAt.formatted())
+                LabeledContent("Application", value: displayedResult.foreground.applicationName)
+                if let title = displayedResult.foreground.windowTitle {
                     LabeledContent("Window", value: title)
                 }
-                if let host = result.browser?.origin.host {
+                if let host = displayedResult.browser?.origin.host {
                     LabeledContent("Site", value: host)
                 }
             }
             Section("Evidence") {
-                ForEach(Array(result.evidence.enumerated()), id: \.offset) { _, evidence in
+                ForEach(Array(displayedResult.evidence.enumerated()), id: \.offset) { _, evidence in
                     let projection = SearchEvidenceLineProjection(evidence: evidence)
                     LabeledContent(projection.sourceLabel, value: projection.displayText)
                 }
@@ -174,7 +198,11 @@ struct SearchMomentDetailView: View {
     }
 
     private func adjacent(_ direction: MomentDetailStepDirection) -> SearchResult? {
-        MomentDetailSequence.adjacent(to: result.frameID, direction: direction, in: results)
+        MomentDetailSequence.adjacent(
+            to: displayedResult.frameID,
+            direction: direction,
+            in: results
+        )
     }
 
     private func step(_ direction: MomentDetailStepDirection) {
@@ -187,7 +215,7 @@ struct SearchMomentDetailView: View {
         exportStatus = "Preparing verified original…"
         Task {
             do {
-                let payload = try await exportProvider.payload(for: result)
+                let payload = try await exportProvider.payload(for: displayedResult)
                 let panel = NSSavePanel()
                 panel.nameFieldStringValue = payload.suggestedFilename
                 panel.allowedContentTypes = [.heic]
@@ -216,6 +244,10 @@ struct SearchMomentDetailView: View {
         case .exportFailed:
             "The verified original could not be exported."
         }
+    }
+
+    private var displayedResult: SearchResult {
+        timelineModel.settledResult ?? result
     }
 
 }
