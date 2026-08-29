@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "decision": "Decisions/0008-visual-memory-first-interface.md",
+  "status": "accepted",
+  "date": "2026-08-29",
+  "authority": "owner-requested visual-memory-first redesign",
+  "referenceInspection": {
+    "count": 8,
+    "method": "view_image original detail",
+    "treatment": "composition, hierarchy, density, interaction discoverability, and polish evidence only"
+  },
+  "guidance": [
+    "ui-skills-root",
+    "dimillian/swiftui-ui-patterns",
+    "mengto/design-first-ui-prompting"
+  ],
+  "reopenedStories": [
+    "LM-040",
+    "LM-041",
+    "LM-042",
+    "LM-043",
+    "LM-045",
+    "LM-046",
+    "LM-047",
+    "LM-048"
+  ],
+  "unchangedStories": {
+    "LM-039": "blocked, implementation-ready, H9-deferred root search binding",
+    "LM-044": "passed domain timeline contract",
+    "LM-080": "blocked, implementation-ready, H9-deferred diagnostics"
+  },
+  "runtimeAuthorization": "none",
+  "prohibitedOnOwnerLaptop": [
+    "Local Memory application runtime",
+    "ScreenCaptureKit",
+    "Apple ImageIO",
+    "VideoToolbox",
+    "AVAssetWriter",
+    "XCUITest",
+    "media runtime"
+  ],
+  "h9": {
+    "required": true,
+    "trigger": "after LM-080 and the ADR-0008 LM-048 safe redesign checkpoint",
+    "acceptanceWaived": false
+  },
+  "planFilesUpdated": [
+    "Docs/Plan/00-master-plan.md",
+    "Docs/Plan/01-product-fidelity.md",
+    "Docs/Plan/06-product-ui-design-system.md",
+    "Docs/Plan/10-contracts-and-fixtures.md",
+    "Docs/Plan/11-ux-specification.md",
+    "Docs/Plan/13-implementation-backlog.md",
+    "Docs/Plan/14-goal-thread-runbook.md",
+    "Docs/Operations/H9-isolated-runtime-validation.md",
+    "Results/H9/isolated-validation-ledger.template.json",
+    "phase-state.json"
+  ]
+}

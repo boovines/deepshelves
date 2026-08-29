@@ -676,3 +676,20 @@ This file is append-only. Each story records measurements, failures, and durable
 - Capture admission, search, enrichment, and export have local `OSSignposter` intervals. The Diagnostics pane reads energy condition, resident memory, allocated archive/log sizes, index backlog, capture status, and an honest not-yet-measured monthly baseline only on open or explicit refresh; it has no timer or polling loop.
 - Five focused tests prove content rejection, rotation bounds and permissions, unknown-field sanitization, release-budget health projection, and 500 safe model writes in about 37 ms. The broad safe milestone matrix passes 40 Store, 43 Search, 33 Agent Access, and 2 Shared Query tests plus contracts, privacy, dependency, and universal Release compilation.
 - No application or prohibited runtime ran. The exact installed overhead/dashboard/export/accessibility proof remains H9-020, alongside all earlier deferred stories. The ordered H9 template has 20 items and fails closed on missing, reordered, revision/host-mismatched, failed, or hardware-media-contaminated evidence.
+
+## 2026-08-29 — ADR 0008 visual-memory-first redesign
+
+- Eight owner-supplied reference screenshots were inspected at original detail and treated
+  only as evidence for composition, hierarchy, density, interaction discoverability, and
+  polish. No external name, logo, asset, exact icon, wording, or source is an implementation
+  input.
+- ADR 0008 replaces the permanent database-like three-pane composition with a dominant
+  foreground-window canvas, compact chrome, persistent spatial timeline, prominent Search
+  Memory / Ask Agent composer, secondary provenance/actions, and six-section Settings.
+- LM-039 remains implementation-ready/H9-deferred and LM-044 remains passed. Safe visual
+  readiness for LM-040–LM-043 and LM-045–LM-048 is reopened while all historical checkpoints
+  remain preserved. The previous H9 human action is removed because safe redesign work is
+  now available; H9 resumes only after the redesigned LM-048 checkpoint.
+- Application, ScreenCaptureKit, Apple ImageIO, VideoToolbox, AVAssetWriter, XCUITest, and
+  media runtime remain prohibited on this laptop. Offscreen synthetic snapshots must pass a
+  source audit and are never represented as H9 runtime evidence.

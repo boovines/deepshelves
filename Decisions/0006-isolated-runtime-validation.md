@@ -128,3 +128,11 @@ other dependency-safe implementation can be completed before configuring the iso
 This amendment changes scheduling only: every deferred criterion remains blocked and must
 still receive its original runtime evidence before LM-081 begins. No runtime proof is
 waived, substituted, or authorized on the owner's laptop.
+
+## 2026-08-29 ADR-0008 interface amendment
+
+The owner subsequently authorized dependency-safe visual redesign work after the LM-080
+checkpoint. H9 therefore waits for the ADR-0008 LM-048 redesign checkpoint as well as
+LM-080. H9-003 through H9-010 validate the new composition at that exact later revision.
+This changes scheduling and UI targets only: the complete laptop runtime prohibition and
+every original runtime acceptance criterion remain unchanged.

@@ -1,8 +1,9 @@
 # H9 isolated runtime validation
 
-This is the single ordered runtime session required by ADR 0006 after LM-080 and before
-LM-081. It runs only on a physically distinct, recoverable validation Mac. Nothing in this
-document authorizes application or media runtime on the owner's laptop.
+This is the single ordered runtime session required by ADR 0006 after both the LM-080 safe
+checkpoint and ADR-0008 LM-048 redesign checkpoint, and before LM-081. It runs only on a
+physically distinct, recoverable validation Mac. Nothing in this document authorizes
+application or media runtime on the owner's laptop.
 
 ## Host admission
 
@@ -26,6 +27,14 @@ host, then execute H9-001 through H9-020 without reordering. Each item must reco
 command/journey, tripwire result, pass/fail disposition, and content-free artifact paths.
 The detailed unchanged checks are in each source story's `runtime-deferred.md`, report, or
 blocker. H9-012 additionally produces `Results/LM-063/offline.json`.
+
+H9-003 through H9-010 validate the ADR-0008 composition at the exact final redesign
+revision: dominant foreground-window canvas, compact chrome, spatial moment navigation,
+persistent draggable timeline, Search Memory / Ask Agent composer, real filter and client
+detection, secondary provenance/actions, six-section Settings, semantic appearances,
+minimum geometry, keyboard, VoiceOver, and destructive flows. The reference comparison is
+about composition and usability only; no proprietary name, logo, asset, icon, or wording is
+an acceptance target.
 
 The session fails closed on a missing, failed, skipped, reordered, host-mismatched, or
 revision-mismatched item. Safe unit/model/static/compile/snapshot evidence cannot populate a

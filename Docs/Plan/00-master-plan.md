@@ -2,7 +2,9 @@
 
 ## Goal
 
-Build a personal, local-only macOS application that is functionally faithful to the currently described Coast Local preview:
+Build a personal, local-only macOS application with the visual-memory capabilities publicly
+demonstrated by comparable products, expressed through Local Memory's independent native
+interface:
 
 - Quiet, always-available visual memory
 - On-device Accessibility extraction, OCR, and visual retrieval
@@ -14,7 +16,10 @@ Build a personal, local-only macOS application that is functionally faithful to 
 - A complete visual-memory personal alpha; optional audio is deferred outside this critical path
 - No accounts, cloud storage, telemetry, remote AI, or required network access
 
-This is an independent implementation of public product behavior. It must not copy Coast code, assets, wording, or proprietary visual design.
+This is an independent implementation of public product behavior. It must not copy another
+product's code, name, logo, assets, exact icons, wording, or proprietary visual identity.
+Reference screenshots are evidence for composition, hierarchy, density, interaction
+discoverability, and polish only. ADR 0008 is the canonical interface direction.
 
 ## Architecture decision
 
@@ -192,12 +197,18 @@ FTS and visual ranks use reciprocal-rank fusion. Exact identifiers, titles, apps
 - Menu-bar utility with a real main window.
 - Menu bar: status, pause/resume, search, forget recent, settings, quit.
 - Global search panel: 760 × 620 points, centered, keyboard-first.
-- Main window: 1120 × 760 default, 840 × 560 minimum.
-- Sidebar: Search, Timeline, Activity, Settings.
-- Result grid: three columns at default width.
-- Detail: screenshot canvas, provenance inspector, 96-point bottom timeline.
-- SF Pro, SF Symbols, dynamic system surfaces, one system-indigo accent.
-- 4-point spacing grid and fixed radius/motion tokens.
+- Main window: 1180 × 800 default, 880 × 600 minimum.
+- Timeline-first composition with a dominant foreground-window screenshot canvas, compact
+  Search/Settings actions, spatial previous/next controls, lower-leading date/time, and a
+  persistent bottom timeline rail.
+- Search uses one prominent Search Memory / Ask Agent composer backed by the existing
+  root-owned `SearchSessionModel`, with visible time/site/application filtering.
+- Provenance and destructive actions use secondary disclosure rather than a permanently
+  dominant inspector.
+- Settings uses a 240–280 point sidebar for General, Agents, Appearance, Capture, Storage,
+  and Exclusions with spacious 18–22 point grouped cards.
+- SF Pro, SF Symbols, semantic Light/Dark/System surfaces, one restrained azure accent,
+  the 4-point spacing grid, and governed shape/motion tokens.
 
 No third-party visual component framework is used. Reusable controls live in MemoryDesignSystem and require previews, keyboard states, accessibility labels, and screenshot fixtures.
 
@@ -288,7 +299,8 @@ The agent may automatically fix failures within the active story. It may not sil
 1. Three normal workdays without disruptive resource use. During this observation window,
    Codex is fully stopped and resumes only after the user manually returns with the report.
 2. Exact and visual retrieval meet thresholds.
-3. Search, screenshot detail, and timeline provide Coast-style recall.
+3. Search, screenshot detail, and the spatial timeline provide fast visual recall through
+   Local Memory's independent visual-memory-first interface.
 4. Pause, exclusions, retention, deletion, and export survive failure tests.
 5. Normal use makes zero outbound connections.
 6. Database text is SQLCipher-encrypted and media protection is described accurately.
@@ -297,7 +309,8 @@ The agent may automatically fix failures within the active story. It may not sil
 9. Installation, permissions, migration, rollback, export, and recovery are rehearsed.
 10. UI passes keyboard, VoiceOver, light/dark, and screenshot review.
 11. Every LM story is complete or removed through an ADR.
-12. Every remaining Coast fidelity difference is documented.
+12. Every intentional difference from the selected visual references is documented without
+    copying proprietary branding or weakening Local Memory's privacy model.
 
 ## Research basis
 

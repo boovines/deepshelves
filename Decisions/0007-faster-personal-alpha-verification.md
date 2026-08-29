@@ -60,6 +60,11 @@ The already-completed LM-049–LM-055 Visual Recall work needs no redundant new 
 rerun. A story may still demand its own expensive gate when that gate is the story's stated
 deliverable.
 
+ADR 0008 later reopens LM-040–LM-043 and LM-045–LM-048 for a visual-memory-first redesign.
+The same focused per-story cadence applies, followed by one refreshed Recall UI milestone
+at LM-048. The earlier Recall milestone remains historical evidence and is not overwritten.
+H9 moves after that refreshed safe checkpoint without adding another broad gate per story.
+
 Treat LM-039–LM-046 as one Recall UI implementation stream. Preserve each story's
 technical `blocked` status, `implementationReadiness: ready`, and H9 ledger entry. Continue
 LM-047 and LM-048 using those safe dependencies. Unit/model/static/compile/snapshot proof

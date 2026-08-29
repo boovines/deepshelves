@@ -4,7 +4,9 @@
 
 Build a single-user macOS application that provides the capabilities Coast Local publicly describes today: ambient screen memory, local enrichment, fast recall, a visual timeline, activity summaries, privacy controls, and scoped access for local agents.
 
-This plan targets functional equivalence, not copied branding, assets, wording, or pixel-identical UI.
+This plan targets functional equivalence and comparable interaction clarity, not copied
+branding, assets, wording, icons, source, or pixel-identical UI. ADR 0008 adopts the
+reference composition principles while keeping an independent Local Memory identity.
 
 ## Product definition
 
@@ -50,7 +52,15 @@ The user presses a global shortcut, types “lamp today,” sees screenshot card
 
 ### Recall by time
 
-The user opens Today, sees an hourly timeline, jumps to 2:30 PM, and reviews the surrounding sequence of application changes.
+The user opens Timeline into a large screenshot canvas, moves spatially between moments,
+drags a persistent app-interval rail to 2:30 PM, and reviews surrounding foreground-window
+changes without implying that the whole desktop was captured.
+
+### Ask an agent
+
+The user switches the prominent composer from Search Memory to Ask Agent, reviews a bounded
+time/app/site/image scope, and routes the request only to a genuinely detected local target.
+No route can grant unrestricted or nonexpiring archive access.
 
 ### Activity review
 
@@ -76,6 +86,7 @@ A local MCP client asks for activity during a bounded time range. The app return
 - Accessibility-first extraction with OCR fallback
 - Hybrid lexical and visual-semantic retrieval
 - Screenshot grid, result detail, timeline, filters, and activity analytics
+- Light, Dark, and dynamically resolving System appearance; a fresh profile starts Light
 - Local CLI and MCP interface
 - No default outbound network access
 - Deletion, exclusion, and retention controls
@@ -102,6 +113,9 @@ A local MCP client asks for activity during a bounded time range. The app return
 6. Deletion must remove media, indexes, derived data, and cached previews.
 7. Agent access is narrower than human access by default.
 8. Every model and dependency must run locally after installation.
+9. The screenshot is the primary content; provenance and destructive actions remain one
+   deliberate disclosure away.
+10. Every visible control performs a real supported action or is omitted.
 
 ## Success metrics
 

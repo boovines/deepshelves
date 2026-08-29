@@ -54,6 +54,14 @@ LM-039–LM-046 form one Recall UI implementation stream and remain technically 
 until H9. LM-075–LM-079 are `adr_removed` by ADR 0007 and are skipped without being called
 implemented or passed. LM-080 depends on LM-074 for the personal alpha.
 
+ADR 0008 reopens the safe visual readiness of LM-040–LM-043 and LM-045–LM-048 after the
+original LM-080 checkpoint. Their historical checkpoints and evidence stay immutable.
+Execute them again in dependency order, recording the prior checkpoint and new redesign
+evidence; LM-039 remains H9-deferred/implementation-ready and LM-044 remains passed. H9 is
+not the next human action until the redesigned LM-048 milestone is safely checkpointed.
+Remove a stale H9 `HUMAN-ACTION.md` while this newly authorized safe work is active, and
+recreate it only when H9 again becomes the next unavoidable prerequisite.
+
 ### Prohibited runtime on the owner's laptop
 
 The owner does not authorize application, ScreenCaptureKit, ImageIO, VideoToolbox, or
@@ -63,7 +71,8 @@ static, compile, and deterministic offscreen snapshot checks are allowed only af
 inspection proves they cannot reach a prohibited runtime. Reports must name these proof
 classes honestly and list the original runtime acceptance separately.
 
-ADR 0006 moves all such deferred checks into one H9 ledger after LM-080 and before LM-081 on an isolated
+ADR 0006 moves all such deferred checks into one H9 ledger after LM-080 and the ADR-0008
+LM-048 redesign checkpoint, and before LM-081, on an isolated
 validation Mac. A story remains `blocked`; `implementationReadiness: ready` merely allows
 safe downstream implementation. If a story cannot be implemented further without one of
 the prohibited runtimes, record the exact boundary and stop it rather than guessing.

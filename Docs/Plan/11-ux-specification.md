@@ -2,7 +2,11 @@
 
 ## Product posture
 
-The app should feel like a quiet, trustworthy macOS utility, not a dashboard and not a browser page in a window. It records without demanding attention, makes recall fast from the keyboard, and always exposes whether capture is active. Native behavior and legibility outrank novelty.
+The app should feel like a quiet, trustworthy visual memory, not a dashboard, database
+browser, or browser page in a window. The selected foreground-window screenshot is the
+primary object. Controls are compact, spatial, and disclosed at the moment they are useful;
+capture truth remains continuously available. Native behavior and legibility outrank
+novelty.
 
 SwiftUI and selective AppKit interop are the UI framework. `MemoryDesignSystem` standardizes tokens and composed controls. gluestack is not used because it targets React Native/Expo and would not supply native macOS focus, menus, windowing, accessibility, or energy behavior.
 
@@ -12,11 +16,12 @@ SwiftUI and selective AppKit interop are the UI framework. `MemoryDesignSystem` 
 |---|---|---|
 | Menu-bar popover | 320 × content, maximum 520 high | Status, pause/resume, search, forget recent, settings, quit |
 | Global search panel | 760 × 620, minimum 640 × 480 | Centered non-activating `NSPanel`; becomes key when invoked; remembers display |
-| Main window | 1120 × 760 default; 840 × 560 minimum | Restorable; opens last section and selection |
-| Sidebar | 184 default; 168...240 | Search, Timeline, Activity, Settings |
-| Detail inspector | 264 default; 220...360 | Collapsible provenance/actions; hidden below 900-point width |
-| Timeline rail | 96 high | Fixed beneath detail canvas; keyboard and pointer scrubbing |
-| Settings window | 680 × 560 | Native toolbar sections; no modal wizard after onboarding |
+| Main window | 1180 × 800 default; 880 × 600 minimum | Restorable; opens the last meaningful Timeline/Search/Activity location |
+| Main chrome | 52 high | Compact Search and Settings actions; no permanent database sidebar |
+| Secondary disclosure | 320 preferred; sheet/popover at minimum width | Provenance, evidence, Revisit, Export, and Forget |
+| Timeline rail | 104 high | Persistent beneath canvas; pointer/keyboard scrub, app intervals, playhead, zoom |
+| Settings window | 1040 × 720; 840 × 600 minimum | 260-point sidebar and independently scrolling content |
+| Settings sidebar | 260 default; 240...280 | General, Agents, Appearance, Capture, Storage, Exclusions |
 
 The global search panel is a distinct scene backed by the same navigation/search state, not a second product implementation.
 
@@ -28,42 +33,51 @@ Use semantic system colors through SwiftUI/AppKit bridges; never hard-code light
 
 | Token | macOS semantic source | Use |
 |---|---|---|
-| `surface.window` | `windowBackgroundColor` | Window/root |
-| `surface.sidebar` | `underPageBackgroundColor` | Sidebar |
-| `surface.control` | `controlBackgroundColor` | Cards, fields |
+| `surface.window` | semantic warm-window resolver | Window/root; warm white in Light, authored dark surface in Dark |
+| `surface.sidebar` | semantic sidebar resolver | Slightly tinted Light sidebar and distinct Dark sidebar |
+| `surface.control` | semantic raised-surface resolver | White Light cards and elevated Dark cards |
 | `surface.selected` | `selectedContentBackgroundColor` at reduced opacity | Selection |
 | `text.primary` | `labelColor` | Main labels |
 | `text.secondary` | `secondaryLabelColor` | Metadata |
 | `text.tertiary` | `tertiaryLabelColor` | Hints |
 | `border.default` | `separatorColor` | Hairlines |
-| `accent` | `systemIndigo` | Focus, active selection, primary action |
+| `accent` | semantic azure resolver | Focus, active selection, primary action, playhead |
 | `status.recording` | `systemRed` | Recording dot only |
 | `status.paused` | `systemOrange` | Paused state |
 | `status.success` | `systemGreen` | Verified completion |
 
-No gradients. Materials may appear only in the menu popover and floating search chrome, using system material without custom tint. Screenshots remain color-neutral and never receive decorative overlays.
+No decorative gradients. Materials may appear only in the menu popover, composer, and
+compact floating canvas chrome, using system material without a custom tint. Screenshots
+remain color-neutral and never receive decorative overlays. Fresh profiles resolve to
+Light. System mode follows the effective `NSAppearance` dynamically.
 
 ### Spacing, shape, and type
 
-- Spacing scale: 4, 8, 12, 16, 24, 32 points.
-- Corner radii: 6 for controls, 10 for cards, 14 for floating panels.
+- Spacing scale: 4, 8, 12, 16, 20, 24, 28, 32 points.
+- Corner radii: 8 for compact controls, 12 for screenshot/result cards, 20 for grouped
+  settings/composer surfaces, 22 for the primary canvas container.
 - Hairline: one physical pixel using display scale.
 - Control heights: 28 compact, 32 standard, 36 search field.
 - Typography: native `.caption`, `.footnote`, `.callout`, `.body`, `.headline`, `.title2`; monospaced digits for timecodes.
 - Search result title: `.headline`, maximum one line. Evidence: `.callout`, maximum two lines. Metadata: `.caption`.
 - Motion durations: 100 ms focus/hover, 180 ms selection/layout, 260 ms panel presentation. Honor Reduce Motion by replacing movement with opacity.
-- Shadows: system window shadow only; cards use borders and surface contrast, not drop shadows.
+- Shadows: restrained semantic elevation on major floating/grouped surfaces; never stack a
+  heavy border and shadow or place cards inside visually redundant cards.
 
 ## Reusable controls
 
 `MemoryDesignSystem` owns:
 
 - `MemorySearchField`
+- `MemoryComposer` and route control
 - `FilterToken` and `FilterTokenBar`
+- `ApplicationFilterTile`
 - `CaptureStatusBadge`
 - `MemoryResultCard`
 - `EvidenceSnippet`
-- `TimelineRail` and `TimelineMarker`
+- `MemoryCanvasChrome` and `SecondaryDisclosure`
+- `TimelineRail`, `TimelineInterval`, `TimelineMarker`, and `TimelinePlayhead`
+- `SettingsSidebar`, `SettingsGroupCard`, `SettingsRow`, and `AppearancePreview`
 - `ActivityHeatmap`
 - `PermissionRow`
 - `PrivacyRuleRow`
@@ -79,15 +93,18 @@ Every control ships with SwiftUI previews for normal, hover, pressed, focused, d
     Menu bar
       status / pause / search / forget / settings
 
-    Search
-      query + filters
-      result grid
-      selected result detail + timeline
-
     Timeline
-      date navigation
-      chronological visual filmstrip
-      gaps and application transitions
+      dominant selected screenshot
+      previous / next moment
+      date and time
+      persistent spatial rail
+      provenance / actions disclosure
+
+    Search
+      Search Memory / Ask Agent composer
+      time / website / application filters
+      result grid
+      selected result opens visual Timeline context
 
     Activity
       day/week range
@@ -96,12 +113,12 @@ Every control ships with SwiftUI previews for normal, hover, pressed, focused, d
       explicit unrecorded gaps
 
     Settings
+      General
+      Agents
+      Appearance
       Capture
-      Privacy
       Storage
-      Search & models
-      Agent access
-      About & diagnostics
+      Exclusions
 
 ## Onboarding
 
@@ -125,11 +142,12 @@ The preview and privacy copy explicitly say: `Local Memory records only your act
 
 If permission is denied, the app remains navigable with recording off and shows an exact recovery action. It never loops system prompts.
 
-## Global search
+## Search and agent composer
 
     ┌────────────────────────────────────────────────────────────┐
-    │ 🔍  yellow lamp yesterday                 ⌘K clear   esc  │
-    │ [Yesterday ×] [All apps ▾] [All sites ▾]                  │
+    │ [Search Memory | Ask Agent]                                │
+    │ 🔍  yellow lamp yesterday                         Return  │
+    │ [Yesterday ×] [Applications 2] [Sites 1] [Filters]        │
     ├────────────────────────────────────────────────────────────┤
     │  8 results                                      Grid ▾    │
     │ ┌───────────┐ ┌───────────┐ ┌───────────┐                  │
@@ -141,7 +159,14 @@ If permission is denied, the app remains navigable with recording off and shows 
     └────────────────────────────────────────────────────────────┘
 
 - The insertion point is focused on open.
+- Search Memory submits to the existing root-owned `SearchSessionModel` and hybrid
+  `SearchEngine`; the global panel and main Search destination do not create a second owner.
+- Ask Agent first constructs/reuses an explicit bounded access policy. It is unavailable
+  without a real detected target and never grants all history, unlimited results, perpetual
+  access, or images without separate opt-in.
 - Parsing converts recognized time/app/site phrases into visible removable tokens. Query text remains editable and no hidden filter is applied.
+- The filter panel groups compact Today/Yesterday/Last week/custom-date pills, approved host
+  tokens, and app tiles made from real app metadata/icons or honest SF Symbol fallbacks.
 - Results stream lexical matches first only if visual scoring is still running; order settles once, with an `Adding visual matches…` status. Cards do not continually reshuffle.
 - Default three-column grid becomes two below 720 points and one below 520.
 - Up/down moves spatially; left/right moves within row; Return opens detail; Space Quick Looks; Command-Return opens the source app/URL when safe; Escape returns or closes.
@@ -158,26 +183,33 @@ States:
 
 ## Result detail and timeline
 
-    ┌──────────┬────────────────────────────────────┬────────────┐
-    │ Search   │                                    │ 2:14:08 PM │
-    │ Timeline │          screenshot canvas         │ Safari     │
-    │ Activity │                                    │ example.com│
-    │ Settings │                                    │ Evidence   │
-    │          ├────────────────────────────────────┤ [Open]      │
-    │          │  2:13  ▪ ▪ ▪ ┃●┃ ▪ ▪   gap   ▪   │ [Forget]    │
-    └──────────┴────────────────────────────────────┴────────────┘
+    ┌────────────────────────────────────────────────────────────┐
+    │ [Search]               Local Memory              [Settings]│
+    │                                                            │
+    │  ‹          approved foreground-window screenshot       ›  │
+    │                                                            │
+    │  Aug 29, 2:14 PM                         [Details & actions]│
+    ├────────────────────────────────────────────────────────────┤
+    │ app intervals + symbols       │playhead│        [−] [＋]   │
+    └────────────────────────────────────────────────────────────┘
 
 - Canvas uses aspect-fit, pixel-accurate zoom, and click-drag pan only when zoomed.
 - Left/right steps searchable frames; Option-left/right steps application transitions; Command-left/right changes day.
 - Scrubbing updates a low-resolution thumbnail immediately and the decoded full frame after 120 ms dwell.
 - Gaps are visible labeled regions. Excluded content has no thumbnail and is never implied.
-- Inspector shows timestamp, app, window title, approved host/path, match evidence and source, processing state, Open/Revisit, Export moment, and Forget moment.
+- Secondary disclosure shows timestamp, app, window title, approved host/path, match evidence
+  and source, processing state, Open/Revisit, Export moment, and Forget moment.
 - `Forget moment` explains that the underlying short video chunk will be rewritten. Confirmation defaults to Cancel and remains non-blocking while processing.
 - Revisit launches the application and approved URL when available. It never attempts to restore form state or claim exact state restoration.
 
 ## Timeline section
 
-The Timeline section opens to today, with day picker, jump-to-now, an app-color-neutral filmstrip, and hour separators. Zoom levels are 15 minutes, one hour, six hours, and one day. Application transitions are labeled at wider zooms and summarized at narrow zooms. Paused, idle, permission-loss, process-stopped, sleep, and excluded gaps have distinct accessible text labels but use patterns plus color so meaning does not depend on color.
+The Timeline section opens to today and directly owns the dominant canvas. Zoom levels are
+15 minutes, one hour, six hours, and one day. App intervals use stable semantic accent
+families and actual/fallback app symbols; text/patterns preserve meaning without color.
+Dragging the playhead immediately selects the nearest safe thumbnail and promotes the exact
+full frame only after the existing dwell contract. Paused, idle, permission-loss,
+process-stopped, sleep, and excluded gaps remain explicit and never imply missing pixels.
 
 ## Activity
 
@@ -191,6 +223,29 @@ Activity is descriptive, never evaluative.
 
 ## Settings
 
+Settings uses a 240–280 point left sidebar, large section title/subtitle, 20–28 point section
+spacing, and 18–22 point grouped cards. Each row has one primary label, optional secondary
+truth/recovery copy, a leading SF Symbol tile, and a trailing native action/status. No
+control is decorative.
+
+### General
+
+Timeline and Search shortcuts, launch at login, and a fixed local-only/offline status. No
+telemetry, analytics, cloud-sync, favicon-service, or remote-update setting exists.
+
+### Agents
+
+Default routing target, CLI enable/install state, detected supported clients, bounded policy
+creation/review/revoke, and content-free local access history. Installation badges are shown
+only from real detection. No unrestricted or forever option exists.
+
+### Appearance
+
+System, Light, and Dark choices use visual semantic previews. Fresh profiles default to
+Light; selection persists; System follows the current effective macOS appearance. A small
+semantic accent palette may be offered. Dock-icon and timeline-control visibility are
+omitted until they are genuinely supported.
+
 ### Capture
 
 Status, launch at login, global shortcut, `Foreground window only` as a fixed privacy mode, active/static/idle policy as read-only advanced details, and permission health. Advanced timing and full-display capture are not user-tunable in V1 because they would make privacy/performance outcomes indeterminate.
@@ -202,7 +257,11 @@ Recording unless the coordinator currently permits capture for the exact active 
 Launch at login defaults off; its toggle is the only registration action. If macOS reports
 approval required, show the Login Items instruction and keep the status unconfirmed.
 
-### Privacy
+Pause-on-inactivity mutates the real capture coordinator preference. Capture-quality presets
+remain omitted until H9 validates distinct real capture parameters. Permission loss,
+unavailable target, stopped, and paused are visibly distinct.
+
+### Exclusions
 
 Application exclusions, site exclusions, private-browser handling, temporary pause, `Forget last 15 minutes`, and policy-test preview. Rules show precedence and last-match behavior. If URL detection becomes unavailable, the row shows `Browser capture paused to protect site exclusions`.
 
@@ -210,13 +269,9 @@ Application exclusions, site exclusions, private-browser handling, temporary pau
 
 Archive location, current size, 30-day retention, 20-GB cap, oldest/newest moment, delete range, export, integrity check, and honest encryption copy: database text is app-encrypted; visual media is protected by macOS account permissions and FileVault when enabled.
 
-### Search & models
-
-Index progress, bundled MobileCLIP version/hash, reindex action, optional audio model installation state, and local benchmark status. No provider/API-key controls exist.
-
-### Agent access
-
-Helper install status, approved policies, expiry, last access time, result/image limits, revoke, and local audit entries. There is no “allow everything forever” toggle.
+Search/index health, diagnostics, export, archive repair, and delete-all remain reachable
+through secondary rows in Storage or the relevant disclosure without adding a seventh
+sidebar category.
 
 ## Menu-bar behavior
 
@@ -254,4 +309,17 @@ No global shortcut deletes data or pauses recording without visible feedback.
 
 ## Screenshot review gate
 
-For every major surface, store deterministic baselines at default/minimum window size in light, dark, and Increased Contrast. Review checks alignment to the 4-point grid, focus ring visibility, truncation, empty/error states, screenshot aspect handling, and absence of custom web-like controls. A UI story is incomplete until its keyboard and VoiceOver path passes in addition to visual review.
+Store deterministic synthetic offscreen snapshots at default and minimum size for Timeline
+(populated, empty, gap, corrupt frame, loading), Search (initial, filtered, results, no
+results, adding visual matches, error), Agent composer (unavailable, ready, permission
+denied), and every Settings section. Cross-cut those states with Light, Dark, System semantic
+resolution, Increased Contrast, and pseudo-localization without multiplying identical files
+when a deterministic matrix manifest proves coverage.
+
+Review checks alignment to the 4-point grid, focus visibility, truncation, empty/error
+states, screenshot aspect handling, semantic appearance, and absence of fake controls. Safe
+offscreen snapshots, unit tests, keyboard models, accessibility models, static audits, and
+compile checks establish implementation readiness only. Actual application keyboard,
+VoiceOver, window, drag, NSWorkspace, client-detection, and media behavior remain H9 runtime
+items. A major surface is not implementation-ready until all of its safe evidence passes and
+is not accepted until its H9 evidence also passes.

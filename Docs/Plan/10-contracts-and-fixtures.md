@@ -21,6 +21,44 @@ tripwire result, artifact paths, and pass/fail disposition. Missing, reordered, 
 mismatched, or failed entries fail closed. The ledger contains no captured content; original
 owner-only evidence remains at the referenced paths.
 
+## Visual-memory UI fixture contract
+
+ADR 0008 adds a deterministic UI-state contract without changing archive/search domain
+schemas. `VisualMemoryFixtureCatalog` is a test-only projection assembled from existing
+`SearchSessionModel`, `SearchFilterSessionModel`, `MomentDetailModel`,
+`MomentTimelineModel`, capture-lifecycle, storage, exclusion, and agent-policy values. It may
+not own a second search engine, policy store, archive, or deletion queue.
+
+Each fixture scenario has a stable identifier, surface, geometry, appearance preference,
+effective semantic appearance, contrast, motion preference, localization mode, focus target,
+and domain-state references. The required scenario inventory is:
+
+| Surface | Required states |
+|---|---|
+| Timeline | `populated`, `empty`, `gap`, `corrupt-frame`, `loading` |
+| Search | `initial`, `filtered`, `results`, `no-results`, `adding-visual-matches`, `error` |
+| Agent composer | `unavailable`, `ready`, `permission-denied` |
+| Settings | `general`, `agents`, `appearance`, `capture`, `storage`, `exclusions` |
+
+Every surface renders at default and minimum geometry. The matrix manifest must prove Light,
+Dark, dynamically resolved System, Increased Contrast, and 40%-expanded pseudo-localization
+coverage. Fresh-profile fixtures select Light. Agent fixtures may show an installed target
+only when the fixture is explicitly labeled synthetic; production presentation must use real
+detection and never reuses that fixture result.
+
+Safe snapshot output is a deterministic raw raster generated from synthetic SwiftUI
+content through a source-audited offscreen harness. The harness may not import or call the
+product entry point, ScreenCaptureKit, Apple ImageIO, VideoToolbox, AVAssetWriter, HEIC
+decode/encode, or any media helper. Its manifest records proof class `snapshot`, source
+revision, dimensions, scale, scenario ID, semantic mode, and SHA-256. These files are not
+runtime screenshots and cannot populate an H9 result.
+
+Visible UI actions have deterministic action contracts. Search mutates the one shared
+session; filters round-trip through the existing filter model; Timeline selection mutates
+the existing navigation/detail/timeline state; Forget calls the existing provisional
+deletion boundary; Ask Agent requires a bounded CLI/MCP policy and detected target; settings
+rows call their existing services. A control without an action contract is omitted.
+
 ## Package boundaries
 
 | Package | Owns | May depend on |
