@@ -1,0 +1,43 @@
+{
+  "story": "LM-072",
+  "revision": "refs/tags/checkpoints/LM-072",
+  "completedAt": "2026-08-29T08:23:23Z",
+  "proofClass": ["unit", "model", "deterministic-store"],
+  "runtimeExecuted": false,
+  "sevenDayFixture": {
+    "elapsedSeconds": 604800,
+    "activeSeconds": 345600,
+    "unrecordedSeconds": 259200,
+    "applicationSeconds": {
+      "app.alpha": 259200,
+      "app.beta": 86400
+    },
+    "gapSeconds": {
+      "idle": 86400,
+      "excluded": 86400,
+      "sleep": 86400
+    },
+    "reconciliationDeltaSeconds": 0
+  },
+  "checks": {
+    "focusedTests": 3,
+    "failures": 0,
+    "strictOrderingRequired": true,
+    "exactPartitionRequired": true,
+    "adjacentEquivalentIntervalsMerged": true,
+    "missingApprovedContextReason": "unresolvedWindow",
+    "recentlyActiveCountsAsRecorded": true,
+    "idleCountsAsActive": false,
+    "excludedCountsAsActive": false,
+    "sleepCountsAsActive": false,
+    "durableSQLRoundTrip": true,
+    "timelineGapInterop": true,
+    "partialRangeClipping": true,
+    "unknownUncoveredTimeIsUnrecorded": true
+  },
+  "hashes": {
+    "implementation": "251cec1ca61190c14d1b0a8ffe37dcfa04c205e906969de8745cfe4050f66bdc",
+    "tests": "932beb6f0412429e75b6087027b4a713951da847ba178f7f8bc5227823843473",
+    "testLog": "9cc0753406b573a0d2a9a60cb6cd935ec7baaaa2930a0bc725cdf7c88378bcb5"
+  }
+}

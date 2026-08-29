@@ -1367,12 +1367,14 @@
       "resumeProbe": null
     },
     "LM-072": {
-      "status": "pending",
-      "startedAt": null,
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": null,
+      "status": "passed",
+      "startedAt": "2026-08-29T08:20:55Z",
+      "completedAt": "2026-08-29T08:23:23Z",
+      "gitRevision": "refs/tags/checkpoints/LM-072",
+      "evidence": [
+        "Results/LM-072/report.json"
+      ],
+      "notes": "Approved foreground/activity observations now derive a strict, exact partition of durable active or typed-gap intervals. Adjacent equivalent states merge; idle is always a gap, missing approved context becomes unresolvedWindow, privacy-sensitive gap identity is validated by the RecordingGap contract, partial reads clip by real elapsed time, and uncovered time is explicitly unknown/unrecorded. The seven-day deterministic fixture reconciles 604800 seconds exactly: 345600 active and 259200 idle/excluded/sleep, with zero delta. Three focused store/model tests also prove SQL round-trip and Timeline gap interoperability.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null
