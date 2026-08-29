@@ -1,3 +1,4 @@
+import AppKit
 import CryptoKit
 import Foundation
 import MemoryContracts
@@ -72,12 +73,14 @@ enum AppSearchComposition {
         let momentDetailRepository = makeMomentDetailRepository(database: database)
         let momentExportProvider = makeMomentExportProvider(database: database)
         let momentTimelineLoader = makeMomentTimelineLoader(database: database)
+        let momentRevisitProvider = makeMomentRevisitProvider(database: database)
         return SearchSessionModel(
             engine: engine,
             thumbnailRepository: thumbnailRepository,
             momentDetailRepository: momentDetailRepository,
             momentExportProvider: momentExportProvider,
             momentTimelineLoader: momentTimelineLoader,
+            momentRevisitProvider: momentRevisitProvider,
             diagnosticsEnabled: diagnosticsEnabled,
             pageRequestBuilder: { (input: SearchSessionInput, cursor: SearchCursor?) in
                 let now = Date()
@@ -360,6 +363,52 @@ enum AppSearchComposition {
         }
     }
 
+    private static func makeMomentRevisitProvider(
+        database: ArchiveDatabase
+    ) -> MomentRevisitProvider {
+        let sourceStore = ArchiveMomentSourceStore(database: database)
+        return MomentRevisitProvider { result in
+            _ = try sourceStore.readySource(frameID: result.frameID)
+            let currentScope = try database.localSearchScope()
+            let now = Date()
+            let plan = try MomentRevisitPlanner.plan(
+                result: result,
+                scope: MomentRevisitScope(
+                    allowedInterval: DateInterval(
+                        start: now.addingTimeInterval(-400 * 24 * 60 * 60),
+                        end: now.addingTimeInterval(1)
+                    ),
+                    allowedBundleIDs: currentScope.bundleIdentifiers,
+                    allowedHosts: currentScope.hosts
+                )
+            )
+            guard
+                let applicationURL = NSWorkspace.shared.urlForApplication(
+                    withBundleIdentifier: plan.applicationBundleID
+                )
+            else {
+                throw MomentRevisitError.unavailable
+            }
+            let configuration = NSWorkspace.OpenConfiguration()
+            configuration.activates = true
+            configuration.arguments = []
+            configuration.environment = [:]
+            if let approvedURL = plan.approvedURL {
+                _ = try await NSWorkspace.shared.open(
+                    [approvedURL],
+                    withApplicationAt: applicationURL,
+                    configuration: configuration
+                )
+            } else {
+                _ = try await NSWorkspace.shared.openApplication(
+                    at: applicationURL,
+                    configuration: configuration
+                )
+            }
+            return plan
+        }
+    }
+
     nonisolated private static func archiveZoom(
         _ zoom: MomentTimelineZoomLevel
     ) -> TimelineZoomLevel {
@@ -465,6 +514,9 @@ enum AppSearchComposition {
             debounceDuration: .milliseconds(150),
             initialPage: page,
             momentTimelineLoader: makeFixtureTimelineLoader(),
+            momentRevisitProvider: MomentRevisitProvider { _ in
+                throw MomentRevisitError.unavailable
+            },
             diagnosticsEnabled: diagnosticsEnabled,
             pageRequestBuilder: fixtureRequest
         )

@@ -1,0 +1,13 @@
+LM-046 universal Release compile-only verification
+
+Command class: xcodebuild build (no test, no launch, code signing disabled)
+Workspace: LocalMemory.xcworkspace
+Scheme: LocalMemoryApp
+Configuration: Release
+Architectures compiled: arm64 and x86_64
+Result: BUILD SUCCEEDED
+Precheck: no xcodebuild, xctest, or VTEncoderXPCService process was running.
+Tripwire: 50 ms VTEncoderXPCService monitor remained clear for the entire build.
+Runtime evidence: none; the NSWorkspace action compiled but was never called, and no application,
+codec, ScreenCaptureKit, ImageIO, VideoToolbox, or hardware-media runtime was invoked.
+Raw local build log SHA-256: c18f84683f5b8db847c235e07f50ed6e5f9fe581344197720ebcd65850f774b3

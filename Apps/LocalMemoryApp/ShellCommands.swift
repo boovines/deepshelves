@@ -1,6 +1,6 @@
+import AppKit
 import MemoryDesignSystem
 import SwiftUI
-import AppKit
 
 extension Notification.Name {
     static let shellFocusSearch = Notification.Name("LocalMemory.shell.focusSearch")
@@ -9,6 +9,8 @@ extension Notification.Name {
     static let shellRevisit = Notification.Name("LocalMemory.shell.revisit")
     static let shellPreviousTransition = Notification.Name("LocalMemory.shell.previousTransition")
     static let shellNextTransition = Notification.Name("LocalMemory.shell.nextTransition")
+    static let shellPreviousDay = Notification.Name("LocalMemory.shell.previousDay")
+    static let shellNextDay = Notification.Name("LocalMemory.shell.nextDay")
     static let shellForgetMoment = Notification.Name("LocalMemory.shell.forgetMoment")
     static let shellEscape = Notification.Name("LocalMemory.shell.escape")
     static let shellRestoreSelectedMomentFocus = Notification.Name(
@@ -77,6 +79,12 @@ struct LocalMemoryCommands: Commands {
             Button("Next Application Transition") { post(.shellNextTransition) }
                 .keyboardShortcut(.rightArrow, modifiers: .option)
                 .disabled(shellCommandsActive != true)
+            Button("Previous Timeline Day") { post(.shellPreviousDay) }
+                .keyboardShortcut(.leftArrow, modifiers: .command)
+                .disabled(shellCommandsActive != true)
+            Button("Next Timeline Day") { post(.shellNextDay) }
+                .keyboardShortcut(.rightArrow, modifiers: .command)
+                .disabled(shellCommandsActive != true)
             Divider()
             Button("Forget Selected Moment…", role: .destructive) { post(.shellForgetMoment) }
                 .keyboardShortcut(.delete, modifiers: .command)
@@ -134,6 +142,10 @@ final class ShellKeyboardCommandMonitor {
             notification = .shellPreviousTransition
         case 124 where option:
             notification = .shellNextTransition
+        case 123 where command:
+            notification = .shellPreviousDay
+        case 124 where command:
+            notification = .shellNextDay
         case 51 where command:
             notification = .shellForgetMoment
         case 53:

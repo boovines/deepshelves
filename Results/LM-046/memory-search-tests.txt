@@ -1,0 +1,17 @@
+LM-046 MemorySearch safe unit/model verification
+
+Configuration: SwiftPM Release
+Result: 38 tests executed, 0 failures, 0 unexpected failures.
+Focused LM-046 cases: 5.
+
+Passed LM-046 coverage:
+- locale-independent local-day identity and restoration
+- 23-hour spring-forward and 25-hour fall-back intervals
+- detailed versus summarized application-transition presentation
+- approved app plus HTTP(S) origin/path-only Revisit plan
+- fail-closed unapproved bundle and unsafe-scheme behavior
+- form state structurally unrepresentable
+
+No application, NSWorkspace action, or media runtime was invoked. The 50 ms
+VTEncoderXPCService tripwire remained empty. Raw local log SHA-256:
+3c7e1f7a3598b41a6b5eb85e03dda0c58393684d2ccef7a8d0e64be50433f43b

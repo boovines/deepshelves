@@ -14,7 +14,8 @@
         "LM-041",
         "LM-042",
         "LM-043",
-        "LM-045"
+        "LM-045",
+        "LM-046"
       ],
       "evidence": []
     }
@@ -904,13 +905,27 @@
       "resumeProbe": null
     },
     "LM-046": {
-      "status": "pending",
-      "startedAt": null,
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": null,
-      "blockedReason": null,
+      "status": "blocked",
+      "implementationReadiness": "ready",
+      "deferredValidationGate": "H9",
+      "startedAt": "2026-08-29T02:01:00Z",
+      "completedAt": "2026-08-29T02:04:56Z",
+      "gitRevision": "refs/tags/checkpoints/LM-046-blocked",
+      "evidence": [
+        "Results/LM-046/report.json",
+        "Results/LM-046/runtime-deferred.md",
+        "Results/LM-046/timeline-section-snapshot.json",
+        "Results/LM-046/memory-search-tests.txt",
+        "Results/LM-046/memory-store-tests.txt",
+        "Results/LM-046/compile-only-summary.txt",
+        "Results/LM-046/static-audit.txt",
+        "Results/LM-046/swift-format.txt",
+        "Results/LM-046/privacy.txt",
+        "Results/LM-046/dependencies.txt",
+        "Decisions/0006-isolated-runtime-validation.md"
+      ],
+      "notes": "The Timeline section now opens to a persisted local calendar day, navigates by calendar arithmetic across 23/25-hour DST days, jumps to today, exposes four zoom levels, renders neutral filmstrip hour separators and patterned gaps, labels app transitions when zoomed in and summarizes them when zoomed out, and shows exact selected-result context. Revisit revalidates the current ready source and current approved app/host scope, permits only HTTP(S) origin/path URLs, and cannot represent captured form state. Thirty-eight MemorySearch tests, three MemoryStore tests, strict formatting, static/privacy/dependency audits, deterministic snapshot, and a universal Release compile-only build pass under the encoder tripwire with no prohibited runtime.",
+      "blockedReason": "The acceptance contract still requires real application day navigation/restoration, locale/DST presentation, keyboard and VoiceOver behavior, transition labels, selected-context behavior, and NSWorkspace launch verification proving only the approved app/URL opens and no form state is restored. Application and NSWorkspace action runtime are prohibited on this laptop and ADR 0006 assigns those unchanged checks to H9. Unit/model/static/compile/snapshot evidence does not replace them, so LM-046 remains blocked.",
       "requestedHumanGate": null,
       "resumeProbe": null
     },

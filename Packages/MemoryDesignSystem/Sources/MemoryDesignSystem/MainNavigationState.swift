@@ -6,9 +6,9 @@ public enum MainWindowDefaults: Sendable {
     public static let minimumWidth = 840
     public static let minimumHeight = 560
     public static let sidebarIdealWidth = 184
-    public static let sidebarWidthRange = 168 ... 240
+    public static let sidebarWidthRange = 168...240
     public static let inspectorIdealWidth = 264
-    public static let inspectorWidthRange = 220 ... 360
+    public static let inspectorWidthRange = 220...360
     public static let inspectorVisibilityThreshold = 900
     public static let settingsWidth = 680
     public static let settingsHeight = 560
@@ -50,21 +50,25 @@ public struct MainNavigationSnapshot: Codable, Equatable, Sendable {
     public let section: MainNavigationSection
     public let selectedMomentID: UUID?
     public let inspectorRequested: Bool
+    public let timelineDate: Date?
 
     public init(
         section: MainNavigationSection,
         selectedMomentID: UUID?,
-        inspectorRequested: Bool
+        inspectorRequested: Bool,
+        timelineDate: Date? = nil
     ) {
         self.section = section
         self.selectedMomentID = selectedMomentID
         self.inspectorRequested = inspectorRequested
+        self.timelineDate = timelineDate
     }
 
     public static let `default` = MainNavigationSnapshot(
         section: .search,
         selectedMomentID: nil,
-        inspectorRequested: true
+        inspectorRequested: true,
+        timelineDate: nil
     )
 }
 

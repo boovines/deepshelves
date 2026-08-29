@@ -91,7 +91,8 @@ final class MainNavigationViewModel: ObservableObject {
             MainNavigationSnapshot(
                 section: section,
                 selectedMomentID: snapshot.selectedMomentID,
-                inspectorRequested: snapshot.inspectorRequested
+                inspectorRequested: snapshot.inspectorRequested,
+                timelineDate: snapshot.timelineDate
             ))
     }
 
@@ -101,7 +102,8 @@ final class MainNavigationViewModel: ObservableObject {
             MainNavigationSnapshot(
                 section: snapshot.section,
                 selectedMomentID: momentID,
-                inspectorRequested: snapshot.inspectorRequested
+                inspectorRequested: snapshot.inspectorRequested,
+                timelineDate: snapshot.timelineDate
             ))
     }
 
@@ -111,7 +113,19 @@ final class MainNavigationViewModel: ObservableObject {
             MainNavigationSnapshot(
                 section: snapshot.section,
                 selectedMomentID: snapshot.selectedMomentID,
-                inspectorRequested: requested
+                inspectorRequested: requested,
+                timelineDate: snapshot.timelineDate
+            ))
+    }
+
+    func selectTimelineDate(_ date: Date) {
+        guard isRestored, snapshot.timelineDate != date else { return }
+        apply(
+            MainNavigationSnapshot(
+                section: snapshot.section,
+                selectedMomentID: snapshot.selectedMomentID,
+                inspectorRequested: snapshot.inspectorRequested,
+                timelineDate: date
             ))
     }
 
@@ -422,18 +436,10 @@ private struct MainSectionView: View {
                         localizationMode: localizationMode
                     )
                 case .timeline:
-                    MomentSectionCanvas(
-                        title: "Timeline",
-                        subtitle: "Today · Synthetic local fixture",
-                        symbol: "clock.arrow.circlepath",
-                        selectedMoment: selectedMoment,
-                        selectedSearchResult: nil,
+                    SearchTimelineSectionView(
                         navigationModel: navigationModel,
-                        searchModel: searchModel,
-                        searchFilterModel: searchFilterModel,
-                        indexingBacklog: indexingBacklog,
-                        contentState: .ready,
-                        localizationMode: localizationMode
+                        loader: searchModel.momentTimelineLoader,
+                        revisitProvider: searchModel.momentRevisitProvider
                     )
                 case .activity:
                     ActivityShellView(localizationMode: localizationMode)
@@ -605,30 +611,6 @@ private struct MomentSectionCanvas: View {
                     .accessibilityHint("Searches only the local archive")
 
                 SharedSearchFilterControls(filterModel: searchFilterModel)
-            }
-
-            if title == "Timeline" {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("Timeline accessibility list")
-                        .font(.headline)
-                    ScrollView(.horizontal) {
-                        HStack(spacing: 12) {
-                            Text("9:12 AM, Calendar moment")
-                            ForEach(ShellTimelineGapFixtures.gaps) { gap in
-                                Label(gap.accessibilityLabel, systemImage: gap.systemImage)
-                                    .font(.caption)
-                                    .accessibilityLabel(gap.accessibilityLabel)
-                                    .accessibilityIdentifier(
-                                        "timeline.gap.\(gap.reason.rawValue)"
-                                    )
-                            }
-                            Text("2:14 PM, Safari moment")
-                        }
-                    }
-                }
-                .accessibilityElement(children: .contain)
-                .accessibilityLabel("Timeline accessibility list")
-                .accessibilityIdentifier("timeline.accessibilityList")
             }
 
             if contentState == .ready {

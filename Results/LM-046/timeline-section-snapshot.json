@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-046",
+  "proofClass": "deterministic-model-snapshot",
+  "dayIdentity": {
+    "fields": ["year", "month", "day"],
+    "navigation": "calendar-day-addition",
+    "anchor": "midpoint-of-real-local-day",
+    "springForwardDurationHours": 23,
+    "fallBackDurationHours": 25,
+    "localeIndependent": true,
+    "persistedInNavigationState": true
+  },
+  "timelineSection": {
+    "default": "today",
+    "controls": ["previous-day", "date-picker", "next-day", "jump-to-today"],
+    "zoomLevels": ["calendarDay", "sixHours", "oneHour", "fifteenMinutes"],
+    "filmstripColorIdentity": "neutral",
+    "hourSeparatorsIncludeTimeZone": true,
+    "transitionLabelsWhenZoomedIn": true,
+    "transitionSummaryWhenZoomedOut": true,
+    "selectedResultContext": ["time", "application", "window-title", "approved-host"]
+  },
+  "revisit": {
+    "requiresCurrentReadySource": true,
+    "requiresCurrentApprovedBundle": true,
+    "requiresCurrentApprovedHost": true,
+    "allowedSchemes": ["http", "https"],
+    "urlFields": ["scheme", "host", "path"],
+    "queryFragmentCredentialsAllowed": false,
+    "privateContextAllowed": false,
+    "formStateRepresentable": false,
+    "workspaceArguments": [],
+    "workspaceEnvironment": {}
+  },
+  "runtimeClaim": false
+}

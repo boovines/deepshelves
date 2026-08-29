@@ -248,7 +248,7 @@ struct SearchMomentTimelineRail: View {
     }
 }
 
-private struct MomentTimelineGapPatternView: View {
+struct MomentTimelineGapPatternView: View {
     let pattern: MomentTimelineGapPattern
 
     var body: some View {

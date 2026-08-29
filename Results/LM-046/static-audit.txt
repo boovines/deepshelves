@@ -1,0 +1,23 @@
+LM-046 static audit — 2026-08-29
+
+PASS: local day selection uses Calendar day intervals and year/month/day restoration. It never
+adds a fixed 86,400 seconds; spring-forward/fall-back tests preserve exact 23/25-hour intervals.
+PASS: navigation state persists the selected timeline Date and remains backward-compatible through
+an optional Codable field; today is used only when no date was restored.
+PASS: the Timeline section exposes previous/date-picker/next/today controls, four zooms, timezone-
+labeled hour separators, neutral moment marks, patterned gaps, and exact selected-result context.
+PASS: transition presentation uses approved application display names where available, detailed
+labels at one-hour/15-minute zoom, and count summaries at six-hour/day zoom. Option-left/right
+selects the nearest moment at the adjacent transition; Command-left/right changes local day.
+PASS: Revisit first revalidates the exact frame as current/ready and rebuilds current approved app
+and host scope. The pure plan admits only approved HTTP(S) scheme/host/path and has no field capable
+of carrying query, fragment, credentials, form state, scroll state, tab identity, or captured UI.
+PASS: NSWorkspace composition resolves only the approved bundle, supplies empty arguments and
+environment, and passes only the approved URL when present.
+PASS: 38 MemorySearch tests, three MemoryStore tests, strict formatting, privacy/dependency scans,
+and universal Release compile-only verification pass under the encoder-service tripwire.
+
+NOT EXECUTED: application launch, NSWorkspace lookup/open action, SwiftUI/AppKit interaction,
+keyboard/VoiceOver runtime, locale/DST rendering, screenshot capture, software HEIC helper,
+ScreenCaptureKit, Apple ImageIO, VideoToolbox, or hardware-media runtime. Safe proof is not runtime
+evidence.
