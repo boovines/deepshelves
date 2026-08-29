@@ -1,0 +1,28 @@
+Building for debugging...
+[0/3] Write sources
+[1/3] Write swift-version--58304C5D6DBC2206.txt
+[3/5] Emitting module MemoryStore
+[4/5] Compiling MemoryStore ArchiveMomentSourceStore.swift
+[4/6] Write Objects.LinkFileList
+[5/6] Linking MemoryStorePackageTests
+Build complete! (1.28s)
+Test Suite 'All tests' started at 2026-08-29 03:26:44.883.
+Test Suite 'MemoryStorePackageTests.xctest' started at 2026-08-29 03:26:44.884.
+Test Suite 'ArchiveMomentSourceStoreTests' started at 2026-08-29 03:26:44.884.
+Test Case '-[MemoryStoreTests.ArchiveMomentSourceStoreTests testReadySourceRequiresTheExactSearchResultLocatorAndCurrentReadyIdentity]' started.
+Test Case '-[MemoryStoreTests.ArchiveMomentSourceStoreTests testReadySourceRequiresTheExactSearchResultLocatorAndCurrentReadyIdentity]' passed (0.017 seconds).
+Test Suite 'ArchiveMomentSourceStoreTests' passed at 2026-08-29 03:26:44.901.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.017 (0.018) seconds
+Test Suite 'ArchiveSearchFilterMetadataTests' started at 2026-08-29 03:26:44.901.
+Test Case '-[MemoryStoreTests.ArchiveSearchFilterMetadataTests testAutocompleteMetadataIncludesOnlyApprovedSearchableFrames]' started.
+Test Case '-[MemoryStoreTests.ArchiveSearchFilterMetadataTests testAutocompleteMetadataIncludesOnlyApprovedSearchableFrames]' passed (0.012 seconds).
+Test Suite 'ArchiveSearchFilterMetadataTests' passed at 2026-08-29 03:26:44.914.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.012 (0.012) seconds
+Test Suite 'MemoryStorePackageTests.xctest' passed at 2026-08-29 03:26:44.914.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.030 (0.030) seconds
+Test Suite 'All tests' passed at 2026-08-29 03:26:44.914.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.030 (0.031) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.

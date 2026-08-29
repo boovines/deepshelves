@@ -12,7 +12,8 @@
         "LM-039",
         "LM-040",
         "LM-041",
-        "LM-042"
+        "LM-042",
+        "LM-043"
       ],
       "evidence": []
     }
@@ -830,13 +831,27 @@
       "resumeProbe": null
     },
     "LM-043": {
-      "status": "pending",
-      "startedAt": null,
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": null,
-      "blockedReason": null,
+      "status": "blocked",
+      "implementationReadiness": "ready",
+      "deferredValidationGate": "H9",
+      "startedAt": "2026-08-29T01:25:00Z",
+      "completedAt": "2026-08-29T01:27:29Z",
+      "gitRevision": "refs/tags/checkpoints/LM-043-blocked",
+      "evidence": [
+        "Results/LM-043/report.json",
+        "Results/LM-043/runtime-deferred.md",
+        "Results/LM-043/detail-contract-snapshot.json",
+        "Results/LM-043/memory-search-tests.txt",
+        "Results/LM-043/memory-store-tests.txt",
+        "Results/LM-043/compile-only-summary.txt",
+        "Results/LM-043/static-audit.txt",
+        "Results/LM-043/swift-format.txt",
+        "Results/LM-043/privacy.txt",
+        "Results/LM-043/dependencies.txt",
+        "Decisions/0006-isolated-runtime-validation.md"
+      ],
+      "notes": "The detail surface now admits only an exact ready archive source, verifies media and manifest identity, decodes behind the pinned software-codec boundary, owns a 256 MiB actor cache that revalidates before every hit, rejects late selections, exposes typed recovery/retry, bounded zoom/pan and stable stepping, and exports the revalidated original HEIC atomically without archive mutation. Twenty-seven MemorySearch tests, two MemoryStore tests, deterministic snapshot, strict formatting, static audits, and universal Release compile-only verification pass under the encoder tripwire with no prohibited runtime.",
+      "blockedReason": "The acceptance contract requires real production software-HEIC cold/cached latency plus application tamper, corrupt-media, manifest-mismatch, recovery, interaction, accessibility, and export evidence. Those runtime checks are prohibited on this laptop and are assigned unchanged to H9 by ADR 0006. Unit/model/static/compile/snapshot evidence does not replace them, so LM-043 remains blocked.",
       "requestedHumanGate": null,
       "resumeProbe": null
     },

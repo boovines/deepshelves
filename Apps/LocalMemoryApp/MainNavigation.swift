@@ -391,6 +391,11 @@ private struct MainSectionView: View {
         ShellMomentFixtures.moment(id: navigationModel.snapshot.selectedMomentID)
     }
 
+    private var selectedSearchResult: SearchResult? {
+        guard let selectedID = navigationModel.snapshot.selectedMomentID else { return nil }
+        return searchModel.results.first { $0.frameID == selectedID }
+    }
+
     private var showsInspector: Bool {
         MainWindowDefaults.showsInspector(
             width: availableWidth + CGFloat(MainWindowDefaults.sidebarIdealWidth),
@@ -408,6 +413,7 @@ private struct MainSectionView: View {
                         subtitle: "Find a moment you previously saw",
                         symbol: "magnifyingglass",
                         selectedMoment: selectedMoment,
+                        selectedSearchResult: selectedSearchResult,
                         navigationModel: navigationModel,
                         searchModel: searchModel,
                         searchFilterModel: searchFilterModel,
@@ -421,6 +427,7 @@ private struct MainSectionView: View {
                         subtitle: "Today · Synthetic local fixture",
                         symbol: "clock.arrow.circlepath",
                         selectedMoment: selectedMoment,
+                        selectedSearchResult: nil,
                         navigationModel: navigationModel,
                         searchModel: searchModel,
                         searchFilterModel: searchFilterModel,
@@ -566,6 +573,7 @@ private struct MomentSectionCanvas: View {
     let subtitle: String
     let symbol: String
     let selectedMoment: ShellMoment?
+    let selectedSearchResult: SearchResult?
     @ObservedObject var navigationModel: MainNavigationViewModel
     @ObservedObject var searchModel: SearchSessionModel
     @ObservedObject var searchFilterModel: SearchFilterSessionModel
@@ -625,13 +633,23 @@ private struct MomentSectionCanvas: View {
 
             if contentState == .ready {
                 if title == "Search" {
-                    SharedSearchResultsView(
-                        searchModel: searchModel,
-                        navigationModel: navigationModel,
-                        filterModel: searchFilterModel,
-                        indexingBacklog: indexingBacklog,
-                        surface: .main
-                    )
+                    if let selectedSearchResult {
+                        SearchMomentDetailView(
+                            result: selectedSearchResult,
+                            results: searchModel.results,
+                            navigationModel: navigationModel,
+                            repository: searchModel.momentDetailRepository,
+                            exportProvider: searchModel.momentExportProvider
+                        )
+                    } else {
+                        SharedSearchResultsView(
+                            searchModel: searchModel,
+                            navigationModel: navigationModel,
+                            filterModel: searchFilterModel,
+                            indexingBacklog: indexingBacklog,
+                            surface: .main
+                        )
+                    }
                 } else {
                     List(Array(ShellMomentFixtures.moments.enumerated()), id: \.element.id) {
                         index, moment in

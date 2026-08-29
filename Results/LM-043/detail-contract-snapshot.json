@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-043",
+  "proofClass": "deterministic-model-snapshot",
+  "sourceAdmission": {
+    "requiresReadyChunk": true,
+    "requiresSearchableFrame": true,
+    "requiresExactFrameID": true,
+    "requiresExactArchiveLocator": true,
+    "requiresCaptureEpochMatch": true,
+    "requiresTargetWindowMatch": true,
+    "requiresPolicyGeneration": true,
+    "requiresRegularNonSymlinkFiles": true,
+    "requiresFrameAndManifestSHA256": true,
+    "requiresManifestEntryPathHashAndByteCount": true
+  },
+  "decodedCache": {
+    "owner": "root-search-session",
+    "isolation": "actor",
+    "capacityBytes": 268435456,
+    "identity": "frame-id-plus-exact-media-locator",
+    "cachedHitRevalidatesSource": true,
+    "lateSelectionCompletion": "discarded"
+  },
+  "canvas": {
+    "fitScale": 1,
+    "maximumScale": 8,
+    "panAtFit": false,
+    "panBoundedToScaledViewport": true,
+    "frameStepping": "stable-search-order"
+  },
+  "recoveryReasons": [
+    "source-unavailable",
+    "integrity-mismatch",
+    "manifest-mismatch",
+    "corrupt-media",
+    "invalid-raster"
+  ],
+  "export": {
+    "source": "same-revalidated-original-heic",
+    "atomicDestinationWrite": true,
+    "archiveMutation": false
+  },
+  "runtimeClaim": false
+}

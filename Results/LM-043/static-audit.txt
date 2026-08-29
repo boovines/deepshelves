@@ -1,0 +1,28 @@
+LM-043 static audit — 2026-08-29
+
+PASS: ArchiveMomentSourceStore returns only a current schema-V2 frame in a ready chunk whose
+visual state is not suppressed and whose text or visual projection is ready. It binds exact
+frame, epoch, target window, policy generation, media locator/hash/size, and manifest
+locator/hash.
+PASS: production admission requires regular non-symlink media and manifest files, verifies
+both SHA-256 identities, decodes the canonical manifest, and matches the exact frame entry's
+derived path, hash, byte count, epoch, and target before the pinned software codec seam.
+PASS: the actor-owned decoded cache is root-injected, capped at 256 MiB, keyed by frame and
+exact locator, rejects late selection completions, and revalidates the source before every
+cached hit so tampered evidence cannot survive through cached pixels.
+PASS: the detail session exposes typed loading/ready/recovery states. Retry uses the same
+exact selected source; stable frame stepping stops at boundaries.
+PASS: zoom is bounded from aspect-fit 1x through 8x, panning is disabled at fit and bounded
+to scaled viewport overflow, and reset returns the exact identity transform.
+PASS: the native detail composition converts decoded RGBA directly through CoreGraphics,
+caches the NSImage by exact identity across gesture redraws, exposes provenance/evidence,
+and offers a verified-original HEIC export with atomic destination write.
+PASS: 27 MemorySearch tests and two MemoryStore tests pass, including rapid selection,
+cache eviction/revalidation, typed retry, sequence boundaries, transform bounds, and exact
+ready-source admission.
+PASS: strict formatting, privacy static scan, dependency static audit, and universal Release
+compile-only verification pass under the encoder-service tripwire.
+
+NOT EXECUTED: application launch, SwiftUI/AppKit interaction, pinned software-HEIC helper,
+real HEIC decode, decode timing, corrupt-file decode, save panel, ScreenCaptureKit, Apple
+ImageIO, VideoToolbox, or hardware-media runtime. Safe proof is not runtime evidence.

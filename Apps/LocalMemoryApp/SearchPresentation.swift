@@ -69,9 +69,13 @@ enum AppSearchComposition {
         let engine = LocalSearchEngine(lexical: lexical, visual: visual, hybrid: hybrid)
         let policyID = UUID()
         let thumbnailRepository = makeThumbnailRepository(database: database)
+        let momentDetailRepository = makeMomentDetailRepository(database: database)
+        let momentExportProvider = makeMomentExportProvider(database: database)
         return SearchSessionModel(
             engine: engine,
             thumbnailRepository: thumbnailRepository,
+            momentDetailRepository: momentDetailRepository,
+            momentExportProvider: momentExportProvider,
             diagnosticsEnabled: diagnosticsEnabled,
             pageRequestBuilder: { (input: SearchSessionInput, cursor: SearchCursor?) in
                 let now = Date()
@@ -224,6 +228,148 @@ enum AppSearchComposition {
             capacityBytes: 64 * 1_024 * 1_024,
             loader: loader
         )
+    }
+
+    private static func makeMomentDetailRepository(
+        database: ArchiveDatabase
+    ) -> MomentDetailRepository? {
+        guard let fileStore = database.fileStore,
+            let codec = try? SoftwareThumbnailHEICCodec()
+        else {
+            return nil
+        }
+        let sourceStore = ArchiveMomentSourceStore(database: database)
+        let loader = MomentDetailLoader { result in
+            let mediaBytes = try verifiedMomentBytes(
+                result: result,
+                fileStore: fileStore,
+                sourceStore: sourceStore
+            )
+            do {
+                let decoded = try codec.decode(mediaBytes)
+                return try MomentDetailRaster(
+                    width: decoded.raster.width,
+                    height: decoded.raster.height,
+                    rgba8: decoded.raster.rgba8
+                )
+            } catch {
+                throw MomentDetailError.corruptMedia
+            }
+        }
+        return MomentDetailRepository(
+            capacityBytes: 256 * 1_024 * 1_024,
+            validator: MomentDetailValidator { result in
+                _ = try verifiedMomentBytes(
+                    result: result,
+                    fileStore: fileStore,
+                    sourceStore: sourceStore
+                )
+            },
+            loader: loader
+        )
+    }
+
+    private static func makeMomentExportProvider(
+        database: ArchiveDatabase
+    ) -> MomentExportProvider? {
+        guard let fileStore = database.fileStore else { return nil }
+        let sourceStore = ArchiveMomentSourceStore(database: database)
+        return MomentExportProvider { result in
+            let bytes = try verifiedMomentBytes(
+                result: result,
+                fileStore: fileStore,
+                sourceStore: sourceStore
+            )
+            return MomentExportPayload(
+                frameID: result.frameID,
+                suggestedFilename: "moment-\(result.frameID.uuidString.lowercased()).heic",
+                heicData: bytes
+            )
+        }
+    }
+
+    nonisolated private static func verifiedMomentBytes(
+        result: SearchResult,
+        fileStore: ArchiveFileStore,
+        sourceStore: ArchiveMomentSourceStore
+    ) throws -> Data {
+        guard case .archiveRelativePath(let value) = result.mediaLocator,
+            let expectedPath = try? ArchiveRelativePath(value)
+        else {
+            throw MomentDetailError.sourceUnavailable
+        }
+        let record: ArchiveMomentSourceRecord
+        do {
+            record = try sourceStore.readySource(
+                frameID: result.frameID,
+                expectedPath: expectedPath
+            )
+        } catch ArchiveMomentSourceError.locatorMismatch {
+            throw MomentDetailError.manifestMismatch
+        } catch {
+            throw MomentDetailError.sourceUnavailable
+        }
+        let mediaBytes = try verifiedBytes(
+            at: fileStore.url(for: record.mediaPath),
+            expectedHash: record.mediaHash,
+            expectedByteCount: record.mediaByteCount
+        )
+        let manifestBytes = try verifiedBytes(
+            at: fileStore.url(for: record.manifestPath),
+            expectedHash: record.manifestHash,
+            expectedByteCount: nil
+        )
+        let manifest: HEICKeyframeManifest
+        do {
+            manifest = try ContractJSON.decode(
+                HEICKeyframeManifest.self,
+                from: manifestBytes
+            )
+        } catch {
+            throw MomentDetailError.manifestMismatch
+        }
+        guard manifest.captureEpochID == record.captureEpochID,
+            manifest.targetWindowID == record.targetWindowID,
+            let entry = manifest.frames.first(where: { $0.frameID == result.frameID })
+        else {
+            throw MomentDetailError.manifestMismatch
+        }
+        let archivePath: String
+        do {
+            archivePath = try entry.archiveRelativePath(
+                chunkManifestPath: record.manifestPath.rawValue
+            )
+        } catch {
+            throw MomentDetailError.manifestMismatch
+        }
+        guard archivePath == record.mediaPath.rawValue,
+            entry.sha256 == record.mediaHash,
+            entry.byteCount == Int64(record.mediaByteCount)
+        else {
+            throw MomentDetailError.manifestMismatch
+        }
+        return mediaBytes
+    }
+
+    nonisolated private static func verifiedBytes(
+        at fileURL: URL,
+        expectedHash: Data,
+        expectedByteCount: Int?
+    ) throws -> Data {
+        let values = try fileURL.resourceValues(forKeys: [
+            .isRegularFileKey,
+            .isSymbolicLinkKey,
+        ])
+        guard values.isRegularFile == true, values.isSymbolicLink != true else {
+            throw MomentDetailError.sourceUnavailable
+        }
+        let bytes = try Data(contentsOf: fileURL, options: .mappedIfSafe)
+        guard expectedByteCount.map({ $0 == bytes.count }) ?? true,
+            Data(SHA256.hash(data: bytes)) == expectedHash
+        else {
+            throw MomentDetailError.integrityMismatch
+        }
+        return bytes
     }
 
     private static func makeFixtureModel(
