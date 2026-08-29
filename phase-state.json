@@ -3,7 +3,7 @@
   "activeStory": null,
   "validationGates": {
     "H9": {
-      "status": "pending",
+      "status": "blocked_human",
       "story": "LM-048",
       "trigger": "after the existing LM-080 checkpoint and the ADR-0008 LM-048 redesign checkpoint, before LM-081",
       "hostPolicy": "physically-distinct-isolated-validation-mac",
@@ -33,7 +33,8 @@
       "evidence": [
         "Docs/Operations/H9-isolated-runtime-validation.md",
         "Results/H9/isolated-validation-ledger.template.json",
-        "Decisions/0008-visual-memory-first-interface.md"
+        "Decisions/0008-visual-memory-first-interface.md",
+        "HUMAN-ACTION.md"
       ]
     }
   },
@@ -1005,10 +1006,11 @@
       "resumeProbe": null
     },
     "LM-048": {
-      "status": "blocked",
+      "status": "blocked_human",
       "startedAt": "2026-08-29T11:29:00Z",
       "completedAt": "2026-08-29T11:43:00Z",
-      "gitRevision": "refs/tags/checkpoints/LM-048-visual-redesign-blocked",
+      "gitRevision": "refs/tags/checkpoints/H9-visual-redesign-blocked-human",
+      "implementationCheckpoint": "refs/tags/checkpoints/LM-048-visual-redesign-blocked",
       "previousImplementationCheckpoint": "refs/tags/checkpoints/LM-048-blocked",
       "evidence": [
         "Results/LM-048/safe-journey-matrix.json",
@@ -1023,12 +1025,15 @@
         "Results/LM-048/snapshot-matrix.json",
         "Results/LM-048/deterministic-snapshot-gallery.html",
         "Results/LM-048/reference-comparison.md",
-        "Results/Milestones/RecallUI/redesign-report.json"
+        "Results/Milestones/RecallUI/redesign-report.json",
+        "Docs/Operations/H9-isolated-runtime-validation.md",
+        "Results/H9/isolated-validation-ledger.template.json",
+        "HUMAN-ACTION.md"
       ],
       "notes": "Visual-memory-first convergence is implementation-ready: Timeline is the fresh-profile root, screenshot canvas and spatial rail dominate Recall, Search and Ask Agent share the existing state owner, Settings has the exact six-section IA, appearance persists with fresh Light default, and 50 deterministic fixture views plus an independent reference comparison cover the requested states. Safe focused models, accessibility/keyboard/privacy models, the full 47-test MemorySearch package, static quarantine checks, and the final universal Release compile pass.",
-      "blockedReason": "Installed SwiftUI/AppKit composition, minimum-window layout, keyboard traversal, focus rings, VoiceOver reading order, live rail drag/scrub, capture state transitions, and media display remain H9-only. The deterministic matrix is explicitly not a substitute; no runtime acceptance criterion was marked passed.",
-      "requestedHumanGate": null,
-      "resumeProbe": null
+      "blockedReason": "H9 is now the next unavoidable prerequisite. Installed SwiftUI/AppKit composition, minimum-window layout, keyboard traversal, focus rings, VoiceOver reading order, live rail drag/scrub, capture state transitions, and media display require a physically distinct recoverable validation Mac. The deterministic matrix is explicitly not a substitute; no runtime acceptance criterion was marked passed.",
+      "requestedHumanGate": "H9",
+      "resumeProbe": "Verify a physically distinct host by one-way hardware identity; verify the private checkout resolves exactly to checkpoints/H9-visual-redesign-blocked-human, the pinned Xcode/dependencies and only documented Screen Recording/Accessibility grants are present, and no xcodebuild, xctest, VTEncoderXPCService, product, watcher, or hardware-media process is running; then initialize and execute H9-001 through H9-020 in order under deny-all networking and the encoder-service tripwire."
     },
     "LM-049": {
       "status": "passed",
