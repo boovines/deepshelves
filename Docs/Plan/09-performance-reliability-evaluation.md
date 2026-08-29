@@ -155,16 +155,24 @@ but cannot satisfy live CPU, energy, WindowServer, interaction, or wall-clock so
 Those checks accumulate in the H9 ledger and run once on the isolated validation Mac at
 LM-064.
 
-For every phase:
+For every implementation story:
 
 1. Read the master plan and the category plan.
-2. Select one narrow milestone.
+2. Select the next dependency-safe story in the active milestone.
 3. Add or update fixtures first.
 4. Implement the smallest vertical slice.
-5. Run relevant unit, integration, privacy, and performance gates.
+5. Run focused changed-behavior tests, strict changed-file formatting, a targeted static
+   privacy/safety check, and one cached native arm64 compile when integration requires it.
 6. Record decisions in an ADR and measured results in progress.md.
-7. Mark a milestone complete only when its acceptance criteria pass.
+7. Run universal Release and broad cross-cutting suites once at the Recall UI,
+   Trust/Lifecycle, Agent Access, and Activity/Hardening checkpoints, plus the final release
+   gate. A story-specific benchmark still runs when it is the story deliverable.
 8. Stop and request a decision when changing architecture, privacy boundary, or license posture.
+
+Suppress successful build output, store concise summaries/hashes/final metrics, and retain
+only useful failure excerpts. Reuse DerivedData and resolved dependencies. After two
+repetitions of the same failure, diagnose and change approach instead of repeating the same
+command. ADR 0007 defines the complete cadence and optional-audio disposition.
 
 No agent may waive a privacy or data-loss test to advance the phase.
 

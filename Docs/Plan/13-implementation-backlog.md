@@ -7,12 +7,21 @@ This is the sole story order for the first complete build. Execute it through [1
 A story is complete only when:
 
 1. Its dependencies are `passed`.
-2. Release build, affected unit/integration tests, and privacy smoke test pass.
+2. Focused changed-behavior tests, strict changed-file formatting, targeted static
+   privacy/safety checks, and a cached native arm64 compile when needed pass. Broad
+   universal/cross-cutting gates pass at the enclosing ADR-0007 milestone checkpoint or
+   run earlier only when this story directly changes that surface.
 3. The stated evidence artifact exists and contains the git revision.
 4. New failure behavior has a user-visible state or documented recovery path.
 5. `progress.md` records measurements and durable decisions.
 
 Use `xcodegen generate`, then pinned `xcodebuild` schemes. CI-equivalent local commands are recorded in the project README once LM-001 creates it. Architecture/privacy/contract changes require an ADR and human direction; a failing test alone is not authorization to relax a gate.
+
+ADR 0007 groups the remaining work into Recall UI (LM-039–LM-048), Trust/Lifecycle
+(LM-056–LM-064), Agent Access (LM-065–LM-071), Activity/Hardening (LM-072–LM-074 and
+LM-080–LM-085), and final release (LM-086). Run universal Release and broad privacy,
+dependency, contract, benchmark, and repository suites once per applicable milestone plus
+the final release gate. Keep routine evidence concise and reuse safe caches.
 
 ADR 0006 adds one narrow scheduling exception without changing completion: an implementation
 dependency may be consumed when its upstream story is technically `blocked` solely on a
@@ -134,24 +143,24 @@ After LM-064, every dependency must be `passed`; implementation readiness is ins
 | LM-070 | Implement Agent Access settings, policy creation/review/revoke, helper install diagnostics, and content-free local audit entries. | LM-016, LM-067, LM-069 | User can explain scope before approve; no forever/unrestricted option; audit contains query hash not query/content. |
 | LM-071 | Run adversarial policy suite: prompt-like queries, traversal, cursor tamper, huge limits, races, revoked policies, excluded content, and client disconnects. | LM-070 | Zero policy leakage or mutation; helpers stay under resource limits; `Results/LM-071/agent-security.json`. |
 
-## Phase 8 — Activity and optional audio
+## Phase 8 — Activity; optional audio deferred
 
 | ID | Deliverable | Depends on | Acceptance and evidence |
 |---|---|---|---|
 | LM-072 | Derive durable foreground activity intervals from approved context/activity signals with typed gaps and exact elapsed-duration semantics. | LM-023, LM-064 | Seven-day fixture totals reconcile exactly; exclusions/idle/sleep never count as active. |
 | LM-073 | Implement accessible day/week hourly heatmap with local calendar/DST correctness and Timeline drill-through. | LM-072, LM-016 | Visual and table projections match fixture minutes; repeated/missing DST hours labeled. |
 | LM-074 | Implement per-application totals, unrecorded total, range controls, and neutral explanatory copy; prohibit productivity scoring. | LM-072, LM-073 | Totals plus gaps equal selected elapsed interval; snapshot/copy audit has no evaluative score language. |
-| LM-075 | Add separately consented microphone/system-audio capture experiment, independent toggle/status/permission, and no audio default. | LM-064; H4 only if user elects optional audio | Visual app remains complete without permission/model; status clearly distinguishes audio from screen capture. |
-| LM-076 | Bundle or explicitly install fixed WhisperKit `small.en` resources without silent download; transcribe locally with versioned jobs and thermal scheduling. | LM-075 | Offline hash/inference/latency fixtures pass; capture budget non-regressive; absent model has actionable state. |
-| LM-077 | Populate the separately reserved LM-035 transcript field with timestamped transcript spans and expose them through FTS/evidence/timeline with audio-source labels and no silent semantic summary. | LM-035, LM-044, LM-076 | Transcript search locates labeled fixtures within timestamp tolerance; evidence distinguishes transcription and never merges it into approved screen text. |
-| LM-078 | Implement separate audio retention/delete/export controls and cascading deletion from chunks, transcripts, FTS, and helper projections. | LM-060, LM-077 | Delete-audio-only and delete-all forensic sentinels vanish from every projection; visual retention remains correct. |
-| LM-079 | Run activity/audio reconciliation, permission, privacy, thermal, and optional-feature removal gate. | LM-074, LM-078 | Activity exact, audio local/deletable, and build with audio disabled remains fully functional; report attached. |
+| LM-075 | **ADR-removed from personal alpha; not implemented.** Future separately consented microphone/system-audio experiment with independent toggle/status/permission and no-audio default. | Future ADR restoring audio; H4 only if elected | Original acceptance retained for future work; no claim of implementation or evidence in this alpha. |
+| LM-076 | **ADR-removed from personal alpha; not implemented.** Future fixed WhisperKit `small.en` resources and local versioned transcription jobs. | LM-075 after restoration | Original acceptance retained for future work; no claim of implementation or evidence in this alpha. |
+| LM-077 | **ADR-removed from personal alpha; not implemented.** Future timestamped transcript spans in the separately reserved LM-035 field. | LM-076 after restoration | Original acceptance retained for future work; no claim of implementation or evidence in this alpha. |
+| LM-078 | **ADR-removed from personal alpha; not implemented.** Future separate audio retention/delete/export controls and cascading deletion. | LM-077 after restoration | Original acceptance retained for future work; no claim of implementation or evidence in this alpha. |
+| LM-079 | **ADR-removed from personal alpha; not implemented.** Future activity/audio reconciliation, permission, privacy, thermal, and optional-feature removal gate. | LM-074, LM-078 after restoration | Original acceptance retained for future work; no claim of implementation or evidence in this alpha. |
 
 ## Phase 9 — Hardening and personal release
 
 | ID | Deliverable | Depends on | Acceptance and evidence |
 |---|---|---|---|
-| LM-080 | Add release performance telemetry that remains local: signposts, bounded rotating logs, diagnostic export, energy/memory/storage/index backlog dashboards. | LM-079 | No content in metrics/logs; overhead below 1% CPU; diagnostic bundle privacy snapshot passes. |
+| LM-080 | Add release performance telemetry that remains local: signposts, bounded rotating logs, diagnostic export, energy/memory/storage/index backlog dashboards. | LM-074 | No content in metrics/logs; overhead below 1% CPU; diagnostic bundle privacy snapshot passes. |
 | LM-081 | Complete three real workdays of personal dogfood, logging search failures, false exclusions, resource discomfort, crashes, and UX friction; fix release blockers. Before observation begins, Codex must checkpoint LM-080, enter the H5 pause, end its active turn, and remain fully stopped until the user manually returns. | LM-080; H5 | Three-workday report, resource percentiles, issue dispositions, zero known privacy/deletion blocker, and evidence that no Codex automation, heartbeat, polling, or monitoring ran during observation. |
 | LM-082 | Run 72-hour accelerated software-HEIC capture/enrichment/search/retention/delete fault soak with clock advancement, codec-process termination, and disk pressure. | LM-081 | Under the encoder-service tripwire, no unbounded growth, codec temporary residue, corrupt searchable manifest/asset state, stuck leases, exclusion leak, orphan staging/ready directory, deleted sentinel, or unrecoverable restart. |
 | LM-083 | Rehearse signed fresh install, first launch offline, permission grant/deny/revoke, launch-at-login, OS update smoke, helper installation, and complete uninstall/data-preserve choices. | LM-082; H6 | Screen recording and command transcript cover every path; uninstall never deletes archive without explicit choice. |
@@ -183,4 +192,12 @@ After LM-064, every dependency must be `passed`; implementation readiness is ins
 }
 ```
 
-Allowed statuses are `pending`, `active`, `blocked`, `blocked_human`, and `passed`. At most one story is `active`. `blocked` requires a concrete technical failing gate, evidence path, attempted fallbacks, and requested decision. `blocked_human` is limited to the enumerated gates in plan 14 and requires `HUMAN-ACTION.md` plus a `resumeProbe`; neither status is a synonym for “difficult.” ADR-0006 runtime deferral may add `implementationReadiness: "ready"` and `deferredValidationGate: "H9"` to a blocked story. Those fields affect scheduling only and never satisfy completion or release acceptance.
+Allowed statuses are `pending`, `active`, `blocked`, `blocked_human`, `passed`, and
+`adr_removed`. At most one story is `active`. `adr_removed` means explicitly excluded from
+the current product scope by an accepted ADR; it never means implemented or passed and must
+name that ADR in `notes`. `blocked` requires a concrete technical failing gate, evidence
+path, attempted fallbacks, and requested decision. `blocked_human` is limited to the
+enumerated gates in plan 14 and requires `HUMAN-ACTION.md` plus a `resumeProbe`; neither
+status is a synonym for “difficult.” ADR-0006 runtime deferral may add
+`implementationReadiness: "ready"` and `deferredValidationGate: "H9"` to a blocked story.
+Those fields affect scheduling only and never satisfy completion or release acceptance.

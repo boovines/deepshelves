@@ -1,0 +1,17 @@
+{
+  "adr": "Decisions/0007-faster-personal-alpha-verification.md",
+  "status": "accepted",
+  "date": "2026-08-29",
+  "gitRevision": "refs/tags/checkpoints/ADR-0007",
+  "remainingMilestoneBroadCheckpoints": 4,
+  "finalReleaseBroadCheckpoint": 1,
+  "estimatedRemainingCriticalPathStoriesAfterRemoval": 28,
+  "estimatedBroadGateExecutionReductionPercent": 82,
+  "runtimeQuarantine": "unchanged",
+  "h9AcceptanceLedger": "unchanged",
+  "optionalAudioStories": {
+    "stories": ["LM-075", "LM-076", "LM-077", "LM-078", "LM-079"],
+    "status": "adr_removed",
+    "implemented": false
+  }
+}

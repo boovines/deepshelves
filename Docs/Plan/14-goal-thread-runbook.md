@@ -32,12 +32,27 @@ For each story:
 3. Set exactly one story to `active`; record start time and base revision.
 4. Add the fixture/test that demonstrates the story outcome.
 5. Implement only that story, including user-visible failure/recovery behavior.
-6. Run targeted tests, privacy smoke, release build, and the story's evidence command.
+6. Run only focused changed-behavior tests, strict formatting for changed files, a targeted
+   static privacy/safety check, and one cached native arm64 compile when needed. Run a broad
+   gate here only if the story directly changes that surface.
 7. Fix failures while they remain within the story and fixed architecture.
-8. Write evidence under `Results/<story-id>/`, append durable lessons, and update documentation when behavior changed.
+8. Write concise evidence under `Results/<story-id>/`: command/result/hash/final metrics and
+   useful failure excerpts, not duplicate successful logs. Append durable lessons and
+   update documentation when behavior changed.
 9. Mark `passed` only when all acceptance evidence exists.
 10. Create one atomic Git checkpoint whose message starts with the story ID, staging only files owned by that story and never unrelated user changes; push the verified checkpoint to the private `origin` before beginning the next story.
 11. Re-read the next story and continue automatically.
+
+After LM-048, LM-064, LM-071, and LM-085, run the ADR-0007 milestone checkpoint: one
+universal Release build and the applicable broad privacy, dependency, contract, benchmark,
+and repository suites. Run the complete final release gate again at LM-086. Reuse
+DerivedData and resolved dependencies, suppress successful build output, and do not perform
+redundant clean builds. After two repetitions of the same failure, diagnose once and change
+approach rather than rerunning an unchanged command.
+
+LM-039–LM-046 form one Recall UI implementation stream and remain technically blocked
+until H9. LM-075–LM-079 are `adr_removed` by ADR 0007 and are skipped without being called
+implemented or passed. LM-080 depends on LM-074 for the personal alpha.
 
 ### Prohibited runtime on the owner's laptop
 
@@ -83,7 +98,7 @@ The agent may not invent additional approval gates merely because work is diffic
 | H1 Signing identity | Stable Apple Development/local signing identity or Keychain group requires account/UI | Select/create the intended local development team/signing identity; approve only the named Keychain prompt | `codesign` designated requirement/entitlements and signed-helper Keychain test pass |
 | H2 Screen/Accessibility TCC | First real capture and AX test | In System Settings, grant Screen & System Audio Recording and Accessibility to the fixed app bundle | App capability probes return granted and foreground-window sentinel test passes |
 | H3 Launch-at-login | SMAppService asks for user confirmation | Approve Local Memory under Login Items when prompted | Service status is enabled and relaunch test passes |
-| H4 Optional audio TCC | User elects to complete Phase 8 audio | Grant only the requested microphone/system-audio permission | Audio capability probe and local fixture capture pass |
+| H4 Optional audio TCC | A future accepted ADR restores LM-075–LM-079 and the user elects audio | Grant only the requested microphone/system-audio permission | Audio capability probe and local fixture capture pass |
 | H5 Three-workday dogfood | LM-081 | Use the app during three normal workdays; record observed failures/false exclusions/UX friction in the supplied form. The days need not be consecutive. | Agent ingests the report only after the user manually resumes, checks bounded local diagnostics, and reproduces or dispositions every item. |
 | H6 Fresh-install rehearsal | LM-083 | Follow the supplied install/permission/revoke/uninstall checklist on the target Mac | Agent reruns probes and records resulting state/evidence |
 | H7 Final subjective review | LM-085 | Review the deterministic UI gallery and five core journeys; list unacceptable issues or explicitly accept | Agent fixes listed blockers and records user acceptance; numeric/accessibility gates still run automatically |
@@ -160,4 +175,7 @@ If the planning directory later moves into the implementation repository, update
 
 ## Completion condition
 
-The goal is complete only when LM-086 is `passed`, every evidence link resolves, no `active`/`blocked`/`blocked_human` story remains, the release build passes offline, and the final tag/checkpoint points to the exact verified revision.
+The goal is complete only when LM-086 is `passed`, every evidence link resolves, no
+`active`/`blocked`/`blocked_human` story remains, every `adr_removed` story names its
+accepted disposition without an implementation claim, the release build passes offline,
+and the final tag/checkpoint points to the exact verified revision.

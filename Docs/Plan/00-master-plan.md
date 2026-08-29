@@ -11,7 +11,7 @@ Build a personal, local-only macOS application that is functionally faithful to 
 - Activity heatmaps and application totals
 - Pause, exclusions, retention, deletion, and export
 - Scoped local CLI and MCP access for trusted agents
-- Optional on-device audio transcription after the visual product is stable
+- A complete visual-memory personal alpha; optional audio is deferred outside this critical path
 - No accounts, cloud storage, telemetry, remote AI, or required network access
 
 This is an independent implementation of public product behavior. It must not copy Coast code, assets, wording, or proprietary visual design.
@@ -36,7 +36,7 @@ The implementation is a clean-room, native macOS application written in Swift. T
 | Visual retrieval | Bundled Core ML MobileCLIP-S0 image/text encoders |
 | Vector index | Versioned Float16 flat index with exact Accelerate scan for V1 |
 | Ranking | FTS5 BM25 plus visual similarity fused with reciprocal-rank fusion |
-| Audio | WhisperKit, off by default and implemented late |
+| Audio | Deferred outside the personal-alpha critical path by ADR 0007; no audio ships in this alpha |
 | Agent integration | Official Swift MCP SDK over standard input/output |
 | Secrets | macOS Keychain |
 | Process security | Hardened Runtime on; App Sandbox off because global Accessibility/event monitoring is core behavior |
@@ -230,8 +230,11 @@ Contract changes require a schema/migration version, fixture updates, previous-v
 | 5 Visual recall | LM-049–055 | MobileCLIP, flat vectors, hybrid ranking | Visual Recall@10 ≥ 0.80; hybrid p95 < 750 ms |
 | 6 Trust/lifecycle | LM-056–064 | Retention, SQLCipher, export, forensic deletion | Zero-network and deletion proofs pass |
 | 7 Agent memory | LM-065–071 | CLI, MCP, policies, audit | No policy leakage; offline stdio MCP |
-| 8 Activity/audio | LM-072–079 | Heatmap, app totals, optional WhisperKit | Analytics reconcile; audio separately deletable |
+| 8 Activity | LM-072–074 | Heatmap and app totals | Analytics reconcile exactly |
 | 9 Hardening | LM-080–086 | Dogfood, soak, install/rollback runbooks | All definition-of-done evidence attached |
+
+LM-075–LM-079 retain their future optional-audio specifications but are `adr_removed` from
+the personal-alpha critical path by ADR 0007. They are not implemented or passed.
 
 Privacy fixtures begin in Phase 0. Privacy is not deferred to Phase 6.
 
@@ -243,7 +246,9 @@ The implementation agent must:
 2. Work on exactly one LM story at a time.
 3. Confirm dependencies in phase-state.json.
 4. Add or update fixtures and tests with implementation.
-5. Run story commands and attach evidence paths to phase-state.json.
+5. Run the focused story checks defined by ADR 0007 and attach concise evidence paths to
+   phase-state.json. Run broad universal/cross-cutting gates at milestone checkpoints and
+   the final release gate, not after every micro-story.
 6. Append measurements, failures, and durable lessons to progress.md.
 7. Create an ADR before changing a fixed architecture decision, privacy boundary, contract, or model.
 8. Never mark a story complete from inspection alone.
@@ -255,7 +260,10 @@ runtime testing on the owner's laptop. Before LM-064, stories blocked solely on 
 may expose an explicit H9 implementation-ready dependency while remaining incomplete. The
 single isolated-validation-Mac ledger at LM-064 must supply every original runtime acceptance
 artifact before any post-LM-064 release work proceeds.
-11. Follow [14-goal-thread-runbook.md](14-goal-thread-runbook.md): checkpoint after every story and use `blocked_human` for actions that require TCC, credentials, physical interaction, or subjective acceptance.
+11. Follow [14-goal-thread-runbook.md](14-goal-thread-runbook.md): checkpoint after every
+    story, checkpoint broad verification at Recall UI, Trust/Lifecycle, Agent Access,
+    Activity/Hardening, and final release milestones, and use `blocked_human` for actions
+    that require TCC, credentials, physical interaction, or subjective acceptance.
 
 The agent may automatically fix failures within the active story. It may not silently redesign later phases.
 
