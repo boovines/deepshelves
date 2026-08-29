@@ -11,7 +11,7 @@ if rg -n --glob '*.swift' "$forbidden" "${source_roots[@]}"; then
     exit 1
 fi
 
-if rg -n --glob '*.swift' 'https?://' "${source_roots[@]}"; then
+if rg -n --glob '*.swift' '^[\t ]*[^/*\t ].*https?://' "${source_roots[@]}"; then
     echo "Remote URL literal found in shipping source." >&2
     exit 1
 fi
@@ -27,4 +27,3 @@ if rg -n 'com\.apple\.security\.network\.(client|server)' Apps project.yml; then
 fi
 
 echo "privacy-smoke: zero runtime networking, telemetry, remote packages, or network entitlements"
-

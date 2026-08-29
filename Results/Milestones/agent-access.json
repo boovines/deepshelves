@@ -1,0 +1,37 @@
+{
+  "milestone": "Agent Access",
+  "stories": ["LM-065", "LM-066", "LM-067", "LM-068", "LM-069", "LM-070", "LM-071"],
+  "checkpointedAt": "2026-08-29T08:18:20Z",
+  "revision": "refs/tags/checkpoints/LM-071",
+  "universalRelease": {
+    "architectures": ["arm64", "x86_64"],
+    "configuration": "Release",
+    "result": "passed",
+    "compileOnly": true,
+    "encoderTripwire": "passed",
+    "sha256": "a93284b334dbc86528cb3b6540e74391d8574ad09ea894623fec5f074e656c86"
+  },
+  "broadSafeGates": {
+    "agentAccessPackage": {"tests": 33, "failures": 0},
+    "memoryStorePackage": {"tests": 27, "failures": 0},
+    "sharedQueryPackage": {"tests": 2, "failures": 0},
+    "contractFixtureReproduction": "passed",
+    "staticPrivacy": "passed",
+    "staticAndBinaryDependencyAudit": "passed"
+  },
+  "hashes": {
+    "contractFixtureGate": "fb5200dae0248113cdf8e3a3acaae2ec488dc435088d2377ea2b70ac991c9112",
+    "privacyGate": "9ea4b5449f9715c90a3a80909f275c987c95be1130414ae6e10f888fcbe4a8bc",
+    "dependencyBinaryGate": "ee19ec2fac69814d57606f8260d4120b82de9aecffb3286ca3159489700b0b32"
+  },
+  "quarantine": {
+    "applicationRuntimeExecuted": false,
+    "screenCaptureKitExecuted": false,
+    "imageIOExecuted": false,
+    "videoToolboxExecuted": false,
+    "hardwareMediaExecuted": false,
+    "monolithicXcodeTestSuiteExecuted": false,
+    "reason": "The monolithic test bundle links prohibited runtime surfaces. Complete safe package suites and byte-exact contract generation ran instead; H9 retains all installed/runtime acceptance."
+  },
+  "h9DeferredStories": ["LM-025", "LM-028", "LM-029", "LM-033", "LM-039", "LM-040", "LM-041", "LM-042", "LM-043", "LM-044", "LM-045", "LM-046", "LM-056", "LM-057", "LM-058", "LM-059", "LM-060", "LM-061", "LM-062", "LM-063", "LM-064", "LM-067", "LM-068", "LM-069", "LM-070", "LM-080"]
+}

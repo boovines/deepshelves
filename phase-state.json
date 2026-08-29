@@ -1353,12 +1353,15 @@
       "resumeProbe": null
     },
     "LM-071": {
-      "status": "pending",
-      "startedAt": null,
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": null,
+      "status": "passed",
+      "startedAt": "2026-08-29T08:11:45Z",
+      "completedAt": "2026-08-29T08:18:20Z",
+      "gitRevision": "refs/tags/checkpoints/LM-071",
+      "evidence": [
+        "Results/LM-071/agent-security.json",
+        "Results/Milestones/agent-access.json"
+      ],
+      "notes": "Seven dedicated adversarial tests pass prompt-like evidence delimiting, traversal/oversize rejection before backend, HMAC cursor tamper/query/key mismatch, huge limit rejection, mixed allowed/excluded filtering, revocation races, client cancellation, and closed-world mutation denial. The Agent Access milestone also passes 33 complete agent tests, 27 store tests, 2 shared-query tests, byte-exact contract generation, static privacy and dependency audits, release-binary dependency inspection, and a compile-only arm64+x86_64 Release build under the encoder tripwire. No application/media runtime was executed; inherited installed helper checks remain at H9 under their original stories.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null

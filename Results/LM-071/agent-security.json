@@ -1,0 +1,54 @@
+{
+  "story": "LM-071",
+  "revision": "refs/tags/checkpoints/LM-071",
+  "completedAt": "2026-08-29T08:18:20Z",
+  "runtimeHost": {
+    "architecture": "arm64",
+    "macOS": "26.5",
+    "build": "25F71",
+    "xcode": "26.5 (17F42)",
+    "applicationRuntimeExecuted": false,
+    "mediaRuntimeExecuted": false
+  },
+  "adversarialCases": {
+    "promptLikeCapturedEvidence": "passed-as-quoted-untrusted-evidence",
+    "pathTraversal": "rejected-before-backend",
+    "cursorSignatureTamper": "rejected",
+    "cursorQueryDrift": "rejected",
+    "cursorSigningKeyMismatch": "rejected",
+    "millionResultLimit": "rejected-before-backend",
+    "oversizedMCPMessage": "rejected-at-1048576-byte-boundary",
+    "revocationDuringQuery": "fails-closed-before-content-return",
+    "clientCancellation": "cancelled-before-content-return",
+    "mixedAllowedExcludedContent": "policy-subset-only",
+    "unknownMutationMethods": "method-not-found-read-only-boundary",
+    "deletedOrMalformedImageResource": "no-backend-call-or-path-disclosure"
+  },
+  "resourceBounds": {
+    "maximumMCPMessageBytes": 1048576,
+    "maximumCLIImageResourceIDCharacters": 512,
+    "maximumQueryCharacters": 2048,
+    "maximumResultsPerQuery": 100,
+    "maximumImageBytes": 8388608,
+    "maximumImageDimension": 1920,
+    "maximumPolicyHistoryDays": 30,
+    "maximumPolicySessionHours": 24
+  },
+  "results": {
+    "dedicatedAdversarialTests": 7,
+    "completeAgentAccessPackageTests": 33,
+    "memoryStorePackageTests": 27,
+    "sharedQueryPackageTests": 2,
+    "failures": 0,
+    "policyLeakageObserved": 0,
+    "mutationDispatchesObserved": 0
+  },
+  "hashes": {
+    "adversarialSuiteSource": "5c2fc3faa2b7638082463a8f4cc4dd0cc4f8760138997b44cc30e6caf094493f",
+    "adversarialTestLog": "38535e5fcbd44ff0fb95fb67f2eea5140cd274af268a84365b6a06cb1d99c78c",
+    "completeAgentTestLog": "d30b9b58892ae5ef27aca15d1719773586f35522334f284104a778c72f7ce005",
+    "storeTestLog": "84d18dd6d1b847a12efcba47cc41ed3784c314eff6f65ee2e5d8a3b42462d871",
+    "sharedQueryTestLog": "be36fba056d2669a2bbae8a1d0ce001f28381c3a414aadbf3fb05330424888b7"
+  },
+  "installedRuntimeNote": "Installed signed helper/client behavior is still deferred under ADR 0006/H9 by LM-067 through LM-070. This safe adversarial suite does not claim that separate runtime evidence."
+}

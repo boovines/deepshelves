@@ -8,6 +8,8 @@ let package = Package(
     dependencies: [
         .package(path: "../MemoryContracts"),
         .package(path: "../MCPStdio"),
+        .package(path: "../MemorySearch"),
+        .package(path: "../MemoryStore"),
         .package(path: "../SharedQueryKit"),
     ],
     targets: [
@@ -18,7 +20,10 @@ let package = Package(
         ),
         .testTarget(
             name: "MemoryAgentAccessTests",
-            dependencies: ["MemoryAgentAccess", "MemoryContracts", "MCPStdio", "SharedQueryKit"]
+            dependencies: [
+                "MemoryAgentAccess", "MemoryContracts", "MCPStdio", "MemorySearch", "MemoryStore",
+                "SharedQueryKit",
+            ]
         ),
     ]
 )
