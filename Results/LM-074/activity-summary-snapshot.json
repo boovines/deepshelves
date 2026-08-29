@@ -1,0 +1,25 @@
+{
+  "story": "LM-074",
+  "selectedElapsedSeconds": 86400,
+  "applicationTotals": [
+    {
+      "bundleID": "app.beta",
+      "applicationName": "Beta",
+      "recordedSeconds": 10800,
+      "durationLabel": "3 hr"
+    },
+    {
+      "bundleID": "app.alpha",
+      "applicationName": "Alpha",
+      "recordedSeconds": 7200,
+      "durationLabel": "2 hr"
+    }
+  ],
+  "recordedSeconds": 18000,
+  "unrecordedSeconds": 68400,
+  "unrecordedDurationLabel": "19 hr",
+  "reconciliationDeltaSeconds": 0,
+  "explanatoryText": "These estimates describe recorded foreground time and known gaps. Unrecorded time can include idle periods, pauses, exclusions, or unavailable capture.",
+  "prohibitedEvaluativeLexicon": ["productivity", "attention", "score", "streak", "rank", "good", "bad"],
+  "prohibitedEvaluativeLexiconMatches": 0
+}

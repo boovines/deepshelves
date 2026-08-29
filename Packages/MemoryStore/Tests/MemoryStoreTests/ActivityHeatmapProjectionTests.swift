@@ -5,6 +5,70 @@ import XCTest
 @testable import MemoryStore
 
 final class ActivityHeatmapProjectionTests: XCTestCase {
+    func testApplicationSummaryReconcilesExactlyWithSelectedElapsedInterval() throws {
+        let calendar = activityCalendar(timeZoneID: "Europe/Paris")
+        let start = localDate(year: 2026, month: 8, day: 29, hour: 0, calendar: calendar)
+        let interval = DateInterval(start: start, duration: 24 * 60 * 60)
+        let alpha = ApprovedForegroundActivityIdentity(
+            bundleID: "app.alpha",
+            applicationName: "Alpha"
+        )
+        let beta = ApprovedForegroundActivityIdentity(
+            bundleID: "app.beta",
+            applicationName: "Beta"
+        )
+        let records = try ForegroundActivityDeriver.derive(
+            observations: [
+                ForegroundActivityObservation(
+                    occurredAt: start,
+                    activity: .active,
+                    identity: alpha
+                ),
+                ForegroundActivityObservation(
+                    occurredAt: start.addingTimeInterval(2 * 60 * 60),
+                    activity: .idle,
+                    identity: alpha
+                ),
+                ForegroundActivityObservation(
+                    occurredAt: start.addingTimeInterval(3 * 60 * 60),
+                    activity: .active,
+                    identity: beta
+                ),
+                ForegroundActivityObservation(
+                    occurredAt: start.addingTimeInterval(6 * 60 * 60),
+                    activity: .idle,
+                    identity: beta
+                ),
+            ],
+            through: interval.end
+        )
+
+        let summary = try ActivitySummaryProjector.project(
+            records: records,
+            interval: interval
+        )
+
+        XCTAssertEqual(summary.applications.map(\.bundleID), ["app.beta", "app.alpha"])
+        XCTAssertEqual(summary.applications.map(\.recordedDuration), [3 * 3600, 2 * 3600])
+        XCTAssertEqual(summary.recordedDuration, 5 * 3600)
+        XCTAssertEqual(summary.unrecordedDuration, 19 * 3600)
+        XCTAssertEqual(
+            summary.recordedDuration + summary.unrecordedDuration,
+            interval.duration,
+            accuracy: 0.000_001
+        )
+        XCTAssertTrue(summary.applications.allSatisfy { $0.fractionOfElapsedTime >= 0 })
+    }
+
+    func testActivitySummaryCopyContainsNoEvaluativeLanguage() {
+        let normalized = ActivitySummaryProjection.explanatoryText.lowercased()
+        let prohibited = ["productivity", "attention", "score", "streak", "rank", "good", "bad"]
+
+        XCTAssertTrue(prohibited.allSatisfy { !normalized.contains($0) })
+        XCTAssertTrue(normalized.contains("estimates"))
+        XCTAssertTrue(normalized.contains("unrecorded"))
+    }
+
     func testSpringForwardIncludesLabeledMissingHourAndMatchesTwentyThreeElapsedHours()
         throws
     {

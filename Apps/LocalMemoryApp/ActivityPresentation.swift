@@ -13,6 +13,7 @@ final class ActivityViewModel: ObservableObject {
     @Published var rangeMode: ActivityRangeMode = .week
     @Published var anchor = Date()
     @Published private(set) var projection: ActivityHeatmapProjection?
+    @Published private(set) var summary: ActivitySummaryProjection?
     @Published private(set) var isLoading = false
     @Published private(set) var errorCode: String?
 
@@ -30,6 +31,7 @@ final class ActivityViewModel: ObservableObject {
         let requestedGeneration = generation
         guard let interval = selectedInterval else {
             projection = nil
+            summary = nil
             errorCode = "LM-ACTIVITY-CALENDAR"
             return
         }
@@ -40,19 +42,27 @@ final class ActivityViewModel: ObservableObject {
             do {
                 let projected = try await Task.detached {
                     let records = try store?.intervals(in: interval) ?? []
-                    return try ActivityHeatmapProjector.project(
-                        records: records,
-                        interval: interval,
-                        calendar: calendar
+                    return try (
+                        heatmap: ActivityHeatmapProjector.project(
+                            records: records,
+                            interval: interval,
+                            calendar: calendar
+                        ),
+                        summary: ActivitySummaryProjector.project(
+                            records: records,
+                            interval: interval
+                        )
                     )
                 }.value
                 guard requestedGeneration == generation else { return }
-                projection = projected
+                projection = projected.heatmap
+                summary = projected.summary
                 errorCode = nil
                 isLoading = false
             } catch {
                 guard requestedGeneration == generation else { return }
                 projection = nil
+                summary = nil
                 errorCode = "LM-ACTIVITY-LOAD"
                 isLoading = false
             }
@@ -78,10 +88,8 @@ struct ActivityShellView: View {
         VStack(alignment: .leading, spacing: 12) {
             header
             controls
-            Text(
-                "Recorded foreground time and unrecorded gaps are descriptive. No score, rank, or productivity judgment is calculated."
-            )
-            .foregroundStyle(.secondary)
+            Text(ActivitySummaryProjection.explanatoryText)
+                .foregroundStyle(.secondary)
 
             if model.isLoading {
                 ProgressView("Loading local activity…")
@@ -93,6 +101,9 @@ struct ActivityShellView: View {
                     description: Text("Local activity could not be loaded. \(errorCode)")
                 )
             } else if let projection = model.projection {
+                if let summary = model.summary {
+                    summaryPanel(summary)
+                }
                 heatmap(projection)
                 accessibilityTable(projection)
             } else {
@@ -107,6 +118,38 @@ struct ActivityShellView: View {
         .padding()
         .task { model.reload() }
         .accessibilityIdentifier("activity.section")
+    }
+
+    private func summaryPanel(_ summary: ActivitySummaryProjection) -> some View {
+        GroupBox("Activity estimates") {
+            VStack(alignment: .leading, spacing: 6) {
+                ScrollView {
+                    LazyVStack(alignment: .leading, spacing: 6) {
+                        ForEach(summary.applications) { application in
+                            HStack {
+                                Text(application.applicationName)
+                                Spacer()
+                                Text(application.durationLabel)
+                                    .monospacedDigit()
+                            }
+                            .accessibilityElement(children: .ignore)
+                            .accessibilityLabel(application.accessibilityLabel)
+                        }
+                    }
+                }
+                .frame(maxHeight: 160)
+                Divider()
+                HStack {
+                    Text("Unrecorded")
+                    Spacer()
+                    Text(summary.unrecordedDurationLabel)
+                        .monospacedDigit()
+                }
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel(summary.unrecordedAccessibilityLabel)
+            }
+        }
+        .accessibilityIdentifier("activity.summary")
     }
 
     private var header: some View {

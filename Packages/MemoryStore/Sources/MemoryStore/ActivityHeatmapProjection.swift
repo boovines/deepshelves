@@ -6,6 +6,109 @@ public enum ActivityHeatmapProjectionError: Error, Equatable, Sendable {
     case calendarFailure
 }
 
+public struct ActivityApplicationSummary: Identifiable, Equatable, Sendable {
+    public var id: String { bundleID }
+    public let bundleID: String
+    public let applicationName: String
+    public let recordedDuration: TimeInterval
+    public let fractionOfElapsedTime: Double
+    public let durationLabel: String
+    public let accessibilityLabel: String
+}
+
+public struct ActivitySummaryProjection: Equatable, Sendable {
+    public static let explanatoryText =
+        "These estimates describe recorded foreground time and known gaps. Unrecorded time can include idle periods, pauses, exclusions, or unavailable capture."
+
+    public let interval: DateInterval
+    public let applications: [ActivityApplicationSummary]
+    public let unrecordedDuration: TimeInterval
+    public let unrecordedDurationLabel: String
+    public let unrecordedAccessibilityLabel: String
+
+    public var recordedDuration: TimeInterval {
+        applications.reduce(0) { $0 + $1.recordedDuration }
+    }
+}
+
+public enum ActivitySummaryProjector {
+    public static func project(
+        records: [DurableForegroundActivityInterval],
+        interval: DateInterval
+    ) throws -> ActivitySummaryProjection {
+        guard interval.start < interval.end else {
+            throw ActivityHeatmapProjectionError.invalidInterval
+        }
+        let sorted = records.sorted {
+            if $0.startedAt != $1.startedAt { return $0.startedAt < $1.startedAt }
+            return $0.id.uuidString < $1.id.uuidString
+        }
+        for (current, next) in zip(sorted, sorted.dropFirst())
+        where current.endedAt > next.startedAt {
+            throw ActivityHeatmapProjectionError.invalidActivityRecords
+        }
+
+        var durations: [String: TimeInterval] = [:]
+        var names: [String: String] = [:]
+        for record in sorted where record.isActive {
+            let start = max(record.startedAt, interval.start)
+            let end = min(record.endedAt, interval.end)
+            guard start < end, let bundleID = record.bundleID,
+                let applicationName = record.applicationName
+            else { continue }
+            durations[bundleID, default: 0] += end.timeIntervalSince(start)
+            names[bundleID] = applicationName
+        }
+        let recorded = durations.values.reduce(0, +)
+        guard recorded <= interval.duration + 0.000_001 else {
+            throw ActivityHeatmapProjectionError.invalidActivityRecords
+        }
+        let applications = durations.map { bundleID, duration in
+            let name = names[bundleID] ?? bundleID
+            let fraction = duration / interval.duration
+            return ActivityApplicationSummary(
+                bundleID: bundleID,
+                applicationName: name,
+                recordedDuration: duration,
+                fractionOfElapsedTime: fraction,
+                durationLabel: durationLabel(duration),
+                accessibilityLabel:
+                    "\(name), \(durationLabel(duration)) recorded, \(percentageLabel(fraction)) of selected elapsed time"
+            )
+        }.sorted { left, right in
+            if left.recordedDuration != right.recordedDuration {
+                return left.recordedDuration > right.recordedDuration
+            }
+            if left.applicationName != right.applicationName {
+                return left.applicationName < right.applicationName
+            }
+            return left.bundleID < right.bundleID
+        }
+        let unrecorded = max(0, interval.duration - recorded)
+        return ActivitySummaryProjection(
+            interval: interval,
+            applications: applications,
+            unrecordedDuration: unrecorded,
+            unrecordedDurationLabel: durationLabel(unrecorded),
+            unrecordedAccessibilityLabel:
+                "Unrecorded, \(durationLabel(unrecorded)), \(percentageLabel(unrecorded / interval.duration)) of selected elapsed time"
+        )
+    }
+
+    private static func durationLabel(_ duration: TimeInterval) -> String {
+        let totalMinutes = Int((duration / 60).rounded())
+        let hours = totalMinutes / 60
+        let minutes = totalMinutes % 60
+        if hours == 0 { return "\(minutes) min" }
+        if minutes == 0 { return "\(hours) hr" }
+        return "\(hours) hr \(minutes) min"
+    }
+
+    private static func percentageLabel(_ fraction: Double) -> String {
+        String(format: "%.1f%%", fraction * 100)
+    }
+}
+
 public enum ActivityHourOccurrence: String, Equatable, Sendable {
     case standard
     case firstOccurrence

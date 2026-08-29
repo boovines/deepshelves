@@ -662,3 +662,10 @@ This file is append-only. Each story records measurements, failures, and durable
 - The spring-forward fixture has 23 real elapsed hours plus one explicitly labeled, disabled missing 2 AM cell. The fall-back fixture has 25 real elapsed hours with distinct first and repeated 1 AM cells and distinct Timeline intervals.
 - Every real cell carries its exact half-open interval. Activity-to-Timeline navigation consumes that start as the Timeline cursor and selects one-hour zoom, covered by a focused request-probe test.
 - Nine safe projection/Timeline tests, changed-file strict formatting, targeted prohibited-media inspection, and a cached native arm64 compile pass under the 50 ms encoder tripwire. No application, UI, ImageIO, capture, or media runtime ran; installed accessibility and interaction evidence remains blocked at H9.
+
+## 2026-08-29 — LM-074 exact neutral activity summaries (runtime deferred)
+
+- The summary projector aggregates only approved active intervals by bundle ID, preserves the most recent approved application name, orders duration-descending with deterministic ties, and derives `Unrecorded` from real selected elapsed time rather than a fixed-day assumption.
+- The deterministic 24-hour fixture reconciles exactly: Beta 3 hours + Alpha 2 hours + Unrecorded 19 hours = 24 hours. Missing database coverage and every typed gap remain unrecorded rather than being attributed to an application.
+- Day/week and date controls continue to use the injected local calendar. Application totals are scroll-bounded, each row has a complete accessibility label, and the explicit Unrecorded row remains visible.
+- Production explanatory copy has zero matches for the frozen evaluative lexicon. Five focused tests, strict formatting, targeted prohibited-media/copy scans, and cached arm64 compile pass under the encoder tripwire; installed layout and accessibility checks remain at H9.

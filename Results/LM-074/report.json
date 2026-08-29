@@ -1,0 +1,29 @@
+{
+  "story": "LM-074",
+  "revision": "refs/tags/checkpoints/LM-074-blocked",
+  "completedAt": "2026-08-29T08:33:01Z",
+  "status": "blocked",
+  "implementationReadiness": "ready",
+  "deferredValidationGate": "H9",
+  "proofClass": ["unit", "model", "static", "compile", "snapshot"],
+  "runtimeExecuted": false,
+  "checks": {
+    "focusedTests": 5,
+    "failures": 0,
+    "applicationTotalsStable": true,
+    "explicitUnrecordedTotal": true,
+    "selectedElapsedIntervalReconciles": true,
+    "dayAndWeekControlsUseLocalCalendar": true,
+    "productionCopyEvaluativeLexiconMatches": 0,
+    "changedFileStrictFormat": true,
+    "targetedProhibitedMediaScan": true,
+    "nativeArm64Compile": true,
+    "encoderTripwireClear": true
+  },
+  "hashes": {
+    "projectionImplementation": "cee103a70e758268de645541b9798782479fdb3b44dd2656982a1726bcbe3e5e",
+    "projectionTests": "6492612bbaab34bb3e0a57e80b9b3881276257567aefc84b91a2994e4694bd50",
+    "activityPresentation": "d0080aedccdb23b6ac1ccaf1170f09deb57d6d1a421c2c59fcc03afcf0c18cf9",
+    "compileLog": "4457f87f5061448f71e8af39307e9cea1ff5e1338d3cc10580ed45b4d3a06dca"
+  }
+}
