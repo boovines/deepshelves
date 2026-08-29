@@ -536,3 +536,11 @@ This file is append-only. Each story records measurements, failures, and durable
 - Detail and Timeline provide destructive Moment and Range/day actions. Shared confirmation defaults to Cancel, explains immediate hiding and backup limits, then shows queued/rewrite/verification/failure state. Production composition injects the store; fixtures cannot mutate an archive.
 - Four focused MemoryStore tests, three Forget model tests, one late-result test, changed-file strict formatting, targeted static safety, deterministic snapshot, and cached native arm64 compile pass with no encoder-service tripwire event.
 - LM-047 remains technically blocked for the real keyboard/VoiceOver/application/helper/relaunch/physical-rewrite flow assigned unchanged to H9. No safe proof is represented as runtime evidence.
+
+## 2026-08-29 — LM-048 Recall UI milestone checkpoint (runtime deferred)
+
+- The safe journey matrix binds exact phrase, app/site, lamp-today lexical fallback, timeline context, Revisit, and Forget to the already checkpointed parser/search/detail/timeline/deletion seams. It explicitly labels every real application/interaction/timing artifact as H9-only.
+- The first ADR-0007 milestone broad gate passes 42 MemorySearch tests, 7 MemoryStore tests, byte-identical V1/V2 contract regeneration plus two contract test classes, static privacy, static dependency provenance, and a universal arm64/x86_64 Release compile. The 50 ms encoder-service tripwire remained clean throughout.
+- MemoryContracts has no SwiftPM test target; the first combined command reported that fact after the search/store suites passed. The executor did not repeat the unchanged failure and instead used the repository's canonical contract verifier, which passed.
+- The LM-038 frozen retrieval benchmark remains canonical because the Recall UI stream did not change ranking or labels. ADR 0007 avoids a redundant benchmark rerun while preserving the exact evidence link and revision.
+- LM-048 remains technically blocked until the isolated validation Mac supplies recordings, screenshots, p95 UI timings, keyboard/VoiceOver review, real Revisit execution, and live Forget/relaunch behavior. Safe milestone evidence is not a substitute.

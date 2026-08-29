@@ -16,7 +16,8 @@
         "LM-043",
         "LM-045",
         "LM-046",
-        "LM-047"
+        "LM-047",
+        "LM-048"
       ],
       "evidence": []
     }
@@ -967,13 +968,22 @@
       "resumeProbe": null
     },
     "LM-048": {
-      "status": "pending",
-      "startedAt": null,
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": null,
-      "blockedReason": null,
+      "status": "blocked",
+      "implementationReadiness": "ready",
+      "deferredValidationGate": "H9",
+      "startedAt": "2026-08-29T02:28:00Z",
+      "completedAt": "2026-08-29T02:30:06Z",
+      "gitRevision": "refs/tags/checkpoints/LM-048-blocked",
+      "evidence": [
+        "Results/LM-048/safe-journey-matrix.json",
+        "Results/LM-048/runtime-deferred.md",
+        "Results/Milestones/RecallUI/report.json",
+        "Results/LM-038/retrieval.json",
+        "Decisions/0006-isolated-runtime-validation.md",
+        "Decisions/0007-faster-personal-alpha-verification.md"
+      ],
+      "notes": "Recall UI milestone safe verification passes: 42 MemorySearch and 7 MemoryStore tests, exact V1/V2 contract fixture reproduction and two contract test classes, static privacy, static dependency provenance, and universal arm64/x86_64 Release compile under a clean encoder-service tripwire. The six core recall journeys have a dependency-bound safe model/static matrix with zero fixture leakage. The unchanged LM-038 frozen retrieval report remains canonical and was not redundantly rerun under ADR 0007.",
+      "blockedReason": "LM-048 explicitly requires real journey recordings, screenshots, application p95 UI timings, keyboard/VoiceOver accessibility review, NSWorkspace Revisit execution, and live Forget behavior. Those runtime checks are prohibited here and remain unchanged H9 ledger entries; the safe milestone checkpoint is not represented as satisfying them.",
       "requestedHumanGate": null,
       "resumeProbe": null
     },

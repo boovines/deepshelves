@@ -1,0 +1,44 @@
+{
+  "story": "LM-048",
+  "proofClass": "model-static-snapshot",
+  "runtimeSubstitute": false,
+  "journeys": [
+    {
+      "name": "find exact phrase",
+      "safeEvidence": ["LM-036 parser goldens", "LM-037 exact lexical evidence", "LM-039 settled-order model", "LM-042 source-evidence projection"],
+      "runtimeEvidence": "H9 search field, result grid, detail, keyboard, and timing journey"
+    },
+    {
+      "name": "what app/site",
+      "safeEvidence": ["visible/removable app and site filter models", "approved-metadata autocomplete boundary", "policy-scoped lexical candidates"],
+      "runtimeEvidence": "H9 picker/token/VoiceOver journey"
+    },
+    {
+      "name": "lamp today lexical fallback",
+      "safeEvidence": ["frozen LM-038 Recall@5 report", "today parser interval", "exact settled-order result projection"],
+      "runtimeEvidence": "H9 complete query-to-detail timing journey"
+    },
+    {
+      "name": "timeline context",
+      "safeEvidence": ["six MomentTimeline model tests", "five TimelineSection model tests", "LM-045 and LM-046 deterministic snapshots"],
+      "runtimeEvidence": "H9 scrub, day navigation, selected context, keyboard, VoiceOver, and p95 timing"
+    },
+    {
+      "name": "revisit",
+      "safeEvidence": ["current-source and current-policy planning", "HTTP(S) origin/path-only URL", "unrepresentable form state"],
+      "runtimeEvidence": "H9 NSWorkspace execution proving only approved app/address opens"
+    },
+    {
+      "name": "forget",
+      "safeEvidence": ["four atomic store tests", "three confirmation/progress model tests", "late-result read barrier", "encrypted restart recovery"],
+      "runtimeEvidence": "H9 Cancel-default Moment/Range/helper/relaunch/physical-deletion journey"
+    }
+  ],
+  "accessibilityProjection": {
+    "sourceLabels": "complete for AX, OCR, app, title, URL, transcript, and visual",
+    "timelineList": "deterministic chronological moment/gap/transition rows",
+    "forgetIdentifiers": 8,
+    "keyboardAndVoiceOverRuntime": "deferred unchanged to H9"
+  },
+  "policyLeakageInSafeFixtures": 0
+}

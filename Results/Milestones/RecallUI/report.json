@@ -1,0 +1,28 @@
+{
+  "milestone": "Recall UI",
+  "stories": "LM-039-LM-048",
+  "status": "implementation-ready-runtime-blocked",
+  "gitRevision": "refs/tags/checkpoints/LM-048-blocked",
+  "baseRevision": "ca7ee661b09e7a86b3ba9baf6f09f9006cb16b80",
+  "safeBroadChecks": {
+    "MemorySearch": {"tests": 42, "failures": 0, "durationSeconds": 0.255},
+    "MemoryStore": {"tests": 7, "failures": 0, "durationSeconds": 0.512},
+    "contractFixtures": "V1/V2 byte-identical",
+    "contractTestClasses": 2,
+    "staticPrivacy": "passed",
+    "staticDependencyProvenance": "passed",
+    "universalReleaseCompile": "arm64+x86_64 passed",
+    "encoderServiceTripwire": "clean"
+  },
+  "retrievalBenchmark": {
+    "rerun": false,
+    "reason": "Retrieval ranking and frozen labels are unchanged; ADR 0007 avoids redundant benchmarks.",
+    "canonicalEvidence": "Results/LM-038/retrieval.json",
+    "canonicalRevision": "refs/tags/checkpoints/LM-038"
+  },
+  "runtimeLedger": {
+    "gate": "H9",
+    "satisfied": false,
+    "stories": ["LM-039", "LM-040", "LM-041", "LM-042", "LM-043", "LM-045", "LM-046", "LM-047", "LM-048"]
+  }
+}
