@@ -1,0 +1,12 @@
+{
+  "decision": "ADR-0006",
+  "amendedAt": "2026-08-29T07:15:22Z",
+  "previousTrigger": "LM-064",
+  "newTrigger": "after LM-080 checkpoint and before LM-081",
+  "runtimeExecuted": false,
+  "ownerLaptopRuntimeProhibitionUnchanged": true,
+  "unexecutedAcceptanceCriteriaMarkedPassed": false,
+  "humanActionFilePresent": false,
+  "dependencyReadinessExceptionEndsAfter": "LM-080",
+  "h9Status": "pending"
+}

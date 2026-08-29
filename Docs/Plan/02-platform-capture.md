@@ -146,7 +146,7 @@ ADR 0001 authorizes HEIC as the canonical archive format after two repeatable ha
 ADR 0006 additionally prohibits application, ScreenCaptureKit, ImageIO, VideoToolbox, and
 hardware-media runtime testing on the owner's laptop. LM-028's real eight-hour production
 soak remains mandatory and technically blocked; it executes only as part of the single H9
-isolated-validation-Mac ledger at LM-064. Local unit/model/static/compile/snapshot results
+isolated-validation-Mac ledger after LM-080 and before LM-081. Local unit/model/static/compile/snapshot results
 are implementation evidence, not a substitute for that soak.
 
 Every indexed frame points to a chunk ID, logical presentation timestamp, and exact source HEIC path. A separate 480-pixel HEIC thumbnail is generated asynchronously.

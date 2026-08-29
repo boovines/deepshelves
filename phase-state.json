@@ -3,8 +3,9 @@
   "activeStory": null,
   "validationGates": {
     "H9": {
-      "status": "blocked_human",
-      "story": "LM-064",
+      "status": "pending",
+      "story": "LM-080",
+      "trigger": "after LM-080 checkpoint and before LM-081",
       "hostPolicy": "physically-distinct-isolated-validation-mac",
       "adr": "Decisions/0006-isolated-runtime-validation.md",
       "deferredStories": [
@@ -19,11 +20,11 @@
         "LM-047",
         "LM-048",
         "LM-060",
-        "LM-063"
+        "LM-063",
+        "LM-064",
+        "LM-080"
       ],
-      "evidence": [
-        "HUMAN-ACTION.md"
-      ]
+      "evidence": []
     }
   },
   "executionPolicy": {
@@ -36,9 +37,10 @@
     ],
     "broadCheckpoints": [
       "Recall UI: LM-048",
-      "Trust/Lifecycle and H9: LM-064",
+      "Trust/Lifecycle safe checkpoint: LM-064",
       "Agent Access: LM-071",
-      "Activity/Hardening: LM-085",
+      "Pre-runtime Activity/Hardening and H9: LM-080",
+      "Runtime/dogfood Hardening: LM-085",
       "Final release: LM-086"
     ],
     "estimatedBroadGateExecutionReductionPercent": 82
@@ -1234,19 +1236,21 @@
       "resumeProbe": null
     },
     "LM-064": {
-      "status": "blocked_human",
+      "status": "blocked",
+      "implementationReadiness": "ready",
+      "deferredValidationGate": "H9",
       "startedAt": "2026-08-29T03:20:00Z",
-      "completedAt": null,
-      "gitRevision": "refs/tags/checkpoints/LM-064-h9",
+      "completedAt": "2026-08-29T07:15:22Z",
+      "gitRevision": "refs/tags/checkpoints/H9-rescheduled",
       "evidence": [
-        "HUMAN-ACTION.md",
         "Decisions/0006-isolated-runtime-validation.md",
-        "Results/LM-063/runtime-deferred.md"
+        "Results/LM-064/runtime-deferred.md",
+        "Results/ADR-0006-amendment/report.json"
       ],
-      "notes": "All dependency-safe implementation work through LM-063 is checkpointed. H9 must now run once on a physically distinct isolated validation Mac. No automation, heartbeat, polling loop, watcher, or sub-agent remains active during this pause.",
-      "blockedReason": "The complete ADR-0006 runtime ledger and LM-064 trust journey require a physically distinct recoverable Mac with documented Screen Recording and Accessibility consent. This owner laptop is prohibited.",
-      "requestedHumanGate": "H9",
-      "resumeProbe": "Verify distinct IOPlatformUUID hash, exact checkpoints/LM-064-h9 revision, pinned Xcode, and zero xcodebuild/xctest/VTEncoderXPCService processes before any isolated-Mac capability probe."
+      "notes": "All safe trust/lifecycle implementation and prerequisites are code-complete. Under the accepted ADR-0006 scheduling amendment, LM-064 remains technically blocked and implementation-ready while dependency-safe work continues through LM-080. No runtime claim is made.",
+      "blockedReason": "The unchanged trust journey and complete runtime ledger require a physically distinct recoverable Mac. H9 is scheduled after the LM-080 checkpoint and before LM-081; application and media runtime remain prohibited on this laptop.",
+      "requestedHumanGate": null,
+      "resumeProbe": null
     },
     "LM-065": {
       "status": "pending",

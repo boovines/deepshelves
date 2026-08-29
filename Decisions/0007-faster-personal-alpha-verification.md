@@ -50,9 +50,10 @@ milestone, then once more at the final release gate:
 | Milestone | Stories | Broad checkpoint |
 |---|---|---|
 | Recall UI | LM-039–LM-048 | After LM-048 safe implementation is ready; runtime items remain in H9 |
-| Trust/Lifecycle | LM-056–LM-064 | After LM-063 safe work, with the H9 isolated-Mac ledger and trust gate at LM-064 |
+| Trust/Lifecycle | LM-056–LM-064 | After LM-064 safe implementation is ready; runtime trust items remain in H9 |
 | Agent Access | LM-065–LM-071 | After LM-071 adversarial policy suite |
-| Activity/Hardening | LM-072–LM-074 and LM-080–LM-085 | After LM-085, including the required H5/H6/H7 human gates |
+| Pre-runtime Activity/Hardening | LM-072–LM-074 and LM-080 | After LM-080, immediately before H9 |
+| Runtime/dogfood Hardening | LM-081–LM-085 | After LM-085, including the required H5/H6/H7 human gates |
 | Final release | LM-086 | Exact release-candidate revision under the complete final gate |
 
 The already-completed LM-049–LM-055 Visual Recall work needs no redundant new milestone
@@ -73,7 +74,8 @@ now depends on LM-074. H4 is dormant unless a future ADR restores audio work.
 
 ### Observation and runtime discipline
 
-The complete ADR-0006 quarantine and H9 acceptance ledger remain unchanged. Foreground-
+The complete ADR-0006 quarantine and H9 acceptance ledger remain unchanged. Under the
+accepted ADR-0006 scheduling amendment, H9 runs after LM-080 and before LM-081. Foreground-
 window isolation, exclusions, encryption, deletion/corruption correctness, fail-closed
 behavior, bounded agent access, accessibility correctness, and all original acceptance
 criteria remain mandatory.

@@ -21,8 +21,9 @@ exclusions, privacy/deletion blockers, resource discomfort, crashes, UX friction
 local diagnostics, and disposition of every reported issue.
 
 Make the observation interval explicitly credit-silent. Before it starts, Codex checkpoints
-LM-080, records the H5 instructions and resume probe, sets LM-081 to `blocked_human`, and
-ends its active turn. No Codex automation, scheduled task, heartbeat, sub-agent, polling
+LM-080, completes the H9 isolated-Mac runtime gate under ADR 0006, records the H5 instructions
+and resume probe, sets LM-081 to `blocked_human`, and ends its active turn. No Codex
+automation, scheduled task, heartbeat, sub-agent, polling
 loop, terminal watcher, or recurring status check may run during the three workdays. The
 user manually resumes the goal after completing the observation form.
 

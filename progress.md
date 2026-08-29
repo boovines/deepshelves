@@ -588,3 +588,10 @@ This file is append-only. Each story records measurements, failures, and durable
 - All safe implementation work through LM-063 is checkpointed. LM-064 is `blocked_human` at H9 because the accumulated runtime ledger can run only on a physically distinct recoverable validation Mac.
 - The single action and exact resume probe are durable in `HUMAN-ACTION.md`. The resumed agent must verify physical-host identity, checkpoint revision, pinned Xcode, and a clean process state before any runtime probe.
 - This pause is fully credit-silent: no automation, heartbeat, recurring task, polling loop, terminal watcher, or sub-agent was created or left running.
+
+## 2026-08-29 — ADR-0006 amendment: H9 moved to the LM-080/LM-081 boundary
+
+- The owner explicitly moved the single isolated-Mac runtime session until after every dependency-safe implementation story through LM-080 is code-complete. The canonical master plan, backlog, contracts, evaluation plan, ADRs, phase rules, and goal-thread runbook now agree on that boundary.
+- LM-064 changed from `blocked_human` to technical `blocked` with `implementationReadiness: ready` and `deferredValidationGate: H9`. Its original runtime trust journey remains wholly unsatisfied; no static/unit/model/compile evidence was relabeled.
+- The readiness exception now permits safe implementation through LM-080 only. H9 becomes the next mandatory prerequisite after that checkpoint; LM-081 and later work require the deferred stories to be promoted to `passed` from real isolated-host evidence.
+- `HUMAN-ACTION.md` was removed because no human action is currently required. It will be recreated only after LM-080 when H9 is the next unavoidable gate. No runtime or application process was launched for this scheduling change.

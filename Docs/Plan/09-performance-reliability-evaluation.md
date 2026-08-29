@@ -152,8 +152,8 @@ ADR 0006 requires runtime-host provenance in every performance report. On the ow
 laptop, application, ScreenCaptureKit, ImageIO, VideoToolbox, and hardware-media runtime are
 prohibited. Safe unit/model/static/compile/snapshot measurements may guide implementation
 but cannot satisfy live CPU, energy, WindowServer, interaction, or wall-clock soak gates.
-Those checks accumulate in the H9 ledger and run once on the isolated validation Mac at
-LM-064.
+Those checks accumulate in the H9 ledger and run once on the isolated validation Mac after
+LM-080 and before LM-081.
 
 For every implementation story:
 

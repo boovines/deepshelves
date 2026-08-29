@@ -14,7 +14,7 @@ is classified as `runtime` and includes its required host, command/journey ident
 story, and result. Safe evidence may establish `implementationReadiness` but never changes a
 blocked story to passed or satisfies a runtime item.
 
-The H9 ledger at `Results/LM-064/isolated-validation-ledger.json` is append-only for one
+The H9 ledger at `Results/H9/isolated-validation-ledger.json` is append-only for one
 validation revision and contains: schema version, git revision, isolated-host declaration,
 ordered item IDs, source story, acceptance text, proof class `runtime`, command/journey,
 tripwire result, artifact paths, and pass/fail disposition. Missing, reordered, revision-

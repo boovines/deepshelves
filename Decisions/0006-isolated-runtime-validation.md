@@ -45,7 +45,8 @@ downstream story to claim runtime behavior based on unit/model/static/compile/sn
 Every downstream story that reaches its own runtime-only evidence boundary remains
 `blocked`, records its safe evidence separately, and joins the same H9 ledger.
 
-H9 runs once at LM-064 on an isolated validation Mac. That Mac must be physically distinct
+H9 runs once after all dependency-safe implementation through LM-080 is code-complete and
+checkpointed, immediately before LM-081 dogfood, on an isolated validation Mac. That Mac must be physically distinct
 from this laptop, expendable or recoverable, compatible with the pinned toolchain, and have
 the required Screen Recording and Accessibility consent. H9 executes the accumulated
 runtime ledger in dependency order, including at minimum:
@@ -54,14 +55,16 @@ runtime ledger in dependency order, including at minimum:
    scans with the pinned software HEIC helper and encoder-service tripwire;
 2. LM-039's warm/slow/error XCUITest fixtures;
 3. every later UI journey, accessibility interaction, live offline, or application-runtime
-   acceptance check explicitly registered in the ledger before LM-064.
+   acceptance check explicitly registered in the ledger before the LM-080 checkpoint.
 
 If VideoToolbox or any hardware-media service appears unexpectedly, the H9 run stops,
 preserves content-free diagnostics, and leaves every affected story blocked. H9 may not
 reinterpret a snapshot, model, compile, or fake test as runtime evidence. After every ledger
-entry passes, each deferred story receives its real evidence, is promoted to `passed` in its
-own dependency order, and LM-064 may complete. No story after LM-064 may use implementation
-readiness in place of a passed dependency.
+entry passes, each deferred story receives its real evidence and is promoted to `passed` in
+its own dependency order, including LM-064. Dependency-safe implementation through LM-080
+may consume an implementation-ready H9-deferred predecessor. LM-081 and every later story
+require all of their nonremoved dependencies to be `passed`; the readiness exception ends
+at the LM-080/H9 boundary.
 
 ## Invariant analysis
 
@@ -107,7 +110,7 @@ every deferred runtime check separately. Static process and source audits must s
 application, ScreenCaptureKit, ImageIO, VideoToolbox, or hardware-media runtime was invoked
 on this laptop.
 
-At H9, `Results/LM-064/isolated-validation-ledger.json` binds the isolated host declaration,
+At H9, `Results/H9/isolated-validation-ledger.json` binds the isolated host declaration,
 exact git revision, commands, story/evidence mapping, process tripwire output, and pass/fail
 result for every deferred check. A missing or failed ledger item leaves its story blocked.
 
@@ -116,3 +119,12 @@ result for every deferred check. A missing or failed ledger item leaves its stor
 Revisit only if the owner changes the laptop prohibition, an isolated validation Mac is
 available, or a new runtime-only requirement cannot be represented as an H9 ledger entry
 without changing product/privacy architecture.
+
+## 2026-08-29 scheduling amendment
+
+The original decision placed H9 at LM-064. The owner explicitly moved the single runtime
+session to the LM-080/LM-081 boundary so Agent Access, Activity, local diagnostics, and all
+other dependency-safe implementation can be completed before configuring the isolated Mac.
+This amendment changes scheduling only: every deferred criterion remains blocked and must
+still receive its original runtime evidence before LM-081 begins. No runtime proof is
+waived, substituted, or authorized on the owner's laptop.

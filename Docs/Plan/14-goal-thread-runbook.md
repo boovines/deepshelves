@@ -26,9 +26,9 @@ The goal thread begins by checking current branch/status, existing user changes,
 For each story:
 
 1. Read master plan, active category plan, contracts, story row, applicable spike/ADR, `progress.md`, and `phase-state.json`.
-2. Verify every dependency is `passed` and working tree ownership is understood. Before
-   LM-064, ADR-0006 dependencies may instead be blocked/implementation-ready/H9-deferred;
-   record that distinction explicitly. Never use this exception after LM-064.
+2. Verify every dependency is `passed` and working tree ownership is understood. Through
+   LM-080, ADR-0006 dependencies may instead be blocked/implementation-ready/H9-deferred;
+   record that distinction explicitly. Never use this exception for LM-081 or later.
 3. Set exactly one story to `active`; record start time and base revision.
 4. Add the fixture/test that demonstrates the story outcome.
 5. Implement only that story, including user-visible failure/recovery behavior.
@@ -43,7 +43,7 @@ For each story:
 10. Create one atomic Git checkpoint whose message starts with the story ID, staging only files owned by that story and never unrelated user changes; push the verified checkpoint to the private `origin` before beginning the next story.
 11. Re-read the next story and continue automatically.
 
-After LM-048, LM-064, LM-071, and LM-085, run the ADR-0007 milestone checkpoint: one
+After LM-048, LM-064, LM-071, LM-080, and LM-085, run the ADR-0007 milestone checkpoint: one
 universal Release build and the applicable broad privacy, dependency, contract, benchmark,
 and repository suites. Run the complete final release gate again at LM-086. Reuse
 DerivedData and resolved dependencies, suppress successful build output, and do not perform
@@ -63,7 +63,7 @@ static, compile, and deterministic offscreen snapshot checks are allowed only af
 inspection proves they cannot reach a prohibited runtime. Reports must name these proof
 classes honestly and list the original runtime acceptance separately.
 
-ADR 0006 moves all such deferred checks into one H9 ledger at LM-064 on an isolated
+ADR 0006 moves all such deferred checks into one H9 ledger after LM-080 and before LM-081 on an isolated
 validation Mac. A story remains `blocked`; `implementationReadiness: ready` merely allows
 safe downstream implementation. If a story cannot be implemented further without one of
 the prohibited runtimes, record the exact boundary and stop it rather than guessing.
@@ -103,14 +103,15 @@ The agent may not invent additional approval gates merely because work is diffic
 | H6 Fresh-install rehearsal | LM-083 | Follow the supplied install/permission/revoke/uninstall checklist on the target Mac | Agent reruns probes and records resulting state/evidence |
 | H7 Final subjective review | LM-085 | Review the deterministic UI gallery and five core journeys; list unacceptable issues or explicitly accept | Agent fixes listed blockers and records user acceptance; numeric/accessibility gates still run automatically |
 | H8 GitHub authentication | LM-001 cannot create/push the private `deepshelves` remote | Authenticate GitHub CLI for the intended account and confirm private visibility; do not authorize public creation | `gh auth status`, `git remote -v`, and repository visibility inspection pass; initial plan/build checkpoint pushes successfully |
-| H9 Isolated runtime validation | LM-064 after all safe implementation work through LM-063 is ready | Provide a physically distinct, recoverable validation Mac with the pinned revision/toolchain and grant only the documented Screen Recording/Accessibility permissions there | Run the ordered ADR-0006 ledger once; every LM-028/LM-039 and later deferred runtime check has real evidence, no prohibited service escapes the tripwire, and affected stories are promoted in dependency order before LM-064 passes |
+| H9 Isolated runtime validation | After LM-080 safe code completion, immediately before LM-081 | Provide a physically distinct, recoverable validation Mac with the pinned revision/toolchain and grant only the documented Screen Recording/Accessibility permissions there | Run the ordered ADR-0006 ledger once; every deferred runtime check has real evidence, no prohibited service escapes the tripwire, and affected stories are promoted in dependency order before LM-081 begins |
 
 A paid Apple Developer Program membership and App Store submission are not required. Apple-account authentication, TCC consent, Keychain prompts, microphone consent, real-world dogfood, and subjective visual approval cannot be assumed automatable.
 
 ### H5 credit-silent observation protocol
 
 H5 is an offline human observation window, not an agent-monitoring task. Before the first
-dogfood day, the agent must checkpoint LM-080, set LM-081 to `blocked_human`, write the
+dogfood day, the agent must checkpoint LM-080, complete and checkpoint H9, set LM-081 to
+`blocked_human`, write the
 observation form and exact resume probe to `HUMAN-ACTION.md`, and end its active turn. It
 must not create or leave running a Codex automation, scheduled task, heartbeat, sub-agent,
 polling loop, terminal watcher, or recurring status check. The Local Memory app may write
@@ -154,7 +155,7 @@ A technical failure that needs no user authority uses `blocked`, not `blocked_hu
 
 Under ADR 0006, a story whose implementation is safely complete but whose runtime evidence
 is prohibited here stays `blocked`, records `implementationReadiness: ready` and H9, and may
-be consumed only as a pre-LM-064 implementation dependency. It is never reported complete.
+be consumed only for dependency-safe implementation through LM-080. It is never reported complete.
 
 The next thread can then continue from evidence rather than restarting diagnosis.
 

@@ -137,7 +137,7 @@ privacy, integrity, retention, and deletion gates against HEIC source assets.
 
 ADR 0006 does not alter this verification requirement. It keeps LM-028 blocked, permits
 downstream safe implementation work, and assigns the missing real production soak to the
-single H9 isolated-validation-Mac ledger at LM-064. No local model, static, compile, or
+single H9 isolated-validation-Mac ledger after LM-080 and before LM-081. No local model, static, compile, or
 snapshot result substitutes for that runtime evidence.
 
 ## Revisit triggers
