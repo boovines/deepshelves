@@ -58,6 +58,10 @@ struct LocalMemoryApp: App {
             arguments: arguments,
             database: archiveSecurityModel.database
         )
+        SignedMCPEntrypoint.launchIfRequested(
+            arguments: arguments,
+            database: archiveSecurityModel.database
+        )
         let lifecycleModel = AppLifecycleViewModel(
             stateURL: configuration.stateURL,
             initialStatus: configuration.initialStatus,

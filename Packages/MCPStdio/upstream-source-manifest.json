@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "upstream": {
+    "name": "modelcontextprotocol/swift-sdk",
+    "version": "0.12.1",
+    "revision": "a0ae212ebf6eab5f754c3129608bc5557637e605",
+    "archiveSHA256": "497caabc0cdf669fe442421b4fff13bf5ce7aa132bc747e851c9fdc63f56c0c5"
+  },
+  "localAdaptations": [
+    "OfficialSDK/Error.swift removes the Swift System errno helper unused by the blocking Foundation stdio loop",
+    "StdioTransport.swift preserves official newline framing with bounded injected Foundation file handles and no network-capable dependency"
+  ],
+  "files": [
+    {"path": "LICENSE", "sha256": "0382b0057770ca05e9c350a50aa3b1c1fea84da0bc81d723bf00b9aa841be58a"},
+    {"path": "Sources/MCPStdio/OfficialSDK/Data+Extensions.swift", "sha256": "4694218cc05959b1103ab90bcfa9c4f5178688074ae2a2070868c786e8587782"},
+    {"path": "Sources/MCPStdio/OfficialSDK/Error.swift", "sha256": "911c6b9a9dfdd191a6e8d8f7ef1cda2ad7839acee3a965a3fde8fa16d9267787"},
+    {"path": "Sources/MCPStdio/OfficialSDK/ID.swift", "sha256": "519d7804eabbf14299b8f067374bf714aa03303b711d2c4423e0078e8e4ee4da"},
+    {"path": "Sources/MCPStdio/OfficialSDK/Icon.swift", "sha256": "d8c259e2a08a4fa7e326b54f8a00b8abf3edbe46e1d0ffa4adb1aa93f29d18eb"},
+    {"path": "Sources/MCPStdio/OfficialSDK/Messages.swift", "sha256": "7162e0b3e6bc851bcc266ce8358e77c0026d3d91a4d6f2de07ff18f86f1b4f90"},
+    {"path": "Sources/MCPStdio/OfficialSDK/Progress.swift", "sha256": "44d219777d0d549f3b4d606e6831abe113f988b015eb3e8aba420ba9925061ce"},
+    {"path": "Sources/MCPStdio/OfficialSDK/Resources.swift", "sha256": "adda0919e933eb304bedb9bb199bc10098c3bb4a24c6a3485eb1443e0bf0d333"},
+    {"path": "Sources/MCPStdio/OfficialSDK/Tools.swift", "sha256": "79c4fc03714468c4a41c05544371ea7ffbf4517dc647db1b679abf8b71df7f0f"},
+    {"path": "Sources/MCPStdio/OfficialSDK/UnitInterval.swift", "sha256": "e54b8ddca6816c88ee49dc49ec79eb01590e104055208c55470d67314e3e8a74"},
+    {"path": "Sources/MCPStdio/OfficialSDK/Value.swift", "sha256": "6a8399cb11db842faac9f549143058e24d15763705be65701ffba714111aabeb"},
+    {"path": "Sources/MCPStdio/OfficialSDK/Versioning.swift", "sha256": "90e48d38b27f138c3e33a4e3ea47c48f5e00b007c01a6c5dbc9287d4099912c5"},
+    {"path": "Sources/MCPStdio/StdioTransport.swift", "sha256": "0f10ca29894c4470e1e9fb9d1473d34ab08934f1694bfb13196f336f2fbc3c53"}
+  ],
+  "excludedUpstreamAreas": [
+    "Authorization",
+    "HTTPClientTransport",
+    "HTTPServer",
+    "NetworkTransport",
+    "EventSource",
+    "NIO conformance targets",
+    "Client runtime",
+    "generic Server runtime"
+  ]
+}

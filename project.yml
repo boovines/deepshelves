@@ -88,8 +88,7 @@ targets:
     sources:
       - Apps/LocalMemoryMCP
     dependencies:
-      - package: MemoryContracts
-      - package: SharedQueryKit
+      - package: MemoryAgentAccess
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.justinhou.deepshelves.localmemory.mcp

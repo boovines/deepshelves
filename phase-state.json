@@ -23,6 +23,7 @@
         "LM-063",
         "LM-064",
         "LM-067",
+        "LM-068",
         "LM-080"
       ],
       "evidence": []
@@ -1297,13 +1298,20 @@
       "resumeProbe": null
     },
     "LM-068": {
-      "status": "pending",
-      "startedAt": null,
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": null,
-      "blockedReason": null,
+      "status": "blocked",
+      "implementationReadiness": "ready",
+      "deferredValidationGate": "H9",
+      "startedAt": "2026-08-29T07:41:30Z",
+      "completedAt": "2026-08-29T07:50:03Z",
+      "gitRevision": "refs/tags/checkpoints/LM-068-blocked",
+      "evidence": [
+        "Results/LM-068/report.json",
+        "Results/LM-068/runtime-deferred.md",
+        "Packages/MCPStdio/upstream-source-manifest.json",
+        "Decisions/0006-isolated-runtime-validation.md"
+      ],
+      "notes": "The official-SDK-based stdio MCP implementation is code-complete with four closed-world read-only tools, bounded framing, stable policy-backed projections, untrusted-evidence labeling, protocol negotiation, and a signed-app routing launcher. Five focused MCP tests, two-client projection parity, nine policy/CLI regression tests, the dependency audit, empty helper entitlements, arm64 app/helper compiles, and binary network/listener/SQLCipher linkage checks pass. No installed-product runtime claim is made.",
+      "blockedReason": "The unchanged acceptance contract requires the installed helper to run through the signed application's --mcp entrypoint with the protocol inspector, two real independent MCP clients, offline/network instrumentation, real policy filtering, disconnect/cancellation, and a live port scan. Application execution is prohibited on this laptop; ADR 0006 assigns these checks to H9.",
       "requestedHumanGate": null,
       "resumeProbe": null
     },

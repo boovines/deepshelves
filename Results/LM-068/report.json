@@ -1,0 +1,67 @@
+{
+  "story": "LM-068",
+  "revision": "refs/tags/checkpoints/LM-068-blocked",
+  "completedAt": "2026-08-29T07:50:03Z",
+  "proofClass": [
+    "unit",
+    "protocol-model",
+    "dependency-audit",
+    "static-binary",
+    "compile"
+  ],
+  "runtimeExecuted": false,
+  "checks": {
+    "focusedMCPTests": {
+      "count": 5,
+      "status": "passed"
+    },
+    "policyCLIRegressionTests": 9,
+    "protocolVersions": [
+      "2025-11-25",
+      "2025-06-18",
+      "2025-03-26",
+      "2024-11-05"
+    ],
+    "transport": "newline-delimited-stdio",
+    "maximumMessageBytes": 1048576,
+    "tools": [
+      "memory_status",
+      "search_memory",
+      "get_timeline",
+      "get_moment"
+    ],
+    "readOnlyToolAnnotations": true,
+    "arbitrarySQLSurface": false,
+    "mutationSurface": false,
+    "capturedTextMarkedUntrustedEvidence": true,
+    "twoIndependentClientShapes": "byte-equivalent-structured-projection",
+    "officialSDK": {
+      "version": "0.12.1",
+      "revision": "a0ae212ebf6eab5f754c3129608bc5557637e605",
+      "archiveSHA256": "497caabc0cdf669fe442421b4fff13bf5ce7aa132bc747e851c9fdc63f56c0c5",
+      "fullNetworkCapablePackageLinked": false,
+      "auditedProtocolSubsetLinked": true
+    },
+    "staticDependencyAudit": "passed",
+    "helperArchitecture": "arm64",
+    "helperEntitlements": "empty",
+    "helperNetworkFrameworkLinkage": false,
+    "helperSQLCipherLinkage": false,
+    "helperNetworkOrListenerSymbols": false,
+    "sourceHTTPNetworkNIOEventSource": false,
+    "changedFileStrictFormat": "passed",
+    "nativeArm64AppCompile": "passed",
+    "nativeArm64MCPCompile": "passed",
+    "encoderProcessTripwire": "passed"
+  },
+  "sourceHashes": {
+    "mcpServer": "4c50e20345f678423e417e06c2f0f3a6ee7661cdeba1711ac4e5c6362566e8df",
+    "signedEntrypoint": "aefe35b182100845320295bc7e8834716fda0555be3010fe2cf76e7550219e18",
+    "launcher": "36fd06d29d7d221290c3e74992d2e27c9cdd2bc4f22e249f35fd70ca74c80167",
+    "upstreamSubsetManifest": "644b0ac771782e04355d4e4756c6e3957a04141818910d5d36e70a6de00b125b",
+    "debugHelper": "81f95c39e458975e2a4b240c9b26cae915c46bf97cf0f6e25f85e5f7af695ff4",
+    "appCompileLog": "0d4a9ca21d4610122487b2223f4c7fc0a32d2f963d28457ba37e5a3e8b9a5ec0",
+    "mcpCompileLog": "4bda7fe528e191c9164732e4dcb2877248db73e73b2e850175dfdf467e9f0ae7"
+  },
+  "deferredValidation": "The installed standalone helper was not launched through the signed application's --mcp entrypoint. H9 must run the protocol inspector and two independent real MCP clients under deny-all networking, verify real policy filtering, inspect the live process for listening sockets, and exercise disconnect/cancellation."
+}

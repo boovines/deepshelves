@@ -13,7 +13,7 @@ enum SignedCLIEntrypoint {
         Task.detached {
             let result = await LocalMemoryCLIExecutor.execute(
                 arguments: commandArguments,
-                backend: backend(database: database)
+                backend: makeBackend(database: database)
             )
             if !result.standardOutput.isEmpty {
                 FileHandle.standardOutput.write(result.standardOutput)
@@ -25,7 +25,7 @@ enum SignedCLIEntrypoint {
         }
     }
 
-    private static func backend(database: ArchiveDatabase?) -> LocalMemoryCLIBackend {
+    static func makeBackend(database: ArchiveDatabase?) -> LocalMemoryCLIBackend {
         guard let database, let root = database.paths?.root else {
             return unavailableBackend()
         }

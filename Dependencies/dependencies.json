@@ -112,6 +112,38 @@
       "updateProcedure": "Review MCP protocol changes, resolve the exact release commit and full package closure, refresh hashes/licenses, reapply the stdio-only packaging boundary, and rerun two-client protocol plus linked-binary network audits."
     },
     {
+      "id": "mcp-swift-sdk-stdio-subset",
+      "version": "0.12.1-stdio-subset",
+      "revision": "a0ae212ebf6eab5f754c3129608bc5557637e605",
+      "source": "https://github.com/modelcontextprotocol/swift-sdk",
+      "scope": "auditedLocalShippingSubset",
+      "runtimeFetchPolicy": "forbidden",
+      "networkCapable": false,
+      "linkedShippingTargets": [
+        "MemoryAgentAccess",
+        "LocalMemoryApp",
+        "LocalMemoryMCP"
+      ],
+      "license": {
+        "name": "Apache-2.0 and MIT historical code",
+        "spdx": "Apache-2.0 AND MIT",
+        "source": "https://github.com/modelcontextprotocol/swift-sdk/blob/a0ae212ebf6eab5f754c3129608bc5557637e605/LICENSE",
+        "expectedSize": 12227,
+        "sha256": "0382b0057770ca05e9c350a50aa3b1c1fea84da0bc81d723bf00b9aa841be58a"
+      },
+      "artifacts": [
+        {
+          "path": "mcp-swift-sdk-0.12.1.tar.gz",
+          "cachePath": "sources/mcp-swift-sdk-0.12.1.tar.gz",
+          "url": "https://codeload.github.com/modelcontextprotocol/swift-sdk/tar.gz/a0ae212ebf6eab5f754c3129608bc5557637e605",
+          "expectedSize": 229445,
+          "sha256": "497caabc0cdf669fe442421b4fff13bf5ce7aa132bc747e851c9fdc63f56c0c5"
+        }
+      ],
+      "notes": "LM-068 vendors only official protocol models needed for stdio tools/resources. OAuth, URLSession, HTTP client/server, EventSource, NetworkTransport, NIO, client runtime, and generic server runtime are absent. The local Foundation FileHandle loop has no socket API; the exact copied/adapted file hashes are in Packages/MCPStdio/upstream-source-manifest.json.",
+      "updateProcedure": "Review the new official source, verify the pinned archive, rebuild the narrow file manifest from scratch, prove excluded network areas remain absent, run protocol/two-client tests, and repeat linked-helper network/listener audits."
+    },
+    {
       "id": "swift-system",
       "version": "1.4.0",
       "revision": "c8a44d836fe7913603e246acab7c528c2e780168",

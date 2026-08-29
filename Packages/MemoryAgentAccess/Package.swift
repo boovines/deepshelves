@@ -7,17 +7,18 @@ let package = Package(
     products: [.library(name: "MemoryAgentAccess", targets: ["MemoryAgentAccess"])],
     dependencies: [
         .package(path: "../MemoryContracts"),
+        .package(path: "../MCPStdio"),
         .package(path: "../SharedQueryKit"),
     ],
     targets: [
         .target(
             name: "MemoryAgentAccess",
-            dependencies: ["MemoryContracts", "SharedQueryKit"],
+            dependencies: ["MemoryContracts", "MCPStdio", "SharedQueryKit"],
             linkerSettings: [.linkedFramework("Security")]
         ),
         .testTarget(
             name: "MemoryAgentAccessTests",
-            dependencies: ["MemoryAgentAccess", "MemoryContracts", "SharedQueryKit"]
+            dependencies: ["MemoryAgentAccess", "MemoryContracts", "MCPStdio", "SharedQueryKit"]
         ),
     ]
 )

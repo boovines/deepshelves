@@ -2,7 +2,7 @@
 
 `dependencies.json` is the canonical LM-004 software/model bill of materials. It records exact revisions, licenses, expected sizes, SHA-256 digests, linkage scope, and update procedures. The generated Xcode project intentionally continues to reference only local packages until the owning implementation story integrates an audited dependency.
 
-The full upstream MCP package and Argmax OSS package are explicitly `forbiddenShipping`: their source distributions include network transports or model-download paths. Later stories may create narrow local targets from the pinned official source only after proving that stdio-only MCP and local-model-only audio binaries contain none of those transports. `EventSource` and `swift-nio` record the upstream MCP resolver closure but may never link into a DeepShelves shipping target.
+The full upstream MCP package and Argmax OSS package are explicitly `forbiddenShipping`: their source distributions include network transports or model-download paths. LM-068 created `Packages/MCPStdio` from the pinned official SDK source with a per-file hash manifest. It contains only protocol models and DeepShelves' Foundation stdio loop; HTTP, OAuth, EventSource, NetworkTransport, NIO, upstream client runtime, and generic server runtime are excluded. `EventSource` and `swift-nio` remain resolver-audit records and may never link into a DeepShelves shipping target.
 
 Apple's pinned MobileCLIP weights use the Apple Machine Learning Research Model License, which limits them to research use and excludes commercial product use. They may be evaluated in this private personal research build. They must not be redistributed or used for a commercial release without a different license grant or an explicitly approved model decision.
 

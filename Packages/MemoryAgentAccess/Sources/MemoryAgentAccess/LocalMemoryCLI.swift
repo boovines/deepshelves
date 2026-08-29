@@ -72,6 +72,42 @@ public struct SignedApplicationCLIRoute: Equatable, Sendable {
     }
 }
 
+public struct SignedApplicationMCPRoute: Equatable, Sendable {
+    public let executableURL: URL
+    public let arguments: [String]
+
+    public static func resolve(
+        launcherURL: URL,
+        standardApplicationsDirectories: [URL] = [
+            URL(fileURLWithPath: "/Applications", isDirectory: true),
+            FileManager.default.homeDirectoryForCurrentUser.appending(
+                path: "Applications", directoryHint: .isDirectory),
+        ],
+        isExecutable: (URL) -> Bool = {
+            FileManager.default.isExecutableFile(atPath: $0.path)
+        }
+    ) throws -> Self {
+        let helperCandidate =
+            launcherURL
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+            .appending(path: "MacOS/Local Memory")
+        let installedCandidates = standardApplicationsDirectories.map {
+            $0.appending(path: "Local Memory.app/Contents/MacOS/Local Memory")
+        }
+        guard
+            let executableURL = ([helperCandidate] + installedCandidates)
+                .first(where: isExecutable)
+        else {
+            throw LocalMemoryCLIError.unavailable
+        }
+        return Self(
+            executableURL: executableURL,
+            arguments: [executableURL.path, "--mcp"]
+        )
+    }
+}
+
 public struct CLIStatusProjection: Codable, Equatable, Sendable {
     public let recordingState: String
     public let archiveReadable: Bool
