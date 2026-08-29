@@ -10,9 +10,9 @@ final class MainNavigationStateTests: XCTestCase {
         XCTAssertEqual(MainWindowDefaults.minimumWidth, 840)
         XCTAssertEqual(MainWindowDefaults.minimumHeight, 560)
         XCTAssertEqual(MainWindowDefaults.sidebarIdealWidth, 184)
-        XCTAssertEqual(MainWindowDefaults.sidebarWidthRange, 168 ... 240)
+        XCTAssertEqual(MainWindowDefaults.sidebarWidthRange, 168...240)
         XCTAssertEqual(MainWindowDefaults.inspectorIdealWidth, 264)
-        XCTAssertEqual(MainWindowDefaults.inspectorWidthRange, 220 ... 360)
+        XCTAssertEqual(MainWindowDefaults.inspectorWidthRange, 220...360)
         XCTAssertEqual(MainWindowDefaults.settingsWidth, 680)
         XCTAssertEqual(MainWindowDefaults.settingsHeight, 560)
     }
@@ -28,9 +28,9 @@ final class MainNavigationStateTests: XCTestCase {
             MainNavigationSection.allCases,
             [.search, .timeline, .activity, .settings]
         )
-        XCTAssertEqual(MainNavigationSnapshot.default.section, .search)
+        XCTAssertEqual(MainNavigationSnapshot.default.section, .timeline)
         XCTAssertNil(MainNavigationSnapshot.default.selectedMomentID)
-        XCTAssertTrue(MainNavigationSnapshot.default.inspectorRequested)
+        XCTAssertFalse(MainNavigationSnapshot.default.inspectorRequested)
     }
 
     func testNavigationStateRoundTripsWithOwnerOnlyPermissions() async throws {

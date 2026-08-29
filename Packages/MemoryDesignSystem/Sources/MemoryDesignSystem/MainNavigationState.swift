@@ -65,9 +65,9 @@ public struct MainNavigationSnapshot: Codable, Equatable, Sendable {
     }
 
     public static let `default` = MainNavigationSnapshot(
-        section: .search,
+        section: .timeline,
         selectedMomentID: nil,
-        inspectorRequested: true,
+        inspectorRequested: false,
         timelineDate: nil
     )
 }

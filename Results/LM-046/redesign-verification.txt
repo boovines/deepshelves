@@ -1,0 +1,15 @@
+LM-046 primary Timeline verification
+
+- LocalMemoryUnitTests/MainNavigationStateTests: 4 passed
+- MemorySearch/TimelineSectionModelTests: 6 passed
+- fresh-profile Timeline default, owner-only restoration, malformed-state fallback,
+  DST-correct days, Activity drill-through, transition selection, and fail-closed
+  Revisit pass
+- static scan finds no NavigationSplitView, persistent sidebar, permanent moment
+  inspector, or inspector toggle in the redesigned shell
+- changed-file strict formatting and native arm64 app compile: PASS
+- targeted prohibited-runtime source scan: zero matches
+- no application, NSWorkspace action, XCUITest, capture, ImageIO, VideoToolbox,
+  AVAssetWriter, or hardware-media runtime executed
+
+Installed navigation, NSWorkspace, focus, VoiceOver, and drag evidence remains H9.

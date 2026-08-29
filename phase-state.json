@@ -955,10 +955,10 @@
       "resumeProbe": null
     },
     "LM-046": {
-      "status": "pending",
-      "startedAt": null,
-      "completedAt": null,
-      "gitRevision": null,
+      "status": "blocked",
+      "startedAt": "2026-08-29T11:24:00Z",
+      "completedAt": "2026-08-29T11:25:28Z",
+      "gitRevision": "refs/tags/checkpoints/LM-046-visual-redesign-blocked",
       "previousImplementationCheckpoint": "refs/tags/checkpoints/LM-046-blocked",
       "evidence": [
         "Results/LM-046/report.json",
@@ -971,10 +971,14 @@
         "Results/LM-046/swift-format.txt",
         "Results/LM-046/privacy.txt",
         "Results/LM-046/dependencies.txt",
-        "Decisions/0006-isolated-runtime-validation.md"
+        "Results/LM-046/redesign-report.json",
+        "Results/LM-046/redesign-timeline-snapshot.json",
+        "Results/LM-046/redesign-verification.txt",
+        "Decisions/0006-isolated-runtime-validation.md",
+        "Decisions/0008-visual-memory-first-interface.md"
       ],
-      "notes": "ADR 0008 reopens visual readiness to make Timeline the primary surface and remove the obsolete parallel three-pane composition. Historical date/DST/Revisit policy behavior remains valid; real window and NSWorkspace behavior remain H9-only.",
-      "blockedReason": null,
+      "notes": "Fresh profiles now enter Timeline with no requested inspector. The persistent NavigationSplitView/sidebar and permanent inspector are removed; a compact bar exposes Timeline, Search, Activity, and the real Settings window. A selected Timeline moment uses the dominant exact-source canvas and spatial rail rather than the old parallel filmstrip/context composition. Revisit remains secondary and invokes only the approved application and approved URL plan.",
+      "blockedReason": "Installed navigation, real window behavior, NSWorkspace Revisit, focus/VoiceOver, and drag interaction remain runtime-only H9 criteria. Safe restoration/DST/action tests, semantic snapshots, static removal audit, and arm64 compilation pass without launching the app.",
       "requestedHumanGate": null,
       "resumeProbe": null
     },

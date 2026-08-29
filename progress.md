@@ -758,3 +758,16 @@ This file is append-only. Each story records measurements, failures, and durable
 - Seven focused timeline tests pass for interval geometry, gap privacy, nearest selection,
   immediate preview, stale completion rejection, dwell promotion, source revalidation, and
   zoom. Formatting, quarantine scan, and cached arm64 compile pass; no prohibited runtime ran.
+
+## 2026-08-29 — LM-046 Timeline-primary window composition
+
+- Fresh profiles now open on Timeline. The permanent NavigationSplitView/sidebar and moment
+  inspector are removed; one compact navigation bar exposes Timeline, Search, Activity, and
+  the real Settings window without reducing canvas space.
+- A selected Timeline result now uses the same dominant exact-source canvas and persistent
+  spatial rail as Search detail. The old parallel filmstrip + selected-context composition was
+  deleted. Revisit remains a secondary action and preserves its application/approved-URL-only,
+  fail-closed contract.
+- Four navigation/restoration tests and six Timeline day/DST/action tests pass, along with
+  strict formatting, obsolete-composition/quarantine scans, and native arm64 compilation.
+  No app, NSWorkspace action, XCUITest, capture, ImageIO, VideoToolbox, or media runtime ran.

@@ -312,49 +312,27 @@ struct MainShellView: View {
     @Environment(\.openSettings) private var openSettings
 
     var body: some View {
-        GeometryReader { geometry in
-            NavigationSplitView {
-                MainSidebar(
-                    navigationModel: navigationModel,
-                    localizationMode: localizationMode
-                )
-                .navigationSplitViewColumnWidth(
-                    min: CGFloat(MainWindowDefaults.sidebarWidthRange.lowerBound),
-                    ideal: CGFloat(MainWindowDefaults.sidebarIdealWidth),
-                    max: CGFloat(MainWindowDefaults.sidebarWidthRange.upperBound)
-                )
-            } detail: {
-                MainSectionView(
-                    navigationModel: navigationModel,
-                    searchModel: searchModel,
-                    searchFilterModel: searchFilterModel,
-                    activityModel: activityModel,
-                    indexingBacklog: lifecycleModel.enrichmentBacklog.pendingCount,
-                    contentState: contentState,
-                    localizationMode: localizationMode,
-                    availableWidth: geometry.size.width
-                        - CGFloat(MainWindowDefaults.sidebarIdealWidth)
-                )
-            }
+        VStack(spacing: 0) {
+            MainCompactNavigationBar(
+                navigationModel: navigationModel,
+                localizationMode: localizationMode
+            )
+            Divider()
+            MainSectionView(
+                navigationModel: navigationModel,
+                searchModel: searchModel,
+                searchFilterModel: searchFilterModel,
+                activityModel: activityModel,
+                indexingBacklog: lifecycleModel.enrichmentBacklog.pendingCount,
+                contentState: contentState,
+                localizationMode: localizationMode
+            )
         }
         .frame(
             minWidth: CGFloat(MainWindowDefaults.minimumWidth),
             minHeight: CGFloat(MainWindowDefaults.minimumHeight)
         )
         .background(WindowContentSizeApplier(requestedSize: forcedWindowSize))
-        .toolbar {
-            ToolbarItem {
-                SettingsLink {
-                    Label("Settings", systemImage: "gearshape")
-                }
-                .frame(
-                    minWidth: CGFloat(ShellAccessibilityCatalog.minimumPointerTargetPoints),
-                    minHeight: CGFloat(ShellAccessibilityCatalog.minimumPointerTargetPoints)
-                )
-                .help("Open Local Memory Settings")
-                .accessibilityIdentifier("main.openSettings")
-            }
-        }
         .task {
             await navigationModel.start()
             if opensSettingsAtLaunch {
@@ -369,39 +347,68 @@ struct MainShellView: View {
     }
 }
 
-private struct MainSidebar: View {
+private struct MainCompactNavigationBar: View {
     @ObservedObject var navigationModel: MainNavigationViewModel
     let localizationMode: ShellLocalizationMode
 
     var body: some View {
-        List(selection: selection) {
-            Section("Memory") {
-                ForEach(MainNavigationSection.allCases, id: \.self) { section in
-                    Label(
-                        localizationMode.localized(section.title),
-                        systemImage: section.systemImage
-                    )
-                    .tag(section)
-                    .accessibilityIdentifier("sidebar.\(section.rawValue)")
-                }
+        HStack(spacing: 8) {
+            Button {
+                navigationModel.select(section: .timeline)
+            } label: {
+                Label("Timeline", systemImage: "clock.arrow.circlepath")
             }
-        }
-        .listStyle(.sidebar)
-        .navigationTitle("Local Memory")
-        .disabled(!navigationModel.isRestored)
-        .accessibilityIdentifier("main.sidebar")
-    }
+            .buttonStyle(.bordered)
+            .tint(
+                navigationModel.snapshot.section == .timeline
+                    ? MemoryColorToken.accent.color : MemoryColorToken.textSecondary.color
+            )
+            .accessibilityIdentifier("navigation.timeline")
 
-    private var selection: Binding<MainNavigationSection?> {
-        Binding(
-            get: {
-                navigationModel.isRestored ? navigationModel.snapshot.section : nil
-            },
-            set: { section in
-                guard let section else { return }
-                navigationModel.select(section: section)
+            Spacer()
+
+            Text(localizationMode.localized(navigationModel.snapshot.section.title))
+                .font(.headline)
+
+            Spacer()
+
+            Button {
+                navigationModel.select(section: .search)
+            } label: {
+                Label("Search", systemImage: "magnifyingglass")
             }
-        )
+            .buttonStyle(.bordered)
+            .tint(
+                navigationModel.snapshot.section == .search
+                    ? MemoryColorToken.accent.color : MemoryColorToken.textSecondary.color
+            )
+            .keyboardShortcut("f", modifiers: [.command])
+            .accessibilityIdentifier("navigation.search")
+
+            Button {
+                navigationModel.select(section: .activity)
+            } label: {
+                Label("Activity", systemImage: "chart.xyaxis.line")
+                    .labelStyle(.iconOnly)
+            }
+            .buttonStyle(.bordered)
+            .help("Activity")
+            .accessibilityIdentifier("navigation.activity")
+
+            SettingsLink {
+                Label("Settings", systemImage: "gearshape")
+                    .labelStyle(.iconOnly)
+            }
+            .buttonStyle(.bordered)
+            .help("Settings")
+            .accessibilityIdentifier("main.openSettings")
+        }
+        .padding(.horizontal, 16)
+        .frame(minHeight: 52)
+        .background(MemoryColorToken.surfaceSidebar.color.opacity(0.72))
+        .disabled(!navigationModel.isRestored)
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel("Local Memory navigation")
     }
 }
 
@@ -413,7 +420,6 @@ private struct MainSectionView: View {
     let indexingBacklog: Int
     let contentState: ShellContentState
     let localizationMode: ShellLocalizationMode
-    let availableWidth: CGFloat
     @State private var showsQuickLook = false
     @State private var showsForgetConfirmation = false
     @State private var revisitNotice: String?
@@ -427,64 +433,41 @@ private struct MainSectionView: View {
         return searchModel.results.first { $0.frameID == selectedID }
     }
 
-    private var showsInspector: Bool {
-        MainWindowDefaults.showsInspector(
-            width: availableWidth + CGFloat(MainWindowDefaults.sidebarIdealWidth),
-            requested: navigationModel.snapshot.inspectorRequested
-        ) && selectedMoment != nil
-    }
-
     var body: some View {
-        HStack(spacing: 0) {
-            Group {
-                switch navigationModel.snapshot.section {
-                case .search:
-                    MomentSectionCanvas(
-                        title: "Search",
-                        subtitle: "Find a moment you previously saw",
-                        symbol: "magnifyingglass",
-                        selectedMoment: selectedMoment,
-                        selectedSearchResult: selectedSearchResult,
-                        navigationModel: navigationModel,
-                        searchModel: searchModel,
-                        searchFilterModel: searchFilterModel,
-                        indexingBacklog: indexingBacklog,
-                        contentState: contentState,
-                        localizationMode: localizationMode
-                    )
-                case .timeline:
-                    SearchTimelineSectionView(
-                        navigationModel: navigationModel,
-                        searchModel: searchModel,
-                        loader: searchModel.momentTimelineLoader,
-                        revisitProvider: searchModel.momentRevisitProvider
-                    )
-                case .activity:
-                    ActivityShellView(
-                        model: activityModel,
-                        navigationModel: navigationModel,
-                        localizationMode: localizationMode
-                    )
-                case .settings:
-                    EmbeddedSettingsShellView(localizationMode: localizationMode)
-                }
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-
-            if showsInspector, let selectedMoment {
-                Divider()
-                MomentInspectorView(
-                    moment: selectedMoment,
-                    dismiss: { navigationModel.setInspectorRequested(false) }
+        Group {
+            switch navigationModel.snapshot.section {
+            case .search:
+                MomentSectionCanvas(
+                    title: "Search",
+                    subtitle: "Find a moment you previously saw",
+                    symbol: "magnifyingglass",
+                    selectedMoment: selectedMoment,
+                    selectedSearchResult: selectedSearchResult,
+                    navigationModel: navigationModel,
+                    searchModel: searchModel,
+                    searchFilterModel: searchFilterModel,
+                    indexingBacklog: indexingBacklog,
+                    contentState: contentState,
+                    localizationMode: localizationMode
                 )
-                .frame(
-                    minWidth: CGFloat(MainWindowDefaults.inspectorWidthRange.lowerBound),
-                    idealWidth: CGFloat(MainWindowDefaults.inspectorIdealWidth),
-                    maxWidth: CGFloat(MainWindowDefaults.inspectorWidthRange.upperBound),
-                    maxHeight: .infinity
+            case .timeline:
+                SearchTimelineSectionView(
+                    navigationModel: navigationModel,
+                    searchModel: searchModel,
+                    loader: searchModel.momentTimelineLoader,
+                    revisitProvider: searchModel.momentRevisitProvider
                 )
+            case .activity:
+                ActivityShellView(
+                    model: activityModel,
+                    navigationModel: navigationModel,
+                    localizationMode: localizationMode
+                )
+            case .settings:
+                EmbeddedSettingsShellView(localizationMode: localizationMode)
             }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .overlay(alignment: .bottom) {
             if let revisitNotice {
                 Text(revisitNotice)
@@ -567,25 +550,6 @@ private struct MainSectionView: View {
                 navigationModel.setInspectorRequested(false)
             } else {
                 navigationModel.goBack()
-            }
-        }
-        .toolbar {
-            if selectedMoment != nil {
-                ToolbarItem {
-                    Button {
-                        navigationModel.setInspectorRequested(
-                            !navigationModel.snapshot.inspectorRequested
-                        )
-                    } label: {
-                        Label("Toggle Inspector", systemImage: "sidebar.trailing")
-                    }
-                    .frame(
-                        minWidth: CGFloat(ShellAccessibilityCatalog.minimumPointerTargetPoints),
-                        minHeight: CGFloat(ShellAccessibilityCatalog.minimumPointerTargetPoints)
-                    )
-                    .help("Show or hide moment details")
-                    .accessibilityIdentifier("main.toggleInspector")
-                }
             }
         }
         .accessibilityIdentifier("main.section")
@@ -781,53 +745,6 @@ private struct MomentSectionCanvas: View {
                 retryTitle: localizationMode.localized("Try Again")
             )
         }
-    }
-}
-
-private struct MomentInspectorView: View {
-    let moment: ShellMoment
-    let dismiss: () -> Void
-
-    var body: some View {
-        Form {
-            HStack {
-                Text("Moment Details")
-                    .font(.headline)
-                Spacer()
-                Button(action: dismiss) {
-                    Image(systemName: "xmark")
-                }
-                .buttonStyle(.borderless)
-                .frame(
-                    minWidth: CGFloat(ShellAccessibilityCatalog.minimumPointerTargetPoints),
-                    minHeight: CGFloat(ShellAccessibilityCatalog.minimumPointerTargetPoints)
-                )
-                .help("Hide inspector")
-                .accessibilityLabel("Hide inspector")
-                .accessibilityIdentifier("inspector.dismiss")
-            }
-
-            LabeledContent("Title") {
-                Text(moment.title)
-                    .accessibilityIdentifier("inspector.title")
-            }
-            LabeledContent("Time", value: moment.time)
-            LabeledContent("Application", value: moment.application)
-            LabeledContent("Context", value: moment.context)
-            LabeledContent("Source", value: "Synthetic fixture")
-
-            Section("Actions") {
-                Button("Open or Revisit") {}
-                    .disabled(true)
-                Button("Export Moment…") {}
-                    .disabled(true)
-                Button("Forget Moment…", role: .destructive) {}
-                    .disabled(true)
-            }
-        }
-        .formStyle(.grouped)
-        .accessibilityElement(children: .contain)
-        .accessibilityIdentifier("main.inspector")
     }
 }
 

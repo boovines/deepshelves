@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "surface": "primary-timeline",
+  "freshProfile": {
+    "section": "timeline",
+    "inspectorRequested": false
+  },
+  "windowHierarchy": [
+    "compact-navigation-bar",
+    "date-navigation",
+    "dominant-selected-moment-canvas",
+    "persistent-spatial-timeline-rail"
+  ],
+  "compactNavigation": {
+    "leading": "Timeline",
+    "center": "current section",
+    "trailing": [
+      "Search",
+      "Activity",
+      "Settings"
+    ]
+  },
+  "states": [
+    "populated",
+    "empty-with-typed-gaps",
+    "loading",
+    "unavailable"
+  ],
+  "removed": [
+    "persistent-navigation-sidebar",
+    "permanent-moment-inspector",
+    "parallel-filmstrip-detail-composition"
+  ]
+}

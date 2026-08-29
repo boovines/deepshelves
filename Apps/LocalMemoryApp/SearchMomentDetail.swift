@@ -22,6 +22,7 @@ struct SearchMomentDetailView: View {
     @State private var showsSourceDetails = false
     @State private var showsDiagnostics = false
     @State private var showsInspector = false
+    @State private var revisitStatus: String?
     @State private var rangeStart: Date
     @State private var rangeEnd: Date
     @StateObject private var forgetModel: ForgetSessionModel
@@ -139,6 +140,10 @@ struct SearchMomentDetailView: View {
                     exportMoment()
                 }
                 .disabled(exportProvider == nil)
+                Button("Revisit", systemImage: "arrow.up.forward.app") {
+                    revisitMoment()
+                }
+                .disabled(searchModel.momentRevisitProvider == nil)
                 Button("Forget Moment…", systemImage: "trash", role: .destructive) {
                     beginForget(.moment(displayedResult.frameID))
                 }
@@ -321,6 +326,11 @@ struct SearchMomentDetailView: View {
                     }
                 }
             }
+            if let revisitStatus {
+                Section("Revisit") {
+                    Text(revisitStatus)
+                }
+            }
             Section("Forget range") {
                 DatePicker("From", selection: $rangeStart)
                 DatePicker("Until", selection: $rangeEnd)
@@ -372,7 +382,13 @@ struct SearchMomentDetailView: View {
     }
 
     private func adjacent(_ direction: MomentDetailStepDirection) -> SearchResult? {
-        MomentDetailSequence.adjacent(
+        if case .ready(let projection) = timelineModel.phase,
+            let current = timelineModel.scrubbedResult ?? timelineModel.settledResult,
+            let adjacent = projection.adjacentMoment(to: current.frameID, direction: direction)
+        {
+            return adjacent.result
+        }
+        return MomentDetailSequence.adjacent(
             to: displayedResult.frameID,
             direction: direction,
             in: searchModel.results
@@ -380,8 +396,31 @@ struct SearchMomentDetailView: View {
     }
 
     private func step(_ direction: MomentDetailStepDirection) {
+        if case .ready = timelineModel.phase {
+            timelineModel.step(direction)
+            return
+        }
         guard let result = adjacent(direction) else { return }
         navigationModel.select(momentID: result.frameID)
+    }
+
+    private func revisitMoment() {
+        guard let provider = searchModel.momentRevisitProvider else { return }
+        revisitStatus = "Opening approved source…"
+        Task {
+            do {
+                let plan = try await provider.revisit(displayedResult)
+                revisitStatus =
+                    plan.approvedURL == nil
+                    ? "Opened the approved application; captured state was not restored."
+                    : "Opened the approved application and address; captured state was not restored."
+                showsInspector = true
+            } catch {
+                revisitStatus =
+                    "Revisit is unavailable because the current source or policy changed."
+                showsInspector = true
+            }
+        }
     }
 
     private func exportMoment() {

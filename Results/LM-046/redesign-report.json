@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-046",
+  "checkpoint": "timeline-primary-window-composition",
+  "status": "blocked",
+  "implementationReadiness": "ready",
+  "deferredValidationGate": "H9",
+  "composition": {
+    "freshProfileDestination": "timeline",
+    "persistentNavigationSidebar": false,
+    "permanentInspector": false,
+    "compactActions": [
+      "timeline",
+      "search",
+      "activity",
+      "settings"
+    ],
+    "selectedTimelineMomentUsesDominantCanvas": true,
+    "dateNavigation": true,
+    "spatialPreviousNext": true,
+    "secondaryActions": true,
+    "revisit": "approved-application-and-approved-url-only"
+  },
+  "verification": {
+    "mainNavigationUnitTests": 4,
+    "timelineSectionModelTests": 6,
+    "dstAndRestoration": "passed",
+    "revisitFailClosed": "passed",
+    "obsoleteThreePaneStaticScan": "passed",
+    "strictFormatting": "passed",
+    "nativeArm64Compile": "passed",
+    "targetedProhibitedRuntimeSourceAudit": "passed",
+    "applicationRuntimeExecuted": false,
+    "xcuiRuntimeExecuted": false,
+    "hardwareMediaRuntimeExecuted": false
+  },
+  "remainingGate": "Validate installed navigation, real window behavior, NSWorkspace Revisit, date/step focus, VoiceOver, and drag behavior on the isolated H9 Mac."
+}
