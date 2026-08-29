@@ -460,8 +460,8 @@
     "LM-028": {
       "status": "blocked",
       "startedAt": "2026-08-28T18:03:55Z",
-      "completedAt": "2026-08-28T18:23:07Z",
-      "gitRevision": "refs/tags/checkpoints/LM-028-blocked",
+      "completedAt": "2026-08-29T00:21:42Z",
+      "gitRevision": "refs/tags/checkpoints/LM-028-blocked-v2",
       "evidence": [
         "Results/LM-028/soak-report.md",
         "Results/LM-028/blocker.md",
@@ -476,10 +476,14 @@
         "Results/LM-028/release-build.txt",
         "Results/LM-028/dependencies.txt",
         "Results/LM-028/swift-format.txt",
-        "Results/LM-028/story-gate.txt"
+        "Results/LM-028/story-gate.txt",
+        "Results/LM-028/headless-runtime-quarantine.json",
+        "Results/LM-028/headless-preflight.json",
+        "Results/LM-028/headless-linkage.txt",
+        "Results/LM-028/headless-smoke.stderr"
       ],
-      "notes": "All safe portions pass: 67 focused Release tests, an eight-hour synthetic office model, a 72-hour accelerated model, privacy/focus/filter/fault coverage, a licensed three-file HEIC corpus decoded only through FFmpeg software HEVC, 85.664 ms worst p95, 32.5 MB decoder RSS, queue peak four, zero modeled prohibited persistence/corrupt/orphan state, and 18.414 GB projected 30-day office storage. The writer no longer has an implicit production encoder and legacy runtime harnesses fail closed. This is not represented as a real wall-clock production soak.",
-      "blockedReason": "A metadata-only Apple sips probe unexpectedly spawned VTEncoderXPCService. The service was terminated immediately and the Apple ImageIO runtime is now quarantined. The required real eight-hour production HEIC capture/decode/resource soak cannot run safely on this Mac until a codec runtime is proven not to initialize VideoToolbox, or an isolated validation host is authorized by a later ADR.",
+      "notes": "All safe portions pass: 67 focused Release tests, an eight-hour synthetic office model, a 72-hour accelerated model, privacy/focus/filter/fault coverage, a licensed three-file HEIC corpus decoded only through FFmpeg software HEVC, 85.664 ms worst p95, 32.5 MB decoder RSS, queue peak four, zero modeled prohibited persistence/corrupt/orphan state, and 18.414 GB projected 30-day office storage. A single five-second headless live-source smoke left VTEncoderXPCService after the process exited even though the writer was the pinned software HEIC helper. The service was terminated, the experiment was not repeated, and its runnable source and generated binary were removed. This is not represented as a real wall-clock production soak.",
+      "blockedReason": "Both a metadata-only Apple sips probe and a later headless ScreenCaptureKit smoke unexpectedly spawned VTEncoderXPCService on this Mac. The accepted software HEIC codec remains intact, but the complete live capture runtime cannot be proven encoder-service-free here. The required real eight-hour production capture/decode/resource soak must run only on a validation environment where the live source plus pinned software codec is proven not to initialize VideoToolbox.",
       "requestedHumanGate": null,
       "resumeProbe": null
     },

@@ -17,6 +17,14 @@ The accidental reachability found by that probe is fixed fail-closed:
 - The legacy live capture harness defaults to `QuarantinedHEICFrameEncoder`.
 - The legacy ImageIO decode benchmark throws `runtimeQuarantined` before opening a file.
 
+An attempted five-second headless ScreenCaptureKit smoke on 2026-08-29 also left a
+`VTEncoderXPCService` process after the harness had exited, despite the software-only HEIC
+writer and absence of direct VideoToolbox/ImageIO linkage. The service was terminated, the
+runnable experiment was removed, and no repeat was attempted. Live ScreenCaptureKit runtime
+is therefore quarantined alongside app/XCUITest runtime on this Mac. This does not change the
+software HEIC codec contract or any privacy/publication/deletion invariant; it only proves
+that the complete live source cannot supply the required soak evidence here.
+
 ## Safe test suite
 
 - 62 focused Release unit tests and 5 fake-media integration tests passed.

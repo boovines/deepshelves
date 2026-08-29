@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-028",
+  "observedAt": "2026-08-29T00:20:00Z",
+  "probe": {
+    "kind": "five-second-headless-foreground-window-smoke",
+    "applicationLaunched": false,
+    "appleImageIORuntimeExecuted": false,
+    "hardwareEncoderTestExecuted": false,
+    "declaredWriter": "pinned-software-heic",
+    "preflightScreenRecording": true,
+    "preflightAccessibility": true,
+    "stderrCode": "capture_or_decode_failed"
+  },
+  "tripwire": {
+    "videoToolboxEncoderServiceObservedAfterHarnessExit": true,
+    "pid": 70643,
+    "parentPid": 1,
+    "elapsedSecondsWhenInspected": 78,
+    "cpuPercentWhenInspected": 0.0,
+    "terminated": true,
+    "remainingMatchingProcesses": 0
+  },
+  "disposition": {
+    "probeRepeated": false,
+    "liveScreenCaptureKitRuntimeQuarantinedOnThisMac": true,
+    "runnableHarnessSourceRemoved": true,
+    "generatedHarnessBinaryMovedToTrash": true,
+    "acceptedSoftwareHEICContractChanged": false,
+    "privacyInvariantChanged": false,
+    "remainingGate": "real eight-hour production capture soak on a validation environment proven not to initialize VideoToolbox"
+  }
+}

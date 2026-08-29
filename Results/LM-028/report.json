@@ -90,5 +90,21 @@
   "productionImageIOExecuted": false,
   "appRuntimeExecuted": false,
   "hardwareEncoderTestsExecuted": 0,
-  "remainingGate": "A real eight-hour production HEIC capture/decode/resource soak requires a codec runtime proven not to initialize VTEncoderXPCService on this Mac."
+  "headlessRuntimeSafetyProbe": {
+    "date": "2026-08-29",
+    "declaredSoftwareHEICWriter": true,
+    "durationSecondsRequested": 5,
+    "applicationRuntimeExecuted": false,
+    "appleImageIORuntimeExecuted": false,
+    "stderrCode": "capture_or_decode_failed",
+    "videoToolboxEncoderServiceObserved": true,
+    "observedPID": 70643,
+    "observedParentPID": 1,
+    "observedElapsedSeconds": 78,
+    "serviceTerminated": true,
+    "repeated": false,
+    "runnableHarnessRemoved": true,
+    "outcome": "quarantined"
+  },
+  "remainingGate": "A real eight-hour production HEIC capture/decode/resource soak requires a validation environment where the complete live ScreenCaptureKit source plus pinned software codec is proven not to initialize VTEncoderXPCService."
 }
