@@ -1,6 +1,19 @@
 {
   "schemaVersion": 1,
   "activeStory": null,
+  "validationGates": {
+    "H9": {
+      "status": "pending",
+      "story": "LM-064",
+      "hostPolicy": "physically-distinct-isolated-validation-mac",
+      "adr": "Decisions/0006-isolated-runtime-validation.md",
+      "deferredStories": [
+        "LM-028",
+        "LM-039"
+      ],
+      "evidence": []
+    }
+  },
   "stories": {
     "LM-001": {
       "status": "passed",
@@ -459,6 +472,8 @@
     },
     "LM-028": {
       "status": "blocked",
+      "implementationReadiness": "ready",
+      "deferredValidationGate": "H9",
       "startedAt": "2026-08-28T18:03:55Z",
       "completedAt": "2026-08-29T00:21:42Z",
       "gitRevision": "refs/tags/checkpoints/LM-028-blocked-v2",
@@ -480,10 +495,12 @@
         "Results/LM-028/headless-runtime-quarantine.json",
         "Results/LM-028/headless-preflight.json",
         "Results/LM-028/headless-linkage.txt",
-        "Results/LM-028/headless-smoke.stderr"
+        "Results/LM-028/headless-smoke.stderr",
+        "Decisions/0006-isolated-runtime-validation.md",
+        "Results/ADR-0006/report.json"
       ],
       "notes": "All safe portions pass: 67 focused Release tests, an eight-hour synthetic office model, a 72-hour accelerated model, privacy/focus/filter/fault coverage, a licensed three-file HEIC corpus decoded only through FFmpeg software HEVC, 85.664 ms worst p95, 32.5 MB decoder RSS, queue peak four, zero modeled prohibited persistence/corrupt/orphan state, and 18.414 GB projected 30-day office storage. A single five-second headless live-source smoke left VTEncoderXPCService after the process exited even though the writer was the pinned software HEIC helper. The service was terminated, the experiment was not repeated, and its runnable source and generated binary were removed. This is not represented as a real wall-clock production soak.",
-      "blockedReason": "Both a metadata-only Apple sips probe and a later headless ScreenCaptureKit smoke unexpectedly spawned VTEncoderXPCService on this Mac. The accepted software HEIC codec remains intact, but the complete live capture runtime cannot be proven encoder-service-free here. The required real eight-hour production capture/decode/resource soak must run only on a validation environment where the live source plus pinned software codec is proven not to initialize VideoToolbox.",
+      "blockedReason": "Both a metadata-only Apple sips probe and a later headless ScreenCaptureKit smoke unexpectedly spawned VTEncoderXPCService on this Mac. The accepted software HEIC codec remains intact, but the complete live capture runtime cannot be proven encoder-service-free here. ADR 0006 assigns the unchanged real eight-hour production capture/decode/resource acceptance gate to H9 on an isolated validation Mac; LM-028 remains blocked until that ledger item passes.",
       "requestedHumanGate": null,
       "resumeProbe": null
     },
@@ -713,6 +730,8 @@
     },
     "LM-039": {
       "status": "blocked",
+      "implementationReadiness": "ready",
+      "deferredValidationGate": "H9",
       "startedAt": "2026-08-28T21:24:14Z",
       "completedAt": "2026-08-28T21:51:00Z",
       "gitRevision": "refs/tags/checkpoints/LM-039-blocked",
@@ -727,10 +746,12 @@
         "Results/LM-039/release-build.txt",
         "Results/LM-039/dependencies.txt",
         "Results/LM-039/swift-format.txt",
-        "Results/LM-039/story-gate.txt"
+        "Results/LM-039/story-gate.txt",
+        "Decisions/0006-isolated-runtime-validation.md",
+        "Results/ADR-0006/report.json"
       ],
       "notes": "One root-owned SearchSessionModel now drives both the main Search section and global panel. A 150 ms debounce, task cancellation, generation checks, immediate stale-result clearing, and exactly-once settlement pass six focused model tests; the production policy scope admits only fully ready approved records. Warm/slow/error XCUITest fixtures compile, and 14 safe focused Release tests plus contracts, privacy, formatting, dependencies, and universal compile pass under the encoder tripwire with zero app or media runtime.",
-      "blockedReason": "The acceptance contract requires warm/slow/error XCUITest runtime execution. Application launch remains quarantined on this Mac after unexpected VTEncoderXPCService activity in the environment with two prior dart-ave hardware-video kernel panics; compile-only proof cannot replace the runtime gate.",
+      "blockedReason": "The acceptance contract requires warm/slow/error XCUITest runtime execution. Application launch is prohibited on this laptop after unexpected VTEncoderXPCService activity in the environment with two prior dart-ave hardware-video kernel panics. ADR 0006 assigns the unchanged fixtures to H9 on an isolated validation Mac; compile-only proof does not replace them and LM-039 remains blocked until they pass.",
       "requestedHumanGate": null,
       "resumeProbe": null
     },

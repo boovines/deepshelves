@@ -148,6 +148,13 @@ A paid Apple Developer membership is unnecessary for local development/testing. 
 
 ## Agent implementation discipline
 
+ADR 0006 requires runtime-host provenance in every performance report. On the owner's
+laptop, application, ScreenCaptureKit, ImageIO, VideoToolbox, and hardware-media runtime are
+prohibited. Safe unit/model/static/compile/snapshot measurements may guide implementation
+but cannot satisfy live CPU, energy, WindowServer, interaction, or wall-clock soak gates.
+Those checks accumulate in the H9 ledger and run once on the isolated validation Mac at
+LM-064.
+
 For every phase:
 
 1. Read the master plan and the category plan.

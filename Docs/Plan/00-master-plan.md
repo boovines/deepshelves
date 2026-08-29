@@ -249,6 +249,12 @@ The implementation agent must:
 8. Never mark a story complete from inspection alone.
 9. Never waive privacy, deletion, integrity, or offline tests.
 10. Stop for direction if a change expands scope, adds runtime networking, or weakens privacy/recovery.
+
+ADR 0006 prohibits application, ScreenCaptureKit, ImageIO, VideoToolbox, and hardware-media
+runtime testing on the owner's laptop. Before LM-064, stories blocked solely on those checks
+may expose an explicit H9 implementation-ready dependency while remaining incomplete. The
+single isolated-validation-Mac ledger at LM-064 must supply every original runtime acceptance
+artifact before any post-LM-064 release work proceeds.
 11. Follow [14-goal-thread-runbook.md](14-goal-thread-runbook.md): checkpoint after every story and use `blocked_human` for actions that require TCC, credentials, physical interaction, or subjective acceptance.
 
 The agent may automatically fix failures within the active story. It may not silently redesign later phases.

@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "adr": "Decisions/0006-isolated-runtime-validation.md",
+  "status": "accepted",
+  "date": "2026-08-29",
+  "ownerLaptopRuntimeProhibition": [
+    "application",
+    "ScreenCaptureKit",
+    "ImageIO",
+    "VideoToolbox",
+    "hardware-media"
+  ],
+  "allowedLocalProofClasses": [
+    "unit",
+    "model",
+    "static",
+    "compile",
+    "snapshot"
+  ],
+  "deferredStories": [
+    "LM-028",
+    "LM-039"
+  ],
+  "deferredValidationGate": "H9",
+  "gateStory": "LM-064",
+  "canonicalFilesUpdated": [
+    "Decisions/0001-capture-media.md",
+    "Decisions/0006-isolated-runtime-validation.md",
+    "Docs/Plan/00-master-plan.md",
+    "Docs/Plan/02-platform-capture.md",
+    "Docs/Plan/09-performance-reliability-evaluation.md",
+    "Docs/Plan/10-contracts-and-fixtures.md",
+    "Docs/Plan/13-implementation-backlog.md",
+    "Docs/Plan/14-goal-thread-runbook.md",
+    "phase-state.json"
+  ],
+  "safeValidation": {
+    "jsonParsed": true,
+    "blockedStatusPreserved": true,
+    "h9RegisteredOnce": true,
+    "prohibitedRuntimeExecuted": false
+  },
+  "acceptanceCriteriaWaived": false,
+  "blockedStoriesPromoted": false,
+  "privacyOrIntegrityInvariantChanged": false
+}

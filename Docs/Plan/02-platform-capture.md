@@ -143,6 +143,12 @@ MediaWriter creates immutable logical chunk directories of independently encoded
 
 ADR 0001 authorizes HEIC as the canonical archive format after two repeatable hardware-video kernel panics during LM-025. Production Image I/O encoding is compile-checked but no hardware HEVC/VideoToolbox encoder validation may execute on the affected Mac. Encoding failure stops canonical capture visibly and records a content-free diagnostic error.
 
+ADR 0006 additionally prohibits application, ScreenCaptureKit, ImageIO, VideoToolbox, and
+hardware-media runtime testing on the owner's laptop. LM-028's real eight-hour production
+soak remains mandatory and technically blocked; it executes only as part of the single H9
+isolated-validation-Mac ledger at LM-064. Local unit/model/static/compile/snapshot results
+are implementation evidence, not a substitute for that soak.
+
 Every indexed frame points to a chunk ID, logical presentation timestamp, and exact source HEIC path. A separate 480-pixel HEIC thumbnail is generated asynchronously.
 
 ## Activity signals

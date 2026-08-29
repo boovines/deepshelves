@@ -6,6 +6,21 @@ This document removes ambiguity at package boundaries. These contracts are the v
 
 All wall-clock timestamps are UTC `Date` values encoded as RFC 3339 with fractional seconds. All media offsets and durations are integer milliseconds. All rectangles use normalized display coordinates from 0 through 1 with the origin at the upper-left. Primary identifiers are random UUIDs encoded as lowercase strings.
 
+## Validation evidence contract
+
+ADR 0006 distinguishes implementation scheduling from acceptance evidence. Safe evidence is
+classified as `unit`, `model`, `static`, `compile`, or `snapshot`. A runtime acceptance item
+is classified as `runtime` and includes its required host, command/journey identity, source
+story, and result. Safe evidence may establish `implementationReadiness` but never changes a
+blocked story to passed or satisfies a runtime item.
+
+The H9 ledger at `Results/LM-064/isolated-validation-ledger.json` is append-only for one
+validation revision and contains: schema version, git revision, isolated-host declaration,
+ordered item IDs, source story, acceptance text, proof class `runtime`, command/journey,
+tripwire result, artifact paths, and pass/fail disposition. Missing, reordered, revision-
+mismatched, or failed entries fail closed. The ledger contains no captured content; original
+owner-only evidence remains at the referenced paths.
+
 ## Package boundaries
 
 | Package | Owns | May depend on |

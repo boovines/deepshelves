@@ -135,10 +135,15 @@ promoted. LM-033 separately proves real HEIC thumbnail aspect, orientation, sRGB
 hash, rebuild, publication, and deletion behavior. LM-082 repeats the long-soak, offline
 privacy, integrity, retention, and deletion gates against HEIC source assets.
 
+ADR 0006 does not alter this verification requirement. It keeps LM-028 blocked, permits
+downstream safe implementation work, and assigns the missing real production soak to the
+single H9 isolated-validation-Mac ledger at LM-064. No local model, static, compile, or
+snapshot result substitutes for that runtime evidence.
+
 ## Revisit triggers
 
-Revisit the Apple media codec quarantine only after a macOS/firmware change or on an
-isolated expendable validation host. Update the software codec pins only through a reviewed
+Revisit the Apple media codec quarantine only after a macOS/firmware change or through the
+ADR-0006 H9 gate on an isolated expendable validation host. Update the software codec pins only through a reviewed
 ADR amendment with reproducible linkage, crash-integrity, deletion, decode, privacy,
 resource, license, and migration evidence. Archive identity and exact-frame locators must
 remain stable across any future representation migration.

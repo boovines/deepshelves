@@ -14,6 +14,15 @@ A story is complete only when:
 
 Use `xcodegen generate`, then pinned `xcodebuild` schemes. CI-equivalent local commands are recorded in the project README once LM-001 creates it. Architecture/privacy/contract changes require an ADR and human direction; a failing test alone is not authorization to relax a gate.
 
+ADR 0006 adds one narrow scheduling exception without changing completion: an implementation
+dependency may be consumed when its upstream story is technically `blocked` solely on a
+runtime check prohibited on this laptop, has `implementationReadiness: ready`, and names H9
+as its `deferredValidationGate`. The downstream story may use only unit, model, static,
+compile, and deterministic snapshot verification. It must record runtime-only checks in the
+H9 ledger and may not call those proof classes substitutes for runtime evidence. A deferred
+story remains incomplete and blocked until H9 supplies its original acceptance evidence.
+After LM-064, every dependency must be `passed`; implementation readiness is insufficient.
+
 ## Phase 0 — Foundation and measured defaults
 
 | ID | Deliverable | Depends on | Acceptance and evidence |
@@ -55,7 +64,7 @@ Use `xcodegen generate`, then pinned `xcodebuild` schemes. CI-equivalent local c
 | LM-025 | Implement downscale and ≤30-second, single-epoch, fixed-dimension HEIC-keyframe `MediaWriter`, canonical manifest, exact frame locators, per-frame/chunk hashes, atomic directory finalization, and explicit injection of the pinned software-only codec. Remove ImageIO, AVAssetWriter, and VideoToolbox from the shipping path. | LM-018, LM-024 | Every chunk has one target/epoch/dimension; logical duration/frame ordering, real software-HEIC encode/decode, exact-frame lookup, integrity, retained-only replacement, retention removal, and termination fixtures pass beneath the encoder-service tripwire without executing a hardware video encoder. |
 | LM-026 | Implement atomic coordinator among epoch/policy identity, ready HEIC manifests/assets, frame rows, and retryable jobs; no row points to staging, corrupt, missing, or mismatched media. Add the append-only V2 frame-locator migration. | LM-017, LM-022, LM-025 | Injected crashes/focus races restore invariants and never expose stale/mismatched targets; unreferenced published directories reconcile deterministically; `Results/LM-026/state-machine.json`. |
 | LM-027 | Connect visible pause/resume, foreground-window-only status, launch-at-login, idle, sleep/wake, target gaps, permission loss, low-disk stop, and safe restart. Persist exact resolver gaps; retain exact visible low-disk/archive/process stop causes within the canonical `processStopped` timeline class. | LM-009, LM-023, LM-026; H3 only when a user-initiated `SMAppService.register()` returns `requiresApproval` | UI agrees within 250 ms; no hidden capture; every unavailable target/stop reason creates its exact typed projection and canonical gap; interrupted recording never resumes before complete reconciliation. |
-| LM-028 | Run eight-hour office soak plus accelerated focus/filter/fault/pixel-contamination suite using the pinned software-only HEIC runtime. Measure encode/decode CPU, memory, corpus size, exact-frame decode, temporary residue, and projected 30-day retention; fix leaks, unbounded queues, corrupt manifests/assets, resolver errors, and recovery failures. | LM-027 | Resource/storage/decode budgets pass under the encoder-service tripwire or a measured nonprivacy tuning ADR is adopted; automated scans find zero background/adjacent/excluded/stale sentinel or codec temporary residue in every canonical/derived location; `Results/LM-028/soak-report.md`. |
+| LM-028 | Run eight-hour office soak plus accelerated focus/filter/fault/pixel-contamination suite using the pinned software-only HEIC runtime. Measure encode/decode CPU, memory, corpus size, exact-frame decode, temporary residue, and projected 30-day retention; fix leaks, unbounded queues, corrupt manifests/assets, resolver errors, and recovery failures. | LM-027 | Resource/storage/decode budgets pass under the encoder-service tripwire or a measured nonprivacy tuning ADR is adopted; automated scans find zero background/adjacent/excluded/stale sentinel or codec temporary residue in every canonical/derived location; `Results/LM-028/soak-report.md`. The real wall-clock/runtime portion is an H9 ledger item under ADR 0006; LM-028 remains blocked until it passes. |
 
 ## Phase 3 — Text enrichment and lexical recall
 
@@ -76,7 +85,7 @@ Use `xcodegen generate`, then pinned `xcodebuild` schemes. CI-equivalent local c
 
 | ID | Deliverable | Depends on | Acceptance and evidence |
 |---|---|---|---|
-| LM-039 | Bind shared `SearchEngine` state to global panel/main Search section with debounced cancellation and exactly-once settled ordering. | LM-015, LM-038 | Rapid typing never shows stale results; warm/slow/error XCUITest fixtures pass. |
+| LM-039 | Bind shared `SearchEngine` state to global panel/main Search section with debounced cancellation and exactly-once settled ordering. | LM-015, LM-038 | Rapid typing never shows stale results; warm/slow/error XCUITest fixtures pass. The fixtures are an H9 ledger item under ADR 0006; LM-039 remains blocked until their isolated-Mac runtime passes. |
 | LM-040 | Implement visible parser tokens, app/site pickers, date interval controls, query examples, filter removal, and URL/app autocomplete from approved metadata. | LM-036, LM-039 | Every applied filter is visible/removable and round-trips; keyboard/VoiceOver interaction passes. |
 | LM-041 | Implement adaptive lazy result grid, pagination, selection, thumbnail cache, card provenance, and no-result/indexing states. | LM-012, LM-033, LM-039 | 10k-card S6 performance and accessibility announcements pass; no stale thumbnails. |
 | LM-042 | Implement evidence rendering for AX/OCR/app/title/URL sources, component-debug overlay behind a diagnostics flag, and honest no-summary behavior. | LM-041 | Each golden result cites source evidence; no generated or unsupported claim is displayed. |
@@ -111,7 +120,7 @@ Use `xcodegen generate`, then pinned `xcodebuild` schemes. CI-equivalent local c
 | LM-061 | Build forensic deletion verifier scanning DB/WAL/HEIC manifests and frame assets/thumbnails/vectors/logs/exports/helper projections plus codec temporary residue for seeded sentinels. | LM-060 | All deletion fixture sentinels and frame IDs are absent after checkpoint/vacuum, old-directory disposal, and codec-process termination; signed report `Results/LM-061/deletion.json`. |
 | LM-062 | Implement explicit export (manifest + selected original evidence), integrity check, quarantine review, archive repair, and documented full-reset/recovery flows. | LM-018, LM-060 | Export is self-describing and policy-bounded; corrupted fixtures repair/quarantine without silent data invention. |
 | LM-063 | Implement automated deny-all-network run, socket/DNS instrumentation, binary/dependency/model audit, and build-time-only dependency bootstrap verification. | LM-049, LM-059, LM-062 | Every normal journey produces zero outbound attempt; reproducible audit `Results/LM-063/offline.json`. |
-| LM-064 | Run trust gate: exclusions, private browsing, pause, retention, encryption copy, delete moment/range/all, export, key loss, and permission revocation. | LM-056–LM-063 | All privacy fixtures pass; UI claims match verified protection; five-minute manual trust checklist recording attached. |
+| LM-064 | On the isolated validation Mac, execute the complete ADR-0006 H9 runtime ledger, then run the trust gate: exclusions, private browsing, pause, retention, encryption copy, delete moment/range/all, export, key loss, and permission revocation. | LM-056–LM-063 implementation-ready; H9 | Every deferred runtime item passes and its source story is promoted in dependency order; all privacy fixtures pass; UI claims match verified protection; five-minute manual trust checklist recording and `Results/LM-064/isolated-validation-ledger.json` are attached. |
 
 ## Phase 7 — Bounded agent memory
 
@@ -174,4 +183,4 @@ Use `xcodegen generate`, then pinned `xcodebuild` schemes. CI-equivalent local c
 }
 ```
 
-Allowed statuses are `pending`, `active`, `blocked`, `blocked_human`, and `passed`. At most one story is `active`. `blocked` requires a concrete technical failing gate, evidence path, attempted fallbacks, and requested decision. `blocked_human` is limited to the enumerated gates in plan 14 and requires `HUMAN-ACTION.md` plus a `resumeProbe`; neither status is a synonym for “difficult.”
+Allowed statuses are `pending`, `active`, `blocked`, `blocked_human`, and `passed`. At most one story is `active`. `blocked` requires a concrete technical failing gate, evidence path, attempted fallbacks, and requested decision. `blocked_human` is limited to the enumerated gates in plan 14 and requires `HUMAN-ACTION.md` plus a `resumeProbe`; neither status is a synonym for “difficult.” ADR-0006 runtime deferral may add `implementationReadiness: "ready"` and `deferredValidationGate: "H9"` to a blocked story. Those fields affect scheduling only and never satisfy completion or release acceptance.
