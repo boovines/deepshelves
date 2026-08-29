@@ -55,7 +55,7 @@ public struct MemoryColorToken: Codable, Equatable, Hashable, Sendable {
     )
     public static let accent = MemoryColorToken(
         "accent",
-        source: "systemIndigo",
+        source: "systemBlue",
         use: "Focus, active selection, primary action"
     )
     public static let statusRecording = MemoryColorToken(
@@ -103,7 +103,7 @@ public struct MemoryColorToken: Codable, Equatable, Hashable, Sendable {
         case .textSecondary: .secondaryLabelColor
         case .textTertiary: .tertiaryLabelColor
         case .borderDefault: .separatorColor
-        case .accent: .systemIndigo
+        case .accent: .systemBlue
         case .statusRecording: .systemRed
         case .statusPaused: .systemOrange
         case .statusSuccess: .systemGreen

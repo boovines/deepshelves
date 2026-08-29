@@ -15,7 +15,7 @@ final class DesignTokenTests: XCTestCase {
                 "text.secondary|secondaryLabelColor|Metadata",
                 "text.tertiary|tertiaryLabelColor|Hints",
                 "border.default|separatorColor|Hairlines",
-                "accent|systemIndigo|Focus, active selection, primary action",
+                "accent|systemBlue|Focus, active selection, primary action",
                 "status.recording|systemRed|Recording dot only",
                 "status.paused|systemOrange|Paused state",
                 "status.success|systemGreen|Verified completion",

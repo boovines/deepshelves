@@ -40,7 +40,7 @@ final class ShellUXStateTests: XCTestCase {
         XCTAssertEqual(ShellLocalizationMode.english.localized(source), source)
     }
 
-    func testNavigationHistorySupportsBackForwardWithoutBranchLeakage() {
+    func testTimelineFirstNavigationHistorySupportsBackForwardWithoutBranchLeakage() {
         var history = MainNavigationHistory(initial: .default)
         let timeline = MainNavigationSnapshot(
             section: .timeline,
@@ -54,8 +54,12 @@ final class ShellUXStateTests: XCTestCase {
         )
         history.record(timeline)
         history.record(activity)
-        XCTAssertEqual(history.goBack()?.section, .timeline)
-        XCTAssertEqual(history.goBack()?.section, .search)
+        let priorTimeline = history.goBack()
+        XCTAssertEqual(priorTimeline?.section, .timeline)
+        XCTAssertEqual(priorTimeline?.inspectorRequested, true)
+        let freshProfile = history.goBack()
+        XCTAssertEqual(freshProfile, .default)
+        XCTAssertEqual(freshProfile?.section, .timeline)
         XCTAssertEqual(history.goForward()?.section, .timeline)
 
         history.record(activity)
@@ -105,7 +109,8 @@ final class ShellUXStateTests: XCTestCase {
         XCTAssertTrue(englishTime.contains("PM"))
         XCTAssertEqual(ShellLocaleFormatting.time(hour: 14, minute: 14, locale: french), "14:14")
         XCTAssertEqual(ShellLocaleFormatting.relativeDay(dayOffset: 0, locale: english), "today")
-        XCTAssertEqual(ShellLocaleFormatting.relativeDay(dayOffset: 0, locale: french), "aujourd’hui")
+        XCTAssertEqual(
+            ShellLocaleFormatting.relativeDay(dayOffset: 0, locale: french), "aujourd’hui")
         XCTAssertNotEqual(
             ShellLocaleFormatting.firstWeekday(locale: english),
             ShellLocaleFormatting.firstWeekday(locale: french)

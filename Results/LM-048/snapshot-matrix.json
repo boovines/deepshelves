@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-048",
+  "generatedAt": "2026-08-29T11:36:00Z",
+  "rendering": {
+    "kind": "deterministic-html-css-fixture",
+    "artifact": "Results/LM-048/deterministic-snapshot-gallery.html",
+    "externalAssets": false,
+    "runtimeMediaFrameworks": false,
+    "installedApplicationLaunched": false,
+    "acceptanceSubstitute": false,
+    "note": "This matrix proves deterministic composition and state coverage only. Installed SwiftUI, keyboard, VoiceOver, drag, and media behavior remain deferred to H9."
+  },
+  "sizes": [
+    { "id": "default", "width": 1180, "height": 760 },
+    { "id": "minimum", "width": 820, "height": 600 }
+  ],
+  "surfaces": [
+    {
+      "id": "timeline",
+      "states": ["populated", "empty", "gap", "corrupt-frame", "loading"]
+    },
+    {
+      "id": "search",
+      "states": ["initial", "filtered", "results", "no-results", "adding-visual-matches", "error"]
+    },
+    {
+      "id": "agent-composer",
+      "states": ["unavailable", "ready", "permission-denied"]
+    },
+    {
+      "id": "settings",
+      "states": ["general", "agents", "appearance", "capture", "storage", "exclusions"]
+    },
+    {
+      "id": "environment",
+      "states": ["light", "dark", "system-semantic", "increased-contrast", "pseudo-localization"]
+    }
+  ],
+  "scenarioCount": 25,
+  "snapshotCount": 50,
+  "requiredIdentifiers": [
+    "timeline.canvas",
+    "timeline.previous",
+    "timeline.next",
+    "timeline.timestamp",
+    "timeline.rail",
+    "timeline.playhead",
+    "timeline.zoom.out",
+    "timeline.zoom.in",
+    "search.composer",
+    "search.route.memory",
+    "search.route.agent",
+    "search.filters.time",
+    "search.filters.website",
+    "search.filters.application",
+    "settings.sidebar",
+    "settings.content"
+  ]
+}

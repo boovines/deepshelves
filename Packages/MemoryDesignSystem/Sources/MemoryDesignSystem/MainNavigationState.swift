@@ -10,8 +10,8 @@ public enum MainWindowDefaults: Sendable {
     public static let inspectorIdealWidth = 264
     public static let inspectorWidthRange = 220...360
     public static let inspectorVisibilityThreshold = 900
-    public static let settingsWidth = 680
-    public static let settingsHeight = 560
+    public static let settingsWidth = 1_040
+    public static let settingsHeight = 720
     public static let momentSymbolWidth = 28
     public static let previewSymbolSize = 48
     public static let previewMinimumHeight = 180

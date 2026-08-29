@@ -1,6 +1,7 @@
 import Foundation
 import MemoryAgentAccess
 import MemoryContracts
+import MemoryDesignSystem
 import MemoryStore
 import SwiftUI
 
@@ -170,10 +171,6 @@ struct AgentAccessSettingsPane: View {
 
     var body: some View {
         Form {
-            Label("Agent Access", systemImage: "terminal")
-                .font(.title2)
-                .accessibilityIdentifier("agents.title")
-
             Section("How access works") {
                 Text(
                     "Every policy is limited by time, applications or sites, result count, and expiry. Empty application and site lists expose no content. Forever and unrestricted access are not available."
@@ -286,6 +283,8 @@ struct AgentAccessSettingsPane: View {
             }
         }
         .formStyle(.grouped)
+        .scrollContentBackground(.hidden)
+        .background(MemoryColorToken.surfaceWindow.color)
         .disabled(model.isBusy)
     }
 

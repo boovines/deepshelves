@@ -783,3 +783,20 @@ This file is append-only. Each story records measurements, failures, and durable
 - Four focused tests, strict formatting, targeted quarantine inspection, and final arm64 compile
   pass. The first compile caught one missing explicit return introduced with the projection; it
   was corrected once. No app, rewrite, decoder, XCUITest, capture, or media runtime ran.
+
+## 2026-08-29 — LM-048 visual-memory-first convergence
+
+- Settings now uses a stable 260-point sidebar with exactly General, Agents, Appearance,
+  Capture, Storage, and Exclusions. Large headers and semantic grouped surfaces replace the old
+  tab/database treatment, while the existing root-owned models continue to drive every action.
+- Fresh profiles default to persisted Light appearance; System resolves dynamically from the
+  current macOS appearance and Dark uses semantic native surfaces. Azure is the single accent.
+  Unsupported quality, Dock, update, telemetry, and fabricated agent controls remain omitted.
+- The deterministic review matrix covers 25 required states at default and minimum sizes (50
+  fixture views), and the independent seven-reference comparison records every privacy and
+  product difference. These artifacts are explicitly not installed-runtime substitutes.
+- Forty-seven Recall package tests, focused appearance/navigation/search/launch/accessibility
+  models, keyboard/pseudo-localization/privacy models, formatting, static quarantine checks, and
+  the final arm64+x86_64 Release compile pass. One stale history assertion still expected Search
+  as the fresh root; it was updated to assert the intentional Timeline-first history. No app,
+  capture, ImageIO, VideoToolbox, AVAssetWriter, media runtime, or XCUITest ran.

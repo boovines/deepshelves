@@ -271,6 +271,7 @@ struct AppLaunchConfiguration {
     let onboardingStateURL: URL
     let searchPanelStateURL: URL
     let privacyPolicyStateURL: URL
+    let appearanceStateURL: URL
     let initialStatus: LocalMemoryRuntimeStatus
     let forcedMainWindowSize: MainWindowLaunchSize?
     let preferredColorScheme: ColorScheme?
@@ -412,6 +413,7 @@ struct AppLaunchConfiguration {
         } else {
             privacyPolicyStateURL = Self.defaultStateURL(fileName: "privacy-policy.json")
         }
+        appearanceStateURL = Self.defaultStateURL(fileName: "appearance-state.json")
 
         var permissionOverrides: [OnboardingPermissionKind: OnboardingPermissionStatus] = [:]
         if let index = arguments.firstIndex(of: "--lm014-screen-permission"),
@@ -630,9 +632,6 @@ struct MenuBarStatusPanel: View {
                 .accessibilityIdentifier("menu.search")
             Button("Open Timeline", action: openTimeline)
                 .accessibilityIdentifier("menu.timeline")
-            Button("Forget Last 15 Minutes…") {}
-                .disabled(true)
-                .accessibilityIdentifier("menu.forgetRecent")
             Button("Open Local Memory", action: openApplication)
                 .accessibilityIdentifier("menu.openMain")
             Button("Settings…", action: openSettings)

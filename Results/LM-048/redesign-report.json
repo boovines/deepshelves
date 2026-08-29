@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-048",
+  "checkpoint": "visual-memory-first-convergence",
+  "status": "blocked",
+  "implementationReadiness": "ready",
+  "deferredValidationGate": "H9",
+  "product": {
+    "freshProfileRoot": "timeline",
+    "primaryComposition": "dominant-exact-source-memory-canvas",
+    "persistentTimelineRail": true,
+    "sharedSearchStateOwner": "SearchSessionModel",
+    "explicitAgentRoute": true,
+    "agentArchiveAccess": "bounded-policy-only",
+    "settingsSections": [
+      "General",
+      "Agents",
+      "Appearance",
+      "Capture",
+      "Storage",
+      "Exclusions"
+    ],
+    "appearanceModes": ["system", "light", "dark"],
+    "freshProfileAppearance": "light",
+    "foregroundWindowOnly": true,
+    "localOnly": true
+  },
+  "deterministicEvidence": {
+    "scenarioCount": 25,
+    "sizeCount": 2,
+    "snapshotCount": 50,
+    "gallery": "Results/LM-048/deterministic-snapshot-gallery.html",
+    "manifest": "Results/LM-048/snapshot-matrix.json",
+    "gallerySHA256": "48771df81b506dd2dcd1eb97b37b6afb1538c8953f266656de786c70735cc5ae",
+    "manifestSHA256": "9dc8d2c129869537f098767cfa9ed28bad4e133976959b2ddf9f4c982347a81a",
+    "acceptanceSubstitute": false
+  },
+  "verification": {
+    "memorySearchTests": 47,
+    "memorySearchFailures": 0,
+    "focusedUnitModels": "passed",
+    "keyboardAccessibilityAndPrivacyModels": "passed-after-one-stale-expectation-fix",
+    "strictFormatting": "passed",
+    "staticQuarantineAudit": "passed",
+    "universalReleaseCompile": "arm64+x86_64 passed",
+    "externalSnapshotAssets": false,
+    "applicationRuntimeExecuted": false,
+    "screenCaptureRuntimeExecuted": false,
+    "imageIORuntimeExecuted": false,
+    "videoToolboxRuntimeExecuted": false,
+    "avAssetWriterRuntimeExecuted": false,
+    "xcuiRuntimeExecuted": false
+  },
+  "review": {
+    "artifact": "Results/LM-048/reference-comparison.md",
+    "referenceCountForComposition": 7,
+    "brandIconExcluded": true,
+    "copiedProprietaryAssets": false,
+    "reviewSHA256": "907a2d78ab81768d817b056abe5a811e406d7c77d7686bcb120763dcf5780c9f"
+  },
+  "remainingGate": "Validate installed SwiftUI/AppKit rendering, window behavior, keyboard traversal, focus rings, VoiceOver order, live rail drag/scrub, capture transitions, and media display on the isolated H9 Mac."
+}

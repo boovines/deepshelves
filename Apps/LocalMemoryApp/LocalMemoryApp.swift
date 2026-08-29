@@ -24,6 +24,7 @@ struct LocalMemoryApp: App {
     @StateObject private var agentAccessSettingsModel: AgentAccessSettingsViewModel
     @StateObject private var activityModel: ActivityViewModel
     @StateObject private var diagnosticsModel: LocalDiagnosticsViewModel
+    @StateObject private var appearanceSettingsModel: AppearanceSettingsViewModel
     private let shellKeyboardMonitor: ShellKeyboardCommandMonitor
 
     private let launchConfiguration: AppLaunchConfiguration
@@ -52,6 +53,9 @@ struct LocalMemoryApp: App {
         Self.exportLM024EpochCaptureAndExitIfRequested(arguments: arguments)
         let configuration = AppLaunchConfiguration(arguments: arguments)
         launchConfiguration = configuration
+        _appearanceSettingsModel = StateObject(
+            wrappedValue: AppearanceSettingsViewModel(stateURL: configuration.appearanceStateURL)
+        )
         shellKeyboardMonitor = ShellKeyboardCommandMonitor()
         let archiveSecurityModel = ArchiveSecurityViewModel(
             usesDeterministicStore: arguments.contains("--lm019-export-lifecycle")
@@ -380,7 +384,10 @@ struct LocalMemoryApp: App {
                     CaptureSpikeTargetView(animated: captureSpikeCrashActiveMode)
                 }
             }
-            .preferredColorScheme(launchConfiguration.preferredColorScheme)
+            .preferredColorScheme(
+                launchConfiguration.preferredColorScheme
+                    ?? appearanceSettingsModel.preferredColorScheme
+            )
             .task {
                 if let lm019LifecycleOutput {
                     do {
@@ -468,9 +475,13 @@ struct LocalMemoryApp: App {
                 archiveSecurityModel: archiveSecurityModel,
                 agentAccessSettingsModel: agentAccessSettingsModel,
                 diagnosticsModel: diagnosticsModel,
+                appearanceSettingsModel: appearanceSettingsModel,
                 opensPrivacyAtLaunch: launchConfiguration.opensPrivacySettingsAtLaunch
             )
-            .preferredColorScheme(launchConfiguration.preferredColorScheme)
+            .preferredColorScheme(
+                launchConfiguration.preferredColorScheme
+                    ?? appearanceSettingsModel.preferredColorScheme
+            )
         }
         .defaultSize(
             width: CGFloat(MainWindowDefaults.settingsWidth),
@@ -479,7 +490,10 @@ struct LocalMemoryApp: App {
 
         Window("Welcome to Local Memory", id: "onboarding") {
             OnboardingSceneRoot(model: onboardingModel)
-                .preferredColorScheme(launchConfiguration.preferredColorScheme)
+                .preferredColorScheme(
+                    launchConfiguration.preferredColorScheme
+                        ?? appearanceSettingsModel.preferredColorScheme
+                )
         }
         .defaultSize(
             width: CGFloat(OnboardingDefaults.windowWidth),
@@ -495,6 +509,10 @@ struct LocalMemoryApp: App {
                 model: lifecycleModel,
                 navigationModel: navigationModel,
                 searchPanelCoordinator: searchPanelCoordinator
+            )
+            .preferredColorScheme(
+                launchConfiguration.preferredColorScheme
+                    ?? appearanceSettingsModel.preferredColorScheme
             )
         } label: {
             MenuBarStatusLabel(

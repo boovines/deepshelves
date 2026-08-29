@@ -1,0 +1,28 @@
+LM-048 visual-memory-first convergence verification
+Date: 2026-08-29
+
+PASS strict formatting for every changed Swift file
+PASS git diff whitespace validation
+PASS targeted changed-source quarantine scan
+PASS stale process checks before and after every xcodebuild/swift test invocation
+PASS focused unit models: appearance persistence, navigation, tokens, global search, launch at login, bounded accessibility projection
+PASS MemorySearch package: 47 tests, 0 failures
+PASS keyboard/accessibility/pseudo-localization and privacy settings models
+PASS deterministic snapshot manifest: 25 scenarios x 2 sizes = 50 views
+PASS snapshot gallery contains no external assets or network references
+PASS independent seven-reference comparison and intentional-difference ledger
+PASS final universal Release compile: arm64 + x86_64
+
+Diagnosed failures (not repeated unchanged):
+- A first selected-test invocation omitted the LocalMemoryUnitTests target prefix. The target list was inspected and the corrected scoped command passed.
+- The Recall milestone test surfaced a stale assertion that expected Search as the fresh-profile root. The product now intentionally opens Timeline; the test was updated to assert the two distinct Timeline history snapshots and passed.
+- Earlier focused LM-048 tests caught an XCTest async-autoclosure misuse and the previous indigo token expectation after the approved azure change. Both were corrected once and passed.
+
+NOT RUN Local Memory application
+NOT RUN ScreenCaptureKit
+NOT RUN ImageIO
+NOT RUN VideoToolbox or AVAssetWriter
+NOT RUN media encode/decode runtime
+NOT RUN XCUITest
+
+Installed interaction, windowing, drag/scrub, focus-ring, VoiceOver, capture-state, and media-display criteria remain deferred—not passed—to H9 on a known-safe validation Mac.

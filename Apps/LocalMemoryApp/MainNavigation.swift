@@ -771,13 +771,37 @@ private struct EmbeddedSettingsShellView: View {
     }
 }
 
-private enum LocalMemorySettingsSection: Hashable {
-    case capture
-    case privacy
-    case storage
-    case search
+private enum LocalMemorySettingsSection: String, CaseIterable, Hashable {
+    case general
     case agents
-    case about
+    case appearance
+    case capture
+    case storage
+    case exclusions
+
+    var title: String { rawValue.capitalized }
+
+    var systemImage: String {
+        switch self {
+        case .general: "gearshape"
+        case .agents: "terminal"
+        case .appearance: "circle.lefthalf.filled"
+        case .capture: "record.circle"
+        case .storage: "externaldrive"
+        case .exclusions: "eye.slash"
+        }
+    }
+
+    var subtitle: String {
+        switch self {
+        case .general: "Shortcuts, startup, and local-only operation"
+        case .agents: "Bounded local access and revocation"
+        case .appearance: "Light, dark, and system presentation"
+        case .capture: "Foreground-window recording health"
+        case .storage: "Usage, retention, integrity, and diagnostics"
+        case .exclusions: "Applications, sites, and fail-closed rules"
+        }
+    }
 }
 
 struct LocalMemorySettingsView: View {
@@ -788,6 +812,7 @@ struct LocalMemorySettingsView: View {
     @ObservedObject var archiveSecurityModel: ArchiveSecurityViewModel
     @ObservedObject var agentAccessSettingsModel: AgentAccessSettingsViewModel
     @ObservedObject var diagnosticsModel: LocalDiagnosticsViewModel
+    @ObservedObject var appearanceSettingsModel: AppearanceSettingsViewModel
     @State private var selection: LocalMemorySettingsSection
 
     init(
@@ -798,6 +823,7 @@ struct LocalMemorySettingsView: View {
         archiveSecurityModel: ArchiveSecurityViewModel,
         agentAccessSettingsModel: AgentAccessSettingsViewModel,
         diagnosticsModel: LocalDiagnosticsViewModel,
+        appearanceSettingsModel: AppearanceSettingsViewModel,
         opensPrivacyAtLaunch: Bool
     ) {
         self.lifecycleModel = lifecycleModel
@@ -807,49 +833,72 @@ struct LocalMemorySettingsView: View {
         self.archiveSecurityModel = archiveSecurityModel
         self.agentAccessSettingsModel = agentAccessSettingsModel
         self.diagnosticsModel = diagnosticsModel
-        _selection = State(initialValue: opensPrivacyAtLaunch ? .privacy : .capture)
+        self.appearanceSettingsModel = appearanceSettingsModel
+        _selection = State(initialValue: opensPrivacyAtLaunch ? .exclusions : .general)
     }
 
     var body: some View {
-        TabView(selection: $selection) {
-            CaptureSettingsPane(
-                lifecycleModel: lifecycleModel,
-                launchAtLoginModel: launchAtLoginModel,
-                searchPanelCoordinator: searchPanelCoordinator
-            )
-            .tabItem { Label("Capture", systemImage: "record.circle") }
-            .tag(LocalMemorySettingsSection.capture)
+        HStack(spacing: 0) {
+            VStack(alignment: .leading, spacing: MemorySpacing.large) {
+                Text("Local Memory")
+                    .font(.title2.weight(.semibold))
+                    .padding(.horizontal, MemorySpacing.xLarge)
+                    .padding(.top, MemorySpacing.xLarge)
 
-            PrivacySettingsPane(model: privacySettingsModel)
-                .tabItem { Label("Privacy", systemImage: "hand.raised") }
-                .tag(LocalMemorySettingsSection.privacy)
+                VStack(spacing: MemorySpacing.xSmall) {
+                    ForEach(LocalMemorySettingsSection.allCases, id: \.self) { section in
+                        Button {
+                            selection = section
+                        } label: {
+                            Label(section.title, systemImage: section.systemImage)
+                                .font(.body.weight(selection == section ? .semibold : .regular))
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding(.horizontal, MemorySpacing.medium)
+                                .frame(minHeight: 40)
+                                .background(
+                                    selection == section
+                                        ? MemoryColorToken.accent.color : .clear,
+                                    in: RoundedRectangle(
+                                        cornerRadius: MemoryRadius.card,
+                                        style: .continuous
+                                    )
+                                )
+                                .foregroundStyle(selection == section ? .white : .primary)
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityLabel(
+                            "\(section.title), "
+                                + (selection == section ? "selected" : "not selected")
+                        )
+                        .accessibilityIdentifier("settings.sidebar.\(section.rawValue)")
+                    }
+                }
+                .padding(.horizontal, MemorySpacing.large)
+                Spacer()
+            }
+            .frame(width: 260)
+            .background(MemoryColorToken.surfaceSidebar.color)
 
-            ArchiveSecuritySettingsPane(model: archiveSecurityModel)
-                .tabItem { Label("Storage", systemImage: "externaldrive") }
-                .tag(LocalMemorySettingsSection.storage)
+            Divider()
 
-            SettingsPane(
-                title: "Search & Models",
-                systemImage: "magnifyingglass",
-                rows: [
-                    ("Visual model", "Bundled local model"),
-                    ("Runtime downloads", "Never"),
-                    ("Index", "Synthetic preview"),
-                ]
-            )
-            .tabItem { Label("Search", systemImage: "magnifyingglass") }
-            .tag(LocalMemorySettingsSection.search)
+            VStack(alignment: .leading, spacing: 0) {
+                VStack(alignment: .leading, spacing: MemorySpacing.xSmall) {
+                    Text(selection.title)
+                        .font(.largeTitle.weight(.semibold))
+                    Text(selection.subtitle)
+                        .font(.callout)
+                        .foregroundStyle(.secondary)
+                }
+                .padding(.horizontal, MemorySpacing.sectionLarge)
+                .padding(.top, MemorySpacing.sectionLarge)
+                .padding(.bottom, MemorySpacing.large)
+                .accessibilityElement(children: .combine)
+                .accessibilityIdentifier("settings.title")
 
-            AgentAccessSettingsPane(model: agentAccessSettingsModel)
-                .tabItem { Label("Agents", systemImage: "terminal") }
-                .tag(LocalMemorySettingsSection.agents)
-
-            LocalDiagnosticsSettingsPane(
-                model: diagnosticsModel,
-                lifecycleModel: lifecycleModel
-            )
-            .tabItem { Label("About", systemImage: "info.circle") }
-            .tag(LocalMemorySettingsSection.about)
+                settingsContent
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .background(MemoryColorToken.surfaceWindow.color)
         }
         .frame(
             width: CGFloat(MainWindowDefaults.settingsWidth),
@@ -858,16 +907,141 @@ struct LocalMemorySettingsView: View {
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("settings.root")
     }
+
+    @ViewBuilder
+    private var settingsContent: some View {
+        switch selection {
+        case .general:
+            ScrollView {
+                GeneralSettingsPane(
+                    launchAtLoginModel: launchAtLoginModel,
+                    searchPanelCoordinator: searchPanelCoordinator
+                )
+                .padding(.horizontal, MemorySpacing.sectionLarge)
+                .padding(.bottom, MemorySpacing.sectionLarge)
+            }
+        case .agents:
+            AgentAccessSettingsPane(model: agentAccessSettingsModel)
+        case .appearance:
+            ScrollView {
+                AppearanceSettingsPane(model: appearanceSettingsModel)
+                    .padding(.horizontal, MemorySpacing.sectionLarge)
+                    .padding(.bottom, MemorySpacing.sectionLarge)
+            }
+        case .capture:
+            ScrollView {
+                CaptureSettingsPane(lifecycleModel: lifecycleModel)
+                    .padding(.horizontal, MemorySpacing.sectionLarge)
+                    .padding(.bottom, MemorySpacing.sectionLarge)
+            }
+        case .storage:
+            ArchiveSecuritySettingsPane(
+                model: archiveSecurityModel,
+                diagnosticsModel: diagnosticsModel
+            )
+        case .exclusions:
+            PrivacySettingsPane(model: privacySettingsModel)
+        }
+    }
+}
+
+private struct GeneralSettingsPane: View {
+    @ObservedObject var launchAtLoginModel: LaunchAtLoginViewModel
+    @ObservedObject var searchPanelCoordinator: GlobalSearchPanelCoordinator
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: MemorySpacing.sectionLarge) {
+            SettingsGroupedCard {
+                VStack(spacing: MemorySpacing.large) {
+                    HStack {
+                        SettingsRowHeader(
+                            systemImage: "clock.arrow.circlepath",
+                            title: "Open Timeline",
+                            detail: "Use the menu bar or the main window’s Timeline action."
+                        )
+                        Spacer()
+                        Text("⌘2").font(.body.monospaced())
+                    }
+                    Divider()
+                    HStack {
+                        SettingsRowHeader(
+                            systemImage: "magnifyingglass",
+                            title: "Open Search",
+                            detail: "Choose the registered global shortcut."
+                        )
+                        Spacer()
+                        Picker("Search shortcut", selection: shortcutBinding) {
+                            Text(GlobalSearchShortcut.default.displayName)
+                                .tag(GlobalSearchShortcut.default)
+                            Text("Command–Shift–K")
+                                .tag(GlobalSearchShortcut(key: .k, modifiers: [.command, .shift]))
+                        }
+                        .labelsHidden()
+                        .frame(width: 180)
+                    }
+                }
+            }
+
+            SettingsGroupedCard {
+                HStack {
+                    SettingsRowHeader(
+                        systemImage: "door.left.hand.open",
+                        title: "Launch at login",
+                        detail: launchAtLoginModel.snapshot.statusLabel
+                    )
+                    Spacer()
+                    Toggle("Launch at login", isOn: launchAtLoginBinding)
+                        .labelsHidden()
+                        .accessibilityIdentifier("settings.launchAtLogin")
+                }
+            }
+
+            SettingsGroupedCard {
+                SettingsRowHeader(
+                    systemImage: "network.slash",
+                    title: "Local-only and offline",
+                    detail:
+                        "Capture, search, visual indexing, settings, and diagnostics stay on this Mac. Local Memory has no telemetry, cloud sync, or remote update service."
+                )
+            }
+        }
+        .task {
+            await searchPanelCoordinator.start()
+            await launchAtLoginModel.start()
+        }
+    }
+
+    private var shortcutBinding: Binding<GlobalSearchShortcut> {
+        Binding(
+            get: { searchPanelCoordinator.shortcut },
+            set: { searchPanelCoordinator.setShortcut($0) }
+        )
+    }
+
+    private var launchAtLoginBinding: Binding<Bool> {
+        Binding(
+            get: { launchAtLoginModel.isEnabled },
+            set: { launchAtLoginModel.setEnabled($0) }
+        )
+    }
 }
 
 private struct ArchiveSecuritySettingsPane: View {
     @ObservedObject var model: ArchiveSecurityViewModel
+    @ObservedObject var diagnosticsModel: LocalDiagnosticsViewModel
 
     var body: some View {
         Form {
-            Label("Storage", systemImage: "externaldrive")
-                .font(.title2)
-                .accessibilityIdentifier("settings.title")
+            Section("Current usage") {
+                LabeledContent("Archive", value: archiveUsage)
+                    .accessibilityIdentifier("storage.currentUsage")
+                Button("Refresh Usage") { diagnosticsModel.refresh() }
+                    .disabled(diagnosticsModel.isLoading)
+                    .accessibilityIdentifier("storage.refreshUsage")
+                if diagnosticsModel.isLoading {
+                    ProgressView("Measuring local storage…")
+                }
+            }
             Section("Archive") {
                 LabeledContent("Default retention", value: "30 days")
                 LabeledContent("Default cap", value: "20 GB")
@@ -876,6 +1050,15 @@ private struct ArchiveSecuritySettingsPane: View {
                     .accessibilityIdentifier("storage.encryptionStatus")
                 Text(
                     "Searchable text, settings, and audit rows are SQLCipher-encrypted. Visual media relies on owner-only permissions and FileVault when enabled."
+                )
+                .font(.caption)
+                .foregroundStyle(.secondary)
+            }
+            Section("Lifecycle policy") {
+                LabeledContent("Retention", value: "30 days")
+                LabeledContent("Storage cap", value: "20 GB")
+                Text(
+                    "The oldest ready visual chunks are deleted first. Active staging is protected, and low disk space stops capture before cleanup."
                 )
                 .font(.caption)
                 .foregroundStyle(.secondary)
@@ -919,6 +1102,17 @@ private struct ArchiveSecuritySettingsPane: View {
             }
         }
         .formStyle(.grouped)
+        .scrollContentBackground(.hidden)
+        .background(MemoryColorToken.surfaceWindow.color)
+        .task { diagnosticsModel.refresh() }
+    }
+
+    private var archiveUsage: String {
+        guard let snapshot = diagnosticsModel.snapshot else {
+            return diagnosticsModel.errorCode == nil ? "Measuring…" : "Unavailable"
+        }
+        let total = snapshot.databaseBytes + snapshot.mediaBytes + snapshot.logBytes
+        return ByteCountFormatter.string(fromByteCount: total, countStyle: .file)
     }
 
     private var encryptionStatus: String {
@@ -932,101 +1126,44 @@ private struct ArchiveSecuritySettingsPane: View {
 
 private struct CaptureSettingsPane: View {
     @ObservedObject var lifecycleModel: AppLifecycleViewModel
-    @ObservedObject var launchAtLoginModel: LaunchAtLoginViewModel
-    @ObservedObject var searchPanelCoordinator: GlobalSearchPanelCoordinator
 
     var body: some View {
-        Form {
-            Label("Capture", systemImage: "record.circle")
-                .font(.title2)
-                .accessibilityIdentifier("settings.title")
-            Section {
-                LabeledContent("Status", value: lifecycleModel.menuProjection.statusLabel)
-                    .accessibilityIdentifier("settings.captureStatus")
-                if let detail = lifecycleModel.menuProjection.detailLabel {
-                    Text(detail)
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                        .accessibilityIdentifier("settings.captureDetail")
-                }
-                LabeledContent("Privacy mode", value: "Foreground window only")
-                Toggle(
-                    "Launch at login",
-                    isOn: Binding(
-                        get: { launchAtLoginModel.isEnabled },
-                        set: { launchAtLoginModel.setEnabled($0) }
+        VStack(alignment: .leading, spacing: MemorySpacing.sectionLarge) {
+            SettingsGroupedCard {
+                HStack {
+                    SettingsRowHeader(
+                        systemImage: lifecycleModel.menuProjection.statusSymbol,
+                        title: lifecycleModel.menuProjection.statusLabel,
+                        detail: lifecycleModel.menuProjection.detailLabel
+                            ?? "Only the approved foreground window can be recorded."
                     )
-                )
-                .accessibilityIdentifier("settings.launchAtLogin")
-                LabeledContent("Login item status", value: launchAtLoginModel.snapshot.statusLabel)
-                    .accessibilityIdentifier("settings.launchAtLoginStatus")
-                if launchAtLoginModel.snapshot.humanGate == .approveInLoginItems {
-                    Text("Approve Local Memory in System Settings › General › Login Items.")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                        .accessibilityIdentifier("settings.launchAtLoginApproval")
-                }
-                if let errorCode = launchAtLoginModel.errorCode {
-                    LabeledContent("Login item diagnostic", value: errorCode)
-                        .accessibilityIdentifier("settings.launchAtLoginError")
-                }
-            }
-            Section("Global search shortcut") {
-                Picker(
-                    "Shortcut",
-                    selection: Binding(
-                        get: { searchPanelCoordinator.shortcut },
-                        set: { searchPanelCoordinator.setShortcut($0) }
-                    )
-                ) {
-                    Text(GlobalSearchShortcut.default.displayName)
-                        .tag(GlobalSearchShortcut.default)
-                    Text("Command–Shift–K")
-                        .tag(GlobalSearchShortcut(key: .k, modifiers: [.command, .shift]))
-                }
-                .accessibilityIdentifier("settings.shortcut")
-                LabeledContent(
-                    "Registration",
-                    value: searchPanelCoordinator.registrationState.statusLabel
-                )
-                .accessibilityIdentifier("settings.shortcutStatus")
-                if let diagnosticCode = searchPanelCoordinator.registrationState.diagnosticCode {
-                    LabeledContent("Diagnostic", value: diagnosticCode)
-                        .accessibilityIdentifier("settings.shortcutDiagnostic")
-                }
-                if let actionTitle = searchPanelCoordinator.registrationState.recoveryActionTitle {
-                    Button(actionTitle) {
-                        searchPanelCoordinator.chooseRecoveryShortcut()
+                    Spacer()
+                    Button(lifecycleModel.menuProjection.primaryActionLabel) {
+                        lifecycleModel.performPrimaryAction()
                     }
-                    .accessibilityIdentifier("settings.shortcutRecovery")
+                    .buttonStyle(.borderedProminent)
+                    .accessibilityIdentifier("settings.capturePrimaryAction")
                 }
             }
-        }
-        .formStyle(.grouped)
-        .task {
-            await searchPanelCoordinator.start()
-            await launchAtLoginModel.start()
-        }
-    }
-}
 
-private struct SettingsPane: View {
-    let title: String
-    let systemImage: String
-    let rows: [(String, String)]
+            SettingsGroupedCard {
+                SettingsRowHeader(
+                    systemImage: "macwindow.on.rectangle",
+                    title: "Foreground-window only",
+                    detail:
+                        "Local Memory never broadens capture to the whole desktop. Exclusions and permission loss apply fail closed before a frame is admitted."
+                )
+            }
 
-    var body: some View {
-        Form {
-            Label(title, systemImage: systemImage)
-                .font(.title2)
-                .accessibilityIdentifier("settings.title")
-            Section {
-                ForEach(rows, id: \.0) { row in
-                    LabeledContent(row.0, value: row.1)
-                }
+            SettingsGroupedCard {
+                SettingsRowHeader(
+                    systemImage: "pause.circle",
+                    title: "Pause on inactivity",
+                    detail:
+                        "Idle and sleep observations create typed gaps instead of screenshots. This fixed privacy behavior is always enabled."
+                )
             }
         }
-        .formStyle(.grouped)
     }
 }
 

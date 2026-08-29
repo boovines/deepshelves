@@ -200,10 +200,6 @@ struct PrivacySettingsPane: View {
 
     var body: some View {
         Form {
-            Label("Privacy", systemImage: "hand.raised")
-                .font(.title2)
-                .accessibilityIdentifier("settings.title")
-
             Section("Fixed protections") {
                 LabeledContent("Capture surface", value: "Foreground window only")
                 LabeledContent("Private windows", value: "Excluded by default")
@@ -369,6 +365,8 @@ struct PrivacySettingsPane: View {
             }
         }
         .formStyle(.grouped)
+        .scrollContentBackground(.hidden)
+        .background(MemoryColorToken.surfaceWindow.color)
         .task { await model.load() }
         .accessibilityIdentifier("privacy.settingsPane")
     }

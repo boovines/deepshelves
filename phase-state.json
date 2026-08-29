@@ -1005,10 +1005,10 @@
       "resumeProbe": null
     },
     "LM-048": {
-      "status": "pending",
-      "startedAt": null,
-      "completedAt": null,
-      "gitRevision": null,
+      "status": "blocked",
+      "startedAt": "2026-08-29T11:29:00Z",
+      "completedAt": "2026-08-29T11:43:00Z",
+      "gitRevision": "refs/tags/checkpoints/LM-048-visual-redesign-blocked",
       "previousImplementationCheckpoint": "refs/tags/checkpoints/LM-048-blocked",
       "evidence": [
         "Results/LM-048/safe-journey-matrix.json",
@@ -1016,10 +1016,17 @@
         "Results/Milestones/RecallUI/report.json",
         "Results/LM-038/retrieval.json",
         "Decisions/0006-isolated-runtime-validation.md",
-        "Decisions/0007-faster-personal-alpha-verification.md"
+        "Decisions/0007-faster-personal-alpha-verification.md",
+        "Decisions/0008-visual-memory-first-interface.md",
+        "Results/LM-048/redesign-report.json",
+        "Results/LM-048/redesign-verification.txt",
+        "Results/LM-048/snapshot-matrix.json",
+        "Results/LM-048/deterministic-snapshot-gallery.html",
+        "Results/LM-048/reference-comparison.md",
+        "Results/Milestones/RecallUI/redesign-report.json"
       ],
-      "notes": "ADR 0008 reopens visual readiness for full Recall convergence, six-section Settings IA, appearance persistence, deterministic snapshot matrix, and independent side-by-side review. Historical recall evidence remains preserved; all installed runtime acceptance remains H9-only.",
-      "blockedReason": null,
+      "notes": "Visual-memory-first convergence is implementation-ready: Timeline is the fresh-profile root, screenshot canvas and spatial rail dominate Recall, Search and Ask Agent share the existing state owner, Settings has the exact six-section IA, appearance persists with fresh Light default, and 50 deterministic fixture views plus an independent reference comparison cover the requested states. Safe focused models, accessibility/keyboard/privacy models, the full 47-test MemorySearch package, static quarantine checks, and the final universal Release compile pass.",
+      "blockedReason": "Installed SwiftUI/AppKit composition, minimum-window layout, keyboard traversal, focus rings, VoiceOver reading order, live rail drag/scrub, capture state transitions, and media display remain H9-only. The deterministic matrix is explicitly not a substitute; no runtime acceptance criterion was marked passed.",
       "requestedHumanGate": null,
       "resumeProbe": null
     },

@@ -13,8 +13,8 @@ final class MainNavigationStateTests: XCTestCase {
         XCTAssertEqual(MainWindowDefaults.sidebarWidthRange, 168...240)
         XCTAssertEqual(MainWindowDefaults.inspectorIdealWidth, 264)
         XCTAssertEqual(MainWindowDefaults.inspectorWidthRange, 220...360)
-        XCTAssertEqual(MainWindowDefaults.settingsWidth, 680)
-        XCTAssertEqual(MainWindowDefaults.settingsHeight, 560)
+        XCTAssertEqual(MainWindowDefaults.settingsWidth, 1_040)
+        XCTAssertEqual(MainWindowDefaults.settingsHeight, 720)
     }
 
     func testInspectorCollapsesBelowNineHundredPointsOrWhenDismissed() {

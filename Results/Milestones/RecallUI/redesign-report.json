@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "milestone": "Recall UI visual-memory-first redesign",
+  "stories": ["LM-039", "LM-040", "LM-041", "LM-042", "LM-043", "LM-045", "LM-046", "LM-047", "LM-048"],
+  "status": "implementation-ready-runtime-blocked",
+  "safeCheckpoint": {
+    "focusedUnitModels": "passed",
+    "memorySearchTests": { "tests": 47, "failures": 0 },
+    "keyboardAccessibilityPrivacyModels": "passed",
+    "deterministicSnapshots": { "scenarios": 25, "sizes": 2, "views": 50 },
+    "staticQuarantine": "passed",
+    "universalReleaseCompile": "arm64+x86_64 passed",
+    "applicationRuntime": "not-run"
+  },
+  "runtimeLedger": {
+    "gate": "H9",
+    "satisfied": false,
+    "acceptanceCriteriaWaived": false
+  }
+}
