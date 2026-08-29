@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-042",
+  "checkpoint": "secondary-provenance-disclosure",
+  "status": "blocked",
+  "implementationReadiness": "ready",
+  "deferredValidationGate": "H9",
+  "behavior": {
+    "resultCardEvidence": "quiet-source-kind-only",
+    "detailEvidence": "collapsed-by-default-exact-disclosure",
+    "diagnostics": "collapsed-and-explicitly-enabled-only",
+    "inventedSummary": false,
+    "validatedSourceLabelsPreserved": true
+  },
+  "verification": {
+    "focusedSearchResultGridTests": 8,
+    "allContractEvidenceSources": "passed",
+    "exactDisclosureProjection": "passed",
+    "strictFormatting": "passed",
+    "nativeArm64Compile": "passed",
+    "targetedProhibitedRuntimeSourceAudit": "passed",
+    "applicationRuntimeExecuted": false,
+    "xcuiRuntimeExecuted": false,
+    "hardwareMediaRuntimeExecuted": false
+  },
+  "remainingGate": "Validate disclosure keyboard traversal, focus, VoiceOver ordering, and installed detail layout on the isolated H9 Mac."
+}

@@ -850,10 +850,10 @@
       "resumeProbe": null
     },
     "LM-042": {
-      "status": "pending",
-      "startedAt": null,
-      "completedAt": null,
-      "gitRevision": null,
+      "status": "blocked",
+      "startedAt": "2026-08-29T11:17:00Z",
+      "completedAt": "2026-08-29T11:17:32Z",
+      "gitRevision": "refs/tags/checkpoints/LM-042-visual-redesign-blocked",
       "previousImplementationCheckpoint": "refs/tags/checkpoints/LM-042-blocked",
       "evidence": [
         "Results/LM-042/report.json",
@@ -865,10 +865,14 @@
         "Results/LM-042/swift-format.txt",
         "Results/LM-042/privacy.txt",
         "Results/LM-042/dependencies.txt",
-        "Decisions/0006-isolated-runtime-validation.md"
+        "Results/LM-042/redesign-report.json",
+        "Results/LM-042/redesign-disclosure-snapshot.json",
+        "Results/LM-042/redesign-verification.txt",
+        "Decisions/0006-isolated-runtime-validation.md",
+        "Decisions/0008-visual-memory-first-interface.md"
       ],
-      "notes": "ADR 0008 reopens visual readiness to move provenance and actions into honest secondary disclosure. Historical evidence-source guarantees remain valid; production UI/accessibility inspection remains H9-only.",
-      "blockedReason": null,
+      "notes": "Result cards now show only a quiet validated source-kind cue. Exact matched content and every source label move into a collapsed-by-default Source details disclosure in the selected moment. Diagnostics remain absent unless search diagnostics are explicitly enabled, and then remain in a separate collapsed disclosure. No generated summary is introduced.",
+      "blockedReason": "Disclosure keyboard traversal, focus, VoiceOver ordering, and installed detail layout remain runtime-only H9 criteria. Exact model projections, focused tests, static audit, and arm64 compilation pass without replacing H9.",
       "requestedHumanGate": null,
       "resumeProbe": null
     },

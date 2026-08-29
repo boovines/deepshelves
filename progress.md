@@ -723,3 +723,14 @@ This file is append-only. Each story records measurements, failures, and durable
   pagination, hidden-result suppression, and stale-thumbnail identity rejection. Strict
   formatting, targeted quarantine inspection, and cached arm64 compile also pass with no app,
   XCUITest, ImageIO, VideoToolbox, AVAssetWriter, or media runtime.
+
+## 2026-08-29 — LM-042 secondary provenance disclosure
+
+- Result cards now keep provenance quiet with only the validated source kind. Exact matched
+  evidence moves into a collapsed-by-default Source details disclosure on the selected moment,
+  preserving every contract label and value without generating a summary.
+- Search diagnostics remain entirely absent unless the session explicitly enables them; an
+  enabled diagnostic section is still secondary and collapsed by default.
+- Eight focused projection/grid tests, strict formatting, targeted quarantine inspection, and
+  cached arm64 compile pass. Installed disclosure interaction, focus, VoiceOver ordering, and
+  layout remain blocked at H9; no prohibited runtime ran.

@@ -514,8 +514,8 @@ private final class SearchResultCollectionItem: NSCollectionViewItem {
             .compactMap { $0 }
             .joined(separator: " · ")
         let primaryEvidence = card.evidence[0]
-        evidenceLabel.stringValue = primaryEvidence.displayText
-        evidenceLabel.toolTip = "Source: \(primaryEvidence.sourceLabel)"
+        evidenceLabel.stringValue = "Matched using \(primaryEvidence.sourceLabel.lowercased())"
+        evidenceLabel.toolTip = "Open the moment to review exact source details"
         debugLabel.stringValue = card.componentDebug?.displayText ?? ""
         debugLabel.isHidden = card.componentDebug == nil
         view.layer?.backgroundColor =

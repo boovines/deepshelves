@@ -29,6 +29,22 @@ public struct SearchEvidenceLineProjection: Codable, Equatable, Sendable {
     }
 }
 
+public struct SearchEvidenceDisclosureProjection: Codable, Equatable, Sendable {
+    public let summary: String
+    public let lines: [SearchEvidenceLineProjection]
+    public let accessibilityLabel: String
+
+    public init(evidence: [SearchEvidence]) {
+        lines = evidence.map(SearchEvidenceLineProjection.init)
+        if let first = lines.first {
+            summary = "Matched using \(first.sourceLabel.lowercased())"
+        } else {
+            summary = "Source details unavailable"
+        }
+        accessibilityLabel = "Source details, \(lines.count) validated evidence items"
+    }
+}
+
 public struct SearchComponentDebugProjection: Codable, Equatable, Sendable {
     public let textRank: Int?
     public let visualRank: Int?

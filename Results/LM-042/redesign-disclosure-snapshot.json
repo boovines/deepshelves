@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "surface": "source-details",
+  "collapsed": {
+    "title": "Source details",
+    "summary": "Matched using accessibility text",
+    "matchedContentVisible": false
+  },
+  "expanded": {
+    "rows": [
+      {
+        "source": "Accessibility text",
+        "value": "Save changes"
+      },
+      {
+        "source": "On-screen text",
+        "value": "Quarterly report"
+      }
+    ],
+    "inventedSummary": false
+  },
+  "accessibilityLabel": "Source details, 2 validated evidence items",
+  "diagnosticsVisibility": "explicit-search-diagnostics-session-only"
+}

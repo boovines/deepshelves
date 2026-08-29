@@ -19,6 +19,8 @@ struct SearchMomentDetailView: View {
     @State private var exportStatus: String?
     @State private var exportPackageRoot: URL?
     @State private var showsForgetConfirmation = false
+    @State private var showsSourceDetails = false
+    @State private var showsDiagnostics = false
     @State private var rangeStart: Date
     @State private var rangeEnd: Date
     @StateObject private var forgetModel: ForgetSessionModel
@@ -180,10 +182,43 @@ struct SearchMomentDetailView: View {
                     LabeledContent("Site", value: host)
                 }
             }
-            Section("Evidence") {
-                ForEach(Array(displayedResult.evidence.enumerated()), id: \.offset) { _, evidence in
-                    let projection = SearchEvidenceLineProjection(evidence: evidence)
-                    LabeledContent(projection.sourceLabel, value: projection.displayText)
+            Section {
+                DisclosureGroup(
+                    isExpanded: $showsSourceDetails,
+                    content: {
+                        let disclosure = SearchEvidenceDisclosureProjection(
+                            evidence: displayedResult.evidence
+                        )
+                        ForEach(Array(disclosure.lines.enumerated()), id: \.offset) { _, line in
+                            LabeledContent(line.sourceLabel, value: line.displayText)
+                        }
+                    },
+                    label: {
+                        let disclosure = SearchEvidenceDisclosureProjection(
+                            evidence: displayedResult.evidence
+                        )
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Source details")
+                            Text(disclosure.summary)
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                )
+                .accessibilityLabel(
+                    SearchEvidenceDisclosureProjection(evidence: displayedResult.evidence)
+                        .accessibilityLabel
+                )
+                .accessibilityIdentifier("detail.sourceDisclosure")
+            }
+            if searchModel.diagnosticsEnabled {
+                Section {
+                    DisclosureGroup("Search diagnostics", isExpanded: $showsDiagnostics) {
+                        Text("Diagnostics are available only in an explicitly enabled session.")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                    .accessibilityIdentifier("detail.diagnosticsDisclosure")
                 }
             }
             if let exportStatus {

@@ -200,6 +200,26 @@ final class SearchResultGridTests: XCTestCase {
         }
     }
 
+    func testEvidenceDisclosureIsSecondaryExactAndNeverInventsASummary() throws {
+        let evidence = [
+            SearchEvidence(source: .accessibility, matchedText: "Save changes", score: 4),
+            SearchEvidence(source: .visionOCR, matchedText: "Quarterly report", score: 3),
+        ]
+
+        let disclosure = SearchEvidenceDisclosureProjection(evidence: evidence)
+
+        XCTAssertEqual(disclosure.summary, "Matched using accessibility text")
+        XCTAssertEqual(
+            disclosure.lines.map(\.sourceLabel), ["Accessibility text", "On-screen text"])
+        XCTAssertEqual(disclosure.lines.map(\.matchedText), ["Save changes", "Quarterly report"])
+        XCTAssertEqual(disclosure.accessibilityLabel, "Source details, 2 validated evidence items")
+        XCTAssertFalse(disclosure.summary.contains("Save changes"))
+        XCTAssertEqual(
+            SearchEvidenceDisclosureProjection(evidence: []).summary,
+            "Source details unavailable"
+        )
+    }
+
     func testComponentDebugProjectionExistsOnlyBehindDiagnosticsFlag() throws {
         let result = try result(suffix: 200, score: 0.03125)
 
