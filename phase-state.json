@@ -3,7 +3,7 @@
   "activeStory": null,
   "validationGates": {
     "H9": {
-      "status": "pending",
+      "status": "blocked_human",
       "story": "LM-064",
       "hostPolicy": "physically-distinct-isolated-validation-mac",
       "adr": "Decisions/0006-isolated-runtime-validation.md",
@@ -21,7 +21,9 @@
         "LM-060",
         "LM-063"
       ],
-      "evidence": []
+      "evidence": [
+        "HUMAN-ACTION.md"
+      ]
     }
   },
   "executionPolicy": {
@@ -1232,15 +1234,19 @@
       "resumeProbe": null
     },
     "LM-064": {
-      "status": "pending",
-      "startedAt": null,
+      "status": "blocked_human",
+      "startedAt": "2026-08-29T03:20:00Z",
       "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": null,
-      "blockedReason": null,
-      "requestedHumanGate": null,
-      "resumeProbe": null
+      "gitRevision": "refs/tags/checkpoints/LM-064-h9",
+      "evidence": [
+        "HUMAN-ACTION.md",
+        "Decisions/0006-isolated-runtime-validation.md",
+        "Results/LM-063/runtime-deferred.md"
+      ],
+      "notes": "All dependency-safe implementation work through LM-063 is checkpointed. H9 must now run once on a physically distinct isolated validation Mac. No automation, heartbeat, polling loop, watcher, or sub-agent remains active during this pause.",
+      "blockedReason": "The complete ADR-0006 runtime ledger and LM-064 trust journey require a physically distinct recoverable Mac with documented Screen Recording and Accessibility consent. This owner laptop is prohibited.",
+      "requestedHumanGate": "H9",
+      "resumeProbe": "Verify distinct IOPlatformUUID hash, exact checkpoints/LM-064-h9 revision, pinned Xcode, and zero xcodebuild/xctest/VTEncoderXPCService processes before any isolated-Mac capability probe."
     },
     "LM-065": {
       "status": "pending",

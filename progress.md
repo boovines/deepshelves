@@ -582,3 +582,9 @@ This file is append-only. Each story records measurements, failures, and durable
 - The checker accepts the complete passing fixture and rejects a one-field outbound-attempt mutation. Without H9 authorization, the runtime runner exits before any build or application action. Shell syntax checks pass.
 - Safe local audit verifies the offline dependency cache, static dependency policy, zero forbidden shipping source matches, and all 12 bundled MobileCLIP files against their manifest hashes. `Results/LM-063/offline-static.json` says `runtimeExecuted: false` and is not runtime proof.
 - LM-063 remains technically blocked and implementation-ready. H9 must run the guarded harness on the physically distinct validation Mac to create `Results/LM-063/offline.json`; no application, network, capture, ImageIO, VideoToolbox, or media runtime ran here.
+
+## 2026-08-29 — LM-064 H9 human pause
+
+- All safe implementation work through LM-063 is checkpointed. LM-064 is `blocked_human` at H9 because the accumulated runtime ledger can run only on a physically distinct recoverable validation Mac.
+- The single action and exact resume probe are durable in `HUMAN-ACTION.md`. The resumed agent must verify physical-host identity, checkpoint revision, pinned Xcode, and a clean process state before any runtime probe.
+- This pause is fully credit-silent: no automation, heartbeat, recurring task, polling loop, terminal watcher, or sub-agent was created or left running.
