@@ -225,8 +225,10 @@ struct AppLaunchConfiguration {
     let shellContentState: ShellContentState
     let shellLocalizationMode: ShellLocalizationMode
     let searchFixtureMode: AppSearchFixtureMode?
+    let searchDiagnosticsEnabled: Bool
 
     init(arguments: [String]) {
+        searchDiagnosticsEnabled = arguments.contains("--search-diagnostics")
         runsLM009EvidenceSequence = arguments.contains("--lm009-evidence-sequence")
         showsMenuPreview =
             arguments.contains("--lm009-menu-preview")

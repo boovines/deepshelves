@@ -22,10 +22,14 @@ private enum AppSearchCompositionError: Error {
 enum AppSearchComposition {
     static func makeModel(
         database: ArchiveDatabase?,
-        fixtureMode: AppSearchFixtureMode?
+        fixtureMode: AppSearchFixtureMode?,
+        diagnosticsEnabled: Bool
     ) -> SearchSessionModel {
         if let fixtureMode {
-            return makeFixtureModel(mode: fixtureMode)
+            return makeFixtureModel(
+                mode: fixtureMode,
+                diagnosticsEnabled: diagnosticsEnabled
+            )
         }
         let modelService = MobileCLIPModelService.bundled()
         let cursorSigningKey = Data((0..<32).map { _ in UInt8.random(in: .min ... .max) })
@@ -56,6 +60,7 @@ enum AppSearchComposition {
         else {
             return SearchSessionModel(
                 engine: UnavailableAppSearchEngine(),
+                diagnosticsEnabled: diagnosticsEnabled,
                 requestBuilder: { (_: SearchSessionInput) in
                     throw AppSearchCompositionError.archiveUnavailable
                 }
@@ -67,6 +72,7 @@ enum AppSearchComposition {
         return SearchSessionModel(
             engine: engine,
             thumbnailRepository: thumbnailRepository,
+            diagnosticsEnabled: diagnosticsEnabled,
             pageRequestBuilder: { (input: SearchSessionInput, cursor: SearchCursor?) in
                 let now = Date()
                 let interval = DateInterval(
@@ -220,12 +226,16 @@ enum AppSearchComposition {
         )
     }
 
-    private static func makeFixtureModel(mode: AppSearchFixtureMode) -> SearchSessionModel {
+    private static func makeFixtureModel(
+        mode: AppSearchFixtureMode,
+        diagnosticsEnabled: Bool
+    ) -> SearchSessionModel {
         let page = try! SearchPage(results: fixtureResults, nextCursor: nil)
         return SearchSessionModel(
             engine: AppSearchFixtureEngine(mode: mode, results: page.results),
             debounceDuration: .milliseconds(150),
             initialPage: page,
+            diagnosticsEnabled: diagnosticsEnabled,
             pageRequestBuilder: fixtureRequest
         )
     }

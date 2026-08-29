@@ -487,3 +487,11 @@ This file is append-only. Each story records measurements, failures, and durable
 - Cards retain capture time, app, approved host, evidence source/text, position, and stable identifiers. Empty archive/query, loading, no-result/removable-filter, indexing, page failure, and fatal failure are explicit, with deterministic accessibility announcement text.
 - Nineteen safe MemorySearch tests pass. A pure model test projects 10,000 cards deterministically but makes no timing or rendering claim. Strict formatting, static audit, snapshot, and universal Release compile-only verification pass under the 50 ms tripwire; no app or prohibited media runtime ran.
 - LM-041 remains technically blocked because the production 10,000-card S6, stale-thumbnail, selection, keyboard, and VoiceOver runtime evidence is unchanged and deferred to H9. The safe evidence is not represented as a substitute.
+
+## 2026-08-29 — LM-042 exact source-evidence presentation (runtime deferred)
+
+- Search cards now map every contract source to explicit copy: Accessibility text, On-screen text, Application, Window title, Page address, Transcript, or Visual similarity. The displayed snippet is copied only from validated `SearchEvidence.matchedText`; visual evidence never receives invented text.
+- `summaryText` is structurally nil for every V1 card. Card titles remain canonical window-title/application fields, so a missing source snippet cannot silently become a generated claim.
+- Text/visual component ranks and fused score are absent by default and projected only when the root search session receives the explicit `--search-diagnostics` flag. The overlay adds no captured content.
+- Twenty-one safe MemorySearch tests, the seven-source snapshot, strict formatting, static/privacy/dependency audits, and universal Release compile-only verification pass under the 50 ms tripwire. No app or prohibited media runtime ran.
+- LM-042 remains technically blocked behind LM-041 and the production source-indicator/diagnostics/accessibility inspection assigned to H9. Safe evidence is not represented as runtime evidence.

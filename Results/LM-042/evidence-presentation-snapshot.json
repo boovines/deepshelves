@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-042",
+  "proofClass": "deterministic-model-snapshot",
+  "sources": [
+    { "contract": "accessibility", "label": "Accessibility text", "textRule": "normalized-source-text-only" },
+    { "contract": "visionOCR", "label": "On-screen text", "textRule": "normalized-source-text-only" },
+    { "contract": "application", "label": "Application", "textRule": "canonical-source-text-only" },
+    { "contract": "title", "label": "Window title", "textRule": "canonical-source-text-only" },
+    { "contract": "url", "label": "Page address", "textRule": "approved-source-text-only" },
+    { "contract": "transcript", "label": "Transcript", "textRule": "normalized-source-text-only" },
+    { "contract": "visual", "label": "Visual similarity", "textRule": "no-matched-text-per-contract" }
+  ],
+  "summary": {
+    "generated": false,
+    "fallback": null,
+    "titleSource": "canonical-window-title-or-application"
+  },
+  "componentDebug": {
+    "default": null,
+    "requiredFlag": "--search-diagnostics",
+    "fields": ["text-rank", "visual-rank", "fused-score"],
+    "contentFields": false
+  },
+  "verification": [
+    "SearchResultGridTests.testEveryContractEvidenceSourceRendersWithoutInventingASummary",
+    "SearchResultGridTests.testComponentDebugProjectionExistsOnlyBehindDiagnosticsFlag"
+  ],
+  "runtimeClaim": false
+}

@@ -1,6 +1,61 @@
 import Foundation
 import MemoryContracts
 
+public struct SearchEvidenceLineProjection: Codable, Equatable, Sendable {
+    public let source: SearchEvidenceSource
+    public let sourceLabel: String
+    public let matchedText: String?
+
+    public init(evidence: SearchEvidence) {
+        source = evidence.source
+        sourceLabel = Self.label(for: evidence.source)
+        matchedText = evidence.matchedText
+    }
+
+    public var displayText: String {
+        matchedText.map { "“\($0)”" } ?? sourceLabel
+    }
+
+    private static func label(for source: SearchEvidenceSource) -> String {
+        switch source {
+        case .accessibility: "Accessibility text"
+        case .visionOCR: "On-screen text"
+        case .transcript: "Transcript"
+        case .title: "Window title"
+        case .application: "Application"
+        case .url: "Page address"
+        case .visual: "Visual similarity"
+        }
+    }
+}
+
+public struct SearchComponentDebugProjection: Codable, Equatable, Sendable {
+    public let textRank: Int?
+    public let visualRank: Int?
+    public let fusedScore: Double
+
+    public init(textRank: Int?, visualRank: Int?, fusedScore: Double) {
+        self.textRank = textRank
+        self.visualRank = visualRank
+        self.fusedScore = fusedScore
+    }
+
+    public var displayText: String {
+        var parts: [String] = []
+        if let textRank { parts.append("Text rank \(textRank)") }
+        if let visualRank { parts.append("Visual rank \(visualRank)") }
+        parts.append(
+            "Fused score "
+                + String(
+                    format: "%.6f",
+                    locale: Locale(identifier: "en_US_POSIX"),
+                    fusedScore
+                )
+        )
+        return parts.joined(separator: " · ")
+    }
+}
+
 public struct SearchResultCardProjection: Codable, Equatable, Sendable {
     public let frameID: UUID
     public let title: String
@@ -9,6 +64,9 @@ public struct SearchResultCardProjection: Codable, Equatable, Sendable {
     public let host: String?
     public let evidenceSource: SearchEvidenceSource
     public let evidenceText: String?
+    public let evidence: [SearchEvidenceLineProjection]
+    public let summaryText: String?
+    public let componentDebug: SearchComponentDebugProjection?
     public let position: Int
     public let resultCount: Int
     public let thumbnailLocator: ContentLocator?
@@ -21,6 +79,8 @@ public struct SearchResultCardProjection: Codable, Equatable, Sendable {
         host: String?,
         evidenceSource: SearchEvidenceSource,
         evidenceText: String?,
+        evidence: [SearchEvidenceLineProjection],
+        componentDebug: SearchComponentDebugProjection?,
         position: Int,
         resultCount: Int,
         thumbnailLocator: ContentLocator?
@@ -32,6 +92,9 @@ public struct SearchResultCardProjection: Codable, Equatable, Sendable {
         self.host = host
         self.evidenceSource = evidenceSource
         self.evidenceText = evidenceText
+        self.evidence = evidence
+        summaryText = nil
+        self.componentDebug = componentDebug
         self.position = position
         self.resultCount = resultCount
         self.thumbnailLocator = thumbnailLocator
@@ -62,7 +125,8 @@ public enum SearchResultGridProjection: Sendable {
 
     public static func cards(
         from results: [SearchResult],
-        calendar: Calendar = .autoupdatingCurrent
+        calendar: Calendar = .autoupdatingCurrent,
+        diagnosticsEnabled: Bool = false
     ) -> [SearchResultCardProjection] {
         let formatter = DateFormatter()
         formatter.calendar = calendar
@@ -80,6 +144,13 @@ public enum SearchResultGridProjection: Sendable {
                 host: result.browser?.origin.host,
                 evidenceSource: evidence.source,
                 evidenceText: evidence.matchedText,
+                evidence: result.evidence.map(SearchEvidenceLineProjection.init),
+                componentDebug: diagnosticsEnabled
+                    ? SearchComponentDebugProjection(
+                        textRank: result.textRank,
+                        visualRank: result.visualRank,
+                        fusedScore: result.fusedScore
+                    ) : nil,
                 position: index + 1,
                 resultCount: results.count,
                 thumbnailLocator: result.thumbnailLocator

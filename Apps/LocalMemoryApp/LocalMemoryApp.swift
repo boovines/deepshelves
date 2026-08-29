@@ -65,7 +65,8 @@ struct LocalMemoryApp: App {
         _navigationModel = StateObject(wrappedValue: navigationModel)
         let searchModel = AppSearchComposition.makeModel(
             database: archiveSecurityModel.database,
-            fixtureMode: configuration.searchFixtureMode
+            fixtureMode: configuration.searchFixtureMode,
+            diagnosticsEnabled: configuration.searchDiagnosticsEnabled
         )
         _searchModel = StateObject(wrappedValue: searchModel)
         let searchFilterModel = AppSearchComposition.makeFilterModel(

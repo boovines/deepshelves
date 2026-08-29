@@ -207,7 +207,10 @@ struct SharedSearchResultsView: View {
             }
             SearchResultCollectionView(
                 results: searchModel.results,
-                cards: SearchResultGridProjection.cards(from: searchModel.results),
+                cards: SearchResultGridProjection.cards(
+                    from: searchModel.results,
+                    diagnosticsEnabled: searchModel.diagnosticsEnabled
+                ),
                 selectedFrameID: navigationModel.snapshot.selectedMomentID,
                 surface: surface,
                 thumbnailModel: thumbnailModel,
@@ -437,6 +440,7 @@ private final class SearchResultCollectionItem: NSCollectionViewItem {
     private let titleLabel = NSTextField(labelWithString: "")
     private let metadataLabel = NSTextField(labelWithString: "")
     private let evidenceLabel = NSTextField(labelWithString: "")
+    private let debugLabel = NSTextField(labelWithString: "")
 
     override func loadView() {
         let root = NSView()
@@ -458,8 +462,13 @@ private final class SearchResultCollectionItem: NSCollectionViewItem {
         evidenceLabel.textColor = .secondaryLabelColor
         evidenceLabel.maximumNumberOfLines = 2
         evidenceLabel.lineBreakMode = .byTruncatingTail
+        debugLabel.font = .monospacedSystemFont(ofSize: 9, weight: .regular)
+        debugLabel.textColor = .tertiaryLabelColor
+        debugLabel.lineBreakMode = .byTruncatingTail
 
-        let stack = NSStackView(views: [preview, titleLabel, metadataLabel, evidenceLabel])
+        let stack = NSStackView(
+            views: [preview, titleLabel, metadataLabel, evidenceLabel, debugLabel]
+        )
         stack.orientation = .vertical
         stack.alignment = .leading
         stack.spacing = 6
@@ -489,10 +498,11 @@ private final class SearchResultCollectionItem: NSCollectionViewItem {
         metadataLabel.stringValue = [card.timeText, card.applicationName, card.host]
             .compactMap { $0 }
             .joined(separator: " · ")
-        evidenceLabel.stringValue =
-            card.evidenceText.map {
-                "\(card.evidenceSource.rawValue): \($0)"
-            } ?? card.evidenceSource.rawValue
+        let primaryEvidence = card.evidence[0]
+        evidenceLabel.stringValue = primaryEvidence.displayText
+        evidenceLabel.toolTip = "Source: \(primaryEvidence.sourceLabel)"
+        debugLabel.stringValue = card.componentDebug?.displayText ?? ""
+        debugLabel.isHidden = card.componentDebug == nil
         view.layer?.backgroundColor =
             (selected
             ? NSColor.selectedContentBackgroundColor.withAlphaComponent(0.16)
@@ -501,7 +511,10 @@ private final class SearchResultCollectionItem: NSCollectionViewItem {
             (selected ? NSColor.controlAccentColor : NSColor.separatorColor).cgColor
         view.setAccessibilityRole(.button)
         view.setAccessibilityIdentifier(accessibilityIdentifier)
-        view.setAccessibilityLabel(card.accessibilityLabel)
+        view.setAccessibilityLabel(
+            "\(card.accessibilityLabel), \(primaryEvidence.sourceLabel), "
+                + primaryEvidence.displayText
+        )
         view.setAccessibilityHelp("Press Return to open detail")
     }
 }

@@ -1,0 +1,23 @@
+LM-042 static audit — 2026-08-29
+
+PASS: each SearchEvidenceSource has one explicit user-facing source label. Matched text is
+copied only from the validated SearchEvidence contract; visual evidence never receives
+invented matched text.
+PASS: every card's summaryText is unconditionally nil. Its title is the canonical window
+title or application name, never a generated or inferred summary.
+PASS: the primary evidence line displays the exact normalized source text when present and
+otherwise the honest source label. The source is also exposed in the tooltip and full
+accessibility label.
+PASS: all evidence entries remain attached to the card projection even though the compact
+card renders only the primary line; later detail work can display the same contract values.
+PASS: component ranks and fused score are absent by default. They exist only when the root
+SearchSessionModel receives the explicit --search-diagnostics launch flag, and the overlay
+contains no captured text.
+PASS: 21 safe MemorySearch unit/model tests pass, including all seven contract evidence
+sources, nil summary, and diagnostics-default-off behavior.
+PASS: strict formatting, privacy static scan, dependency static audit, and universal Release
+compile-only verification pass under the 50 ms encoder-service tripwire.
+
+NOT EXECUTED: application launch, UI tests, hover/focus behavior, accessibility inspection,
+ScreenCaptureKit, Apple ImageIO, VideoToolbox, or hardware-media runtime. The source matrix
+snapshot and compile-only proof are not substitutes for the deferred UI-runtime inspection.

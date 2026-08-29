@@ -68,6 +68,7 @@ public final class SearchSessionModel: ObservableObject {
     @Published public private(set) var paginationFailureDiagnosticCode: String?
 
     public let thumbnailRepository: SearchThumbnailRepository?
+    public let diagnosticsEnabled: Bool
 
     private let engine: any SearchEngine
     private let requestBuilder: RequestBuilder
@@ -82,12 +83,14 @@ public final class SearchSessionModel: ObservableObject {
         debounceDuration: Duration = .milliseconds(150),
         initialPage: SearchPage? = nil,
         thumbnailRepository: SearchThumbnailRepository? = nil,
+        diagnosticsEnabled: Bool = false,
         requestBuilder: @escaping RequestBuilder
     ) {
         self.engine = engine
         self.debounceDuration = debounceDuration
         self.initialPage = initialPage
         self.thumbnailRepository = thumbnailRepository
+        self.diagnosticsEnabled = diagnosticsEnabled
         self.requestBuilder = requestBuilder
         pageRequestBuilder = nil
         input = SearchSessionInput(query: "")
@@ -102,12 +105,14 @@ public final class SearchSessionModel: ObservableObject {
         debounceDuration: Duration = .milliseconds(150),
         initialPage: SearchPage? = nil,
         thumbnailRepository: SearchThumbnailRepository? = nil,
+        diagnosticsEnabled: Bool = false,
         pageRequestBuilder: @escaping PageRequestBuilder
     ) {
         self.engine = engine
         self.debounceDuration = debounceDuration
         self.initialPage = initialPage
         self.thumbnailRepository = thumbnailRepository
+        self.diagnosticsEnabled = diagnosticsEnabled
         requestBuilder = { input in try pageRequestBuilder(input, nil) }
         self.pageRequestBuilder = pageRequestBuilder
         input = SearchSessionInput(query: "")
@@ -122,6 +127,7 @@ public final class SearchSessionModel: ObservableObject {
         debounceDuration: Duration = .milliseconds(150),
         initialPage: SearchPage? = nil,
         thumbnailRepository: SearchThumbnailRepository? = nil,
+        diagnosticsEnabled: Bool = false,
         requestBuilder: @escaping @Sendable (String) throws -> SearchRequest
     ) {
         self.init(
@@ -129,6 +135,7 @@ public final class SearchSessionModel: ObservableObject {
             debounceDuration: debounceDuration,
             initialPage: initialPage,
             thumbnailRepository: thumbnailRepository,
+            diagnosticsEnabled: diagnosticsEnabled,
             requestBuilder: { input in try requestBuilder(input.query) }
         )
     }

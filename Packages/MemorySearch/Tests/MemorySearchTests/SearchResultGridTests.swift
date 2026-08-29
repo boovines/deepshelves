@@ -121,6 +121,70 @@ final class SearchResultGridTests: XCTestCase {
         XCTAssertTrue(cards.allSatisfy { $0.resultCount == 10_000 })
     }
 
+    func testEveryContractEvidenceSourceRendersWithoutInventingASummary() throws {
+        let fixtures: [(SearchEvidence, String, String?)] = [
+            (
+                SearchEvidence(source: .accessibility, matchedText: "Save changes", score: 7),
+                "Accessibility text", "Save changes"
+            ),
+            (
+                SearchEvidence(source: .visionOCR, matchedText: "Quarterly report", score: 6),
+                "On-screen text", "Quarterly report"
+            ),
+            (
+                SearchEvidence(source: .application, matchedText: "Safari", score: 5),
+                "Application", "Safari"
+            ),
+            (
+                SearchEvidence(source: .title, matchedText: "Project Atlas", score: 4),
+                "Window title", "Project Atlas"
+            ),
+            (
+                SearchEvidence(source: .url, matchedText: "example.com/atlas", score: 3),
+                "Page address", "example.com/atlas"
+            ),
+            (
+                SearchEvidence(source: .transcript, matchedText: "review the launch", score: 2),
+                "Transcript", "review the launch"
+            ),
+            (SearchEvidence(source: .visual, matchedText: nil, score: 1), "Visual similarity", nil),
+        ]
+        let results = try fixtures.enumerated().map { index, fixture in
+            try result(suffix: index + 100, score: fixture.0.score, evidence: [fixture.0])
+        }
+
+        let cards = SearchResultGridProjection.cards(from: results)
+
+        XCTAssertEqual(cards.count, fixtures.count)
+        for (card, fixture) in zip(cards, fixtures) {
+            XCTAssertEqual(card.evidence.count, 1)
+            XCTAssertEqual(card.evidence[0].sourceLabel, fixture.1)
+            XCTAssertEqual(card.evidence[0].matchedText, fixture.2)
+            XCTAssertNil(card.summaryText)
+            XCTAssertNil(card.componentDebug)
+        }
+    }
+
+    func testComponentDebugProjectionExistsOnlyBehindDiagnosticsFlag() throws {
+        let result = try result(suffix: 200, score: 0.03125)
+
+        let normal = try XCTUnwrap(
+            SearchResultGridProjection.cards(from: [result], diagnosticsEnabled: false).first
+        )
+        let diagnostic = try XCTUnwrap(
+            SearchResultGridProjection.cards(from: [result], diagnosticsEnabled: true).first
+        )
+
+        XCTAssertNil(normal.componentDebug)
+        XCTAssertEqual(diagnostic.componentDebug?.textRank, result.textRank)
+        XCTAssertEqual(diagnostic.componentDebug?.visualRank, result.visualRank)
+        XCTAssertEqual(diagnostic.componentDebug?.fusedScore, result.fusedScore)
+        XCTAssertEqual(
+            diagnostic.componentDebug?.displayText,
+            "Text rank 200 · Fused score 0.031250"
+        )
+    }
+
     func testThumbnailRepositoryCachesExactIdentityAndRejectsStaleCompletion() async throws {
         let oldResult = try result(suffix: 9, score: 2, thumbnailName: "old")
         let newResult = try result(suffix: 9, score: 2, thumbnailName: "new")
@@ -183,7 +247,8 @@ final class SearchResultGridTests: XCTestCase {
     private func result(
         suffix: Int,
         score: Double,
-        thumbnailName: String? = nil
+        thumbnailName: String? = nil,
+        evidence: [SearchEvidence]? = nil
     ) throws -> SearchResult {
         try SearchResult(
             frameID: UUID(uuidString: String(format: "41000000-0000-4000-8000-%012d", suffix))!,
@@ -204,7 +269,8 @@ final class SearchResultGridTests: XCTestCase {
                 "thumbnails/\(thumbnailName ?? "lamp-\(suffix)").heic"
             ),
             mediaLocator: .opaqueResourceID("lamp-\(suffix)"),
-            evidence: [SearchEvidence(source: .title, matchedText: "Lamp", score: score)],
+            evidence: evidence
+                ?? [SearchEvidence(source: .title, matchedText: "Lamp", score: score)],
             textRank: suffix,
             visualRank: nil,
             fusedScore: score

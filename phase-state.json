@@ -11,7 +11,8 @@
         "LM-028",
         "LM-039",
         "LM-040",
-        "LM-041"
+        "LM-041",
+        "LM-042"
       ],
       "evidence": []
     }
@@ -805,13 +806,26 @@
       "resumeProbe": null
     },
     "LM-042": {
-      "status": "pending",
-      "startedAt": null,
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": null,
-      "blockedReason": null,
+      "status": "blocked",
+      "implementationReadiness": "ready",
+      "deferredValidationGate": "H9",
+      "startedAt": "2026-08-29T01:10:00Z",
+      "completedAt": "2026-08-29T01:13:15Z",
+      "gitRevision": "refs/tags/checkpoints/LM-042-blocked",
+      "evidence": [
+        "Results/LM-042/report.json",
+        "Results/LM-042/runtime-deferred.md",
+        "Results/LM-042/evidence-presentation-snapshot.json",
+        "Results/LM-042/memory-search-tests.txt",
+        "Results/LM-042/compile-only-summary.txt",
+        "Results/LM-042/static-audit.txt",
+        "Results/LM-042/swift-format.txt",
+        "Results/LM-042/privacy.txt",
+        "Results/LM-042/dependencies.txt",
+        "Decisions/0006-isolated-runtime-validation.md"
+      ],
+      "notes": "All seven contract evidence sources now have explicit user-facing projections that copy only validated source text; visual evidence has no invented text and every card summary remains nil. Component ranks/fused score are absent by default and appear only behind --search-diagnostics. Twenty-one safe MemorySearch tests, deterministic source snapshot, static audit, strict formatting, privacy/dependency scans, and universal compile pass under the tripwire with no prohibited runtime.",
+      "blockedReason": "LM-041 remains H9-deferred and the production card source indicator, diagnostics overlay, and accessibility output require application-runtime inspection. ADR 0006 assigns that unchanged UI ledger to H9; unit/model/static/compile/snapshot evidence does not replace it, so LM-042 remains blocked.",
       "requestedHumanGate": null,
       "resumeProbe": null
     },
