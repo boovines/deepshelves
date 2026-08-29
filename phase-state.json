@@ -18,7 +18,8 @@
         "LM-046",
         "LM-047",
         "LM-048",
-        "LM-060"
+        "LM-060",
+        "LM-063"
       ],
       "evidence": []
     }
@@ -1214,13 +1215,19 @@
       "resumeProbe": null
     },
     "LM-063": {
-      "status": "pending",
-      "startedAt": null,
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": null,
-      "blockedReason": null,
+      "status": "blocked",
+      "implementationReadiness": "ready",
+      "deferredValidationGate": "H9",
+      "startedAt": "2026-08-29T03:16:00Z",
+      "completedAt": "2026-08-29T03:17:48Z",
+      "gitRevision": "refs/tags/checkpoints/LM-063-blocked",
+      "evidence": [
+        "Results/LM-063/report.json",
+        "Results/LM-063/offline-static.json",
+        "Results/LM-063/runtime-deferred.md"
+      ],
+      "notes": "The isolated-host-only runtime runner, strict offline.json checker, passing/outbound-attempt fixtures, owner-host refusal, offline cache verification, source/dependency audit, and all 12 bundled model hashes pass without application or network runtime. The runner will produce the required Results/LM-063/offline.json only after application/CLI/MCP journeys and deny-all instrumentation pass on H9.",
+      "blockedReason": "Acceptance requires executing every normal shipping journey under deny-all outbound policy with DNS/socket instrumentation and current Release binaries. Application and media runtime are prohibited on this laptop. Static/cache/model proof is explicitly marked non-substitutive; H9 owns the required isolated-Mac runtime audit.",
       "requestedHumanGate": null,
       "resumeProbe": null
     },

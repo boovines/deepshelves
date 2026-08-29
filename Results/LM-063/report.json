@@ -1,0 +1,36 @@
+{
+  "story": "LM-063",
+  "status": "blocked",
+  "implementationReadiness": "ready",
+  "deferredValidationGate": "H9",
+  "proofClass": "static-cache-manifest",
+  "runtimeSubstitute": false,
+  "implementation": {
+    "hostGuard": "Explicit H9 environment authorization plus one-way physical-owner-host rejection",
+    "networkRuntime": "Deny-all outbound sandbox, positive denial control, application/CLI/MCP journey execution, unified denial audit, and DNS/socket symbol checks",
+    "offlineBuild": "Byte-verified dependency cache, disabled automatic package resolution, and build-time-only bootstrap",
+    "audit": "Shipping source, linked framework, telemetry/update/crash/remote-resource, per-file provenance, and bundled model checksum closure",
+    "validator": "A single strict JSON gate rejects any outbound attempt, incomplete journey, unverified resource, missing provenance, owner-host execution, or non-runtime report"
+  },
+  "safeVerification": {
+    "runtimeHostGuardRefusal": "passed",
+    "passingSchemaFixture": "passed",
+    "outboundAttemptFixtureRejected": "passed",
+    "shellSyntax": "passed",
+    "offlineDependencyCacheVerification": "passed",
+    "staticDependencyAudit": "passed",
+    "bundledModelArtifactsVerified": 12,
+    "forbiddenShippingSourceMatches": 0,
+    "applicationRuntimeExecuted": false,
+    "networkRuntimeExecuted": false,
+    "mediaRuntimeExecuted": false
+  },
+  "sourceSHA256": {
+    "check-lm063-offline-gate.sh": "3ef1d49d4bb6f71b2aef8696dadc817f5cb48683473a2bbb6a2deb4112afa8e1",
+    "lm063-static-audit.sh": "de971a864e5c4c0b10974d1753aa25c5ea20ef59f2478f6296efa052e1855504",
+    "run-lm063-offline-gate.sh": "2987d1d7c02ba61b061a280fe9508d74c78fce761a1aaec901b3520382783e0a",
+    "offline-pass.json": "d4f0a4f01067a75e925e9aed2baf393e2f4005be49a99bd99f84ac2b85bd6829",
+    "offline-static.json": "7874d4ff24e49225d8af4d66dbe43000237e1c7e85fba85e13833e47c8ccbf4b"
+  },
+  "requiredRuntimeEvidence": "Results/LM-063/offline.json"
+}

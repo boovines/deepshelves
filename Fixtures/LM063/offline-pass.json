@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-063",
+  "status": "passed",
+  "runtimeHost": {
+    "isolatedValidationMac": true,
+    "sameAsOwnerLaptop": false,
+    "hardwareUUIDSHA256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "network": {
+    "policy": "deny-all outbound",
+    "instrumentationControlDeniedAttempts": 1,
+    "shippingDeniedAttempts": 0,
+    "dnsAttempts": 0,
+    "tcpAttempts": 0,
+    "udpAttempts": 0,
+    "httpAttempts": 0,
+    "quicAttempts": 0,
+    "socketSymbolMatches": 0,
+    "dnsSymbolMatches": 0
+  },
+  "journeys": {
+    "completed": [
+      "firstLaunch",
+      "onboarding",
+      "capture",
+      "search",
+      "visualInference",
+      "deletion",
+      "export",
+      "cli",
+      "mcp"
+    ],
+    "allPassed": true
+  },
+  "build": {
+    "dependencyCacheVerified": true,
+    "automaticPackageResolutionDisabled": true,
+    "runtimeDownloadsAllowed": false,
+    "buildBootstrapOnly": true
+  },
+  "audit": {
+    "forbiddenSourceMatches": 0,
+    "forbiddenLinkedFrameworkMatches": 0,
+    "telemetryComponents": 0,
+    "crashUploadComponents": 0,
+    "automaticUpdateComponents": 0,
+    "remoteResourceComponents": 0,
+    "provenanceComplete": true,
+    "modelResourcesVerified": true
+  },
+  "runtime": {
+    "applicationExecuted": true,
+    "cliExecuted": true,
+    "mcpExecuted": true
+  }
+}

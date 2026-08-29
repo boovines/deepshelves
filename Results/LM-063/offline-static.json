@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-063",
+  "status": "passed-static-only",
+  "proofClass": "static-cache-manifest",
+  "runtimeSubstitute": false,
+  "forbiddenSourceMatches": 0,
+  "dependencyCacheVerified": true,
+  "automaticPackageResolutionDisabled": true,
+  "runtimeExecuted": false,
+  "modelResourceCount": 12,
+  "modelResourcesVerified": true,
+  "dependencyManifestSHA256": "4af6637a2bac1cbe6eda8d25219a39ff4b4036283f53f5b460aba6796bf98c9d",
+  "modelManifestSHA256": "758468b14a34070a0f6295fe8b6fd4d1b8cf536083cbb10c847fd5dae3cc762b",
+  "sourceManifestSHA256": "f97305b5f9c960ec5dcad3b1e780f38be65ebc35dca0278f0417283204482238"
+}
