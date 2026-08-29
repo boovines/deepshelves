@@ -291,6 +291,8 @@ struct AppLaunchConfiguration {
                     || argument.hasPrefix("--capture-")
                     || argument.hasPrefix("--context-")
                     || argument == "--s3-s4-spike"
+                    || argument == "--cli"
+                    || argument == "--mcp"
             }
         opensOnboardingAtLaunch = forcesOnboarding || !suppressesOnboarding
         suppressOnboardingSystemSettings = arguments.contains(

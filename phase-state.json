@@ -22,6 +22,7 @@
         "LM-060",
         "LM-063",
         "LM-064",
+        "LM-067",
         "LM-080"
       ],
       "evidence": []
@@ -1279,13 +1280,19 @@
       "resumeProbe": null
     },
     "LM-067": {
-      "status": "pending",
-      "startedAt": null,
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": null,
-      "blockedReason": null,
+      "status": "blocked",
+      "implementationReadiness": "ready",
+      "deferredValidationGate": "H9",
+      "startedAt": "2026-08-29T07:35:00Z",
+      "completedAt": "2026-08-29T07:40:32Z",
+      "gitRevision": "refs/tags/checkpoints/LM-067-blocked",
+      "evidence": [
+        "Results/LM-067/report.json",
+        "Results/LM-067/runtime-deferred.md",
+        "Decisions/0006-isolated-runtime-validation.md"
+      ],
+      "notes": "The signed CLI implementation is code-complete: five JSON V1 commands, stable exits/errors, required content policy, policy-filtered app-owned storage queries, cancellation, pagination, fail-closed malformed input, and a no-Keychain standalone launcher that routes only to the signed application's --cli entrypoint. Five focused CLI tests plus four policy regression tests, golden fixtures, strict formatting, static safety/entitlement checks, and native arm64 compile pass. No runtime claim is made.",
+      "blockedReason": "The unchanged acceptance contract requires offline execution of the built helper through the signed application's --cli entrypoint with real persisted policy, cancellation, pagination, malformed-input, network, and listener evidence. Application execution is prohibited on this laptop; ADR 0006 assigns these checks to H9.",
       "requestedHumanGate": null,
       "resumeProbe": null
     },

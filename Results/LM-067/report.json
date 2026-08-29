@@ -1,0 +1,56 @@
+{
+  "story": "LM-067",
+  "revision": "refs/tags/checkpoints/LM-067-blocked",
+  "completedAt": "2026-08-29T07:40:32Z",
+  "proofClass": [
+    "unit",
+    "golden-fixture",
+    "static",
+    "compile"
+  ],
+  "runtimeExecuted": false,
+  "checks": {
+    "focusedCLITests": {
+      "count": 5,
+      "status": "passed"
+    },
+    "policyRegressionTests": 4,
+    "commands": [
+      "status",
+      "search",
+      "timeline",
+      "get-moment",
+      "image-resource"
+    ],
+    "jsonSchemaVersion": 1,
+    "goldenFixtures": "passed",
+    "stableExitAndErrorCodes": "passed",
+    "contentPolicyRequired": true,
+    "policyDenial": "passed",
+    "cancellationBeforeAndAfterQuery": "passed",
+    "paginationParsing": "passed",
+    "malformedInput": "fails-closed",
+    "standaloneArchiveAccess": false,
+    "standaloneKeychainGroup": false,
+    "signedApplicationRoute": "--cli",
+    "signedBackend": [
+      "AccessPolicyStore",
+      "LexicalSearchEngine",
+      "ArchiveTimelineQuery",
+      "ArchiveMomentSourceStore"
+    ],
+    "changedFileStrictFormat": "passed",
+    "prohibitedRuntimeImportsInCLISurface": "absent",
+    "nativeArm64Compile": "passed",
+    "encoderProcessTripwire": "passed"
+  },
+  "sourceHashes": {
+    "cliCore": "4e97fcedf03a27511a5c9b4535122adba6f1754d1fdf887c0a1441e62299f3d3",
+    "signedEntrypoint": "ecb9c20e851de7edff7aff52377884867bfb4373b1259d1068bfdaf1b3871c8e",
+    "launcher": "ee78b608c2b81321304b7b7c8443ecac2765ea305ccabe241667eace8e2807d2",
+    "statusFixture": "633976e899a6e4cac70688c04ee73d4f16d837f9e5ba1e2c1f1ef7a39a87e3f5",
+    "searchFixture": "afce77bc5ef678922474225bed58fcf8dc6429b99f70d2b28e54bd65538e4e50",
+    "compileLog": "74a6b36e87725d6e48d21da3cb28e3b90e8ea1e0623de47c98b05542fefc5591"
+  },
+  "deferredValidation": "Offline execution of the built standalone launcher through the signed application's --cli entrypoint is not run on this laptop. H9 must execute golden commands, policy denial, cancellation, pagination, malformed input, no-listener, and offline instrumentation against the signed build."
+}

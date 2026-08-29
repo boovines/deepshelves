@@ -54,6 +54,10 @@ struct LocalMemoryApp: App {
                 || arguments.contains("--lm020-export-resolver")
         )
         _archiveSecurityModel = StateObject(wrappedValue: archiveSecurityModel)
+        SignedCLIEntrypoint.launchIfRequested(
+            arguments: arguments,
+            database: archiveSecurityModel.database
+        )
         let lifecycleModel = AppLifecycleViewModel(
             stateURL: configuration.stateURL,
             initialStatus: configuration.initialStatus,
