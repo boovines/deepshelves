@@ -74,6 +74,7 @@ enum AppSearchComposition {
         let momentExportProvider = makeMomentExportProvider(database: database)
         let momentTimelineLoader = makeMomentTimelineLoader(database: database)
         let momentRevisitProvider = makeMomentRevisitProvider(database: database)
+        let momentForgetProvider = makeMomentForgetProvider(database: database)
         return SearchSessionModel(
             engine: engine,
             thumbnailRepository: thumbnailRepository,
@@ -81,6 +82,7 @@ enum AppSearchComposition {
             momentExportProvider: momentExportProvider,
             momentTimelineLoader: momentTimelineLoader,
             momentRevisitProvider: momentRevisitProvider,
+            momentForgetProvider: momentForgetProvider,
             diagnosticsEnabled: diagnosticsEnabled,
             pageRequestBuilder: { (input: SearchSessionInput, cursor: SearchCursor?) in
                 let now = Date()
@@ -406,6 +408,50 @@ enum AppSearchComposition {
                 )
             }
             return plan
+        }
+    }
+
+    private static func makeMomentForgetProvider(
+        database: ArchiveDatabase
+    ) -> MomentForgetProvider {
+        MomentForgetProvider { target in
+            let archiveTarget: ArchiveDeletionTarget
+            switch target {
+            case .moment(let frameID):
+                archiveTarget = .moment(frameID)
+            case .range(let interval):
+                archiveTarget = .range(interval)
+            }
+            let store = try ArchiveDeletionRequestStore(database: database)
+            let operation = try store.request(
+                ArchiveDeletionRequest(
+                    id: UUID(),
+                    target: archiveTarget,
+                    requestedAt: Date(),
+                    rewriteJobID: UUID(),
+                    auditEventID: UUID()
+                )
+            )
+            return ForgetOperation(
+                id: operation.tombstone.id,
+                affectedFrameIDs: operation.tombstone.requestedFrameIDs,
+                state: forgetState(operation.state),
+                completedRewriteCount: operation.completedRewriteCount,
+                totalRewriteCount: operation.totalRewriteCount,
+                failureCode: operation.failureCode
+            )
+        }
+    }
+
+    nonisolated private static func forgetState(
+        _ state: ArchiveDeletionOperationState
+    ) -> ForgetOperationState {
+        switch state {
+        case .queued: .queued
+        case .rewriting: .rewriting
+        case .verifying: .verifying
+        case .complete: .complete
+        case .failed: .failed
         }
     }
 

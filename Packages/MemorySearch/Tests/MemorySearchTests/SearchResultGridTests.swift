@@ -40,6 +40,32 @@ final class SearchResultGridTests: XCTestCase {
         XCTAssertEqual(cursorTokens, [nil, "page-2"])
     }
 
+    func testProvisionallyHiddenResultCannotReappearFromLaterSearchOrPagination() async throws {
+        let hidden = try result(suffix: 40, score: 3)
+        let visible = try result(suffix: 41, score: 2)
+        let later = try result(suffix: 42, score: 1)
+        let engine = PagedGridEngine(
+            firstPage: try SearchPage(
+                results: [hidden, visible], nextCursor: SearchCursor(token: "page-2")),
+            secondPage: try SearchPage(results: [hidden, later], nextCursor: nil)
+        )
+        let model = SearchSessionModel(
+            engine: engine,
+            debounceDuration: .zero,
+            pageRequestBuilder: Self.request
+        )
+        model.updateQuery("lamp")
+        await model.waitForCurrentSearch()
+
+        model.hideResults(frameIDs: [hidden.frameID])
+        model.updateQuery("lamp again")
+        await model.waitForCurrentSearch()
+        await model.loadNextPage()
+
+        XCTAssertEqual(model.results.map(\.frameID), [visible.frameID, later.frameID])
+        XCTAssertFalse(model.results.contains { $0.frameID == hidden.frameID })
+    }
+
     func testAdaptiveProjectionPreservesCardProvenanceAndExplicitStates() throws {
         let result = try result(suffix: 7, score: 4)
         var calendar = Calendar(identifier: .gregorian)

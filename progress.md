@@ -527,3 +527,12 @@ This file is append-only. Each story records measurements, failures, and durable
 - LM-039–LM-046 remain technically blocked and implementation-ready for the single H9 runtime ledger; safe evidence is still not a substitute. The application, ScreenCaptureKit, ImageIO, VideoToolbox, and hardware-media quarantine on this laptop is unchanged.
 - LM-075–LM-079 are explicitly `adr_removed`, not implemented or passed. LM-080 now depends on LM-074, giving the personal alpha a visual-memory critical path with no audio permission/model surface.
 - Routine evidence retains concise command/result/hash/metric summaries and useful failure excerpts rather than verbose duplicate successful logs. Human observation windows remain fully credit-silent.
+
+## 2026-08-29 — LM-047 provisional Forget Moment/Range (runtime deferred)
+
+- One atomic store transaction resolves exact visible frame identities, writes the canonical `rewriting` tombstone, suppresses frame text/visual plus merged text, cancels incomplete derived jobs, enqueues a priority-1000 `mediaRewrite` job keyed by tombstone, and writes only actor/action/count in the audit row. The physical retained-frame rewrite remains LM-060 work.
+- Moment and half-open Range tests prove lexical search, Timeline, and local approved-scope disappearance. A SearchSession read barrier retains suppressed frame IDs so even a late database snapshot or later pagination result cannot reintroduce them during processing.
+- The encrypted file-backed restart test proves queued rewrite and suppression survive process loss. Permanent failure exposes only a bounded content-free error and never unhides the target.
+- Detail and Timeline provide destructive Moment and Range/day actions. Shared confirmation defaults to Cancel, explains immediate hiding and backup limits, then shows queued/rewrite/verification/failure state. Production composition injects the store; fixtures cannot mutate an archive.
+- Four focused MemoryStore tests, three Forget model tests, one late-result test, changed-file strict formatting, targeted static safety, deterministic snapshot, and cached native arm64 compile pass with no encoder-service tripwire event.
+- LM-047 remains technically blocked for the real keyboard/VoiceOver/application/helper/relaunch/physical-rewrite flow assigned unchanged to H9. No safe proof is represented as runtime evidence.

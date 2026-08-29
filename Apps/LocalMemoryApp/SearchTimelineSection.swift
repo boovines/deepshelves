@@ -5,17 +5,22 @@ import SwiftUI
 
 struct SearchTimelineSectionView: View {
     @ObservedObject var navigationModel: MainNavigationViewModel
+    @ObservedObject var searchModel: SearchSessionModel
     let revisitProvider: MomentRevisitProvider?
 
     @StateObject private var model: TimelineSectionSessionModel
+    @StateObject private var forgetModel: ForgetSessionModel
     @State private var revisitStatus: String?
+    @State private var showsForgetConfirmation = false
 
     init(
         navigationModel: MainNavigationViewModel,
+        searchModel: SearchSessionModel,
         loader: MomentTimelinePageLoader?,
         revisitProvider: MomentRevisitProvider?
     ) {
         self.navigationModel = navigationModel
+        self.searchModel = searchModel
         self.revisitProvider = revisitProvider
         let loader =
             loader
@@ -23,6 +28,14 @@ struct SearchTimelineSectionView: View {
                 throw MomentTimelineError.unavailable
             }
         _model = StateObject(wrappedValue: TimelineSectionSessionModel(loader: loader))
+        let unavailableProvider = MomentForgetProvider { _ in
+            throw TimelineForgetPresentationError.unavailable
+        }
+        _forgetModel = StateObject(
+            wrappedValue: ForgetSessionModel(
+                provider: searchModel.momentForgetProvider ?? unavailableProvider
+            )
+        )
     }
 
     var body: some View {
@@ -46,6 +59,11 @@ struct SearchTimelineSectionView: View {
         .onReceive(NotificationCenter.default.publisher(for: .shellRevisit)) { _ in
             if let result = model.selectedResult { revisit(result) }
         }
+        .onReceive(NotificationCenter.default.publisher(for: .shellForgetMoment)) { _ in
+            if let result = model.selectedResult {
+                beginForget(.moment(result.frameID))
+            }
+        }
         .onReceive(NotificationCenter.default.publisher(for: .shellPreviousTransition)) { _ in
             model.selectAdjacentApplicationTransition(.previous)
             if let result = model.selectedResult {
@@ -65,6 +83,13 @@ struct SearchTimelineSectionView: View {
             moveDay(1)
         }
         .onDisappear { model.clear() }
+        .sheet(isPresented: $showsForgetConfirmation) {
+            ForgetConfirmationFlow(
+                model: forgetModel,
+                onHidden: hideForgottenResults,
+                onDismiss: { showsForgetConfirmation = false }
+            )
+        }
         .accessibilityIdentifier("timeline.section")
     }
 
@@ -249,12 +274,24 @@ struct SearchTimelineSectionView: View {
                         }
                     }
                     Spacer()
-                    Button("Revisit") { revisit(result) }
-                        .disabled(revisitProvider == nil)
-                        .accessibilityHint(
-                            "Opens only the approved application and approved address; form state is not restored"
-                        )
-                        .accessibilityIdentifier("timeline.revisit")
+                    VStack(alignment: .trailing, spacing: 8) {
+                        Button("Revisit") { revisit(result) }
+                            .disabled(revisitProvider == nil)
+                            .accessibilityHint(
+                                "Opens only the approved application and approved address; form state is not restored"
+                            )
+                            .accessibilityIdentifier("timeline.revisit")
+                        Button("Forget Moment…", role: .destructive) {
+                            beginForget(.moment(result.frameID))
+                        }
+                        .disabled(searchModel.momentForgetProvider == nil)
+                        .accessibilityIdentifier("timeline.forgetMoment")
+                        Button("Forget This Day…", role: .destructive) {
+                            beginForget(.range(model.day.interval))
+                        }
+                        .disabled(searchModel.momentForgetProvider == nil)
+                        .accessibilityIdentifier("timeline.forgetRange")
+                    }
                 }
             }
             .accessibilityIdentifier("timeline.selectedContext")
@@ -310,6 +347,17 @@ struct SearchTimelineSectionView: View {
         }
     }
 
+    private func beginForget(_ target: ForgetTarget) {
+        guard searchModel.momentForgetProvider != nil else { return }
+        forgetModel.begin(target)
+        showsForgetConfirmation = true
+    }
+
+    private func hideForgottenResults(_ frameIDs: Set<UUID>) {
+        searchModel.hideResults(frameIDs: frameIDs)
+        Task { await model.load(date: model.day.anchor) }
+    }
+
     private func hourTicks(in interval: DateInterval) -> [(
         date: Date, position: Double, label: String
     )] {
@@ -339,4 +387,8 @@ struct SearchTimelineSectionView: View {
         }
         return output
     }
+}
+
+private enum TimelineForgetPresentationError: Error {
+    case unavailable
 }

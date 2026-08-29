@@ -1,0 +1,31 @@
+{
+  "confirmation": {
+    "cancelLabel": "Cancel",
+    "cancelIsDefault": true,
+    "confirmRole": "destructive",
+    "momentConfirmLabel": "Forget Moment",
+    "rangeConfirmLabel": "Forget Range"
+  },
+  "visibility": {
+    "immediate": true,
+    "surfaces": ["lexical search", "timeline", "local approved scope", "future shared helper query"],
+    "databaseStates": {"frameText": "suppressed", "frameVisual": "suppressed", "mergedText": "suppressed"},
+    "lateSearchReadBarrier": true
+  },
+  "rewrite": {
+    "jobKind": "mediaRewrite",
+    "producerVersion": "deletion-v1",
+    "priority": 1000,
+    "durableTombstoneState": "rewriting",
+    "statesShown": ["queued", "rewriting", "verifying", "complete", "failed"]
+  },
+  "copy": {
+    "backupCaveat": "Existing exports or backups cannot be recalled.",
+    "failureSafety": "The moments remain hidden until verified physical rewrite succeeds."
+  },
+  "accessibilityIdentifiers": [
+    "detail.forgetMoment", "detail.forgetRange", "timeline.forgetMoment",
+    "timeline.forgetRange", "forget.flow", "forget.requesting",
+    "forget.progress", "forget.failure"
+  ]
+}

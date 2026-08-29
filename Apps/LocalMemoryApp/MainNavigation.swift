@@ -438,6 +438,7 @@ private struct MainSectionView: View {
                 case .timeline:
                     SearchTimelineSectionView(
                         navigationModel: navigationModel,
+                        searchModel: searchModel,
                         loader: searchModel.momentTimelineLoader,
                         revisitProvider: searchModel.momentRevisitProvider
                     )
@@ -618,8 +619,8 @@ private struct MomentSectionCanvas: View {
                     if let selectedSearchResult {
                         SearchMomentDetailView(
                             result: selectedSearchResult,
-                            results: searchModel.results,
                             navigationModel: navigationModel,
+                            searchModel: searchModel,
                             repository: searchModel.momentDetailRepository,
                             exportProvider: searchModel.momentExportProvider,
                             timelineLoader: searchModel.momentTimelineLoader,

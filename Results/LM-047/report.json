@@ -1,0 +1,24 @@
+{
+  "story": "LM-047",
+  "status": "blocked",
+  "implementationReadiness": "ready",
+  "deferredValidationGate": "H9",
+  "gitRevision": "refs/tags/checkpoints/LM-047-blocked",
+  "baseRevision": "875c12e997dcf76d536eb8381c96568b678972ca",
+  "proofClasses": ["unit", "model", "static", "compile", "snapshot"],
+  "focusedChecks": {
+    "MemoryStore.ArchiveDeletionRequestStoreTests": {"tests": 4, "failures": 0, "durationSeconds": 0.447},
+    "MemorySearch.ForgetSessionModelTests": {"tests": 3, "failures": 0, "durationSeconds": 0.022},
+    "MemorySearch.hiddenResultReadBarrier": {"tests": 1, "failures": 0, "durationSeconds": 0.003},
+    "changedFileStrictFormatting": "passed",
+    "targetedStaticPrivacySafety": "passed",
+    "cachedNativeArm64Compile": "passed",
+    "encoderServiceTripwire": "clean"
+  },
+  "sourceHashes": {
+    "ArchiveDeletionRequestStore.swift": "e5180856b27a7b581ca91f74e4ff52fcf67c6d59f75efd0a731a311e67c000ff",
+    "ForgetSessionModel.swift": "d05ff8ecf46b09ccd7222a6af634de8afbe2df14efe772318176ef260c861192",
+    "ForgetPresentation.swift": "7440d5345d7f719ca0b6d9fa39e81bf44dec2d6d56575f343c14acb297db8707"
+  },
+  "runtimeEvidenceSatisfied": false
+}

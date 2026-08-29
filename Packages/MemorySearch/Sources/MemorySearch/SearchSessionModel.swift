@@ -72,6 +72,7 @@ public final class SearchSessionModel: ObservableObject {
     public let momentExportProvider: MomentExportProvider?
     public let momentTimelineLoader: MomentTimelinePageLoader?
     public let momentRevisitProvider: MomentRevisitProvider?
+    public let momentForgetProvider: MomentForgetProvider?
     public let diagnosticsEnabled: Bool
 
     private let engine: any SearchEngine
@@ -81,6 +82,7 @@ public final class SearchSessionModel: ObservableObject {
     private let initialPage: SearchPage?
     private var generation = 0
     private var searchTask: Task<Void, Never>?
+    private var hiddenFrameIDs: Set<UUID> = []
 
     public init(
         engine: any SearchEngine,
@@ -91,6 +93,7 @@ public final class SearchSessionModel: ObservableObject {
         momentExportProvider: MomentExportProvider? = nil,
         momentTimelineLoader: MomentTimelinePageLoader? = nil,
         momentRevisitProvider: MomentRevisitProvider? = nil,
+        momentForgetProvider: MomentForgetProvider? = nil,
         diagnosticsEnabled: Bool = false,
         requestBuilder: @escaping RequestBuilder
     ) {
@@ -102,6 +105,7 @@ public final class SearchSessionModel: ObservableObject {
         self.momentExportProvider = momentExportProvider
         self.momentTimelineLoader = momentTimelineLoader
         self.momentRevisitProvider = momentRevisitProvider
+        self.momentForgetProvider = momentForgetProvider
         self.diagnosticsEnabled = diagnosticsEnabled
         self.requestBuilder = requestBuilder
         pageRequestBuilder = nil
@@ -121,6 +125,7 @@ public final class SearchSessionModel: ObservableObject {
         momentExportProvider: MomentExportProvider? = nil,
         momentTimelineLoader: MomentTimelinePageLoader? = nil,
         momentRevisitProvider: MomentRevisitProvider? = nil,
+        momentForgetProvider: MomentForgetProvider? = nil,
         diagnosticsEnabled: Bool = false,
         pageRequestBuilder: @escaping PageRequestBuilder
     ) {
@@ -132,6 +137,7 @@ public final class SearchSessionModel: ObservableObject {
         self.momentExportProvider = momentExportProvider
         self.momentTimelineLoader = momentTimelineLoader
         self.momentRevisitProvider = momentRevisitProvider
+        self.momentForgetProvider = momentForgetProvider
         self.diagnosticsEnabled = diagnosticsEnabled
         requestBuilder = { input in try pageRequestBuilder(input, nil) }
         self.pageRequestBuilder = pageRequestBuilder
@@ -151,6 +157,7 @@ public final class SearchSessionModel: ObservableObject {
         momentExportProvider: MomentExportProvider? = nil,
         momentTimelineLoader: MomentTimelinePageLoader? = nil,
         momentRevisitProvider: MomentRevisitProvider? = nil,
+        momentForgetProvider: MomentForgetProvider? = nil,
         diagnosticsEnabled: Bool = false,
         requestBuilder: @escaping @Sendable (String) throws -> SearchRequest
     ) {
@@ -163,6 +170,7 @@ public final class SearchSessionModel: ObservableObject {
             momentExportProvider: momentExportProvider,
             momentTimelineLoader: momentTimelineLoader,
             momentRevisitProvider: momentRevisitProvider,
+            momentForgetProvider: momentForgetProvider,
             diagnosticsEnabled: diagnosticsEnabled,
             requestBuilder: { input in try requestBuilder(input.query) }
         )
@@ -259,7 +267,10 @@ public final class SearchSessionModel: ObservableObject {
             try Task.checkCancellation()
             guard generation == pageGeneration else { return }
             var seen = Set(results.map(\.frameID))
-            results.append(contentsOf: page.results.filter { seen.insert($0.frameID).inserted })
+            results.append(
+                contentsOf: page.results.filter {
+                    !hiddenFrameIDs.contains($0.frameID) && seen.insert($0.frameID).inserted
+                })
             nextCursor = page.nextCursor
             phase = .results(query: settledQuery ?? pageInput.query, count: results.count)
         } catch is CancellationError {
@@ -270,16 +281,27 @@ public final class SearchSessionModel: ObservableObject {
         }
     }
 
+    public func hideResults(frameIDs: Set<UUID>) {
+        guard !frameIDs.isEmpty else { return }
+        hiddenFrameIDs.formUnion(frameIDs)
+        results.removeAll { frameIDs.contains($0.frameID) }
+        guard let settledQuery else { return }
+        phase =
+            results.isEmpty
+            ? .empty(query: settledQuery)
+            : .results(query: settledQuery, count: results.count)
+    }
+
     private func settle(page: SearchPage, query: String, generation: Int) {
         guard self.generation == generation, settledQuery == nil else { return }
-        results = page.results
+        results = page.results.filter { !hiddenFrameIDs.contains($0.frameID) }
         nextCursor = page.nextCursor
         settledQuery = query
         settlementCount += 1
         phase =
-            page.results.isEmpty
+            results.isEmpty
             ? .empty(query: query)
-            : .results(query: query, count: page.results.count)
+            : .results(query: query, count: results.count)
     }
 
     private func settleFailure(query: String, generation: Int) {

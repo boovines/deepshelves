@@ -7,8 +7,8 @@ import UniformTypeIdentifiers
 
 struct SearchMomentDetailView: View {
     let result: SearchResult
-    let results: [SearchResult]
     @ObservedObject var navigationModel: MainNavigationViewModel
+    @ObservedObject var searchModel: SearchSessionModel
     let exportProvider: MomentExportProvider?
 
     @StateObject private var model: MomentDetailSessionModel
@@ -17,19 +17,23 @@ struct SearchMomentDetailView: View {
     @GestureState private var transientMagnification = 1.0
     @GestureState private var transientDrag = CGSize.zero
     @State private var exportStatus: String?
+    @State private var showsForgetConfirmation = false
+    @State private var rangeStart: Date
+    @State private var rangeEnd: Date
+    @StateObject private var forgetModel: ForgetSessionModel
 
     init(
         result: SearchResult,
-        results: [SearchResult],
         navigationModel: MainNavigationViewModel,
+        searchModel: SearchSessionModel,
         repository: MomentDetailRepository?,
         exportProvider: MomentExportProvider?,
         timelineLoader: MomentTimelinePageLoader?,
         thumbnailRepository: SearchThumbnailRepository?
     ) {
         self.result = result
-        self.results = results
         self.navigationModel = navigationModel
+        self.searchModel = searchModel
         self.exportProvider = exportProvider
         let repository =
             repository
@@ -49,6 +53,16 @@ struct SearchMomentDetailView: View {
             wrappedValue: MomentTimelineSessionModel(
                 loader: timelineLoader,
                 thumbnailRepository: thumbnailRepository
+            )
+        )
+        _rangeStart = State(initialValue: result.capturedAt.addingTimeInterval(-5 * 60))
+        _rangeEnd = State(initialValue: result.capturedAt.addingTimeInterval(5 * 60))
+        let unavailableProvider = MomentForgetProvider { _ in
+            throw SearchMomentForgetPresentationError.unavailable
+        }
+        _forgetModel = StateObject(
+            wrappedValue: ForgetSessionModel(
+                provider: searchModel.momentForgetProvider ?? unavailableProvider
             )
         )
     }
@@ -80,6 +94,16 @@ struct SearchMomentDetailView: View {
             timelineModel.clear()
             Task { await model.clear() }
         }
+        .sheet(isPresented: $showsForgetConfirmation) {
+            ForgetConfirmationFlow(
+                model: forgetModel,
+                onHidden: hideForgottenResults,
+                onDismiss: { showsForgetConfirmation = false }
+            )
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .shellForgetMoment)) { _ in
+            beginForget(.moment(displayedResult.frameID))
+        }
         .accessibilityIdentifier("detail.root")
     }
 
@@ -102,6 +126,11 @@ struct SearchMomentDetailView: View {
             }
             .disabled(exportProvider == nil)
             .accessibilityIdentifier("detail.export")
+            Button("Forget Moment…", systemImage: "trash", role: .destructive) {
+                beginForget(.moment(displayedResult.frameID))
+            }
+            .disabled(searchModel.momentForgetProvider == nil)
+            .accessibilityIdentifier("detail.forgetMoment")
         }
     }
 
@@ -159,6 +188,18 @@ struct SearchMomentDetailView: View {
             if let exportStatus {
                 Section("Export") { Text(exportStatus) }
             }
+            Section("Forget range") {
+                DatePicker("From", selection: $rangeStart)
+                DatePicker("Until", selection: $rangeEnd)
+                Button("Forget Selected Range…", role: .destructive) {
+                    guard rangeStart < rangeEnd else { return }
+                    beginForget(
+                        .range(DateInterval(start: rangeStart, end: rangeEnd))
+                    )
+                }
+                .disabled(searchModel.momentForgetProvider == nil || rangeStart >= rangeEnd)
+                .accessibilityIdentifier("detail.forgetRange")
+            }
         }
         .formStyle(.grouped)
         .accessibilityIdentifier("detail.inspector")
@@ -201,7 +242,7 @@ struct SearchMomentDetailView: View {
         MomentDetailSequence.adjacent(
             to: displayedResult.frameID,
             direction: direction,
-            in: results
+            in: searchModel.results
         )
     }
 
@@ -250,6 +291,23 @@ struct SearchMomentDetailView: View {
         timelineModel.settledResult ?? result
     }
 
+    private func beginForget(_ target: ForgetTarget) {
+        guard searchModel.momentForgetProvider != nil else { return }
+        forgetModel.begin(target)
+        showsForgetConfirmation = true
+    }
+
+    private func hideForgottenResults(_ frameIDs: Set<UUID>) {
+        searchModel.hideResults(frameIDs: frameIDs)
+        if frameIDs.contains(displayedResult.frameID) {
+            navigationModel.goBack()
+        }
+    }
+
+}
+
+private enum SearchMomentForgetPresentationError: Error {
+    case unavailable
 }
 
 @MainActor
