@@ -30,6 +30,7 @@ enum MainWindowLaunchSize: String {
 final class MainNavigationViewModel: ObservableObject {
     @Published private(set) var snapshot = MainNavigationSnapshot.default
     @Published private(set) var isRestored = false
+    @Published private(set) var timelineDrillThroughInterval: DateInterval?
 
     private let store: FileMainNavigationStateStore
     private var startupTask: Task<MainNavigationSnapshot?, Error>?
@@ -95,6 +96,18 @@ final class MainNavigationViewModel: ObservableObject {
                 inspectorRequested: snapshot.inspectorRequested,
                 timelineDate: snapshot.timelineDate
             ))
+    }
+
+    func openTimeline(interval: DateInterval) {
+        guard interval.start < interval.end else { return }
+        timelineDrillThroughInterval = interval
+        selectTimelineDate(interval.start)
+        select(section: .timeline)
+    }
+
+    func takeTimelineDrillThroughInterval() -> DateInterval? {
+        defer { timelineDrillThroughInterval = nil }
+        return timelineDrillThroughInterval
     }
 
     func select(momentID: UUID) {
@@ -290,6 +303,7 @@ struct MainShellView: View {
     @ObservedObject var navigationModel: MainNavigationViewModel
     @ObservedObject var searchModel: SearchSessionModel
     @ObservedObject var searchFilterModel: SearchFilterSessionModel
+    @ObservedObject var activityModel: ActivityViewModel
     let forcedWindowSize: MainWindowLaunchSize?
     let opensSettingsAtLaunch: Bool
     let contentState: ShellContentState
@@ -314,6 +328,7 @@ struct MainShellView: View {
                     navigationModel: navigationModel,
                     searchModel: searchModel,
                     searchFilterModel: searchFilterModel,
+                    activityModel: activityModel,
                     indexingBacklog: lifecycleModel.enrichmentBacklog.pendingCount,
                     contentState: contentState,
                     localizationMode: localizationMode,
@@ -394,6 +409,7 @@ private struct MainSectionView: View {
     @ObservedObject var navigationModel: MainNavigationViewModel
     @ObservedObject var searchModel: SearchSessionModel
     @ObservedObject var searchFilterModel: SearchFilterSessionModel
+    @ObservedObject var activityModel: ActivityViewModel
     let indexingBacklog: Int
     let contentState: ShellContentState
     let localizationMode: ShellLocalizationMode
@@ -444,7 +460,11 @@ private struct MainSectionView: View {
                         revisitProvider: searchModel.momentRevisitProvider
                     )
                 case .activity:
-                    ActivityShellView(localizationMode: localizationMode)
+                    ActivityShellView(
+                        model: activityModel,
+                        navigationModel: navigationModel,
+                        localizationMode: localizationMode
+                    )
                 case .settings:
                     EmbeddedSettingsShellView(localizationMode: localizationMode)
                 }
@@ -819,44 +839,6 @@ private struct MomentInspectorView: View {
         .formStyle(.grouped)
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("main.inspector")
-    }
-}
-
-private struct ActivityShellView: View {
-    let localizationMode: ShellLocalizationMode
-
-    var body: some View {
-        VStack(alignment: .leading) {
-            Label(localizationMode.localized("Activity"), systemImage: "chart.xyaxis.line")
-                .font(.title2)
-                .accessibilityIdentifier("main.sectionTitle")
-            Text("Activity estimates")
-                .font(.headline)
-            Text(
-                "Recorded, idle, paused, and missing time will be shown here without scores or rankings."
-            )
-            .foregroundStyle(.secondary)
-            GroupBox("Activity accessibility table") {
-                Grid(alignment: .leading, horizontalSpacing: 16, verticalSpacing: 8) {
-                    GridRow {
-                        Text("Date and hour").font(.headline)
-                        Text("Recorded").font(.headline)
-                        Text("Gap").font(.headline)
-                    }
-                    GridRow {
-                        Text("Today, 2 PM")
-                        Text("42 minutes")
-                        Text("18 minutes")
-                    }
-                }
-                .accessibilityElement(children: .ignore)
-                .accessibilityLabel("Today, 2 PM, 42 recorded minutes, 18 gap minutes")
-            }
-            .accessibilityIdentifier("activity.accessibilityTable")
-            Spacer()
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-        .padding()
     }
 }
 

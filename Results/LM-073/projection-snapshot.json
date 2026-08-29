@@ -1,0 +1,29 @@
+{
+  "story": "LM-073",
+  "fixtures": {
+    "springForwardAmericaLosAngeles20260308": {
+      "elapsedHours": 23,
+      "visualCells": 24,
+      "tableRows": 24,
+      "missingLocalHour": 2,
+      "missingCellElapsedSeconds": 0,
+      "recordedSeconds": 82800
+    },
+    "fallBackAmericaLosAngeles20261101": {
+      "elapsedHours": 25,
+      "visualCells": 25,
+      "tableRows": 25,
+      "repeatedLocalHour": 1,
+      "occurrenceLabels": ["first daylight-saving occurrence", "repeated daylight-saving occurrence"],
+      "recordedSeconds": 90000
+    },
+    "normalWeekEuropeParis": {
+      "days": 7,
+      "visualRecordedSeconds": 5400,
+      "tableRecordedSeconds": 5400,
+      "firstCellRecordedSeconds": 3600,
+      "secondCellRecordedSeconds": 1800,
+      "firstCellTimelineDurationSeconds": 3600
+    }
+  }
+}

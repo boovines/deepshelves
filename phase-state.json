@@ -26,6 +26,7 @@
         "LM-068",
         "LM-069",
         "LM-070",
+        "LM-073",
         "LM-080"
       ],
       "evidence": []
@@ -1380,13 +1381,20 @@
       "resumeProbe": null
     },
     "LM-073": {
-      "status": "pending",
-      "startedAt": null,
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": null,
-      "blockedReason": null,
+      "status": "blocked",
+      "implementationReadiness": "ready",
+      "deferredValidationGate": "H9",
+      "startedAt": "2026-08-29T08:24:47Z",
+      "completedAt": "2026-08-29T08:30:04Z",
+      "gitRevision": "refs/tags/checkpoints/LM-073-blocked",
+      "evidence": [
+        "Results/LM-073/report.json",
+        "Results/LM-073/projection-snapshot.json",
+        "Results/LM-073/runtime-deferred.md",
+        "Decisions/0006-isolated-runtime-validation.md"
+      ],
+      "notes": "The Activity day/week projection is implementation-ready with exact elapsed-hour cells, a shared visual/table value model, explicit spring-forward missing hours, distinct first/repeated fall-back hours, neutral accessibility labels, and exact Timeline cursor drill-through. Nine focused model tests, strict formatting, static prohibited-media inspection, and a cached arm64 compile pass under the encoder tripwire without launching the app.",
+      "blockedReason": "Installed day/week Activity interaction, VoiceOver/table equivalence, DST UI labels, keyboard range controls, and live Timeline drill-through remain unexecuted because application and UI runtime are prohibited on this laptop. ADR 0006 assigns them to H9.",
       "requestedHumanGate": null,
       "resumeProbe": null
     },

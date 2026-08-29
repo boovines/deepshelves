@@ -22,6 +22,7 @@ struct LocalMemoryApp: App {
     @StateObject private var privacySettingsModel: PrivacySettingsViewModel
     @StateObject private var archiveSecurityModel: ArchiveSecurityViewModel
     @StateObject private var agentAccessSettingsModel: AgentAccessSettingsViewModel
+    @StateObject private var activityModel: ActivityViewModel
     private let shellKeyboardMonitor: ShellKeyboardCommandMonitor
 
     private let launchConfiguration: AppLaunchConfiguration
@@ -58,6 +59,9 @@ struct LocalMemoryApp: App {
         _archiveSecurityModel = StateObject(wrappedValue: archiveSecurityModel)
         _agentAccessSettingsModel = StateObject(
             wrappedValue: AgentAccessSettingsViewModel(database: archiveSecurityModel.database)
+        )
+        _activityModel = StateObject(
+            wrappedValue: ActivityViewModel(database: archiveSecurityModel.database)
         )
         SignedCLIEntrypoint.launchIfRequested(
             arguments: arguments,
@@ -360,6 +364,7 @@ struct LocalMemoryApp: App {
                         navigationModel: navigationModel,
                         searchModel: searchModel,
                         searchFilterModel: searchFilterModel,
+                        activityModel: activityModel,
                         forcedWindowSize: launchConfiguration.forcedMainWindowSize,
                         opensSettingsAtLaunch: launchConfiguration.opensSettingsAtLaunch,
                         contentState: launchConfiguration.shellContentState,

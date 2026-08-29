@@ -274,6 +274,17 @@ public final class TimelineSectionSessionModel: ObservableObject {
         await load(day: targetDay, preferredFrameID: preferredFrameID)
     }
 
+    public func focus(interval: DateInterval) async {
+        guard interval.start < interval.end,
+            let targetDay = try? navigator.day(containing: interval.start)
+        else {
+            phase = .failure(.unavailable)
+            return
+        }
+        zoom = interval.duration <= 60 * 60 ? .oneHour : .sixHours
+        await load(day: targetDay, cursor: interval.start)
+    }
+
     public func moveDay(by offset: Int) async {
         guard let target = try? navigator.moving(day, byDays: offset) else {
             phase = .failure(.unavailable)
@@ -330,14 +341,19 @@ public final class TimelineSectionSessionModel: ObservableObject {
         transitions = []
     }
 
-    private func load(day requestedDay: TimelineDay, preferredFrameID: UUID? = nil) async {
+    private func load(
+        day requestedDay: TimelineDay,
+        preferredFrameID: UUID? = nil,
+        cursor: Date? = nil
+    ) async {
         generation += 1
         let requestGeneration = generation
         day = requestedDay
-        phase = .loading(cursor: requestedDay.anchor, zoom: zoom)
+        let requestedCursor = cursor ?? requestedDay.anchor
+        phase = .loading(cursor: requestedCursor, zoom: zoom)
         do {
             let source = try await loader.load(
-                MomentTimelinePageRequest(cursor: requestedDay.anchor, zoom: zoom)
+                MomentTimelinePageRequest(cursor: requestedCursor, zoom: zoom)
             )
             try Task.checkCancellation()
             let projection = try MomentTimelineProjection(source: source)

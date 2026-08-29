@@ -655,3 +655,10 @@ This file is append-only. Each story records measurements, failures, and durable
 - Approved foreground identity plus coarse activity transitions now derive a strict elapsed-time partition. Active and recently-active observations with approved identity count as recorded; idle, exclusion, sleep, and missing-context states become typed gaps and can never inflate application totals.
 - The durable activity store atomically replaces an exact range, clips reads to the requested interval, validates privacy-sensitive gap identity through the shared RecordingGap contract, and reports uncovered time as unknown/unrecorded. Its gap rows remain readable by the existing lifecycle and Timeline projections.
 - The deterministic seven-day fixture reconciles exactly: 604800 elapsed seconds = 345600 recorded + 259200 unrecorded, with one day each of idle, excluded, and sleep and zero rounding delta.
+
+## 2026-08-29 — LM-073 DST-correct accessible activity heatmap (runtime deferred)
+
+- One shared projection drives both hourly visual cells and the accessibility table, so their recorded/unrecorded elapsed minutes cannot drift. Day/week selection uses the injected local calendar rather than fixed 24-hour arithmetic.
+- The spring-forward fixture has 23 real elapsed hours plus one explicitly labeled, disabled missing 2 AM cell. The fall-back fixture has 25 real elapsed hours with distinct first and repeated 1 AM cells and distinct Timeline intervals.
+- Every real cell carries its exact half-open interval. Activity-to-Timeline navigation consumes that start as the Timeline cursor and selects one-hour zoom, covered by a focused request-probe test.
+- Nine safe projection/Timeline tests, changed-file strict formatting, targeted prohibited-media inspection, and a cached native arm64 compile pass under the 50 ms encoder tripwire. No application, UI, ImageIO, capture, or media runtime ran; installed accessibility and interaction evidence remains blocked at H9.

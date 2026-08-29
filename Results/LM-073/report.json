@@ -1,0 +1,33 @@
+{
+  "story": "LM-073",
+  "revision": "refs/tags/checkpoints/LM-073-blocked",
+  "completedAt": "2026-08-29T08:30:04Z",
+  "status": "blocked",
+  "implementationReadiness": "ready",
+  "deferredValidationGate": "H9",
+  "proofClass": ["unit", "model", "static", "compile"],
+  "runtimeExecuted": false,
+  "checks": {
+    "activityProjectionTests": 3,
+    "timelineSectionTests": 6,
+    "failures": 0,
+    "visualAndTableShareProjection": true,
+    "localCalendarDayAndWeekRanges": true,
+    "springForwardMissingHourLabeled": true,
+    "fallBackOccurrencesDistinctAndLabeled": true,
+    "timelineCursorUsesExactCellStart": true,
+    "timelineHourZoomSelected": true,
+    "changedFileStrictFormat": true,
+    "targetedProhibitedMediaScan": true,
+    "nativeArm64Compile": true,
+    "encoderTripwireClear": true
+  },
+  "hashes": {
+    "projectionImplementation": "21467cc4f02bb2acba518498d978c62947f494c62dba766b9f5b9b1a6111ee81",
+    "projectionTests": "a5c745c00089947eb2015768e5185df3a0d45e35f89a48026720ed1e3dda0364",
+    "activityPresentation": "a493e6565efae132780799212afd5ccf91f1ef6ca24020fa2acbac773cfdd133",
+    "timelineImplementation": "2d1bdc2a645666033d9d41f193ba1118f786f4b264447aa56d8c43184df20027",
+    "timelineTests": "10d68c7a200d818e3361c9cbdcfe8b2b449a6aa04a9d1888d4ac90f015c7c054",
+    "compileLog": "b2bc71b5048d9d23838539f0e2d5054319f5e015506e43f8392865507ad604ab"
+  }
+}

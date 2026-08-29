@@ -6,6 +6,27 @@ import XCTest
 
 @MainActor
 final class TimelineSectionModelTests: XCTestCase {
+    func testActivityDrillThroughUsesExactHourCursorAndFocusedZoom() async throws {
+        let source = try sourcePage()
+        let probe = TimelineRequestProbe(source: source)
+        let model = TimelineSectionSessionModel(
+            loader: MomentTimelinePageLoader { request in
+                await probe.load(request)
+            }
+        )
+        let interval = DateInterval(
+            start: Date(timeIntervalSince1970: 1_800_100_000),
+            duration: 60 * 60
+        )
+
+        await model.focus(interval: interval)
+
+        let requests = await probe.requests()
+        XCTAssertEqual(
+            requests, [MomentTimelinePageRequest(cursor: interval.start, zoom: .oneHour)])
+        XCTAssertEqual(model.zoom, .oneHour)
+    }
+
     func testCalendarNavigationPreservesLocalDaysAcrossDSTAndLocale() throws {
         let zone = try XCTUnwrap(TimeZone(identifier: "America/Los_Angeles"))
         var calendar = Calendar(identifier: .gregorian)
@@ -201,5 +222,23 @@ final class TimelineSectionModelTests: XCTestCase {
             browser: result.browser,
             thumbnailLocator: result.thumbnailLocator
         )
+    }
+}
+
+private actor TimelineRequestProbe {
+    private let source: MomentTimelineSourcePage
+    private var recordedRequests: [MomentTimelinePageRequest] = []
+
+    init(source: MomentTimelineSourcePage) {
+        self.source = source
+    }
+
+    func load(_ request: MomentTimelinePageRequest) -> MomentTimelineSourcePage {
+        recordedRequests.append(request)
+        return source
+    }
+
+    func requests() -> [MomentTimelinePageRequest] {
+        recordedRequests
     }
 }

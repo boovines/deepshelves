@@ -53,7 +53,11 @@ struct SearchTimelineSectionView: View {
         .padding()
         .task(id: navigationModel.isRestored) {
             guard navigationModel.isRestored else { return }
-            await model.load(date: navigationModel.snapshot.timelineDate ?? Date())
+            if let interval = navigationModel.takeTimelineDrillThroughInterval() {
+                await model.focus(interval: interval)
+            } else {
+                await model.load(date: navigationModel.snapshot.timelineDate ?? Date())
+            }
             navigationModel.selectTimelineDate(model.day.anchor)
         }
         .onReceive(NotificationCenter.default.publisher(for: .shellRevisit)) { _ in
