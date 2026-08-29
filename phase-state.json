@@ -1266,12 +1266,14 @@
       "resumeProbe": null
     },
     "LM-066": {
-      "status": "pending",
-      "startedAt": null,
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": null,
+      "status": "passed",
+      "startedAt": "2026-08-29T07:28:00Z",
+      "completedAt": "2026-08-29T07:32:58Z",
+      "gitRevision": "refs/tags/checkpoints/LM-066",
+      "evidence": [
+        "Results/LM-066/report.json"
+      ],
+      "notes": "Persisted user-created policies are HMAC-authenticated with a 256-bit capability held by the production Keychain implementation, written with 0700/0600 modes, and bounded to 30 days, 100 results, and 24-hour expiry. Revocation and expiry are rechecked after every async query before content returns. Exhaustive property cases prove empty allowlists yield none and every projection is a policy subset. Four focused safe tests, strict format/static boundary, and native arm64 compile pass under the encoder tripwire.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null

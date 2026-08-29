@@ -603,3 +603,12 @@ This file is append-only. Each story records measurements, failures, and durable
 - The same checked-in search request/page/timeline fixtures produce byte-identical canonical output for independent app/helper service instances across all three projection kinds. A mismatched moment identity fails closed.
 - The first integration compile exposed a transitive `MemorySearch`/SQLCipher dependency that caused duplicate framework embedding in the two helper products. The dependency was removed rather than suppressing the build error; the replacement cached native arm64 Release compile passes.
 - Two focused tests, changed-file strict formatting, the storage/media static boundary, and the 50 ms encoder-process tripwire pass. No application, capture, ImageIO, VideoToolbox, media, or UI runtime executed.
+
+## 2026-08-29 — LM-066 persisted bounded agent policy
+
+- `AccessPolicyStore` persists only user-created, contract-valid policies in an HMAC-authenticated envelope with owner-only 0700/0600 permissions. Policy IDs cannot be reused after revocation, malformed/tampered stores fail closed, and the 256-bit capability itself never enters the policy file.
+- The production capability implementation uses the existing signed-app Keychain access group under a distinct service/account. Tests inject a fixed in-memory key; standalone CLI/MCP scaffolds retain empty entitlements and cannot directly access the shared Keychain, preserving ADR 0002.
+- Draft creation rejects more than 30 days of history, more than 100 results, sessions beyond 24 hours, non-user-created policy, invalid host/application values, and already-expired policies. The persisted image toggle is explicit and defaults at the call site, never inferred.
+- Authorization checks capability, existence, revocation, and expiry both before and after an async operation. Actor reentrancy tests revoke or advance the clock while a query is suspended and prove its result is discarded rather than returned.
+- `AccessPolicyProjectionFilter` strips denied search/timeline/moment results before serialization. Sixteen exhaustive allowlist masks prove every returned application/site is a subset and empty allowlists return no content.
+- Four focused safe tests, strict changed-file formatting, static no-network/no-media and entitlement checks, and cached native arm64 app compile pass under the 50 ms encoder tripwire. No application, Keychain prompt, capture, codec, or UI runtime executed.

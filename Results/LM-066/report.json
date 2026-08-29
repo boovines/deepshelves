@@ -1,0 +1,40 @@
+{
+  "story": "LM-066",
+  "revision": "refs/tags/checkpoints/LM-066",
+  "completedAt": "2026-08-29T07:32:58Z",
+  "proofClass": [
+    "unit",
+    "property",
+    "static",
+    "compile"
+  ],
+  "runtimeExecuted": false,
+  "checks": {
+    "focusedTests": {
+      "count": 4,
+      "status": "passed"
+    },
+    "ownerOnlyPersistence": "0700-directory/0600-file",
+    "signedEnvelopeTamper": "fails-closed",
+    "capabilityStorage": "Keychain-production/in-memory-test-seam",
+    "capabilityBytesPersistedToPolicyFile": false,
+    "historyMaximumDays": 30,
+    "expiryMaximumHours": 24,
+    "maximumResults": 100,
+    "emptyAllowlistsReturnContent": false,
+    "expiryDuringQuery": "fails-before-return",
+    "revocationDuringQuery": "fails-before-return",
+    "subsetPropertyMasks": 16,
+    "standaloneHelperKeychainGroup": false,
+    "changedFileStrictFormat": "passed",
+    "prohibitedMediaOrNetworkImports": "absent",
+    "nativeArm64Compile": "passed",
+    "encoderProcessTripwire": "passed"
+  },
+  "sourceHashes": {
+    "policyStore": "da7b0860fe6b1859935ffc4b14174a289afaa28ebed027a84688e73537329952",
+    "capabilityStore": "e0f3fbb04b9c9bad9f21d2e69f8886198c0026d89853c0975fccfa98f652bf31",
+    "projectionFilter": "a753e8e089901fc7b645f686777f0aa62cb91c8789f66f44f5a8380be1964371"
+  },
+  "runtimeDeferred": "No application or Keychain prompt was launched. The production Security.framework path was compile-verified; the previously passed signed-entrypoint/access-group decision remains canonical."
+}

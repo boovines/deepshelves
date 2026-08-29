@@ -5,6 +5,19 @@ let package = Package(
     name: "MemoryAgentAccess",
     platforms: [.macOS(.v15)],
     products: [.library(name: "MemoryAgentAccess", targets: ["MemoryAgentAccess"])],
-    targets: [.target(name: "MemoryAgentAccess")]
+    dependencies: [
+        .package(path: "../MemoryContracts"),
+        .package(path: "../SharedQueryKit"),
+    ],
+    targets: [
+        .target(
+            name: "MemoryAgentAccess",
+            dependencies: ["MemoryContracts", "SharedQueryKit"],
+            linkerSettings: [.linkedFramework("Security")]
+        ),
+        .testTarget(
+            name: "MemoryAgentAccessTests",
+            dependencies: ["MemoryAgentAccess", "MemoryContracts", "SharedQueryKit"]
+        ),
+    ]
 )
-
