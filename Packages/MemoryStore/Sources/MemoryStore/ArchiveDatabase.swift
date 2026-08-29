@@ -756,6 +756,16 @@ public final class ArchiveDatabase: @unchecked Sendable {
         try writer.read(read)
     }
 
+    public func checkpointAndVacuumForForensicDeletion() throws {
+        _ = try writer.writeWithoutTransaction { database in
+            try database.checkpoint(.truncate)
+        }
+        try writer.vacuum()
+        _ = try writer.writeWithoutTransaction { database in
+            try database.checkpoint(.truncate)
+        }
+    }
+
     func frameColumnNamesForTesting() throws -> Set<String> {
         try writer.read { database in
             Set(try database.columns(in: "frames").map(\.name))

@@ -1,0 +1,38 @@
+{
+  "story": "LM-061",
+  "status": "passed",
+  "proofClass": "unit-static-compile",
+  "implementation": {
+    "databaseMaintenance": "TRUNCATE checkpoint, VACUUM, then TRUNCATE checkpoint before scanning",
+    "logicalScan": "Deleted frame identities and seeded content sentinels across frames, text spans, merged text, artifacts, and vector offsets",
+    "physicalScan": "Encrypted database/WAL/SHM plus media, thumbnails, vectors, logs, exports, quarantine, helper projections, and codec temporary residue",
+    "processScan": "Injected active-process snapshot rejects prohibited codec process names",
+    "failClosed": "Invalid requests, scan failures, and symbolic links abort verification",
+    "reportIntegrity": "Canonical content-free unsigned report is SHA-256 hashed and HMAC-SHA256 signed with a 256-bit key"
+  },
+  "focusedTests": {
+    "verifierTests": 3,
+    "rewriteIntegrationTests": 1,
+    "failures": 0,
+    "verifierElapsedSeconds": 0.678,
+    "rewriteIntegrationElapsedSeconds": 0.237
+  },
+  "verification": {
+    "strictChangedFileFormatting": "passed",
+    "targetedPrivacySafetyStaticCheck": "passed",
+    "memoryStoreNativeArm64ReleaseCompile": "passed",
+    "encoderServiceTripwire": "clean",
+    "applicationRuntimeExecuted": false,
+    "screenCaptureKitRuntimeExecuted": false,
+    "imageIORuntimeExecuted": false,
+    "videoToolboxRuntimeExecuted": false,
+    "mediaDecodeOrEncodeExecuted": false
+  },
+  "sourceSHA256": {
+    "ArchiveDatabase.swift": "8eb39c73494fa20d1b909bb60a6665ea95ccee6e1a28170558459d45182fe29d",
+    "ArchiveForensicDeletionVerifier.swift": "c9d95994611d9f5eaab02712d088837b5def4f717c2133caa5529d69c79acb9f",
+    "ArchiveForensicDeletionVerifierTests.swift": "f4022803645ece234ce387bca15afa08cf8bca945a1a0d6bf6ef2fe14eb3484a",
+    "ArchiveDeletionRewriteWorkerTests.swift": "f2ae43436daa2f901f0aaa9d5bae3213bcccddd5afb28c2f81ba8db29eb16138"
+  },
+  "signedEvidence": "Results/LM-061/deletion.json"
+}

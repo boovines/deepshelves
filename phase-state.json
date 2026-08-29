@@ -1185,12 +1185,15 @@
       "resumeProbe": null
     },
     "LM-061": {
-      "status": "pending",
-      "startedAt": null,
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": null,
+      "status": "passed",
+      "startedAt": "2026-08-29T02:56:00Z",
+      "completedAt": "2026-08-29T03:01:01Z",
+      "gitRevision": "refs/tags/checkpoints/LM-061",
+      "evidence": [
+        "Results/LM-061/deletion.json",
+        "Results/LM-061/report.json"
+      ],
+      "notes": "The fail-closed forensic verifier performs checkpoint/vacuum, scans every content-bearing logical and physical deletion surface plus helper projections and codec residue/process snapshots, and emits a canonical content-free SHA-256/HMAC-SHA256 signed report. Three verifier tests and one end-to-end synthetic deletion integration test pass. Canonical content-free deletion tombstone identity metadata is explicitly excluded by contract; all user-content surfaces must be clear. Strict formatting, static safety, native arm64 Release compile, and encoder tripwire pass without app or media runtime.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null

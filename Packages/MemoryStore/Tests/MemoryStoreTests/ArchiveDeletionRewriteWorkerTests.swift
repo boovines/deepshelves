@@ -62,6 +62,26 @@ final class ArchiveDeletionRewriteWorkerTests: XCTestCase {
                 atPath: fixture.journalDirectory(request.id).path
             )
         )
+
+        let forensic = try ArchiveForensicDeletionVerifier(database: fixture.archive).verify(
+            ArchiveForensicDeletionRequest(
+                deletedFrameIDs: [deleted.id],
+                sentinelValues: [Data(deleted.searchText.utf8)],
+                helperProjections: [Data("benign-helper-projection".utf8)],
+                codecTemporaryDirectories: [],
+                activeProcessNames: [],
+                prohibitedCodecProcessNames: ["memory-software-heic", "VTEncoderXPCService"],
+                signingKey: Data(repeating: 0x61, count: 32),
+                scannedAt: Date(timeIntervalSince1970: 1_777_681_000)
+            )
+        )
+        XCTAssertTrue(forensic.passed)
+        XCTAssertTrue(
+            ArchiveForensicDeletionVerifier.verifySignature(
+                forensic,
+                signingKey: Data(repeating: 0x61, count: 32)
+            )
+        )
     }
 
     func testRangeDeletesCoveredChunkAndRewritesPartiallyCoveredChunk() throws {

@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "story": "LM-061",
+  "passed": true,
+  "proofClass": "unit-static-compile",
+  "runtimeSubstitute": false,
+  "signedPayload": "{\"applicationRuntimeExecuted\":false,\"encoderTripwire\":\"clean\",\"passed\":true,\"proofClass\":\"unit-static-compile\",\"story\":\"LM-061\",\"surfaces\":[\"database.logicalContent\",\"database.encryptedBytes\",\"media\",\"thumbnails\",\"vectors\",\"logs\",\"exports\",\"quarantine\",\"helperProjections\",\"codecTemporaryResidue\",\"codecProcesses\"],\"tests\":3}",
+  "payloadSHA256": "8ad9ac0e6bcbb05b51ca3361c1860987bc62eacae03a83571d312cb34fa76b13",
+  "signatureAlgorithm": "HMAC-SHA256",
+  "signingKeyIdentitySHA256": "3ba3f5f43b92602683c19aee62a20342b084dd5971ddd33808d81a328879a547",
+  "signature": "d321ab9f30aa74a224a036aa1ef5b2bb2c506a2a7921b5266c2ff204ccddd0cc",
+  "contentFree": true,
+  "checkpointAndVacuumCompleted": true,
+  "tombstoneIdentityMetadataExcluded": true,
+  "tombstoneIdentityMetadataReason": "Canonical deletion tombstones intentionally retain requested frame identity as content-free audit metadata; every content-bearing logical and physical surface is scanned and must be clear.",
+  "surfaces": [
+    "database.logicalContent",
+    "database.encryptedBytes",
+    "media",
+    "thumbnails",
+    "vectors",
+    "logs",
+    "exports",
+    "quarantine",
+    "helperProjections",
+    "codecTemporaryResidue",
+    "codecProcesses"
+  ]
+}
