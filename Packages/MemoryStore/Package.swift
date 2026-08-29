@@ -20,6 +20,7 @@ let package = Package(
                     package: "GRDB.swift-a285e4ca87ec6b3584c97b0ec25fc61fec02de60"
                 ),
             ]
-        )
+        ),
+        .testTarget(name: "MemoryStoreTests", dependencies: ["MemoryStore"]),
     ]
 )

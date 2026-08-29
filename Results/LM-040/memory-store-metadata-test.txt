@@ -1,0 +1,18 @@
+Building for debugging...
+[0/2] Write swift-version--58304C5D6DBC2206.txt
+Build complete! (0.13s)
+Test Suite 'Selected tests' started at 2026-08-29 02:47:59.275.
+Test Suite 'MemoryStorePackageTests.xctest' started at 2026-08-29 02:47:59.275.
+Test Suite 'ArchiveSearchFilterMetadataTests' started at 2026-08-29 02:47:59.276.
+Test Case '-[MemoryStoreTests.ArchiveSearchFilterMetadataTests testAutocompleteMetadataIncludesOnlyApprovedSearchableFrames]' started.
+Test Case '-[MemoryStoreTests.ArchiveSearchFilterMetadataTests testAutocompleteMetadataIncludesOnlyApprovedSearchableFrames]' passed (0.037 seconds).
+Test Suite 'ArchiveSearchFilterMetadataTests' passed at 2026-08-29 02:47:59.312.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.037 (0.037) seconds
+Test Suite 'MemoryStorePackageTests.xctest' passed at 2026-08-29 02:47:59.313.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.037 (0.037) seconds
+Test Suite 'Selected tests' passed at 2026-08-29 02:47:59.313.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.037 (0.038) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.

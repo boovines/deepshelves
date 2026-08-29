@@ -99,6 +99,7 @@ final class GlobalSearchPanelCoordinator: NSObject, ObservableObject, NSWindowDe
 
     private let navigationModel: MainNavigationViewModel
     private let searchModel: SearchSessionModel
+    private let searchFilterModel: SearchFilterSessionModel
     private let store: FileGlobalSearchPanelStateStore
     private let simulatesShortcutCollision: Bool
     private var registrar: CarbonGlobalSearchShortcutRegistrar!
@@ -108,11 +109,13 @@ final class GlobalSearchPanelCoordinator: NSObject, ObservableObject, NSWindowDe
     init(
         navigationModel: MainNavigationViewModel,
         searchModel: SearchSessionModel,
+        searchFilterModel: SearchFilterSessionModel,
         stateURL: URL,
         simulatesShortcutCollision: Bool
     ) {
         self.navigationModel = navigationModel
         self.searchModel = searchModel
+        self.searchFilterModel = searchFilterModel
         store = FileGlobalSearchPanelStateStore(fileURL: stateURL)
         self.simulatesShortcutCollision = simulatesShortcutCollision
         super.init()
@@ -247,6 +250,7 @@ final class GlobalSearchPanelCoordinator: NSObject, ObservableObject, NSWindowDe
             rootView: GlobalSearchPanelView(
                 navigationModel: navigationModel,
                 searchModel: searchModel,
+                searchFilterModel: searchFilterModel,
                 coordinator: self
             )
         )
@@ -326,6 +330,7 @@ private final class GlobalSearchNSPanel: NSPanel {
 private struct GlobalSearchPanelView: View {
     @ObservedObject var navigationModel: MainNavigationViewModel
     @ObservedObject var searchModel: SearchSessionModel
+    @ObservedObject var searchFilterModel: SearchFilterSessionModel
     @ObservedObject var coordinator: GlobalSearchPanelCoordinator
     @FocusState private var searchIsFocused: Bool
 
@@ -340,6 +345,7 @@ private struct GlobalSearchPanelView: View {
                     .textFieldStyle(.plain)
                     .font(.title2)
                     .focused($searchIsFocused)
+                    .onSubmit { searchFilterModel.commitQuery() }
                     .accessibilityIdentifier("search.query")
                 Text(coordinator.shortcut.displayName)
                     .font(.caption.monospaced())
@@ -350,6 +356,9 @@ private struct GlobalSearchPanelView: View {
             }
             .padding(.horizontal, 20)
             .padding(.top, 20)
+
+            SharedSearchFilterControls(filterModel: searchFilterModel)
+                .padding(.horizontal, 20)
 
             Divider()
 
@@ -401,8 +410,8 @@ private struct GlobalSearchPanelView: View {
 
     private var queryBinding: Binding<String> {
         Binding(
-            get: { searchModel.query },
-            set: { searchModel.updateQuery($0) }
+            get: { searchFilterModel.queryText },
+            set: { searchFilterModel.updateQueryText($0) }
         )
     }
 }

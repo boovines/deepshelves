@@ -1,5 +1,6 @@
 import Foundation
 import MemoryContracts
+import MemoryDesignSystem
 import MemoryEnrichment
 import MemorySearch
 import MemoryStore
@@ -54,12 +55,14 @@ enum AppSearchComposition {
         else {
             return SearchSessionModel(
                 engine: UnavailableAppSearchEngine(),
-                requestBuilder: { _ in throw AppSearchCompositionError.archiveUnavailable }
+                requestBuilder: { (_: SearchSessionInput) in
+                    throw AppSearchCompositionError.archiveUnavailable
+                }
             )
         }
         let engine = LocalSearchEngine(lexical: lexical, visual: visual, hybrid: hybrid)
         let policyID = UUID()
-        return SearchSessionModel(engine: engine) { query in
+        return SearchSessionModel(engine: engine) { (input: SearchSessionInput) in
             let now = Date()
             let interval = DateInterval(
                 start: now.addingTimeInterval(-30 * 24 * 60 * 60),
@@ -78,16 +81,72 @@ enum AppSearchComposition {
                 createdByUser: true
             )
             return try SearchRequest(
-                query: query,
-                interval: nil,
-                bundleIDs: [],
-                hosts: [],
+                query: input.query,
+                interval: input.interval,
+                bundleIDs: input.bundleIDs,
+                hosts: input.hosts,
                 mode: .hybrid,
                 pageSize: 50,
                 cursor: nil,
                 accessPolicy: policy
             )
         }
+    }
+
+    static func makeFilterModel(
+        searchModel: SearchSessionModel,
+        database: ArchiveDatabase?,
+        fixtureMode: AppSearchFixtureMode?
+    ) -> SearchFilterSessionModel {
+        let applications: [SearchApplicationDescriptor]
+        let hosts: [String]
+        if fixtureMode != nil {
+            applications = [
+                SearchApplicationDescriptor(
+                    bundleID: "com.apple.Calendar",
+                    displayName: "Calendar"
+                ),
+                SearchApplicationDescriptor(
+                    bundleID: "com.apple.Safari",
+                    displayName: "Safari"
+                ),
+                SearchApplicationDescriptor(
+                    bundleID: "com.apple.Notes",
+                    displayName: "Notes"
+                ),
+            ]
+            hosts = ["calendar.example.test", "example.test", "notes.example.test"]
+        } else if let database, let scope = try? database.localSearchScope() {
+            applications = scope.applications.map {
+                SearchApplicationDescriptor(
+                    bundleID: $0.bundleIdentifier,
+                    displayName: $0.displayName
+                )
+            }
+            hosts = scope.hosts.sorted()
+        } else {
+            applications = []
+            hosts = []
+        }
+        var calendar = Calendar.autoupdatingCurrent
+        calendar.locale = Locale.autoupdatingCurrent
+        let catalog = SearchFilterCatalog(applications: applications, hosts: hosts)
+        let referenceDate = Date()
+        let context =
+            (try? QueryParserContext(
+                referenceDate: referenceDate,
+                calendar: calendar,
+                applications: catalog.parserApplications(locale: calendar.locale)
+            ))
+            ?? QueryParserContext.emptyFailClosed(
+                referenceDate: referenceDate,
+                calendar: calendar
+            )
+        return SearchFilterSessionModel(
+            searchModel: searchModel,
+            parserContext: context,
+            catalog: catalog
+        )
     }
 
     private static func groupingProvider(database: ArchiveDatabase)
@@ -122,7 +181,9 @@ enum AppSearchComposition {
         )
     }
 
-    nonisolated private static func fixtureRequest(_ query: String) throws -> SearchRequest {
+    nonisolated private static func fixtureRequest(_ input: SearchSessionInput) throws
+        -> SearchRequest
+    {
         let now = Date(timeIntervalSince1970: 1_777_000_000)
         let interval = DateInterval(
             start: now.addingTimeInterval(-30 * 24 * 60 * 60),
@@ -143,10 +204,10 @@ enum AppSearchComposition {
             createdByUser: true
         )
         return try SearchRequest(
-            query: query,
-            interval: nil,
-            bundleIDs: [],
-            hosts: [],
+            query: input.query,
+            interval: input.interval,
+            bundleIDs: input.bundleIDs,
+            hosts: input.hosts,
             mode: .textOnly,
             pageSize: 20,
             cursor: nil,
@@ -225,6 +286,158 @@ enum AppSearchComposition {
             visualRank: nil,
             fusedScore: score
         )
+    }
+}
+
+struct SharedSearchFilterControls: View {
+    @ObservedObject var filterModel: SearchFilterSessionModel
+
+    private var suggestions: [SearchAutocompleteSuggestion] {
+        filterModel.autocompleteSuggestions(for: filterModel.queryText)
+    }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            if !filterModel.tokens.isEmpty {
+                FilterTokenBar(
+                    tokens: filterModel.tokens.map { token in
+                        FilterTokenModel(
+                            id: token.id,
+                            label: token.label,
+                            systemImage: systemImage(for: token.kind)
+                        )
+                    },
+                    onActivate: { filterModel.removeFilter(id: $0.id) }
+                )
+                .accessibilityIdentifier("search.activeFilters")
+            }
+
+            HStack(spacing: 8) {
+                Menu {
+                    if filterModel.catalog.applications.isEmpty {
+                        Text("No approved applications indexed")
+                    } else {
+                        ForEach(filterModel.catalog.applications, id: \.bundleID) { application in
+                            Button(application.displayName) {
+                                filterModel.applySuggestion(
+                                    SearchAutocompleteSuggestion(
+                                        kind: .application,
+                                        label: application.displayName,
+                                        canonicalValue: application.bundleID
+                                    )
+                                )
+                            }
+                        }
+                    }
+                } label: {
+                    Label("Apps", systemImage: "app")
+                }
+                .accessibilityIdentifier("search.appPicker")
+
+                Menu {
+                    if filterModel.catalog.hosts.isEmpty {
+                        Text("No approved sites indexed")
+                    } else {
+                        ForEach(filterModel.catalog.hosts, id: \.self) { host in
+                            Button(host) {
+                                filterModel.applySuggestion(
+                                    SearchAutocompleteSuggestion(
+                                        kind: .site,
+                                        label: host,
+                                        canonicalValue: host
+                                    )
+                                )
+                            }
+                        }
+                    }
+                } label: {
+                    Label("Sites", systemImage: "globe")
+                }
+                .accessibilityIdentifier("search.sitePicker")
+
+                Menu {
+                    Button("Today") { applyDay(offset: 0) }
+                    Button("Yesterday") { applyDay(offset: -1) }
+                    Button("Last 7 days") { applyLastSevenDays() }
+                    if let timeToken = filterModel.tokens.first(where: { $0.kind == .time }) {
+                        Divider()
+                        Button("Clear date filter") {
+                            filterModel.removeFilter(id: timeToken.id)
+                        }
+                    }
+                } label: {
+                    Label("Date", systemImage: "calendar")
+                }
+                .accessibilityIdentifier("search.datePicker")
+
+                Spacer()
+            }
+            .controlSize(.small)
+
+            if !suggestions.isEmpty {
+                HStack(spacing: 8) {
+                    Text("Suggestions")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    ForEach(suggestions) { suggestion in
+                        Button(suggestion.label) {
+                            filterModel.applySuggestion(suggestion)
+                        }
+                        .buttonStyle(.borderless)
+                        .accessibilityLabel("Use \(suggestion.label) filter")
+                    }
+                }
+                .accessibilityElement(children: .contain)
+                .accessibilityIdentifier("search.autocomplete")
+            }
+
+            if filterModel.queryText.isEmpty, filterModel.tokens.isEmpty {
+                HStack(spacing: 8) {
+                    Text("Try")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    ForEach(filterModel.queryExamples, id: \.self) { example in
+                        Button(example) {
+                            filterModel.updateQueryText(example)
+                            filterModel.commitQuery()
+                        }
+                        .buttonStyle(.borderless)
+                        .accessibilityLabel("Search example: \(example)")
+                    }
+                }
+                .accessibilityElement(children: .contain)
+                .accessibilityIdentifier("search.examples")
+            }
+        }
+    }
+
+    private func systemImage(for kind: SearchQueryTokenKind) -> String {
+        switch kind {
+        case .application: "app"
+        case .site: "globe"
+        case .time: "calendar"
+        }
+    }
+
+    private func applyDay(offset: Int) {
+        let calendar = Calendar.autoupdatingCurrent
+        guard let day = calendar.date(byAdding: .day, value: offset, to: Date()),
+            let interval = calendar.dateInterval(of: .day, for: day)
+        else {
+            return
+        }
+        filterModel.setDateInterval(interval)
+    }
+
+    private func applyLastSevenDays() {
+        let calendar = Calendar.autoupdatingCurrent
+        let startOfToday = calendar.startOfDay(for: Date())
+        guard let end = calendar.date(byAdding: .day, value: 1, to: startOfToday),
+            let start = calendar.date(byAdding: .day, value: -7, to: end)
+        else {
+            return
+        }
+        filterModel.setDateInterval(DateInterval(start: start, end: end))
     }
 }
 

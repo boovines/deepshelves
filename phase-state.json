@@ -9,7 +9,8 @@
       "adr": "Decisions/0006-isolated-runtime-validation.md",
       "deferredStories": [
         "LM-028",
-        "LM-039"
+        "LM-039",
+        "LM-040"
       ],
       "evidence": []
     }
@@ -756,13 +757,25 @@
       "resumeProbe": null
     },
     "LM-040": {
-      "status": "pending",
-      "startedAt": null,
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": null,
-      "blockedReason": null,
+      "status": "blocked",
+      "implementationReadiness": "ready",
+      "deferredValidationGate": "H9",
+      "startedAt": "2026-08-29T00:36:45Z",
+      "completedAt": "2026-08-29T00:51:01Z",
+      "gitRevision": "refs/tags/checkpoints/LM-040-blocked",
+      "evidence": [
+        "Results/LM-040/report.json",
+        "Results/LM-040/runtime-deferred.md",
+        "Results/LM-040/filter-contract-snapshot.json",
+        "Results/LM-040/memory-search-tests.txt",
+        "Results/LM-040/memory-store-metadata-test.txt",
+        "Results/LM-040/compile-only-summary.txt",
+        "Results/LM-040/static-audit.txt",
+        "Results/LM-040/swift-format.txt",
+        "Decisions/0006-isolated-runtime-validation.md"
+      ],
+      "notes": "Visible removable parser/picker/date tokens now drive the same root-owned request state in both search surfaces. Approved app/site autocomplete comes only from ready non-suppressed archive metadata; ambiguous parser aliases and unapproved restored snapshots fail closed. Fifteen MemorySearch tests, one focused store test, strict formatting, deterministic filter snapshot, static audit, and universal Release compile-only build pass under the encoder tripwire with no prohibited runtime.",
+      "blockedReason": "The acceptance contract requires real keyboard and VoiceOver interaction in both search surfaces. Application runtime is prohibited on this laptop. ADR 0006 assigns the unchanged interaction ledger to H9 on the isolated validation Mac; unit/model/static/compile/snapshot evidence does not replace it, so LM-040 remains blocked.",
       "requestedHumanGate": null,
       "resumeProbe": null
     },

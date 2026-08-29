@@ -8,6 +8,32 @@ public protocol SearchEngine: Sendable {
 
 extension LexicalSearchEngine: SearchEngine {}
 
+public struct SearchSessionInput: Equatable, Sendable {
+    public let query: String
+    public let interval: DateInterval?
+    public let bundleIDs: Set<String>
+    public let hosts: Set<String>
+
+    public init(
+        query: String,
+        interval: DateInterval? = nil,
+        bundleIDs: Set<String> = [],
+        hosts: Set<String> = []
+    ) {
+        self.query = query
+        self.interval = interval
+        self.bundleIDs = bundleIDs
+        self.hosts = hosts
+    }
+
+    public var isEmpty: Bool {
+        query.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            && interval == nil
+            && bundleIDs.isEmpty
+            && hosts.isEmpty
+    }
+}
+
 public enum SearchSessionPhase: Equatable, Sendable {
     case idle
     case debouncing(query: String)
@@ -26,9 +52,10 @@ public enum SearchSessionPhase: Equatable, Sendable {
 
 @MainActor
 public final class SearchSessionModel: ObservableObject {
-    public typealias RequestBuilder = @Sendable (String) throws -> SearchRequest
+    public typealias RequestBuilder = @Sendable (SearchSessionInput) throws -> SearchRequest
 
     @Published public private(set) var query: String
+    @Published public private(set) var input: SearchSessionInput
     @Published public private(set) var phase: SearchSessionPhase
     @Published public private(set) var results: [SearchResult]
     @Published public private(set) var nextCursor: SearchCursor?
@@ -52,19 +79,46 @@ public final class SearchSessionModel: ObservableObject {
         self.debounceDuration = debounceDuration
         self.initialPage = initialPage
         self.requestBuilder = requestBuilder
+        input = SearchSessionInput(query: "")
         query = ""
         results = initialPage?.results ?? []
         nextCursor = initialPage?.nextCursor
         phase = initialPage.map { .results(query: "", count: $0.results.count) } ?? .idle
     }
 
+    public convenience init(
+        engine: any SearchEngine,
+        debounceDuration: Duration = .milliseconds(150),
+        initialPage: SearchPage? = nil,
+        requestBuilder: @escaping @Sendable (String) throws -> SearchRequest
+    ) {
+        self.init(
+            engine: engine,
+            debounceDuration: debounceDuration,
+            initialPage: initialPage,
+            requestBuilder: { input in try requestBuilder(input.query) }
+        )
+    }
+
     public func updateQuery(_ value: String) {
-        guard query != value else { return }
-        query = value
+        updateInput(
+            SearchSessionInput(
+                query: value,
+                interval: input.interval,
+                bundleIDs: input.bundleIDs,
+                hosts: input.hosts
+            )
+        )
+    }
+
+    public func updateInput(_ value: SearchSessionInput) {
+        guard input != value else { return }
+        input = value
+        query = value.query
         generation += 1
         searchTask?.cancel()
-        let normalized = value.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !normalized.isEmpty else {
+        let normalized = value.query.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !value.isEmpty else {
             results = initialPage?.results ?? []
             nextCursor = initialPage?.nextCursor
             settledQuery = nil
@@ -80,6 +134,12 @@ public final class SearchSessionModel: ObservableObject {
         let debounceDuration = debounceDuration
         let engine = engine
         let requestBuilder = requestBuilder
+        let requestInput = SearchSessionInput(
+            query: normalized,
+            interval: value.interval,
+            bundleIDs: value.bundleIDs,
+            hosts: value.hosts
+        )
         searchTask = Task { [weak self] in
             do {
                 if debounceDuration > .zero {
@@ -88,7 +148,7 @@ public final class SearchSessionModel: ObservableObject {
                 try Task.checkCancellation()
                 guard let self, self.generation == requestGeneration else { return }
                 self.phase = .loading(query: normalized)
-                let request = try requestBuilder(normalized)
+                let request = try requestBuilder(requestInput)
                 let page = try await engine.search(request)
                 try Task.checkCancellation()
                 guard self.generation == requestGeneration else { return }

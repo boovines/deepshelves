@@ -48,7 +48,41 @@ public struct QueryParserContext: Sendable {
                 }
             }
         }
-        self.referenceDate = referenceDate
+        self.init(
+            validatedReferenceDate: referenceDate,
+            calendar: calendar,
+            applications: applications
+        )
+    }
+
+    public static func emptyFailClosed(
+        referenceDate: Date,
+        calendar: Calendar
+    ) -> QueryParserContext {
+        if let context = try? QueryParserContext(
+            referenceDate: referenceDate,
+            calendar: calendar
+        ) {
+            return context
+        }
+        var fallbackCalendar = Calendar(identifier: .gregorian)
+        fallbackCalendar.locale = Locale(identifier: "en_US_POSIX")
+        if let utc = TimeZone(secondsFromGMT: 0) {
+            fallbackCalendar.timeZone = utc
+        }
+        return QueryParserContext(
+            validatedReferenceDate: Date(timeIntervalSince1970: 0),
+            calendar: fallbackCalendar,
+            applications: []
+        )
+    }
+
+    private init(
+        validatedReferenceDate: Date,
+        calendar: Calendar,
+        applications: [SearchApplicationDescriptor]
+    ) {
+        referenceDate = validatedReferenceDate
         self.calendar = calendar
         self.applications = applications
     }

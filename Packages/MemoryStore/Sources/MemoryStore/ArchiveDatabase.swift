@@ -38,10 +38,26 @@ public struct ArchiveDatabaseConfigurationSnapshot: Equatable, Sendable {
 public struct ArchiveLocalSearchScope: Equatable, Sendable {
     public let bundleIdentifiers: Set<String>
     public let hosts: Set<String>
+    public let applications: [ArchiveSearchApplication]
 
-    public init(bundleIdentifiers: Set<String>, hosts: Set<String>) {
+    public init(
+        bundleIdentifiers: Set<String>,
+        hosts: Set<String>,
+        applications: [ArchiveSearchApplication] = []
+    ) {
         self.bundleIdentifiers = bundleIdentifiers
         self.hosts = hosts
+        self.applications = applications
+    }
+}
+
+public struct ArchiveSearchApplication: Equatable, Sendable {
+    public let bundleIdentifier: String
+    public let displayName: String
+
+    public init(bundleIdentifier: String, displayName: String) {
+        self.bundleIdentifier = bundleIdentifier
+        self.displayName = displayName
     }
 }
 
@@ -215,9 +231,31 @@ public final class ArchiveDatabase: @unchecked Sendable {
                     ORDER BY frames.url_host
                     """
             )
+            let applications = try Row.fetchAll(
+                database,
+                sql: """
+                    SELECT frames.bundle_id,
+                           MIN(frames.app_name COLLATE NOCASE) AS app_name
+                    FROM frames
+                    JOIN media_chunks ON media_chunks.id = frames.chunk_id
+                    WHERE media_chunks.state = 'ready'
+                      AND frames.bundle_id IS NOT NULL
+                      AND frames.app_name IS NOT NULL
+                      AND frames.visual_state <> 'suppressed'
+                      AND (frames.text_state = 'ready' OR frames.visual_state = 'ready')
+                    GROUP BY frames.bundle_id
+                    ORDER BY app_name COLLATE NOCASE, frames.bundle_id
+                    """
+            ).map { row in
+                ArchiveSearchApplication(
+                    bundleIdentifier: row["bundle_id"],
+                    displayName: row["app_name"]
+                )
+            }
             return ArchiveLocalSearchScope(
                 bundleIdentifiers: Set(bundleIdentifiers),
-                hosts: Set(hosts)
+                hosts: Set(hosts),
+                applications: applications
             )
         }
     }

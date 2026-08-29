@@ -274,6 +274,7 @@ struct MainShellView: View {
     @ObservedObject var lifecycleModel: AppLifecycleViewModel
     @ObservedObject var navigationModel: MainNavigationViewModel
     @ObservedObject var searchModel: SearchSessionModel
+    @ObservedObject var searchFilterModel: SearchFilterSessionModel
     let forcedWindowSize: MainWindowLaunchSize?
     let opensSettingsAtLaunch: Bool
     let contentState: ShellContentState
@@ -297,6 +298,7 @@ struct MainShellView: View {
                 MainSectionView(
                     navigationModel: navigationModel,
                     searchModel: searchModel,
+                    searchFilterModel: searchFilterModel,
                     contentState: contentState,
                     localizationMode: localizationMode,
                     availableWidth: geometry.size.width
@@ -375,6 +377,7 @@ private struct MainSidebar: View {
 private struct MainSectionView: View {
     @ObservedObject var navigationModel: MainNavigationViewModel
     @ObservedObject var searchModel: SearchSessionModel
+    @ObservedObject var searchFilterModel: SearchFilterSessionModel
     let contentState: ShellContentState
     let localizationMode: ShellLocalizationMode
     let availableWidth: CGFloat
@@ -405,6 +408,7 @@ private struct MainSectionView: View {
                         selectedMoment: selectedMoment,
                         navigationModel: navigationModel,
                         searchModel: searchModel,
+                        searchFilterModel: searchFilterModel,
                         contentState: contentState,
                         localizationMode: localizationMode
                     )
@@ -416,6 +420,7 @@ private struct MainSectionView: View {
                         selectedMoment: selectedMoment,
                         navigationModel: navigationModel,
                         searchModel: searchModel,
+                        searchFilterModel: searchFilterModel,
                         contentState: .ready,
                         localizationMode: localizationMode
                     )
@@ -559,6 +564,7 @@ private struct MomentSectionCanvas: View {
     let selectedMoment: ShellMoment?
     @ObservedObject var navigationModel: MainNavigationViewModel
     @ObservedObject var searchModel: SearchSessionModel
+    @ObservedObject var searchFilterModel: SearchFilterSessionModel
     let contentState: ShellContentState
     let localizationMode: ShellLocalizationMode
     @FocusState private var searchIsFocused: Bool
@@ -580,9 +586,12 @@ private struct MomentSectionCanvas: View {
                 TextField("Search your local memory", text: queryBinding)
                     .textFieldStyle(.roundedBorder)
                     .focused($searchIsFocused)
+                    .onSubmit { searchFilterModel.commitQuery() }
                     .accessibilityLabel("Search your local memory")
                     .accessibilityIdentifier("main.searchField")
                     .accessibilityHint("Searches only the local archive")
+
+                SharedSearchFilterControls(filterModel: searchFilterModel)
             }
 
             if title == "Timeline" {
@@ -716,8 +725,8 @@ private struct MomentSectionCanvas: View {
 
     private var queryBinding: Binding<String> {
         Binding(
-            get: { searchModel.query },
-            set: { searchModel.updateQuery($0) }
+            get: { searchFilterModel.queryText },
+            set: { searchFilterModel.updateQueryText($0) }
         )
     }
 

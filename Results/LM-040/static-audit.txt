@@ -1,0 +1,23 @@
+LM-040 static audit — 2026-08-29
+
+PASS: Search filter source contains no ScreenCaptureKit, ImageIO, VideoToolbox,
+AVAssetWriter, VTCompression, CGImageDestination, XCUIApplication, or application-run call.
+PASS: one root-owned SearchFilterSessionModel is injected into both the main Search section
+and the global panel alongside the shared SearchSessionModel.
+PASS: app and site suggestions are derived only from ArchiveDatabase.localSearchScope(),
+which selects distinct metadata from ready media and non-suppressed searchable frames.
+PASS: duplicate or ambiguous application names remain available to the explicit picker but
+are excluded from parser aliases; parser construction falls back to an empty fail-closed
+context rather than trapping.
+PASS: every application, site, and date filter creates a visible removable token and the
+same canonical state is forwarded into SearchRequest.
+PASS: serialized filter restoration rejects metadata outside the approved catalog and
+rejects token/request-state disagreement without mutating the current state.
+PASS: calendar-day and seven-day controls use calendar arithmetic, including DST days.
+PASS: strict swift-format lint passed for every changed Swift source and test.
+PASS: universal Release compile-only build passed with code signing disabled.
+PASS: process prechecks and the 50 ms encoder-service tripwire remained clear.
+
+NOT EXECUTED: application launch, UI tests, ScreenCaptureKit runtime, Apple ImageIO runtime,
+VideoToolbox, hardware-media runtime, keyboard interaction, or VoiceOver interaction.
+Compile-only proof is not runtime evidence.

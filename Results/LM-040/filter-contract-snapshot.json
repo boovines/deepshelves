@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "queryText": "lamp",
+  "tokens": [
+    {
+      "kind": "application",
+      "label": "Safari",
+      "canonicalValue": "com.apple.Safari"
+    },
+    {
+      "kind": "site",
+      "label": "example.com",
+      "canonicalValue": "example.com"
+    },
+    {
+      "kind": "time",
+      "label": "Aug 28, 2026",
+      "canonicalValue": "interval:1787875200000/1787961600000"
+    }
+  ],
+  "applicationBundleIDs": [
+    "com.apple.Safari"
+  ],
+  "hosts": [
+    "example.com"
+  ],
+  "interval": {
+    "start": "2026-08-28T00:00:00Z",
+    "end": "2026-08-29T00:00:00Z"
+  },
+  "verification": "SearchFilterSessionTests.testFilterSnapshotRoundTripsOnlyApprovedVisibleRequestState"
+}

@@ -17,6 +17,7 @@ struct LocalMemoryApp: App {
     @StateObject private var onboardingModel: OnboardingViewModel
     @StateObject private var searchPanelCoordinator: GlobalSearchPanelCoordinator
     @StateObject private var searchModel: SearchSessionModel
+    @StateObject private var searchFilterModel: SearchFilterSessionModel
     @StateObject private var privacySettingsModel: PrivacySettingsViewModel
     @StateObject private var archiveSecurityModel: ArchiveSecurityViewModel
     private let shellKeyboardMonitor: ShellKeyboardCommandMonitor
@@ -68,10 +69,17 @@ struct LocalMemoryApp: App {
             fixtureMode: configuration.searchFixtureMode
         )
         _searchModel = StateObject(wrappedValue: searchModel)
+        let searchFilterModel = AppSearchComposition.makeFilterModel(
+            searchModel: searchModel,
+            database: archiveSecurityModel.database,
+            fixtureMode: configuration.searchFixtureMode
+        )
+        _searchFilterModel = StateObject(wrappedValue: searchFilterModel)
         _searchPanelCoordinator = StateObject(
             wrappedValue: GlobalSearchPanelCoordinator(
                 navigationModel: navigationModel,
                 searchModel: searchModel,
+                searchFilterModel: searchFilterModel,
                 stateURL: configuration.searchPanelStateURL,
                 simulatesShortcutCollision: configuration.simulatesShortcutCollision
             )
@@ -337,6 +345,7 @@ struct LocalMemoryApp: App {
                         lifecycleModel: lifecycleModel,
                         navigationModel: navigationModel,
                         searchModel: searchModel,
+                        searchFilterModel: searchFilterModel,
                         forcedWindowSize: launchConfiguration.forcedMainWindowSize,
                         opensSettingsAtLaunch: launchConfiguration.opensSettingsAtLaunch,
                         contentState: launchConfiguration.shellContentState,
