@@ -1253,12 +1253,14 @@
       "resumeProbe": null
     },
     "LM-065": {
-      "status": "pending",
-      "startedAt": null,
-      "completedAt": null,
-      "gitRevision": null,
-      "evidence": [],
-      "notes": null,
+      "status": "passed",
+      "startedAt": "2026-08-29T07:17:00Z",
+      "completedAt": "2026-08-29T07:25:19Z",
+      "gitRevision": "refs/tags/checkpoints/LM-065",
+      "evidence": [
+        "Results/LM-065/report.json"
+      ],
+      "notes": "SharedQueryKit defines versioned, canonical, policy-scoped search/timeline/moment requests and projections using only MemoryContracts. Production and fixture app search flow through its service; CLI and MCP targets link the same storage-agnostic package. Two safe tests prove byte-equivalent ordered app/helper output and fail-closed moment identity. Strict formatting/static boundaries and native arm64 Release compile pass under the encoder tripwire without runtime.",
       "blockedReason": null,
       "requestedHumanGate": null,
       "resumeProbe": null

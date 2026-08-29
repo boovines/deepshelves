@@ -1,0 +1,42 @@
+{
+  "story": "LM-065",
+  "revision": "refs/tags/checkpoints/LM-065",
+  "completedAt": "2026-08-29T07:25:19Z",
+  "proofClass": [
+    "unit",
+    "static",
+    "compile"
+  ],
+  "runtimeExecuted": false,
+  "checks": {
+    "sharedQueryTests": {
+      "count": 2,
+      "status": "passed"
+    },
+    "appHelperCanonicalProjection": {
+      "surfaces": [
+        "search",
+        "timeline",
+        "moment"
+      ],
+      "byteEquivalent": true,
+      "ordered": true,
+      "status": "passed"
+    },
+    "policyProjectionValidation": "passed",
+    "changedFileStrictFormat": "passed",
+    "prohibitedMediaImports": "absent",
+    "sharedPackageStorageDependency": "absent",
+    "nativeArm64Compile": "passed",
+    "encoderProcessTripwire": "passed"
+  },
+  "fixtureHashes": {
+    "searchRequest": "b857b0cb986dfbcd7ae8636754f41c4bd0857eeb4ed282c6ce118ec0c00c437d",
+    "searchPage": "4b6385da878b87d597369bb6e9714c958079149c2b808bf263bec62cf5ad386e",
+    "timelineSlice": "77cdf7af12044d4fc705193011acfef3a103757bdea8d366b5aa8c833d1f64c2"
+  },
+  "diagnosis": {
+    "firstCompileFailure": "SharedQueryKit initially depended on MemorySearch, which transitively embedded SQLCipher into both helper targets and produced duplicate framework copy commands.",
+    "resolution": "SharedQueryKit now depends only on MemoryContracts; the application owns the SearchEngine adapter, and helpers consume the same storage-agnostic canonical projections."
+  }
+}

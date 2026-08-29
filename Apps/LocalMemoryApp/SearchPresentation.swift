@@ -6,6 +6,7 @@ import MemoryDesignSystem
 import MemoryEnrichment
 import MemorySearch
 import MemoryStore
+import SharedQueryKit
 import SwiftUI
 
 enum AppSearchFixtureMode: String {
@@ -67,7 +68,10 @@ enum AppSearchComposition {
                 }
             )
         }
-        let engine = LocalSearchEngine(lexical: lexical, visual: visual, hybrid: hybrid)
+        let localEngine = LocalSearchEngine(lexical: lexical, visual: visual, hybrid: hybrid)
+        let engine = SharedQueryService(search: { request in
+            try await localEngine.search(request)
+        })
         let policyID = UUID()
         let thumbnailRepository = makeThumbnailRepository(database: database)
         let momentDetailRepository = makeMomentDetailRepository(database: database)
@@ -76,7 +80,7 @@ enum AppSearchComposition {
         let momentRevisitProvider = makeMomentRevisitProvider(database: database)
         let momentForgetProvider = makeMomentForgetProvider(database: database)
         return SearchSessionModel(
-            engine: engine,
+            engine: AppSharedSearchEngine(service: engine),
             thumbnailRepository: thumbnailRepository,
             momentDetailRepository: momentDetailRepository,
             momentExportProvider: momentExportProvider,
@@ -598,8 +602,12 @@ enum AppSearchComposition {
         diagnosticsEnabled: Bool
     ) -> SearchSessionModel {
         let page = try! SearchPage(results: fixtureResults, nextCursor: nil)
+        let fixtureEngine = AppSearchFixtureEngine(mode: mode, results: page.results)
+        let engine = SharedQueryService(search: { request in
+            try await fixtureEngine.search(request)
+        })
         return SearchSessionModel(
-            engine: AppSearchFixtureEngine(mode: mode, results: page.results),
+            engine: AppSharedSearchEngine(service: engine),
             debounceDuration: .milliseconds(150),
             initialPage: page,
             momentTimelineLoader: makeFixtureTimelineLoader(),
@@ -932,6 +940,14 @@ private struct UnavailableAppSearchEngine: SearchEngine {
     func search(_ request: SearchRequest) async throws -> SearchPage {
         _ = request
         throw AppSearchCompositionError.archiveUnavailable
+    }
+}
+
+private struct AppSharedSearchEngine: SearchEngine {
+    let service: SharedQueryService
+
+    func search(_ request: SearchRequest) async throws -> SearchPage {
+        try await service.search(request)
     }
 }
 

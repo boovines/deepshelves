@@ -35,6 +35,8 @@ packages:
     path: Packages/MemorySearch
   MemoryAgentAccess:
     path: Packages/MemoryAgentAccess
+  SharedQueryKit:
+    path: Packages/SharedQueryKit
   MemoryDesignSystem:
     path: Packages/MemoryDesignSystem
   MemoryTestSupport:
@@ -60,6 +62,7 @@ targets:
       - package: MemoryEnrichment
       - package: MemorySearch
       - package: MemoryStore
+      - package: SharedQueryKit
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.justinhou.deepshelves.localmemory
@@ -73,6 +76,7 @@ targets:
       - Apps/LocalMemoryCLI
     dependencies:
       - package: MemoryContracts
+      - package: SharedQueryKit
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.justinhou.deepshelves.localmemory.cli
@@ -85,6 +89,7 @@ targets:
       - Apps/LocalMemoryMCP
     dependencies:
       - package: MemoryContracts
+      - package: SharedQueryKit
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.justinhou.deepshelves.localmemory.mcp
@@ -104,6 +109,7 @@ targets:
       - package: MemorySoftwareHEIC
       - package: MemoryStore
       - package: MemoryTestSupport
+      - package: SharedQueryKit
   LocalMemoryIntegrationTests:
     type: bundle.unit-test
     platform: macOS

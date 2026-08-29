@@ -595,3 +595,11 @@ This file is append-only. Each story records measurements, failures, and durable
 - LM-064 changed from `blocked_human` to technical `blocked` with `implementationReadiness: ready` and `deferredValidationGate: H9`. Its original runtime trust journey remains wholly unsatisfied; no static/unit/model/compile evidence was relabeled.
 - The readiness exception now permits safe implementation through LM-080 only. H9 becomes the next mandatory prerequisite after that checkpoint; LM-081 and later work require the deferred stories to be promoted to `passed` from real isolated-host evidence.
 - `HUMAN-ACTION.md` was removed because no human action is currently required. It will be recreated only after LM-080 when H9 is the next unavoidable gate. No runtime or application process was launched for this scheduling change.
+
+## 2026-08-29 — LM-065 shared read projections
+
+- `SharedQueryKit` now owns versioned search, timeline, and moment request/projection envelopes, deterministic `ContractJSON` bytes, projection identity/order checks, and static policy-scope validation. It depends only on `MemoryContracts`, so it cannot open storage or import a media runtime.
+- The production and fixture app search engines run through the shared service via an app-owned `SearchEngine` adapter. Both CLI and MCP helper targets link the same package and schema version without acquiring a storage implementation dependency.
+- The same checked-in search request/page/timeline fixtures produce byte-identical canonical output for independent app/helper service instances across all three projection kinds. A mismatched moment identity fails closed.
+- The first integration compile exposed a transitive `MemorySearch`/SQLCipher dependency that caused duplicate framework embedding in the two helper products. The dependency was removed rather than suppressing the build error; the replacement cached native arm64 Release compile passes.
+- Two focused tests, changed-file strict formatting, the storage/media static boundary, and the 50 ms encoder-process tripwire pass. No application, capture, ImageIO, VideoToolbox, media, or UI runtime executed.
