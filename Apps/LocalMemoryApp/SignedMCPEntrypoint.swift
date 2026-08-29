@@ -9,7 +9,10 @@ enum SignedMCPEntrypoint {
         Task.detached {
             do {
                 try await LocalMemoryMCPServer.run(
-                    backend: SignedCLIEntrypoint.makeBackend(database: database)
+                    backend: SignedCLIEntrypoint.makeBackend(database: database),
+                    imageBackend: SignedImageResourceComposition.makeBackend(
+                        database: database
+                    )
                 )
                 Darwin.exit(EXIT_SUCCESS)
             } catch {

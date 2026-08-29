@@ -629,3 +629,11 @@ This file is append-only. Each story records measurements, failures, and durable
 - Five MCP tests pass an inspector transcript, a real temporary-file stdio loop, two independent client request shapes with identical structured output, policy denial, unknown tools/mutations, and signed launcher routing. Nine CLI/policy regression tests and the static dependency audit also pass.
 - Cached arm64 app and MCP helper compiles pass under the encoder tripwire. The helper has empty entitlements and static binary inspection shows no Network/CFNetwork/EventSource/NIO/SQLCipher linkage and no socket, bind, listen, connect, DNS, URLSession, or HTTP client symbol.
 - LM-068 remains technically blocked and implementation-ready because the installed signed-app MCP launch, official inspector, two live clients, deny-all network instrumentation, live port scan, real policy archive, disconnect, and cancellation evidence must run at H9.
+
+## 2026-08-29 — LM-069 bounded opaque image resources (runtime deferred)
+
+- Image handles are AES-GCM-encrypted opaque tokens bound to one frame, one user-created policy, and a maximum five-minute expiry. Tokens reveal neither UUID nor archive path; tamper, expiry, wrong capability, and missing opt-in fail closed.
+- The signed app verifies the policy-visible Moment and current ready source both when issuing and reading. A deleted/suppressed/replaced source becomes unavailable before bytes return. Policy expiry/revocation is rechecked after the async read by `AccessPolicyStore`.
+- Stored width/height and byte count are checked before file loading with 1,920-pixel and 8-MiB ceilings. The bounded reader checks cancellation before and after loading, exact byte count, and SHA-256 without ImageIO or decode.
+- MCP adds read-only `get_moment_image`, returning a short-lived `memory-image://` resource link, and `resources/read`, returning the verified HEIC blob. Deleted-resource errors disclose neither token nor filesystem/media path.
+- Eleven agent-access tests and two source-store tests pass, including fail-closed rejection of non-256-bit capability keys, along with strict formatting, static no-media-runtime inspection, and an arm64 app compile under the encoder tripwire. LM-069 remains implementation-ready but technically blocked until H9 runs the installed signed image journey on real retained/deleted evidence.

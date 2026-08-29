@@ -131,6 +131,79 @@ final class LocalMemoryMCPServerTests: XCTestCase {
         XCTAssertEqual(try object(mutation["error"])["code"] as? Int, -32601)
     }
 
+    func testImageToolIssuesOpaqueURIAndResourceReadReturnsBoundedBytes() async throws {
+        let image = LocalMemoryMCPImageBackend(
+            issue: { _, _ in
+                MCPImageResourceIssue(
+                    resourceID: "opaque_token_1",
+                    expiresAt: Date(timeIntervalSince1970: 1_777_700_300)
+                )
+            },
+            read: { resourceID in
+                XCTAssertEqual(resourceID, "opaque_token_1")
+                return BoundedImageResource(
+                    data: Data([1, 2, 3, 4]),
+                    width: 1,
+                    height: 1
+                )
+            }
+        )
+        let frame = UUID(uuidString: "69000000-0000-4000-8000-000000000001")!
+        let policy = UUID(uuidString: "69000000-0000-4000-8000-000000000002")!
+        let issueRequest: [String: Any] = [
+            "jsonrpc": "2.0", "id": 8, "method": "tools/call",
+            "params": [
+                "name": "get_moment_image",
+                "arguments": ["id": frame.uuidString, "policy": policy.uuidString],
+            ],
+        ]
+        let issued = try await response(
+            String(
+                decoding: JSONSerialization.data(withJSONObject: issueRequest),
+                as: UTF8.self
+            ),
+            backend: MCPFixture.backend(),
+            imageBackend: image
+        )
+        let issuedResult = try object(issued["result"])
+        XCTAssertEqual(issuedResult["isError"] as? Bool, false)
+        XCTAssertFalse(
+            String(data: try canonical(issuedResult), encoding: .utf8)!.contains(frame.uuidString)
+        )
+
+        let resourceRequest =
+            #"{"jsonrpc":"2.0","id":9,"method":"resources/read","params":{"uri":"memory-image://opaque_token_1"}}"#
+        let resource = try await response(
+            resourceRequest,
+            backend: MCPFixture.backend(),
+            imageBackend: image
+        )
+        let contents = try array(try object(resource["result"])["contents"])
+        XCTAssertEqual(
+            try object(contents[0])["blob"] as? String, Data([1, 2, 3, 4]).base64EncodedString())
+        XCTAssertEqual(try object(contents[0])["mimeType"] as? String, "image/heic")
+    }
+
+    func testDeletedImageResourceFailsWithoutTokenOrPathDisclosure() async throws {
+        let image = LocalMemoryMCPImageBackend(
+            issue: { _, _ in throw ImageResourceError.policyDenied },
+            read: { _ in throw ImageResourceError.notFound }
+        )
+        let response = try await response(
+            #"{"jsonrpc":"2.0","id":10,"method":"resources/read","params":{"uri":"memory-image://opaque_deleted_token"}}"#,
+            backend: MCPFixture.backend(),
+            imageBackend: image
+        )
+        let encoded = String(
+            decoding: try JSONSerialization.data(withJSONObject: response, options: [.sortedKeys]),
+            as: UTF8.self
+        )
+        XCTAssertTrue(encoded.contains("not_found"))
+        XCTAssertFalse(encoded.contains("opaque_deleted_token"))
+        XCTAssertFalse(encoded.contains("/Users/"))
+        XCTAssertFalse(encoded.contains("media/"))
+    }
+
     private func callTool(
         id: Any,
         name: String,
@@ -149,11 +222,13 @@ final class LocalMemoryMCPServerTests: XCTestCase {
 
     private func response(
         _ request: String,
-        backend: LocalMemoryCLIBackend
+        backend: LocalMemoryCLIBackend,
+        imageBackend: LocalMemoryMCPImageBackend? = nil
     ) async throws -> [String: Any] {
         let processed = await LocalMemoryMCPServer.process(
             message: Data(request.utf8),
-            backend: backend
+            backend: backend,
+            imageBackend: imageBackend
         )
         let data = try XCTUnwrap(processed)
         XCTAssertEqual(data.last, 0x0A)

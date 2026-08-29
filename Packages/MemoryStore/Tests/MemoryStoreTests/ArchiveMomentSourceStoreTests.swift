@@ -16,6 +16,8 @@ final class ArchiveMomentSourceStoreTests: XCTestCase {
         XCTAssertEqual(
             record.captureEpochID.uuidString.lowercased(), "43000000-0000-4000-8000-000000000010")
         XCTAssertEqual(record.targetWindowID, 42)
+        XCTAssertEqual(record.width, 1)
+        XCTAssertEqual(record.height, 1)
     }
 
     func testReadySourceRequiresTheExactSearchResultLocatorAndCurrentReadyIdentity() throws {

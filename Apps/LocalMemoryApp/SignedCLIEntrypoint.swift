@@ -176,7 +176,7 @@ enum SignedCLIEntrypoint {
         }
     }
 
-    private static func findMoment(
+    static func findMoment(
         _ frameID: UUID,
         policy: AccessPolicy,
         database: ArchiveDatabase

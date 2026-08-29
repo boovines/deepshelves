@@ -15,6 +15,8 @@ public struct ArchiveMomentSourceRecord: Equatable, Sendable {
     public let mediaPath: ArchiveRelativePath
     public let mediaHash: Data
     public let mediaByteCount: Int
+    public let width: Int
+    public let height: Int
     public let manifestPath: ArchiveRelativePath
     public let manifestHash: Data
 
@@ -26,6 +28,8 @@ public struct ArchiveMomentSourceRecord: Equatable, Sendable {
         mediaPath: ArchiveRelativePath,
         mediaHash: Data,
         mediaByteCount: Int,
+        width: Int,
+        height: Int,
         manifestPath: ArchiveRelativePath,
         manifestHash: Data
     ) {
@@ -36,6 +40,8 @@ public struct ArchiveMomentSourceRecord: Equatable, Sendable {
         self.mediaPath = mediaPath
         self.mediaHash = mediaHash
         self.mediaByteCount = mediaByteCount
+        self.width = width
+        self.height = height
         self.manifestPath = manifestPath
         self.manifestHash = manifestHash
     }
@@ -67,6 +73,7 @@ public final class ArchiveMomentSourceStore: @unchecked Sendable {
                     SELECT frames.id, frames.capture_epoch_id, frames.target_window_id,
                            frames.policy_generation, frames.media_path,
                            frames.media_sha256, frames.media_byte_count,
+                           media_chunks.width, media_chunks.height,
                            media_chunks.relative_path AS manifest_path,
                            media_chunks.sha256 AS manifest_sha256
                     FROM frames
@@ -99,6 +106,10 @@ public final class ArchiveMomentSourceStore: @unchecked Sendable {
             policyGeneration > 0,
             let byteCount = row["media_byte_count"] as Int?,
             byteCount > 0,
+            let width = row["width"] as Int?,
+            let height = row["height"] as Int?,
+            width > 0,
+            height > 0,
             let mediaHash = decodeHash(row["media_sha256"] as String),
             let manifestHash = decodeHash(row["manifest_sha256"] as String)
         else {
@@ -113,6 +124,8 @@ public final class ArchiveMomentSourceStore: @unchecked Sendable {
                 mediaPath: try ArchiveRelativePath(row["media_path"] as String),
                 mediaHash: mediaHash,
                 mediaByteCount: byteCount,
+                width: width,
+                height: height,
                 manifestPath: try ArchiveRelativePath(row["manifest_path"] as String),
                 manifestHash: manifestHash
             )

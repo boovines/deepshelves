@@ -1,0 +1,36 @@
+{
+  "story": "LM-069",
+  "revision": "refs/tags/checkpoints/LM-069-blocked",
+  "completedAt": "2026-08-29T07:59:23Z",
+  "proofClass": ["unit", "model", "static", "compile"],
+  "runtimeExecuted": false,
+  "checks": {
+    "focusedAgentAccessTests": 11,
+    "focusedStoreTests": 2,
+    "opaqueTokenCryptography": "AES-GCM-256",
+    "tokenMaximumLifetimeSeconds": 300,
+    "policyAndFrameBound": true,
+    "explicitImageOptIn": true,
+    "maximumDimension": 1920,
+    "maximumBytes": 8388608,
+    "boundsCheckedBeforeLoad": true,
+    "byteCountAndSHA256Verified": true,
+    "cancellationBeforeAndAfterLoad": true,
+    "deletedSourceRevalidated": true,
+    "pathDisclosureOnFailure": false,
+    "mcpTool": "get_moment_image",
+    "mcpResourceScheme": "memory-image",
+    "imageRuntimeOrDecodeExecuted": false,
+    "changedFileStrictFormat": "passed",
+    "nativeArm64Compile": "passed",
+    "encoderProcessTripwire": "passed"
+  },
+  "sourceHashes": {
+    "authority": "46cd66a426017083378649d4c7fcdd925b2d928cab305fe8907649c01bcc40f3",
+    "mcpServer": "ec5d6bd7851fa3cd953352fbcbeffe5917163c977ebb09b0847926d1e0a67515",
+    "signedComposition": "2231b6b452c51e481ec7a78b8d90ddfd4bec282851aeac088f8f70ad72848d59",
+    "sourceStore": "78437aec6edbc19abfc766dc40487d575fdae4964b8b760b6f4c8565bb3255c6",
+    "compileLog": "f24634a926ddffe8c098abef1309a34bbb178ba63ac51af030a9fb97c5a44252"
+  },
+  "deferredValidation": "H9 must exercise the installed signed MCP get_moment_image/resources-read exchange against real retained and deleted HEIC evidence, confirm live expiry/revocation/cancellation, and verify byte/dimension behavior without path disclosure."
+}
